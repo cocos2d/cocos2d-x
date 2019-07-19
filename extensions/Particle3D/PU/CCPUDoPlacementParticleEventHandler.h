@@ -51,16 +51,16 @@ public:
 
     /** Getters/Setters
     */
-    bool isInheritPosition(void) const {return _inheritPosition;};
-    bool isInheritDirection(void) const {return _inheritDirection;};
-    bool isInheritOrientation(void) const {return _inheritOrientation;};
-    bool isInheritTimeToLive(void) const {return _inheritTimeToLive;};
-    bool isInheritMass(void) const {return _inheritMass;};
-    bool isInheritTextureCoordinate(void) const {return _inheritTextureCoordinate;};
-    bool isInheritColour(void) const {return _inheritColour;};
-    bool isInheritParticleWidth(void) const {return _inheritParticleWidth;};
-    bool isInheritParticleHeight(void) const {return _inheritParticleHeight;};
-    bool isInheritParticleDepth(void) const {return _inheritParticleDepth;};
+    bool isInheritPosition() const {return _inheritPosition;};
+    bool isInheritDirection() const {return _inheritDirection;};
+    bool isInheritOrientation() const {return _inheritOrientation;};
+    bool isInheritTimeToLive() const {return _inheritTimeToLive;};
+    bool isInheritMass() const {return _inheritMass;};
+    bool isInheritTextureCoordinate() const {return _inheritTextureCoordinate;};
+    bool isInheritColour() const {return _inheritColour;};
+    bool isInheritParticleWidth() const {return _inheritParticleWidth;};
+    bool isInheritParticleHeight() const {return _inheritParticleHeight;};
+    bool isInheritParticleDepth() const {return _inheritParticleDepth;};
 
     void setInheritPosition(bool inheritPosition) {_inheritPosition = inheritPosition;};
     void setInheritDirection(bool inheritDirection) {_inheritDirection = inheritDirection;};
@@ -75,7 +75,7 @@ public:
 
     /** Get the name of the emitter that is used to emit its particles.
     */
-    const std::string& getForceEmitterName(void) const {return _forceEmitterName;};
+    const std::string& getForceEmitterName() const {return _forceEmitterName;};
 
     /** Set the name of the emitter that is used to emit its particles.
     */
@@ -83,7 +83,7 @@ public:
 
     /** Returns a pointer to the emitter that is used as a force emitter.
     */
-    PUEmitter* getForceEmitter(void) const;
+    PUEmitter* getForceEmitter() const;
 
     /** Remove this as a listener from the technique.
     @remarks
@@ -92,11 +92,11 @@ public:
         The reason why it is not called automatically in the setForceEmitterName() function is to offer some flexibility on 
         the moment the removeAsListener() is called.
     */
-    void removeAsListener(void);
+    void removeAsListener();
 
     /** Get the number of particles to emit.
     */
-    unsigned int getNumberOfParticles(void) const {return _numberOfParticles;};
+    unsigned int getNumberOfParticles() const {return _numberOfParticles;};
 
     /** Set the number of particles to emit.
     */
@@ -105,7 +105,7 @@ public:
     /** Boolean that determines whether always the position of the particle that is handled must be used for emission of 
         the new particle.
     */
-    bool alwaysUsePosition(void) const {return _alwaysUsePosition;};
+    bool alwaysUsePosition() const {return _alwaysUsePosition;};
 
     /** Set the boolean to indicate whether the position of the particle that is handled must be used for emission of 
         the new particle or whether the contact point of the physics actor must be used. This only applies if a physics engine
@@ -132,8 +132,8 @@ public:
     virtual void copyAttributesTo (PUEventHandler* eventHandler) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUDoPlacementParticleEventHandler(void);
-    virtual ~PUDoPlacementParticleEventHandler(void);
+    PUDoPlacementParticleEventHandler();
+    virtual ~PUDoPlacementParticleEventHandler();
 
 protected:
     // Identifies the name of emitter

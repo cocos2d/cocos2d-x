@@ -84,7 +84,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~ArmatureAnimation(void);
+    virtual ~ArmatureAnimation();
 
     /**
      * Init with a Armature

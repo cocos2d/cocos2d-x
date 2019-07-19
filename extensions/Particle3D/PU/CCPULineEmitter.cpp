@@ -36,7 +36,7 @@ const float PULineEmitter::DEFAULT_MAX_INCREMENT = 0.0f;
 const float PULineEmitter::DEFAULT_MAX_DEVIATION = 0.0f;
 
 //-----------------------------------------------------------------------
-PULineEmitter::PULineEmitter(void) : 
+PULineEmitter::PULineEmitter() : 
     PUEmitter(),
     _end(DEFAULT_END),
     _maxDeviation(DEFAULT_MAX_DEVIATION),
@@ -53,7 +53,7 @@ PULineEmitter::PULineEmitter(void) :
 {
 }
 //-----------------------------------------------------------------------
-void PULineEmitter::notifyStart (void)
+void PULineEmitter::notifyStart ()
 {
     // Reset the incremental attributes to allow a restart.
     PUEmitter::notifyStart();
@@ -99,7 +99,7 @@ unsigned short PULineEmitter::calculateRequestedParticles(float timeElapsed)
     return requested;
 }
 //-----------------------------------------------------------------------
-const Vec3& PULineEmitter::getEnd(void) const
+const Vec3& PULineEmitter::getEnd() const
 {
     return _end;
 }
@@ -111,7 +111,7 @@ void PULineEmitter::setEnd(const Vec3& end)
     _length = _end.length();
 }
 //-----------------------------------------------------------------------
-float PULineEmitter::getMaxIncrement(void) const
+float PULineEmitter::getMaxIncrement() const
 {
     return _maxIncrement;
 }
@@ -122,7 +122,7 @@ void PULineEmitter::setMaxIncrement(float maxIncrement)
     _scaledMaxIncrement = _maxIncrement * _emitterScale.length();
 }
 //-----------------------------------------------------------------------
-float PULineEmitter::getMinIncrement(void) const
+float PULineEmitter::getMinIncrement() const
 {
     return _minIncrement;
 }
@@ -133,7 +133,7 @@ void PULineEmitter::setMinIncrement(float minIncrement)
     _scaledMinIncrement = _minIncrement * _emitterScale.length();
 }
 //-----------------------------------------------------------------------
-float PULineEmitter::getMaxDeviation(void) const
+float PULineEmitter::getMaxDeviation() const
 {
     return _maxDeviation;
 }

@@ -49,7 +49,7 @@ public:
     /** Returns an indication whether the 2D rotation speed is the same for all particles in this 
         particle technique, or whether the 2D rotation speed of the particle itself is used.
     */
-    bool useOwnRotationSpeed (void) const;
+    bool useOwnRotationSpeed () const;
 
     /** Set the indication whether the 2D rotation speed of the particle itself is used.
     */
@@ -57,7 +57,7 @@ public:
 
     /** Returns the rotation speed. This is the speed controlled by the affector.
     */
-    PUDynamicAttribute* getRotationSpeed(void) const;
+    PUDynamicAttribute* getRotationSpeed() const;
 
     /** 
     */
@@ -65,7 +65,7 @@ public:
 
     /** Returns the rotation defined in the affector.
     */
-    PUDynamicAttribute* getRotation(void) const;
+    PUDynamicAttribute* getRotation() const;
 
     /** 
     */
@@ -73,7 +73,7 @@ public:
 
     /** Returns a rotation set in the affector, depending on the type of dynamic attribute.
     */
-    float calculateRotation (void);
+    float calculateRotation ();
 
     /** Returns a rotation speed value, depending on the type of dynamic attribute.
     */
@@ -85,8 +85,8 @@ public:
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	
-    PUTextureRotator(void);
-    virtual ~PUTextureRotator(void);
+    PUTextureRotator();
+    virtual ~PUTextureRotator();
 
 protected:
     bool _useOwnRotationSpeed;

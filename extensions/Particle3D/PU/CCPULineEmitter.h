@@ -45,7 +45,7 @@ public:
     static PULineEmitter* create();
     /** 
     */
-    virtual void notifyStart (void) override;
+    virtual void notifyStart () override;
 
     /** Override the default implementation, to allow that no particles are emitted if there
         is an incremental emission of particles (along a path), and the end of the line has
@@ -55,22 +55,22 @@ public:
 
     /** 
     */
-    float getMaxDeviation(void) const;
+    float getMaxDeviation() const;
     void setMaxDeviation(float maxDeviation);
 
     /** 
     */
-    float getMaxIncrement(void) const;
+    float getMaxIncrement() const;
     void setMaxIncrement(float maxIncrement);
             
     /** 
     */
-    float getMinIncrement(void) const;
+    float getMinIncrement() const;
     void setMinIncrement(float minIncrement);
             
     /** Get the end vector. This is the vector that defines the end of the line (in local space).
     */
-    const Vec3& getEnd(void) const;
+    const Vec3& getEnd() const;
 
     /** Set the end vector.
     */
@@ -92,8 +92,8 @@ public:
     virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PULineEmitter(void);
-    virtual ~PULineEmitter(void) {};
+    PULineEmitter();
+    virtual ~PULineEmitter() {};
 
 protected:
 

@@ -147,7 +147,7 @@ static const char* starNestFrg = STRINGIFY(
                                            float saturation = 0.850;
                                            
                                            
-void main(void)
+void main()
 {
     //	iCenter = vec2(300, 300);
 	//get coords and direction
@@ -378,7 +378,7 @@ float shade1(float d)
 	return v + g * 0.5;
 }
                                                        
-void main(void)
+void main()
 {
 	vec2 uv = gl_FragCoord.xy / iResolution.xy;
 	uv = uv * 2.0 - 1.0;

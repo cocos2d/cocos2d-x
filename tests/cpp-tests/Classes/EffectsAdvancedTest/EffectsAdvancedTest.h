@@ -43,7 +43,7 @@ protected:
 
 public:
     virtual void onEnter() override;
-    ~EffectAdvanceBaseTest(void);
+    ~EffectAdvanceBaseTest();
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

@@ -128,7 +128,7 @@ void Box2dTestBed::onTouchMoved(Touch* touch, Event* event)
 // Box2DView
 //
 //------------------------------------------------------------------
-Box2DView::Box2DView(void)
+Box2DView::Box2DView()
 {
 }
 

@@ -65,13 +65,13 @@ void __NotificationCenter::destroyInstance()
 }
 
 // FIXME:: deprecated
-__NotificationCenter *__NotificationCenter::sharedNotificationCenter(void)
+__NotificationCenter *__NotificationCenter::sharedNotificationCenter()
 {
     return __NotificationCenter::getInstance();
 }
 
 // FIXME:: deprecated
-void __NotificationCenter::purgeNotificationCenter(void)
+void __NotificationCenter::purgeNotificationCenter()
 {
     __NotificationCenter::destroyInstance();
 }

@@ -1075,12 +1075,12 @@ ParticleTests::ParticleTests()
     ADD_TEST_CASE(ParticleSpriteFrame);
 }
 
-ParticleDemo::~ParticleDemo(void)
+ParticleDemo::~ParticleDemo()
 {
     CC_SAFE_RELEASE(_emitter);
 }
 
-void ParticleDemo::onEnter(void)
+void ParticleDemo::onEnter()
 {
     TestCase::onEnter();
 

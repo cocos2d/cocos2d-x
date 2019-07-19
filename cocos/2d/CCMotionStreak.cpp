@@ -223,7 +223,7 @@ void MotionStreak::tintWithColor(const Color3B& colors)
     }
 }
 
-Texture2D* MotionStreak::getTexture(void) const
+Texture2D* MotionStreak::getTexture() const
 {
     return _texture;
 }
@@ -243,7 +243,7 @@ void MotionStreak::setBlendFunc(const BlendFunc &blendFunc)
     _blendFunc = blendFunc;
 }
 
-const BlendFunc& MotionStreak::getBlendFunc(void) const
+const BlendFunc& MotionStreak::getBlendFunc() const
 {
     return _blendFunc;
 }
@@ -253,7 +253,7 @@ void MotionStreak::setOpacity(uint8_t /*opacity*/)
     CCASSERT(false, "Set opacity no supported");
 }
 
-uint8_t MotionStreak::getOpacity(void) const
+uint8_t MotionStreak::getOpacity() const
 {
     CCASSERT(false, "Opacity no supported");
     return 0;

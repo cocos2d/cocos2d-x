@@ -56,7 +56,7 @@ void ArmatureDataManager::destroyInstance()
     CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
 }
 
-ArmatureDataManager::ArmatureDataManager(void)
+ArmatureDataManager::ArmatureDataManager()
 {
     _armarureDatas.clear();
     _animationDatas.clear();
@@ -65,7 +65,7 @@ ArmatureDataManager::ArmatureDataManager(void)
 }
 
 
-ArmatureDataManager::~ArmatureDataManager(void)
+ArmatureDataManager::~ArmatureDataManager()
 {
     _animationDatas.clear();
     _armarureDatas.clear();

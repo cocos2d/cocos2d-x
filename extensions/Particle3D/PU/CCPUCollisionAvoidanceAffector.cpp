@@ -32,7 +32,7 @@ NS_CC_BEGIN
 const float PUCollisionAvoidanceAffector::DEFAULT_RADIUS = 100.0f;
 
 //-----------------------------------------------------------------------
-PUCollisionAvoidanceAffector::PUCollisionAvoidanceAffector(void) : 
+PUCollisionAvoidanceAffector::PUCollisionAvoidanceAffector() : 
     PUAffector(),
     _radius(DEFAULT_RADIUS)
 {
@@ -42,7 +42,7 @@ PUCollisionAvoidanceAffector::~PUCollisionAvoidanceAffector()
 
 }
 //-----------------------------------------------------------------------
-float PUCollisionAvoidanceAffector::getRadius(void) const
+float PUCollisionAvoidanceAffector::getRadius() const
 {
     return _radius;
 }

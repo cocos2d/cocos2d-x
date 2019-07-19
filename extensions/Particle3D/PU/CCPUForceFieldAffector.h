@@ -63,51 +63,51 @@ public:
 
     /** Get/Set Delta
     */
-    float getDelta(void) const;
+    float getDelta() const;
     void setDelta(float delta);
 
     /** Get/Set scale Force
     */
-    float getScaleForce(void) const;
+    float getScaleForce() const;
     void setScaleForce(float scaleForce);
 
     /** Get/Set scale Octaves
     */
-    unsigned short getOctaves(void) const;
+    unsigned short getOctaves() const;
     void setOctaves(unsigned short octaves);
 
     /** Get/Set scale Frequency
     */
-    double getFrequency(void) const;
+    double getFrequency() const;
     void setFrequency(double frequency);
 
     /** Get/Set scale Amplitude
     */
-    double getAmplitude(void) const;
+    double getAmplitude() const;
     void setAmplitude(double amplitude);
 
     /** Get/Set scale Persistence
     */
-    double getPersistence(void) const;
+    double getPersistence() const;
     void setPersistence(double persistence);
 
     /** Get/Set scale ForceFieldSize
     */
-    unsigned int getForceFieldSize(void) const;
+    unsigned int getForceFieldSize() const;
     void setForceFieldSize(unsigned int forceFieldSize);
 
     /** Get/Set scale worldSize
     */
-    Vec3 getWorldSize(void) const;
+    Vec3 getWorldSize() const;
     void setWorldSize(const Vec3& worldSize);
 
     /** Get/Set scale flip attributes
     */
-    bool getIgnoreNegativeX(void) const;
+    bool getIgnoreNegativeX() const;
     void setIgnoreNegativeX(bool ignoreNegativeX);
-    bool getIgnoreNegativeY(void) const;
+    bool getIgnoreNegativeY() const;
     void setIgnoreNegativeY(bool ignoreNegativeY);
-    bool getIgnoreNegativeZ(void) const;
+    bool getIgnoreNegativeZ() const;
     void setIgnoreNegativeZ(bool ignoreNegativeZ);
 
     /** Get/Set Movement
@@ -115,12 +115,12 @@ public:
         The movement vector determines the position of the movement. This movement is a displacement of the particle position 
         mapped to the forcefield.
     */
-    const Vec3& getMovement(void) const;
+    const Vec3& getMovement() const;
     void setMovement(const Vec3& movement);
 
     /** Get/Set Movement frequency
     */
-    float getMovementFrequency(void) const;
+    float getMovementFrequency() const;
     void setMovementFrequency(float movementFrequency);
 
     /** Suppress (re)generation of the forcefield everytime an attribute is changed.

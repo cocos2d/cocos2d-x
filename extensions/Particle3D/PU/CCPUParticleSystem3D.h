@@ -169,7 +169,7 @@ struct CC_DLL PUParticle3D : public Particle3D
 
     unsigned int eventFlags;
 
-    bool isFreezed(void) const
+    bool isFreezed() const
     {
         return freezed;
     }
@@ -349,7 +349,7 @@ public:
     const ParticlePoolMap& getEmittedSystemParticlePool() const { return _emittedSystemParticlePool; };
 
     bool makeParticleLocal(PUParticle3D* particle);
-    void calulateRotationOffset(void);
+    void calulateRotationOffset();
 
     virtual PUParticleSystem3D* clone();
     virtual void copyAttributesTo(PUParticleSystem3D* system);

@@ -33,8 +33,8 @@ class Ball : public cocos2d::Sprite
 {
     cocos2d::Vec2 _velocity;
 public:
-    Ball(void);
-    virtual ~Ball(void);
+    Ball();
+    virtual ~Ball();
 
     float radius();
     //BOOL initWithTexture(cocos2d::Texture2D* aTexture);

@@ -55,7 +55,7 @@ BaseTestConsole::BaseTestConsole()
 {
 }
 
-BaseTestConsole::~BaseTestConsole(void)
+BaseTestConsole::~BaseTestConsole()
 {
 }
 

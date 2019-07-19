@@ -55,7 +55,7 @@ public:
 
     /** Todo
     */
-    float getAdjustment(void) const;
+    float getAdjustment() const;
 
     /** Todo
     */
@@ -63,7 +63,7 @@ public:
 
     /** Todo
     */
-    InterParticleCollisionResponse getInterParticleCollisionResponse(void) const;
+    InterParticleCollisionResponse getInterParticleCollisionResponse() const;
 
     /** Todo
     */
@@ -72,8 +72,8 @@ public:
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUParticle3DInterParticleCollider(void);
-    virtual ~PUParticle3DInterParticleCollider(void);
+    PUParticle3DInterParticleCollider();
+    virtual ~PUParticle3DInterParticleCollider();
 
 protected:
 

@@ -79,8 +79,8 @@ class CameraRotationTest : public CameraBaseTest {
 
 public:
     CREATE_FUNC(CameraRotationTest);
-    CameraRotationTest(void);
-    virtual ~CameraRotationTest(void);
+    CameraRotationTest();
+    virtual ~CameraRotationTest();
 
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -102,8 +102,8 @@ class Camera3DTestDemo : public CameraBaseTest
 {
 public:
     CREATE_FUNC(Camera3DTestDemo);
-    Camera3DTestDemo(void);
-    virtual ~Camera3DTestDemo(void);
+    Camera3DTestDemo();
+    virtual ~Camera3DTestDemo();
 
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -159,8 +159,8 @@ class CameraCullingDemo : public CameraBaseTest
 {
 public:
     CREATE_FUNC(CameraCullingDemo);
-    CameraCullingDemo(void);
-    virtual ~CameraCullingDemo(void);
+    CameraCullingDemo();
+    virtual ~CameraCullingDemo();
     
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -193,8 +193,8 @@ class CameraArcBallDemo : public CameraBaseTest
 {
 public:
     CREATE_FUNC(CameraArcBallDemo);
-    CameraArcBallDemo(void);
-    virtual ~CameraArcBallDemo(void);
+    CameraArcBallDemo();
+    virtual ~CameraArcBallDemo();
     
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -230,8 +230,8 @@ class FogTestDemo : public CameraBaseTest
 {
 public:
     CREATE_FUNC(FogTestDemo);
-    FogTestDemo(void);
-    virtual ~FogTestDemo(void);
+    FogTestDemo();
+    virtual ~FogTestDemo();
     
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -263,8 +263,8 @@ protected:
 //{
 //public:
 //    CREATE_FUNC(CameraFrameBufferTest);
-//    CameraFrameBufferTest(void);
-//    virtual ~CameraFrameBufferTest(void);
+//    CameraFrameBufferTest();
+//    virtual ~CameraFrameBufferTest();
 //    // overrides
 //    virtual std::string title() const override;
 //    
@@ -275,8 +275,8 @@ class BackgroundColorBrushTest : public CameraBaseTest
 {
 public:
     CREATE_FUNC(BackgroundColorBrushTest);
-    BackgroundColorBrushTest(void);
-    virtual ~BackgroundColorBrushTest(void);
+    BackgroundColorBrushTest();
+    virtual ~BackgroundColorBrushTest();
     
     // overrides
     virtual std::string title() const override;

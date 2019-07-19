@@ -34,7 +34,7 @@ NS_CC_BEGIN
 //const unsigned short Particle3DVertexEmitter::DEFAULT_ITERATIONS = 1;
 //
 ////-----------------------------------------------------------------------
-//Particle3DVertexEmitter::Particle3DVertexEmitter(void) : ParticleEmitter(),
+//Particle3DVertexEmitter::Particle3DVertexEmitter() : ParticleEmitter(),
 //	mPositionElement(0),
 //	mVertexData(0),
 //	mVertexBuffer(0),
@@ -54,7 +54,7 @@ NS_CC_BEGIN
 //	mBuffer.setNull();
 //}
 ////-----------------------------------------------------------------------
-//unsigned short Particle3DVertexEmitter::getIterations(void) const
+//unsigned short Particle3DVertexEmitter::getIterations() const
 //{
 //	return mIterations;
 //}
@@ -64,7 +64,7 @@ NS_CC_BEGIN
 //	mIterations = iterations;
 //}
 ////-----------------------------------------------------------------------
-//unsigned short Particle3DVertexEmitter::getSegments(void) const
+//unsigned short Particle3DVertexEmitter::getSegments() const
 //{
 //	return mSegments;
 //}
@@ -74,7 +74,7 @@ NS_CC_BEGIN
 //	mSegments = segments;
 //}
 ////-----------------------------------------------------------------------
-//unsigned short Particle3DVertexEmitter::getStep(void) const
+//unsigned short Particle3DVertexEmitter::getStep() const
 //{
 //	return mStep;
 //}
@@ -84,7 +84,7 @@ NS_CC_BEGIN
 //	mStep = step;
 //}
 ////-----------------------------------------------------------------------
-//const std::string& Particle3DVertexEmitter::getMeshName(void) const
+//const std::string& Particle3DVertexEmitter::getMeshName() const
 //{
 //	return mMeshName;
 //}
@@ -95,7 +95,7 @@ NS_CC_BEGIN
 //	mMeshName = meshName;
 //}
 ////-----------------------------------------------------------------------
-//void Particle3DVertexEmitter::_notifyStart (void)
+//void Particle3DVertexEmitter::_notifyStart ()
 //{
 //	ParticleEmitter::_notifyStart();
 //	_setDefaults();
@@ -155,7 +155,7 @@ NS_CC_BEGIN
 //	getDerivedPosition();
 //}
 ////-----------------------------------------------------------------------
-//void Particle3DVertexEmitter::_setDefaults(void)
+//void Particle3DVertexEmitter::_setDefaults()
 //{
 //	// Set the default values except the name of the mesh, which may only be changed by the 
 //	// setMeshName() function
@@ -181,7 +181,7 @@ NS_CC_BEGIN
 //	}
 //}
 ////-----------------------------------------------------------------------
-//void Particle3DVertexEmitter::_loadMesh (void)
+//void Particle3DVertexEmitter::_loadMesh ()
 //{
 //	Ogre::MeshPtr mesh = Ogre::MeshManager::getSingleton().load(mMeshName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 //	mMesh = mesh.getPointer();
@@ -197,7 +197,7 @@ NS_CC_BEGIN
 //	}
 //}
 ////-----------------------------------------------------------------------
-//void Particle3DVertexEmitter::_generatePoints (void)
+//void Particle3DVertexEmitter::_generatePoints ()
 //{
 //	if (mAllVerticesProcessed)
 //	{
@@ -244,7 +244,7 @@ NS_CC_BEGIN
 //	}
 //}
 ////-----------------------------------------------------------------------
-//void Particle3DVertexEmitter::_generatePointsFromMesh (void)
+//void Particle3DVertexEmitter::_generatePointsFromMesh ()
 //{
 //	if (mMaxVertexCount == 0 && mMesh)
 //	{
@@ -264,7 +264,7 @@ NS_CC_BEGIN
 //	}
 //}
 ////-----------------------------------------------------------------------
-//void Particle3DVertexEmitter::_generatePointsFromSubMesh (void)
+//void Particle3DVertexEmitter::_generatePointsFromSubMesh ()
 //{
 //	if (mMaxVertexCount == 0 && mSubMesh)
 //	{
@@ -279,7 +279,7 @@ NS_CC_BEGIN
 //	_generatePointsFromVertexBuffer();
 //}	
 ////-----------------------------------------------------------------------
-//void Particle3DVertexEmitter::_fillVertexBuffer(void)
+//void Particle3DVertexEmitter::_fillVertexBuffer()
 //{
 //	mVertexCount = 0;
 //	mMaxVertexCount = mVertexData->vertexCount - mStep;
@@ -289,7 +289,7 @@ NS_CC_BEGIN
 //	mVertexBuffer = static_cast<unsigned char*>(mBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
 //}
 ////-----------------------------------------------------------------------
-//void Particle3DVertexEmitter::_generatePointsFromVertexBuffer(void)
+//void Particle3DVertexEmitter::_generatePointsFromVertexBuffer()
 //{
 //	if (mMaxVertexCount > 1)
 //	{

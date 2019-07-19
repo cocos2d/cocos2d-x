@@ -72,7 +72,7 @@ ArmatureAnimation::ArmatureAnimation()
 
 }
 
-ArmatureAnimation::~ArmatureAnimation(void)
+ArmatureAnimation::~ArmatureAnimation()
 {
     CC_SAFE_RELEASE_NULL(_animationData);
 

@@ -96,7 +96,7 @@ public:
     
     void setStartupScriptFilename(const std::string& startupScriptFile);
     
-    const std::string& getStartupScriptFilename(void);
+    const std::string& getStartupScriptFilename();
     
 protected:
     static Application * sm_pSharedApplication;

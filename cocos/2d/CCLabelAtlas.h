@@ -84,7 +84,7 @@ public:
     bool initWithString(const std::string& string, Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     
     virtual void setString(const std::string &label) override;
-    virtual const std::string& getString(void) const override;
+    virtual const std::string& getString() const override;
 
     virtual void updateAtlasValues() override;
 	/**

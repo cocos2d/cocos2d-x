@@ -30,7 +30,7 @@ NS_CC_BEGIN
 lua_State *LuaBridge::s_luaState = NULL;
 int        LuaBridge::s_newFunctionId = 0;
 
-LuaStack *LuaBridge::getStack(void)
+LuaStack *LuaBridge::getStack()
 {
     return LuaEngine::getInstance()->getLuaStack();
 }

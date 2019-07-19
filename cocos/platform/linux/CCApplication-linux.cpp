@@ -128,7 +128,7 @@ void Application::setResourceRootPath(const std::string& rootResDir)
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& Application::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath()
 {
     return _resourceRootPath;
 }

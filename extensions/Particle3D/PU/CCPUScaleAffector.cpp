@@ -36,7 +36,7 @@ const float PUScaleAffector::DEFAULT_Z_SCALE = 1.0f;
 const float PUScaleAffector::DEFAULT_XYZ_SCALE = 1.0f;
 
 //-----------------------------------------------------------------------
-PUScaleAffector::PUScaleAffector(void) : 
+PUScaleAffector::PUScaleAffector() : 
     PUAffector(),
     _dynScaleXSet(false),
     _dynScaleYSet(false),
@@ -55,7 +55,7 @@ PUScaleAffector::PUScaleAffector(void) :
     _latestTimeElapsed = 1.0f;
 }
 //-----------------------------------------------------------------------
-PUScaleAffector::~PUScaleAffector(void)
+PUScaleAffector::~PUScaleAffector()
 {
     if (_dynScaleX)
     {

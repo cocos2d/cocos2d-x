@@ -49,38 +49,38 @@ public:
 
     /** 
     */
-    PUDynamicAttribute* getDynScaleX(void) const {return _dynScaleX;};
+    PUDynamicAttribute* getDynScaleX() const {return _dynScaleX;};
     void setDynScaleX(PUDynamicAttribute* dynScaleX);
     void resetDynScaleX(bool resetToDefault = true);
 
     /** 
     */
-    PUDynamicAttribute* getDynScaleY(void) const {return _dynScaleY;};
+    PUDynamicAttribute* getDynScaleY() const {return _dynScaleY;};
     void setDynScaleY(PUDynamicAttribute* dynScaleY);
     void resetDynScaleY(bool resetToDefault = true);
 
     /** 
     */
-    PUDynamicAttribute* getDynScaleZ(void) const {return _dynScaleZ;};
+    PUDynamicAttribute* getDynScaleZ() const {return _dynScaleZ;};
     void setDynScaleZ(PUDynamicAttribute* dynScaleZ);
     void resetDynScaleZ(bool resetToDefault = true);
 
     /** 
     */
-    PUDynamicAttribute* getDynScaleXYZ(void) const {return _dynScaleXYZ;};
+    PUDynamicAttribute* getDynScaleXYZ() const {return _dynScaleXYZ;};
     void setDynScaleXYZ(PUDynamicAttribute* dynScaleXYZ);
     void resetDynScaleXYZ(bool resetToDefault = true);
 
     /** 
     */
-    bool isSinceStartSystem(void) const {return _sinceStartSystem;};
+    bool isSinceStartSystem() const {return _sinceStartSystem;};
     void setSinceStartSystem(bool sinceStartSystem){_sinceStartSystem = sinceStartSystem;};
 
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUScaleAffector(void);
-    virtual ~PUScaleAffector(void);
+    PUScaleAffector();
+    virtual ~PUScaleAffector();
 
 protected:
 

@@ -33,8 +33,8 @@ DEFINE_TEST_SUITE(MotionStreakTests);
 class MotionStreakTest : public TestCase
 {
 public:
-    MotionStreakTest(void);
-    ~MotionStreakTest(void);
+    MotionStreakTest();
+    ~MotionStreakTest();
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

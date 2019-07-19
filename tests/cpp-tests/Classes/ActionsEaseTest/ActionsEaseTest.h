@@ -41,8 +41,8 @@ protected:
     std::string    _title;
 
 public:
-    EaseSpriteDemo(void);
-    ~EaseSpriteDemo(void);
+    EaseSpriteDemo();
+    ~EaseSpriteDemo();
 
     virtual std::string subtitle() const override;
     virtual void onEnter() override;

@@ -44,7 +44,7 @@ ProtectedNode::~ProtectedNode()
     removeAllProtectedChildren();
 }
 
-ProtectedNode * ProtectedNode::create(void)
+ProtectedNode * ProtectedNode::create()
 {
 	ProtectedNode * ret = new (std::nothrow) ProtectedNode();
     if (ret && ret->init())

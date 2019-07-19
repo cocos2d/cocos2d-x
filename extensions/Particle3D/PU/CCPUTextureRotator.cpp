@@ -34,7 +34,7 @@ const float PUTextureRotator::DEFAULT_ROTATION_SPEED = 10.0f;
 const float PUTextureRotator::DEFAULT_ROTATION = 0.0f;
 
 //-----------------------------------------------------------------------
-PUTextureRotator::PUTextureRotator(void) : 
+PUTextureRotator::PUTextureRotator() : 
     PUAffector(),
     _useOwnRotationSpeed(DEFAULT_USE_OWN_SPEED),
     _scaledRotationSpeed(0.0f),
@@ -46,7 +46,7 @@ PUTextureRotator::PUTextureRotator(void) :
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 }
 //-----------------------------------------------------------------------
-PUTextureRotator::~PUTextureRotator(void)
+PUTextureRotator::~PUTextureRotator()
 {
     if (_dynRotation)
     {
@@ -59,7 +59,7 @@ PUTextureRotator::~PUTextureRotator(void)
     }
 }
 //-----------------------------------------------------------------------
-bool PUTextureRotator::useOwnRotationSpeed (void) const
+bool PUTextureRotator::useOwnRotationSpeed () const
 {
     return _useOwnRotationSpeed;
 }
@@ -69,7 +69,7 @@ void PUTextureRotator::setUseOwnRotationSpeed (bool useOwnRotationSpeed)
     _useOwnRotationSpeed = useOwnRotationSpeed;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttribute* PUTextureRotator::getRotation(void) const
+PUDynamicAttribute* PUTextureRotator::getRotation() const
 {
     return _dynRotation;
 }
@@ -82,7 +82,7 @@ void PUTextureRotator::setRotation(PUDynamicAttribute* dynRotation)
     _dynRotation = dynRotation;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttribute* PUTextureRotator::getRotationSpeed(void) const
+PUDynamicAttribute* PUTextureRotator::getRotationSpeed() const
 {
     return _dynRotationSpeed;
 }
@@ -95,7 +95,7 @@ void PUTextureRotator::setRotationSpeed(PUDynamicAttribute* dynRotationSpeed)
     _dynRotationSpeed = dynRotationSpeed;
 }
 //-----------------------------------------------------------------------
-float PUTextureRotator::calculateRotation(void)
+float PUTextureRotator::calculateRotation()
 {
     return _dynamicAttributeHelper.calculate(_dynRotation, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
 }

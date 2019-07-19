@@ -108,7 +108,7 @@ SocketIOTest::SocketIOTest()
 }
 
 
-SocketIOTest::~SocketIOTest(void)
+SocketIOTest::~SocketIOTest()
 {
 }
 

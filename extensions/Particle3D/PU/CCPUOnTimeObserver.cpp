@@ -39,7 +39,7 @@ static bool almostEquals(float a, float b, float epsilon = std::numeric_limits<f
 };
 
 //-----------------------------------------------------------------------
-PUOnTimeObserver::PUOnTimeObserver(void) : PUObserver(),
+PUOnTimeObserver::PUOnTimeObserver() : PUObserver(),
     _threshold(DEFAULT_THRESHOLD),
     _compare(CO_GREATER_THAN),
     _sinceStartSystem(DEFAULT_SINCE_START_SYSTEM)

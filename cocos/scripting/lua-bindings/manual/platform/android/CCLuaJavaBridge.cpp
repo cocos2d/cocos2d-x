@@ -35,7 +35,7 @@ extern "C" {
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 }
 
-LuaJavaBridge::CallInfo::~CallInfo(void)
+LuaJavaBridge::CallInfo::~CallInfo()
 {
 	if (m_returnType == TypeString && m_ret.stringValue)
 	{
@@ -43,7 +43,7 @@ LuaJavaBridge::CallInfo::~CallInfo(void)
 	}
 }
 
-bool LuaJavaBridge::CallInfo::execute(void)
+bool LuaJavaBridge::CallInfo::execute()
 {
 	switch (m_returnType)
     {
@@ -170,7 +170,7 @@ int LuaJavaBridge::CallInfo::pushReturnValue(lua_State *L)
 }
 
 
-bool LuaJavaBridge::CallInfo::validateMethodSig(void)
+bool LuaJavaBridge::CallInfo::validateMethodSig()
 {
     size_t len = m_methodSig.length();
     if (len < 3 || m_methodSig[0] != '(') // min sig is "()V"
@@ -244,7 +244,7 @@ LuaJavaBridge::ValueType LuaJavaBridge::CallInfo::checkType(const string& sig, s
 }
 
 
-bool LuaJavaBridge::CallInfo::getMethodInfo(void)
+bool LuaJavaBridge::CallInfo::getMethodInfo()
 {
     m_methodID = 0;
     m_env = 0;

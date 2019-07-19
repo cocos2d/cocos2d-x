@@ -75,7 +75,7 @@ public:
      */
     static void destroyInstance();
 
-    bool init(void);
+    bool init();
 
     /** Adds a Animation with a name.
      *

@@ -45,7 +45,7 @@ void PUPathFollower::addPoint(const Vec3& point)
     _spline.addPoint(point);
 }
 //-----------------------------------------------------------------------
-void PUPathFollower::clearPoints (void)
+void PUPathFollower::clearPoints ()
 {
     _spline.clear();
 }

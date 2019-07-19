@@ -57,24 +57,24 @@ public:
      * @js NA
      * @lua NA
      */
-    ~Profiler(void);
+    ~Profiler();
     /** display the timers
      * @js NA
      * @lua NA
      */
-    void displayTimers(void);
+    void displayTimers();
     /**
      * @js NA
      * @lua NA
      */
-    bool init(void);
+    bool init();
 
 public:
     /** returns the singleton 
      * @js NA
      * @lua NA
      */
-    static Profiler* getInstance(void);
+    static Profiler* getInstance();
 
 
     /** Creates and adds a new timer 
@@ -108,7 +108,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~ProfilingTimer(void);
+    ~ProfilingTimer();
     /**
      * @js NA
      * @lua NA

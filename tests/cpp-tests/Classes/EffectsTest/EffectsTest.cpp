@@ -402,6 +402,6 @@ void EffectBaseTest::checkAnim(float dt)
         _gridNodeTarget->setGrid(nullptr);
 }
 
-EffectBaseTest::~EffectBaseTest(void)
+EffectBaseTest::~EffectBaseTest()
 {
 }
