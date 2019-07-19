@@ -37,16 +37,16 @@ CC_BACKEND_BEGIN
 ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmentShader)
 : Program(vertexShader, fragmentShader)
 {
-    _vertexShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newVertexShaderModule(_vertexShader));
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    std::string headersDef("#ifdef GL_FRAGMENT_PRECISION_HIGH\n" \
-                           "precision highp float;\n precision highp int;\n" \
-                           "#else\n" \
-                           "precision mediump float;\n precision mediump int;\n"
-                           "#endif\n");
-    headersDef.append(fragmentShader);
-    _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(headersDef));
+    //some device required manually specify the precision qualifiers for vertex shader.
+    std::string vsPreDefine("#version 100\n precision highp float;\n precision highp int;\n");
+    std::string fsPreDefine("precision mediump float;\n precision mediump int;\n");
+    vsPreDefine.append(vertexShader);
+    fsPreDefine.append(fragmentShader);
+    _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(fsPreDefine));
+    _vertexShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newVertexShaderModule(vsPreDefine));
 #else
+    _vertexShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newVertexShaderModule(_vertexShader));
     _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(_fragmentShader));
 #endif
 
