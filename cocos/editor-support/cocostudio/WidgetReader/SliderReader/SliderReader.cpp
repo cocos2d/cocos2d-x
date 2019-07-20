@@ -862,7 +862,7 @@ namespace cocostudio
         return slider;
     }
     
-    int SliderReader::getResourceType(std::string key)
+    int SliderReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

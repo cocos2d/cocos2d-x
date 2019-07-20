@@ -140,7 +140,7 @@ void CCBAnimationManager::addDocumentCallbackNode(Node *node)
     _documentCallbackNodes.pushBack(node);
 }
 
-void CCBAnimationManager::addDocumentCallbackName(std::string name)
+void CCBAnimationManager::addDocumentCallbackName(const std::string& name)
 {
     _documentCallbackNames.push_back(Value(name));
 }
@@ -170,7 +170,7 @@ void CCBAnimationManager::addDocumentOutletNode(Node *node)
     _documentOutletNodes.pushBack(node);
 }
 
-void CCBAnimationManager::addDocumentOutletName(std::string name)
+void CCBAnimationManager::addDocumentOutletName(const std::string& name)
 {
     _documentOutletNames.push_back(Value(name));
 }

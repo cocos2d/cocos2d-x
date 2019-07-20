@@ -323,10 +323,10 @@ void DrawNode3D::setBlendFunc(const BlendFunc &blendFunc)
 class ValueTypeJudgeInTable:public Node
 {
 public:
-    static ValueTypeJudgeInTable* create(ValueMap valueMap);
+    static ValueTypeJudgeInTable* create(const ValueMap& valueMap);
 };
 
-ValueTypeJudgeInTable* ValueTypeJudgeInTable::create(ValueMap valueMap)
+ValueTypeJudgeInTable* ValueTypeJudgeInTable::create(const ValueMap& valueMap)
 {
     ValueTypeJudgeInTable* ret = new (std::nothrow) ValueTypeJudgeInTable();
     if (ret)

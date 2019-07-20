@@ -113,7 +113,7 @@ void Particle3DTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, coco
     
 }
 
-Particle3DTestDemo::Particle3DTestDemo( void )
+Particle3DTestDemo::Particle3DTestDemo()
 : _angle(0.0f)
 {
 
@@ -138,7 +138,7 @@ void Particle3DTestDemo::update( float delta )
     }
 }
 
-Particle3DTestDemo::~Particle3DTestDemo( void )
+Particle3DTestDemo::~Particle3DTestDemo()
 {
     _particleLab->release();
 }

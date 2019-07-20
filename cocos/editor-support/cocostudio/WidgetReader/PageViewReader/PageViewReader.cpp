@@ -472,7 +472,7 @@ namespace cocostudio
         return pageView;
     }
     
-    int PageViewReader::getResourceType(std::string key)
+    int PageViewReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

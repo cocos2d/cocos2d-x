@@ -28,11 +28,11 @@
 
 USING_NS_CC;
 
-Ball::Ball(void)
+Ball::Ball()
 {
 }
 
-Ball::~Ball(void)
+Ball::~Ball()
 {
 }
 

@@ -700,7 +700,7 @@ void Terrain::setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture)
     _alphaMap = newAlphaMapTexture;
 }
 
-void Terrain::setDetailMap(unsigned int index, DetailMap detailMap)
+void Terrain::setDetailMap(unsigned int index, const DetailMap& detailMap)
 {
     if(index>4)
     {

@@ -1650,7 +1650,7 @@ public:
      *
      * @return An autoreleased ActionFloat object
      */
-    static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
+    static ActionFloat* create(float duration, float from, float to, const ActionFloatCallback& callback);
 
     /**
      * Overridden ActionInterval methods
@@ -1664,7 +1664,7 @@ CC_CONSTRUCTOR_ACCESS:
     ActionFloat() {};
     virtual ~ActionFloat() {};
 
-    bool initWithDuration(float duration, float from, float to, ActionFloatCallback callback);
+    bool initWithDuration(float duration, float from, float to, const ActionFloatCallback& callback);
 
 protected:
     /* From value */

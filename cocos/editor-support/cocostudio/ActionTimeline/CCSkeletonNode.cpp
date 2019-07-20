@@ -317,7 +317,7 @@ const cocos2d::Map<std::string, BoneNode*>& SkeletonNode::getAllSubBonesMap() co
     return _subBonesMap;
 }
 
-void SkeletonNode::addSkinGroup(std::string groupName, std::map<std::string, std::string> boneSkinNameMap)
+void SkeletonNode::addSkinGroup(const std::string& groupName, const std::map<std::string, std::string>& boneSkinNameMap)
 {
     _skinGroupMap.emplace(groupName, boneSkinNameMap);
 }

@@ -440,7 +440,7 @@ namespace cocostudio
         return node;
     }
 
-    int GameNode3DReader::getResourceType(std::string key)
+    int GameNode3DReader::getResourceType(const std::string& key)
     {
         if (key == "Normal" || key == "Default")
         {
