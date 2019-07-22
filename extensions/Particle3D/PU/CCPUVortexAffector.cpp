@@ -34,7 +34,7 @@ const Vec3 PUVortexAffector::DEFAULT_ROTATION_VECTOR(0, 0, 0);
 const float PUVortexAffector::DEFAULT_ROTATION_SPEED = 1.0f;
 
 //-----------------------------------------------------------------------
-PUVortexAffector::PUVortexAffector(void) : 
+PUVortexAffector::PUVortexAffector() : 
     PUAffector(),
     _rotationVector(DEFAULT_ROTATION_VECTOR)
 {
@@ -42,7 +42,7 @@ PUVortexAffector::PUVortexAffector(void) :
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 }
 //-----------------------------------------------------------------------
-PUVortexAffector::~PUVortexAffector(void)
+PUVortexAffector::~PUVortexAffector()
 {
     if (_dynRotationSpeed)
     {
@@ -50,7 +50,7 @@ PUVortexAffector::~PUVortexAffector(void)
     }
 }
 //-----------------------------------------------------------------------
-const Vec3& PUVortexAffector::getRotationVector(void) const
+const Vec3& PUVortexAffector::getRotationVector() const
 {
     return _rotationVector;
 }
@@ -60,7 +60,7 @@ void PUVortexAffector::setRotationVector(const Vec3& rotationVector)
     _rotationVector = rotationVector;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttribute* PUVortexAffector::getRotationSpeed(void) const
+PUDynamicAttribute* PUVortexAffector::getRotationSpeed() const
 {
     return _dynRotationSpeed;
 }
@@ -73,7 +73,7 @@ void PUVortexAffector::setRotationSpeed(PUDynamicAttribute* dynRotationSpeed)
     _dynRotationSpeed = dynRotationSpeed;
 }
 //-----------------------------------------------------------------------
-float PUVortexAffector::calculateRotationSpeed(void)
+float PUVortexAffector::calculateRotationSpeed()
 {
     return float(_dynamicAttributeHelper.calculate(_dynRotationSpeed, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart()));
 }

@@ -40,8 +40,8 @@ protected:
     PUObserver* _observer;
     
 public:
-    PUObserverTranslator(void);
-    virtual ~PUObserverTranslator(void){};
+    PUObserverTranslator();
+    virtual ~PUObserverTranslator(){};
     virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node);
 };
 

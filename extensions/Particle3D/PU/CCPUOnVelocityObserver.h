@@ -51,7 +51,7 @@ public:
 
     /** 
     */
-    float getThreshold(void) const {return _threshold;};
+    float getThreshold() const {return _threshold;};
     void setThreshold(float threshold){_threshold = threshold;};
 
     /** 
@@ -62,8 +62,8 @@ public:
     virtual void copyAttributesTo (PUObserver* observer) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUOnVelocityObserver(void);
-    virtual ~PUOnVelocityObserver(void) {};
+    PUOnVelocityObserver();
+    virtual ~PUOnVelocityObserver() {};
 
 protected:
     float _threshold;

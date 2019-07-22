@@ -62,16 +62,16 @@ public:
 
     /** Todo
     */
-    const std::string& getObserverType(void) const {return _observerType;};
+    const std::string& getObserverType() const {return _observerType;};
     void setObserverType(const std::string& observerType) {_observerType = observerType;};
 
     /** Todo
     */
-    virtual bool isEnabled(void) const;
+    virtual bool isEnabled() const;
 
     /** Returns the 'enabled' value that was set in setEnabled() and not altered during execution.
     */
-    bool _getOriginalEnabled(void) const;
+    bool _getOriginalEnabled() const;
 
     /** Todo
     */
@@ -81,26 +81,26 @@ public:
     @remarks
         Using _resetEnabled() makes it possible to use setEnabled() without the restriction of having a fixed mOriginalEnabled value.
     */
-    void _resetEnabled(void);
+    void _resetEnabled();
 
     ///** Todo
     //*/
-    //PUParticleSystem3D* getParentSystem(void) const {return mParentTechnique;};
+    //PUParticleSystem3D* getParentSystem() const {return mParentTechnique;};
     //void setParentSystem(PUParticleSystem3D* parentTechnique){mParentTechnique = parentTechnique;};
 
     /** Todo
     */
-    const std::string& getName(void) const {return _name;};
+    const std::string& getName() const {return _name;};
     void setName(const std::string& name) {_name = name;};
 
     /** Todo
     */
-    const PUParticle3D::ParticleType& getParticleTypeToObserve(void) const {return _particleTypeToObserve;};
+    const PUParticle3D::ParticleType& getParticleTypeToObserve() const {return _particleTypeToObserve;};
     void setParticleTypeToObserve(const PUParticle3D::ParticleType particleTypeToObserve);
 
 
-    virtual void notifyStart (void);
-    virtual void notifyStop (void){/* Do nothing */};
+    virtual void notifyStart ();
+    virtual void notifyStop (){/* Do nothing */};
     virtual void notifyRescaled(const Vec3& scale);
     virtual void preUpdateObserver(float deltaTime);
     virtual void updateObserver(PUParticle3D *particle, float deltaTime, bool firstParticle);
@@ -133,7 +133,7 @@ public:
 
     /** Todo
     */
-    size_t getNumEventHandlers (void) const;
+    size_t getNumEventHandlers () const;
 
     /** Todo
     */
@@ -145,11 +145,11 @@ public:
 
     /** Todo
     */
-    void destroyAllEventHandlers (void);
+    void destroyAllEventHandlers ();
 
     /** Return the interval value, which defines at what interval the observer is called.
     */
-    float getObserverInterval(void) const;
+    float getObserverInterval() const;
 
     /** Set the interval value, which defines at what interval the observer is called.
     */
@@ -157,7 +157,7 @@ public:
 
     /** Return the value of mObserveUntilEvent.
     */
-    bool getObserveUntilEvent(void) const;
+    bool getObserveUntilEvent() const;
 
     /** Sets the value of mObserveUntilEvent. This value determines whether observation must be continued
         after an event occurred and the event handlers are called.
@@ -166,13 +166,13 @@ public:
 
     /** Returns true if the particle type to observe specifically has been set.
     */
-    bool isParticleTypeToObserveSet(void) const;
+    bool isParticleTypeToObserveSet() const;
 
     virtual void copyAttributesTo (PUObserver* observer);
 
 CC_CONSTRUCTOR_ACCESS:
-    PUObserver(void);
-    virtual ~PUObserver(void);
+    PUObserver();
+    virtual ~PUObserver();
 
 protected:
 

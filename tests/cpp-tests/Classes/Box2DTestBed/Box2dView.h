@@ -57,8 +57,8 @@ class Box2DView : public cocos2d::Layer
     Test*        m_test;
     int            m_entryID;
 public:
-    Box2DView(void);
-    virtual ~Box2DView(void);
+    Box2DView();
+    virtual ~Box2DView();
 
     bool initWithEntryID(int entryId);
     std::string title() const;

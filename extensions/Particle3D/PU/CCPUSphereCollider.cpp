@@ -32,7 +32,7 @@ NS_CC_BEGIN
 const float PUSphereCollider::DEFAULT_RADIUS = 100.0f;
 
 //-----------------------------------------------------------------------
-PUSphereCollider::PUSphereCollider(void) : 
+PUSphereCollider::PUSphereCollider() : 
     PUBaseCollider(),
     _radius(DEFAULT_RADIUS),
     _innerCollision(false)
@@ -56,7 +56,7 @@ void PUSphereCollider::setRadius(const float radius)
     _sphere.setRadius(_radius);
 }
 //-----------------------------------------------------------------------
-bool PUSphereCollider::isInnerCollision(void) const
+bool PUSphereCollider::isInnerCollision() const
 {
     return _innerCollision;
 }

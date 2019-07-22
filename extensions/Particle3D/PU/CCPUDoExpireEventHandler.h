@@ -47,7 +47,7 @@ public:
 
     ///** Get indication that all particles are expired
     //*/
-    //bool getExpireAll(void);
+    //bool getExpireAll();
 
     ///** Set indication that all particles are expired
     //*/
@@ -58,10 +58,10 @@ public:
     virtual void handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUDoExpireEventHandler(void) : PUEventHandler()
+    PUDoExpireEventHandler() : PUEventHandler()
     {
     }
-    virtual ~PUDoExpireEventHandler(void) {};
+    virtual ~PUDoExpireEventHandler() {};
 };
 
 NS_CC_END

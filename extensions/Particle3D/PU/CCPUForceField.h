@@ -41,7 +41,7 @@ public:
     // Const
     static const Vec3 DEFAULT_WORLDSIZE;
 
-    PUForceFieldCalculationFactory(void) : 
+    PUForceFieldCalculationFactory() : 
         _octaves(2),
         _frequency(1.0f),
         _amplitude(1.0f),
@@ -49,7 +49,7 @@ public:
         _worldSize(DEFAULT_WORLDSIZE)
     {
     }
-    virtual ~PUForceFieldCalculationFactory(void){};
+    virtual ~PUForceFieldCalculationFactory(){};
 
     /** Generates the force field
     @remarks
@@ -74,17 +74,17 @@ public:
 
     /** Default Getters/Setters
     */
-    virtual unsigned short getOctaves(void) const;
+    virtual unsigned short getOctaves() const;
     virtual void setOctaves(unsigned short octaves);
-    virtual double getFrequency(void) const;
+    virtual double getFrequency() const;
     virtual void setFrequency(double frequency);
-    virtual double getAmplitude(void) const;
+    virtual double getAmplitude() const;
     virtual void setAmplitude(double amplitude);
-    virtual double getPersistence(void) const;
+    virtual double getPersistence() const;
     virtual void setPersistence(double persistence);
-    virtual unsigned int getForceFieldSize(void) const;
+    virtual unsigned int getForceFieldSize() const;
     virtual void setForceFieldSize(unsigned int forceFieldSize);
-    virtual Vec3 getWorldSize(void) const;
+    virtual Vec3 getWorldSize() const;
     virtual void setWorldSize(const Vec3& worldSize);
 
 protected:
@@ -106,8 +106,8 @@ protected:
 class PURealTimeForceFieldCalculationFactory : public PUForceFieldCalculationFactory
 {
 public:
-    PURealTimeForceFieldCalculationFactory(void) : PUForceFieldCalculationFactory() {};
-    virtual ~PURealTimeForceFieldCalculationFactory(void){};
+    PURealTimeForceFieldCalculationFactory() : PUForceFieldCalculationFactory() {};
+    virtual ~PURealTimeForceFieldCalculationFactory(){};
 
     /** Override from ForceFieldCalculationFactory
     */
@@ -164,7 +164,7 @@ class PUForceField
             const Vec3& worldSize);
 
         /** Get/Set the base position of the force field */
-        const Vec3& getForceFieldPositionBase(void) const;
+        const Vec3& getForceFieldPositionBase() const;
         void setForceFieldPositionBase(const Vec3& position);
 
         /** Calculate the force, based on a certain position */
@@ -172,17 +172,17 @@ class PUForceField
 
         /** Getters/Setters
         */
-        virtual unsigned short getOctaves(void) const;
+        virtual unsigned short getOctaves() const;
         virtual void setOctaves(unsigned short octaves);
-        virtual double getFrequency(void) const;
+        virtual double getFrequency() const;
         virtual void setFrequency(double frequency);
-        virtual double getAmplitude(void) const;
+        virtual double getAmplitude() const;
         virtual void setAmplitude(double amplitude);
-        virtual double getPersistence(void) const;
+        virtual double getPersistence() const;
         virtual void setPersistence(double persistence);
-        virtual unsigned int getForceFieldSize(void) const;
+        virtual unsigned int getForceFieldSize() const;
         virtual void setForceFieldSize(unsigned int forceFieldSize);
-        virtual Vec3 getWorldSize(void) const;
+        virtual Vec3 getWorldSize() const;
         virtual void setWorldSize(const Vec3& worldSize);
             
         /** Get/Set the Forcefield type

@@ -47,11 +47,11 @@ public:
 
     /** Clear all points
     */
-    void clearPoints (void);
+    void clearPoints ();
 
     /** 
     */
-    unsigned short getNumPoints(void) const {return _spline.getNumPoints();};
+    unsigned short getNumPoints() const {return _spline.getNumPoints();};
                 
     /** 
     */
@@ -60,8 +60,8 @@ public:
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUPathFollower(void);
-    virtual ~PUPathFollower(void);
+    PUPathFollower();
+    virtual ~PUPathFollower();
 
 protected:
 

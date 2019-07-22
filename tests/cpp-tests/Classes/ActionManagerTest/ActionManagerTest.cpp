@@ -53,11 +53,11 @@ ActionManagerTests::ActionManagerTests()
 //
 //------------------------------------------------------------------
 
-ActionManagerTest::ActionManagerTest(void)
+ActionManagerTest::ActionManagerTest()
 {
 }
 
-ActionManagerTest::~ActionManagerTest(void)
+ActionManagerTest::~ActionManagerTest()
 {
 }
 

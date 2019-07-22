@@ -63,14 +63,14 @@ void NavMeshDisabled::onEnter()
 }
 #else
 
-NavMeshBaseTestDemo::NavMeshBaseTestDemo(void)
+NavMeshBaseTestDemo::NavMeshBaseTestDemo()
     : _camera(nullptr)
     , _needMoveAgents(false)
 {
 
 }
 
-NavMeshBaseTestDemo::~NavMeshBaseTestDemo(void)
+NavMeshBaseTestDemo::~NavMeshBaseTestDemo()
 {
     for (auto iter : _agents){
         AgentUserData *data = static_cast<AgentUserData *>(iter.first->getUserData());
@@ -263,12 +263,12 @@ void NavMeshBaseTestDemo::update(float delta)
     }
 }
 
-NavMeshBasicTestDemo::NavMeshBasicTestDemo(void)
+NavMeshBasicTestDemo::NavMeshBasicTestDemo()
 {
 
 }
 
-NavMeshBasicTestDemo::~NavMeshBasicTestDemo(void)
+NavMeshBasicTestDemo::~NavMeshBasicTestDemo()
 {
 }
 
@@ -335,12 +335,12 @@ void NavMeshBasicTestDemo::onEnter()
     createAgent(result.hitPosition);
 }
 
-NavMeshAdvanceTestDemo::NavMeshAdvanceTestDemo(void)
+NavMeshAdvanceTestDemo::NavMeshAdvanceTestDemo()
 {
 
 }
 
-NavMeshAdvanceTestDemo::~NavMeshAdvanceTestDemo(void)
+NavMeshAdvanceTestDemo::~NavMeshAdvanceTestDemo()
 {
 
 }

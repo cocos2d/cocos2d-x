@@ -46,8 +46,8 @@ class NavMeshBaseTestDemo : public TestCase
 {
 public:
     CREATE_FUNC(NavMeshBaseTestDemo);
-    NavMeshBaseTestDemo(void);
-    virtual ~NavMeshBaseTestDemo(void);
+    NavMeshBaseTestDemo();
+    virtual ~NavMeshBaseTestDemo();
 
     // overrides
     virtual bool init() override;
@@ -77,8 +77,8 @@ class NavMeshBasicTestDemo : public NavMeshBaseTestDemo
 {
 public:
     CREATE_FUNC(NavMeshBasicTestDemo);
-    NavMeshBasicTestDemo(void);
-    virtual ~NavMeshBasicTestDemo(void);
+    NavMeshBasicTestDemo();
+    virtual ~NavMeshBasicTestDemo();
     
     // overrides
     virtual bool init() override;
@@ -101,8 +101,8 @@ class NavMeshAdvanceTestDemo : public NavMeshBaseTestDemo
 {
 public:
     CREATE_FUNC(NavMeshAdvanceTestDemo);
-    NavMeshAdvanceTestDemo(void);
-    virtual ~NavMeshAdvanceTestDemo(void);
+    NavMeshAdvanceTestDemo();
+    virtual ~NavMeshAdvanceTestDemo();
 
     // overrides
     virtual bool init() override;

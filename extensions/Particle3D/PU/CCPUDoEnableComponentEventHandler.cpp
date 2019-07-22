@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
-PUDoEnableComponentEventHandler::PUDoEnableComponentEventHandler(void) : 
+PUDoEnableComponentEventHandler::PUDoEnableComponentEventHandler() : 
     PUEventHandler(),
     _componentType(CT_EMITTER),
     _componentEnabled(true)

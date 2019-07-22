@@ -70,7 +70,7 @@ public:
     virtual void setTexture(Texture2D *texture) override;
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
-    virtual const Color3B& getColor(void) const override;
+    virtual const Color3B& getColor() const override;
     virtual void setColor(const Color3B& color) override;
     virtual void setOpacity(uint8_t opacity) override;
     

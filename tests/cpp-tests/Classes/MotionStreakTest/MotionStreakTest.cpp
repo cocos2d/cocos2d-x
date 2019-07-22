@@ -242,11 +242,11 @@ std::string Issue12226::subtitle() const
 //
 //------------------------------------------------------------------
 
-MotionStreakTest::MotionStreakTest(void)
+MotionStreakTest::MotionStreakTest()
 {
 }
 
-MotionStreakTest::~MotionStreakTest(void)
+MotionStreakTest::~MotionStreakTest()
 {
 }
 

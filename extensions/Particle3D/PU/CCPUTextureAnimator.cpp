@@ -36,7 +36,7 @@ const PUTextureAnimator::TextureAnimationType PUTextureAnimator::DEFAULT_ANIMATI
 const bool PUTextureAnimator::DEFAULT_START_RANDOM = true;
 
 //-----------------------------------------------------------------------
-PUTextureAnimator::PUTextureAnimator(void) : 
+PUTextureAnimator::PUTextureAnimator() : 
     PUAffector(),
     _animationTimeStep(DEFAULT_TIME_STEP),
     _animationTimeStepCount(0.0f),
@@ -49,11 +49,11 @@ PUTextureAnimator::PUTextureAnimator(void) :
 {
 }
 //-----------------------------------------------------------------------
-PUTextureAnimator::~PUTextureAnimator(void)
+PUTextureAnimator::~PUTextureAnimator()
 {
 }
 //-----------------------------------------------------------------------
-float PUTextureAnimator::getAnimationTimeStep(void) const
+float PUTextureAnimator::getAnimationTimeStep() const
 {
     return _animationTimeStep;
 }
@@ -64,7 +64,7 @@ void PUTextureAnimator::setAnimationTimeStep(float animationTimeStep)
     _animationTimeStepSet = true;
 }
 //-----------------------------------------------------------------------
-PUTextureAnimator::TextureAnimationType PUTextureAnimator::getTextureAnimationType(void) const
+PUTextureAnimator::TextureAnimationType PUTextureAnimator::getTextureAnimationType() const
 {
     return _textureAnimationType;
 }
@@ -74,7 +74,7 @@ void PUTextureAnimator::setTextureAnimationType(PUTextureAnimator::TextureAnimat
     _textureAnimationType = textureAnimationType;
 }
 //-----------------------------------------------------------------------
-unsigned short PUTextureAnimator::getTextureCoordsStart(void) const
+unsigned short PUTextureAnimator::getTextureCoordsStart() const
 {
     return _textureCoordsStart;
 }
@@ -84,7 +84,7 @@ void PUTextureAnimator::setTextureCoordsStart(unsigned short textureCoordsStart)
     _textureCoordsStart = textureCoordsStart;
 }
 //-----------------------------------------------------------------------
-unsigned short PUTextureAnimator::getTextureCoordsEnd(void) const
+unsigned short PUTextureAnimator::getTextureCoordsEnd() const
 {
     return _textureCoordsEnd;
 }
@@ -94,7 +94,7 @@ void PUTextureAnimator::setTextureCoordsEnd(unsigned short textureCoordsEnd)
     _textureCoordsEnd = textureCoordsEnd;
 }
 //-----------------------------------------------------------------------
-bool PUTextureAnimator::isStartRandom(void) const
+bool PUTextureAnimator::isStartRandom() const
 {
     return _startRandom;
 }

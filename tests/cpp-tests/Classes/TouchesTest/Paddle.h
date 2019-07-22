@@ -39,8 +39,8 @@ class Paddle : public cocos2d::Sprite, public cocos2d::Clonable
     PaddleState        _state;
 
 public:
-    Paddle(void);
-    virtual ~Paddle(void);
+    Paddle();
+    virtual ~Paddle();
 
     cocos2d::Rect getRect();
     bool initWithTexture(cocos2d::Texture2D* aTexture) override;

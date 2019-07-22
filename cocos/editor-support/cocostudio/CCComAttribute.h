@@ -40,17 +40,17 @@ public:
     /**
      * @js ctor
      */
-    ComAttribute(void);
+    ComAttribute();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ComAttribute(void);
+    virtual ~ComAttribute();
     
 public:
     const static std::string COMPONENT_NAME;
 
-    static ComAttribute* create(void);
+    static ComAttribute* create();
     virtual bool init() override;
     virtual bool serialize(void* r) override;
     

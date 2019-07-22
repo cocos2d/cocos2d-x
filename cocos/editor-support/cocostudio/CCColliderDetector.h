@@ -146,7 +146,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~ColliderDetector(void);
+    ~ColliderDetector();
 
     virtual bool init();
     virtual bool init(Bone *bone);

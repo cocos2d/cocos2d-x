@@ -32,7 +32,7 @@ NS_CC_BEGIN
 const bool PUPositionEmitter::DEFAULT_RANDOMIZE = true;
 
 //-----------------------------------------------------------------------
-PUPositionEmitter::PUPositionEmitter(void) : 
+PUPositionEmitter::PUPositionEmitter() : 
     PUEmitter(),
     _randomized(DEFAULT_RANDOMIZE),
     _index(0)
@@ -49,7 +49,7 @@ void PUPositionEmitter::setRandomized(bool randomized)
     _randomized = randomized;
 }
 //-----------------------------------------------------------------------
-const std::vector<Vec3>& PUPositionEmitter::getPositions(void) const
+const std::vector<Vec3>& PUPositionEmitter::getPositions() const
 {
     return _positionList;
 }
@@ -59,13 +59,13 @@ void PUPositionEmitter::addPosition(const Vec3& position)
     _positionList.push_back(position);
 }
 //-----------------------------------------------------------------------
-void PUPositionEmitter::notifyStart(void)
+void PUPositionEmitter::notifyStart()
 {
     PUEmitter::notifyStart();
     _index = 0;
 }
 //-----------------------------------------------------------------------
-void PUPositionEmitter::removeAllPositions(void)
+void PUPositionEmitter::removeAllPositions()
 {
     _index = 0;
     _positionList.clear();

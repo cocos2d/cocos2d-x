@@ -34,8 +34,8 @@ DEFINE_TEST_SUITE(ActionsProgressTests);
 class SpriteDemo : public TestCase
 {
 public:
-    SpriteDemo(void);
-    ~SpriteDemo(void);
+    SpriteDemo();
+    ~SpriteDemo();
 
     virtual std::string title() const override;
     virtual void onEnter() override;

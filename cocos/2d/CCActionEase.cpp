@@ -64,7 +64,7 @@ bool ActionEase::initWithAction(ActionInterval *action)
     return false;
 }
 
-ActionEase::~ActionEase(void)
+ActionEase::~ActionEase()
 {
     CC_SAFE_RELEASE(_inner);
 }
@@ -82,7 +82,7 @@ void ActionEase::startWithTarget(Node *target)
     }
 }
 
-void ActionEase::stop(void)
+void ActionEase::stop()
 {
     if (_inner)
         _inner->stop();

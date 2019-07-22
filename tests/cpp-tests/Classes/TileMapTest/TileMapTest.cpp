@@ -96,7 +96,7 @@ TileDemo::TileDemo()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-TileDemo::~TileDemo(void)
+TileDemo::~TileDemo()
 {
 }
 

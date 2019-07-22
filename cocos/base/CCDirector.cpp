@@ -83,7 +83,7 @@ NS_CC_BEGIN
 static Director *s_SharedDirector = nullptr;
 
 #define kDefaultFPS        60  // 60 frames per second
-extern const char* cocos2dVersion(void);
+extern const char* cocos2dVersion();
 
 const char *Director::EVENT_BEFORE_SET_NEXT_SCENE = "director_before_set_next_scene";
 const char *Director::EVENT_AFTER_SET_NEXT_SCENE = "director_after_set_next_scene";
@@ -111,7 +111,7 @@ Director::Director()
 {
 }
 
-bool Director::init(void)
+bool Director::init()
 {
     setDefaultValues();
 
@@ -156,7 +156,7 @@ bool Director::init(void)
     return true;
 }
 
-Director::~Director(void)
+Director::~Director()
 {
     CCLOGINFO("deallocing Director: %p", this);
 
@@ -198,7 +198,7 @@ Director::~Director(void)
 #endif
 }
 
-void Director::setDefaultValues(void)
+void Director::setDefaultValues()
 {
     Configuration *conf = Configuration::getInstance();
 
@@ -643,7 +643,7 @@ void Director::setProjection(Projection projection)
     _eventDispatcher->dispatchEvent(_eventProjectionChanged);
 }
 
-void Director::purgeCachedData(void)
+void Director::purgeCachedData()
 {
     FontFNT::purgeCachedData();
     FontAtlasCache::purgeCachedData();
@@ -660,7 +660,7 @@ void Director::purgeCachedData(void)
     FileUtils::getInstance()->purgeCachedEntries();
 }
 
-float Director::getZEye(void) const
+float Director::getZEye() const
 {
     return (_winSizeInPoints.height / 1.154700538379252f);//(2 * tanf(M_PI/6))
 }
@@ -729,7 +729,7 @@ Vec2 Director::convertToUI(const Vec2& glPoint)
     return Vec2(glSize.width * (clipCoord.x * 0.5f + 0.5f) * factor, glSize.height * (-clipCoord.y * 0.5f + 0.5f) * factor);
 }
 
-const Size& Director::getWinSize(void) const
+const Size& Director::getWinSize() const
 {
     return _winSizeInPoints;
 }
@@ -842,7 +842,7 @@ void Director::pushScene(Scene *scene)
     _nextScene = scene;
 }
 
-void Director::popScene(void)
+void Director::popScene()
 {
     CCASSERT(_runningScene != nullptr, "running scene should not null");
     
@@ -867,7 +867,7 @@ void Director::popScene(void)
     }
 }
 
-void Director::popToRootScene(void)
+void Director::popToRootScene()
 {
     popToSceneStackLevel(1);
 }

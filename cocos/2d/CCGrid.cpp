@@ -148,7 +148,7 @@ void GridBase::updateBlendState()
     }
 }
 
-GridBase::~GridBase(void)
+GridBase::~GridBase()
 {
     CCLOGINFO("deallocing GridBase: %p", this);
 

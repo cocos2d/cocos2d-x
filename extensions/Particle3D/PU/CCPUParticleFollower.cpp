@@ -34,7 +34,7 @@ const float PUParticleFollower::DEFAULT_MAX_DISTANCE = 3.40282e+038f;
 const float PUParticleFollower::DEFAULT_MIN_DISTANCE = 10.0f;
 
 //-----------------------------------------------------------------------
-PUParticleFollower::PUParticleFollower(void) : 
+PUParticleFollower::PUParticleFollower() : 
     PUAffector(),
     _minDistance(DEFAULT_MIN_DISTANCE),
     _maxDistance(DEFAULT_MAX_DISTANCE),
@@ -47,7 +47,7 @@ PUParticleFollower::~PUParticleFollower( void )
 
 }
 //-----------------------------------------------------------------------
-float PUParticleFollower::getMaxDistance(void) const
+float PUParticleFollower::getMaxDistance() const
 {
     return _maxDistance;
 }
@@ -57,7 +57,7 @@ void PUParticleFollower::setMaxDistance(float maxDistance)
     _maxDistance = maxDistance;
 }
 //-----------------------------------------------------------------------
-float PUParticleFollower::getMinDistance(void) const
+float PUParticleFollower::getMinDistance() const
 {
     return _minDistance;
 }

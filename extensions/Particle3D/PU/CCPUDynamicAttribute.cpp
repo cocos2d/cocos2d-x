@@ -30,15 +30,15 @@
 
 NS_CC_BEGIN
     //-----------------------------------------------------------------------
-    PUDynamicAttribute::PUDynamicAttribute (void)
+    PUDynamicAttribute::PUDynamicAttribute ()
 {
 }
 //-----------------------------------------------------------------------
-PUDynamicAttribute::~PUDynamicAttribute (void)
+PUDynamicAttribute::~PUDynamicAttribute ()
 {
 }
 //-----------------------------------------------------------------------
-PUDynamicAttribute::DynamicAttributeType PUDynamicAttribute::getType (void) const
+PUDynamicAttribute::DynamicAttributeType PUDynamicAttribute::getType () const
 {
     return _type;
 }
@@ -49,7 +49,7 @@ void PUDynamicAttribute::setType (PUDynamicAttribute::DynamicAttributeType type)
 }
 
 //-----------------------------------------------------------------------
-PUDynamicAttributeFixed::PUDynamicAttributeFixed (void) : _value(0)
+PUDynamicAttributeFixed::PUDynamicAttributeFixed () : _value(0)
 {
     _type = PUDynamicAttribute::DAT_FIXED;
 }
@@ -60,7 +60,7 @@ PUDynamicAttributeFixed::PUDynamicAttributeFixed (const PUDynamicAttributeFixed&
     _value = dynamicAttributeFixed._value;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttributeFixed::~PUDynamicAttributeFixed (void)
+PUDynamicAttributeFixed::~PUDynamicAttributeFixed ()
 {
 }
 //-----------------------------------------------------------------------
@@ -91,7 +91,7 @@ PUDynamicAttributeFixed* PUDynamicAttributeFixed::clone()
 }
 
 //-----------------------------------------------------------------------
-PUDynamicAttributeRandom::PUDynamicAttributeRandom (void) : _min(0), _max(0)
+PUDynamicAttributeRandom::PUDynamicAttributeRandom () : _min(0), _max(0)
 {
     _type = PUDynamicAttribute::DAT_RANDOM;
 }
@@ -103,11 +103,11 @@ PUDynamicAttributeRandom::PUDynamicAttributeRandom (const PUDynamicAttributeRand
     _max = dynamicAttributeRandom._max;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttributeRandom::~PUDynamicAttributeRandom (void)
+PUDynamicAttributeRandom::~PUDynamicAttributeRandom ()
 {
 }
 //-----------------------------------------------------------------------
-float PUDynamicAttributeRandom::getMin (void) const
+float PUDynamicAttributeRandom::getMin () const
 {
     return _min;
 }
@@ -117,7 +117,7 @@ void PUDynamicAttributeRandom::setMin (float min)
     _min = min;
 }
 //-----------------------------------------------------------------------
-float PUDynamicAttributeRandom::getMax (void) const
+float PUDynamicAttributeRandom::getMax () const
 {
     return _max;
 }
@@ -156,7 +156,7 @@ PUDynamicAttributeRandom* PUDynamicAttributeRandom::clone()
 }
 
 //-----------------------------------------------------------------------
-PUDynamicAttributeCurved::PUDynamicAttributeCurved (void) : 
+PUDynamicAttributeCurved::PUDynamicAttributeCurved () : 
 	_range(0),
 	_interpolationType(IT_LINEAR)
 {
@@ -185,7 +185,7 @@ PUDynamicAttributeCurved::PUDynamicAttributeCurved (const PUDynamicAttributeCurv
     processControlPoints();
 }
 //-----------------------------------------------------------------------
-PUDynamicAttributeCurved::~PUDynamicAttributeCurved (void)
+PUDynamicAttributeCurved::~PUDynamicAttributeCurved ()
 {
 }
 //-----------------------------------------------------------------------
@@ -199,7 +199,7 @@ void PUDynamicAttributeCurved::setInterpolationType (PUInterpolationType interpo
     }
 }
 //-----------------------------------------------------------------------
-PUInterpolationType PUDynamicAttributeCurved::getInterpolationType (void) const
+PUInterpolationType PUDynamicAttributeCurved::getInterpolationType () const
 {
     return _interpolationType;
 }
@@ -248,12 +248,12 @@ void PUDynamicAttributeCurved::addControlPoint (float x, float y)
     _controlPoints.push_back(Vec2(x, y));
 }
 //-----------------------------------------------------------------------
-const PUDynamicAttributeCurved::ControlPointList& PUDynamicAttributeCurved::getControlPoints (void) const
+const PUDynamicAttributeCurved::ControlPointList& PUDynamicAttributeCurved::getControlPoints () const
 {
     return _controlPoints;
 }
 //-----------------------------------------------------------------------
-void PUDynamicAttributeCurved::processControlPoints(void)
+void PUDynamicAttributeCurved::processControlPoints()
 {
     if (_controlPoints.empty())
         return;
@@ -271,12 +271,12 @@ void PUDynamicAttributeCurved::processControlPoints(void)
     }
 }
 //-----------------------------------------------------------------------
-size_t PUDynamicAttributeCurved::getNumControlPoints(void) const
+size_t PUDynamicAttributeCurved::getNumControlPoints() const
 {
     return _controlPoints.size();
 }
 //-----------------------------------------------------------------------
-void PUDynamicAttributeCurved::removeAllControlPoints(void)
+void PUDynamicAttributeCurved::removeAllControlPoints()
 {
     _controlPoints.clear();
 }
@@ -301,12 +301,12 @@ PUDynamicAttributeCurved::ControlPointList::iterator PUDynamicAttributeCurved::f
     return --it;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttributeCurved::ControlPointList::iterator PUDynamicAttributeCurved::getFirstValidIterator(void)
+PUDynamicAttributeCurved::ControlPointList::iterator PUDynamicAttributeCurved::getFirstValidIterator()
 {
     return _controlPoints.begin();
 }
 //-----------------------------------------------------------------------
-PUDynamicAttributeCurved::ControlPointList::iterator PUDynamicAttributeCurved::getLastValidIterator(void)
+PUDynamicAttributeCurved::ControlPointList::iterator PUDynamicAttributeCurved::getLastValidIterator()
 {
     return _controlPoints.end() - 1;
 }
@@ -340,7 +340,7 @@ PUDynamicAttributeCurved* PUDynamicAttributeCurved::clone()
 }
 
 //-----------------------------------------------------------------------
-PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (void) :
+PUDynamicAttributeOscillate::PUDynamicAttributeOscillate () :
     _oscillationType(PUDynamicAttributeOscillate::OSCT_SINE),
     _frequency(1.0f),
     _phase(0.0f),
@@ -355,11 +355,11 @@ PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (const PUDynamicAttribu
     _type = PUDynamicAttribute::DAT_OSCILLATE;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttributeOscillate::~PUDynamicAttributeOscillate (void)
+PUDynamicAttributeOscillate::~PUDynamicAttributeOscillate ()
 {
 }
 //-----------------------------------------------------------------------
-PUDynamicAttributeOscillate::OscillationType PUDynamicAttributeOscillate::getOscillationType (void) const
+PUDynamicAttributeOscillate::OscillationType PUDynamicAttributeOscillate::getOscillationType () const
 {
     return _oscillationType;
 }
@@ -369,7 +369,7 @@ void PUDynamicAttributeOscillate::setOscillationType (PUDynamicAttributeOscillat
     _oscillationType = oscillationType;
 }
 //-----------------------------------------------------------------------
-float PUDynamicAttributeOscillate::getFrequency (void) const
+float PUDynamicAttributeOscillate::getFrequency () const
 {
     return _frequency;
 }
@@ -379,7 +379,7 @@ void PUDynamicAttributeOscillate::setFrequency (float frequency)
     _frequency = frequency;
 }
 //-----------------------------------------------------------------------
-float PUDynamicAttributeOscillate::getPhase (void) const
+float PUDynamicAttributeOscillate::getPhase () const
 {
     return _phase;
 }
@@ -389,7 +389,7 @@ void PUDynamicAttributeOscillate::setPhase (float phase)
     _phase = phase;
 }
 //-----------------------------------------------------------------------
-float PUDynamicAttributeOscillate::getBase (void) const
+float PUDynamicAttributeOscillate::getBase () const
 {
     return _base;
 }
@@ -399,7 +399,7 @@ void PUDynamicAttributeOscillate::setBase (float base)
     _base = base;
 }
 //-----------------------------------------------------------------------
-float PUDynamicAttributeOscillate::getAmplitude (void) const
+float PUDynamicAttributeOscillate::getAmplitude () const
 {
     return _amplitude;
 }

@@ -55,8 +55,8 @@ enum AnimationType
 class  CC_STUDIO_DLL ProcessBase : public cocos2d::Ref
 {
 public:
-    ProcessBase(void);
-    virtual ~ProcessBase(void);
+    ProcessBase();
+    virtual ~ProcessBase();
 
     /**
      * Play animation by animation name.

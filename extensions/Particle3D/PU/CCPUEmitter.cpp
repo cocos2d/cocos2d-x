@@ -410,7 +410,7 @@ void PUEmitter::postUpdateEmitter( float /*deltaTime*/ )
 }
 
 //-----------------------------------------------------------------------
-bool PUEmitter::isKeepLocal(void) const
+bool PUEmitter::isKeepLocal() const
 {
     return _keepLocal;
 }
@@ -433,7 +433,7 @@ bool PUEmitter::makeParticleLocal(PUParticle3D* particle)
 }
 
 //-----------------------------------------------------------------------
-const Vec4& PUEmitter::getParticleColor(void) const
+const Vec4& PUEmitter::getParticleColor() const
 {
     return _particleColor;
 }
@@ -443,7 +443,7 @@ void PUEmitter::setParticleColor(const Vec4& particleColor)
     _particleColor = particleColor;
 }
 //-----------------------------------------------------------------------
-const Vec4& PUEmitter::getParticleColorRangeStart(void) const
+const Vec4& PUEmitter::getParticleColorRangeStart() const
 {
     return _particleColorRangeStart;
 }
@@ -454,7 +454,7 @@ void PUEmitter::setParticleColorRangeStart(const Vec4& particleColorRangeStart)
     _particleColorRangeSet = true;
 }
 //-----------------------------------------------------------------------
-const Vec4& PUEmitter::getParticleColorRangeEnd(void) const
+const Vec4& PUEmitter::getParticleColorRangeEnd() const
 {
     return _particleColorRangeEnd;
 }
@@ -465,7 +465,7 @@ void PUEmitter::setParticleColorRangeEnd(const Vec4& particleColorRangeEnd)
     _particleColorRangeSet = true;
 }
 //-----------------------------------------------------------------------
-const unsigned short& PUEmitter::getParticleTextureCoords(void) const
+const unsigned short& PUEmitter::getParticleTextureCoords() const
 {
     return _particleTextureCoords;
 }
@@ -475,7 +475,7 @@ void PUEmitter::setParticleTextureCoords(const unsigned short& particleTextureCo
     _particleTextureCoords = particleTextureCoords;
 }
 //-----------------------------------------------------------------------
-const unsigned short& PUEmitter::getParticleTextureCoordsRangeStart(void) const
+const unsigned short& PUEmitter::getParticleTextureCoordsRangeStart() const
 {
     return _particleTextureCoordsRangeStart;
 }
@@ -486,7 +486,7 @@ void PUEmitter::setParticleTextureCoordsRangeStart(const unsigned short& particl
     _particleTextureCoordsRangeSet = true;
 }
 //-----------------------------------------------------------------------
-const unsigned short& PUEmitter::getParticleTextureCoordsRangeEnd(void) const
+const unsigned short& PUEmitter::getParticleTextureCoordsRangeEnd() const
 {
     return _particleTextureCoordsRangeEnd;
 }
@@ -640,7 +640,7 @@ void PUEmitter::setDynParticleDepthSet(bool particleDepthSet)
     _dynParticleDepthSet = particleDepthSet;
 }
 //-----------------------------------------------------------------------
-const Vec3& PUEmitter::getParticleDirection(void)
+const Vec3& PUEmitter::getParticleDirection()
 {
     return _particleDirection;
 }
@@ -655,12 +655,12 @@ void PUEmitter::setParticleDirection(const Vec3& direction)
     _upVector.normalize();
 }
 //-----------------------------------------------------------------------
-const Vec3& PUEmitter::getOriginalParticleDirection(void) const
+const Vec3& PUEmitter::getOriginalParticleDirection() const
 {
     return _originalParticleDirection;
 }
 //-----------------------------------------------------------------------
-const Quaternion& PUEmitter::getParticleOrientation(void) const
+const Quaternion& PUEmitter::getParticleOrientation() const
 {
     return _particleOrientation;
 }
@@ -670,7 +670,7 @@ void PUEmitter::setParticleOrientation(const Quaternion& orientation)
     _particleOrientation = orientation;
 }
 //-----------------------------------------------------------------------
-const Quaternion& PUEmitter::getParticleOrientationRangeStart(void) const
+const Quaternion& PUEmitter::getParticleOrientationRangeStart() const
 {
     return _particleOrientationRangeStart;
 }
@@ -681,7 +681,7 @@ void PUEmitter::setParticleOrientationRangeStart(const Quaternion& orientationRa
     _particleOrientationRangeSet = true;
 }
 //-----------------------------------------------------------------------
-const Quaternion& PUEmitter::getParticleOrientationRangeEnd(void) const
+const Quaternion& PUEmitter::getParticleOrientationRangeEnd() const
 {
     return _particleOrientationRangeEnd;
 }
@@ -692,7 +692,7 @@ void PUEmitter::setParticleOrientationRangeEnd(const Quaternion& orientationRang
     _particleOrientationRangeSet = true;
 }
 //-----------------------------------------------------------------------
-bool PUEmitter::isAutoDirection(void) const
+bool PUEmitter::isAutoDirection() const
 {
     return _autoDirection;
 }
@@ -702,7 +702,7 @@ void PUEmitter::setAutoDirection(bool autoDirection)
     _autoDirection = autoDirection;
 }
 //-----------------------------------------------------------------------
-bool PUEmitter::isForceEmission(void) const
+bool PUEmitter::isForceEmission() const
 {
     return _forceEmission;
 }

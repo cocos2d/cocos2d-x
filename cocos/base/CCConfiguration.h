@@ -239,7 +239,7 @@ public:
     int getMaxAttributes() const;
 
 private:
-    Configuration(void);
+    Configuration();
     static Configuration    *s_sharedConfiguration;
 	static std::string		s_configfile;
     

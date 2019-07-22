@@ -41,7 +41,7 @@ public:
 
     /** 
     */
-    const std::string& getMasterTechniqueName(void) const;
+    const std::string& getMasterTechniqueName() const;
 
     /** 
     */
@@ -49,7 +49,7 @@ public:
 
     /** 
     */
-    const std::string& getMasterEmitterName(void) const;
+    const std::string& getMasterEmitterName() const;
 
     /** See ParticleEmitter.
     */
@@ -69,7 +69,7 @@ public:
 
     /** See ParticleEmitter.
     */
-    virtual void notifyStart (void) override;
+    virtual void notifyStart () override;
 
     /** Initialise the emitted particle. This means that its position is set.
     */
@@ -87,8 +87,8 @@ public:
     virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUSlaveEmitter(void);
-    virtual ~PUSlaveEmitter(void){};
+    PUSlaveEmitter();
+    virtual ~PUSlaveEmitter(){};
 
 protected:
 

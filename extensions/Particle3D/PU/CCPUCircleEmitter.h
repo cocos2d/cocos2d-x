@@ -66,20 +66,20 @@ public:
 
     /* 
     */ 
-    const Quaternion& getOrientation(void) const;
-    const Vec3& getNormal(void) const;
+    const Quaternion& getOrientation() const;
+    const Vec3& getNormal() const;
     void setNormal(const Vec3 &normal); 
 
     /** See ParticleEmiter
     */
-    virtual void notifyStart(void) override;
+    virtual void notifyStart() override;
 
     virtual PUCircleEmitter* clone() override;
     virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUCircleEmitter(void);
-    virtual ~PUCircleEmitter(void) {};
+    PUCircleEmitter();
+    virtual ~PUCircleEmitter() {};
 
 protected:
 

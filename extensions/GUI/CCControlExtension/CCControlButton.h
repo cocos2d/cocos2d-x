@@ -62,7 +62,7 @@ public:
     static ControlButton* create(const std::string& title, const std::string& fontName, float fontSize);
     static ControlButton* create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite, bool adjustBackGroundSize);
 
-    virtual void needsLayout(void) override;
+    virtual void needsLayout() override;
 
     virtual void setEnabled(bool enabled) override;
     virtual void setSelected(bool enabled) override;

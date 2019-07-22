@@ -189,7 +189,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~Grid3D(void);
+    ~Grid3D();
 
     /** Returns the vertex at a given position.
      * @js NA

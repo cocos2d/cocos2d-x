@@ -49,8 +49,8 @@ class Physics3DTestDemo : public TestCase
 {
 public:
     CREATE_FUNC(Physics3DTestDemo);
-    Physics3DTestDemo(void);
-    virtual ~Physics3DTestDemo(void);
+    Physics3DTestDemo();
+    virtual ~Physics3DTestDemo();
     
     // overrides
     virtual bool init() override;

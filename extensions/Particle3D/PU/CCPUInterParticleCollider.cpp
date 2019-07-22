@@ -35,7 +35,7 @@ const PUParticle3DInterParticleCollider::InterParticleCollisionResponse PUPartic
          PUParticle3DInterParticleCollider::IPCR_AVERAGE_VELOCITY;
 
 //-----------------------------------------------------------------------
-PUParticle3DInterParticleCollider::PUParticle3DInterParticleCollider(void) : 
+PUParticle3DInterParticleCollider::PUParticle3DInterParticleCollider() : 
     PUBaseCollider(),
     _adjustment(DEFAULT_ADJUSTMENT),
     _interParticleCollisionResponse(DEFAULT_COLLISION_RESPONSE)
@@ -47,7 +47,7 @@ PUParticle3DInterParticleCollider::~PUParticle3DInterParticleCollider( void )
 
 }
 //-----------------------------------------------------------------------
-float PUParticle3DInterParticleCollider::getAdjustment(void) const
+float PUParticle3DInterParticleCollider::getAdjustment() const
 {
     return _adjustment;
 }
@@ -57,7 +57,7 @@ void PUParticle3DInterParticleCollider::setAdjustment(float adjustment)
     _adjustment = adjustment;
 }
 //-----------------------------------------------------------------------
-PUParticle3DInterParticleCollider::InterParticleCollisionResponse PUParticle3DInterParticleCollider::getInterParticleCollisionResponse(void) const
+PUParticle3DInterParticleCollider::InterParticleCollisionResponse PUParticle3DInterParticleCollider::getInterParticleCollisionResponse() const
 {
     return _interParticleCollisionResponse;
 }

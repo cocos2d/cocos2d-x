@@ -222,7 +222,7 @@ BMFontConfiguration::~BMFontConfiguration()
     CC_SAFE_DELETE(_characterSet);
 }
 
-std::string BMFontConfiguration::description(void) const
+std::string BMFontConfiguration::description() const
 {
     return StringUtils::format(
         "<BMFontConfiguration = " CC_FORMAT_PRINTF_SIZE_T " | Glphys:%d Kernings:%d | Image = %s>",

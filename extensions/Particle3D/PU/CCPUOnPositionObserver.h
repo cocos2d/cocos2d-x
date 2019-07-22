@@ -57,21 +57,21 @@ public:
 
     /** 
         */
-    float getPositionXThreshold(void) const {return _positionXThreshold;};
-    float getPositionYThreshold(void) const {return _positionYThreshold;};
-    float getPositionZThreshold(void) const {return _positionZThreshold;};
+    float getPositionXThreshold() const {return _positionXThreshold;};
+    float getPositionYThreshold() const {return _positionYThreshold;};
+    float getPositionZThreshold() const {return _positionZThreshold;};
 
     /** 
         */
-    bool isPositionXThresholdSet(void) const {return _positionXThresholdSet;};
-    bool isPositionYThresholdSet(void) const {return _positionYThresholdSet;};
-    bool isPositionZThresholdSet(void) const {return _positionZThresholdSet;};
+    bool isPositionXThresholdSet() const {return _positionXThresholdSet;};
+    bool isPositionYThresholdSet() const {return _positionYThresholdSet;};
+    bool isPositionZThresholdSet() const {return _positionZThresholdSet;};
 
     /** 
         */
-    void resetPositionXThreshold(void) {_positionXThresholdSet = false;};
-    void resetPositionYThreshold(void) {_positionYThresholdSet = false;};
-    void resetPositionZThreshold(void) {_positionZThresholdSet = false;};
+    void resetPositionXThreshold() {_positionXThresholdSet = false;};
+    void resetPositionYThreshold() {_positionYThresholdSet = false;};
+    void resetPositionZThreshold() {_positionZThresholdSet = false;};
 
     /** 
         */
@@ -88,8 +88,8 @@ public:
     virtual void copyAttributesTo (PUObserver* observer) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUOnPositionObserver(void);
-    virtual ~PUOnPositionObserver(void) {};
+    PUOnPositionObserver();
+    virtual ~PUOnPositionObserver() {};
 
 protected:
 

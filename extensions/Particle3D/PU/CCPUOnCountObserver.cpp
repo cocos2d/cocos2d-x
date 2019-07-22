@@ -34,14 +34,14 @@ const unsigned int PUOnCountObserver::DEFAULT_THRESHOLD = 0;
 const PUComparisionOperator PUOnCountObserver::DEFAULT_COMPARE = CO_LESS_THAN;
 
 //-----------------------------------------------------------------------
-PUOnCountObserver::PUOnCountObserver(void) : PUObserver(),
+PUOnCountObserver::PUOnCountObserver() : PUObserver(),
     _count(1),
     _threshold(DEFAULT_THRESHOLD),
     _compare(DEFAULT_COMPARE)
 {
 }
 //-----------------------------------------------------------------------
-void PUOnCountObserver::notifyStart (void)
+void PUOnCountObserver::notifyStart ()
 {
     PUObserver::notifyStart();
 

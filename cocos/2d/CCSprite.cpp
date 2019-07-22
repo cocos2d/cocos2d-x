@@ -1002,7 +1002,7 @@ void Sprite::populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad)
 
 // MARK: visit, draw, transform
 
-void Sprite::updateTransform(void)
+void Sprite::updateTransform()
 {
     CCASSERT(_renderMode == RenderMode::QUAD_BATCHNODE, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
 
@@ -1693,7 +1693,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 }
 
 // MARK: Texture protocol
-void Sprite::updateBlendFunc(void)
+void Sprite::updateBlendFunc()
 {
     CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
     

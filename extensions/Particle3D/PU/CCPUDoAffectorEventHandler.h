@@ -57,7 +57,7 @@ public:
 
     /** Get the name of the affector that must be enabled or disabled.
     */
-    const std::string& getAffectorName(void) const {return _affectorName;};
+    const std::string& getAffectorName() const {return _affectorName;};
 
     /** Set the name of the affector.
     */
@@ -74,8 +74,8 @@ public:
     virtual void copyAttributesTo (PUEventHandler* eventHandler) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUDoAffectorEventHandler(void);
-    virtual ~PUDoAffectorEventHandler(void) {};
+    PUDoAffectorEventHandler();
+    virtual ~PUDoAffectorEventHandler() {};
 
 protected:
     // Identifies the name of affector

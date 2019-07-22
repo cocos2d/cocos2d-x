@@ -178,7 +178,7 @@ void Application::setStartupScriptFilename(const std::string& startupScriptFile)
     std::replace(_startupScriptFilename.begin(), _startupScriptFilename.end(), '\\', '/');
 }
 
-const std::string& Application::getStartupScriptFilename(void)
+const std::string& Application::getStartupScriptFilename()
 {
     return _startupScriptFilename;
 }

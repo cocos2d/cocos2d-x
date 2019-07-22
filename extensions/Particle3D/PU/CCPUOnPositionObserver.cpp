@@ -33,7 +33,7 @@ NS_CC_BEGIN
 const Vec3 PUOnPositionObserver::DEFAULT_POSITION_THRESHOLD(0, 0, 0);
 
 //-----------------------------------------------------------------------
-PUOnPositionObserver::PUOnPositionObserver(void) : 
+PUOnPositionObserver::PUOnPositionObserver() : 
     PUObserver(),
     _positionXThreshold(DEFAULT_POSITION_THRESHOLD.x),
     _positionYThreshold(DEFAULT_POSITION_THRESHOLD.y),

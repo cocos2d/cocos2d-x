@@ -33,7 +33,7 @@ const float PUSineForceAffector::DEFAULT_FREQ_MIN = 1.0f;
 const float PUSineForceAffector::DEFAULT_FREQ_MAX = 1.0f;
 
 //-----------------------------------------------------------------------
-PUSineForceAffector::PUSineForceAffector(void) : 
+PUSineForceAffector::PUSineForceAffector() : 
     PUBaseForceAffector(),
     _angle(361),
     _frequencyMin(DEFAULT_FREQ_MIN),
