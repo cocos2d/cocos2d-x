@@ -9,7 +9,7 @@ function(cocos_copy_target_res cocos_target)
     foreach(cc_file ${opt_FILES})
         get_filename_component(file_name ${cc_file} NAME)
         add_custom_command(TARGET ${cocos_target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E echo "copy-file into Resources: ${file_name} ..."
+            #COMMAND ${CMAKE_COMMAND} -E echo "copy-file into Resources: ${file_name} ..."
             COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_file} "${opt_COPY_TO}/${file_name}"
         )
     endforeach()
@@ -27,7 +27,7 @@ function(cocos_copy_target_res cocos_target)
         # endforeach()
         ### copy file by file is too slow on windows, the copy_directory improves a lot. 
         add_custom_command(TARGET ${cocos_target} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E echo "copy-dir into Resources: ${opt_COPY_TO} ..."
+                #COMMAND ${CMAKE_COMMAND} -E echo "copy-dir into Resources: ${opt_COPY_TO} ..."
                 COMMAND ${CMAKE_COMMAND} -E copy_directory ${cc_folder} "${opt_COPY_TO}"
             )
     endforeach()
@@ -111,7 +111,7 @@ function(cocos_copy_target_dll cocos_target)
     foreach(cc_dll_file ${all_depend_dlls})
         get_filename_component(cc_dll_name ${cc_dll_file} NAME)
         add_custom_command(TARGET ${cocos_target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E echo "copy dll into target file dir: ${cc_dll_name} ..."
+            #COMMAND ${CMAKE_COMMAND} -E echo "copy dll into target file dir: ${cc_dll_name} ..."
             COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_dll_file} "$<TARGET_FILE_DIR:${cocos_target}>/${cc_dll_name}"
         )
     endforeach()
