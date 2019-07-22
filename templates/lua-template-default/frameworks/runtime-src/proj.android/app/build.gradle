@@ -13,9 +13,29 @@ android {
         versionName "1.0"
 
         externalNativeBuild {
-            cmake {
-                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
-                cppFlags "-frtti -fexceptions -fsigned-char"
+            if (PROP_BUILD_TYPE == 'ndk-build') {
+                ndkBuild {
+                    targets 'cocos2dlua'
+                    arguments 'NDK_TOOLCHAIN_VERSION=clang'
+                    arguments '-j' + Runtime.runtime.availableProcessors()
+
+                    def module_paths = [project.file("../../../cocos2d-x").absolutePath,
+                                        project.file("../../../cocos2d-x/cocos").absolutePath,
+                                        project.file("../../../cocos2d-x/external").absolutePath]
+                    if (OperatingSystem.current().isWindows()) {
+                        module_paths = module_paths.collect {it.replaceAll('\\\\', '/')}
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
+                }
+            }
+            else if (PROP_BUILD_TYPE == 'cmake') {
+                cmake {
+                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
+                    cppFlags "-frtti -fexceptions -fsigned-char"
+                }
             }
         }
 
@@ -30,11 +50,19 @@ android {
         res.srcDir "res"
         jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
+        assets.srcDir "assets"
     }
 
     externalNativeBuild {
-        cmake {
-            path "../../../../CMakeLists.txt"
+        if (PROP_BUILD_TYPE == 'ndk-build') {
+            ndkBuild {
+                path "jni/Android.mk"
+            }
+        }
+        else if (PROP_BUILD_TYPE == 'cmake') {
+            cmake {
+                path "../../../../CMakeLists.txt"
+            }
         }
     }
 
@@ -61,12 +89,23 @@ android {
             if (project.hasProperty("RELEASE_STORE_FILE")) {
                 signingConfig signingConfigs.release
             }
+
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
+                }
+            }
         }
 
         debug {
             debuggable true
             jniDebuggable true
             renderscriptDebuggable true
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
+                }
+            }
         }
     }
 }
@@ -134,20 +173,20 @@ android.applicationVariants.all { variant ->
     def dest_assets_folder = "${projectDir}/assets"
 
     // delete previous files first
-    delete "${buildDir}/intermediates/assets/${variant.dirName}"
+    delete dest_assets_folder
 
     def targetName = variant.name.capitalize()
     def copyTaskName = "copy${targetName}ResourcesToAssets"
    
     tasks.register(copyTaskName) {
         copy {
-           from "${buildDir}/../../../../../res"
-           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+           from project_root_folder + "/res"
+           into dest_assets_folder + "/res"
         }
 
         copy {
-            from "${buildDir}/../../../../../src"
-            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+            from project_root_folder + "/src"
+            into dest_assets_folder + "/src"
         }
 
         // copy {
@@ -196,32 +235,32 @@ android.applicationVariants.all { variant ->
             // invoke cocos command to compile & encrypt the lua files
             switch (buildType) {
                 case -1:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src",
                                false, false, encryptLua)
                     break
                 case 0:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src",
                                true, false, encryptLua)
                     break
                 case 1:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src/64bit",
                                true, true, encryptLua)
 
                     // remove the lua files in src dir
-                    delete fileTree("${buildDir}/intermediates/assets/${variant.dirName}/src") {
+                    delete fileTree(dest_assets_folder + "/src") {
                         include '**/*.lua'
                     }
-                    delete "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+                    delete dest_assets_folder + "/src/cocos"
                     break
                 case 2:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src/64bit",
                                true, true, encryptLua)
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src",
                                true, false, encryptLua)
                     break
             }
