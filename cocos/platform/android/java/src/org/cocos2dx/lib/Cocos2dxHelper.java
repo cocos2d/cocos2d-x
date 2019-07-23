@@ -486,6 +486,10 @@ public class Cocos2dxHelper {
     }
     
     public static void terminateProcess() {
+        // Remove it from recent apps.
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            sActivity.finishAndRemoveTask();
+        }
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
