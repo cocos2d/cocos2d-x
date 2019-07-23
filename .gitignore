@@ -175,3 +175,6 @@ metal-support*.zip
 **/org.eclipse.buildship.core.prefs
 
 desktop.ini
+
+
+tools/travis-scripts/test.sh

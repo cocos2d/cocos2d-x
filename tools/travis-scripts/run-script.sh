@@ -151,6 +151,7 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     local COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
     local COMMITTAG="[ci skip][AUTO]: updating luabinding & cocos_file.json automatically"
     local PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
+    local COCOSFILE_PATH="$COCOS2DX_ROOT/templates/cocos2dx_files.json"
 
     pushd "$COCOS2DX_ROOT"
     #Set git user for cocos2d-lua repo
