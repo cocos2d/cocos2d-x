@@ -235,7 +235,7 @@ Mesh* Mesh::create(const std::vector<float>& vertices, int /*perVertexSizeInFloa
     meshdata.attribs = attribs;
     meshdata.vertex = vertices;
     meshdata.subMeshIndices.push_back(indices);
-    meshdata.subMeshIds.push_back("");
+    meshdata.subMeshIds.emplace_back("");
     auto meshvertexdata = MeshVertexData::create(meshdata);
     auto indexData = meshvertexdata->getMeshIndexDataByIndex(0);
     

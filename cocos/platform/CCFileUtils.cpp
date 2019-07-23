@@ -615,7 +615,7 @@ bool FileUtils::init()
 {
     DECLARE_GUARD;
     _searchPathArray.push_back(_defaultResRootPath);
-    _searchResolutionsOrderArray.push_back("");
+    _searchResolutionsOrderArray.emplace_back("");
     return true;
 }
 
@@ -955,7 +955,7 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
 
     if (!existDefault)
     {
-        _searchResolutionsOrderArray.push_back("");
+        _searchResolutionsOrderArray.emplace_back("");
     }
 }
 

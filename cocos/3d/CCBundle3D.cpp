@@ -314,7 +314,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
                 meshdata->subMeshIndices.push_back(submesh.second);
                 meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), submesh.second));
                 sprintf(str, "%d", ++i);
-                meshdata->subMeshIds.push_back(str);
+                meshdata->subMeshIds.emplace_back(str);
                 
                 auto modelnode = new (std::nothrow) ModelData();
                 modelnode->materialId = submesh.first == -1 ? "" : materials[submesh.first].name;
@@ -474,7 +474,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
                     CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
                     goto FAILED;
                 }
-                meshData->subMeshAABB.push_back(AABB(Vec3(aabb[0], aabb[1], aabb[2]), Vec3(aabb[3], aabb[4], aabb[5])));
+                meshData->subMeshAABB.emplace_back(Vec3(aabb[0], aabb[1], aabb[2]), Vec3(aabb[3], aabb[4], aabb[5]));
             }
             else
             {
@@ -774,7 +774,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
         {
             std::vector<unsigned short>      indexArray;
             const rapidjson::Value& mesh_part = mesh_part_array[i];
-            meshData->subMeshIds.push_back(mesh_part[ID].GetString());
+            meshData->subMeshIds.emplace_back(mesh_part[ID].GetString());
             // index_number
             const rapidjson::Value& indices_val_array = mesh_part[INDICES];
             for (rapidjson::SizeType j = 0, indices_val_array_size = indices_val_array.Size(); j < indices_val_array_size; ++j)
@@ -792,7 +792,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
                              mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
                     Vec3 max(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(),
                              mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
-                    meshData->subMeshAABB.push_back(AABB(min, max));
+                    meshData->subMeshAABB.emplace_back(min, max);
                 }
                 else
                 {
@@ -1321,7 +1321,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
             CCLOG("warning: Failed to load SkinData: bindpos '%s'.", _path.c_str());
             return false;
         }
-        skindata->inverseBindPoseMatrices.push_back(bindpos);
+        skindata->inverseBindPoseMatrices.emplace_back(bindpos);
     }
     
     skindata->skinBoneOriginMatrices.resize(boneNum);
@@ -1335,7 +1335,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     {
         skindata->addNodeBoneNames(boneName);
         rootIndex = skindata->getBoneNameIndex(boneName);
-        skindata->nodeBoneOriginMatrices.push_back(bindShape);
+        skindata->nodeBoneOriginMatrices.emplace_back(bindShape);
     }
     else
     {
@@ -1367,7 +1367,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         {
             skindata->addNodeBoneNames(id);
             index = skindata->getBoneNameIndex(id);
-            skindata->nodeBoneOriginMatrices.push_back(transform);
+            skindata->nodeBoneOriginMatrices.emplace_back(transform);
         }
         else
         {
@@ -1755,7 +1755,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bo
                         return nullptr;
                     }
 
-                    modelnodedata->bones.push_back(bone[NODE].GetString());
+                    modelnodedata->bones.emplace_back(bone[NODE].GetString());
 
                     Mat4 invbindpos;
                     const rapidjson::Value& jinvbindpos = bone[TRANSFORM];
@@ -2212,7 +2212,7 @@ std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
         int preVertexSize = iter->getPerVertexSize() / sizeof(float);
         for (const auto& indexArray : iter->subMeshIndices){
             for (auto i : indexArray){
-                trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
+                trianglesList.emplace_back(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]);
             }
         }
     }
