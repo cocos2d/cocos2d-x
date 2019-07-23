@@ -37,7 +37,6 @@ android {
         cmake {
             path "../../../../CMakeLists.txt"
         }
-    
     }
 
     signingConfigs {
@@ -63,23 +62,12 @@ android {
             if (project.hasProperty("RELEASE_STORE_FILE")) {
                 signingConfig signingConfigs.release
             }
-
-            externalNativeBuild {
-                ndkBuild {
-                    arguments 'NDK_DEBUG=0'
-                }
-            }
         }
 
         debug {
             debuggable true
             jniDebuggable true
             renderscriptDebuggable true
-            externalNativeBuild {
-                ndkBuild {
-                    arguments 'NDK_DEBUG=1'
-                }
-            }
         }
     }
 }
