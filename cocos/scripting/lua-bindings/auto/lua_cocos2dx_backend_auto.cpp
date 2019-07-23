@@ -1998,21 +1998,24 @@ int lua_cocos2dx_backend_VertexLayout_setLayout(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 2) 
     {
         unsigned int arg0;
+        cocos2d::backend::VertexStepMode arg1;
 
         ok &= luaval_to_uint32(tolua_S, 2,&arg0, "ccb.VertexLayout:setLayout");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccb.VertexLayout:setLayout");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_setLayout'", nullptr);
             return 0;
         }
-        cobj->setLayout(arg0);
+        cobj->setLayout(arg0, arg1);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:setLayout",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:setLayout",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
