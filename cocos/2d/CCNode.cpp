@@ -1686,7 +1686,7 @@ Mat4 Node::getNodeToParentTransform(Node* ancestor) const
 
     for (Node *p = _parent;  p != nullptr && p != ancestor ; p = p->getParent())
     {
-        t = p->getNodeToParentTransform() * t;
+        t *= p->getNodeToParentTransform();
     }
 
     return t;
