@@ -42,7 +42,7 @@
 @property (nonatomic, readonly, getter = isEditState) BOOL editState;
 @property (nonatomic, readwrite) BOOL returnPressed;
 
-- (instancetype)initWithFrame:(CGRect)frameRect editBox:( *)editBox;
+- (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
 - ()doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
 
 - (NSString *)getDefaultFontName;
