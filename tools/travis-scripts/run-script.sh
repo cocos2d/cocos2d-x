@@ -5,6 +5,7 @@ set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
+COCOSFILE_PATH="$COCOS2DX_ROOT/templates/cocos2dx_files.json"
 CPU_CORES=4
 
 function do_retry()
@@ -131,8 +132,6 @@ function update_cocos_files()
 {
     # Don't exit on non-zero return value
     set +e
-
-    COCOSFILE_PATH="$COCOS2DX_ROOT/templates/cocos2dx_files.json"
     echo "Updates cocos_files.json"
     $COCOS2DX_ROOT/tools/travis-scripts/generate-template-files.py
     git diff FETCH_HEAD --stat --exit-code "$COCOSFILE_PATH"
@@ -151,7 +150,6 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     local COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
     local COMMITTAG="[ci skip][AUTO]: updating luabinding & cocos_file.json automatically"
     local PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
-    local COCOSFILE_PATH="$COCOS2DX_ROOT/templates/cocos2dx_files.json"
 
     pushd "$COCOS2DX_ROOT"
     #Set git user for cocos2d-lua repo
