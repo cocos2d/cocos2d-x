@@ -77,7 +77,6 @@ elseif(APPLE)
              proj.ios_mac/mac/LuaObjectCBridgeTest.h
              )
         set(APP_UI_RES
-            proj.ios_mac/mac/en.lproj/MainMenu.xib
             proj.ios_mac/mac/Icon.icns
             proj.ios_mac/mac/Info.plist
             )

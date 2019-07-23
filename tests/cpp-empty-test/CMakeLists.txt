@@ -95,7 +95,6 @@ elseif(APPLE)
         set(APP_UI_RES
             proj.mac/Icon.icns
             proj.mac/Info.plist
-            proj.mac/en.lproj/MainMenu.xib
             proj.mac/en.lproj/InfoPlist.strings
             )
         list(APPEND GAME_SOURCE

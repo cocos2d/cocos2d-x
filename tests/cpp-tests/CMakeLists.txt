@@ -68,7 +68,6 @@ elseif(APPLE)
             proj.mac/Icon.icns
             proj.mac/Info.plist
             proj.mac/Prefix.pch
-            proj.mac/en.lproj/MainMenu.xib
             proj.mac/en.lproj/InfoPlist.strings
             )
         list(APPEND GAME_SOURCE
