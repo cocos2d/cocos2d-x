@@ -151,6 +151,9 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     local COMMITTAG="[ci skip][AUTO]: updating luabinding & cocos_file.json automatically"
     local PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
 
+    # Don't exit on non-zero return value
+    set +e
+    
     pushd "$COCOS2DX_ROOT"
     #Set git user for cocos2d-lua repo
     git config user.email ${GH_EMAIL}
@@ -165,8 +168,6 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     echo
     git fetch origin "$TRAVIS_BRANCH"
 
-    # Don't exit on non-zero return value
-    set +e
     git diff FETCH_HEAD --stat --exit-code "$LUA_AUTO_GENERATE_SCRIPT_PATH"
     local lua_binding_codes_diff=$?
 
