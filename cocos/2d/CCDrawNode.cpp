@@ -43,8 +43,7 @@ static Vec2 v2fzero(0.0f,0.0f);
 
 static inline Vec2 v2f(float x, float y)
 {
-    Vec2 ret(x, y);
-    return ret;
+    return {x, y};
 }
 
 static inline Vec2 v2fadd(const Vec2 &v0, const Vec2 &v1)
@@ -568,9 +567,8 @@ void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Colo
 {
     ensureCapacityGLPoint(1);
 
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
-    V2F_C4B_T2F a = {position, Color4B(color), Tex2F(pointSize,0)};
-    *point = a;
+    V2F_C4B_T2F *point = _bufferGLPoint + _bufferCountGLPoint;
+    *point = {position, Color4B(color), Tex2F(pointSize,0)};
 
     _bufferCountGLPoint += 1;
     _dirtyGLPoint = true;
@@ -585,12 +583,11 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
 {
     ensureCapacityGLPoint(numberOfPoints);
 
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
+    V2F_C4B_T2F *point = _bufferGLPoint + _bufferCountGLPoint;
 
     for(unsigned int i=0; i < numberOfPoints; i++,point++)
     {
-        V2F_C4B_T2F a = {position[i], Color4B(color), Tex2F(pointSize,0)};
-        *point = a;
+        *point = {position[i], Color4B(color), Tex2F(pointSize,0)};
     }
 
     _bufferCountGLPoint += numberOfPoints;
@@ -601,13 +598,10 @@ void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color
 {
     ensureCapacityGLLine(2);
 
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLLine + _bufferCountGLLine);
+    V2F_C4B_T2F *point = _bufferGLLine + _bufferCountGLLine;
 
-    V2F_C4B_T2F a = {origin, Color4B(color), Tex2F(0.0, 0.0)};
-    V2F_C4B_T2F b = {destination, Color4B(color), Tex2F(0.0, 0.0)};
-
-    *point = a;
-    *(point+1) = b;
+    *point = {origin, Color4B(color), Tex2F(0.0, 0.0)};
+    *(point + 1) = {destination, Color4B(color), Tex2F(0.0, 0.0)};
 
     _bufferCountGLLine += 2;
     _dirtyGLLine = true;
@@ -615,10 +609,10 @@ void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color
 
 void DrawNode::drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
 {
-    drawLine(Vec2(origin.x, origin.y), Vec2(destination.x, origin.y), color);
-    drawLine(Vec2(destination.x, origin.y), Vec2(destination.x, destination.y), color);
-    drawLine(Vec2(destination.x, destination.y), Vec2(origin.x, destination.y), color);
-    drawLine(Vec2(origin.x, destination.y), Vec2(origin.x, origin.y), color);
+    drawLine(origin, Vec2(destination.x, origin.y), color);
+    drawLine(Vec2(destination.x, origin.y), destination, color);
+    drawLine(destination, Vec2(origin.x, destination.y), color);
+    drawLine(Vec2(origin.x, destination.y), origin, color);
 }
 
 void DrawNode::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color)
@@ -635,24 +629,20 @@ void DrawNode::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool clos
         ensureCapacityGLLine(vertex_count);
     }
 
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLLine + _bufferCountGLLine);
+    V2F_C4B_T2F *point = _bufferGLLine + _bufferCountGLLine;
 
     unsigned int i = 0;
-    for(; i<numberOfPoints-1; i++)
+    for(; i < numberOfPoints - 1; i++)
     {
-        V2F_C4B_T2F a = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
-        V2F_C4B_T2F b = {poli[i+1], Color4B(color), Tex2F(0.0, 0.0)};
+        *point = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
+        *(point + 1) = {poli[i + 1], Color4B(color), Tex2F(0.0, 0.0)};
 
-        *point = a;
-        *(point+1) = b;
         point += 2;
     }
     if(closePolygon)
     {
-        V2F_C4B_T2F a = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
-        V2F_C4B_T2F b = {poli[0], Color4B(color), Tex2F(0.0, 0.0)};
-        *point = a;
-        *(point+1) = b;
+        *point = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
+        *(point + 1) = {poli[0], Color4B(color), Tex2F(0.0, 0.0)};
     }
 
     _bufferCountGLLine += vertex_count;
@@ -800,10 +790,10 @@ void DrawNode::drawDot(const Vec2 &pos, float radius, const Color4F &color)
 
 void DrawNode::drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color)
 {
-    drawLine(Vec2(p1.x, p1.y), Vec2(p2.x, p2.y), color);
-    drawLine(Vec2(p2.x, p2.y), Vec2(p3.x, p3.y), color);
-    drawLine(Vec2(p3.x, p3.y), Vec2(p4.x, p4.y), color);
-    drawLine(Vec2(p4.x, p4.y), Vec2(p1.x, p1.y), color);
+    drawLine(p1, p2, color);
+    drawLine(p2, p3, color);
+    drawLine(p3, p4, color);
+    drawLine(p4, p1, color);
 }
 
 void DrawNode::drawSegment(const Vec2 &from, const Vec2 &to, float radius, const Color4F &color)
@@ -897,8 +887,7 @@ void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColo
     if(outline)
     {
         struct ExtrudeVerts {Vec2 offset, n;};
-        struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
-        memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
+        ExtrudeVerts* extrude = (ExtrudeVerts *)malloc(sizeof(ExtrudeVerts) * count);
         
         for (int i = 0; i < count; i++)
         {
@@ -910,8 +899,7 @@ void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColo
             Vec2 n2 = v2fnormalize(v2fperp(v2fsub(v2, v1)));
             
             Vec2 offset = v2fmult(v2fadd(n1, n2), 1.0f / (v2fdot(n1, n2) + 1.0f));
-            struct ExtrudeVerts tmp = {offset, n2};
-            extrude[i] = tmp;
+            extrude[i] = {offset, n2};
         }
         
         for(int i = 0; i < count; i++)
@@ -962,12 +950,12 @@ void DrawNode::drawSolidRect(const Vec2 &origin, const Vec2 &destination, const 
         Vec2(origin.x, destination.y)
     };
     
-    drawSolidPoly(vertices, 4, color );
+    drawSolidPoly(vertices, 4, color);
 }
 
 void DrawNode::drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, const Color4F &color)
 {
-    drawPolygon(poli, numberOfPoints, color, 0.0, Color4F(0.0, 0.0, 0.0, 0.0));
+    drawPolygon(poli, numberOfPoints, color, 0.0, Color4F());
 }
 
 void DrawNode::drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY, const Color4F &color)
@@ -1004,9 +992,9 @@ void DrawNode::drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, cons
     ensureCapacity(vertex_count);
 
     Color4B col = Color4B(color);
-    V2F_C4B_T2F a = {Vec2(p1.x, p1.y), col, Tex2F(0.0, 0.0) };
-    V2F_C4B_T2F b = {Vec2(p2.x, p2.y), col, Tex2F(0.0,  0.0) };
-    V2F_C4B_T2F c = {Vec2(p3.x, p3.y), col, Tex2F(0.0,  0.0) };
+    V2F_C4B_T2F a = {p1, col, Tex2F(0.0, 0.0) };
+    V2F_C4B_T2F b = {p2, col, Tex2F(0.0, 0.0) };
+    V2F_C4B_T2F c = {p3, col, Tex2F(0.0, 0.0) };
 
     V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
     V2F_C4B_T2F_Triangle triangle = {a, b, c};
