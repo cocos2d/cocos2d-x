@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # exit this script if any commmand fails
-set -e
+set -x
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
