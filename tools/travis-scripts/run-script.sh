@@ -178,8 +178,8 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     fi
 
 
-    # Exit on error
-    set -e
+    # do not exit on error
+    # set -e 
 
     git add -f --all "$LUA_AUTO_GENERATE_SCRIPT_PATH"
     git add -f --all "$COCOSFILE_PATH"
