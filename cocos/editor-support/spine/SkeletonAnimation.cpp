@@ -88,10 +88,10 @@ SkeletonAnimation* SkeletonAnimation::createWithJsonFile (const std::string& ske
 	spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
 	node->initWithJsonFile(skeletonJsonFile, atlas, scale);
 	node->autorelease();
-    	if(!node->getSkeleton() || !node->getSkeleton()->data)
-    	{
-        	return nullptr;
-    	}
+    if(!node->getSkeleton() || !node->getSkeleton()->data)
+    {
+        CC_SAFE_RELEASE_NULL(node);
+    }
 	return node;
 }
 
