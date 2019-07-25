@@ -469,6 +469,18 @@ Label::~Label()
     CC_SAFE_RELEASE_NULL(_shadowNode);
 }
 
+#if CC_LABEL_DEBUG_DRAW
+void Label::enableDebugDraw(const bool value)
+{
+    Label::_debugDrawEnabled = value;
+}
+
+void Label::setDebugDrawColor(Color4F& color)
+{
+    Label::_debugDrawColor = color;
+}
+#endif
+
 void Label::reset()
 {
     CC_SAFE_RELEASE_NULL(_textSprite);
@@ -1887,18 +1899,6 @@ float Label::getAdditionalKerning() const
 
     return _additionalKerning;
 }
-
-#if CC_LABEL_DEBUG_DRAW
-void Label::enableDebugDraw(const bool value)
-{
-    Label::_debugDrawEnabled = value;
-}
-
-void Label::setDebugDrawColor(Color4F& color)
-{
-    Label::_debugDrawColor = color;
-}
-#endif
 
 void Label::computeStringNumLines()
 {

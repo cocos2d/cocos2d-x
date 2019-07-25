@@ -551,6 +551,15 @@ CC_CONSTRUCTOR_ACCESS :
      */
     Sprite();
     virtual ~Sprite();
+    
+#if CC_SPRITE_DEBUG_DRAW
+    /// @name DebugDraw
+    /// @{
+    static void setDebugDrawLevel(int value);
+    static int getDebugDrawLevel() { return _debugDrawLevel; }
+    static void setDebugDrawColor(const Color4F& color);
+    /// @}
+#endif
 
     /* Initializes an empty sprite with no parameters. */
     virtual bool init() override;
@@ -648,11 +657,7 @@ CC_CONSTRUCTOR_ACCESS :
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
 
-#if CC_SPRITE_DEBUG_DRAW
-    static void setDebugDrawLevel(int value);
-    static int getDebugDrawLevel() { return _debugDrawLevel; }
-    static void setDebugDrawColor(const Color4F& color);
-#endif
+
     
 protected:
 

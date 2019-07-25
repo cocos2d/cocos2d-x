@@ -197,19 +197,6 @@ bool Sprite::initWithFile(const std::string& filename)
     return false;
 }
 
-#if CC_SPRITE_DEBUG_DRAW
-void Sprite::setDebugDrawLevel(int value)
-{
-    Sprite::_debugDrawLevel = value;
-}
-
-void Sprite::setDebugDrawColor(const Color4F& color)
-{
-    Sprite::_debugDrawColor = color;
-}
-#endif
-
-
 bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
     CCASSERT(!filename.empty(), "Invalid filename");
@@ -361,6 +348,18 @@ Sprite::~Sprite()
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
 }
+
+#if CC_SPRITE_DEBUG_DRAW
+void Sprite::setDebugDrawLevel(int value)
+{
+    Sprite::_debugDrawLevel = value;
+}
+
+void Sprite::setDebugDrawColor(const Color4F& color)
+{
+    Sprite::_debugDrawColor = color;
+}
+#endif
 
 /*
  * Texture methods

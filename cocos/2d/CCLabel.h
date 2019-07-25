@@ -585,12 +585,6 @@ public:
     float getAdditionalKerning() const;
 
     FontAtlas* getFontAtlas() { return _fontAtlas; }
-    
-#if CC_LABEL_DEBUG_DRAW
-    static void enableDebugDraw(const bool value);
-    static bool getDebugDrawEnabled() { return _debugDrawEnabled; }
-    static void setDebugDrawColor(Color4F& color);
-#endif
 
     virtual const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
@@ -635,6 +629,15 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua NA
      */
     virtual ~Label();
+    
+#if CC_LABEL_DEBUG_DRAW
+    /// @name DebugDraw
+    /// @{
+    static void enableDebugDraw(const bool value);
+    static bool getDebugDrawEnabled() { return _debugDrawEnabled; }
+    static void setDebugDrawColor(Color4F& color);
+    /// @}
+#endif
 
     bool initWithTTF(const std::string& text, const std::string& fontFilePath, float fontSize,
                      const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
