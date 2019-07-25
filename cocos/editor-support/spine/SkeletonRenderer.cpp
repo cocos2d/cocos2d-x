@@ -128,21 +128,15 @@ void SkeletonRenderer::initWithJsonFile (const std::string& skeletonDataFile, sp
 void SkeletonRenderer::initWithJsonFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
 	_atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
     
-    	if (!_atlas) {
-        	CCLOG("ERROR: reading atlas file: %s", atlasFile.c_str());
-		CCASSERT(_atlas, "Error reading atlas file.");
-    	}
-	
+    CCASSERT(_atlas, "Error reading atlas file.");
+
 	_attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
 
 	spSkeletonJson* json = spSkeletonJson_createWithLoader(_attachmentLoader);
 	json->scale = scale;
 	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
     
-    	if (!skeletonData) {
-        	CCLOG("ERROR reading skeleton data file: %s", skeletonDataFile.c_str());
-		CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
-    	}
+    CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
 	
 	spSkeletonJson_dispose(json);
 
