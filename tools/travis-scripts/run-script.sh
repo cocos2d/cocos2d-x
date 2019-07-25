@@ -188,6 +188,7 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 
     set -x
     echo "Pushing to Robot's repo ..."
+    git fetch --unshallow upstream
     git push -f upstream "$COCOS_BRANCH"
     set +x
 
