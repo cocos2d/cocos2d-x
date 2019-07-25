@@ -188,7 +188,7 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 
     set -x
     echo "Pushing to Robot's repo ..."
-    git push -fq upstream "$COCOS_BRANCH" 2> /dev/null
+    git push -f upstream "$COCOS_BRANCH"
     set +x
 
     echo "Sending Pull Request to base repo ..."
