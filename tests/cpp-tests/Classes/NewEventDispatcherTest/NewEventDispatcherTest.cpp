@@ -489,7 +489,7 @@ void CustomEventOrderTest::onAfterDraw(cocos2d::EventCustom* event)
         {
             _monitorLabel->setString(_testText);
         }
-        CCASSERT(_testText == "OK!", "Result test is OK!");
+        CCASSERT(_testText == "OK!", "Result test PASSED!");
     }
 }
 
