@@ -1284,6 +1284,7 @@
         "docs/doxygen.config", 
         "docs/doxygen_white_book.config", 
         "docs/framework_architecture.jpg", 
+        "docs/framework_architecture_v4.png", 
         "docs/img-cocos.jpg", 
         "download-deps.py", 
         "extensions/CMakeLists.txt", 
@@ -2253,9 +2254,6 @@
         "external/edtaa3func/edtaa3func.cpp", 
         "external/edtaa3func/edtaa3func.h", 
         "external/empty.cpp", 
-        "external/fbx-conv/README.md", 
-        "external/fbx-conv/mac/fbx-conv", 
-        "external/fbx-conv/mac/libfbxsdk.dylib", 
         "external/flatbuffers/Android.mk", 
         "external/flatbuffers/CMakeLists.txt", 
         "external/flatbuffers/flatbuffers.h", 
@@ -2775,7 +2773,9 @@
         "external/linux-specific/fmod/include/fmod_errors.h", 
         "external/linux-specific/fmod/include/fmod_output.h", 
         "external/linux-specific/fmod/prebuilt/64-bit/libfmod.so", 
+        "external/linux-specific/fmod/prebuilt/64-bit/libfmod.so.6", 
         "external/linux-specific/fmod/prebuilt/64-bit/libfmodL.so", 
+        "external/linux-specific/fmod/prebuilt/64-bit/libfmodL.so.6", 
         "external/md5/CMakeLists.txt", 
         "external/md5/md5.c", 
         "external/md5/md5.h", 
@@ -3836,6 +3836,9 @@
         "tools/appveyor-scripts/setup_android.py", 
         "tools/coding-style/include-linter.py", 
         "tools/coding-style/tailing-spaces.py", 
+        "tools/fbx-conv/README.md", 
+        "tools/fbx-conv/mac/fbx-conv", 
+        "tools/fbx-conv/mac/libfbxsdk.dylib", 
         "tools/missing-tools.txt", 
         "tools/particle/convert_YCoordFlipped.py", 
         "tools/performance-analyze/README.md", 
@@ -4225,6 +4228,7 @@
         "tools/tolua/cocos2dx_spine.ini", 
         "tools/tolua/cocos2dx_studio.ini", 
         "tools/tolua/cocos2dx_ui.ini", 
-        "tools/tolua/genbindings.py"
+        "tools/tolua/genbindings.py", 
+        "tools/tolua/userconf.ini"
     ]
 }
