@@ -198,7 +198,7 @@ void NavMeshBaseTestDemo::createAgent(const Vec3 &pos)
         animate->setSpeed(0);
     }
 
-    _agents.push_back(std::make_pair(agent, animate));
+    _agents.emplace_back(agent, animate);
 }
 
 void NavMeshBaseTestDemo::createObstacle(const Vec3 &pos)

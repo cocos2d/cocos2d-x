@@ -163,10 +163,6 @@ LuaMinXmlHttpRequest::~LuaMinXmlHttpRequest()
  */
 void LuaMinXmlHttpRequest::_gotHeader(const std::string& header)
 {
-	// Get Header and Set StatusText
-    // Split String into Tokens
-    char * cstr = new (std::nothrow) char [header.length()+1];
-    
     // check for colon.
     size_t found_header_field = header.find_first_of(':');
     
@@ -190,40 +186,17 @@ void LuaMinXmlHttpRequest::_gotHeader(const std::string& header)
     else
     {
         // Seems like we have the response Code! Parse it and check for it.
-        char * pch;
-        strcpy(cstr, header.c_str());
-        
-        pch = strtok(cstr," ");
-        while (pch != nullptr)
+        std::istringstream in(header);
+        std::string token;
+        while (std::getline(in, token, ' '))
         {
-            std::stringstream ss;
-            std::string val;
-            
-            ss << pch;
-            val = ss.str();
-            size_t found_http = val.find("HTTP");
-            
-            // Check for HTTP Header to set statusText
-            if (found_http != std::string::npos) {
-                
-                std::stringstream mystream;
-                
-                // Get Response Status
-                pch = strtok (NULL, " ");
-                mystream << pch;
-                
-                pch = strtok (NULL, "\n");
-                mystream << " " << pch;
-                
-                _statusText = mystream.str();
-                
+            if (token.find("HTTP") != std::string::npos)
+            {
+                std::getline(in, _statusText);
+                break;
             }
-            
-            pch = strtok (NULL, " ");
         }
     }
-    
-    CC_SAFE_DELETE_ARRAY(cstr);
 }
 
 /**

@@ -215,7 +215,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
         request->setUrl("http://httpbin.org/post");
         request->setRequestType(HttpRequest::Type::POST);
         std::vector<std::string> headers;
-        headers.push_back("Content-Type: application/json; charset=utf-8");
+        headers.emplace_back("Content-Type: application/json; charset=utf-8");
         request->setHeaders(headers);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
         
@@ -295,7 +295,7 @@ void HttpClientTest::onMenuPutTestClicked(Ref *sender, bool isImmediate)
         request->setUrl("http://httpbin.org/put");
         request->setRequestType(HttpRequest::Type::PUT);
         std::vector<std::string> headers;
-        headers.push_back("Content-Type: application/json; charset=utf-8");
+        headers.emplace_back("Content-Type: application/json; charset=utf-8");
         request->setHeaders(headers);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
 

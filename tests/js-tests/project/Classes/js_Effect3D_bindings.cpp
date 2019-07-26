@@ -176,7 +176,7 @@ void EffectSprite3D::addEffect(Effect3DOutline* effect, ssize_t order)
     effect->retain();
     effect->setTarget(this);
 
-    _effects.push_back(std::make_tuple(order,effect,CustomCommand()));
+    _effects.emplace_back(order,effect,CustomCommand());
 
     std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
 }

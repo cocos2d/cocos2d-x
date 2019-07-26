@@ -81,19 +81,19 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (screenSize.height > 320)
     {
         auto resourceSize = Size(960, 640);
-        searchPaths.push_back("hd");
-        searchPaths.push_back("ccs-res/hd");
-        searchPaths.push_back("ccs-res");
-        searchPaths.push_back("Manifests");
+        searchPaths.emplace_back("hd");
+        searchPaths.emplace_back("ccs-res/hd");
+        searchPaths.emplace_back("ccs-res");
+        searchPaths.emplace_back("Manifests");
         director->setContentScaleFactor(resourceSize.height/designSize.height);
 
-        searchPaths.push_back("hd/ActionTimeline");
+        searchPaths.emplace_back("hd/ActionTimeline");
     }
     else
     {
-        searchPaths.push_back("ccs-res");
+        searchPaths.emplace_back("ccs-res");
         
-        searchPaths.push_back("ActionTimeline");
+        searchPaths.emplace_back("ActionTimeline");
     }
     
     fileUtils->setSearchPaths(searchPaths);

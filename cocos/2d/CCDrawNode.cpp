@@ -37,65 +37,9 @@
 
 NS_CC_BEGIN
 
-// Vec2 == CGPoint in 32-bits, but not in 64-bits (OS X)
-// that's why the "v2f" functions are needed
-static Vec2 v2fzero(0.0f,0.0f);
-
-static inline Vec2 v2f(float x, float y)
+static inline Tex2F v2ToTex2F(const Vec2 &v)
 {
-    Vec2 ret(x, y);
-    return ret;
-}
-
-static inline Vec2 v2fadd(const Vec2 &v0, const Vec2 &v1)
-{
-    return v2f(v0.x+v1.x, v0.y+v1.y);
-}
-
-static inline Vec2 v2fsub(const Vec2 &v0, const Vec2 &v1)
-{
-    return v2f(v0.x-v1.x, v0.y-v1.y);
-}
-
-static inline Vec2 v2fmult(const Vec2 &v, float s)
-{
-    return v2f(v.x * s, v.y * s);
-}
-
-static inline Vec2 v2fperp(const Vec2 &p0)
-{
-    return v2f(-p0.y, p0.x);
-}
-
-static inline Vec2 v2fneg(const Vec2 &p0)
-{
-    return v2f(-p0.x, - p0.y);
-}
-
-static inline float v2fdot(const Vec2 &p0, const Vec2 &p1)
-{
-    return  p0.x * p1.x + p0.y * p1.y;
-}
-
-static inline Vec2 v2fnormalize(const Vec2 &p)
-{
-    Vec2 r(p.x, p.y);
-    r.normalize();
-    return v2f(r.x, r.y);
-}
-
-static inline Vec2 __v2f(const Vec2 &v)
-{
-//#ifdef __LP64__
-    return v2f(v.x, v.y);
-// #else
-//     return * ((Vec2*) &v);
-// #endif
-}
-
-static inline Tex2F __t(const Vec2 &v)
-{
-    return *(Tex2F*)&v;
+    return {v.x, v.y};
 }
 
 static const float EPSILON=0.0000000001f;
@@ -178,9 +122,9 @@ V2F_C4B_T2F_Triangle * Triangulate::processTriangles(const Vec2 *verts,V2F_C4B_T
         for (int i = 0; i < n-2; i++)
         {
             V2F_C4B_T2F_Triangle tmp = {
-                    {verts[0], Color4B(fillColor), __t(v2fzero)},
-                    {verts[i+1], Color4B(fillColor), __t(v2fzero)},
-                    {verts[i+2], Color4B(fillColor), __t(v2fzero)},
+                    {verts[0], Color4B(fillColor), v2ToTex2F(Vec2::ZERO)},
+                    {verts[i+1], Color4B(fillColor), v2ToTex2F(Vec2::ZERO)},
+                    {verts[i+2], Color4B(fillColor), v2ToTex2F(Vec2::ZERO)},
             };
 
             *triangles++ = tmp;
@@ -211,9 +155,9 @@ V2F_C4B_T2F_Triangle * Triangulate::processTriangles(const Vec2 *verts,V2F_C4B_T
             a = V[u]; b = V[v]; c = V[w];
 
             V2F_C4B_T2F_Triangle tmp = {
-                {verts[a], Color4B(fillColor), __t(v2fzero)},
-                {verts[b], Color4B(fillColor), __t(v2fzero)},
-                {verts[c], Color4B(fillColor), __t(v2fzero)},
+                {verts[a], Color4B(fillColor), v2ToTex2F(Vec2::ZERO)},
+                {verts[b], Color4B(fillColor), v2ToTex2F(Vec2::ZERO)},
+                {verts[c], Color4B(fillColor), v2ToTex2F(Vec2::ZERO)},
             };
             *triangles++ = tmp;
             m++;
@@ -568,9 +512,8 @@ void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Colo
 {
     ensureCapacityGLPoint(1);
 
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
-    V2F_C4B_T2F a = {position, Color4B(color), Tex2F(pointSize,0)};
-    *point = a;
+    V2F_C4B_T2F *point = _bufferGLPoint + _bufferCountGLPoint;
+    *point = {position, Color4B(color), Tex2F(pointSize,0)};
 
     _bufferCountGLPoint += 1;
     _dirtyGLPoint = true;
@@ -585,12 +528,11 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
 {
     ensureCapacityGLPoint(numberOfPoints);
 
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
+    V2F_C4B_T2F *point = _bufferGLPoint + _bufferCountGLPoint;
 
     for(unsigned int i=0; i < numberOfPoints; i++,point++)
     {
-        V2F_C4B_T2F a = {position[i], Color4B(color), Tex2F(pointSize,0)};
-        *point = a;
+        *point = {position[i], Color4B(color), Tex2F(pointSize,0)};
     }
 
     _bufferCountGLPoint += numberOfPoints;
@@ -601,13 +543,10 @@ void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color
 {
     ensureCapacityGLLine(2);
 
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLLine + _bufferCountGLLine);
+    V2F_C4B_T2F *point = _bufferGLLine + _bufferCountGLLine;
 
-    V2F_C4B_T2F a = {origin, Color4B(color), Tex2F(0.0, 0.0)};
-    V2F_C4B_T2F b = {destination, Color4B(color), Tex2F(0.0, 0.0)};
-
-    *point = a;
-    *(point+1) = b;
+    *point = {origin, Color4B(color), Tex2F(0.0, 0.0)};
+    *(point + 1) = {destination, Color4B(color), Tex2F(0.0, 0.0)};
 
     _bufferCountGLLine += 2;
     _dirtyGLLine = true;
@@ -615,10 +554,10 @@ void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color
 
 void DrawNode::drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
 {
-    drawLine(Vec2(origin.x, origin.y), Vec2(destination.x, origin.y), color);
-    drawLine(Vec2(destination.x, origin.y), Vec2(destination.x, destination.y), color);
-    drawLine(Vec2(destination.x, destination.y), Vec2(origin.x, destination.y), color);
-    drawLine(Vec2(origin.x, destination.y), Vec2(origin.x, origin.y), color);
+    drawLine(origin, Vec2(destination.x, origin.y), color);
+    drawLine(Vec2(destination.x, origin.y), destination, color);
+    drawLine(destination, Vec2(origin.x, destination.y), color);
+    drawLine(Vec2(origin.x, destination.y), origin, color);
 }
 
 void DrawNode::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color)
@@ -635,24 +574,20 @@ void DrawNode::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool clos
         ensureCapacityGLLine(vertex_count);
     }
 
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLLine + _bufferCountGLLine);
+    V2F_C4B_T2F *point = _bufferGLLine + _bufferCountGLLine;
 
     unsigned int i = 0;
-    for(; i<numberOfPoints-1; i++)
+    for(; i < numberOfPoints - 1; i++)
     {
-        V2F_C4B_T2F a = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
-        V2F_C4B_T2F b = {poli[i+1], Color4B(color), Tex2F(0.0, 0.0)};
+        *point = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
+        *(point + 1) = {poli[i + 1], Color4B(color), Tex2F(0.0, 0.0)};
 
-        *point = a;
-        *(point+1) = b;
         point += 2;
     }
     if(closePolygon)
     {
-        V2F_C4B_T2F a = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
-        V2F_C4B_T2F b = {poli[0], Color4B(color), Tex2F(0.0, 0.0)};
-        *point = a;
-        *(point+1) = b;
+        *point = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
+        *(point + 1) = {poli[0], Color4B(color), Tex2F(0.0, 0.0)};
     }
 
     _bufferCountGLLine += vertex_count;
@@ -800,10 +735,10 @@ void DrawNode::drawDot(const Vec2 &pos, float radius, const Color4F &color)
 
 void DrawNode::drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color)
 {
-    drawLine(Vec2(p1.x, p1.y), Vec2(p2.x, p2.y), color);
-    drawLine(Vec2(p2.x, p2.y), Vec2(p3.x, p3.y), color);
-    drawLine(Vec2(p3.x, p3.y), Vec2(p4.x, p4.y), color);
-    drawLine(Vec2(p4.x, p4.y), Vec2(p1.x, p1.y), color);
+    drawLine(p1, p2, color);
+    drawLine(p2, p3, color);
+    drawLine(p3, p4, color);
+    drawLine(p4, p1, color);
 }
 
 void DrawNode::drawSegment(const Vec2 &from, const Vec2 &to, float radius, const Color4F &color)
@@ -811,66 +746,66 @@ void DrawNode::drawSegment(const Vec2 &from, const Vec2 &to, float radius, const
     unsigned int vertex_count = 6*3;
     ensureCapacity(vertex_count);
 
-    Vec2 a = __v2f(from);
-    Vec2 b = __v2f(to);
+    Vec2 a = from;
+    Vec2 b = to;
 
 
-    Vec2 n = v2fnormalize(v2fperp(v2fsub(b, a)));
-    Vec2 t = v2fperp(n);
+    Vec2 n = ((b - a).getPerp()).getNormalized();
+    Vec2 t = n.getPerp();
 
-    Vec2 nw = v2fmult(n, radius);
-    Vec2 tw = v2fmult(t, radius);
-    Vec2 v0 = v2fsub(b, v2fadd(nw, tw));
-    Vec2 v1 = v2fadd(b, v2fsub(nw, tw));
-    Vec2 v2 = v2fsub(b, nw);
-    Vec2 v3 = v2fadd(b, nw);
-    Vec2 v4 = v2fsub(a, nw);
-    Vec2 v5 = v2fadd(a, nw);
-    Vec2 v6 = v2fsub(a, v2fsub(nw, tw));
-    Vec2 v7 = v2fadd(a, v2fadd(nw, tw));
+    Vec2 nw = n * radius;
+    Vec2 tw = t * radius;
+    Vec2 v0 = b - (nw + tw);
+    Vec2 v1 = b + (nw - tw);
+    Vec2 v2 = b - nw;
+    Vec2 v3 = b + nw;
+    Vec2 v4 = a - nw;
+    Vec2 v5 = a + nw;
+    Vec2 v6 = a - (nw - tw);
+    Vec2 v7 = a + (nw + tw);
 
 
     V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
 
     V2F_C4B_T2F_Triangle triangles0 = {
-        {v0, Color4B(color), __t(v2fneg(v2fadd(n, t)))},
-        {v1, Color4B(color), __t(v2fsub(n, t))},
-        {v2, Color4B(color), __t(v2fneg(n))},
+        {v0, Color4B(color), v2ToTex2F(-(n + t))},
+        {v1, Color4B(color), v2ToTex2F(n - t)},
+        {v2, Color4B(color), v2ToTex2F(-n)},
     };
     triangles[0] = triangles0;
 
     V2F_C4B_T2F_Triangle triangles1 = {
-        {v3, Color4B(color), __t(n)},
-        {v1, Color4B(color), __t(v2fsub(n, t))},
-        {v2, Color4B(color), __t(v2fneg(n))},
+        {v3, Color4B(color), v2ToTex2F(n)},
+        {v1, Color4B(color), v2ToTex2F(n - t)},
+        {v2, Color4B(color), v2ToTex2F(-n)},
     };
     triangles[1] = triangles1;
 
     V2F_C4B_T2F_Triangle triangles2 = {
-        {v3, Color4B(color), __t(n)},
-        {v4, Color4B(color), __t(v2fneg(n))},
-        {v2, Color4B(color), __t(v2fneg(n))},
+        {v3, Color4B(color), v2ToTex2F(n)},
+        {v4, Color4B(color), v2ToTex2F(-n)},
+        {v2, Color4B(color), v2ToTex2F(-n)},
     };
     triangles[2] = triangles2;
 
     V2F_C4B_T2F_Triangle triangles3 = {
-        {v3, Color4B(color), __t(n)},
-        {v4, Color4B(color), __t(v2fneg(n))},
-        {v5, Color4B(color), __t(n) },
+        {v3, Color4B(color), v2ToTex2F(n)},
+        {v4, Color4B(color), v2ToTex2F(-n)},
+        {v5, Color4B(color), v2ToTex2F(n) },
     };
     triangles[3] = triangles3;
 
     V2F_C4B_T2F_Triangle triangles4 = {
-        {v6, Color4B(color), __t(v2fsub(t, n))},
-        {v4, Color4B(color), __t(v2fneg(n)) },
-        {v5, Color4B(color), __t(n)},
+        {v6, Color4B(color), v2ToTex2F(t - n)},
+        {v4, Color4B(color), v2ToTex2F(-n) },
+        {v5, Color4B(color), v2ToTex2F(n)},
     };
     triangles[4] = triangles4;
 
     V2F_C4B_T2F_Triangle triangles5 = {
-        {v6, Color4B(color), __t(v2fsub(t, n))},
-        {v7, Color4B(color), __t(v2fadd(n, t))},
-        {v5, Color4B(color), __t(n)},
+        {v6, Color4B(color), v2ToTex2F(t - n)},
+        {v7, Color4B(color), v2ToTex2F(t + n)},
+        {v5, Color4B(color), v2ToTex2F(n)},
     };
     triangles[5] = triangles5;
 
@@ -897,50 +832,48 @@ void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColo
     if(outline)
     {
         struct ExtrudeVerts {Vec2 offset, n;};
-        struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
-        memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
+        ExtrudeVerts* extrude = (ExtrudeVerts *)malloc(sizeof(ExtrudeVerts) * count);
         
         for (int i = 0; i < count; i++)
         {
-            Vec2 v0 = __v2f(verts[(i-1+count)%count]);
-            Vec2 v1 = __v2f(verts[i]);
-            Vec2 v2 = __v2f(verts[(i+1)%count]);
+            Vec2 v0 = verts[(i-1+count)%count];
+            Vec2 v1 = verts[i];
+            Vec2 v2 = verts[(i+1)%count];
             
-            Vec2 n1 = v2fnormalize(v2fperp(v2fsub(v1, v0)));
-            Vec2 n2 = v2fnormalize(v2fperp(v2fsub(v2, v1)));
+            Vec2 n1 = ((v1 - v0).getPerp()).getNormalized();
+            Vec2 n2 = ((v2 - v1).getPerp()).getNormalized();
             
-            Vec2 offset = v2fmult(v2fadd(n1, n2), 1.0f / (v2fdot(n1, n2) + 1.0f));
-            struct ExtrudeVerts tmp = {offset, n2};
-            extrude[i] = tmp;
+            Vec2 offset = (n1 + n2) * (1.0f / (Vec2::dot(n1, n2) + 1.0f));
+            extrude[i] = {offset, n2};
         }
         
         for(int i = 0; i < count; i++)
         {
             int j = (i+1)%count;
-            Vec2 v0 = __v2f(verts[i]);
-            Vec2 v1 = __v2f(verts[j]);
+            Vec2 v0 = verts[i];
+            Vec2 v1 = verts[j];
             
             Vec2 n0 = extrude[i].n;
             
             Vec2 offset0 = extrude[i].offset;
             Vec2 offset1 = extrude[j].offset;
             
-            Vec2 inner0 = v2fsub(v0, v2fmult(offset0, borderWidth));
-            Vec2 inner1 = v2fsub(v1, v2fmult(offset1, borderWidth));
-            Vec2 outer0 = v2fadd(v0, v2fmult(offset0, borderWidth));
-            Vec2 outer1 = v2fadd(v1, v2fmult(offset1, borderWidth));
+            Vec2 inner0 = v0 - offset0 * borderWidth;
+            Vec2 inner1 = v1 - offset1 * borderWidth;
+            Vec2 outer0 = v0 + offset0 * borderWidth;
+            Vec2 outer1 = v1 + offset1 * borderWidth;
             
             V2F_C4B_T2F_Triangle tmp1 = {
-                {inner0, Color4B(borderColor), __t(v2fneg(n0))},
-                {inner1, Color4B(borderColor), __t(v2fneg(n0))},
-                {outer1, Color4B(borderColor), __t(n0)}
+                {inner0, Color4B(borderColor), v2ToTex2F(-n0)},
+                {inner1, Color4B(borderColor), v2ToTex2F(-n0)},
+                {outer1, Color4B(borderColor), v2ToTex2F(n0)}
             };
             *cursor++ = tmp1;
             
             V2F_C4B_T2F_Triangle tmp2 = {
-                {inner0, Color4B(borderColor), __t(v2fneg(n0))},
-                {outer0, Color4B(borderColor), __t(n0)},
-                {outer1, Color4B(borderColor), __t(n0)}
+                {inner0, Color4B(borderColor), v2ToTex2F(-n0)},
+                {outer0, Color4B(borderColor), v2ToTex2F(n0)},
+                {outer1, Color4B(borderColor), v2ToTex2F(n0)}
             };
             *cursor++ = tmp2;
         }
@@ -962,12 +895,12 @@ void DrawNode::drawSolidRect(const Vec2 &origin, const Vec2 &destination, const 
         Vec2(origin.x, destination.y)
     };
     
-    drawSolidPoly(vertices, 4, color );
+    drawSolidPoly(vertices, 4, color);
 }
 
 void DrawNode::drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, const Color4F &color)
 {
-    drawPolygon(poli, numberOfPoints, color, 0.0, Color4F(0.0, 0.0, 0.0, 0.0));
+    drawPolygon(poli, numberOfPoints, color, 0.0, Color4F());
 }
 
 void DrawNode::drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY, const Color4F &color)
@@ -1004,9 +937,9 @@ void DrawNode::drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, cons
     ensureCapacity(vertex_count);
 
     Color4B col = Color4B(color);
-    V2F_C4B_T2F a = {Vec2(p1.x, p1.y), col, Tex2F(0.0, 0.0) };
-    V2F_C4B_T2F b = {Vec2(p2.x, p2.y), col, Tex2F(0.0,  0.0) };
-    V2F_C4B_T2F c = {Vec2(p3.x, p3.y), col, Tex2F(0.0,  0.0) };
+    V2F_C4B_T2F a = {p1, col, Tex2F(0.0, 0.0) };
+    V2F_C4B_T2F b = {p2, col, Tex2F(0.0, 0.0) };
+    V2F_C4B_T2F c = {p3, col, Tex2F(0.0, 0.0) };
 
     V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
     V2F_C4B_T2F_Triangle triangle = {a, b, c};

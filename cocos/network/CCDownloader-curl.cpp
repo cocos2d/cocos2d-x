@@ -261,12 +261,12 @@ namespace cocos2d { namespace network {
             if (DownloadTask::ERROR_NO_ERROR == coTask->_errCode)
             {
                 lock_guard<mutex> lock(_requestMutex);
-                _requestQueue.push_back(make_pair(task, coTask));
+                _requestQueue.emplace_back(task, coTask);
             }
             else
             {
                 lock_guard<mutex> lock(_finishedMutex);
-                _finishedQueue.push_back(make_pair(task, coTask));
+                _finishedQueue.emplace_back(task, coTask);
             }
         }
 
