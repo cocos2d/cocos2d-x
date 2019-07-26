@@ -1048,7 +1048,7 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         {
             if (PNG_PREMULTIPLIED_ALPHA_ENABLED)
             {
-                premultipliedAlpha();
+                premultiplyAlpha();
             }
             else
             {
@@ -2341,7 +2341,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
 #endif // CC_USE_JPEG
 }
 
-void Image::premultipliedAlpha()
+void Image::premultiplyAlpha()
 {
 #if CC_ENABLE_PREMULTIPLIED_ALPHA == 0
         _hasPremultipliedAlpha = false;
@@ -2360,6 +2360,29 @@ void Image::premultipliedAlpha()
 #endif
 }
 
+static inline unsigned char clamp(int x) {
+    return (unsigned char)(x >= 0 ? (x < 255 ? x : 255) : 0);
+}
+
+void Image::reversePremultipliedAlpha()
+{
+    CCASSERT(_pixelFormat == backend::PixelFormat::RGBA8888, "The pixel format should be RGBA8888!");
+
+    unsigned int* fourBytes = (unsigned int*)_data;
+    for (int i = 0; i < _width * _height; i++)
+    {
+        unsigned char* p = _data + i * 4;
+        if (p[3] > 0)
+        {
+            fourBytes[i] = clamp(int(std::ceil((p[0] * 255.0f) / p[3]))) |
+                clamp(int(std::ceil((p[1] * 255.0f) / p[3]))) << 8 |
+                clamp(int(std::ceil((p[2] * 255.0f) / p[3]))) << 16 |
+                p[3] << 24;
+        }
+    }
+
+    _hasPremultipliedAlpha = false;
+}
 
 void Image::setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
