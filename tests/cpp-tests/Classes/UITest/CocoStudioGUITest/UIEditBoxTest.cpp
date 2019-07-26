@@ -416,7 +416,7 @@ bool UIEditBoxTestRestrictions::init()
         _editbox->setText("Only alphanumeric test");
         _editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
         _editbox->setVisible(true);
-        _editbox->setInputRestriction( (int) EditBox::InputRestrictionFlag::ALNUM );
+        _editbox->setInputRestriction( static_cast<int> (ui::EditBox::InputRestrictionFlag::ALNUM ));
         addChild(_editbox);
         
         _editbox2 = ui::EditBox::create(editBoxSize + Size(0,40), ui::Scale9Sprite::create(pNormalSprite));
