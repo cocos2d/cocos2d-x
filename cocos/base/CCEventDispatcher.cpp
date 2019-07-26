@@ -952,7 +952,7 @@ void EventDispatcher::dispatchEvent(Event* event)
             }
         }
         
-        if (waitingListeners.size() > 0)
+        if (!waitingListeners.empty())
         {
             auto onEvent = [&event](EventListener* listener) -> bool{
                 event->setCurrentTarget(listener->getAssociatedNode());
