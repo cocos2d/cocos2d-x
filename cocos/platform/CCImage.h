@@ -155,6 +155,8 @@ public:
      @param    isToRGB        whether the image is saved as RGB format.
      */
     bool saveToFile(const std::string &filename, bool isToRGB = true);
+    void premultiplyAlpha();
+    void reversePremultipliedAlpha();   
 
 protected:
     bool initWithJpgData(const unsigned char *  data, ssize_t dataLen);
@@ -173,7 +175,7 @@ protected:
     bool saveImageToPNG(const std::string& filePath, bool isToRGB = true);
     bool saveImageToJPG(const std::string& filePath);
     
-    void premultipliedAlpha();
+
     
 protected:
     /**
