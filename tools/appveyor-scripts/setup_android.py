@@ -84,8 +84,6 @@ def install_android_sdk_tools():
 
 @retry(Exception, tries=5, delay=1, backoff=1)
 def install_android_sdk():
-    # https://stackoverflow.com/questions/46402772/failed-to-install-android-sdk-java-lang-noclassdeffounderror-javax-xml-bind-a
-    export JAVA_OPTS="-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee"
     switches = " --verbose --sdk_root=" + ANDROID_SDK + " "
     cmd1 = SDK_MANAGER + switches
     packages = [
