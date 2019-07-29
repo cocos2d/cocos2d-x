@@ -9,7 +9,7 @@ HOST_NAME=""
 CURL="curl --retry 999 --retry-max-time 0"
 
 # https://stackoverflow.com/questions/46402772/failed-to-install-android-sdk-java-lang-noclassdeffounderror-javax-xml-bind-a
-export JAVA_OPTS = "-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee"
+export JAVA_OPTS="-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee"
 
 function install_android_ndk()
 {
