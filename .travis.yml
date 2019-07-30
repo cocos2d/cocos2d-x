@@ -62,9 +62,6 @@ script:
 before_install:
 - tools/travis-scripts/before-install.sh
 
-jdk:
-  - openjdk8
-
 cache:
   bundler: true
 
