@@ -86,6 +86,7 @@ ShaderModuleMTL::ShaderModuleMTL(id<MTLDevice> mtlDevice, ShaderStage stage, con
     
     glslopt_shader_delete(glslShader);
     glslopt_cleanup(ctx);
+    [library release];
 }
 
 ShaderModuleMTL::~ShaderModuleMTL()
