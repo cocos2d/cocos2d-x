@@ -113,7 +113,6 @@ def export_environment(ndk_only):
         myfile.write("$env:NDK_ROOT=\"" + ANDROID_NDK + "\"\n")
 
 def main(ndk_only):
-    using_java_8()
     if not ndk_only:
         install_android_sdk_tools()
         install_android_sdk()
