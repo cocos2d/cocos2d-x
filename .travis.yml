@@ -28,11 +28,13 @@ matrix:
       env: BUILD_TARGET=android_cmake
       language: android
       sudo: required
+      dist: xenial
     # android_lua cmake
     - os: linux
       env: BUILD_TARGET=android_lua_cmake
       language: android
       sudo: required
+      dist: xenial
       addons:
         apt:
           sources:
@@ -48,6 +50,7 @@ matrix:
       env: BUILD_TARGET=android_cocos_new_test
       language: android
       sudo: required
+      dist: xenial
     - os: linux
       dist: xenial
       env: BUILD_TARGET=linux_cocos_new_test
