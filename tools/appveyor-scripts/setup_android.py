@@ -113,13 +113,10 @@ def export_environment(ndk_only):
         myfile.write("$env:NDK_ROOT=\"" + ANDROID_NDK + "\"\n")
 
 def using_java_8():
-    cmd = """
-          sudo apt-get -y remove default-jdk default-jre default-jdk-headless default-jre-headless ca-certificates-java openjdk-8-jdk openjdk-8-jdk-headless openjdk-8-jre openjdk-8-jre-headless
-          sudo rm -rf /usr/local/lib/jvm
-          sudo apt-get -y update && sudo apt-get -y install openjdk-8-jdk java-common
-          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-          """
-    run_with_yes(cmd)
+    run_with_yes("sudo apt-get -y remove default-jdk default-jre default-jdk-headless default-jre-headless ca-certificates-java openjdk-8-jdk openjdk-8-jdk-headless openjdk-8-jre openjdk-8-jre-headless")
+    run_with_yes("sudo rm -rf /usr/local/lib/jvm")
+    run_with_yes("apt-get -y update && sudo apt-get -y install openjdk-8-jdk java-common")
+    run_with_yes("export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64")
 
 def main(ndk_only):
     using_java_8()
