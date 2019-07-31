@@ -150,7 +150,7 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
         uniform.type = static_cast<unsigned int>(parType);
         uniform.isMatrix = (parMatSize > 1) ? true : false;
         _uniformInfos[parName] = uniform;
-        _uniformInfos1[location] = uniform;
+        _activeUniformInfos[location] = uniform;
         _maxLocation = _maxLocation < location ? (location + 1) : _maxLocation;
     }
 }

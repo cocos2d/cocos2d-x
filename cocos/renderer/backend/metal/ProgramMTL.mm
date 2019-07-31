@@ -135,9 +135,9 @@ const UniformInfo& ProgramMTL::getActiveUniformInfo(ShaderStage stage, int locat
 {
     switch (stage) {
         case ShaderStage::VERTEX:
-            return _vertexShader->getUniforms(location);
+            return _vertexShader->getActiveUniform(location);
         case ShaderStage::FRAGMENT:
-            return _fragmentShader->getUniforms(location);
+            return _fragmentShader->getActiveUniform(location);
         default:
             CCASSERT(false, "Invalid shader stage.");
             break;
