@@ -280,6 +280,9 @@ void ProgramGL::computeUniformInfos()
 #define MAX_UNIFORM_NAME_LENGTH 256
     UniformInfo uniform;
     GLint length = 0;
+    _totalBufferSize = 0;
+    _maxLocation = -1;
+    _activeUniformInfos.clear();
     GLchar* uniformName = (GLchar*)malloc(MAX_UNIFORM_NAME_LENGTH + 1);
     for (int i = 0; i < numOfUniforms; ++i)
     {

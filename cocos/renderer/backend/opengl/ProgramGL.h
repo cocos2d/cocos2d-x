@@ -137,8 +137,26 @@ public:
      * @return Active vertex attributes. key is active attribute name, Value is corresponding attribute info.
      */
     virtual const std::unordered_map<std::string, AttributeBindInfo> getActiveAttributes() const override;
+    
+    /**
+     * Clone a buffer storage that will holds all the uniforms.
+     * @param stage Specifies the shader stage.
+     * @return A cloned unifrom buffer storage. 
+     */
     virtual std::vector<char> cloneUniformBuffer(ShaderStage stage) const override;
+    
+    /**
+     * Get a uniformInfo in given location from the specific shader stage.
+     * @param stage Specifies the shader stage. The symbolic constant can be either VERTEX or FRAGMENT.
+     * @param location Specifies the uniform locaion.
+     * @return The uniformInfo.
+     */
     virtual const UniformInfo& getActiveUniformInfo(ShaderStage stage, int location) const;
+
+    /**
+     * Get all uniformInfos.
+     * @return The uniformInfos.
+     */
     virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo() const override ;
 
 private:

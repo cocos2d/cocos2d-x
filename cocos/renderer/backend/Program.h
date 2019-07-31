@@ -108,11 +108,39 @@ public:
      */
     const std::string& getFragmentShader() const { return _fragmentShader; }
     
+    /**
+     * Get engine built-in program type.
+     * @return The built-in program type.
+     */
     ProgramType getProgramType() const { return _programType; }
+
+    /**
+     * Set engin built-in program type.
+     * @param type Specifies the program type.
+     */
     void setProgramType(ProgramType type);
+
+    /**
+     * Clone a buffer storage that will holds all the uniforms.
+     * @param stage Specifies the shader stage.
+     * @return A cloned unifrom buffer storage. 
+     */
     virtual std::vector<char> cloneUniformBuffer(ShaderStage stage) const = 0;
+
+    /**
+     * Get a uniformInfo in given location from the specific shader stage.
+     * @param stage Specifies the shader stage. The symbolic constant can be either VERTEX or FRAGMENT.
+     * @param location Specifies the uniform locaion.
+     * @return The uniformInfo.
+     */
     virtual const UniformInfo& getActiveUniformInfo(ShaderStage stage, int location) const = 0;
+
+    /**
+     * Get all uniformInfos.
+     * @return The uniformInfos.
+     */
     virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo() const = 0;
+
 protected:
     /**
      * @param vs Specifes the vertex shader source.
@@ -122,12 +150,22 @@ protected:
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     /**
-     * Get the ture location after opengl program reload.
-     * @param location Specifies original location before EGL context lost.
+     * In case of EGL context lost, the engine will reload shaders. Thus location of uniform may changed.
+     * The engine will maintain the relationship between the original uniform location and the current active uniform location.
+     * @param location Specifies original location.
+     * @return Current active uniform location.
+     * @see `int getOriginalLocation(int location) const`
      */
     virtual int getMappedLocation(int location) const = 0;
-    virtual int getOriginalLocation(int location) const = 0;
 
+    /**
+     * In case of EGL context lost, the engine will reload shaders. Thus location of uniform may changed.
+     * The engine will maintain the relationship between the original uniform location and the current active uniform location.
+     * @param location Specifies the current active uniform location.
+     * @return The original uniform location.
+     * @see `int getMappedLocation(int location) const`
+     */
+    virtual int getOriginalLocation(int location) const = 0;
 
     /**
      * Get all uniform locations.
@@ -140,9 +178,7 @@ protected:
     
     std::string _vertexShader; ///< Vertex shader.
     std::string _fragmentShader; ///< Fragment shader.
-    ProgramType _programType;
-    
-    
+    ProgramType _programType; ///< built-in program type.
 };
 
 //end of _backend group

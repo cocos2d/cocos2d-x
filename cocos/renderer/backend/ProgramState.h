@@ -79,11 +79,18 @@ public:
     /**
      * @param vertexShader Specifies the vertex shader.
      * @param fragmentShader Specifies the fragment shader.
+     * @see `ProgramState(ProgramType type)`
      */
     ProgramState(const std::string& vertexShader, const std::string& fragmentShader);
     
-    ///by name
+    /**
+     * Create an program state object more efficient by engine built-in program type.
+     * @param type Specifies the built-in program type.
+     * @see `ProgramState(const std::string& vertexShader, const std::string& fragmentShader)`
+     */
     ProgramState(ProgramType type);
+
+    ///destructor
     virtual ~ProgramState();
     
     /**
@@ -108,9 +115,32 @@ public:
      * Get uniform location in given uniform name.
      * @param uniform Specifies the uniform name.
      * @return Uniform location.
+     * @see `backend::UniformLocation getUniformLocation(backend::Uniform name) const`
      */
     backend::UniformLocation getUniformLocation(const std::string& uniform) const;
+
+    /**
+     * Get uniform location in a more efficient way by the given built-in uniform name.
+     * @param uniform Specifies the engin built-in uniform name.
+     * @return Uniform location.
+     * @see `backend::UniformLocation getUniformLocation(backend::Uniform name) const`
+     */
     backend::UniformLocation getUniformLocation(backend::Uniform name) const;
+
+    /**
+     * Get an attribute location by the actual attribute name.
+     * @param name Specifies the attribute name.
+     * @return Attribute location.
+     * @see `int getAttributeLocation(const std::string& name) const`
+     */
+    inline int getAttributeLocation(const std::string& name) const { return _program->getAttributeLocation(name); }
+
+    /**
+     * Get an attribute location by the engine built-in attribute name.
+     * @param name Specifies the built-in attribute name.
+     * @return Attribute location.
+     * @see `int getAttributeLocation(const std::string& name) const`
+     */
     inline int getAttributeLocation(Attribute name) const { return _program->getAttributeLocation(name); }
 
     /**
@@ -155,7 +185,7 @@ public:
     inline const std::unordered_map<UniformLocation, UniformCallback, UniformLocation>& getCallbackUniforms() const { return _callbackUniforms; }
 
     /**
-     * Get vertex uniform buffer. The buffer store all the vertex uniform's data for metal.
+     * Get vertex uniform buffer. The buffer store all the vertex uniform's data.
      * @return Vertex uniform buffer.
      */
     inline const std::vector<char>& getVertexUniformBuffer() const { return _vertexUniformBuffer; }
@@ -270,6 +300,8 @@ protected:
      * Reset uniform informations when EGL context lost
      */
     void resetUniforms();
+
+    ///Initialize.
     void init();
     
 #ifdef CC_USE_METAL
