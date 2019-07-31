@@ -691,6 +691,10 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
 
         // remove .xxx
         size_t startPos = texturePath.find_last_of('.');
+        if(stratPos == string::npos)
+        {
+            return;
+        }
         texturePath = texturePath.erase(startPos);
 
         // append .png
