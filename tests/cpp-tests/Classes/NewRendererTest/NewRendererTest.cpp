@@ -1076,12 +1076,12 @@ void NonBatchSprites::createSprite()
 
 void NonBatchSprites::update(float dt)
 {
-    _mavDt = 0.4f * _mavDt  + 0.6f * dt;
-    if(_mavDt < DEST_DT_30FPS) {
+    _mavDt = 0.7f * _mavDt  + 0.3f * dt;
+    if(_mavDt <= DEST_DT_30FPS) {
         _hit5.cancel();
-        auto t2 = DEST_DT_30FPS - _mavDt;
-        auto delta = (int)(t2 / _mavDt * _spriteIndex * 0.1);
-        delta = std::max(1, delta);
+        auto t2 = DEST_DT_30FPS - dt;
+        auto delta = (int)(t2 / dt * _spriteIndex * 0.2);
+        delta = std::max(3, delta);
         for(int i =0 ;i< delta; i++) {
             createSprite();
         }
