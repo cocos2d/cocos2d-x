@@ -37,10 +37,12 @@
 CC_BACKEND_BEGIN
 
 class ShaderModule;
+
 /**
  * @addtogroup _backend
  * @{
  */
+
 
 /**
  * A program.
@@ -49,23 +51,32 @@ class Program : public Ref
 {
 public:
     /**
-     * Get vertex uniform infomation.
-     * @return Vertex uniform information. Key is uniform name, Value is corresponding uniform info.
-     */
-    virtual const std::unordered_map<std::string, UniformInfo>& getVertexUniformInfos() const = 0;
-
-    /**
-     * Get fragment uniform information.
-     * @return Fragment uniform information. Key is uniform name, Value is corresponding uniform info.
-     */
-    virtual const std::unordered_map<std::string, UniformInfo>& getFragmentUniformInfos() const = 0;
-    
-    /**
      * Get uniform location by name.
      * @param uniform Specifies the uniform name.
      * @return The uniform location.
      */
     virtual UniformLocation getUniformLocation(const std::string& uniform) const = 0;
+
+    /**
+     * Get uniform location by engine built-in uniform enum name.
+     * @param name Specifies the engine built-in uniform enum name.
+     * @return The uniform location.
+     */
+    virtual UniformLocation getUniformLocation(backend::Uniform name) const = 0;
+
+    /**
+     * Get attribute location by attribute name.
+     * @param name Specifies the attribute name.
+     * @return The attribute location.
+     */
+    virtual int getAttributeLocation(const std::string& name) const =  0;
+
+    /**
+     * Get attribute location by engine built-in attribute enum name.
+     * @param name Specifies the engine built-in attribute enum name.
+     * @return The attribute location.
+     */
+    virtual int getAttributeLocation(backend::Attribute name) const =  0;
     
     /**
      * Get maximum vertex location.
@@ -97,6 +108,11 @@ public:
      */
     const std::string& getFragmentShader() const { return _fragmentShader; }
     
+    ProgramType getProgramType() const { return _programType; }
+    void setProgramType(ProgramType type);
+    virtual std::vector<char> cloneUniformBuffer(ShaderStage stage) const = 0;
+    virtual const UniformInfo& getActiveUniformInfo(ShaderStage stage, int location) const = 0;
+    virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo() const = 0;
 protected:
     /**
      * @param vs Specifes the vertex shader source.
@@ -110,18 +126,23 @@ protected:
      * @param location Specifies original location before EGL context lost.
      */
     virtual int getMappedLocation(int location) const = 0;
+    virtual int getOriginalLocation(int location) const = 0;
+
 
     /**
      * Get all uniform locations.
      * @return All uniform locations.
      */
-    virtual const std::unordered_map<std::string, UniformLocation> getAllUniformsLocation() const = 0;
+    virtual const std::unordered_map<std::string, int> getAllUniformsLocation() const = 0;
     friend class ProgramState;
     friend class ProgramCache;
 #endif
     
     std::string _vertexShader; ///< Vertex shader.
     std::string _fragmentShader; ///< Fragment shader.
+    ProgramType _programType;
+    
+    
 };
 
 //end of _backend group

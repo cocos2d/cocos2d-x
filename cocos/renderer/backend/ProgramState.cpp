@@ -85,47 +85,6 @@ namespace {
 //static field
 std::vector<ProgramState::AutoBindingResolver*> ProgramState::_customAutoBindingResolvers;
 
-UniformBuffer::UniformBuffer(const backend::UniformInfo &_uniformInfo)
-: uniformInfo(_uniformInfo)
-{
-    if(uniformInfo.bufferSize > 0)
-    {
-        data.resize(uniformInfo.bufferSize);
-        std::fill(data.begin(), data.end(), 0);
-    }
-}
-
-UniformBuffer::~UniformBuffer()
-{
-}
-
-UniformBuffer::UniformBuffer(const UniformBuffer &other):
-    uniformInfo(other.uniformInfo), data(other.data)
-{
-}
-
-UniformBuffer& UniformBuffer::operator=(const UniformBuffer& rhs)
-{
-    if (this != &rhs)
-    {
-        uniformInfo = rhs.uniformInfo;
-        data = rhs.data;
-    }
-
-    return *this;
-}
-
-UniformBuffer& UniformBuffer::operator=(UniformBuffer&& rhs)
-{
-    if (this != &rhs)
-    {
-        uniformInfo = rhs.uniformInfo;
-        data = std::move(rhs.data);
-    }
-
-    return *this;
-}
-
 TextureInfo::TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<backend::TextureBackend*> _textures)
 : slot(_slots)
 , textures(_textures)
@@ -196,26 +155,29 @@ TextureInfo& TextureInfo::operator=(const TextureInfo& rhs)
     return *this;
 }
 
+ProgramState::ProgramState(ProgramType type)
+{
+    _program = backend::ProgramCache::getInstance()->newProgramByProgramType(type);
+    CCASSERT(_program, "Not built-in program type, please use ProgramState(const std::string& vertexShader, const std::string& fragmentShader) instead.");
+    CC_SAFE_RETAIN(_program);
+
+    init();
+}
+
 ProgramState::ProgramState(const std::string& vertexShader, const std::string& fragmentShader)
 {
     _program = backend::ProgramCache::getInstance()->newProgram(vertexShader, fragmentShader);
     CC_SAFE_RETAIN(_program);
-    
-    auto maxVertexLocaiton = _program->getMaxVertexLocation();
-    auto maxFragmentLocaiton = _program->getMaxFragmentLocation();
-    
-    if(maxVertexLocaiton > 0)
-    {
-        assert(maxVertexLocaiton);
-        _vertexUniformInfos.resize(maxVertexLocaiton);
-        createVertexUniformBuffer();
-    }
-    
-    if(maxFragmentLocaiton > 0)
-    {
-        _fragmentUniformInfos.resize(maxFragmentLocaiton);
-        createFragmentUniformBuffer();
-    }
+
+    init();
+}
+
+void ProgramState::init()
+{
+    _vertexUniformBuffer = _program->cloneUniformBuffer(ShaderStage::VERTEX);
+#ifdef CC_USE_METAL
+    _fragmentUniformBuffer = _program->cloneUniformBuffer(ShaderStage::FRAGMENT);
+#endif
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
@@ -231,25 +193,16 @@ void ProgramState::resetUniforms()
     if(_program == nullptr)
         return;
 
-    const auto& uniforms = _program->getAllUniformsLocation();
-    const auto& uniformInfos = _program->getVertexUniformInfos();
-    for(const auto& uniform : uniforms)
+    const auto& uniformLocation = _program->getAllUniformsLocation();
+    for(const auto& uniform : uniformLocation)
     {
-        auto location = uniform.second.location;
+        auto location = uniform.second;
         auto mappedLocation = _program->getMappedLocation(location);
-        bool isTextureLocation = uniformInfos.at(uniform.first).bufferSize == 0;
 
-        if(isTextureLocation)
+        //check if current location had been set before
+        if(_vertexTextureInfos.find(location) != _vertexTextureInfos.end())
         {
-            //check if current location had been set before
-            if(_vertexTextureInfos.find(location) != _vertexTextureInfos.end())
-            {
-                _vertexTextureInfos[location].location = mappedLocation;
-            }
-        }
-        else
-        {
-            _vertexUniformInfos[location].uniformInfo.location = mappedLocation;
+            _vertexTextureInfos[location].location = mappedLocation;
         }
     }
 #endif
@@ -263,8 +216,6 @@ ProgramState::~ProgramState()
 {
     CC_SAFE_RELEASE_NULL(_program);
     
-    _vertexUniformInfos.clear();
-    _fragmentUniformInfos.clear();
     _vertexTextureInfos.clear();
     _fragmentTextureInfos.clear();
 
@@ -277,56 +228,20 @@ ProgramState *ProgramState::clone() const
 {
     ProgramState *cp = new ProgramState();
     cp->_program = _program;
-    cp->_vertexUniformInfos = _vertexUniformInfos;
-    cp->_fragmentUniformInfos = _fragmentUniformInfos;
     cp->_vertexTextureInfos = _vertexTextureInfos;
     cp->_fragmentTextureInfos = _fragmentTextureInfos;
     cp->_vertexUniformBuffer = _vertexUniformBuffer;
+#ifdef CC_USE_METAL
     cp->_fragmentUniformBuffer = _fragmentUniformBuffer;
+#endif
     CC_SAFE_RETAIN(cp->_program);
 
     return cp;
 }
 
-
-void ProgramState::createVertexUniformBuffer()
+backend::UniformLocation ProgramState::getUniformLocation(backend::Uniform name) const
 {
-    uint32_t totalUniformsSize = 0;
-    const auto& vertexUniformInfos = _program->getVertexUniformInfos();
-    for(const auto& uniformInfo : vertexUniformInfos)
-    {
-        if(uniformInfo.second.bufferSize)
-        {
-            _vertexUniformInfos[uniformInfo.second.location] = uniformInfo.second; 
-            totalUniformsSize += uniformInfo.second.bufferSize;
-        }
-    }
-#ifdef CC_USE_METAL
-    if (totalUniformsSize > 0)
-    {
-        _vertexUniformBuffer.resize(totalUniformsSize, 0);
-    }
-#endif
-}
-
-void ProgramState::createFragmentUniformBuffer()
-{
-    uint32_t totalUniformsSize = 0;
-    const auto& fragmentUniformInfos = _program->getFragmentUniformInfos();
-    for(const auto& uniformInfo : fragmentUniformInfos)
-    {
-        if(uniformInfo.second.bufferSize)
-        {
-            _fragmentUniformInfos[uniformInfo.second.location] = uniformInfo.second;
-            totalUniformsSize += uniformInfo.second.bufferSize;
-        }
-    }
-#ifdef CC_USE_METAL
-    if (totalUniformsSize > 0)
-    {
-        _fragmentUniformBuffer.resize(totalUniformsSize, 0);
-    }
-#endif
+    return _program->getUniformLocation(name);
 }
 
 backend::UniformLocation ProgramState::getUniformLocation(const std::string& uniform) const
@@ -344,14 +259,14 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
     switch (uniformLocation.shaderStage)
     {
         case backend::ShaderStage::VERTEX:
-            setVertexUniform(uniformLocation.location, data, size);
+            setVertexUniform(uniformLocation.location[0], data, size, uniformLocation.location[1]);
             break;
         case backend::ShaderStage::FRAGMENT:
-            setFragmentUniform(uniformLocation.location, data, size);
+            setFragmentUniform(uniformLocation.location[1], data, size);
             break;
         case backend::ShaderStage::VERTEX_AND_FRAGMENT:
-            setVertexUniform(uniformLocation.location, data, size);
-            setFragmentUniform(uniformLocation.location, data, size);
+            setVertexUniform(uniformLocation.location[0], data, size, uniformLocation.location[1]);
+            setFragmentUniform(uniformLocation.location[1], data, size);
             break;
         default:
             break;
@@ -362,8 +277,8 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
 void ProgramState::convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformBuffer)
 {
     auto basicType = static_cast<glslopt_basic_type>(uniformInfo.type);
-    char* convertedData = new char[uniformInfo.bufferSize];
-    memset(convertedData, 0, uniformInfo.bufferSize);
+    char* convertedData = new char[uniformInfo.size];
+    memset(convertedData, 0, uniformInfo.size);
     int offset = 0;
     switch (basicType)
     {
@@ -422,19 +337,19 @@ void ProgramState::convertAndCopyUniformData(const backend::UniformInfo& uniform
             break;
     }
     
-    memcpy(uniformBuffer.data() + uniformInfo.location, convertedData, uniformInfo.bufferSize);
+    memcpy(uniformBuffer.data() + uniformInfo.location, convertedData, uniformInfo.size);
     CC_SAFE_DELETE_ARRAY(convertedData);
 }
 #endif
 
-void ProgramState::setVertexUniform(int location, const void* data, uint32_t size)
+void ProgramState::setVertexUniform(int location, const void* data, uint32_t size, uint32_t offset)
 {
     if(location < 0)
         return;
     
 //float3 etc in Metal has both sizeof and alignment same as float4, need convert to correct laytout
 #ifdef CC_USE_METAL
-    auto& uniformInfo = _vertexUniformInfos[location].uniformInfo;
+    const auto& uniformInfo = _program->getActiveUniformInfo(ShaderStage::VERTEX, location);
     if(uniformInfo.needConvert)
     {
         convertAndCopyUniformData(uniformInfo, data, size, _vertexUniformBuffer);
@@ -444,7 +359,7 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
         memcpy(_vertexUniformBuffer.data() + location, data, size);
     }
 #else
-    _vertexUniformInfos[location].data.assign((char*)data, (char*)data + size);
+    memcpy(_vertexUniformBuffer.data() + offset, data, size);
 #endif
 }
 
@@ -455,7 +370,7 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
    
 //float3 etc in Metal has both sizeof and alignment same as float4, need convert to correct laytout
 #ifdef CC_USE_METAL
-    auto& uniformInfo = _fragmentUniformInfos[location].uniformInfo;
+    const auto& uniformInfo = _program->getActiveUniformInfo(ShaderStage::FRAGMENT, location);
     if(uniformInfo.needConvert)
     {
         convertAndCopyUniformData(uniformInfo, data, size, _fragmentUniformBuffer);
@@ -464,8 +379,6 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
     {
         memcpy(_fragmentUniformBuffer.data() + location, data, size);
     }
-#else
-    _fragmentUniformInfos[location].data.assign((char *)data, (char *)data + size);
 #endif
 }
 
@@ -474,14 +387,14 @@ void ProgramState::setTexture(const backend::UniformLocation& uniformLocation, u
     switch (uniformLocation.shaderStage)
     {
         case backend::ShaderStage::VERTEX:
-            setTexture(uniformLocation.location, slot, texture, _vertexTextureInfos);
+            setTexture(uniformLocation.location[0], slot, texture, _vertexTextureInfos);
             break;
         case backend::ShaderStage::FRAGMENT:
-            setTexture(uniformLocation.location, slot, texture, _fragmentTextureInfos);
+            setTexture(uniformLocation.location[1], slot, texture, _fragmentTextureInfos);
             break;
         case backend::ShaderStage::VERTEX_AND_FRAGMENT:
-            setTexture(uniformLocation.location, slot, texture, _vertexTextureInfos);
-            setTexture(uniformLocation.location, slot, texture, _fragmentTextureInfos);
+            setTexture(uniformLocation.location[0], slot, texture, _vertexTextureInfos);
+            setTexture(uniformLocation.location[1], slot, texture, _fragmentTextureInfos);
             break;
         default:
             break;
@@ -493,14 +406,14 @@ void ProgramState::setTextureArray(const backend::UniformLocation& uniformLocati
     switch (uniformLocation.shaderStage)
     {
         case backend::ShaderStage::VERTEX:
-            setTextureArray(uniformLocation.location, slots, textures, _vertexTextureInfos);
+            setTextureArray(uniformLocation.location[0], slots, textures, _vertexTextureInfos);
             break;
         case backend::ShaderStage::FRAGMENT:
-            setTextureArray(uniformLocation.location, slots, textures, _fragmentTextureInfos);
+            setTextureArray(uniformLocation.location[1], slots, textures, _fragmentTextureInfos);
             break;
         case backend::ShaderStage::VERTEX_AND_FRAGMENT:
-            setTextureArray(uniformLocation.location, slots, textures, _vertexTextureInfos);
-            setTextureArray(uniformLocation.location, slots, textures, _fragmentTextureInfos);
+            setTextureArray(uniformLocation.location[0], slots, textures, _vertexTextureInfos);
+            setTextureArray(uniformLocation.location[1], slots, textures, _fragmentTextureInfos);
             break;
         default:
             break;
@@ -511,28 +424,25 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::TextureBacke
 {
     if(location < 0)
         return;
-    TextureInfo info;
+    TextureInfo& info = textureInfo[location];
     info.slot = {slot};
     info.textures = {texture};
     info.retainTextures();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     info.location = location;
 #endif
-    textureInfo[location] = std::move(info);
 }
 
 void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::TextureBackend*> textures, std::unordered_map<int, TextureInfo>& textureInfo)
 {
     assert(slots.size() == textures.size());
-    TextureInfo info;
+    TextureInfo& info = textureInfo[location];
     info.slot = slots;
     info.textures = textures;
     info.retainTextures();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     info.location = location;
 #endif
-    textureInfo[location] = std::move(info);
-
 }
 
 void ProgramState::setParameterAutoBinding(const std::string &uniform, const std::string &autoBinding)

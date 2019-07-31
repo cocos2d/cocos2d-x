@@ -36,6 +36,29 @@ CC_BACKEND_BEGIN
  * @{
  */
 
+enum Uniform : uint32_t
+{
+    MVP_MATRIX,
+    TEXTURE,
+    TEXTURE1,
+    TEXTURE2,
+    TEXTURE3,
+    TEXT_COLOR,
+    EFFECT_TYPE,
+    EFFECT_COLOR,
+    UNIFORM_MAX //Maximum uniforms
+};
+
+enum Attribute : uint32_t
+{
+    POSITION,
+    COLOR,
+    TEXCOORD,
+    TEXCOORD1,
+    TEXCOORD2,
+    TEXCOORD3,
+    ATTRIBUTE_MAX //Maximum attributes
+};
 /**
  * Create shader.
  */
@@ -48,6 +71,7 @@ public:
      */
     ShaderStage getShaderStage() const;
 
+    
 protected:
     ShaderModule(ShaderStage stage);
     virtual ~ShaderModule();

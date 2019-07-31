@@ -30,11 +30,24 @@ CC_BACKEND_BEGIN
 
 bool UniformLocation::operator==(const UniformLocation &other) const
 {
-    return shaderStage == other.shaderStage && location == other.location;
+    return (shaderStage == other.shaderStage &&
+            location[0] == other.location[0] &&
+            location[1] == other.location[1]);
 }
 
-std::size_t UniformLocation::operator()(const UniformLocation &uniform) const {
-    return (((size_t) shaderStage) & 0xF)|((size_t)(location << 4));
+std::size_t UniformLocation::operator()(const UniformLocation &uniform) const
+{
+    return (((size_t) shaderStage) & 0xF)|((size_t)(location[0] << 4))|((size_t)(location[1] << 8));
+}
+
+void UniformLocation::reset() 
+{ 
+    location[0] = -1;
+#ifdef CC_USE_METAL
+    location[1] = -1; 
+#else
+    location[1] = 0;
+#endif
 }
 
 CC_BACKEND_END

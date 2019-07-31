@@ -44,28 +44,9 @@ class TextureBackend;
  * @{
  */
 
-/**
- * Store uniform data.
- */
-struct UniformBuffer
-{
-    UniformBuffer(const backend::UniformInfo& _uniformInfo);
-    UniformBuffer() = default;
-    UniformBuffer(const UniformBuffer& _uniformBuffer);
-    UniformBuffer& operator =(const UniformBuffer& rhs);
-    ~UniformBuffer();
-    UniformBuffer& operator =(UniformBuffer&& rhs);
-    
-    inline const bool isValid() const { return uniformInfo.location != -1; }
-    
-    backend::UniformInfo uniformInfo;
-    std::vector<char> data;
-
-};
-
-/**
- * Store texture information.
- */
+ /**
+  * Store texture information.
+  */
 struct TextureInfo
 {
     TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<backend::TextureBackend*> _textures);
@@ -74,10 +55,10 @@ struct TextureInfo
     ~TextureInfo();
     TextureInfo& operator=(TextureInfo&& rhs);
     TextureInfo& operator=(const TextureInfo& rhs);
-    
+
     void retainTextures();
     void releaseTextures();
-    
+
     std::vector<uint32_t> slot;
     std::vector<backend::TextureBackend*> textures;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -100,6 +81,9 @@ public:
      * @param fragmentShader Specifies the fragment shader.
      */
     ProgramState(const std::string& vertexShader, const std::string& fragmentShader);
+    
+    ///by name
+    ProgramState(ProgramType type);
     virtual ~ProgramState();
     
     /**
@@ -126,18 +110,8 @@ public:
      * @return Uniform location.
      */
     backend::UniformLocation getUniformLocation(const std::string& uniform) const;
-
-    /**
-     * Get vertex uniform information.
-     * @return Vertex uniform information.
-     */
-    inline const std::vector<UniformBuffer>& getVertexUniformInfos() const { return _vertexUniformInfos; }
-
-    /**
-     * Get fragment uniform information.
-     * @return Fragment uniform information.
-     */
-    inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
+    backend::UniformLocation getUniformLocation(backend::Uniform name) const;
+    inline int getAttributeLocation(Attribute name) const { return _program->getAttributeLocation(name); }
 
     /**
      * A callback to update unifrom.
@@ -179,7 +153,7 @@ public:
      * @return Uniform callback funciton.
      */
     inline const std::unordered_map<UniformLocation, UniformCallback, UniformLocation>& getCallbackUniforms() const { return _callbackUniforms; }
-#ifdef CC_USE_METAL
+
     /**
      * Get vertex uniform buffer. The buffer store all the vertex uniform's data for metal.
      * @return Vertex uniform buffer.
@@ -191,7 +165,6 @@ public:
      * @return Fragment uniform buffer.
      */
     inline const std::vector<char>& getFragmentUniformBuffer() const { return _fragmentUniformBuffer; }
-#endif
     
     /**
     * An abstract base class that can be extended to support custom material auto bindings.
@@ -265,7 +238,7 @@ protected:
      * @param data Specifies the new values to be used for the specified uniform variable.
      * @param size Specifies the uniform data size.
      */
-    void setVertexUniform(int location, const void* data, uint32_t size);
+    void setVertexUniform(int location, const void* data, uint32_t size, uint32_t offset);
 
     /**
      * Set the fargment uniform data.
@@ -274,16 +247,6 @@ protected:
      * @param size Specifies the uniform data size.
      */
     void setFragmentUniform(int location, const void* data, uint32_t size);
-    
-    /**
-     * Create vertex uniform buffer for each uniform.
-     */
-    void createVertexUniformBuffer();
-
-    /**
-     * Create fragment uniform buffer for each uniform.
-     */
-    void createFragmentUniformBuffer();
 
     /**
      * Set texture.
@@ -307,6 +270,7 @@ protected:
      * Reset uniform informations when EGL context lost
      */
     void resetUniforms();
+    void init();
     
 #ifdef CC_USE_METAL
     /**
@@ -327,8 +291,6 @@ protected:
     void applyAutoBinding(const std::string &, const std::string &);
 
     backend::Program*                                       _program = nullptr;
-    std::vector<UniformBuffer>                              _vertexUniformInfos;
-    std::vector<UniformBuffer>                              _fragmentUniformInfos;
     std::unordered_map<UniformLocation, UniformCallback, UniformLocation>   _callbackUniforms;
     std::vector<char> _vertexUniformBuffer;
     std::vector<char> _fragmentUniformBuffer;

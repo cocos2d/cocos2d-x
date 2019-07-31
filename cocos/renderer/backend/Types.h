@@ -278,7 +278,8 @@ struct UniformInfo
     //in opengl, type means uniform data type, i.e. GL_FLOAT_VEC2, while in metal type means data basic type, i.e. float
     unsigned int type = 0;
     bool isArray = false;
-    unsigned int bufferSize = 0;
+    unsigned int size = 0;
+    unsigned int bufferOffset = 0;
 
     //only used in metal
     bool isMatrix = false;
@@ -287,12 +288,21 @@ struct UniformInfo
 
 struct UniformLocation
 {
-    int location = -1;
+    /**
+     * in metal, those two locations represent to vertex and fragment location. 
+     * in opengl, location[0] represent the location, and location[1] represent location offset in uniform buffer. 
+     */
+    int location[2] = {-1, -1};
     ShaderStage shaderStage = ShaderStage::VERTEX;
     UniformLocation() = default;
-    operator bool() { return location >= 0; }
-    void reset() { location = -1; }
-
+    operator bool()
+    {
+        if(shaderStage == ShaderStage::VERTEX_AND_FRAGMENT)
+            return location[0] >= 0 && location[1] >= 0;
+        else
+            return location[int(shaderStage)] >=0;
+    }
+    void reset();
     bool operator == (const UniformLocation &other) const;
     std::size_t operator()(const UniformLocation &uniform) const;
 };
@@ -316,4 +326,43 @@ enum class TextureCubeFace : uint32_t
     NEGATIVE_Z = 5
 };
 
+enum ProgramType
+{
+    POSITION_COLOR_LENGTH_TEXTURE,
+    POSITION_COLOR_TEXTURE_AS_POINTSIZE,
+    POSITION_COLOR,
+    POSITION_UCOLOR,
+    POSITION_TEXTURE,
+    POSITION_TEXTURE_COLOR,
+    POSITION_TEXTURE_COLOR_ALPHA_TEST,
+    LABEL_NORMAL,
+    LABLE_OUTLINE,
+    LABLE_DISTANCEFIELD_GLOW,
+    LABEL_DISTANCE_NORMAL,
+   
+    LAYER_RADIA_GRADIENT,
+    
+    ETC1,
+    ETC1_GRAY,
+    GRAY_SCALE,
+    LINE_COLOR_3D,
+};
+
+///built-in uniform name
+static const char* UNIFORM_NAME_MVP_MATRIX = "u_MVPMatrix";
+static const char* UNIFORM_NAME_TEXTURE = "u_texture";
+static const char* UNIFORM_NAME_TEXTURE1 = "u_texture1";
+static const char* UNIFORM_NAME_TEXTURE2 = "u_texture2";
+static const char* UNIFORM_NAME_TEXTURE3 = "u_texture3";
+static const char* UNIFORM_NAME_TEXT_COLOR = "u_textColor";
+static const char* UNIFORM_NAME_EFFECT_COLOR = "u_effectColor";
+static const char* UNIFORM_NAME_EFFECT_TYPE = "u_effectType";
+
+///built-in attribute name
+static const char* ATTRIBUTE_NAME_POSITION = "a_position";
+static const char* ATTRIBUTE_NAME_COLOR = "a_color";
+static const char* ATTRIBUTE_NAME_TEXCOORD = "a_texCoord";
+static const char* ATTRIBUTE_NAME_TEXCOORD1 = "a_texCoord1";
+static const char* ATTRIBUTE_NAME_TEXCOORD2 = "a_texCoord2";
+static const char* ATTRIBUTE_NAME_TEXCOORD3 = "a_texCoord3";
 CC_BACKEND_END

@@ -26,6 +26,34 @@
 #include "Device.h"
 #include "ShaderModule.h"
 #include "renderer/ccShaders.h"
+#include "base/ccMacros.h"
+
+namespace {
+    struct Shader
+    {
+        std::string vert;
+        std::string frag;
+
+        Shader(const std::string& _vert, const std::string& _frag)
+            :vert(_vert),
+            frag(_frag)
+        {}
+    };
+}
+
+namespace std {
+    template<> struct hash<Shader> 
+    {
+        typedef Shader argument_type;
+        typedef std::size_t result_type;
+        result_type operator()(argument_type const& s) const noexcept
+        {
+            result_type const h1(std::hash < std::string>{}(s.vert));
+            result_type const h2(std::hash<std::string>{}(s.frag));
+            return h1 ^ (h2 << 1);
+        }
+    };
+}
 
 CC_BACKEND_BEGIN
 
@@ -62,37 +90,103 @@ ProgramCache::~ProgramCache()
 
 bool ProgramCache::init()
 {
-    addProgram(positionTextureColor_vert, positionTextureColor_frag);
-    addProgram(positionTextureColor_vert, etc1_frag);
-    addProgram(positionTextureColor_vert, label_distanceNormal_frag);
-    addProgram(positionTextureColor_vert, label_normal_frag);
-    addProgram(positionTextureColor_vert, labelOutline_frag);
-    addProgram(positionTextureColor_vert, labelDistanceFieldGlow_frag);
-    addProgram(positionColorLengthTexture_vert, positionColorLengthTexture_frag);
-    addProgram(positionColorTextureAsPointsize_vert, positionColor_frag);
-    addProgram(positionColor_vert, positionColor_frag);
-    addProgram(position_vert, layer_radialGradient_frag);
-    addProgram(positionTexture_vert, positionTexture_frag);
-    addProgram(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
-    addProgram(positionUColor_vert, positionUColor_frag);
-    addProgram(positionTextureColor_vert, etc1Gray_frag);
-    addProgram(positionTextureColor_vert, grayScale_frag);
-    addProgram(lineColor3D_vert, lineColor3D_frag);
+    addProgram(ProgramType::POSITION_TEXTURE_COLOR);
+    addProgram(ProgramType::ETC1);
+    addProgram(ProgramType::LABEL_DISTANCE_NORMAL);
+    addProgram(ProgramType::LABEL_NORMAL);
+    addProgram(ProgramType::LABLE_OUTLINE);
+    addProgram(ProgramType::LABLE_DISTANCEFIELD_GLOW);
+    addProgram(ProgramType::POSITION_COLOR_LENGTH_TEXTURE);
+    addProgram(ProgramType::POSITION_COLOR_TEXTURE_AS_POINTSIZE);
+    addProgram(ProgramType::POSITION_COLOR);
+    addProgram(ProgramType::LAYER_RADIA_GRADIENT);
+    addProgram(ProgramType::POSITION_TEXTURE);
+    addProgram(ProgramType::POSITION_TEXTURE_COLOR_ALPHA_TEST);
+    addProgram(ProgramType::POSITION_UCOLOR);
+    addProgram(ProgramType::ETC1_GRAY);
+    addProgram(ProgramType::GRAY_SCALE);
+    addProgram(ProgramType::LINE_COLOR_3D);
     return true;
+}
+
+void ProgramCache::addProgram(ProgramType type)
+{
+    Program* program = nullptr;
+    switch (type) {
+        case ProgramType::POSITION_TEXTURE_COLOR:
+            program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, positionTextureColor_frag);
+            break;
+        case ProgramType::ETC1:
+            program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, etc1_frag);
+            break;
+        case ProgramType::LABEL_DISTANCE_NORMAL:
+            program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, label_distanceNormal_frag);
+            break;
+        case ProgramType::LABEL_NORMAL:
+            program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, label_normal_frag);
+            break;
+        case ProgramType::LABLE_OUTLINE:
+            program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, labelOutline_frag);
+            break;
+        case ProgramType::LABLE_DISTANCEFIELD_GLOW:
+            program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, labelDistanceFieldGlow_frag);
+            break;
+        case ProgramType::POSITION_COLOR_LENGTH_TEXTURE:
+            program = backend::Device::getInstance()->newProgram(positionColorLengthTexture_vert, positionColorLengthTexture_frag);
+            break;
+        case ProgramType::POSITION_COLOR_TEXTURE_AS_POINTSIZE:
+            program = backend::Device::getInstance()->newProgram(positionColorTextureAsPointsize_vert, positionColor_frag);
+            break;
+        case ProgramType::POSITION_COLOR:
+            program = backend::Device::getInstance()->newProgram(positionColor_vert, positionColor_frag);
+            break;
+        case ProgramType::LAYER_RADIA_GRADIENT:
+            program = backend::Device::getInstance()->newProgram(position_vert, layer_radialGradient_frag);
+            break;
+        case ProgramType::POSITION_TEXTURE:
+            program = backend::Device::getInstance()->newProgram(positionTexture_vert, positionTexture_frag);
+            break;
+        case ProgramType::POSITION_TEXTURE_COLOR_ALPHA_TEST:
+            program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
+            break;
+        case ProgramType::POSITION_UCOLOR:
+            program = backend::Device::getInstance()->newProgram(positionUColor_vert, positionUColor_frag);
+            break;
+        case ProgramType::ETC1_GRAY:
+            program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, etc1Gray_frag);
+            break;
+        case ProgramType::GRAY_SCALE:
+            program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, grayScale_frag);
+            break;
+        case ProgramType::LINE_COLOR_3D:
+            program = backend::Device::getInstance()->newProgram(lineColor3D_vert, lineColor3D_frag);
+            break;
+        default:
+            CCASSERT(false, "Not built-in program type.");
+            break;
+    }
+    program->setProgramType(type);
+    ProgramCache::_cachedPrograms.emplace(type, program);
 }
 
 void ProgramCache::addProgram(const std::string& vertexShader, const std::string& fragmentShader)
 {
-    std::string shaderSource = vertexShader + fragmentShader;
-    auto key = std::hash<std::string>{}(shaderSource);
+    auto key = std::hash<Shader>{}(Shader(vertexShader, fragmentShader));
     auto program = backend::Device::getInstance()->newProgram(vertexShader, fragmentShader);
     ProgramCache::_cachedPrograms.emplace(key, program);
 }
 
+backend::Program* ProgramCache::newProgramByProgramType(ProgramType type)
+{
+    const auto& iter = ProgramCache::_cachedPrograms.find(type);
+    if (ProgramCache::_cachedPrograms.end() != iter)
+        return iter->second;
+    return nullptr;
+}
+
 backend::Program* ProgramCache::newProgram(const std::string& vertexShader, const std::string& fragmentShader)
 {
-    std::string shaderSource = vertexShader + fragmentShader;
-    auto key = std::hash<std::string>{}(shaderSource);
+    auto key = std::hash<Shader>{}(Shader(vertexShader, fragmentShader));
     const auto& iter = ProgramCache::_cachedPrograms.find(key);
     if (ProgramCache::_cachedPrograms.end() != iter)
     {

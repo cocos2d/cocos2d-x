@@ -56,6 +56,9 @@ public:
      */
     backend::Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader);
     
+    /// get built-in program
+    backend::Program* newProgramByProgramType(ProgramType type);
+    
     /**
      * Remove a program object from cache.
      * @param program Specifies the program object to move.
@@ -86,6 +89,9 @@ protected:
      * @param fragmentShader Specifes the fragment shader source.
      */
     void addProgram(const std::string& vertexShader, const std::string& fragmentShader);
+    
+    /// Add built-in program
+    void addProgram(ProgramType type);
     
     static std::unordered_map<std::size_t, backend::Program*> _cachedPrograms; ///< The cached program object.
     static ProgramCache *_sharedProgramCache; ///< A shared instance of the program cache.

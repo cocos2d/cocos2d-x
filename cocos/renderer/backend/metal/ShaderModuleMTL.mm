@@ -58,6 +58,8 @@ ShaderModuleMTL::ShaderModuleMTL(id<MTLDevice> mtlDevice, ShaderStage stage, con
     parseAttibute(mtlDevice, glslShader);
     parseUniform(mtlDevice, glslShader);
     parseTexture(mtlDevice, glslShader);
+    setBuiltinUniformLocation();
+    setBuiltinAttributeLocation();
     
     NSString* shader = [NSString stringWithUTF8String:metalShader];
     NSError* error;
@@ -116,6 +118,7 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
 {
     const int uniformCount = glslopt_shader_get_uniform_count(shader);
     const int uniformSize = glslopt_shader_get_uniform_total_size(shader);
+    _uniformBuffer.resize(uniformSize, 0);
     
     for (int i = 0; i < uniformCount; ++i)
     {
@@ -141,13 +144,115 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
         uniform.count = parArrSize;
         uniform.location = location;
         uniform.isArray = parArrSize;
-        uniform.bufferSize = nextLocation - location;
+        uniform.size = nextLocation - location;
+        uniform.bufferOffset = location;
         uniform.needConvert = (parVecSize == 3) ? true : false;
         uniform.type = static_cast<unsigned int>(parType);
         uniform.isMatrix = (parMatSize > 1) ? true : false;
         _uniformInfos[parName] = uniform;
-        
+        _uniformInfos1[location] = uniform;
         _maxLocation = _maxLocation < location ? (location + 1) : _maxLocation;
+    }
+}
+
+int ShaderModuleMTL::getUniformLocation(Uniform name) const
+{
+    return _uniformLocation[name];
+}
+
+int ShaderModuleMTL::getUniformLocation(const std::string& name) const
+{
+    const auto& iter = _uniformInfos.find(name);
+    if(iter != _uniformInfos.end())
+    {
+        return _uniformInfos.at(name).location;
+    }
+    else
+        return -1;
+}
+
+void ShaderModuleMTL::setBuiltinUniformLocation()
+{
+    std::fill(_uniformLocation, _uniformLocation + UNIFORM_MAX, -1);
+    ///u_mvpMatrix
+    auto iter = _uniformInfos.find(UNIFORM_NAME_MVP_MATRIX);
+    if(iter != _uniformInfos.end())
+    {
+        _uniformLocation[Uniform::MVP_MATRIX] = iter->second.location;
+    }
+    
+    ///u_textColor
+    iter = _uniformInfos.find(UNIFORM_NAME_TEXT_COLOR);
+    if(iter != _uniformInfos.end())
+    {
+        _uniformLocation[Uniform::TEXT_COLOR] = iter->second.location;
+    }
+    
+    ///u_effectColor
+    iter = _uniformInfos.find(UNIFORM_NAME_EFFECT_COLOR);
+    if(iter != _uniformInfos.end())
+    {
+        _uniformLocation[Uniform::EFFECT_COLOR] = iter->second.location;
+    }
+    
+    ///u_effectType
+    iter = _uniformInfos.find(UNIFORM_NAME_EFFECT_TYPE);
+    if(iter != _uniformInfos.end())
+    {
+        _uniformLocation[Uniform::EFFECT_TYPE] = iter->second.location;
+    }
+    
+    ///u_texture
+    iter = _uniformInfos.find(UNIFORM_NAME_TEXTURE);
+    if(iter != _uniformInfos.end())
+    {
+        _uniformLocation[Uniform::TEXTURE] = iter->second.location;
+    }
+    
+    ///u_texture1
+    iter = _uniformInfos.find(UNIFORM_NAME_TEXTURE1);
+    if(iter != _uniformInfos.end())
+    {
+        _uniformLocation[Uniform::TEXTURE1] = iter->second.location;
+    }
+}
+
+int ShaderModuleMTL::getAttributeLocation(Attribute name) const
+{
+    return _attributeLocation[name];
+}
+
+int ShaderModuleMTL::getAttributeLocation(std::string name)
+{
+    auto iter = _attributeInfo.find(name);
+    if(iter != _attributeInfo.end())
+        return _attributeInfo[name].location;
+    else
+        return -1;
+}
+
+void ShaderModuleMTL::setBuiltinAttributeLocation()
+{
+    std::fill(_attributeLocation, _attributeLocation + ATTRIBUTE_MAX, -1);
+    ///a_position
+    auto iter = _attributeInfo.find(ATTRIBUTE_NAME_POSITION);
+    if(iter != _attributeInfo.end())
+    {
+        _attributeLocation[Attribute::POSITION] = iter->second.location;
+    }
+    
+    ///a_color
+    iter = _attributeInfo.find(ATTRIBUTE_NAME_COLOR);
+    if(iter != _attributeInfo.end())
+    {
+        _attributeLocation[Attribute::COLOR] = iter->second.location;
+    }
+    
+    ///a_texCoord
+    iter = _attributeInfo.find(ATTRIBUTE_NAME_TEXCOORD);
+    if(iter != _attributeInfo.end())
+    {
+        _attributeLocation[Attribute::TEXCOORD] = iter->second.location;
     }
 }
 

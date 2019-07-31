@@ -451,7 +451,8 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
     if (_programState)
     {
         auto& callbacks = _programState->getCallbackUniforms();
-        auto& uniformInfos = _programState->getVertexUniformInfos();
+        auto& uniformInfos = _programState->getProgram()->getAllActiveUniformInfo();
+        auto& uniformBuffer = _programState->getVertexUniformBuffer();
 
         for (auto &cb : callbacks)
         {
@@ -461,23 +462,16 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
         int i = 0;
         for(auto& iter : uniformInfos)
         {
-            auto& uniformInfo = iter.uniformInfo;
-            if(uniformInfo.bufferSize <= 0)
+            auto& uniformInfo = iter.second;
+            if(uniformInfo.size <= 0)
                 continue;
 
             int elementCount = uniformInfo.count;
-            if (uniformInfo.isArray)
-            {
-                CCASSERT(uniformInfo.count * uniformInfo.bufferSize >= iter.data.size(), "uniform data size mismatch!");
-                //iter.data.reserve(uniformInfo.count * uniformInfo.bufferSize);
-                elementCount = std::min(elementCount, (int)(iter.data.size() / uniformInfo.bufferSize));
-            }
-
             setUniform(uniformInfo.isArray,
                 uniformInfo.location,
                 elementCount,
                 uniformInfo.type,
-                (void*)iter.data.data());
+                (void*)(uniformBuffer.data() + uniformInfo.bufferOffset));
         }
         
         const auto& textureInfo = _programState->getVertexTextureInfos();

@@ -65,8 +65,7 @@ public:
      * Get current shader uniform informatino.
      * @return Uniform information. Key is each uniform name, Value is corresponding uniform info.
      */
-    inline const std::unordered_map<std::string, UniformInfo>& getUniforms() const { return _uniformInfos; }
-    
+    inline const UniformInfo& getUniforms(int location) { return _uniformInfos1[location]; }
     /**
      * Get maximum uniform location.
      * @return Maximum uniform location.
@@ -79,17 +78,30 @@ public:
      */
     inline const std::unordered_map<std::string, AttributeBindInfo> getAttributeInfo() const { return _attributeInfo; }
     
+    inline std::vector<char> cloneUniformBuffer() const { return _uniformBuffer; }
+    int getUniformLocation(Uniform name) const;
+    int getUniformLocation(const std::string& name) const;
+    int getAttributeLocation(Attribute name) const;
+    int getAttributeLocation(std::string name);
+    
 private:
     void parseAttibute(id<MTLDevice> mtlDevice, glslopt_shader* shader);
     void parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shader);
     void parseTexture(id<MTLDevice> mtlDevice, glslopt_shader* shader);
+    void setBuiltinUniformLocation();
+    void setBuiltinAttributeLocation();
     
     id<MTLFunction> _mtlFunction = nil;
     
     std::unordered_map<std::string, UniformInfo> _uniformInfos;
+    std::unordered_map<int, UniformInfo> _uniformInfos1;
     std::unordered_map<std::string, AttributeBindInfo> _attributeInfo;
     
     int _maxLocation = -1;
+
+    std::vector<char> _uniformBuffer;
+    int _uniformLocation[UNIFORM_MAX];
+    int _attributeLocation[ATTRIBUTE_MAX];
 };
 
 // end of _metal group
