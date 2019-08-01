@@ -393,7 +393,6 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
         {
             texturePath = texturePath.erase(startPos);
         }
-        texturePath = texturePath.erase(startPos);
 
         // append .png
         texturePath = texturePath.append(".png");
@@ -699,6 +698,7 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
         {
             texturePath = texturePath.erase(startPos);
         }
+        
         // append .png
         texturePath = texturePath.append(".png");
     }
