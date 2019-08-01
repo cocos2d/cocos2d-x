@@ -62,6 +62,9 @@ script:
 before_install:
 - tools/travis-scripts/before-install.sh
 
+jdk:
+  - oraclejdk8
+
 cache:
   bundler: true
 
