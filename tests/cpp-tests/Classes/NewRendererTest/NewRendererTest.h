@@ -231,8 +231,8 @@ public:
     void doTest();
 
 protected:
-    int totalSprites = 10000;
-    int suggestDelta = 1000;
+    int totalSprites = 1000;
+    int suggestDelta = 100;
     cocos2d::Label*   _labelSpriteNum = nullptr;
     cocos2d::Label*   labelCreate = nullptr;
     cocos2d::Label*   labelDestory = nullptr;
@@ -267,9 +267,10 @@ protected:
     Node *_spritesAnchor = nullptr;
     int _spriteIndex = 0;
     float _mavDt = 1.0f / 60.0f;
+    float _rmavDt =  1.0f/ 60.0f;
     const float DEST_DT_30FPS = 1.0f / 30.0f;
     cocos2d::Label * _totalSprites = nullptr;
-    Ticker _hit5 = Ticker(30);
+    Ticker _contHit = Ticker(30);
 };
 
 #endif //__NewRendererTest_H_
