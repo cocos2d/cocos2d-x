@@ -64,9 +64,6 @@ private:
 NewRendererTests::NewRendererTests()
 {
 
-
-    ADD_TEST_CASE(SpriteCreation);
-
     ADD_TEST_CASE(NewSpriteTest);
     ADD_TEST_CASE(GroupCommandTest);
 //    ADD_TEST_CASE(NewClippingNodeTest); // When depth and stencil are used together, ...
@@ -79,6 +76,7 @@ NewRendererTests::NewRendererTests()
     ADD_TEST_CASE(RendererBatchQuadTri);
     ADD_TEST_CASE(RendererUniformBatch); 
     ADD_TEST_CASE(RendererUniformBatch2);
+    ADD_TEST_CASE(SpriteCreation);
     ADD_TEST_CASE(NonBatchSprites);
 };
 
@@ -581,45 +579,6 @@ std::string SpriteCreation::subtitle() const
 }
 
 
-//NonBatchedSprites::NonBatchedSprites()
-//{
-//    Size s = Director::getInstance()->getWinSize();
-//    Node* parent = Node::create();
-//    parent->setPosition(0,0);
-//    addChild(parent);
-//
-//    for (int i=0; i< Renderer::VBO_SIZE / 3.9; ++i)
-//    {
-//        Sprite* sprite = Sprite::create("Images/grossini_dance_01.png");
-//        sprite->setScale(0.1f, 0.1f);
-//        float x = ((float)std::rand()) /RAND_MAX;
-//        float y = ((float)std::rand()) /RAND_MAX;
-//        sprite->setPosition(Vec2(x * s.width, y * s.height));
-//        parent->addChild(sprite);
-//    }
-//}
-
-//NonBatchedSprites::~NonBatchedSprites()
-//{
-//
-//}
-//
-//std::string NonBatchedSprites::title() const
-//{
-//    return "NonBatched Sprites";
-//}
-//
-//std::string NonBatchedSprites::subtitle() const
-//{
-//#if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG == 1
-//    return "In debug mode";
-//#else
-//    return "In release mode";
-//#endif
-//}
-
-
-
 VBOFullTest::VBOFullTest()
 {
     Size s = Director::getInstance()->getWinSize();
@@ -1077,19 +1036,20 @@ void NonBatchSprites::createSprite()
 void NonBatchSprites::update(float dt)
 {
     _mavDt = 0.7f * _mavDt  + 0.3f * dt;
+    _rmavDt = 0.5 * _rmavDt + 0.5 * dt;
     if(_mavDt <= DEST_DT_30FPS) {
-        _hit5.cancel();
-        auto t2 = DEST_DT_30FPS - dt;
-        auto delta = (int)(t2 / dt * _spriteIndex * 0.1);
-        delta = std::max(20, std::max(3, delta));
+        _contHit.cancel();
+        auto t2 = DEST_DT_30FPS - _rmavDt;
+        auto delta = (int)(t2 / _rmavDt * _spriteIndex * 0.1);
+        delta = std::max(20, std::max(1, delta));
         for(int i =0 ;i< delta; i++) {
             createSprite();
         }
     }else{
-        _hit5.hit();
+        _contHit.hit();
     }
 
-    if(_hit5.ok())
+    if(_contHit.ok())
     {
         unscheduleUpdate();
         std::stringstream ss;
