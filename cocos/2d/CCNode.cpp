@@ -855,11 +855,11 @@ void Node::enumerateChildren(const std::string &name, const std::function<bool (
     
     if (searchFromParent)
     {
-        target = getParent();
-        if (nullptr == target)
+        if (nullptr == _parent)
         {
             return;
         }
+        target = _parent;
     }
     
     if (searchRecursively)
