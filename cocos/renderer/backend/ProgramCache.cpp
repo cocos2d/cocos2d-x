@@ -176,7 +176,7 @@ void ProgramCache::addProgram(const std::string& vertexShader, const std::string
     ProgramCache::_cachedPrograms.emplace(key, program);
 }
 
-backend::Program* ProgramCache::newProgramByProgramType(ProgramType type)
+backend::Program* ProgramCache::newBuiltinProgram(ProgramType type)
 {
     const auto& iter = ProgramCache::_cachedPrograms.find(type);
     if (ProgramCache::_cachedPrograms.end() != iter)

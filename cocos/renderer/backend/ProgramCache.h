@@ -57,7 +57,7 @@ public:
     backend::Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader);
     
     /// get built-in program
-    backend::Program* newProgramByProgramType(ProgramType type);
+    backend::Program* newBuiltinProgram(ProgramType type);
     
     /**
      * Remove a program object from cache.

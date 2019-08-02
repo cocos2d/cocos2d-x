@@ -117,8 +117,7 @@ void ShaderModuleMTL::parseAttibute(id<MTLDevice> mtlDevice, glslopt_shader* sha
 void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shader)
 {
     const int uniformCount = glslopt_shader_get_uniform_count(shader);
-    const int uniformSize = glslopt_shader_get_uniform_total_size(shader);
-    _uniformBuffer.resize(uniformSize, 0);
+    _uniformBufferSize = glslopt_shader_get_uniform_total_size(shader);
     
     for (int i = 0; i < uniformCount; ++i)
     {
@@ -134,7 +133,7 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
         }
         else
         {
-            nextLocation = uniformSize;
+            nextLocation = _uniformBufferSize;
         }
         
         glslopt_shader_get_uniform_desc(shader, i, &parName, &parType, &parPrec, &parVecSize, &parMatSize, &parArrSize, &location);

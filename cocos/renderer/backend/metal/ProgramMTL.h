@@ -109,11 +109,11 @@ public:
     virtual int getMaxFragmentLocation() const override;
     
     /**
-     * Clone a buffer storage that will holds all the uniforms.
-     * @param stage Specifies the shader stage.
-     * @return A cloned unifrom buffer storage. 
+     * Get uniform buffer size in bytes that can hold all the uniforms.
+     * @param stage Specifies the shader stage. The symbolic constant can be either VERTEX or FRAGMENT.
+     * @return The uniform buffer size in bytes.
      */
-    virtual std::vector<char> cloneUniformBuffer(ShaderStage stage) const override;
+    virtual std::size_t getUniformBufferSize(ShaderStage stage) const override;
 
     /**
      * Get a uniformInfo in given location from the specific shader stage.
@@ -127,12 +127,11 @@ public:
      * Get all uniformInfos.
      * @return The uniformInfos.
      */
-    virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo() const override;
+    virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo(ShaderStage stage) const override;
 
 private:
     ShaderModuleMTL* _vertexShader = nullptr;
     ShaderModuleMTL* _fragmentShader = nullptr;
-    std::unordered_map<std::string, UniformInfo> _uniformInfo;
 };
 
 // end of _metal group

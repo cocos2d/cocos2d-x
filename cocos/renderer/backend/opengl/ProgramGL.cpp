@@ -55,7 +55,6 @@ ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmen
     compileProgram();
     computeUniformInfos();
     computeLocations();
-    _uniformBuffer.resize(_totalBufferSize, 0);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     for(const auto& uniform: _activeUniformInfos)
     {
@@ -375,14 +374,14 @@ const UniformInfo& ProgramGL::getActiveUniformInfo(ShaderStage stage, int locati
     return UniformInfo{};
 }
 
-const std::unordered_map<std::string, UniformInfo>& ProgramGL::getAllActiveUniformInfo() const
+const std::unordered_map<std::string, UniformInfo>& ProgramGL::getAllActiveUniformInfo(ShaderStage stage) const
 {
     return _activeUniformInfos;
 }
 
-std::vector<char> ProgramGL::cloneUniformBuffer(ShaderStage stage) const
+std::size_t ProgramGL::getUniformBufferSize(ShaderStage stage) const
 {
-    return _uniformBuffer;
+    return _totalBufferSize;
 }
 
 CC_BACKEND_END

@@ -139,11 +139,11 @@ public:
     virtual const std::unordered_map<std::string, AttributeBindInfo> getActiveAttributes() const override;
     
     /**
-     * Clone a buffer storage that will holds all the uniforms.
-     * @param stage Specifies the shader stage.
-     * @return A cloned unifrom buffer storage. 
+     * Get uniform buffer size in bytes that can hold all the uniforms.
+     * @param stage Specifies the shader stage. The symbolic constant can be either VERTEX or FRAGMENT.
+     * @return The uniform buffer size in bytes.
      */
-    virtual std::vector<char> cloneUniformBuffer(ShaderStage stage) const override;
+    virtual std::size_t getUniformBufferSize(ShaderStage stage) const override;
     
     /**
      * Get a uniformInfo in given location from the specific shader stage.
@@ -157,7 +157,7 @@ public:
      * Get all uniformInfos.
      * @return The uniformInfos.
      */
-    virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo() const override ;
+    virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo(ShaderStage stage) const override ;
 
 private:
     void compileProgram();
@@ -184,11 +184,10 @@ private:
     EventListenerCustom* _backToForegroundListener = nullptr;
 #endif
 
-    int _totalBufferSize = 0;
+    std::size_t _totalBufferSize = 0;
     int _maxLocation = -1;
     UniformLocation _builtinUniformLocation[UNIFORM_MAX];
     int _builtinAttributeLocation[Attribute::ATTRIBUTE_MAX];
-    std::vector<char> _uniformBuffer;
     std::unordered_map<int, int> _bufferOffset;
 };
 //end of _opengl group

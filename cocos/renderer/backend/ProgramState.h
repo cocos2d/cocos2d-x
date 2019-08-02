@@ -188,13 +188,13 @@ public:
      * Get vertex uniform buffer. The buffer store all the vertex uniform's data.
      * @return Vertex uniform buffer.
      */
-    inline const std::vector<char>& getVertexUniformBuffer() const { return _vertexUniformBuffer; }
+    const char* getVertexUniformBuffer(std::size_t& size) const;
 
     /**
      * Get fragment uniform buffer. The buffer store all the fragment uniform's data for metal.
      * @return Fragment uniform buffer.
      */
-    inline const std::vector<char>& getFragmentUniformBuffer() const { return _fragmentUniformBuffer; }
+    const char* getFragmentUniformBuffer(std::size_t& size) const;
     
     /**
     * An abstract base class that can be extended to support custom material auto bindings.
@@ -312,7 +312,7 @@ protected:
      * @param srcSize Specifies the uniform data size.
      * @param uniformBuffer Specifies the uniform buffer to update.
      */
-    void convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformBuffer);
+    void convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, void* buffer);
 #endif
     /**
     * Applies the specified custom auto-binding.
@@ -324,8 +324,10 @@ protected:
 
     backend::Program*                                       _program = nullptr;
     std::unordered_map<UniformLocation, UniformCallback, UniformLocation>   _callbackUniforms;
-    std::vector<char> _vertexUniformBuffer;
-    std::vector<char> _fragmentUniformBuffer;
+    char* _vertexUniformBuffer = nullptr;
+    char* _fragmentUniformBuffer = nullptr;
+    std::size_t _vertexUniformBufferSize = 0;
+    std::size_t _fragmentUniformBufferSize = 0;
 
     std::unordered_map<int, TextureInfo>                    _vertexTextureInfos;
     std::unordered_map<int, TextureInfo>                    _fragmentTextureInfos;

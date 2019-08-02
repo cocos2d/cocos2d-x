@@ -121,11 +121,11 @@ public:
     void setProgramType(ProgramType type);
 
     /**
-     * Clone a buffer storage that will holds all the uniforms.
-     * @param stage Specifies the shader stage.
-     * @return A cloned unifrom buffer storage. 
+     * Get uniform buffer size in bytes that can hold all the uniforms.
+     * @param stage Specifies the shader stage. The symbolic constant can be either VERTEX or FRAGMENT.
+     * @return The uniform buffer size in bytes.
      */
-    virtual std::vector<char> cloneUniformBuffer(ShaderStage stage) const = 0;
+    virtual std::size_t getUniformBufferSize(ShaderStage stage) const =0;
 
     /**
      * Get a uniformInfo in given location from the specific shader stage.
@@ -139,7 +139,7 @@ public:
      * Get all uniformInfos.
      * @return The uniformInfos.
      */
-    virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo() const = 0;
+    virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo(ShaderStage stage) const = 0;
 
 protected:
     /**

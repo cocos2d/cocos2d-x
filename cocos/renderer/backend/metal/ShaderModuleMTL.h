@@ -66,6 +66,13 @@ public:
      * @return Uniform information. Key is each uniform name, Value is corresponding uniform info.
      */
     inline const UniformInfo& getActiveUniform(int location) { return _activeUniformInfos[location]; }
+
+    /**
+     * Get all uniformInfos.
+     * @return The uniformInfos.
+     */
+    inline const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo() const { return _uniformInfos; }
+    
     /**
      * Get maximum uniform location.
      * @return Maximum uniform location.
@@ -78,11 +85,39 @@ public:
      */
     inline const std::unordered_map<std::string, AttributeBindInfo> getAttributeInfo() const { return _attributeInfo; }
     
-    inline std::vector<char> cloneUniformBuffer() const { return _uniformBuffer; }
+    /**
+     * Get uniform location by engine built-in uniform enum name.
+     * @param name Specifies the engine built-in uniform enum name.
+     * @return The uniform location.
+     */
     int getUniformLocation(Uniform name) const;
+
+    /**
+     * Get uniform location by name.
+     * @param uniform Specifies the uniform name.
+     * @return The uniform location.
+     */
     int getUniformLocation(const std::string& name) const;
+    
+    /**
+     * Get attribute location by engine built-in attribute enum name.
+     * @param name Specifies the engine built-in attribute enum name.
+     * @return The attribute location.
+     */
     int getAttributeLocation(Attribute name) const;
+
+    /**
+     * Get attribute location by attribute name.
+     * @param name Specifies the attribute name.
+     * @return The attribute location.
+     */
     int getAttributeLocation(std::string name);
+
+    /**
+     * Get uniform buffer size in bytes that holds all the uniforms.
+     * @return The uniform buffer size.
+     */
+    inline std::size_t getUniformBufferSize() const { return _uniformBufferSize; }
     
 private:
     void parseAttibute(id<MTLDevice> mtlDevice, glslopt_shader* shader);
@@ -98,10 +133,9 @@ private:
     std::unordered_map<std::string, AttributeBindInfo> _attributeInfo;
     
     int _maxLocation = -1;
-
-    std::vector<char> _uniformBuffer;
     int _uniformLocation[UNIFORM_MAX];
     int _attributeLocation[ATTRIBUTE_MAX];
+    std::size_t _uniformBufferSize = 0;
 };
 
 // end of _metal group

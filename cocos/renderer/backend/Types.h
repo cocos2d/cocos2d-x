@@ -302,7 +302,7 @@ struct UniformLocation
         else
             return location[int(shaderStage)] >=0;
     }
-    void reset();
+    void reset() { location[0] = location[1] = -1; }
     bool operator == (const UniformLocation &other) const;
     std::size_t operator()(const UniformLocation &uniform) const;
 };

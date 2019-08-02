@@ -117,19 +117,19 @@ const std::unordered_map<std::string, AttributeBindInfo> ProgramMTL::getActiveAt
     return _vertexShader->getAttributeInfo();
 }
 
-std::vector<char> ProgramMTL::cloneUniformBuffer(ShaderStage stage) const
-{
-    switch (stage) {
-        case ShaderStage::VERTEX:
-            return _vertexShader->cloneUniformBuffer();
-            break;
-        case ShaderStage::FRAGMENT:
-            return _fragmentShader->cloneUniformBuffer();
-        default:
-            CCASSERT(false, "Invalid shader stage.");
-            break;
-    }
-}
+//const std::vector<char>& ProgramMTL::cloneUniformBuffer(ShaderStage stage) const
+//{
+//    switch (stage) {
+//        case ShaderStage::VERTEX:
+//            return _vertexShader->cloneUniformBuffer();
+//            break;
+//        case ShaderStage::FRAGMENT:
+//            return _fragmentShader->cloneUniformBuffer();
+//        default:
+//            CCASSERT(false, "Invalid shader stage.");
+//            break;
+//    }
+//}
 
 const UniformInfo& ProgramMTL::getActiveUniformInfo(ShaderStage stage, int location) const
 {
@@ -140,13 +140,36 @@ const UniformInfo& ProgramMTL::getActiveUniformInfo(ShaderStage stage, int locat
             return _fragmentShader->getActiveUniform(location);
         default:
             CCASSERT(false, "Invalid shader stage.");
-            break;
+        break;
     }
 }
 
-const std::unordered_map<std::string, UniformInfo>& ProgramMTL::getAllActiveUniformInfo() const
+
+std::size_t ProgramMTL::getUniformBufferSize(ShaderStage stage) const
 {
-    return _uniformInfo;
+    switch (stage) {
+        case ShaderStage::VERTEX:
+            return _vertexShader->getUniformBufferSize();
+        case ShaderStage::FRAGMENT:
+            return _fragmentShader->getUniformBufferSize();
+        default:
+            CCASSERT(false, "Invalid shader stage.");
+            break;
+    }
+    return 0;
+}
+
+const std::unordered_map<std::string, UniformInfo>& ProgramMTL::getAllActiveUniformInfo(ShaderStage stage) const
+{
+    switch (stage) {
+        case ShaderStage::VERTEX:
+            return _vertexShader->getAllActiveUniformInfo();
+        case ShaderStage::FRAGMENT:
+            return _fragmentShader->getAllActiveUniformInfo();
+        default:
+            CCASSERT(false, "Invalid shader stage.");
+            break;
+    }
 }
 
 CC_BACKEND_END
