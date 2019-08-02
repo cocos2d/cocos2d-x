@@ -176,9 +176,11 @@ void ProgramState::init()
 {
     _vertexUniformBufferSize = _program->getUniformBufferSize(ShaderStage::VERTEX);
     _vertexUniformBuffer = new char[_vertexUniformBufferSize];
+    memset(_vertexUniformBuffer, 0, _vertexUniformBufferSize);
 #ifdef CC_USE_METAL
     _fragmentUniformBufferSize = _program->getUniformBufferSize(ShaderStage::FRAGMENT);
     _fragmentUniformBuffer = new char[_fragmentUniformBufferSize];
+    memset(_fragmentUniformBuffer, 0, _fragmentUniformBufferSize);
 #endif
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
