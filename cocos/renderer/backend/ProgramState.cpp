@@ -234,8 +234,10 @@ ProgramState *ProgramState::clone() const
     cp->_vertexTextureInfos = _vertexTextureInfos;
     cp->_fragmentTextureInfos = _fragmentTextureInfos;
     cp->_vertexUniformBuffer = new char[_vertexUniformBufferSize];
+    memcpy(cp->_vertexUniformBuffer, _vertexUniformBuffer, _vertexUniformBufferSize);
 #ifdef CC_USE_METAL
     cp->_fragmentUniformBuffer = new char[_fragmentUniformBufferSize];
+    memcpy(cp->_fragmentUniformBuffer, _fragmentUniformBuffer, _fragmentUniformBufferSize);
 #endif
     CC_SAFE_RETAIN(cp->_program);
 
