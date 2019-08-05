@@ -610,11 +610,30 @@ void RepeatForever::step(float dt)
     if (_innerAction->isDone() && _innerAction->getDuration() > 0)
     {
         float diff = _innerAction->getElapsed() - _innerAction->getDuration();
+        int time = 0;
         if (diff > _innerAction->getDuration())
+        {
+            time = (int)(diff / _innerAction->getDuration());
             diff = fmodf(diff, _innerAction->getDuration());
-        _innerAction->startWithTarget(_target);
-        // to prevent jerk. cocos2d-iphone issue #390, 1247
-        _innerAction->step(0.0f);
+        }
+        
+        while(time--)
+        {
+            if(_innerAction->isDone())
+            {
+                _innerAction->startWithTarget(_target);
+                // to prevent jerk. cocos2d-iphone issue #390, 1247
+                _innerAction->step(0.0f);
+            }
+            _innerAction->step(_innerAction->getDuration());
+        }
+        
+        if(_innerAction->isDone())
+        {
+            _innerAction->startWithTarget(_target);
+            // to prevent jerk. cocos2d-iphone issue #390, 1247
+            _innerAction->step(0.0f);
+        }
         _innerAction->step(diff);
     }
 }
