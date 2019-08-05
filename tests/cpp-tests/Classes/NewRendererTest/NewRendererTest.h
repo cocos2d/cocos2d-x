@@ -269,12 +269,12 @@ protected:
     };
     Node *_spritesAnchor = nullptr;
     int _spriteIndex = 0;
-    float _mavDt = 1.0f / 60.0f;
-    float _rmavDt = 1.0f / 60.0f;
-
+    float _maDt = 1.0f / 60.0f;
+    float _rmaDt =  1.0f/ 60.0f;
     const float DEST_DT_30FPS = 1.0f / 30.0f;
     cocos2d::Label * _totalSprites = nullptr;
-    Ticker _contHit = Ticker(30);
+    Ticker _contSlow = Ticker(20);
+    Ticker _contFast = Ticker(2);
+    Ticker _around30fps = Ticker(60 * 3);
 };
-
 #endif //__NewRendererTest_H_
