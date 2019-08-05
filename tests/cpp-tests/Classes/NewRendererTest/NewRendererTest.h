@@ -216,4 +216,63 @@ protected:
     cocos2d::GLProgramState* createSepiaGLProgramState();
 };
 
+class SpriteCreation : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(SpriteCreation);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void addSpritesCallback(Ref *);
+    void delSpritesCallback(Ref *);
+
+    void updateSpriteCountLabel(int x);
+
+    void doTest();
+
+protected:
+    int totalSprites = 1000;
+    int suggestDelta = 100;
+    cocos2d::Label*   _labelSpriteNum = nullptr;
+    cocos2d::Label*   labelCreate = nullptr;
+    cocos2d::Label*   labelDestory = nullptr;
+    SpriteCreation();
+    virtual ~SpriteCreation();
+};
+
+class NonBatchSprites : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(NonBatchSprites);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    virtual void update(float dt) override;
+protected:
+    NonBatchSprites();
+
+    void createSprite();
+
+    virtual ~NonBatchSprites();
+    class Ticker {
+    public:
+        Ticker(int m):_max(m) {}
+        void hit() {_cnt += 1;}
+        void cancel() {_cnt = 0;}
+        bool ok() {return _cnt >= _max;}
+    private:
+        int _cnt = 0;
+        int _max = 0;
+    };
+    Node *_spritesAnchor = nullptr;
+    int _spriteIndex = 0;
+    float _maDt = 1.0f / 60.0f;
+    float _rmaDt =  1.0f/ 60.0f;
+    const float DEST_DT_30FPS = 1.0f / 30.0f;
+    cocos2d::Label * _totalSprites = nullptr;
+    Ticker _contSlow = Ticker(20);
+    Ticker _contFast = Ticker(2);
+    Ticker _around30fps = Ticker(60 * 3);
+};
+
 #endif //__NewRendererTest_H_
