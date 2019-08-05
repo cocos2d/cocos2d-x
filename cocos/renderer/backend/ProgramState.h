@@ -186,15 +186,17 @@ public:
 
     /**
      * Get vertex uniform buffer. The buffer store all the vertex uniform's data.
-     * @return Vertex uniform buffer.
+     * @param[out] buffer Specifies the pointer points to a vertex uniform storage.
+     * @param[out] size Specifies the size of the buffer in bytes.
      */
-    const char* getVertexUniformBuffer(std::size_t& size) const;
+    void getVertexUniformBuffer(char** buffer, std::size_t& size) const;
 
     /**
      * Get fragment uniform buffer. The buffer store all the fragment uniform's data for metal.
-     * @return Fragment uniform buffer.
+     * @param[out] buffer Specifies the pointer points to a fragment uniform storage.
+     * @param[out] size Specifies the size of the buffer in bytes.
      */
-    const char* getFragmentUniformBuffer(std::size_t& size) const;
+    void getFragmentUniformBuffer(char** buffer, std::size_t& size) const;
     
     /**
     * An abstract base class that can be extended to support custom material auto bindings.

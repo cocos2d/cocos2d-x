@@ -479,16 +479,16 @@ ProgramState::AutoBindingResolver::~AutoBindingResolver()
     list.erase(std::remove(list.begin(), list.end(), this), list.end());
 }
 
-const char* ProgramState::getVertexUniformBuffer(std::size_t& size) const
+void ProgramState::getVertexUniformBuffer(char** buffer, std::size_t& size) const
 {
+    *buffer = _vertexUniformBuffer;
     size = _vertexUniformBufferSize;
-    return _vertexUniformBuffer;
 }
 
-const char* ProgramState::getFragmentUniformBuffer(std::size_t& size) const
+void ProgramState::getFragmentUniformBuffer(char** buffer, std::size_t& size) const
 {
+    *buffer = _fragmentUniformBuffer;
     size = _fragmentUniformBufferSize;
-    return _fragmentUniformBuffer;
 }
 
 CC_BACKEND_END

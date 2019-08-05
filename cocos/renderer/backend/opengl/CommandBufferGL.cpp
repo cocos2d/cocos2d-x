@@ -453,7 +453,8 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
         auto& callbacks = _programState->getCallbackUniforms();
         auto& uniformInfos = _programState->getProgram()->getAllActiveUniformInfo(ShaderStage::VERTEX);
         std::size_t bufferSize = 0;
-        const auto& uniformBuffer = _programState->getVertexUniformBuffer(bufferSize);
+        char* buffer = nullptr;
+        _programState->getVertexUniformBuffer(&buffer, bufferSize);
 
         for (auto &cb : callbacks)
         {
@@ -472,7 +473,7 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
                 uniformInfo.location,
                 elementCount,
                 uniformInfo.type,
-                (void*)(uniformBuffer + uniformInfo.bufferOffset));
+                (void*)(buffer + uniformInfo.bufferOffset));
         }
         
         const auto& textureInfo = _programState->getVertexTextureInfos();
