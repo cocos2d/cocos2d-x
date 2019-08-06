@@ -611,7 +611,7 @@ void RepeatForever::step(float dt)
     {
         float diff = _innerAction->getElapsed() - _innerAction->getDuration();
         
-        while(fabsf(diff) > MATH_EPSILON && diff > 0.0f)
+        while(fabsf(diff) > FLT_EPSILON && diff > 0.0f)
         {
             if(_innerAction->isDone())
             {
