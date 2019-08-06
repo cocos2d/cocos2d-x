@@ -505,7 +505,7 @@ int lua_cocos2dx_backend_Program_getFragmentShader(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_backend_Program_getUniformLocation(lua_State* tolua_S)
+int lua_cocos2dx_backend_Program_getUniformBufferSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::backend::Program* cobj = nullptr;
@@ -525,7 +525,7 @@ int lua_cocos2dx_backend_Program_getUniformLocation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_Program_getUniformLocation'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_Program_getUniformBufferSize'", nullptr);
         return 0;
     }
 #endif
@@ -533,24 +533,176 @@ int lua_cocos2dx_backend_Program_getUniformLocation(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::string arg0;
+        cocos2d::backend::ShaderStage arg0;
 
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.Program:getUniformLocation");
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.Program:getUniformBufferSize");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_Program_getUniformLocation'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_Program_getUniformBufferSize'", nullptr);
             return 0;
         }
-        cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
-        uniformLocation_to_luaval(tolua_S, ret);
+        unsigned int ret = cobj->getUniformBufferSize(arg0);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.Program:getUniformLocation",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.Program:getUniformBufferSize",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Program_getUniformBufferSize'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_Program_setProgramType(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::Program* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.Program",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::Program*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_Program_setProgramType'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::backend::ProgramType arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.Program:setProgramType");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_Program_setProgramType'", nullptr);
+            return 0;
+        }
+        cobj->setProgramType(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.Program:setProgramType",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Program_setProgramType'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_Program_getUniformLocation(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::Program* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.Program",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::backend::Program*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_Program_getUniformLocation'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 1) {
+            cocos2d::backend::Uniform arg0;
+            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.Program:getUniformLocation");
+
+            if (!ok) { break; }
+            cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
+            uniformLocation_to_luaval(tolua_S, ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.Program:getUniformLocation");
+
+            if (!ok) { break; }
+            cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
+            uniformLocation_to_luaval(tolua_S, ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccb.Program:getUniformLocation",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Program_getUniformLocation'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_Program_getProgramType(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::Program* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.Program",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::Program*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_Program_getProgramType'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_Program_getProgramType'", nullptr);
+            return 0;
+        }
+        int ret = (int)cobj->getProgramType();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.Program:getProgramType",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Program_getProgramType'.",&tolua_err);
 #endif
 
     return 0;
@@ -598,6 +750,61 @@ int lua_cocos2dx_backend_Program_getActiveAttributes(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Program_getActiveAttributes'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_Program_getAttributeLocation(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::Program* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.Program",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::backend::Program*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_Program_getAttributeLocation'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 1) {
+            cocos2d::backend::Attribute arg0;
+            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.Program:getAttributeLocation");
+
+            if (!ok) { break; }
+            int ret = cobj->getAttributeLocation(arg0);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.Program:getAttributeLocation");
+
+            if (!ok) { break; }
+            int ret = cobj->getAttributeLocation(arg0);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccb.Program:getAttributeLocation",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Program_getAttributeLocation'.",&tolua_err);
 #endif
 
     return 0;
@@ -664,8 +871,12 @@ int lua_register_cocos2dx_backend_Program(lua_State* tolua_S)
         tolua_function(tolua_S,"getMaxVertexLocation",lua_cocos2dx_backend_Program_getMaxVertexLocation);
         tolua_function(tolua_S,"getMaxFragmentLocation",lua_cocos2dx_backend_Program_getMaxFragmentLocation);
         tolua_function(tolua_S,"getFragmentShader",lua_cocos2dx_backend_Program_getFragmentShader);
+        tolua_function(tolua_S,"getUniformBufferSize",lua_cocos2dx_backend_Program_getUniformBufferSize);
+        tolua_function(tolua_S,"setProgramType",lua_cocos2dx_backend_Program_setProgramType);
         tolua_function(tolua_S,"getUniformLocation",lua_cocos2dx_backend_Program_getUniformLocation);
+        tolua_function(tolua_S,"getProgramType",lua_cocos2dx_backend_Program_getProgramType);
         tolua_function(tolua_S,"getActiveAttributes",lua_cocos2dx_backend_Program_getActiveAttributes);
+        tolua_function(tolua_S,"getAttributeLocation",lua_cocos2dx_backend_Program_getAttributeLocation);
         tolua_function(tolua_S,"getVertexShader",lua_cocos2dx_backend_Program_getVertexShader);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::backend::Program).name();
@@ -882,42 +1093,47 @@ int lua_cocos2dx_backend_ProgramState_getUniformLocation(lua_State* tolua_S)
     int argc = 0;
     cocos2d::backend::ProgramState* cobj = nullptr;
     bool ok  = true;
-
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
-
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"ccb.ProgramState",0,&tolua_err)) goto tolua_lerror;
 #endif
-
     cobj = (cocos2d::backend::ProgramState*)tolua_tousertype(tolua_S,1,0);
-
 #if COCOS2D_DEBUG >= 1
-    if (!cobj) 
+    if (!cobj)
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_ProgramState_getUniformLocation'", nullptr);
         return 0;
     }
 #endif
-
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::string arg0;
+    do{
+        if (argc == 1) {
+            cocos2d::backend::Uniform arg0;
+            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.ProgramState:getUniformLocation");
 
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.ProgramState:getUniformLocation");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_ProgramState_getUniformLocation'", nullptr);
-            return 0;
+            if (!ok) { break; }
+            cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
+            uniformLocation_to_luaval(tolua_S, ret);
+            return 1;
         }
-        cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
-        uniformLocation_to_luaval(tolua_S, ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.ProgramState:getUniformLocation",argc, 1);
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.ProgramState:getUniformLocation");
+
+            if (!ok) { break; }
+            cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
+            uniformLocation_to_luaval(tolua_S, ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccb.ProgramState:getUniformLocation",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -927,40 +1143,106 @@ int lua_cocos2dx_backend_ProgramState_getUniformLocation(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_backend_ProgramState_getAttributeLocation(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::ProgramState* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.ProgramState",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::backend::ProgramState*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_ProgramState_getAttributeLocation'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 1) {
+            cocos2d::backend::Attribute arg0;
+            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.ProgramState:getAttributeLocation");
+
+            if (!ok) { break; }
+            int ret = cobj->getAttributeLocation(arg0);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.ProgramState:getAttributeLocation");
+
+            if (!ok) { break; }
+            int ret = cobj->getAttributeLocation(arg0);
+            tolua_pushnumber(tolua_S,(lua_Number)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccb.ProgramState:getAttributeLocation",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_ProgramState_getAttributeLocation'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_backend_ProgramState_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::backend::ProgramState* cobj = nullptr;
     bool ok  = true;
-
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
-
-
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        std::string arg0;
-        std::string arg1;
+    do{
+        if (argc == 1) {
+            cocos2d::backend::ProgramType arg0;
+            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.ProgramState:ProgramState");
 
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.ProgramState:ProgramState");
-
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccb.ProgramState:ProgramState");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_ProgramState_constructor'", nullptr);
-            return 0;
+            if (!ok) { break; }
+            cobj = new cocos2d::backend::ProgramState(arg0);
+            cobj->autorelease();
+            int ID =  (int)cobj->_ID ;
+            int* luaID =  &cobj->_luaID ;
+            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccb.ProgramState");
+            return 1;
         }
-        cobj = new cocos2d::backend::ProgramState(arg0, arg1);
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccb.ProgramState");
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.ProgramState:ProgramState",argc, 2);
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 2) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.ProgramState:ProgramState");
+
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccb.ProgramState:ProgramState");
+
+            if (!ok) { break; }
+            cobj = new cocos2d::backend::ProgramState(arg0, arg1);
+            cobj->autorelease();
+            int ID =  (int)cobj->_ID ;
+            int* luaID =  &cobj->_luaID ;
+            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccb.ProgramState");
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccb.ProgramState:ProgramState",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -988,6 +1270,7 @@ int lua_register_cocos2dx_backend_ProgramState(lua_State* tolua_S)
         tolua_function(tolua_S,"setParameterAutoBinding",lua_cocos2dx_backend_ProgramState_setParameterAutoBinding);
         tolua_function(tolua_S,"getProgram",lua_cocos2dx_backend_ProgramState_getProgram);
         tolua_function(tolua_S,"getUniformLocation",lua_cocos2dx_backend_ProgramState_getUniformLocation);
+        tolua_function(tolua_S,"getAttributeLocation",lua_cocos2dx_backend_ProgramState_getAttributeLocation);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::backend::ProgramState).name();
     g_luaType[typeName] = "ccb.ProgramState";
