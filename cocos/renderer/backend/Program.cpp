@@ -32,4 +32,9 @@ Program::Program(const std::string& vs, const std::string& fs)
 {
 }
 
+void Program::setProgramType(ProgramType type)
+{
+    _programType = type;
+}
+
 CC_BACKEND_END

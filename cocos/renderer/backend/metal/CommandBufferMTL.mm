@@ -452,18 +452,22 @@ void CommandBufferMTL::setUniformBuffer() const
         }
         
         // Uniform buffer is bound to index 1.
-        auto vertexUniformBuffer = _programState->getVertexUniformBuffer();
-        if(vertexUniformBuffer.size() > 0)
+        std::size_t bufferSize = 0;
+        char* vertexBuffer = nullptr;
+        _programState->getVertexUniformBuffer(&vertexBuffer, bufferSize);
+        if(vertexBuffer)
         {
-            [_mtlRenderEncoder setVertexBytes:vertexUniformBuffer.data()
-                                       length:vertexUniformBuffer.size() atIndex:1];
+            [_mtlRenderEncoder setVertexBytes:vertexBuffer
+                                       length:bufferSize 
+                                       atIndex:1];
         }
         
-        auto fragmentUniformBuffer = _programState->getFragmentUniformBuffer();
-        if(fragmentUniformBuffer.size() > 0)
+        char* fragmentBuffer = nullptr;
+        _programState->getFragmentUniformBuffer(&fragmentBuffer, bufferSize);
+        if(fragmentBuffer)
         {
-            [_mtlRenderEncoder setFragmentBytes:fragmentUniformBuffer.data()
-                                         length:fragmentUniformBuffer.size()
+            [_mtlRenderEncoder setFragmentBytes:fragmentBuffer
+                                         length:bufferSize
                                         atIndex:1];
         }
     }

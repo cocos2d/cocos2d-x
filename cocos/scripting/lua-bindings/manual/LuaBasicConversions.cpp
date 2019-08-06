@@ -3352,7 +3352,13 @@ bool luaval_to_uniformLocation(lua_State* L, int pos, cocos2d::backend::UniformL
     if (lua_isnil(L, -1)) {
         CCASSERT(false, "invalidate UniformLocation value");
     }
-    loc.location = lua_tointeger(L, -1);
+    int len = lua_objlen(L, -1);
+    for (int i=0;i<len;i++)
+    {
+        lua_rawgeti(L, -1, i + 1);
+        loc.location[i] = lua_tointeger(L, -1);
+        lua_pop(L, 1);
+    }
     lua_pop(L, 1);
 
     lua_pushstring(L, "shaderStage");
@@ -3371,10 +3377,16 @@ void uniformLocation_to_luaval(lua_State* L, const cocos2d::backend::UniformLoca
         return;
 
     lua_newtable(L);
-
     lua_pushstring(L, "location");
-    lua_pushinteger(L, static_cast<int>(loc.location));
+    lua_newtable(L);
+    for (int i=1;i<=2;i++)
+    {
+        lua_pushnumber(L, i);
+        lua_pushinteger(L, static_cast<int>(loc.location[i-1]));
+        lua_rawset(L, -3);
+    }
     lua_rawset(L, -3);
+
     lua_pushstring(L, "shaderStage");
     lua_pushinteger(L, static_cast<int>(loc.shaderStage));
     lua_rawset(L, -3);
