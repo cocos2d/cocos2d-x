@@ -45,7 +45,7 @@ NS_CC_BEGIN
 
 #if CC_SPRITE_DEBUG_DRAW
 
-int Sprite::_debugDrawLevel = 2;
+bool Sprite::_debugDrawEnabled = true;
 Color4F Sprite::_debugDrawColor = Color4F::WHITE; //Color4F::RED
 
 #endif
@@ -329,7 +329,7 @@ Sprite::Sprite()
 , _stretchEnabled(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
-    if (Sprite::_debugDrawLevel > 0)
+    if (Sprite::_debugDrawEnabled)
     {
         _debugDrawNode = DrawNode::create();
         addChild(_debugDrawNode, INT_MAX);
@@ -350,9 +350,9 @@ Sprite::~Sprite()
 }
 
 #if CC_SPRITE_DEBUG_DRAW
-void Sprite::setDebugDrawLevel(int value)
+void Sprite::enableDebugDraw(const bool value)
 {
-    Sprite::_debugDrawLevel = value;
+    Sprite::_debugDrawEnabled = value;
 }
 
 void Sprite::setDebugDrawColor(const Color4F& color)
@@ -1109,7 +1109,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         renderer->addCommand(&_trianglesCommand);
         
 #if CC_SPRITE_DEBUG_DRAW
-        if (Sprite::_debugDrawLevel && _debugDrawNode)
+        if (Sprite::_debugDrawEnabled && _debugDrawNode)
         {
             _debugDrawNode->clear();
             auto count = _polyInfo.triangles.indexCount/3;

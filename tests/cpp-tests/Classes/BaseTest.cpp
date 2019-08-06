@@ -206,8 +206,9 @@ void TestList::runThisTest()
             _toggleDebugDrawItem->setString(str);
             Label::enableDebugDraw(v);
 #if CC_SPRITE_DEBUG_DRAW
-            Sprite::setDebugDrawLevel(v ? 2 : 0);
+            Sprite::enableDebugDraw(v);
 #endif // CC_SPRITE_DEBUG_DRAW
+            runThisTest(); // Reopen the test menu to apply the debug drawing 
         });
         _toggleDebugDrawItem->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::bottom().y + 70));
 #endif // CC_LABEL_DEBUG_DRAW

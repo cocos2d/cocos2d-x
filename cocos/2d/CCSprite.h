@@ -555,8 +555,8 @@ CC_CONSTRUCTOR_ACCESS :
 #if CC_SPRITE_DEBUG_DRAW
     /// @name DebugDraw
     /// @{
-    static void setDebugDrawLevel(int value);
-    static int getDebugDrawLevel() { return _debugDrawLevel; }
+    static void enableDebugDraw(const bool value);
+    static bool getDebugDrawEnabled() { return _debugDrawEnabled; }
     static void setDebugDrawColor(const Color4F& color);
     /// @}
 #endif
@@ -740,7 +740,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
     
 #if CC_SPRITE_DEBUG_DRAW
-    static int _debugDrawLevel;	       /// Determine to draw or not debug sprite info (0 disabled, 1 bbox, 2 texture box)
+    static bool _debugDrawEnabled;	   /// Is debug drawing of sprites enabled or not
     static Color4F _debugDrawColor;    /// Color to be used to paint the debug bounding boxes
 #endif
 
