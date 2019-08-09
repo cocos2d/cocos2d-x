@@ -319,7 +319,7 @@ void CommandBufferGL::setIndexBuffer(Buffer* buffer)
     _indexBuffer = static_cast<BufferGL*>(buffer);
 }
 
-void CommandBufferGL::setVertexBuffer(unsigned int index, Buffer* buffer)
+void CommandBufferGL::setVertexBuffer(Buffer* buffer)
 {
     assert(buffer != nullptr);
     if (buffer == nullptr)
@@ -327,11 +327,7 @@ void CommandBufferGL::setVertexBuffer(unsigned int index, Buffer* buffer)
     
     buffer->retain();
     
-    if (index >= _vertexBuffers.size())
-        _vertexBuffers.resize(index + 1);
-
-    CC_SAFE_RELEASE(_vertexBuffers[index]);
-    _vertexBuffers[index] = static_cast<BufferGL*>(buffer);
+    _vertexBuffer = static_cast<BufferGL*>(buffer);
 }
 
 void CommandBufferGL::setProgramState(ProgramState* programState)
@@ -419,31 +415,23 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
     int i = 0;
     const auto& attributeInfos = program->getAttributeInfos();
     const auto& vertexLayouts = getVertexLayouts();
-    for (const auto& vertexBuffer : _vertexBuffers)
-    {
-        if (! vertexBuffer)
-            continue;
-        if (i >= attributeInfos.size())
-            break;
-        
-        glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getHandler());
+    
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer->getHandler());
 
-        const auto& attributeInfo = attributeInfos[i];
-        const auto &layouts = vertexLayouts->at(i);
-        for (const auto& attribute : attributeInfo)
-        {
-            const auto &layoutInfo = layouts.getAttributes().at(attribute.name);
-            glEnableVertexAttribArray(attribute.location);
-            glVertexAttribPointer(attribute.location,
-                UtilsGL::getGLAttributeSize(layoutInfo.format),
-                UtilsGL::toGLAttributeType(layoutInfo.format),
-                layoutInfo.needToBeNormallized,
-                layouts.getStride(),
-                (GLvoid*)layoutInfo.offset);
-        }
-        
-        ++i;
+    const auto& attributeInfo = attributeInfos[i];
+    const auto &layouts = vertexLayouts->at(i);
+    for (const auto& attribute : attributeInfo)
+    {
+        const auto &layoutInfo = layouts.getAttributes().at(attribute.name);
+        glEnableVertexAttribArray(attribute.location);
+        glVertexAttribPointer(attribute.location,
+            UtilsGL::getGLAttributeSize(layoutInfo.format),
+            UtilsGL::toGLAttributeType(layoutInfo.format),
+            layoutInfo.needToBeNormallized,
+            layouts.getStride(),
+            (GLvoid*)layoutInfo.offset);
     }
+      
 }
 
 void CommandBufferGL::setUniforms(ProgramGL* program) const
@@ -598,11 +586,7 @@ void CommandBufferGL::cleanResources()
     CC_SAFE_RELEASE_NULL(_indexBuffer);
     CC_SAFE_RELEASE_NULL(_renderPipeline);
     CC_SAFE_RELEASE_NULL(_programState);
-      
-    for (const auto& vertexBuffer : _vertexBuffers)
-        CC_SAFE_RELEASE(vertexBuffer);
-    
-    _vertexBuffers.clear();
+    CC_SAFE_RELEASE(_vertexBuffer);
 }
 
 void CommandBufferGL::setLineWidth(float lineWidth)
