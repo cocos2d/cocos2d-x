@@ -150,7 +150,6 @@ void NavMeshObstacle::syncToObstacle()
     if (_tileCache){
         auto obstacle = _tileCache->getObstacleByRef(_obstacleID);
         if (obstacle){
-            Vec3 worldPos = Vec3(obstacle->pos[0], obstacle->pos[1], obstacle->pos[2]);
             Mat4 mat = _owner->getNodeToWorldTransform();
             if ((mat.m[12] != obstacle->pos[0] && mat.m[13] != obstacle->pos[1] && mat.m[14] != obstacle->pos[2])
                 || obstacle->radius != _radius

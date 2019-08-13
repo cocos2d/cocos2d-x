@@ -46,14 +46,6 @@ const char* FontAtlas::CMD_RESET_FONTATLAS = "__cc_RESET_FONTATLAS";
 
 FontAtlas::FontAtlas(Font &theFont) 
 : _font(&theFont)
-, _fontFreeType(nullptr)
-, _iconv(nullptr)
-, _currentPageData(nullptr)
-, _fontAscender(0)
-, _rendererRecreatedListener(nullptr)
-, _antialiasEnabled(true)
-, _currLineHeight(0)
-, _currentPageDataRGBA(nullptr)
 {
     _font->retain();
 
@@ -62,11 +54,7 @@ FontAtlas::FontAtlas(Font &theFont)
     {
         _lineHeight = _font->getFontMaxHeight();
         _fontAscender = _fontFreeType->getFontAscender();
-        _currentPage = 0;
-        _currentPageOrigX = 0;
-        _currentPageOrigY = 0;
         _letterEdgeExtend = 2;
-        _letterPadding = 0;
 
         if (_fontFreeType->isDistanceFieldEnabled())
         {

@@ -39,33 +39,9 @@ static const int DISABLED_RENDERER_Z = (-2);
 static const float CHECK_EDITBOX_POSITION_INTERVAL = 0.1f;
 
 EditBox::EditBox()
-: _normalRenderer(nullptr)
-, _pressedRenderer(nullptr)
-, _disabledRenderer(nullptr)
-, _normalFileName("")
-, _pressedFileName("")
-, _disabledFileName("")
-, _normalTexType(TextureResType::LOCAL)
-, _pressedTexType(TextureResType::LOCAL)
-, _disabledTexType(TextureResType::LOCAL)
-, _capInsetsNormal(Rect::ZERO)
-, _capInsetsPressed(Rect::ZERO)
-, _capInsetsDisabled(Rect::ZERO)
-, _normalTextureSize(_contentSize)
+: _normalTextureSize(_contentSize)
 , _pressedTextureSize(_contentSize)
 , _disabledTextureSize(_contentSize)
-, _normalTextureLoaded(false)
-, _pressedTextureLoaded(false)
-, _disabledTextureLoaded(false)
-, _normalTextureAdaptDirty(true)
-, _pressedTextureAdaptDirty(true)
-, _disabledTextureAdaptDirty(true)
-, _editBoxImpl(nullptr)
-, _delegate(nullptr)
-, _adjustHeight(0.f)
-#if CC_ENABLE_SCRIPT_BINDING
-, _scriptEditBoxHandler(0)
-#endif
 {
 }
 

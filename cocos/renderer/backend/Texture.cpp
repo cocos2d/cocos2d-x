@@ -96,11 +96,11 @@ namespace
 
 TextureBackend::TextureBackend(const TextureDescriptor& descriptor)
     : _bitsPerElement(computeBitsPerElement(descriptor.textureFormat))
+    , _width(descriptor.width)
+    , _height(descriptor.height)
     , _textureType(descriptor.textureType)
     , _textureFormat(descriptor.textureFormat)
     , _textureUsage(descriptor.textureUsage)
-    , _width(descriptor.width)
-    , _height(descriptor.height)
 {
 }
 

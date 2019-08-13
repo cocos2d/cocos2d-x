@@ -767,7 +767,6 @@ void PUBillboardChain::onBeforeDraw()
 void PUBillboardChain::onAfterDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     renderer->setDepthTest(_rendererDepthTestEnabled);
     renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
     renderer->setCullMode(_rendererCullMode);
