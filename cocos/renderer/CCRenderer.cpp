@@ -634,7 +634,7 @@ void Renderer::drawBatchedTriangles()
     for (int i = 0; i < batchesTotal; ++i)
     {
         beginRenderPass(_triBatchesToDraw[i].cmd);
-        _commandBuffer->setVertexBuffer(0, _vertexBuffer);
+        _commandBuffer->setVertexBuffer(_vertexBuffer);
         _commandBuffer->setIndexBuffer(_indexBuffer);
         auto& pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
         _commandBuffer->setProgramState(pipelineDescriptor.programState);
@@ -664,7 +664,7 @@ void Renderer::drawCustomCommand(RenderCommand *command)
     if (cmd->getBeforeCallback()) cmd->getBeforeCallback()();
 
     beginRenderPass(command);
-    _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
+    _commandBuffer->setVertexBuffer(cmd->getVertexBuffer());
     _commandBuffer->setProgramState(cmd->getPipelineDescriptor().programState);
     
     auto drawType = cmd->getDrawType();

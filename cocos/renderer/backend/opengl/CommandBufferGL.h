@@ -96,10 +96,9 @@ public:
 
     /**
      * Set a global buffer for all vertex shaders at the given bind point index 0.
-     * @param index An index in the buffer argument table.
      * @param buffer The vertex buffer to be setted in the buffer argument table.
      */
-    virtual void setVertexBuffer(unsigned int index, Buffer* buffer) override;
+    virtual void setVertexBuffer(Buffer* buffer) override;
 
     /**
      * Set unifroms and textures
@@ -194,7 +193,7 @@ private:
 
     GLint _defaultFBO = 0;  // The value gets from glGetIntegerv, so need to use GLint
     GLuint _currentFBO = 0;
-    std::vector<BufferGL*> _vertexBuffers;
+    BufferGL* _vertexBuffer;
     ProgramState* _programState = nullptr;
     BufferGL* _indexBuffer = nullptr;
     RenderPipelineGL* _renderPipeline = nullptr;

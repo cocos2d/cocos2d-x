@@ -43,8 +43,10 @@ ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmen
     std::string fsPreDefine("precision mediump float;\n precision mediump int;\n");
     vsPreDefine.append(vertexShader);
     fsPreDefine.append(fragmentShader);
-    _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(fsPreDefine));
-    _vertexShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newVertexShaderModule(vsPreDefine));
+    _vertexShader = std::move(vsPreDefine);
+    _fragmentShader = std::move(fsPreDefine);
+    _vertexShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newVertexShaderModule(_vertexShader));
+    _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(_fragmentShader));
 #else
     _vertexShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newVertexShaderModule(_vertexShader));
     _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(_fragmentShader));
@@ -318,20 +320,16 @@ UniformLocation ProgramGL::getUniformLocation(backend::Uniform name) const
 UniformLocation ProgramGL::getUniformLocation(const std::string& uniform) const
 {
     UniformLocation uniformLocation;
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    if (_originalUniformLocations.find(uniform) != _originalUniformLocations.end())
-    {
-        uniformLocation.location[0] = _originalUniformLocations.at(uniform);
-        uniformLocation.location[1] = _activeUniformInfos.at(uniform).bufferOffset;
-    }
-#else
     if (_activeUniformInfos.find(uniform) != _activeUniformInfos.end())
     {
         const auto& uniformInfo = _activeUniformInfos.at(uniform);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        uniformLocation.location[0] = _mapToOriginalLocation.at(uniformInfo.location);
+#else
         uniformLocation.location[0] = uniformInfo.location;
+#endif
         uniformLocation.location[1] = uniformInfo.bufferOffset;
     }
-#endif
     return uniformLocation;
 }
 
