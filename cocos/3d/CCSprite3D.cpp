@@ -809,19 +809,6 @@ void Sprite3D::setProgramState(backend::ProgramState* programState)
         state->setProgramState(programState);
     }
 }
-//TODO add setProgram
-//void Sprite3D::setGLProgram(GLProgram* glprogram)
-//{
-//    auto glProgramState = GLProgramState::create(glprogram);
-//    setGLProgramState(glProgramState);
-//}
-
-void Sprite3D::setVertexLayout(const backend::VertexLayout* vertexLayout)
-{
-    for (auto state : _meshes) {
-        state->setVertexLayout(vertexLayout);
-    }
-}
 
 void Sprite3D::setBlendFunc(const BlendFunc& blendFunc)
 {

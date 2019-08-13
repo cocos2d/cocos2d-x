@@ -107,12 +107,12 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
     setAnchorPoint(Vec2(0.5f, 0.5f));
     
     // init custom command
-    auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
-    layout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
+    auto layout = _programState->getVertexLayout();
+    layout->setAttribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
 
     float w = SIZE_X, h = SIZE_Y;
     Vec2 vertices[6] = { Vec2(0,0), Vec2(w,0), Vec2(w,h), Vec2(0,0), Vec2(0,h), Vec2(w,h) };
-    layout.setLayout(sizeof(Vec2));
+    layout->setLayout(sizeof(Vec2));
 
     /*
      * TODO: the Y-coordinate of subclasses are flipped in metal

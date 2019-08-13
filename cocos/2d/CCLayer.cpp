@@ -291,19 +291,19 @@ LayerColor::LayerColor()
     _programState = new (std::nothrow) backend::ProgramState(positionColor_vert, positionColor_frag);
     pipelineDescriptor.programState = _programState;
     
-    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
+    auto vertexLayout = _programState->getVertexLayout();
     const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        vertexLayout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, sizeof(_vertexData[0].vertices), false);
+        vertexLayout->setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, sizeof(_vertexData[0].vertices), false);
     }
-    vertexLayout.setLayout(sizeof(_vertexData[0]));
+    vertexLayout->setLayout(sizeof(_vertexData[0]));
     
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     
@@ -714,14 +714,14 @@ LayerRadialGradient::LayerRadialGradient()
     _radiusLocation = pipelineDescriptor.programState->getUniformLocation("u_radius");
     _expandLocation = pipelineDescriptor.programState->getUniformLocation("u_expand");
 
-    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
+    auto vertexLayout = _programState->getVertexLayout();
     const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+        vertexLayout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
     }
-    vertexLayout.setLayout(sizeof(_vertices[0]));
+    vertexLayout->setLayout(sizeof(_vertices[0]));
 
     _customCommand.createVertexBuffer(sizeof(_vertices[0]), sizeof(_vertices) / sizeof(_vertices[0]), CustomCommand::BufferUsage::STATIC);
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);

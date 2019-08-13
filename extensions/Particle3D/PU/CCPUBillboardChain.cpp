@@ -666,24 +666,24 @@ void PUBillboardChain::init( const std::string &texFile )
 
     auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     pipelineDescriptor.programState = _programState;
-    auto &layout = pipelineDescriptor.vertexLayout;
+    auto layout = _programState->getVertexLayout();
     const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        layout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(VertexInfo, position), false);
+        layout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(VertexInfo, position), false);
     }
     iter = attributeInfo.find("a_texCoord");
     if(iter != attributeInfo.end())
     {
-        layout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(VertexInfo, uv), false);
+        layout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(VertexInfo, uv), false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, offsetof(VertexInfo, color), false);
+        layout->setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, offsetof(VertexInfo, color), false);
     }
-    layout.setLayout(sizeof(VertexInfo));
+    layout->setLayout(sizeof(VertexInfo));
     
     _locColor = _programState->getUniformLocation("u_color");
     _locPMatrix = _programState->getUniformLocation("u_PMatrix");

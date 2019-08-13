@@ -162,18 +162,18 @@ bool DrawNode3D::init()
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::LINE);
 
-    auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
+    auto layout = _programState->getVertexLayout();
     const auto &attributeInfo = _programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");
     if (iter != attributeInfo.end()) {
-        layout.setAttribute(iter->first, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        layout->setAttribute(iter->first, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_color");
     if (iter != attributeInfo.end())
     {
-        layout.setAttribute(iter->first, iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
+        layout->setAttribute(iter->first, iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
     }
-    layout.setLayout(sizeof(V3F_C4B));
+    layout->setLayout(sizeof(V3F_C4B));
 
     _customCommand.createVertexBuffer(sizeof(V3F_C4B), INITIAL_VERTEX_BUFFER_LENGTH, CustomCommand::BufferUsage::DYNAMIC);
 

@@ -322,11 +322,10 @@ void CommandBufferGL::setIndexBuffer(Buffer* buffer)
 void CommandBufferGL::setVertexBuffer(Buffer* buffer)
 {
     assert(buffer != nullptr);
-    if (buffer == nullptr)
+    if (buffer == nullptr || _vertexBuffer == buffer)
         return;
     
     buffer->retain();
-    
     _vertexBuffer = static_cast<BufferGL*>(buffer);
 }
 
@@ -412,22 +411,25 @@ void CommandBufferGL::prepareDrawing() const
 void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
 {
     // Bind vertex buffers and set the attributes.
-    int i = 0;
-    const auto& attributeInfos = program->getAttributeInfos();
-    const auto& vertexLayout = getVertexLayout();
+    auto vertexLayout = _programState->getVertexLayout();
+    
+    if (!vertexLayout->isValid())
+        return;
+    
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer->getHandler());
-    for (const auto& attribute : attributeInfos)
+
+    const auto& attributes = vertexLayout->getAttributes();
+    for (const auto& attributeInfo : attributes)
     {
-        const auto &layoutInfo = vertexLayout.getAttributes().at(attribute.name);
-        glEnableVertexAttribArray(attribute.location);
-        glVertexAttribPointer(attribute.location,
-            UtilsGL::getGLAttributeSize(layoutInfo.format),
-            UtilsGL::toGLAttributeType(layoutInfo.format),
-            layoutInfo.needToBeNormallized,
-            vertexLayout.getStride(),
-            (GLvoid*)layoutInfo.offset);
+        const auto& attribute = attributeInfo.second;
+        glEnableVertexAttribArray(attribute.index);
+        glVertexAttribPointer(attribute.index,
+            UtilsGL::getGLAttributeSize(attribute.format),
+            UtilsGL::toGLAttributeType(attribute.format),
+            attribute.needToBeNormallized,
+            vertexLayout->getStride(),
+            (GLvoid*)attribute.offset);
     }
-      
 }
 
 void CommandBufferGL::setUniforms(ProgramGL* program) const
@@ -581,8 +583,8 @@ void CommandBufferGL::cleanResources()
 {
     CC_SAFE_RELEASE_NULL(_indexBuffer);
     CC_SAFE_RELEASE_NULL(_renderPipeline);
-    CC_SAFE_RELEASE_NULL(_programState);
-    CC_SAFE_RELEASE(_vertexBuffer);
+    CC_SAFE_RELEASE_NULL(_programState);  
+    CC_SAFE_RELEASE_NULL(_vertexBuffer);
 }
 
 void CommandBufferGL::setLineWidth(float lineWidth)

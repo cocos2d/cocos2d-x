@@ -69,7 +69,7 @@ bool Skybox::init()
     _programState = new backend::ProgramState(CC3D_skybox_vert, CC3D_skybox_frag);
 
     auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    auto &layout = pipelineDescriptor.vertexLayout;
+    auto layout = _programState->getVertexLayout();
 
     pipelineDescriptor.programState = _programState;
     // disable blend
@@ -78,9 +78,9 @@ bool Skybox::init()
     const auto& iter = attributeInfo.find(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION);
     if(iter != attributeInfo.end())
     {
-        layout.setAttribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        layout->setAttribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
-    layout.setLayout(sizeof(Vec3));
+    layout->setLayout(sizeof(Vec3));
 
     _uniformColorLoc = _programState->getUniformLocation("u_color");
     _uniformCameraRotLoc = _programState->getUniformLocation("u_cameraRot");

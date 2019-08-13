@@ -802,23 +802,24 @@ void Terrain::onEnter()
 
 void Terrain::cacheUniformAttribLocation()
 {
+    auto vertexLayout = _programState->getVertexLayout();
     const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        _vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        vertexLayout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_texCoord");
     if(iter != attributeInfo.end())
     {
-        _vertexLayout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(TerrainVertexData, _texcoord), false);
+        vertexLayout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(TerrainVertexData, _texcoord), false);
     }
     iter = attributeInfo.find("a_normal");
     if(iter != attributeInfo.end())
     {
-        _vertexLayout.setAttribute("a_normal", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(TerrainVertexData, _normal), false);
+        vertexLayout->setAttribute("a_normal", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(TerrainVertexData, _normal), false);
     }
-    _vertexLayout.setLayout(sizeof(TerrainVertexData));
+    vertexLayout->setLayout(sizeof(TerrainVertexData));
 
     _alphaMapLocation.reset();
     for (int i = 0; i < 4; ++i)
@@ -974,7 +975,6 @@ void Terrain::Chunk::bindAndDraw()
     CCASSERT(_buffer && _chunkIndices._indexBuffer, "buffer should not be nullptr");
     _command.setIndexBuffer(_chunkIndices._indexBuffer, backend::IndexFormat::U_SHORT);
     _command.setVertexBuffer(_buffer);
-    _command.getPipelineDescriptor().vertexLayout = _terrain->_vertexLayout;
     _command.getPipelineDescriptor().programState = _terrain->_programState; 
     _command.setIndexDrawInfo(0, _chunkIndices._size);
     renderer->addCommand(&_command);

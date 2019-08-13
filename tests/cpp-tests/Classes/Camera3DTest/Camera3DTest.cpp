@@ -1280,31 +1280,6 @@ void FogTestDemo::onEnter()
     _sprite3D1->setProgramState(_programState1);
     _sprite3D2->setProgramState(_programState2);
 
-    //pass mesh's attribute to shader
-    long offset = 0; 
-    auto attributeCount = _sprite3D1->getMesh()->getMeshVertexAttribCount();
-    backend::VertexLayout layout1;
-    for (auto i = 0; i < attributeCount; i++) {
-        auto meshattribute = _sprite3D1->getMesh()->getMeshVertexAttribute(i);
-        auto attributeName = shaderinfos::getAttributeName(meshattribute.vertexAttrib);
-        layout1.setAttribute(attributeName, i, meshattribute.type, offset, false);
-        offset += meshattribute.getAttribSizeBytes();
-    }
-    layout1.setLayout(offset);
-    _sprite3D1->setVertexLayout(&layout1);
-
-    backend::VertexLayout layout2;
-    long offset1 = 0; 
-    auto attributeCount1 = _sprite3D2->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount1; i++) {
-        auto meshattribute = _sprite3D2->getMesh()->getMeshVertexAttribute(i);
-        auto attributeName = shaderinfos::getAttributeName(meshattribute.vertexAttrib);
-        layout2.setAttribute(attributeName, i, meshattribute.type, offset1, false);
-        offset1 += meshattribute.getAttribSizeBytes();
-    }
-    layout2.setLayout(offset1);
-    _sprite3D2->setVertexLayout(&layout2);
-
     auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
     float   fogStart    = 10;
     float   fogEnd      = 60;

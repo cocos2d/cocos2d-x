@@ -35,7 +35,6 @@ CC_BACKEND_BEGIN
 RenderPipelineGL::RenderPipelineGL(const RenderPipelineDescriptor& descriptor)
 {
     _programGL = static_cast<ProgramGL*>(descriptor.programState->getProgram());
-    _programGL->computeAttributeInfos(descriptor);
     CC_SAFE_RETAIN(_programGL);
 
     const auto& blendState = descriptor.blendState;

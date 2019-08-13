@@ -114,8 +114,7 @@ private:
     
     MeshIndexData* _meshIndexData;
     backend::ProgramState* _programState;
-    backend::VertexLayout* _vertexLayout; //weak reference
-
+    std::shared_ptr<backend::VertexLayout> _vertexLayout = std::make_shared<backend::VertexLayout>();
     std::unordered_map<std::string, backend::AttributeBindInfo> _attributes;
     uint32_t _vertexAttribsFlags;
 };
