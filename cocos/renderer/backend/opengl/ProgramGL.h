@@ -65,8 +65,6 @@ struct AttributeInfo
 class ProgramGL : public Program
 {
 public:
-    typedef std::vector<AttributeInfo> VertexAttributeArray;
-    
     /**
      * @param vertexShader Specifes the vertex shader source.
      * @param fragmentShader Specifes the fragment shader source.
@@ -79,7 +77,7 @@ public:
      * Get attribute informations.
      * @return Attribute informations.
      */
-    inline const std::vector<VertexAttributeArray>& getAttributeInfos() const { return _attributeInfos; }
+    inline const std::vector<AttributeInfo>& getAttributeInfos() const { return _attributeInfos; }
 
     /**
      * Get program object.
@@ -175,7 +173,7 @@ private:
     ShaderModuleGL* _vertexShaderModule = nullptr;
     ShaderModuleGL* _fragmentShaderModule = nullptr;
     
-    std::vector<VertexAttributeArray> _attributeInfos;
+    std::vector<AttributeInfo> _attributeInfos;
     std::unordered_map<std::string, UniformInfo> _activeUniformInfos;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     std::unordered_map<std::string, int> _originalUniformLocations; ///< record the uniform location when shader was first created.

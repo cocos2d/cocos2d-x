@@ -185,34 +185,27 @@ void ProgramGL::computeLocations()
 void ProgramGL::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
 {
     _attributeInfos.clear();
-    const auto& vertexLayouts = descriptor.vertexLayouts;
-    for (const auto& vertexLayout : *vertexLayouts)
+    
+    if (! descriptor.vertexLayout.isValid())
+        return;
+    
+    const auto& attributes = descriptor.vertexLayout.getAttributes();
+    for (const auto& it : attributes)
     {
-        if (! vertexLayout.isValid())
+        auto &attribute = it.second;
+        AttributeInfo attributeInfo;
+        
+        if (!getAttributeLocation(attribute.name, attributeInfo.location))
             continue;
         
-        VertexAttributeArray vertexAttributeArray;
-        
-        const auto& attributes = vertexLayout.getAttributes();
-        for (const auto& it : attributes)
-        {
-            auto &attribute = it.second;
-            AttributeInfo attributeInfo;
-            
-            if (!getAttributeLocation(attribute.name, attributeInfo.location))
-                continue;
-            
-            attributeInfo.stride = vertexLayout.getStride();
-            attributeInfo.offset = attribute.offset;
-            attributeInfo.type = UtilsGL::toGLAttributeType(attribute.format);
-            attributeInfo.size = UtilsGL::getGLAttributeSize(attribute.format);
-            attributeInfo.needToBeNormallized = attribute.needToBeNormallized;
-            attributeInfo.name = attribute.name;
+        attributeInfo.stride = descriptor.vertexLayout.getStride();
+        attributeInfo.offset = attribute.offset;
+        attributeInfo.type = UtilsGL::toGLAttributeType(attribute.format);
+        attributeInfo.size = UtilsGL::getGLAttributeSize(attribute.format);
+        attributeInfo.needToBeNormallized = attribute.needToBeNormallized;
+        attributeInfo.name = attribute.name;
 
-            vertexAttributeArray.push_back(attributeInfo);
-        }
-        
-        _attributeInfos.push_back(std::move(vertexAttributeArray));
+        _attributeInfos.emplace_back(std::move(attributeInfo));
     }
 }
 

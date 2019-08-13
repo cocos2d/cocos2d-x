@@ -119,28 +119,24 @@ RenderPipelineMTL::~RenderPipelineMTL()
 
 void RenderPipelineMTL::setVertexLayout(MTLRenderPipelineDescriptor* mtlDescriptor, const RenderPipelineDescriptor& descriptor)
 {
-    const auto& vertexLayouts = *descriptor.vertexLayouts;
     int vertexIndex = 0;
-    for (const auto& vertexLayout : vertexLayouts)
+    
+    if (!descriptor.vertexLayout.isValid())
+        return;
+    
+    mtlDescriptor.vertexDescriptor.layouts[vertexIndex].stride = descriptor.vertexLayout.getStride();
+    mtlDescriptor.vertexDescriptor.layouts[vertexIndex].stepFunction = toMTLVertexStepFunction(descriptor.vertexLayout.getVertexStepMode());
+    
+    const auto& attributes = descriptor.vertexLayout.getAttributes();
+    for (const auto& it : attributes)
     {
-        if (!vertexLayout.isValid())
-            continue;
-        
-        mtlDescriptor.vertexDescriptor.layouts[vertexIndex].stride = vertexLayout.getStride();
-        mtlDescriptor.vertexDescriptor.layouts[vertexIndex].stepFunction = toMTLVertexStepFunction(vertexLayout.getVertexStepMode());
-        
-        const auto& attributes = vertexLayout.getAttributes();
-        for (const auto& it : attributes)
-        {
-            auto attribute = it.second;
-            mtlDescriptor.vertexDescriptor.attributes[attribute.index].format = toMTLVertexFormat(attribute.format, attribute.needToBeNormallized);
-            mtlDescriptor.vertexDescriptor.attributes[attribute.index].offset = attribute.offset;
-            // Buffer index will always be 0;
-            mtlDescriptor.vertexDescriptor.attributes[attribute.index].bufferIndex = 0;
-        }
-        
-        ++vertexIndex;
+        auto attribute = it.second;
+        mtlDescriptor.vertexDescriptor.attributes[attribute.index].format = toMTLVertexFormat(attribute.format, attribute.needToBeNormallized);
+        mtlDescriptor.vertexDescriptor.attributes[attribute.index].offset = attribute.offset;
+        // Buffer index will always be 0;
+        mtlDescriptor.vertexDescriptor.attributes[attribute.index].bufferIndex = 0;
     }
+     
 }
 
 void RenderPipelineMTL::setBlendState(MTLRenderPipelineColorAttachmentDescriptor* colorAttachmentDescriptor)

@@ -414,21 +414,17 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
     // Bind vertex buffers and set the attributes.
     int i = 0;
     const auto& attributeInfos = program->getAttributeInfos();
-    const auto& vertexLayouts = getVertexLayouts();
-    
+    const auto& vertexLayout = getVertexLayout();
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer->getHandler());
-
-    const auto& attributeInfo = attributeInfos[i];
-    const auto &layouts = vertexLayouts->at(i);
-    for (const auto& attribute : attributeInfo)
+    for (const auto& attribute : attributeInfos)
     {
-        const auto &layoutInfo = layouts.getAttributes().at(attribute.name);
+        const auto &layoutInfo = vertexLayout.getAttributes().at(attribute.name);
         glEnableVertexAttribArray(attribute.location);
         glVertexAttribPointer(attribute.location,
             UtilsGL::getGLAttributeSize(layoutInfo.format),
             UtilsGL::toGLAttributeType(layoutInfo.format),
             layoutInfo.needToBeNormallized,
-            layouts.getStride(),
+            vertexLayout.getStride(),
             (GLvoid*)layoutInfo.offset);
     }
       

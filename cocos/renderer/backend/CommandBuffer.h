@@ -188,20 +188,20 @@ public:
      * Get vertex layout.
      * @return A vector of vertex layout.
      */
-    inline const std::shared_ptr<std::vector<VertexLayout>>& getVertexLayouts() const { return _vertexLayouts; }
+    inline const VertexLayout& getVertexLayout() const { return _vertexLayout; }
     
     /**
      * Update vertex layoutjj.
      * @param layout Specifies the vertex layout.
      */
-    void updateVertexLayouts(const std::shared_ptr<std::vector<VertexLayout>> &layout) { _vertexLayouts = layout; }
+    void updateVertexLayout(const VertexLayout &layout) { _vertexLayout = layout; }
 
 protected:
     virtual ~CommandBuffer() = default;
     
     unsigned int _stencilReferenceValueFront = 0; ///< front stencil reference value.
     unsigned int _stencilReferenceValueBack = 0; ///< back stencil reference value.
-    std::shared_ptr<std::vector<VertexLayout>> _vertexLayouts; ///< vertex layout.
+    VertexLayout _vertexLayout; ///< vertex layout.
 };
 
 // end of _backend group
