@@ -382,7 +382,6 @@ void PURibbonTrailRender::copyAttributesTo(PURibbonTrailRender *trailRender)
 void PURibbonTrailRender::updateParticles( const ParticlePool &pool )
 {
     PURibbonTrailVisualData* visualData = nullptr;
-    Vec3 basePosition = static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedPosition();
     for (auto iter : pool.getActiveDataList())
     {
         auto particle = static_cast<PUParticle3D *>(iter);

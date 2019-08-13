@@ -135,26 +135,26 @@ protected:
 
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
     std::unordered_map<char32_t, FontLetterDefinition> _letterDefinitions;
-    float _lineHeight;
-    Font* _font;
-    FontFreeType* _fontFreeType;
-    void* _iconv;
+    float _lineHeight = 0.f;
+    Font* _font = nullptr;
+    FontFreeType* _fontFreeType = nullptr;
+    void* _iconv = nullptr;
 
     // Dynamic GlyphCollection related stuff
-    int _currentPage;
-    unsigned char *_currentPageData;
-    unsigned char *_currentPageDataRGBA;
-    int _currentPageDataSize;
-    int _currentPageDataSizeRGBA;
-    float _currentPageOrigX;
-    float _currentPageOrigY;
-    int _letterPadding;
-    int _letterEdgeExtend;
+    int _currentPage = 0;
+    unsigned char *_currentPageData = nullptr;
+    unsigned char *_currentPageDataRGBA = nullptr;
+    int _currentPageDataSize = 0;
+    int _currentPageDataSizeRGBA = 0;
+    float _currentPageOrigX = 0;
+    float _currentPageOrigY = 0;
+    int _letterPadding = 0;
+    int _letterEdgeExtend = 0;
 
-    int _fontAscender;
-    EventListenerCustom* _rendererRecreatedListener;
-    bool _antialiasEnabled;
-    int _currLineHeight;
+    int _fontAscender = 0;
+    EventListenerCustom* _rendererRecreatedListener = nullptr;
+    bool _antialiasEnabled = true;
+    int _currLineHeight = 0;
 
     friend class Label;
 };

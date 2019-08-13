@@ -529,16 +529,6 @@ void Mesh::bindMeshCommand()
 {
     if (_material && _meshIndexData)
     {
-        auto pass = _material->_currentTechnique->_passes.at(0);
-//        auto glprogramstate = pass->getGLProgramState();
-        //auto texture = pass->getTexture();
-       // auto textureid = texture ? texture->getName() : 0;
-        // XXX
-//        auto blend = pass->getStateBlock()->getBlendFunc();
-        auto blend = BlendFunc::ALPHA_PREMULTIPLIED;
-
-//TODO
-//        _meshCommand.genMaterialID(textureid, glprogramstate, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), blend);
         _material->getStateBlock().setCullFace(true);
         _material->getStateBlock().setDepthTest(true);
     }
