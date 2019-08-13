@@ -292,7 +292,7 @@ void CommandBufferMTL::setWinding(Winding winding)
     [_mtlRenderEncoder setFrontFacingWinding:toMTLWinding(winding)];
 }
 
-void CommandBufferMTL::setVertexBuffer(unsigned int index, Buffer* buffer)
+void CommandBufferMTL::setVertexBuffer(Buffer* buffer)
 {
     // Vertex buffer is bound in index 0.
     [_mtlRenderEncoder setVertexBuffer:static_cast<BufferMTL*>(buffer)->getMTLBuffer()

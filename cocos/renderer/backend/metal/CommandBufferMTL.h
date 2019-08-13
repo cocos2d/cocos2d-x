@@ -97,10 +97,9 @@ public:
     
     /**
      * Set a global buffer for all vertex shaders at the given bind point index 0.
-     * @param index An index in the buffer argument table.
      * @param buffer The buffer to set in the buffer argument table.
      */
-    virtual void setVertexBuffer(unsigned int index, Buffer* buffer) override;
+    virtual void setVertexBuffer(Buffer* buffer) override;
     
     /**
      * Set the uniform data at a given vertex and fragment buffer binding point 1
