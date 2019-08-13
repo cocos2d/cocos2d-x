@@ -262,7 +262,7 @@ void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Colo
 {
     ensureCapacityGLPoint(1);
     
-    V2F_C4B_T2F *point = V2F_C4B_T2F *point = _bufferGLPoint + _bufferCountGLPoint;
+    V2F_C4B_T2F *point = _bufferGLPoint + _bufferCountGLPoint;
     *point = {position, Color4B(color), Tex2F(pointSize,0)};
     
     _customCommandGLPoint.updateVertexBuffer(point, _bufferCountGLPoint*sizeof(V2F_C4B_T2F), sizeof(V2F_C4B_T2F));
@@ -589,9 +589,9 @@ void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColo
     for (int i = 0; i < count-2; i++)
     {
         V2F_C4B_T2F_Triangle tmp = {
-            {verts[0], Color4B(fillColor), v2ToTex2F(v2fzero)},
-            {verts[i+1], Color4B(fillColor), v2ToTex2F(v2fzero)},
-            {verts[i+2], Color4B(fillColor), v2ToTex2F(v2fzero)},
+            {verts[0], Color4B(fillColor), v2ToTex2F(Vec2::ZERO)},
+            {verts[i+1], Color4B(fillColor), v2ToTex2F(Vec2::ZERO)},
+            {verts[i+2], Color4B(fillColor), v2ToTex2F(Vec2::ZERO)},
         };
         
         *cursor++ = tmp;
