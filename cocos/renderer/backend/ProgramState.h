@@ -34,11 +34,11 @@
 #include "base/CCEventListenerCustom.h"
 #include "renderer/backend/Types.h"
 #include "renderer/backend/Program.h"
+#include "renderer/backend/VertexLayout.h"
 
 CC_BACKEND_BEGIN
 
 class TextureBackend;
-class VertexLayout;
 
 /**
  * @addtogroup _backend

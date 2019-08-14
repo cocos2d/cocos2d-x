@@ -1163,24 +1163,6 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
         "a_blendIndex",
     }
 
-    local attributes = programState:getProgram():getActiveAttributes();
-
-    local offset = 0
-    local attributeCount = self._teapot:getMesh():getMeshVertexAttribCount()
-    local layout = ccb.VertexLayout:new()
-    for i = 1, attributeCount do
-        local meshattribute = self._teapot:getMesh():getMeshVertexAttribute(i - 1)
-        local attrName = attributeNames[meshattribute.vertexAttrib+1]
-        if(attributes[attrName] ~= nil) then
-            layout:setAttribute(attrName, attributes[attrName].location, meshattribute.type, offset, false)
-        end
-  
-        offset = offset + meshattribute.attribSizeBytes
-    end
-
-    layout:setLayout(offset, ccb.VertexStepMode.VERTEX)
-    self._teapot:setVertexLayout(layout)
-
     self:addChild(self._teapot)
 
     --config skybox
