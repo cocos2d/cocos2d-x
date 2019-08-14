@@ -1178,7 +1178,7 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
         offset = offset + meshattribute.attribSizeBytes
     end
 
-    layout:setLayout(offset, ccb.VertexStepMode.VERTEX)
+    layout:setLayout(offset)
     self._teapot:setVertexLayout(layout)
 
     self:addChild(self._teapot)
