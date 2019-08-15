@@ -120,14 +120,14 @@ RenderPipelineMTL::~RenderPipelineMTL()
 void RenderPipelineMTL::setVertexLayout(MTLRenderPipelineDescriptor* mtlDescriptor, const RenderPipelineDescriptor& descriptor)
 {
     int vertexIndex = 0;
-    
-    if (!descriptor.vertexLayout.isValid())
+    auto vertexLayout = descriptor.programState->getVertexLayout();
+    if (!vertexLayout->isValid())
         return;
     
-    mtlDescriptor.vertexDescriptor.layouts[vertexIndex].stride = descriptor.vertexLayout.getStride();
-    mtlDescriptor.vertexDescriptor.layouts[vertexIndex].stepFunction = toMTLVertexStepFunction(descriptor.vertexLayout.getVertexStepMode());
+    mtlDescriptor.vertexDescriptor.layouts[vertexIndex].stride = vertexLayout->getStride();
+    mtlDescriptor.vertexDescriptor.layouts[vertexIndex].stepFunction = toMTLVertexStepFunction(vertexLayout->getVertexStepMode());
     
-    const auto& attributes = descriptor.vertexLayout.getAttributes();
+    const auto& attributes = vertexLayout->getAttributes();
     for (const auto& it : attributes)
     {
         auto attribute = it.second;

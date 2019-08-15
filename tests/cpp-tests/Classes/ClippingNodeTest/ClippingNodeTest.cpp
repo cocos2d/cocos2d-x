@@ -611,12 +611,12 @@ void RawStencilBufferTest::initCommands()
         cmd.createIndexBuffer(backend::IndexFormat::U_SHORT, 6, backend::BufferUsage::STATIC);
         cmd.updateIndexBuffer(indices, sizeof(indices));
         cmd.getPipelineDescriptor().programState = _programState;
-        auto& vertexLayout = cmd.getPipelineDescriptor().vertexLayout;
+        auto vertexLayout = _programState->getVertexLayout();
         auto& attributes = _programState->getProgram()->getActiveAttributes();
         auto iter = attributes.find("a_position");
         if (iter != attributes.end())
-            vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
-        vertexLayout.setLayout(sizeof(Vec2));
+            vertexLayout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+        vertexLayout->setLayout(sizeof(Vec2));
 
 
         auto& cmd2 = _renderCmds[cmdIndex];
@@ -633,7 +633,6 @@ void RawStencilBufferTest::initCommands()
         cmd2.updateVertexBuffer(vertices2, sizeof(vertices2));
         cmd2.createIndexBuffer(backend::IndexFormat::U_SHORT, 6, backend::BufferUsage::STATIC);
         cmd2.updateIndexBuffer(indices, sizeof(indices));
-        cmd2.getPipelineDescriptor().vertexLayout = vertexLayout;
         cmd2.getPipelineDescriptor().programState = _programState;
     }
 }

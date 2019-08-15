@@ -48,7 +48,6 @@ struct RenderPipelineDescriptor
 {
     ProgramState* programState = nullptr;
     BlendState* blendState = nullptr;
-    VertexLayout vertexLayout;
     PixelFormat colorAttachmentsFormat[MAX_COLOR_ATTCHMENT] = { PixelFormat::DEFAULT };
     PixelFormat depthAttachmentFormat = PixelFormat::NONE;
     PixelFormat stencilAttachmentFormat = PixelFormat::NONE;

@@ -471,18 +471,6 @@ void Mesh::setProgramState(backend::ProgramState* programState)
     setMaterial(material);
 }
 
-void Mesh::setVertexLayout(const backend::VertexLayout* vertexLayout)
-{
-    for(auto &p : _meshCommands)
-    {
-        for(auto &cmd: p.second)
-        {
-            cmd.getPipelineDescriptor().vertexLayout = *vertexLayout;
-        }
-    }
-}
-
-
 backend::ProgramState* Mesh::getProgramState() const
 {
     return _material ? _material->_currentTechnique->_passes.at(0)->getProgramState() : nullptr;

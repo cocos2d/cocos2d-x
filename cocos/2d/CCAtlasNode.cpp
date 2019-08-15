@@ -49,24 +49,27 @@ AtlasNode::AtlasNode()
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
   
-    auto& vertexLayout = pipelineDescriptor.vertexLayout;
-    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
-    auto iter = attributeInfo.find("a_position");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
-    }
-    iter = attributeInfo.find("a_texCoord");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
-    }
-    iter = attributeInfo.find("a_color");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
-    }
-    vertexLayout.setLayout(sizeof(V3F_C4B_T2F));
+    auto vertexLayout = _programState->getVertexLayout();
+  //a_position
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_POSITION, 
+                               _programState->getAttributeLocation(backend::Attribute::POSITION), 
+                               backend::VertexFormat::FLOAT3, 
+                               0, 
+                               false);
+   
+    //a_texCoord
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_TEXCOORD, 
+                               _programState->getAttributeLocation(backend::Attribute::TEXCOORD), 
+                               backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), 
+                               false);
+   
+    //a_color
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_COLOR, 
+                               _programState->getAttributeLocation(backend::Attribute::COLOR),
+                               backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors),
+                               true);
+    
+    vertexLayout->setLayout(sizeof(V3F_C4B_T2F));
 }
 
 AtlasNode::~AtlasNode()

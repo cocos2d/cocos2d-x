@@ -34,6 +34,7 @@
 #include "base/CCEventListenerCustom.h"
 #include "renderer/backend/Types.h"
 #include "renderer/backend/Program.h"
+#include "renderer/backend/VertexLayout.h"
 
 CC_BACKEND_BEGIN
 
@@ -73,7 +74,6 @@ struct TextureInfo
 class ProgramState : public Ref
 {
 public:
-
     using UniformCallback = std::function<void(ProgramState*, const UniformLocation &)>;
 
     /**
@@ -260,6 +260,7 @@ public:
     */
     void setParameterAutoBinding(const std::string &uniformName, const std::string &autoBinding);
 
+    inline std::shared_ptr<VertexLayout> getVertexLayout() const { return _vertexLayout; }
 protected:
 
     ProgramState();
@@ -337,6 +338,7 @@ protected:
     std::unordered_map<std::string, std::string>            _autoBindings;
 
     static std::vector<AutoBindingResolver*>                _customAutoBindingResolvers;
+    std::shared_ptr<VertexLayout> _vertexLayout = std::make_shared<VertexLayout>();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener = nullptr;

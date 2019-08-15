@@ -40,10 +40,10 @@ NavMeshDebugDraw::NavMeshDebugDraw()
     _programState = new backend::ProgramState(positionColor_vert, positionColor_frag);
     _locMVP = _programState->getUniformLocation("u_MVPMatrix");
 
-
-    _defaultLayout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4F, position), false);
-    _defaultLayout.setAttribute("a_color", 1, backend::VertexFormat::FLOAT4, offsetof(V3F_C4F, color), false);
-    _defaultLayout.setLayout(sizeof(V3F_C4F));
+    auto vertexLayout = _programState->getVertexLayout();
+    vertexLayout->setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4F, position), false);
+    vertexLayout->setAttribute("a_color", 1, backend::VertexFormat::FLOAT4, offsetof(V3F_C4F, color), false);
+    vertexLayout->setLayout(sizeof(V3F_C4F));
 
     _beforeCommand.func = CC_CALLBACK_0(NavMeshDebugDraw::onBeforeVisitCmd, this);
     _afterCommand.func  = CC_CALLBACK_0(NavMeshDebugDraw::onAfterVisitCmd, this);
@@ -63,7 +63,6 @@ void NavMeshDebugDraw::initCustomCommand(CustomCommand &command)
     command.setDrawType(CustomCommand::DrawType::ARRAY);
     auto &pipelineDescriptor = command.getPipelineDescriptor();
     pipelineDescriptor.programState = _programState;
-    pipelineDescriptor.vertexLayout = _defaultLayout;
 
     auto &blend = pipelineDescriptor.blendDescriptor;
     blend.blendEnabled = true;

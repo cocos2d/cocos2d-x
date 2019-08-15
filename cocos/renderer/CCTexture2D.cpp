@@ -841,17 +841,17 @@ void Texture2D::initProgram()
     pipelineDescriptor.programState = _programState;
     
     //setup vertex layout
-    auto& vertexLayout = pipelineDescriptor.vertexLayout;
+    auto vertexLayout = _programState->getVertexLayout();
     auto& attributes = _programState->getProgram()->getActiveAttributes();
     auto iter = attributes.find("a_position");
     if(iter != attributes.end())
-        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+        vertexLayout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
     
     iter = attributes.find("a_texCoord");
     if(iter != attributes.end())
-        vertexLayout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, 2 * sizeof(float), false);
+        vertexLayout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, 2 * sizeof(float), false);
     
-    vertexLayout.setLayout(4 * sizeof(float));
+    vertexLayout->setLayout(4 * sizeof(float));
     
     //create vertex buffer
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);

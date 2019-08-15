@@ -595,28 +595,28 @@ static Texture2D* _getTexture(Label* label)
 
 void Label::setVertexLayout(PipelineDescriptor& pipelineDescriptor)
 {
-    auto& layout = pipelineDescriptor.vertexLayout;
+    auto vertexLayout = _programState->getVertexLayout();
     ///a_position
-    layout.setAttribute(backend::ATTRIBUTE_NAME_POSITION,
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_POSITION,
                         _programState->getAttributeLocation(backend::Attribute::POSITION),
                         backend::VertexFormat::FLOAT3,
                         0,
                         false);
     
     ///a_texCoord
-    layout.setAttribute(backend::ATTRIBUTE_NAME_TEXCOORD,
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_TEXCOORD,
                         _programState->getAttributeLocation(backend::Attribute::TEXCOORD),
                         backend::VertexFormat::FLOAT2,
                         offsetof(V3F_C4B_T2F, texCoords),
                         false);
     
     ///a_color
-    layout.setAttribute(backend::ATTRIBUTE_NAME_COLOR,
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_COLOR,
                         _programState->getAttributeLocation(backend::Attribute::COLOR),
                         backend::VertexFormat::UBYTE4, 
                         offsetof(V3F_C4B_T2F, colors), 
                         true);
-    layout.setLayout(sizeof(V3F_C4B_T2F));
+    vertexLayout->setLayout(sizeof(V3F_C4B_T2F));
 }
 
 void Label::setProgramState(backend::ProgramState *programState)

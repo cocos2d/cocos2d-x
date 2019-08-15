@@ -182,33 +182,6 @@ void ProgramGL::computeLocations()
     _builtinUniformLocation[Uniform::TEXTURE1].location[0] = location;
 }
 
-void ProgramGL::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
-{
-    _attributeInfos.clear();
-    
-    if (! descriptor.vertexLayout.isValid())
-        return;
-    
-    const auto& attributes = descriptor.vertexLayout.getAttributes();
-    for (const auto& it : attributes)
-    {
-        auto &attribute = it.second;
-        AttributeInfo attributeInfo;
-        
-        if (!getAttributeLocation(attribute.name, attributeInfo.location))
-            continue;
-        
-        attributeInfo.stride = descriptor.vertexLayout.getStride();
-        attributeInfo.offset = attribute.offset;
-        attributeInfo.type = UtilsGL::toGLAttributeType(attribute.format);
-        attributeInfo.size = UtilsGL::getGLAttributeSize(attribute.format);
-        attributeInfo.needToBeNormallized = attribute.needToBeNormallized;
-        attributeInfo.name = attribute.name;
-
-        _attributeInfos.emplace_back(std::move(attributeInfo));
-    }
-}
-
 bool ProgramGL::getAttributeLocation(const std::string& attributeName, unsigned int& location) const
 {
     GLint loc = glGetAttribLocation(_program, attributeName.c_str());
@@ -322,7 +295,7 @@ UniformLocation ProgramGL::getUniformLocation(const std::string& uniform) const
     UniformLocation uniformLocation;
     if (_activeUniformInfos.find(uniform) != _activeUniformInfos.end())
     {
-        const auto& uniformInfo = _activeUniformInfos.at(uniform);
+        const auto &uniformInfo = _activeUniformInfos.at(uniform);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         uniformLocation.location[0] = _mapToOriginalLocation.at(uniformInfo.location);
 #else

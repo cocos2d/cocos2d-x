@@ -785,7 +785,8 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
     hashMe.sourceAlphaBlendFactor = (unsigned int)blendDescriptor.sourceAlphaBlendFactor;
     hashMe.destinationAlphaBlendFactor = (unsigned int)blendDescriptor.destinationAlphaBlendFactor;
     int index = 0;
-    const auto& attributes = renderPipelineDescriptor.vertexLayout.getAttributes();
+    auto vertexLayout = renderPipelineDescriptor.programState->getVertexLayout();
+    const auto& attributes = vertexLayout->getAttributes();
     for (const auto& it : attributes)
     {
         auto &attribute = it.second;
@@ -794,8 +795,8 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
             bit31           bit30 ~ bit16   bit15 ~ bit6    bit5 ~ bit1     bit0
             */
         hashMe.vertexLayoutInfo[index++] =
-            ((unsigned int)renderPipelineDescriptor.vertexLayout.getVertexStepMode() & 0x1) << 31 |
-            ((unsigned int)(renderPipelineDescriptor.vertexLayout.getStride() & 0x7FFF)) << 16 |
+            ((unsigned int)vertexLayout->getVertexStepMode() & 0x1) << 31 |
+            ((unsigned int)(vertexLayout->getStride() & 0x7FFF)) << 16 |
             ((unsigned int)attribute.offset & 0x3FF) << 6 |
             ((unsigned int)attribute.format & 0x1F) << 1 |
             ((unsigned int)attribute.needToBeNormallized & 0x1);
@@ -819,7 +820,6 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
 {
     backend::RenderPipelineDescriptor renderPipelineDescriptor;
     renderPipelineDescriptor.programState = pipelineDescriptor.programState;
-    renderPipelineDescriptor.vertexLayout = pipelineDescriptor.vertexLayout;
     
     auto device = backend::Device::getInstance();
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
@@ -859,10 +859,6 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
 
     _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));
     _commandBuffer->setDepthStencilState(depthStencilState);
-#ifndef CC_USE_METAL
-    // Extra layout info is required in OpenGL, which can not be quried from ProgramGL
-    _commandBuffer->updateVertexLayout(renderPipelineDescriptor.vertexLayout);
-#endif
 }
 
 void Renderer::beginRenderPass(RenderCommand* cmd)

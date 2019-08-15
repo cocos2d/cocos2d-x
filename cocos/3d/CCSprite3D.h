@@ -122,8 +122,6 @@ public:
     /** set ProgramState, you should bind attributes by yourself */
     virtual void setProgramState(backend::ProgramState *programState) override;
 
-    virtual void setVertexLayout(const backend::VertexLayout *vertexLayout);
-
     /*
      * Get AABB
      * If the sprite has animation, it can't be calculated accurately,
