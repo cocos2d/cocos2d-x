@@ -53,15 +53,6 @@ Quaternion::Quaternion(const Vec3& axis, float angle)
     set(axis, angle);
 }
 
-Quaternion::Quaternion(const Quaternion& copy)
-{
-    set(copy);
-}
-
-Quaternion::~Quaternion()
-{
-}
-
 const Quaternion& Quaternion::identity()
 {
     static Quaternion value(0.0f, 0.0f, 0.0f, 1.0f);
