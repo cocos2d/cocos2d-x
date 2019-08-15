@@ -250,7 +250,7 @@ void ActionTimeline::startWithTarget(Node *target)
     this->setTag(target->getTag());
 
     foreachNodeDescendant(target, 
-        [this, target](Node* child)
+        [this](Node* child)
     {
         ComExtensionData* data = dynamic_cast<ComExtensionData*>(child->getComponent("ComExtensionData"));
 

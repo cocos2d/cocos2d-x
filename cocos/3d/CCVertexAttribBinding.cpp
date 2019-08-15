@@ -30,7 +30,6 @@
 NS_CC_BEGIN
 
 
-static uint32_t __maxVertexAttribs = 0;
 static std::vector<VertexAttribBinding*> __vertexAttribBindingCache;
 
 VertexAttribBinding::VertexAttribBinding() :
