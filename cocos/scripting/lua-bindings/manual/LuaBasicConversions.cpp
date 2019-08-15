@@ -3286,7 +3286,7 @@ void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node)
 }
 
 
-bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayout& outLayout,  char *message)
+bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayout& outLayout, const char *message)
 {
     if (L == nullptr)
         return false;
@@ -3302,7 +3302,7 @@ bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayou
 }
 
 
-bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::SamplerDescriptor& output, char *message)
+bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::SamplerDescriptor& output, const char *message)
 {
     if (L == nullptr)
         return false;
@@ -3342,7 +3342,7 @@ bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::Sample
     return true;
 }
 
-bool luaval_to_uniformLocation(lua_State* L, int pos, cocos2d::backend::UniformLocation& loc, char *message)
+bool luaval_to_uniformLocation(lua_State* L, int pos, cocos2d::backend::UniformLocation& loc, const char *message)
 {
     if (L == nullptr)
         return false;
