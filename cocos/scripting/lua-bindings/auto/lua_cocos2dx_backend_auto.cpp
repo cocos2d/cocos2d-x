@@ -885,6 +885,319 @@ int lua_register_cocos2dx_backend_Program(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_backend_VertexLayout_getVertexStepMode(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::VertexLayout* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_getVertexStepMode'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_getVertexStepMode'", nullptr);
+            return 0;
+        }
+        int ret = (int)cobj->getVertexStepMode();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:getVertexStepMode",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_getVertexStepMode'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_VertexLayout_isValid(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::VertexLayout* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_isValid'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_isValid'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->isValid();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:isValid",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_isValid'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_VertexLayout_setLayout(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::VertexLayout* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_setLayout'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        unsigned int arg0;
+
+        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "ccb.VertexLayout:setLayout");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_setLayout'", nullptr);
+            return 0;
+        }
+        cobj->setLayout(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:setLayout",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_setLayout'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_VertexLayout_setAttribute(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::VertexLayout* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_setAttribute'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 5) 
+    {
+        std::string arg0;
+        unsigned int arg1;
+        cocos2d::backend::VertexFormat arg2;
+        unsigned int arg3;
+        bool arg4;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.VertexLayout:setAttribute");
+
+        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "ccb.VertexLayout:setAttribute");
+
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "ccb.VertexLayout:setAttribute");
+
+        ok &= luaval_to_uint32(tolua_S, 5,&arg3, "ccb.VertexLayout:setAttribute");
+
+        ok &= luaval_to_boolean(tolua_S, 6,&arg4, "ccb.VertexLayout:setAttribute");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_setAttribute'", nullptr);
+            return 0;
+        }
+        cobj->setAttribute(arg0, arg1, arg2, arg3, arg4);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:setAttribute",argc, 5);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_setAttribute'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_VertexLayout_getStride(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::VertexLayout* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_getStride'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_getStride'", nullptr);
+            return 0;
+        }
+        unsigned int ret = cobj->getStride();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:getStride",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_getStride'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_VertexLayout_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::VertexLayout* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::backend::VertexLayout();
+        tolua_pushusertype(tolua_S,(void*)cobj,"ccb.VertexLayout");
+        tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:VertexLayout",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_backend_VertexLayout_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (VertexLayout)");
+    return 0;
+}
+
+int lua_register_cocos2dx_backend_VertexLayout(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccb.VertexLayout");
+    tolua_cclass(tolua_S,"VertexLayout","ccb.VertexLayout","",nullptr);
+
+    tolua_beginmodule(tolua_S,"VertexLayout");
+        tolua_function(tolua_S,"new",lua_cocos2dx_backend_VertexLayout_constructor);
+        tolua_function(tolua_S,"getVertexStepMode",lua_cocos2dx_backend_VertexLayout_getVertexStepMode);
+        tolua_function(tolua_S,"isValid",lua_cocos2dx_backend_VertexLayout_isValid);
+        tolua_function(tolua_S,"setLayout",lua_cocos2dx_backend_VertexLayout_setLayout);
+        tolua_function(tolua_S,"setAttribute",lua_cocos2dx_backend_VertexLayout_setAttribute);
+        tolua_function(tolua_S,"getStride",lua_cocos2dx_backend_VertexLayout_getStride);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::VertexLayout).name();
+    g_luaType[typeName] = "ccb.VertexLayout";
+    g_typeCast["VertexLayout"] = "ccb.VertexLayout";
+    return 1;
+}
+
 int lua_cocos2dx_backend_ProgramState_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1088,61 +1401,6 @@ int lua_cocos2dx_backend_ProgramState_getProgram(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_backend_ProgramState_getUniformLocation(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::backend::ProgramState* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccb.ProgramState",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::backend::ProgramState*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_ProgramState_getUniformLocation'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 1) {
-            cocos2d::backend::Uniform arg0;
-            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.ProgramState:getUniformLocation");
-
-            if (!ok) { break; }
-            cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
-            uniformLocation_to_luaval(tolua_S, ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.ProgramState:getUniformLocation");
-
-            if (!ok) { break; }
-            cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
-            uniformLocation_to_luaval(tolua_S, ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccb.ProgramState:getUniformLocation",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_ProgramState_getUniformLocation'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_backend_ProgramState_getAttributeLocation(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1269,7 +1527,6 @@ int lua_register_cocos2dx_backend_ProgramState(lua_State* tolua_S)
         tolua_function(tolua_S,"clone",lua_cocos2dx_backend_ProgramState_clone);
         tolua_function(tolua_S,"setParameterAutoBinding",lua_cocos2dx_backend_ProgramState_setParameterAutoBinding);
         tolua_function(tolua_S,"getProgram",lua_cocos2dx_backend_ProgramState_getProgram);
-        tolua_function(tolua_S,"getUniformLocation",lua_cocos2dx_backend_ProgramState_getUniformLocation);
         tolua_function(tolua_S,"getAttributeLocation",lua_cocos2dx_backend_ProgramState_getAttributeLocation);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::backend::ProgramState).name();
@@ -2158,319 +2415,6 @@ int lua_register_cocos2dx_backend_TextureCubemapBackend(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::backend::TextureCubemapBackend).name();
     g_luaType[typeName] = "ccb.TextureCubemapBackend";
     g_typeCast["TextureCubemapBackend"] = "ccb.TextureCubemapBackend";
-    return 1;
-}
-
-int lua_cocos2dx_backend_VertexLayout_getVertexStepMode(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::backend::VertexLayout* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_getVertexStepMode'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_getVertexStepMode'", nullptr);
-            return 0;
-        }
-        int ret = (int)cobj->getVertexStepMode();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:getVertexStepMode",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_getVertexStepMode'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_backend_VertexLayout_isValid(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::backend::VertexLayout* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_isValid'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_isValid'", nullptr);
-            return 0;
-        }
-        bool ret = cobj->isValid();
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:isValid",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_isValid'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_backend_VertexLayout_setLayout(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::backend::VertexLayout* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_setLayout'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        unsigned int arg0;
-
-        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "ccb.VertexLayout:setLayout");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_setLayout'", nullptr);
-            return 0;
-        }
-        cobj->setLayout(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:setLayout",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_setLayout'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_backend_VertexLayout_setAttribute(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::backend::VertexLayout* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_setAttribute'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 5) 
-    {
-        std::string arg0;
-        unsigned int arg1;
-        cocos2d::backend::VertexFormat arg2;
-        unsigned int arg3;
-        bool arg4;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.VertexLayout:setAttribute");
-
-        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "ccb.VertexLayout:setAttribute");
-
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "ccb.VertexLayout:setAttribute");
-
-        ok &= luaval_to_uint32(tolua_S, 5,&arg3, "ccb.VertexLayout:setAttribute");
-
-        ok &= luaval_to_boolean(tolua_S, 6,&arg4, "ccb.VertexLayout:setAttribute");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_setAttribute'", nullptr);
-            return 0;
-        }
-        cobj->setAttribute(arg0, arg1, arg2, arg3, arg4);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:setAttribute",argc, 5);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_setAttribute'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_backend_VertexLayout_getStride(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::backend::VertexLayout* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccb.VertexLayout",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::backend::VertexLayout*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_VertexLayout_getStride'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_getStride'", nullptr);
-            return 0;
-        }
-        unsigned int ret = cobj->getStride();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:getStride",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_getStride'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_backend_VertexLayout_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::backend::VertexLayout* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_VertexLayout_constructor'", nullptr);
-            return 0;
-        }
-        cobj = new cocos2d::backend::VertexLayout();
-        tolua_pushusertype(tolua_S,(void*)cobj,"ccb.VertexLayout");
-        tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.VertexLayout:VertexLayout",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_VertexLayout_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_backend_VertexLayout_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (VertexLayout)");
-    return 0;
-}
-
-int lua_register_cocos2dx_backend_VertexLayout(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"ccb.VertexLayout");
-    tolua_cclass(tolua_S,"VertexLayout","ccb.VertexLayout","",nullptr);
-
-    tolua_beginmodule(tolua_S,"VertexLayout");
-        tolua_function(tolua_S,"new",lua_cocos2dx_backend_VertexLayout_constructor);
-        tolua_function(tolua_S,"getVertexStepMode",lua_cocos2dx_backend_VertexLayout_getVertexStepMode);
-        tolua_function(tolua_S,"isValid",lua_cocos2dx_backend_VertexLayout_isValid);
-        tolua_function(tolua_S,"setLayout",lua_cocos2dx_backend_VertexLayout_setLayout);
-        tolua_function(tolua_S,"setAttribute",lua_cocos2dx_backend_VertexLayout_setAttribute);
-        tolua_function(tolua_S,"getStride",lua_cocos2dx_backend_VertexLayout_getStride);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::backend::VertexLayout).name();
-    g_luaType[typeName] = "ccb.VertexLayout";
-    g_typeCast["VertexLayout"] = "ccb.VertexLayout";
     return 1;
 }
 TOLUA_API int register_all_cocos2dx_backend(lua_State* tolua_S)
