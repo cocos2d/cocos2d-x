@@ -69,18 +69,11 @@ public:
     virtual DepthStencilState* createDepthStencilState(const DepthStencilDescriptor& descriptor) override;
 
     /**
-     * Create an auto released BlendState object.
-     * @param descriptor Specifies blend description.
-     * @return An auto release BlendState object.
-     */
-    virtual BlendState* createBlendState(const BlendDescriptor& descriptor) override;
-
-    /**
      * New a RenderPipeline object, not auto released.
      * @param descriptor Specifies render pipeline description.
      * @return A RenderPipeline object.
      */
-    virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) override;
+    virtual RenderPipeline* newRenderPipeline() override;
 
     /**
      * Design for metal.

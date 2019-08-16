@@ -39,6 +39,7 @@
 CC_BACKEND_BEGIN
 
 class TextureBackend;
+class VertexLayout;
 
 /**
  * @addtogroup _backend

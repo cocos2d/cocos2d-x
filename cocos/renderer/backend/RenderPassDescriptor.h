@@ -45,6 +45,7 @@ struct RenderPassDescriptor
 {
     RenderPassDescriptor& operator=(const RenderPassDescriptor& descriptor);
     bool operator==(const RenderPassDescriptor& descriptor) const;
+    bool needDepthStencilAttachment() const { return depthTestEnabled || stencilTestEnabled; }
 
     float clearDepthValue = 0.f;
     float clearStencilValue = 0.f;

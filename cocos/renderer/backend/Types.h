@@ -365,4 +365,22 @@ static const char* ATTRIBUTE_NAME_TEXCOORD = "a_texCoord";
 static const char* ATTRIBUTE_NAME_TEXCOORD1 = "a_texCoord1";
 static const char* ATTRIBUTE_NAME_TEXCOORD2 = "a_texCoord2";
 static const char* ATTRIBUTE_NAME_TEXCOORD3 = "a_texCoord3";
+
+/**
+ * @brief a structor to store blend descriptor
+ */
+struct BlendDescriptor
+{
+    ColorWriteMask writeMask = ColorWriteMask::ALL;
+    
+    bool blendEnabled = false;
+    
+    BlendOperation rgbBlendOperation = BlendOperation::ADD;
+    BlendOperation alphaBlendOperation = BlendOperation::ADD;
+    
+    BlendFactor sourceRGBBlendFactor = BlendFactor::ONE;
+    BlendFactor destinationRGBBlendFactor = BlendFactor::ZERO;
+    BlendFactor sourceAlphaBlendFactor = BlendFactor::ONE;
+    BlendFactor destinationAlphaBlendFactor = BlendFactor::ZERO;
+};
 CC_BACKEND_END

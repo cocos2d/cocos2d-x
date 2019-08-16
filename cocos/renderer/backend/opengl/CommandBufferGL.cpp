@@ -28,7 +28,6 @@
 #include "TextureGL.h"
 #include "DepthStencilStateGL.h"
 #include "ProgramGL.h"
-#include "BlendStateGL.h"
 #include "base/ccMacros.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
@@ -88,6 +87,8 @@ CommandBufferGL::CommandBufferGL()
 CommandBufferGL::~CommandBufferGL()
 {
     glDeleteFramebuffers(1, &_generatedFBO);
+    CC_SAFE_RELEASE_NULL(_renderPipeline);
+
     cleanResources();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -390,12 +391,6 @@ void CommandBufferGL::prepareDrawing() const
     else
         DepthStencilStateGL::reset();
     
-    // Set blend state.
-    if (_renderPipeline->getBlendState())
-        _renderPipeline->getBlendState()->apply();
-    else
-        BlendStateGL::reset();
-    
     // Set cull mode.
     if (CullMode::NONE == _cullMode)
     {
@@ -582,7 +577,6 @@ void CommandBufferGL::setUniform(bool isArray, GLuint location, unsigned int siz
 void CommandBufferGL::cleanResources()
 {
     CC_SAFE_RELEASE_NULL(_indexBuffer);
-    CC_SAFE_RELEASE_NULL(_renderPipeline);
     CC_SAFE_RELEASE_NULL(_programState);  
     CC_SAFE_RELEASE_NULL(_vertexBuffer);
 }
