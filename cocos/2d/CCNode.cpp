@@ -865,7 +865,7 @@ void Node::enumerateChildren(const std::string &name, const std::function<bool (
     if (searchRecursively)
     {
         // name is '//xxx'
-        target->doEnumerateRecursive(this, newName, callback);
+        target->doEnumerateRecursive(target, newName, callback);
     }
     else
     {
