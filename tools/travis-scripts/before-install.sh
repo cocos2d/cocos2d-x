@@ -63,7 +63,7 @@ function update_cmake_to_314()
     echo "build and install cmake 3.14.0"
     cmake . > /dev/null
     make > /dev/null
-    make install
+    sudo make install
 
 
     # if [ "$TRAVIS_OS_NAME" == "osx" ]; then
