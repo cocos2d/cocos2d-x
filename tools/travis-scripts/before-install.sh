@@ -54,7 +54,7 @@ function install_latest_python()
 function update_cmake_to_314()
 {
     echo "downloading cmake 3.14.0"
-    curl https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz
+    curl https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz 2>/dev/null
     echo "extract cmake 3.14.0"
     tar -xzf cmake-3.14.0.tar.gz 2>/dev/null
     cd cmake-3.14.0
