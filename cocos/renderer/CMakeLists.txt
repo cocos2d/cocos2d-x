@@ -21,7 +21,6 @@ set(COCOS_RENDERER_HEADER
     renderer/ccShaders.h
 
     renderer/backend/Backend.h
-    renderer/backend/BlendState.h
     renderer/backend/Buffer.h
     renderer/backend/CommandBuffer.h
     renderer/backend/DepthStencilState.h
@@ -61,7 +60,6 @@ set(COCOS_RENDERER_SRC
     renderer/CCTrianglesCommand.cpp
     renderer/ccShaders.cpp
 
-    renderer/backend/BlendState.cpp
     renderer/backend/CommandBuffer.cpp
     renderer/backend/DepthStencilState.cpp
     renderer/backend/Device.cpp
@@ -92,7 +90,6 @@ list(APPEND COCOS_RENDERER_HEADER
 )
 
 list(APPEND COCOS_RENDERER_SRC
-    renderer/backend/opengl/BlendStateGL.cpp
     renderer/backend/opengl/BufferGL.cpp
     renderer/backend/opengl/CommandBufferGL.cpp
     renderer/backend/opengl/DepthStencilStateGL.cpp
@@ -108,7 +105,6 @@ list(APPEND COCOS_RENDERER_SRC
 else()
 
 list(APPEND COCOS_RENDERER_HEADER
-    renderer/backend/metal/BlendStateMTL.h
     renderer/backend/metal/BufferMTL.h
     renderer/backend/metal/BufferManager.h
     renderer/backend/metal/CommandBufferMTL.h
@@ -123,7 +119,6 @@ list(APPEND COCOS_RENDERER_HEADER
 )
 
 list(APPEND COCOS_RENDERER_SRC
-    renderer/backend/metal/BlendStateMTL.mm
     renderer/backend/metal/BufferMTL.mm
     renderer/backend/metal/BufferManager.mm
     renderer/backend/metal/CommandBufferMTL.mm

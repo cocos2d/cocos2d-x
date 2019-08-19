@@ -26,7 +26,6 @@
 
 #include "../RenderPipeline.h"
 #include "../RenderPipelineDescriptor.h"
-#include "BlendStateMTL.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -48,8 +47,9 @@ public:
      * @param mtlDevice The device for which MTLRenderPipelineState object was created.
      * @param descriptor Specify the render pipeline description.
      */
-    RenderPipelineMTL(id<MTLDevice> mtlDevice, const RenderPipelineDescriptor& descriptor);
+    RenderPipelineMTL(id<MTLDevice> mtlDevice);
     ~RenderPipelineMTL();
+    virtual void update(const PipelineDescriptor&, const RenderPassDescriptor&) override;
     
     /**
      * Get a MTLRenderPipelineState object.
@@ -58,16 +58,20 @@ public:
     inline id<MTLRenderPipelineState> getMTLRenderPipelineState() const { return _mtlRenderPipelineState; }
    
 private:
-    void setVertexLayout(MTLRenderPipelineDescriptor*, const RenderPipelineDescriptor&);
-    void setBlendState(MTLRenderPipelineColorAttachmentDescriptor*);
-    void setShaderModules(const RenderPipelineDescriptor&);
-    void setBlendStateAndFormat(const RenderPipelineDescriptor&);
+    void setVertexLayout(MTLRenderPipelineDescriptor*, const PipelineDescriptor&);
+    void setBlendState(MTLRenderPipelineColorAttachmentDescriptor*, const BlendDescriptor&);
+    void setShaderModules(const PipelineDescriptor&);
+    void setBlendStateAndFormat(const BlendDescriptor&, const RenderPassDescriptor&);
+    void getAttachmentFormat(const RenderPassDescriptor&, PixelFormat&, PixelFormat&, PixelFormat&);
     
     id<MTLRenderPipelineState> _mtlRenderPipelineState = nil;
     id<MTLDevice> _mtlDevice = nil;
    
     MTLRenderPipelineDescriptor* _mtlRenderPipelineDescriptor = nil;
-    BlendDescriptorMTL _blendDescriptorMTL;
+    PixelFormat _colorAttachmentsFormat[MAX_COLOR_ATTCHMENT] = { PixelFormat::DEFAULT };
+    PixelFormat _depthAttachmentFormat = PixelFormat::NONE;
+    PixelFormat _stencilAttachmentFormat = PixelFormat::NONE;
+    NSMutableDictionary* _mtlRenderPipelineStateCache = nil;
 };
 
 // end of _metal group

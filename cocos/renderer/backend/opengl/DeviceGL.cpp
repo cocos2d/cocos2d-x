@@ -29,7 +29,6 @@
 #include "CommandBufferGL.h"
 #include "TextureGL.h"
 #include "DepthStencilStateGL.h"
-#include "BlendStateGL.h"
 #include "ProgramGL.h"
 #include "DeviceInfoGL.h"
 
@@ -97,18 +96,9 @@ DepthStencilState* DeviceGL::createDepthStencilState(const DepthStencilDescripto
     return ret;
 }
 
-BlendState* DeviceGL::createBlendState(const BlendDescriptor& descriptor)
+RenderPipeline* DeviceGL::newRenderPipeline()
 {
-    auto ret = new (std::nothrow) BlendStateGL(descriptor);
-    if (ret)
-        ret->autorelease();
-    
-    return ret;
-}
-
-RenderPipeline* DeviceGL::newRenderPipeline(const RenderPipelineDescriptor& descriptor)
-{
-    return new (std::nothrow) RenderPipelineGL(descriptor);
+    return new (std::nothrow) RenderPipelineGL();
 }
 
 Program* DeviceGL::newProgram(const std::string& vertexShader, const std::string& fragmentShader)
