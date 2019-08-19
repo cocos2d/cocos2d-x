@@ -54,32 +54,23 @@ function install_latest_python()
 function update_cmake_to_314()
 {
 
-    # build with source code
-    echo "downloading cmake 3.14.0"
-    curl https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz > ./cmake-3.14.0.tar.gz
-    echo "extract cmake 3.14.0"
-    tar -xzf cmake-3.14.0.tar.gz > /dev/null
-    cd cmake-3.14.0
-    echo "build and install cmake 3.14.0"
-    cmake . > /dev/null
-    make > /dev/null
-    sudo make install
-
-
-    # if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    #     curl https://cmake.org/files/v3.14/cmake-3.14.0-Darwin-x86_64.tar.gz -O
-    #     tar -xzf cmake-3.14.0-Darwin-x86_64.tar.gz
-    #     sudo mv cmake-3.14.0-Darwin-x86_64.tar.gz/CMake.app /Applications
-    #     sudo /Applications/CMake.app/Contents/bin/cmake-gui --install
-    # else
-    #     # linux system
-    #     sudo apt purge --auto-remove cmake
-    #     mkdir ~/temp
-    #     cd ~/temp
-    #     wget https://cmake.org/files/v3.14/cmake-3.14.0-Linux-x86_64.sh 
-    #     sudo mkdir /opt/cmake
-    #     sudo sh cmake-3.14.0-Linux-x86_64.sh --prefix=/opt/cmake
-    # fi
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        curl https://cmake.org/files/v3.14/cmake-3.14.0-Darwin-x86_64.tar.gz -O
+        tar -xzf cmake-3.14.0-Darwin-x86_64.tar.gz
+        sudo mv cmake-3.14.0-Darwin-x86_64/CMake.app /Applications
+    else
+        # linux system
+        # build with source code
+        echo "downloading cmake 3.14.0"
+        curl https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz > ./cmake-3.14.0.tar.gz
+        echo "extract cmake 3.14.0"
+        tar -xzf cmake-3.14.0.tar.gz > /dev/null
+        cd cmake-3.14.0
+        echo "build and install cmake 3.14.0"
+        cmake . > /dev/null
+        make > /dev/null
+        sudo make install
+    fi
 }
 
 # set up environment according os and target
