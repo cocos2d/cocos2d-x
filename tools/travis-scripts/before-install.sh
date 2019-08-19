@@ -63,7 +63,7 @@ function update_cmake_to_314()
         sudo apt purge --auto-remove cmake
         mkdir ~/temp
         cd ~/temp
-        wget https://cmake.org/files/v$version/cmake-3.14.0-Linux-x86_64.sh 
+        wget https://cmake.org/files/v3.14/cmake-3.14.0-Linux-x86_64.sh 
         sudo mkdir /opt/cmake
         sudo sh cmake-3.14.0-Linux-x86_64.sh --prefix=/opt/cmake
     fi
