@@ -53,11 +53,14 @@ function install_latest_python()
 # update cmake version to 3.14
 function update_cmake_to_314()
 {
+    echo "downloading cmake 3.14.0"
     curl https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz
-    tar -xzf cmake-3.14.0.tar.gz
+    echo "extract cmake 3.14.0"
+    tar -xzf cmake-3.14.0.tar.gz 2>/dev/null
     cd cmake-3.14.0
-    cmake .
-    make
+    echo "build and install cmake 3.14.0"
+    cmake . 2>/dev/null
+    make 2>/dev/null
     make install
 
     #if [ "$TRAVIS_OS_NAME" == "osx" ]; then
