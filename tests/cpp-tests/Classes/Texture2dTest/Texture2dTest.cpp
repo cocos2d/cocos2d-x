@@ -78,7 +78,6 @@ Texture2DTests::Texture2DTests()
     ADD_TEST_CASE(TexturePVRBadEncoding);
     ADD_TEST_CASE(TexturePNG);
     ADD_TEST_CASE(TextureJPEG);
-    ADD_TEST_CASE(TextureTIFF);
     ADD_TEST_CASE(TextureTGA);
     ADD_TEST_CASE(TextureWEBP);
     ADD_TEST_CASE(TextureWEBPNoAlpha)
@@ -130,29 +129,6 @@ TextureDemo::~TextureDemo()
     auto textureCache = Director::getInstance()->getTextureCache();
     textureCache->removeUnusedTextures();
     log("%s\n", textureCache->getCachedTextureInfo().c_str());
-}
-
-//------------------------------------------------------------------
-//
-// TextureTIFF
-//
-//------------------------------------------------------------------
-
-void TextureTIFF::onEnter()
-{
-    TextureDemo::onEnter();
-    auto s = Director::getInstance()->getWinSize();
-
-    auto img = Sprite::create("Images/test_image.tiff");
-    img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
-    this->addChild(img);
-
-    log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
-}
-
-std::string TextureTIFF::title() const
-{
-    return "TIFF Test";
 }
 
 
