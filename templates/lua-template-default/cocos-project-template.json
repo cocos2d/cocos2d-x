@@ -90,15 +90,7 @@
                 "include": [
                     "*.dll"
                 ]
-            },
-            {
-                "from": "external/tiff/prebuilt/win32",
-                "to": "runtime/win32",
-                "include": [
-                    "*.dll"
-                ]
             }
-
         ]
     },
     "do_add_native_support": {
