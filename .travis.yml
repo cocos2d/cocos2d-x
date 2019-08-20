@@ -61,6 +61,10 @@ script:
 - tools/travis-scripts/run-script.sh
 before_install:
 - tools/travis-scripts/before-install.sh
+install:
+- DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+- mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+- travis_retry wget --no-check-certificate https://cmake.org/files/v3.14/cmake-3.14.0-Linux-x86_64.tar.gz
 
 jdk:
   - oraclejdk8
