@@ -50,6 +50,29 @@ function install_latest_python()
     python -V
 }
 
+# update cmake version to 3.14
+function update_cmake_to_314()
+{
+
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        curl https://cmake.org/files/v3.14/cmake-3.14.0-Darwin-x86_64.tar.gz -O
+        tar -xzf cmake-3.14.0-Darwin-x86_64.tar.gz
+        sudo mv cmake-3.14.0-Darwin-x86_64/CMake.app /Applications
+    else
+        # linux system
+        # build with source code
+        echo "downloading cmake 3.14.0"
+        curl https://cmake.org/files/v3.14/cmake-3.14.0.tar.gz > ./cmake-3.14.0.tar.gz
+        echo "extract cmake 3.14.0"
+        tar -xzf cmake-3.14.0.tar.gz > /dev/null
+        cd cmake-3.14.0
+        echo "build and install cmake 3.14.0"
+        cmake . > /dev/null
+        make > /dev/null
+        sudo make install
+    fi
+}
+
 # set up environment according os and target
 function install_environement_for_pull_request()
 {
@@ -68,6 +91,8 @@ function install_environement_for_pull_request()
         install_latest_python
         install_python_module_for_osx
     fi
+
+    update_cmake_to_314
 
     # use NDK's clang to generate binding codes
     install_android_ndk
