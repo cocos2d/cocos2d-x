@@ -68,7 +68,7 @@ function build_ios_cmake()
     cd $COCOS2DX_ROOT
     mkdir -p ios_cmake_build
     cd ios_cmake_build
-    cmake .. -DCMAKE_TOOLCHAIN_FILE=$COCOS2DX_ROOT/cmake/ios.toolchain.cmake -GXcode -DIOS_PLATFORM=SIMULATOR64
+    cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
     # too much logs on console when "cmake --build ."
     # cmake --build .
     xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build  | xcpretty
