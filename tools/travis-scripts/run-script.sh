@@ -112,11 +112,6 @@ function genernate_binding_codes()
         ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
     fi
 
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        eval "$(pyenv init -)"
-    fi
-    which python
-
     source ../environment.sh
 
     # Generate binding glue codes
