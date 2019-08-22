@@ -50,6 +50,13 @@ function install_latest_python()
     python -V
 }
 
+function install_cmake_osx()
+{
+    cmake --version
+    brew upgrade cmake
+    cmake --version
+}
+
 # set up environment according os and target
 function install_environement_for_pull_request()
 {
@@ -67,6 +74,7 @@ function install_environement_for_pull_request()
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
         install_latest_python
         install_python_module_for_osx
+        install_cmake_osx
     fi
 
     # use NDK's clang to generate binding codes
@@ -80,6 +88,7 @@ function install_environement_for_after_merge()
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
         install_latest_python
         install_python_module_for_osx
+        install_cmake_osx
     fi
 
     echo "Building merge commit ..."
