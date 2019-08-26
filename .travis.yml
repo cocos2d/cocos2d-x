@@ -15,7 +15,7 @@ matrix:
     - os: osx
       env: BUILD_TARGET=mac_cmake
       language: cpp
-      osx_image: xcode9.3
+      osx_image: xcode10.3
       sudo: required
     # iOS_cmake
     - os: osx
