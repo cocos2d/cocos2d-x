@@ -32,6 +32,7 @@
 set(COCOS2D_X_VERSION 4.0)
 
 set(COCOS_CORE_LIB cocos2d)
+project(cocos2d_libs)
 
 include(2d/CMakeLists.txt)
 include(3d/CMakeLists.txt)
