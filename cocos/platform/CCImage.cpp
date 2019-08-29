@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <ctype.h>
 
 #include "base/CCData.h"
-#include "base/ccConfig.h" // CC_USE_JPEG, CC_USE_WEBP
+#include "base/ccConfig.h" // CC_USE_JPEG, CC_USE_TIFF, CC_USE_WEBP
 
 extern "C"
 {
@@ -81,6 +81,10 @@ extern "C"
 #if CC_USE_PNG
 #include "png.h"
 #endif //CC_USE_PNG
+
+#if CC_USE_TIFF
+#include "tiffio.h"
+#endif //CC_USE_TIFF
 
 #include "base/etc1.h"
     
@@ -568,6 +572,9 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
         case Format::JPG:
             ret = initWithJpgData(unpackedData, unpackedLen);
             break;
+        case Format::TIFF:
+            ret = initWithTiffData(unpackedData, unpackedLen);
+            break;
         case Format::WEBP:
             ret = initWithWebpData(unpackedData, unpackedLen);
             break;
@@ -665,6 +672,20 @@ bool Image::isJpg(const unsigned char * data, ssize_t dataLen)
     return memcmp(data, JPG_SOI, 2) == 0;
 }
 
+bool Image::isTiff(const unsigned char * data, ssize_t dataLen)
+{
+    if (dataLen <= 4)
+    {
+        return false;
+    }
+
+    static const char* TIFF_II = "II";
+    static const char* TIFF_MM = "MM";
+
+    return (memcmp(data, TIFF_II, 2) == 0 && *(static_cast<const unsigned char*>(data) + 2) == 42 && *(static_cast<const unsigned char*>(data) + 3) == 0) ||
+        (memcmp(data, TIFF_MM, 2) == 0 && *(static_cast<const unsigned char*>(data) + 2) == 0 && *(static_cast<const unsigned char*>(data) + 3) == 42);
+}
+
 bool Image::isWebp(const unsigned char * data, ssize_t dataLen)
 {
     if (dataLen <= 12)
@@ -701,6 +722,10 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     else if (isJpg(data, dataLen))
     {
         return Format::JPG;
+    }
+    else if (isTiff(data, dataLen))
+    {
+        return Format::TIFF;
     }
     else if (isWebp(data, dataLen))
     {
@@ -1050,6 +1075,174 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
     CCLOG("png is not enabled, please enable it in ccConfig.h");
     return false;
 #endif //CC_USE_PNG
+}
+
+#if CC_USE_TIFF
+namespace
+{
+    static tmsize_t tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
+    {
+        tImageSource* isource = (tImageSource*)fd;
+        uint8* ma;
+        uint64 mb;
+        unsigned long n;
+        unsigned long o;
+        tmsize_t p;
+        ma=(uint8*)buf;
+        mb=size;
+        p=0;
+        while (mb>0)
+        {
+            n=0x80000000UL;
+            if ((uint64)n>mb)
+                n=(unsigned long)mb;
+            
+            
+            if ((int)(isource->offset + n) <= isource->size)
+            {
+                memcpy(ma, isource->data+isource->offset, n);
+                isource->offset += n;
+                o = n;
+            }
+            else
+            {
+                return 0;
+            }
+            
+            ma+=o;
+            mb-=o;
+            p+=o;
+            if (o!=n)
+            {
+                break;
+            }
+        }
+        return p;
+    }
+    
+    static tmsize_t tiffWriteProc(thandle_t /*fd*/, void* /*buf*/, tmsize_t /*size*/)
+    {
+        return 0;
+    }
+    
+    
+    static uint64 tiffSeekProc(thandle_t fd, uint64 off, int whence)
+    {
+        tImageSource* isource = (tImageSource*)fd;
+        uint64 ret = -1;
+        do
+        {
+            if (whence == SEEK_SET)
+            {
+                CC_BREAK_IF(off >= (uint64)isource->size);
+                ret = isource->offset = (uint32)off;
+            }
+            else if (whence == SEEK_CUR)
+            {
+                CC_BREAK_IF(isource->offset + off >= (uint64)isource->size);
+                ret = isource->offset += (uint32)off;
+            }
+            else if (whence == SEEK_END)
+            {
+                CC_BREAK_IF(off >= (uint64)isource->size);
+                ret = isource->offset = (uint32)(isource->size-1 - off);
+            }
+            else
+            {
+                CC_BREAK_IF(off >= (uint64)isource->size);
+                ret = isource->offset = (uint32)off;
+            }
+        } while (0);
+        
+        return ret;
+    }
+    
+    static uint64 tiffSizeProc(thandle_t fd)
+    {
+        tImageSource* imageSrc = (tImageSource*)fd;
+        return imageSrc->size;
+    }
+    
+    static int tiffCloseProc(thandle_t /*fd*/)
+    {
+        return 0;
+    }
+    
+    static int tiffMapProc(thandle_t /*fd*/, void** /*base*/, toff_t* /*size*/)
+    {
+        return 0;
+    }
+    
+    static void tiffUnmapProc(thandle_t /*fd*/, void* /*base*/, toff_t /*size*/)
+    {
+    }
+}
+#endif // CC_USE_TIFF
+
+bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
+{
+#if CC_USE_TIFF
+    bool ret = false;
+    do 
+    {
+        // set the read call back function
+        tImageSource imageSource;
+        imageSource.data    = data;
+        imageSource.size    = dataLen;
+        imageSource.offset  = 0;
+
+        TIFF* tif = TIFFClientOpen("file.tif", "r", (thandle_t)&imageSource, 
+            tiffReadProc, tiffWriteProc,
+            tiffSeekProc, tiffCloseProc, tiffSizeProc,
+            tiffMapProc,
+            tiffUnmapProc);
+
+        CC_BREAK_IF(nullptr == tif);
+
+        uint32 w = 0, h = 0;
+        uint16 bitsPerSample = 0, samplePerPixel = 0, planarConfig = 0;
+        size_t npixels = 0;
+        
+        TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &w);
+        TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &h);
+        TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bitsPerSample);
+        TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samplePerPixel);
+        TIFFGetField(tif, TIFFTAG_PLANARCONFIG, &planarConfig);
+
+        npixels = w * h;
+        
+        _pixelFormat = backend::PixelFormat::RGBA8888;
+        _width = w;
+        _height = h;
+
+        _dataLen = npixels * sizeof (uint32);
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
+
+        uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
+        if (raster != nullptr) 
+        {
+           if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
+           {
+                /* the raster data is pre-multiplied by the alpha component 
+                   after invoking TIFFReadRGBAImageOriented*/
+                _hasPremultipliedAlpha = true;
+
+               memcpy(_data, raster, npixels*sizeof (uint32));
+           }
+
+          _TIFFfree(raster);
+        }
+        
+
+        TIFFClose(tif);
+
+        ret = true;
+    } while (0);
+    return ret;
+#else
+    CCLOG("tiff is not enabled, please enable it in ccConfig.h");
+    return false;
+#endif //CC_USE_TIFF
 }
 
 namespace

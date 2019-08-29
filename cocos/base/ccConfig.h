@@ -303,6 +303,12 @@ THE SOFTWARE.
 #define CC_USE_JPEG  1
 #endif // CC_USE_JPEG
 
+/** Support TIFF or not. If your application don't use TIFF format picture, you can undefine this macro to save package size.
+ */
+#ifndef CC_USE_TIFF
+#define CC_USE_TIFF  1
+#endif // CC_USE_TIFF
+
 /** Support webp or not. If your application don't use webp format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_WEBP

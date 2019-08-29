@@ -13,6 +13,22 @@ local function createTestLayer(title, subtitle)
     print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
+--------------------------------------------------------------------
+--
+-- TextureTIFF
+--
+--------------------------------------------------------------------
+
+local function TextureTIFF()
+    local ret = createTestLayer("TIFF Test")
+    local s = cc.Director:getInstance():getWinSize()
+
+    local img = cc.Sprite:create("Images/test_image.tiff")
+    img:setPosition(cc.p( s.width/2.0, s.height/2.0))
+    ret:addChild(img)
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
+    return ret
+end
 
 --------------------------------------------------------------------
 --
@@ -1420,6 +1436,7 @@ function Texture2dTestMain()
         TexturePVRBadEncoding,
         TexturePNG,
         TextureJPEG,
+        TextureTIFF,
         TextureWEBP,
         TextureMipMap,
         TexturePixelFormat,

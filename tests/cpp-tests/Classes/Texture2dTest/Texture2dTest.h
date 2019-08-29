@@ -38,6 +38,14 @@ public:
     virtual void onEnter() override;
 };
 
+class TextureTIFF : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureTIFF);
+    virtual std::string title() const override;
+    virtual void onEnter() override;
+};
+
 
 class TextureTGA : public TextureDemo
 {

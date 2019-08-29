@@ -89,7 +89,7 @@ public:
     * If the filename was not previously loaded, it will create a new Texture2D.
     * Object and it will return it. It will use the filename as a key.
     * Otherwise it will return a reference of a previously loaded image.
-    * Supported image extensions: .png, .bmp, .jpeg, .pvr.
+    * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr.
      @param filepath The file path.
     */
     Texture2D* addImage(const std::string &filepath);

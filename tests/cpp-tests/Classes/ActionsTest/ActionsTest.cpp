@@ -106,7 +106,7 @@ void ActionsDemo::onEnter()
 {
     TestCase::onEnter();
 
-    // Or you can create an sprite using a filename. only PNG is supported now.
+    // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too
     _grossini = Sprite::create(s_pathGrossini);
     _grossini->retain();
 
