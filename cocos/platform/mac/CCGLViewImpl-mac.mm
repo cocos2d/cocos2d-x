@@ -319,7 +319,6 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
         return false;
     }
     
-    
     int fbWidth, fbHeight;
     glfwGetFramebufferSize(_mainWindow, &fbWidth, &fbHeight);
     
@@ -879,6 +878,14 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, 
         setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
         Director::getInstance()->setViewport();
         Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_RESIZED, nullptr);
+        
+        //update metal drawable size.
+        int fbWidth, fbHeight;
+        glfwGetFramebufferSize(_mainWindow, &fbWidth, &fbHeight);
+        CGSize size;
+        size.width = static_cast<CGFloat>(fbWidth);
+        size.height = static_cast<CGFloat>(fbHeight);
+        [backend::DeviceMTL::getCAMetalLayer() setDrawableSize:size];
     }
 }
 
