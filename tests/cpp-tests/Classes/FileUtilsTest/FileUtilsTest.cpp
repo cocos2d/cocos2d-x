@@ -717,7 +717,7 @@ void TestGetContents::onEnter()
 
         // Text read string in text mode
         std::string ts = fs->getStringFromFile(_generatedFile);
-        if (ts != "\r\n\r\n")
+        if (strcmp(ts.c_str(), "\r\n\r\n")!=0)
             return std::string("failed: read as zero terminated string");
 
 
