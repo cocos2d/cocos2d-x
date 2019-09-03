@@ -133,6 +133,7 @@ function Material_2DEffects:subtitle()
     return "Testing effects on Sprite"
 end
 
+
 function Material_2DEffects:onEnter()
     local properties = cc.Properties:createNonRefCounted("Materials/2d_effects.material#sample")
 
@@ -161,6 +162,18 @@ function Material_2DEffects:onEnter()
     spriteEdgeDetect:setNormalizedPosition(cc.p(0.8, 0.5))
     self:addChild(spriteEdgeDetect)
     spriteEdgeDetect:setProgramState(mat1:getTechniqueByName("edge_detect"):getPassByIndex(0):getProgramState())
+
+    local scheduler = cc.Director:getInstance():getScheduler()
+    self._schedulerEntry = scheduler:scheduleScriptFunc(function(dt)
+        local time = cc.Director:getInstance():getTotalFrames() * cc.Director:getInstance():getAnimationInterval()
+        local random = cc.vec4(time / 10., time, time * 2, time * 4)
+        spriteNoise:getProgramState():setUniform("u_Time", cc.bytearray.from_vec4(random));
+    end, 0, false)
+end
+
+function Material_2DEffects:onExit()
+    local scheduler = cc.Director:getInstance():getScheduler()
+    scheduler:unscheduleScriptEntry(self._schedulerEntry)
 end
 
 ----------------------------------------
