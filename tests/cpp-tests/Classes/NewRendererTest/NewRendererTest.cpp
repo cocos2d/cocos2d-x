@@ -380,6 +380,9 @@ NewCullingTest::NewCullingTest()
     listener->onTouchMoved = CC_CALLBACK_2(NewCullingTest::onTouchMoved, this);
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+
+    
     
 }
 
@@ -387,6 +390,9 @@ bool NewCullingTest::onTouchBegan(Touch* touch, Event  *event)
 {
     auto pos = touch->getLocation();
     _lastPos = pos;
+
+
+    CCLOG("NewCullingTest this %p ", this);
     return true;
 }
 
@@ -401,6 +407,9 @@ void NewCullingTest::onTouchMoved(Touch* touch, Event  *event)
     
     setPosition(newPos);
     _lastPos = pos;
+
+
+    CCLOG("NewCullingTest this %p ", this);
 }
 
 NewCullingTest::~NewCullingTest()

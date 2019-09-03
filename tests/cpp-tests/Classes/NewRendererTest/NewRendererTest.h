@@ -121,6 +121,7 @@ protected:
     bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event  *event);
     void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event  *event);
     cocos2d::Vec2 _lastPos;
+    cocos2d::Node *_container = nullptr;
 };
 
 class SpriteCreation : public MultiSceneTest

@@ -551,8 +551,78 @@ MenuItem* Menu::getItemForTouch(Touch *touch, const Camera *camera)
         }
         Rect rect;
         rect.size = child->getContentSize();
-        if (isScreenPointInRect(touchLocation, camera, child->getWorldToNodeTransform(), rect, nullptr))
+       // auto pos3d = child->getNodeToWorldTransform() * child->getPosition3D();
+       // rect.origin = Vec2(pos3d.x, pos3d.y);
+        //rect.origin = this->getPosition();
+       // rect.origin = -child->getPosition();
+        CCLOG("-----------------------------------------");
+        auto wt = child->getWorldToNodeTransform();
+        CCLOG("# %p : worldToNodeTransform[%f, %f, %f, %f; %f, %f, %f, %f; %f, %f, %f, %f; %f, %f, %f, %f]",
+            this, wt.m[0],
+            wt.m[1],
+            wt.m[2],
+            wt.m[3],
+            wt.m[4],
+            wt.m[5],
+            wt.m[6],
+            wt.m[7],
+            wt.m[8],
+            wt.m[9],
+            wt.m[10],
+            wt.m[11],
+            wt.m[12],
+            wt.m[13],
+            wt.m[14],
+            wt.m[15]
+        );
+        CCLOG(" ~%p : rect[%f, %f], click:[%f, %f]",this, rect.size.width, rect.size.height, touch->getLocation().x, touch->getLocation().y);
+        auto touchPos = Vec3(touch->getLocation().x, touch->getLocation().y, 1);
+        auto touchPos1 = Vec3(touch->getLocation().x, touch->getLocation().y, -1);
+
+        touchPos = camera->unprojectGL(touchPos);
+        touchPos1 = camera->unprojectGL(touchPos1);
+
+
+        CCLOG("    : pos0 in node transform [%f, %f, %f]", touchPos.x, touchPos.y, touchPos.z);
+        CCLOG("    : pos1 in node transform [%f, %f, %f]", touchPos1.x, touchPos1.y, touchPos1.z);
+
+        auto del = touchPos1 - touchPos;
+        auto N = -touchPos.z / (touchPos1.z - touchPos.z);
+        auto touchPos2 = touchPos + N * del;
+
+       // wt.transformPoint(&touchPos);
+       // wt.transformPoint(&touchPos1);
+
+        CCLOG("    : pos1 in node transform [%f, %f, %f]", touchPos2.x, touchPos2.y, touchPos2.z);
+        wt.transformPoint(&touchPos2);
+        CCLOG("    : pos1 in node transform [%f, %f, %f]", touchPos2.x, touchPos2.y, touchPos2.z);
+
+        auto wt2 = child->getWorldToNodeTransform();
+
+        auto sc = Director::getInstance()->getRunningScene()->getWorldToNodeTransform();
+
+        if (isScreenPointInRect(touchLocation, camera, sc * wt2, rect, nullptr))
         {
+
+            CCLOG("  %p : worldToNodeTransform[%f, %f, %f, %f; %f, %f, %f, %f; %f, %f, %f, %f; %f, %f, %f, %f]",
+                this, wt.m[0],
+                wt.m[1],
+                wt.m[2],
+                wt.m[3],
+                wt.m[4],
+                wt.m[5],
+                wt.m[6],
+                wt.m[7],
+                wt.m[8],
+                wt.m[9],
+                wt.m[10],
+                wt.m[11],
+                wt.m[12],
+                wt.m[13],
+                wt.m[14],
+                wt.m[15]
+            );
+
             return child;
         }
     }

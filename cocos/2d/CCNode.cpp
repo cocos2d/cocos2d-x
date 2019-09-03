@@ -1638,6 +1638,28 @@ Mat4 Node::getNodeToParentTransform(Node* ancestor) const
         t = p->getNodeToParentTransform() * t;
     }
 
+    //CCLOG("   ? %p : getNodeToParentTransform[%f, %f, %f, %f; %f, %f, %f, %f; %f, %f, %f, %f; %f, %f, %f, %f]",
+    //    this,
+    //    t.m[0],
+    //    t.m[1],
+    //    t.m[2],
+    //    t.m[3],
+    //    t.m[4],
+    //    t.m[5],
+    //    t.m[6],
+    //    t.m[7],
+    //    t.m[8],
+    //    t.m[9],
+    //    t.m[10],
+    //    t.m[11],
+    //    t.m[12],
+    //    t.m[13],
+    //    t.m[14],
+    //    t.m[15]
+    //);
+
+
+
     return t;
 }
 
