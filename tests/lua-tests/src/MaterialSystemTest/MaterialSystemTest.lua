@@ -164,10 +164,11 @@ function Material_2DEffects:onEnter()
     spriteEdgeDetect:setProgramState(mat1:getTechniqueByName("edge_detect"):getPassByIndex(0):getProgramState())
 
     local scheduler = cc.Director:getInstance():getScheduler()
+    local uTimeLoc = spriteNoise:getProgramState():getUniformLocation("u_Time")
     self._schedulerEntry = scheduler:scheduleScriptFunc(function(dt)
         local time = cc.Director:getInstance():getTotalFrames() * cc.Director:getInstance():getAnimationInterval()
         local random = cc.vec4(time / 10., time, time * 2, time * 4)
-        spriteNoise:getProgramState():setUniform("u_Time", cc.bytearray.from_vec4(random));
+        spriteNoise:getProgramState():setUniform(uTimeLoc, cc.bytearray.from_vec4(random));
     end, 0, false)
 end
 
