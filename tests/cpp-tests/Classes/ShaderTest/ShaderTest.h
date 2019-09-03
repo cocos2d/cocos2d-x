@@ -182,6 +182,7 @@ protected:
     cocos2d::backend::UniformLocation   _locTime;
     cocos2d::backend::UniformLocation   _locSinTime;
     cocos2d::backend::UniformLocation   _locCosTime;
+    cocos2d::backend::UniformLocation   _locScreenSize;
 };
 
 class ShaderLensFlare : public ShaderTestDemo

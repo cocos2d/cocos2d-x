@@ -6,13 +6,18 @@ precision lowp float;
 
 varying vec2 v_texCoord;
 
+uniform vec2 u_screenSize;
 uniform sampler2D u_texture;
 
 void main(void)
 {
 	vec4 optColor;
-	
-	int y = int( mod(gl_FragCoord.y / 3.0, 10.0 ) );
+#ifdef METAL
+	float fragCoordY = u_screenSize.y - gl_FragCoord.y;
+#else
+	float fragCoordY = gl_FragCoord.y;
+#endif
+	int y = int( mod(fragCoordY / 3.0, 10.0 ) );
 	if(y == 0)	optColor = vec4(1,0,0,1);
 	else if(y == 1) optColor = vec4(0,1,0,1);
 	else if(y == 2) optColor = vec4(0,0,1,1);

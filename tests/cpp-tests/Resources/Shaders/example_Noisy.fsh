@@ -10,6 +10,7 @@ varying vec2 v_texCoord;
 uniform vec2 resolution;
 uniform sampler2D u_texture;
 uniform vec4 u_Time;
+uniform vec2 u_screenSize;
 
 const float intensity = 0.05;
 vec3 noise(vec2 uv)
@@ -22,7 +23,12 @@ vec3 noise(vec2 uv)
 
 void main(void)
 {
-	gl_FragColor.xyz = intensity * noise(gl_FragCoord.xy / sin(resolution.xy * u_Time[1] * 0.01)) + (1. - intensity) *
+#ifdef METAL
+	vec2 fragCoord = vec2(gl_FragCoord.x, u_screenSize.y - gl_FragCoord.y);
+#else
+	vec2 fragCoord = gl_FragCoord.xy;
+#endif
+	gl_FragColor.xyz = intensity * noise(fragCoord / sin(resolution.xy * u_Time[1] * 0.01)) + (1. - intensity) *
 			texture2D(u_texture,v_texCoord.xy).xyz;
 	gl_FragColor.w = 1.;
 }

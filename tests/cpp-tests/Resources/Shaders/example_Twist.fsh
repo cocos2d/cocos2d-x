@@ -7,14 +7,19 @@ precision highp float;
 uniform vec2 resolution;
 uniform sampler2D tex0;
 uniform sampler2D tex1;
-
+uniform vec2 u_screenSize;
 uniform vec4 u_Time;
 uniform vec4 u_CosTime
 
 void main(void)
 {
+#ifdef METAL
+	vec2 fragCoord = vec2(gl_FragCoord.x, u_screenSize.y - gl_FragCoord.y);
+#else
+	vec2 fragCoord = gl_FragCoord.xy;
+#endif
     float time = u_Time[1];
-    vec2 p = -1.0 + 2.0 * gl_FragCoord.xy / resolution.xy;
+    vec2 p = -1.0 + 2.0 * fragCoord / resolution.xy;
     vec2 uv;
 
     float a = atan(p.y,p.x);
