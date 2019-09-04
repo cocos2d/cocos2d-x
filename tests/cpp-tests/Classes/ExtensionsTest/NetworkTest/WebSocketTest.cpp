@@ -147,7 +147,7 @@ void WebSocketTest::startTestCallback(Ref* sender)
     }
 
     protocols.erase(protocols.begin());
-    if (!_wsiSendBinary->init(*this, "wss://echo.websocket.org", &protocols))
+    if (!_wsiSendBinary->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
     {
         CC_SAFE_DELETE(_wsiSendBinary);
     }
