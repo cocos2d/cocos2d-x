@@ -199,7 +199,6 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     if (alphaThreshold < 1)
     {
         auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
-        //_stencil->setProgramState(programState);
         auto alphaLocation = programState->getUniformLocation("u_alpha_value");
         programState->setUniform(alphaLocation, &alphaThreshold, sizeof(alphaThreshold));
         setProgram(_stencil, programState);
@@ -336,9 +335,7 @@ void ClippingNode::setAlphaThreshold(float alphaThreshold)
     {
         // should reset program used by _stencil
         if (_stencil)
-        {
             restoreProgram();
-        }
     }
     _stencilStateManager->setAlphaThreshold(alphaThreshold);
 }

@@ -31,7 +31,6 @@
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCCallbackCommand.h"
-#include "base/CCStencilStateManager.h"
 #include <unordered_map>
 NS_CC_BEGIN
 
