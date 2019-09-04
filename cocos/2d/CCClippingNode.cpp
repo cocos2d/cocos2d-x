@@ -199,9 +199,11 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     if (alphaThreshold < 1)
     {
         auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
-        _stencil->setProgramState(programState);
+        //_stencil->setProgramState(programState);
         auto alphaLocation = programState->getUniformLocation("u_alpha_value");
         programState->setUniform(alphaLocation, &alphaThreshold, sizeof(alphaThreshold));
+        setProgram(_stencil, programState);
+
         CC_SAFE_RELEASE_NULL(programState);
     }
     _stencil->visit(renderer, _modelViewTransform, flags);
@@ -309,7 +311,13 @@ void ClippingNode::setStencil(Node *stencil)
     }
 
     if (_stencil != nullptr)
-        _originalStencilProgramState = _stencil->getProgramState();
+    {
+        _originalStencilProgramState[_stencil] = _stencil->getProgramState();
+        auto& children = _stencil->getChildren();
+        for (const auto &child : children) {
+            _originalStencilProgramState[child] = child->getProgramState();
+        }
+    }
 }
 
 bool ClippingNode::hasContent() const
@@ -328,7 +336,9 @@ void ClippingNode::setAlphaThreshold(float alphaThreshold)
     {
         // should reset program used by _stencil
         if (_stencil)
-            _stencil->setProgramState(_originalStencilProgramState);
+        {
+            restoreProgram();
+        }
     }
     _stencilStateManager->setAlphaThreshold(alphaThreshold);
 }
@@ -341,6 +351,27 @@ bool ClippingNode::isInverted() const
 void ClippingNode::setInverted(bool inverted)
 {
     _stencilStateManager->setInverted(inverted);
+}
+
+void ClippingNode::setProgram(Node* node, backend::ProgramState* programState)
+{
+    _originalStencilProgramState[node] = node->getProgramState();
+    node->setProgramState(programState);
+
+    auto& children = node->getChildren();
+    for (const auto &child : children) {
+        setProgram(child, programState);
+    }
+}
+
+void ClippingNode::restoreProgram()
+{
+    for (auto item : _originalStencilProgramState)
+    {
+        auto node = item.first;
+        auto programState = item.second;
+        node->setProgramState(programState);
+    }
 }
 
 
