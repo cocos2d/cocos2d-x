@@ -67,9 +67,7 @@
 		156EAE071977D0BD00F53709 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		157B08EC1A90864100B7BEA4 /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
 		157B08ED1A90865600B7BEA4 /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
-		15AECE0B195C0F8A00907DB0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		15AECE0F195C1FDD00907DB0 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
-		15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		15B0870D195AD52000D6F62B /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		15B13E5219F0FD4D008A1ADC /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
 		15B3709319EE5D1000ABE682 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
@@ -134,7 +132,6 @@
 		185663621B4155D3009EF2AE /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35418CD9A820087CE3A /* OpenGL.framework */; };
 		185663A51B4155DD009EF2AE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
 		185663A71B4155DD009EF2AE /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
-		185663A81B4155DD009EF2AE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		185663A91B4155DD009EF2AE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3AF18CDA06D0087CE3A /* libz.dylib */; };
 		185663AA1B4155DD009EF2AE /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		185663AB1B4155DD009EF2AE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3A818CD9F130087CE3A /* AudioToolbox.framework */; };
@@ -688,7 +685,6 @@
 		3E9E75D0199324CB005B7047 /* Camera3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E75CE199324CB005B7047 /* Camera3DTest.cpp */; };
 		3E9E75D1199324CB005B7047 /* Camera3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E75CE199324CB005B7047 /* Camera3DTest.cpp */; };
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
-		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
 		400308D820060F12000DFE6D /* strings in Resources */ = {isa = PBXBuildFile; fileRef = 400308D720060F12000DFE6D /* strings */; };
 		406023E5208DDFF5008F1C02 /* strings in Resources */ = {isa = PBXBuildFile; fileRef = 400308D720060F12000DFE6D /* strings */; };
@@ -698,6 +694,14 @@
 		463D7E7D1D227C6A00EA6BD1 /* Bug-14327.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */; };
 		463D7E7E1D227CA400EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
 		463D7E7F1D227CAB00EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
+		467AF5A4231E004C00770112 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A3231E004C00770112 /* AVKit.framework */; };
+		467AF5A6231E079F00770112 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A5231E079F00770112 /* CoreMedia.framework */; };
+		467AF5A9231E4B2500770112 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A5231E079F00770112 /* CoreMedia.framework */; };
+		467AF5AA231E4BA600770112 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A3231E004C00770112 /* AVKit.framework */; };
+		467AF5AB231E4BE500770112 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A3231E004C00770112 /* AVKit.framework */; };
+		467AF5AC231E4BED00770112 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A5231E079F00770112 /* CoreMedia.framework */; };
+		467AF5AD231E4C4300770112 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A3231E004C00770112 /* AVKit.framework */; };
+		467AF5AE231E4C4900770112 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A5231E079F00770112 /* CoreMedia.framework */; };
 		4B5C5BA81CA1147300D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BA91CA1147F00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
@@ -706,7 +710,6 @@
 		4B5C5BAE1CA114B500D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
 		4B5C5BAF1CA114BB00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
 		4B5C5BB01CA114C100D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
-		4B5C5BB11CA114C700D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
 		4B5C5BB21CA114CC00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
 		4B5C5BB31CA114D400D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
 		4B5C5BB51CA114DB00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BB41CA114DB00D55A14 /* Security.framework */; };
@@ -1120,7 +1123,6 @@
 		527B1F3C19EFACBB000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F3A19EFACBB000A1F82 /* Default-667h@2x.png */; };
 		527B1F3D19EFACBB000A1F82 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F3B19EFACBB000A1F82 /* Default-736h@3x.png */; };
 		52B47A341A534B2B004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
-		52B47A351A53A43A004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
 		53367D561DC22891005862DE /* WindowTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53367D541DC22891005862DE /* WindowTest.cpp */; };
 		53E6A008218FA06E002BE515 /* InputTest in Resources */ = {isa = PBXBuildFile; fileRef = 53E6A007218FA06D002BE515 /* InputTest */; };
 		53E6A009218FA06E002BE515 /* InputTest in Resources */ = {isa = PBXBuildFile; fileRef = 53E6A007218FA06D002BE515 /* InputTest */; };
@@ -2228,6 +2230,9 @@
 		463D7E791D227C3800EA6BD1 /* Bug-14327.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-14327.h"; sourceTree = "<group>"; };
 		463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-15776.cpp"; sourceTree = "<group>"; };
 		463D7E7B1D227C3800EA6BD1 /* Bug-15776.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-15776.h"; sourceTree = "<group>"; };
+		467AF5A3231E004C00770112 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/AVKit.framework; sourceTree = DEVELOPER_DIR; };
+		467AF5A5231E079F00770112 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		467AF5A7231E4AA500770112 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		4B5C5BAA1CA1149900D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BB41CA114DB00D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
@@ -2478,14 +2483,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467AF5AE231E4C4900770112 /* CoreMedia.framework in Frameworks */,
+				467AF5AD231E4C4300770112 /* AVKit.framework in Frameworks */,
 				C8DE9E491F0EAECD00B48C6B /* GameController.framework in Frameworks */,
 				294D7D8F1D0E50B2002CE7B7 /* CoreText.framework in Frameworks */,
-				4B5C5BB11CA114C700D55A14 /* Security.framework in Frameworks */,
 				18FC4D5F1B4257CD00B76F95 /* libsqlite3.dylib in Frameworks */,
 				185663F01B41569E009EF2AE /* libjscocos2d iOS.a in Frameworks */,
 				185663A51B4155DD009EF2AE /* Security.framework in Frameworks */,
 				185663A71B4155DD009EF2AE /* libcocos2d iOS.a in Frameworks */,
-				185663A81B4155DD009EF2AE /* MediaPlayer.framework in Frameworks */,
 				185663A91B4155DD009EF2AE /* libz.dylib in Frameworks */,
 				ED545A791B68A1B900C3958E /* libiconv.dylib in Frameworks */,
 				185663AA1B4155DD009EF2AE /* CoreMotion.framework in Frameworks */,
@@ -2564,12 +2569,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467AF5AC231E4BED00770112 /* CoreMedia.framework in Frameworks */,
+				467AF5AB231E4BE500770112 /* AVKit.framework in Frameworks */,
 				294D7D8C1D0E50A0002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAE1CA114B500D55A14 /* Security.framework in Frameworks */,
 				ED545A761B68A1B600C3958E /* libiconv.dylib in Frameworks */,
 				15EFA68B198B3AD8000C57D3 /* libcocos2d iOS.a in Frameworks */,
 				15EFA68D198B3AD8000C57D3 /* libluacocos2d iOS.a in Frameworks */,
-				15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */,
 				1A0EE42C18CDF799004CD58F /* libz.dylib in Frameworks */,
 				1A0EE42D18CDF799004CD58F /* CoreMotion.framework in Frameworks */,
 				1A0EE42E18CDF799004CD58F /* AudioToolbox.framework in Frameworks */,
@@ -2607,12 +2613,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467AF5AA231E4BA600770112 /* AVKit.framework in Frameworks */,
+				467AF5A9231E4B2500770112 /* CoreMedia.framework in Frameworks */,
 				294D7D8B1D0E509A002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAD1CA114AC00D55A14 /* Security.framework in Frameworks */,
-				52B47A351A53A43A004E4C60 /* Security.framework in Frameworks */,
 				15EFA66F198B356E000C57D3 /* libluacocos2d iOS.a in Frameworks */,
 				15EFA666198B34D7000C57D3 /* libcocos2d iOS.a in Frameworks */,
-				15AECE0B195C0F8A00907DB0 /* MediaPlayer.framework in Frameworks */,
 				1ABCA3B018CDA06D0087CE3A /* libz.dylib in Frameworks */,
 				1ABCA3AA18CD9F1A0087CE3A /* CoreMotion.framework in Frameworks */,
 				1ABCA3A918CD9F130087CE3A /* AudioToolbox.framework in Frameworks */,
@@ -2830,11 +2836,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467AF5A6231E079F00770112 /* CoreMedia.framework in Frameworks */,
+				467AF5A4231E004C00770112 /* AVKit.framework in Frameworks */,
 				29DC5A201CFFE6E100CF2930 /* CoreText.framework in Frameworks */,
 				4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */,
 				ED545A731B68A1AC00C3958E /* libiconv.dylib in Frameworks */,
 				52B47A341A534B2B004E4C60 /* Security.framework in Frameworks */,
-				3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */,
 				1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */,
 				D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */,
 				A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */,
@@ -4344,6 +4351,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				467AF5A7231E4AA500770112 /* UIKit.framework */,
+				467AF5A5231E079F00770112 /* CoreMedia.framework */,
+				467AF5A3231E004C00770112 /* AVKit.framework */,
 				C8DE9E481F0EAECD00B48C6B /* GameController.framework */,
 				50FC3FA01D74C15B001C936A /* GameController.framework */,
 				29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */,
@@ -7583,6 +7593,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-lua-tests";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -7613,6 +7624,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-lua-tests";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",

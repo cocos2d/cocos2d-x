@@ -65,7 +65,8 @@ macro(cocos2dx_depend)
             find_library(UIKIT_LIBRARY UIKit)
             find_library(OPENGLES_LIBRARY OpenGLES)
             find_library(CORE_MOTION_LIBRARY CoreMotion)
-            find_library(MEDIA_PLAYER_LIBRARY MediaPlayer)
+            find_library(AVKIT_LIBRARY AVKit)
+            find_library(CORE_MEDIA_LIBRARY CoreMedia)
             find_library(CORE_TEXT_LIBRARY CoreText)
             find_library(SECURITY_LIBRARY Security)
             find_library(CORE_GRAPHICS_LIBRARY CoreGraphics)
@@ -75,7 +76,8 @@ macro(cocos2dx_depend)
                  ${UIKIT_LIBRARY}
                  ${OPENGLES_LIBRARY}
                  ${CORE_MOTION_LIBRARY}
-                 ${MEDIA_PLAYER_LIBRARY}
+                 ${AVKIT_LIBRARY}
+                 ${CORE_MEDIA_LIBRARY}
                  ${CORE_TEXT_LIBRARY}
                  ${SECURITY_LIBRARY}
                  ${CORE_GRAPHICS_LIBRARY}
