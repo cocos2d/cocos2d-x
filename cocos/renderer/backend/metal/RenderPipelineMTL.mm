@@ -302,6 +302,8 @@ void RenderPipelineMTL::getAttachmentFormat(const RenderPassDescriptor& descript
         // FIXME: now just handle color attachment 0.
         if (descriptor.colorAttachmentsTexture[0])
             colorFormat = descriptor.colorAttachmentsTexture[0]->getTextureFormat();
+        else
+            colorFormat = PixelFormat::DEFAULT;
     }
     else
     {
