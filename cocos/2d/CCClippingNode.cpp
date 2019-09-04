@@ -201,7 +201,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
         auto alphaLocation = programState->getUniformLocation("u_alpha_value");
         programState->setUniform(alphaLocation, &alphaThreshold, sizeof(alphaThreshold));
-        setProgram(_stencil, programState);
+        setProgramStateRecursively(_stencil, programState);
 
         CC_SAFE_RELEASE_NULL(programState);
     }
@@ -335,7 +335,7 @@ void ClippingNode::setAlphaThreshold(float alphaThreshold)
     {
         // should reset program used by _stencil
         if (_stencil)
-            restoreProgram();
+            restoreAllProgramStates();
     }
     _stencilStateManager->setAlphaThreshold(alphaThreshold);
 }
@@ -350,18 +350,18 @@ void ClippingNode::setInverted(bool inverted)
     _stencilStateManager->setInverted(inverted);
 }
 
-void ClippingNode::setProgram(Node* node, backend::ProgramState* programState)
+void ClippingNode::setProgramStateRecursively(Node* node, backend::ProgramState* programState)
 {
     _originalStencilProgramState[node] = node->getProgramState();
     node->setProgramState(programState);
 
     auto& children = node->getChildren();
     for (const auto &child : children) {
-        setProgram(child, programState);
+        setProgramStateRecursively(child, programState);
     }
 }
 
-void ClippingNode::restoreProgram()
+void ClippingNode::restoreAllProgramStates()
 {
     for (auto item : _originalStencilProgramState)
     {

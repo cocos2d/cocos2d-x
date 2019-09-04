@@ -154,8 +154,8 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init(Node *stencil);
 
 protected:
-    void setProgram(Node* node, backend::ProgramState* programState);
-    void restoreProgram();
+    void setProgramStateRecursively(Node* node, backend::ProgramState* programState);
+    void restoreAllProgramStates();
 
     Node* _stencil                              = nullptr;
     StencilStateManager* _stencilStateManager   = nullptr;
