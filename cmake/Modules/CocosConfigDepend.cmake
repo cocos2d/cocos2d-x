@@ -72,6 +72,7 @@ macro(cocos2dx_depend)
             find_library(CORE_GRAPHICS_LIBRARY CoreGraphics)
             find_library(AV_FOUNDATION_LIBRARY AVFoundation)
             find_library(Z_LIBRARY z)
+            find_library(WEBKIT_LIBRARY WebKit)
             list(APPEND PLATFORM_SPECIFIC_LIBS
                  ${UIKIT_LIBRARY}
                  ${OPENGLES_LIBRARY}
@@ -83,6 +84,7 @@ macro(cocos2dx_depend)
                  ${CORE_GRAPHICS_LIBRARY}
                  ${AV_FOUNDATION_LIBRARY}
                  ${Z_LIBRARY}
+                 ${WEBKIT_LIBRARY}
                  ${COCOS_APPLE_LIBS}
                  )
         endif()
