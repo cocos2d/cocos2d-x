@@ -27,12 +27,15 @@
 #include "base/ccMacros.h"
 
 CC_BACKEND_BEGIN
+namespace {
+    const std::string metalSpecificDefine = "#define METAL\n";
+}
 
 ProgramMTL::ProgramMTL(const std::string& vertexShader, const std::string& fragmentShader)
 : Program(vertexShader, fragmentShader)
 {
     _vertexShader = static_cast<ShaderModuleMTL*>(ShaderCache::newVertexShaderModule(vertexShader));
-    _fragmentShader = static_cast<ShaderModuleMTL*>(ShaderCache::newFragmentShaderModule(fragmentShader));
+    _fragmentShader = static_cast<ShaderModuleMTL*>(ShaderCache::newFragmentShaderModule(std::move(metalSpecificDefine + fragmentShader)));
 
     CC_SAFE_RETAIN(_vertexShader);
     CC_SAFE_RETAIN(_fragmentShader);

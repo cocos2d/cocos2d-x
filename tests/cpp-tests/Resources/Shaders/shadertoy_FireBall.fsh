@@ -1,6 +1,7 @@
 
 uniform vec2 center;
 uniform vec2 resolution;
+uniform vec2 u_screenSize;
 
 vec2   iCenter = center;
 //uniform float     iChannelTime[4];       // channel playback time (in seconds)
@@ -35,12 +36,17 @@ float snoise(vec3 uv, float res)
 
 void main(void)
 {
+#ifdef METAL
+	vec2 fragCoord = vec2(gl_FragCoord.x, u_screenSize.y - gl_FragCoord.y);
+#else
+	vec2 fragCoord = gl_FragCoord.xy;
+#endif
     vec2   iResolution = resolution;           // viewport resolution (in pixels)
     float  iGlobalTime = u_Time[1];           // shader playback time (in seconds)
 
-	//vec2 p = -.5 + gl_FragCoord.xy / iResolution.xy;
+	//vec2 p = -.5 + fragCoord.xy / iResolution.xy;
     
-    vec2 p = (gl_FragCoord.xy - center.xy) / iResolution.xy;
+    vec2 p = (fragCoord.xy - center.xy) / iResolution.xy;
 	p.x *= iResolution.x/iResolution.y;
 	
 	float color = 3.0 - (3.*length(2.*p));
