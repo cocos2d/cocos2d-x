@@ -702,6 +702,13 @@
 		467AF5AC231E4BED00770112 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A5231E079F00770112 /* CoreMedia.framework */; };
 		467AF5AD231E4C4300770112 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A3231E004C00770112 /* AVKit.framework */; };
 		467AF5AE231E4C4900770112 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A5231E079F00770112 /* CoreMedia.framework */; };
+		467AF5DF231FA82500770112 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5DE231FA82500770112 /* WebKit.framework */; };
+		467AF5E0231FA84F00770112 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5DE231FA82500770112 /* WebKit.framework */; };
+		467AF5E1231FA85D00770112 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5DE231FA82500770112 /* WebKit.framework */; };
+		467AF5E2231FA87100770112 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5DE231FA82500770112 /* WebKit.framework */; };
+		467AF5E3231FA88100770112 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A3231E004C00770112 /* AVKit.framework */; };
+		467AF5E4231FA88700770112 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5A5231E079F00770112 /* CoreMedia.framework */; };
+		467AF5E5231FA88D00770112 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467AF5DE231FA82500770112 /* WebKit.framework */; };
 		4B5C5BA81CA1147300D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BA91CA1147F00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
@@ -2233,6 +2240,7 @@
 		467AF5A3231E004C00770112 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/AVKit.framework; sourceTree = DEVELOPER_DIR; };
 		467AF5A5231E079F00770112 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
 		467AF5A7231E4AA500770112 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		467AF5DE231FA82500770112 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		4B5C5BAA1CA1149900D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BB41CA114DB00D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
@@ -2483,6 +2491,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467AF5E2231FA87100770112 /* WebKit.framework in Frameworks */,
 				467AF5AE231E4C4900770112 /* CoreMedia.framework in Frameworks */,
 				467AF5AD231E4C4300770112 /* AVKit.framework in Frameworks */,
 				C8DE9E491F0EAECD00B48C6B /* GameController.framework in Frameworks */,
@@ -2548,6 +2557,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467AF5E5231FA88D00770112 /* WebKit.framework in Frameworks */,
+				467AF5E4231FA88700770112 /* CoreMedia.framework in Frameworks */,
+				467AF5E3231FA88100770112 /* AVKit.framework in Frameworks */,
 				294D7D8A1D0E5093002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAC1CA114A300D55A14 /* Security.framework in Frameworks */,
 				1A0EE40318CDF775004CD58F /* libcocos2d iOS.a in Frameworks */,
@@ -2569,6 +2581,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467AF5E1231FA85D00770112 /* WebKit.framework in Frameworks */,
 				467AF5AC231E4BED00770112 /* CoreMedia.framework in Frameworks */,
 				467AF5AB231E4BE500770112 /* AVKit.framework in Frameworks */,
 				294D7D8C1D0E50A0002CE7B7 /* CoreText.framework in Frameworks */,
@@ -2613,6 +2626,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467AF5E0231FA84F00770112 /* WebKit.framework in Frameworks */,
 				467AF5AA231E4BA600770112 /* AVKit.framework in Frameworks */,
 				467AF5A9231E4B2500770112 /* CoreMedia.framework in Frameworks */,
 				294D7D8B1D0E509A002CE7B7 /* CoreText.framework in Frameworks */,
@@ -2836,6 +2850,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467AF5DF231FA82500770112 /* WebKit.framework in Frameworks */,
 				467AF5A6231E079F00770112 /* CoreMedia.framework in Frameworks */,
 				467AF5A4231E004C00770112 /* AVKit.framework in Frameworks */,
 				29DC5A201CFFE6E100CF2930 /* CoreText.framework in Frameworks */,
@@ -4351,6 +4366,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				467AF5DE231FA82500770112 /* WebKit.framework */,
 				467AF5A7231E4AA500770112 /* UIKit.framework */,
 				467AF5A5231E079F00770112 /* CoreMedia.framework */,
 				467AF5A3231E004C00770112 /* AVKit.framework */,
