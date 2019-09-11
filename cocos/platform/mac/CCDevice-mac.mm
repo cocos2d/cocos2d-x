@@ -82,6 +82,11 @@ typedef struct
     int width;
     bool hasAlpha;
     bool isPremultipliedAlpha;
+    float        strokeSize;
+    float        tintColorR;
+    float        tintColorG;
+    float        tintColorB;
+    float        tintColorA;
     unsigned char* data;
 } tImageInfo;
 
@@ -300,27 +305,47 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
         
         //Alignment
         CGFloat xPadding = FontUtils::_calculateTextDrawStartWidth(align, realDimensions, dimensions);
-        
+
         CGFloat yPadding = _calculateTextDrawStartHeight(align, realDimensions, dimensions);
-        
+
         NSInteger POTWide = dimensions.width;
         NSInteger POTHigh = dimensions.height;
         NSRect textRect = NSMakeRect(xPadding, POTHigh - dimensions.height + yPadding,
                                      realDimensions.width, realDimensions.height);
-        
-        
-        [[NSGraphicsContext currentContext] setShouldAntialias:NO];
-        
-        NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
-        [image lockFocus];
-        // patch for mac retina display and lableTTF
-        [[NSAffineTransform transform] set];
+
+        NSBitmapImageRep* offscreenRep = [[[NSBitmapImageRep alloc]
+            initWithBitmapDataPlanes:NULL
+            pixelsWide:POTWide
+            pixelsHigh:POTHigh
+            bitsPerSample:8
+            samplesPerPixel:4
+            hasAlpha:YES
+            isPlanar:NO
+            colorSpaceName:NSDeviceRGBColorSpace
+            bitmapFormat: 0
+            bytesPerRow:4 * POTWide
+            bitsPerPixel:32] autorelease];
+
+        NSGraphicsContext* g = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
+        [NSGraphicsContext saveGraphicsState];
+        [NSGraphicsContext setCurrentContext:g];
+
         [stringWithAttributes drawInRect:textRect];
-        NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
-        [image unlockFocus];
-        
-        auto data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
-        
+
+        [NSGraphicsContext restoreGraphicsState];
+
+//        [[NSGraphicsContext currentContext] setShouldAntialias:NO];
+//
+//        NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
+//        [image lockFocus];
+//        // patch for mac retina display and lableTTF
+//        [[NSAffineTransform transform] set];
+//        [stringWithAttributes drawInRect:textRect];
+//        NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
+//        [image unlockFocus];
+
+        auto data = (unsigned char*) [offscreenRep bitmapData];  //Use the same buffer to improve the performance.
+
         NSUInteger textureSize = POTWide * POTHigh * 4;
         auto dataNew = (unsigned char*)malloc(sizeof(unsigned char) * textureSize);
         if (dataNew) {
@@ -333,8 +358,8 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
             info->isPremultipliedAlpha = true;
             ret = true;
         }
-        [bitmap release];
-        [image release];
+//        [bitmap release];
+//        [image release];
     } while (0);
     return ret;
 }
@@ -346,6 +371,10 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         tImageInfo info = {0};
         info.width = textDefinition._dimensions.width;
         info.height = textDefinition._dimensions.height;
+        info.tintColorR             = textDefinition._fontFillColor.r / 255.0f;
+        info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;
+        info.tintColorB             = textDefinition._fontFillColor.b / 255.0f;
+        info.tintColorA             = textDefinition._fontAlpha / 255.0f;
         
         if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, &textDefinition._fontFillColor, textDefinition._fontAlpha, textDefinition._enableWrap, textDefinition._overflow))
         {
