@@ -271,7 +271,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         }
 
 
-        float hexSideLength = attributeDict["hexsidelength"].asFloat();
+        int hexSideLength = (int)attributeDict["hexsidelength"].asFloat();
         tmxMapInfo->setHexSideLength(hexSideLength);
 
         Size s;
@@ -356,7 +356,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
             uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asUnsignedInt());
-            int tilesAmount = layerSize.width*layerSize.height;
+            int tilesAmount = (int)(layerSize.width*layerSize.height);
             
             if (_xmlTileIndex < tilesAmount)
             {
@@ -452,7 +452,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
             
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            int tilesAmount = layerSize.width*layerSize.height;
+            int tilesAmount = (int)(layerSize.width*layerSize.height);
 
             uint32_t *tiles = (uint32_t*) malloc(tilesAmount*sizeof(uint32_t));
             // set all value to 0
@@ -694,7 +694,7 @@ void TMXMapInfo::endElement(void* /*ctx*/, const char *name)
                 unsigned char *deflated = nullptr;
                 Size s = layer->_layerSize;
                 // int sizeHint = s.width * s.height * sizeof(uint32_t);
-                ssize_t sizeHint = s.width * s.height * sizeof(unsigned int);
+                ssize_t sizeHint = static_cast<ssize_t>(s.width * s.height * sizeof(unsigned int));
                 
                 ssize_t CC_UNUSED inflatedLen = ZipUtils::inflateMemoryWithHint(buffer, len, &deflated, sizeHint);
                 CCASSERT(inflatedLen == sizeHint, "inflatedLen should be equal to sizeHint!");

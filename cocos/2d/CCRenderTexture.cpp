@@ -164,10 +164,10 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, backend::PixelFormat fo
     bool ret = false;
     do
     {
-        _fullRect = _rtTextureRect = Rect(0,0,w,h);
+        _fullRect = _rtTextureRect = Rect(0.0f,0.0f,(float)w,(float)h);
         w = (int)(w * CC_CONTENT_SCALE_FACTOR());
         h = (int)(h * CC_CONTENT_SCALE_FACTOR());
-        _fullviewPort = Rect(0,0,w,h);
+        _fullviewPort = Rect(0.0f,0.0f,(float)w,(float)h);
         
         // textures must be power of two squared
         int powW = 0;
@@ -555,7 +555,7 @@ void RenderTexture::onBegin()
     Renderer *renderer =  director->getRenderer();
     
     _oldViewport = renderer->getViewport();
-    renderer->setViewPort(viewport.origin.x, viewport.origin.y, viewport.size.width, viewport.size.height);
+    renderer->setViewPort((int)viewport.origin.x, (int)viewport.origin.y, (unsigned int)viewport.size.width, (unsigned int)viewport.size.height);
 
     _oldColorAttachment = renderer->getColorAttachment();
     _oldDepthAttachment = renderer->getDepthAttachment();

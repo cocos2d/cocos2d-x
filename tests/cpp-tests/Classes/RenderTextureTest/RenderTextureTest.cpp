@@ -132,7 +132,7 @@ void RenderTextureSave::saveImageWithNonPremultipliedAlpha(cocos2d::Ref *sender)
         addChild(sprite);
         sprite->setScale(0.3f);
         sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        sprite->setRotation(counter * 3.0f);
         rt->release();
     };
     
@@ -495,7 +495,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     _spriteDraw->setPosition(Vec2(s.width * 0.25f, 0));
     _spriteDraw->setScale(10);
     //! move sprite half width and height, and draw only where not marked
-    _spriteDraw->setPosition(_spriteDraw->getPosition() + Vec2(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
+    _spriteDraw->setPosition(_spriteDraw->getPosition() + Vec2(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5f, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5f));
     
     _rend = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA4444, PixelFormat::D24S8);
 
@@ -598,7 +598,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     auto s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
-    auto renderTexture = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA4444);
+    auto renderTexture = RenderTexture::create((int)s.width, (int)s.height, backend::PixelFormat::RGBA4444);
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Vec2(s.width/2, s.height/2));
@@ -687,7 +687,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const Mat4 &
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
-        _rt = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA8888);
+        _rt = RenderTexture::create((int)s.width, (int)s.height, backend::PixelFormat::RGBA8888);
         _rt->retain();
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
@@ -775,7 +775,7 @@ Issue16113Test::Issue16113Test()
         auto winSize = Director::getInstance()->getVisibleSize();
         auto text = Label::createWithTTF("hello world", "fonts/Marker Felt.ttf", 40);
         text->setTextColor(Color4B::RED);
-        auto target = RenderTexture::create(winSize.width, winSize.height, backend::PixelFormat::RGBA8888);
+        auto target = RenderTexture::create((int)winSize.width, (int)winSize.height, backend::PixelFormat::RGBA8888);
         target->beginWithClear(0,0,0,0);
         text->setPosition(winSize.width / 2,winSize.height/2);
         text->Node::visit();
@@ -831,12 +831,12 @@ RenderTextureWithSprite3DIssue16894::RenderTextureWithSprite3DIssue16894()
      }
 
      // RenderTextures
-     _renderTexDefault = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888);
+     _renderTexDefault = RenderTexture::create((int)visibleSize.width, (int)visibleSize.height, backend::PixelFormat::RGBA8888);
      _renderTexDefault->setKeepMatrix(true);
      addChild(_renderTexDefault);
      _renderTexDefault->setPosition(visibleSize.width/4 * 3, visibleSize.height/2);
 
-     _renderTexWithBuffer = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888, backend::PixelFormat::D24S8);
+     _renderTexWithBuffer = RenderTexture::create((int)visibleSize.width, (int)visibleSize.height, backend::PixelFormat::RGBA8888, backend::PixelFormat::D24S8);
      _renderTexWithBuffer->setKeepMatrix(true);
      addChild(_renderTexWithBuffer);
      _renderTexWithBuffer->setPosition(visibleSize.width/4 * 4, visibleSize.height/2);

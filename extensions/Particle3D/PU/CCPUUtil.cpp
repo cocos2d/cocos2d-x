@@ -54,7 +54,7 @@ cocos2d::Vec3 PUUtil::randomDeviant( const Vec3 &src, float angle, const Vec3& u
 
 	Quaternion q;
 	Mat4 mat;
-	Quaternion::createFromAxisAngle(src, CCRANDOM_0_1() * M_PI * 2.0f, &q);
+	Quaternion::createFromAxisAngle(src, (float)(CCRANDOM_0_1() * M_PI * 2.0f), &q);
     Mat4::createRotation(q, &mat);
 
 	//{

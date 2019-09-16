@@ -930,7 +930,7 @@ NodeGlobalZValueTest::NodeGlobalZValueTest()
         this->addChild(parent);
 
         float w = sprite->getContentSize().width;
-        sprite->setPosition(s.width/2 - w*0.7*(i-5), s.height/2);
+        sprite->setPosition(s.width/2 - w*0.7f*(i-5), s.height/2);
     }
 
     this->scheduleUpdate();

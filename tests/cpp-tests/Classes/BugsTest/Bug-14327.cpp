@@ -56,7 +56,7 @@ bool Bug14327Layer::init()
         this->addChild(_TTFShowTime);
 
 
-        auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1);
+        auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1f);
 
         std::string pNormalSprite = "extensions/green_edit.png";
         _edit = ui::EditBox::create(editBoxSize + Size(0, 20), ui::Scale9Sprite::create(pNormalSprite));

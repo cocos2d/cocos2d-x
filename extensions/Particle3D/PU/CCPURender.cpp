@@ -166,7 +166,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         }
         Vec3 halfwidth = particle->width * 0.5f * right;
         Vec3 halfheight = particle->height * 0.5f * up;
-        Vec3 offset = halfwidth * offsetX + halfheight * offsetY;
+        Vec3 offset = halfwidth * (float)offsetX + halfheight * (float)offsetY;
         //transform.transformPoint(particle->position, &position);
         position = particle->position;
 
@@ -522,8 +522,10 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
         mat.m[14] = particle->position.z;
         if (_spriteList[index]->getCameraMask() != particleSystem->getCameraMask())
             _spriteList[index]->setCameraMask(particleSystem->getCameraMask());
-        _spriteList[index]->setColor(Color3B(particle->color.x * 255, particle->color.y * 255, particle->color.z * 255));
-        _spriteList[index]->setOpacity(particle->color.w * 255);
+        _spriteList[index]->setColor(Color3B(static_cast<uint8_t>(particle->color.x * 255), 
+                                             static_cast<uint8_t>(particle->color.y * 255), 
+                                             static_cast<uint8_t>(particle->color.z * 255)));
+        _spriteList[index]->setOpacity(static_cast<uint8_t>(particle->color.w * 255));
         _spriteList[index]->visit(renderer, mat, Node::FLAGS_DIRTY_MASK);
         ++index;
     }
@@ -940,8 +942,8 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
 
 void PUSphereRender::buildBuffers( unsigned short count )
 {
-    float stepRingAngle = (M_PI / _numberOfRings);
-    float stepSegmentAngle = (2.0 * M_PI / _numberOfSegments);
+    float stepRingAngle = (float)(M_PI / _numberOfRings);
+    float stepSegmentAngle = (float)(2.0 * M_PI / _numberOfSegments);
 
     unsigned short vertexIndex = 0;
     unsigned short index = 0;

@@ -398,7 +398,7 @@ public:
      * @param wdith Specifies the width of the scissor box
      * @param height Specifies the height of the scissor box
      */
-    void setScissorRect(float x, float y, float width, float height);
+    void setScissorRect(int x, int y, unsigned int width, unsigned int height);
     bool getScissorTest() const; ///< Get whether scissor test is enabled or not.
     const ScissorRect& getScissorRect() const; ///< Get scissor rectangle.
 

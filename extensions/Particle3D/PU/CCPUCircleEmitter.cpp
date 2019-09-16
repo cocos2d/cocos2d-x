@@ -123,13 +123,13 @@ void PUCircleEmitter::initParticlePosition(PUParticle3D* particle)
     if (_random)
     {
         // Choose a random position on the circle.
-        angle = cocos2d::random(0.0, M_PI * 2.0);
+        angle = (float)cocos2d::random(0.0, M_PI * 2.0);
     }
     else
     {
         // Follow the contour of the circle.
         _circleAngle += _step;
-        _circleAngle = _circleAngle > M_PI * 2.0f ? _circleAngle - (M_PI * 2.0) : _circleAngle;
+        _circleAngle = _circleAngle > M_PI * 2.0f ? _circleAngle - (float)(M_PI * 2.0f) : _circleAngle;
         angle = _circleAngle;
     }
 

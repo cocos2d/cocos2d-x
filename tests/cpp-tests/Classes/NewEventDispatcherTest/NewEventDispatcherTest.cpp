@@ -528,8 +528,8 @@ _pos = _max;        \
         ptNow.x += acc->x * 9.81f;
         ptNow.y += acc->y * 9.81f;
         
-        FIX_POS(ptNow.x, (VisibleRect::left().x+ballSize.width / 2.0), (VisibleRect::right().x - ballSize.width / 2.0));
-        FIX_POS(ptNow.y, (VisibleRect::bottom().y+ballSize.height / 2.0), (VisibleRect::top().y - ballSize.height / 2.0));
+        FIX_POS(ptNow.x, (VisibleRect::left().x+ballSize.width / 2.0f), (VisibleRect::right().x - ballSize.width / 2.0f));
+        FIX_POS(ptNow.y, (VisibleRect::bottom().y+ballSize.height / 2.0f), (VisibleRect::top().y - ballSize.height / 2.0f));
         sprite->setPosition(ptNow);
     });
     

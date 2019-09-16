@@ -93,11 +93,11 @@ namespace cocostudio
             
             if (attriname == "X")
             {
-                ret.x = atof(value.c_str());
+                ret.x = (float)atof(value.c_str());
             }
             else if (attriname == "Y")
             {
-                ret.y = atof(value.c_str());
+                ret.y = (float)atof(value.c_str());
             }
             
             attribute = attribute->Next();

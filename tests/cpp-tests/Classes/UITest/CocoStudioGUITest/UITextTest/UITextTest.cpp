@@ -178,8 +178,8 @@ bool UILabelTest_Effect::init()
         auto disableOutlineBtn= Button::create();
         disableOutlineBtn->setTitleText("Disable outline");
         disableOutlineBtn->setTitleFontName("fonts/Marker Felt.ttf");
-        disableOutlineBtn->setPosition(Vec2(widgetSize.width * 0.3,
-                                 widgetSize.height * 0.7));
+        disableOutlineBtn->setPosition(Vec2(widgetSize.width * 0.3f,
+                                 widgetSize.height * 0.7f));
         disableOutlineBtn->setPressedActionEnabled(true);
         disableOutlineBtn->addClickEventListener([=](Ref*){
             outline_label->disableEffect(LabelEffect::OUTLINE);

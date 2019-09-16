@@ -108,7 +108,7 @@ DrawNodeTest::DrawNodeTest()
     // Draw 10 circles
     for( int i=0; i < 10; i++)
     {
-        draw->drawDot(Vec2(s.width/2, s.height/2), 10*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+        draw->drawDot(Vec2(s.width/2, s.height/2), 10.0f*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1.0f));
     }
     
     // Draw polygons
@@ -142,29 +142,29 @@ DrawNodeTest::DrawNodeTest()
             Vec2(o -h, o+w),                                     // left spike
         };
         
-        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1));
+        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1.0f,0.0f,0.0f,0.5f), 1, Color4F(0.0f,0.0f,1.0f,1.0f));
     }
     
     //draw a solid polygon
-    Vec2 vertices3[] = {Vec2(60,160), Vec2(70,190), Vec2(100,190), Vec2(90,160)};
-    draw->drawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
+    Vec2 vertices3[] = {Vec2(60.0f,160.0f), Vec2(70.0f,190.0f), Vec2(100.0f,190.0f), Vec2(90.0f,160.0f)};
+    draw->drawSolidPoly( vertices3, 4, Color4F(1.0f,1.0f,0.0f,1.0f) );
     
     //draw a solid rectangle
-    draw->drawSolidRect(Vec2(10,10), Vec2(20,20), Color4F(1,1,0,1));
+    draw->drawSolidRect(Vec2(10.0f,10.0f), Vec2(20.0f,20.0f), Color4F(1.0f,1.0f,0.0f,1.0f));
     
     //draw a solid circle
-    draw->drawSolidCircle( VisibleRect::center() + Vec2(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 2.0f, 2.0f, Color4F(0.0, 1.0, 0.0, 1.0));
+    draw->drawSolidCircle( VisibleRect::center() + Vec2(140.0f,0.0f), 40.0f, CC_DEGREES_TO_RADIANS(90), 50, 2.0f, 2.0f, Color4F(0.0, 1.0, 0.0, 1.0));
     
     // Draw segment
-    draw->drawSegment(Vec2(20,s.height), Vec2(20,s.height/2), 10, Color4F(0, 1, 0, 1));
+    draw->drawSegment(Vec2(20.0f,s.height), Vec2(20.0f,s.height/2.0f), 10.0f, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
     
-    draw->drawSegment(Vec2(10,s.height/2), Vec2(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
+    draw->drawSegment(Vec2(10,s.height/2), Vec2(s.width/2, s.height/2), 40, Color4F(1.0f, 0.0f, 1.0f, 0.5f));
 
     // Draw triangle
-    draw->drawTriangle(Vec2(10, 10), Vec2(70, 30), Vec2(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawTriangle(Vec2(10.0f, 10.0f), Vec2(70.0f, 30.0f), Vec2(100.0f, 140.0f), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5f));
     
     for (int i = 0; i < 100; i++) {
-        draw->drawPoint(Vec2(i*7, 5), (float)i/5+1, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+        draw->drawPoint(Vec2(i*7.0f, 5.0f), (float)i/5+1, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1.0f));
     }
 
     auto draw1 = DrawNode::create();
@@ -173,8 +173,8 @@ DrawNodeTest::DrawNodeTest()
     draw1->drawLine(Vec2(0, s.height), Vec2(s.width, s.height - 20), Color4F::YELLOW);
     draw1->drawLine(Vec2(0, 0), Vec2(s.width, s.height - 20), Color4F::YELLOW);
 
-    draw->runAction(RepeatForever::create(Sequence::create(FadeIn::create(1.2),FadeOut::create(1.2), NULL)));
-    draw1->runAction(RepeatForever::create(Sequence::create(FadeIn::create(1.2),FadeOut::create(1.2), NULL)));
+    draw->runAction(RepeatForever::create(Sequence::create(FadeIn::create(1.2f),FadeOut::create(1.2f), NULL)));
+    draw1->runAction(RepeatForever::create(Sequence::create(FadeIn::create(1.2f),FadeOut::create(1.2f), NULL)));
 }
 
 string DrawNodeTest::title() const

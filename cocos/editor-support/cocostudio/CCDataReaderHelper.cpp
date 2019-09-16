@@ -901,7 +901,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
         frameData->frameID = totalDuration;
         totalDuration += frameData->duration;
-        movBoneData->duration = totalDuration;
+        movBoneData->duration = (float)totalDuration;
 
         frameXML = frameXML->NextSiblingElement(FRAME);
     }
@@ -918,12 +918,12 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
 			if (difSkewX < -M_PI || difSkewX > M_PI)
 			{
-				frames.at(j-1)->skewX = difSkewX < 0 ? frames.at(j-1)->skewX - 2 * M_PI : frames.at(j-1)->skewX + 2 * M_PI;
+				frames.at(j-1)->skewX = float(difSkewX < 0 ? frames.at(j-1)->skewX - 2 * M_PI : frames.at(j-1)->skewX + 2 * M_PI);
 			}
 
 			if (difSkewY < -M_PI || difSkewY > M_PI)
 			{
-				frames.at(j-1)->skewY = difSkewY < 0 ? frames.at(j-1)->skewY - 2 * M_PI : frames.at(j-1)->skewY + 2 * M_PI;
+				frames.at(j-1)->skewY = float(difSkewY < 0 ? frames.at(j-1)->skewY - 2 * M_PI : frames.at(j-1)->skewY + 2 * M_PI);
 			}
 		}
 	}
@@ -932,7 +932,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
     //
     FrameData *frameData = new (std::nothrow) FrameData();
     frameData->copy((FrameData *)movBoneData->frameList.back());
-    frameData->frameID = movBoneData->duration;
+    frameData->frameID = (int)movBoneData->duration;
     movBoneData->addFrameData(frameData);
     frameData->release();
 
@@ -1081,10 +1081,10 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
         colorTransformXML->QueryIntAttribute(A_GREEN_OFFSET, &greenOffset);
         colorTransformXML->QueryIntAttribute(A_BLUE_OFFSET, &blueOffset) ;
 
-        frameData->a = 2.55 * alphaOffset + alpha;
-        frameData->r = 2.55 * redOffset + red;
-        frameData->g = 2.55 * greenOffset + green;
-        frameData->b = 2.55 * blueOffset + blue;
+        frameData->a = int(2.55 * alphaOffset + alpha);
+        frameData->r = int(2.55 * redOffset + red);
+        frameData->g = int(2.55 * greenOffset + green);
+        frameData->b = int(2.55 * blueOffset + blue);
 
         frameData->isUseColorInfo = true;
     }
@@ -1554,7 +1554,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(const rapidjson::Value& j
 
         if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
         {
-            frameData->frameID = movementBoneData->duration;
+            frameData->frameID = (int)movementBoneData->duration;
             movementBoneData->duration += frameData->duration;
         }
     }
@@ -1573,12 +1573,12 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(const rapidjson::Value& j
 
 				if (difSkewX < -M_PI || difSkewX > M_PI)
 				{
-					frames.at(i-1)->skewX = difSkewX < 0 ? frames.at(i-1)->skewX - 2 * M_PI : frames.at(i-1)->skewX + 2 * M_PI;
+					frames.at(i-1)->skewX = float(difSkewX < 0 ? frames.at(i-1)->skewX - 2 * M_PI : frames.at(i-1)->skewX + 2 * M_PI);
 				}
 
 				if (difSkewY < -M_PI || difSkewY > M_PI)
 				{
-					frames.at(i-1)->skewY = difSkewY < 0 ? frames.at(i-1)->skewY - 2 * M_PI : frames.at(i-1)->skewY + 2 * M_PI;
+					frames.at(i-1)->skewY = float(difSkewY < 0 ? frames.at(i-1)->skewY - 2 * M_PI : frames.at(i-1)->skewY + 2 * M_PI);
 				}
 			}
 		}
@@ -1593,7 +1593,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(const rapidjson::Value& j
             movementBoneData->addFrameData(frameData);
             frameData->release();
 
-            frameData->frameID = movementBoneData->duration;
+            frameData->frameID = (int)movementBoneData->duration;
         }
     }
 
@@ -1759,7 +1759,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     if (key.compare(CONTENT_SCALE) == 0)
                     {
                         std::string value = tpChildArray[i].GetValue(&tCocoLoader);
-                        dataInfo->contentScale = utils::atof(value.c_str());
+                        dataInfo->contentScale = (float)utils::atof(value.c_str());
                     }
                     else if ( 0 == key.compare(ARMATURE_DATA))
                     {
@@ -1875,7 +1875,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             armatureData->name = name;
         }
 
-        float version = utils::atof(pAramtureDataArray[1].GetValue(cocoLoader));
+        float version = (float)utils::atof(pAramtureDataArray[1].GetValue(cocoLoader));
         dataInfo->cocoStudioVersion = armatureData->dataVersion = version; //DICTOOL->getFloatValue_json(json, VERSION, 0.1f);
 
         int length = pAramtureDataArray[3].GetChildNum(); //DICTOOL->getArrayCount_json(json, BONE_DATA, 0);
@@ -1984,27 +1984,27 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                                 str = SkinDataValue[i].GetValue(cocoLoader);
                                 if (key.compare(A_X) == 0)
                                 {
-                                    sdd->skinData.x = utils::atof(str) * s_PositionReadScale;
+                                    sdd->skinData.x = (float)utils::atof(str) * s_PositionReadScale;
                                 }
                                 else if (key.compare(A_Y) == 0)
                                 {
-                                    sdd->skinData.y = utils::atof(str) * s_PositionReadScale;
+                                    sdd->skinData.y = (float)utils::atof(str) * s_PositionReadScale;
                                 }
                                 else if (key.compare(A_SCALE_X) == 0)
                                 {
-                                    sdd->skinData.scaleX = utils::atof(str);
+                                    sdd->skinData.scaleX = (float)utils::atof(str);
                                 }
                                 else if (key.compare(A_SCALE_Y) == 0)
                                 {
-                                    sdd->skinData.scaleY = utils::atof(str);
+                                    sdd->skinData.scaleY = (float)utils::atof(str);
                                 }
                                 else if (key.compare(A_SKEW_X) == 0)
                                 {
-                                    sdd->skinData.skewX = utils::atof(str);
+                                    sdd->skinData.skewX = (float)utils::atof(str);
                                 }
                                 else if (key.compare(A_SKEW_Y) == 0)
                                 {
-                                    sdd->skinData.skewY = utils::atof(str);
+                                    sdd->skinData.skewY = (float)utils::atof(str);
                                 }
                             }
 
@@ -2163,7 +2163,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 movementData->scale = 1.0;
                 if(str != nullptr)
                 {
-                    movementData->scale = utils::atof(str);
+                    movementData->scale = (float)utils::atof(str);
                 }
             }
             else if (key.compare(A_TWEEN_EASING) == 0)
@@ -2215,7 +2215,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             {
                 if(str != nullptr)
                 {
-                    movementBoneData->delay = utils::atof(str);
+                    movementBoneData->delay = (float)utils::atof(str);
                 }
             }
             else if (key.compare(FRAME_DATA) == 0)
@@ -2230,7 +2230,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
 
                     if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
                     {
-                        frameData->frameID = movementBoneData->duration;
+                        frameData->frameID = (int)movementBoneData->duration;
                         movementBoneData->duration += frameData->duration;
                     }
                 }
@@ -2257,12 +2257,12 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
 
                     if (difSkewX < -M_PI || difSkewX > M_PI)
                     {
-                        frames.at(imusone)->skewX = difSkewX < 0 ? frames.at(imusone)->skewX - 2 * M_PI : frames.at(imusone)->skewX + 2 * M_PI;
+                        frames.at(imusone)->skewX = float(difSkewX < 0 ? frames.at(imusone)->skewX - 2 * M_PI : frames.at(imusone)->skewX + 2 * M_PI);
                     }
 
                     if (difSkewY < -M_PI || difSkewY > M_PI)
                     {
-                        frames.at(imusone)->skewY = difSkewY < 0 ? frames.at(imusone)->skewY - 2 * M_PI : frames.at(imusone)->skewY + 2 * M_PI;
+                        frames.at(imusone)->skewY = float(difSkewY < 0 ? frames.at(imusone)->skewY - 2 * M_PI : frames.at(imusone)->skewY + 2 * M_PI);
                     }
                 }
             }
@@ -2276,7 +2276,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 auto frameData = movementBoneData->frameList.at(framesizemusone);
                 movementBoneData->addFrameData(frameData);
                 frameData->release();
-                frameData->frameID = movementBoneData->duration;
+                frameData->frameID = (int)movementBoneData->duration;
             }
         }
 
@@ -2376,7 +2376,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                         str = pFrameData[ii].GetValue(cocoLoader);
                         if (str != nullptr)
                         {
-                            frameData->easingParams[ii] = utils::atof(str);
+                            frameData->easingParams[ii] = (float)utils::atof(str);
                         }
                     }
                 }
@@ -2415,28 +2415,28 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             {
                 if(str != nullptr)
                 {
-                    textureData->width = utils::atof(str);
+                    textureData->width = (float)utils::atof(str);
                 }
             }
             else if (key.compare(A_HEIGHT) == 0)
             {
                 if(str != nullptr)
                 {
-                    textureData->height = utils::atof(str);
+                    textureData->height = (float)utils::atof(str);
                 }
             }
             else if (key.compare(A_PIVOT_X) == 0)
             {
                 if(str != nullptr)
                 {
-                    textureData->pivotX = utils::atof(str);
+                    textureData->pivotX = (float)utils::atof(str);
                 }
             }
             else if (key.compare(A_PIVOT_Y) == 0)
             {
                 if(str != nullptr)
                 {
-                    textureData->pivotY = utils::atof(str);
+                    textureData->pivotY = (float)utils::atof(str);
                 }
             }
             else if (key.compare(CONTOUR_DATA) == 0)
@@ -2475,8 +2475,8 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 {
                     pVerTexPoint = pVerTexPointArray[ii].GetChildArray(cocoLoader);
                     Vec2 vertex;
-                    vertex.x = utils::atof(pVerTexPoint[0].GetValue(cocoLoader));
-                    vertex.y = utils::atof(pVerTexPoint[1].GetValue(cocoLoader));
+                    vertex.x = (float)utils::atof(pVerTexPoint[0].GetValue(cocoLoader));
+                    vertex.y = (float)utils::atof(pVerTexPoint[1].GetValue(cocoLoader));
                     contourData->vertexList.push_back(vertex);                }
                 break;
             }
@@ -2499,11 +2499,11 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             str = child->GetValue(cocoLoader);
             if (key.compare(A_X) == 0)
             {
-                node->x = utils::atof(str) * dataInfo->contentScale;
+                node->x = (float)utils::atof(str) * dataInfo->contentScale;
             }
             else if (key.compare(A_Y) == 0)
             {
-                node->y = utils::atof(str) * dataInfo->contentScale;
+                node->y = (float)utils::atof(str) * dataInfo->contentScale;
             }
             else if (key.compare(A_Z) == 0)
             {
@@ -2511,19 +2511,19 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             }
             else if (key.compare(A_SKEW_X) == 0)
             {
-                node->skewX = utils::atof(str);
+                node->skewX = (float)utils::atof(str);
             }
             else if (key.compare(A_SKEW_Y) == 0)
             {
-                node->skewY = utils::atof(str);
+                node->skewY = (float)utils::atof(str);
             }
             else if (key.compare(A_SCALE_X) == 0)
             {
-                node->scaleX = utils::atof(str);
+                node->scaleX = (float)utils::atof(str);
             }
             else if (key.compare(A_SCALE_Y) == 0)
             {
-                node->scaleY = utils::atof(str);
+                node->scaleY = (float)utils::atof(str);
             }
             else if (key.compare(COLOR_INFO) == 0)
             {

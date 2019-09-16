@@ -105,7 +105,7 @@ namespace cocostudio
             else if(key == P_Text){
                 label->setString(value);
             }else if(key == P_FontSize){
-                label->setFontSize(valueToInt(value));
+                label->setFontSize((float)valueToInt(value));
             }else if(key == P_FontName){
                 std::string fontFilePath;
                 fontFilePath = binaryFilePath.append(value);
@@ -141,7 +141,7 @@ namespace cocostudio
         const char* text = DICTOOL->getStringValue_json(options, P_Text,"Text Label");
         label->setString(text);
       
-        label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
+        label->setFontSize((float)DICTOOL->getIntValue_json(options, P_FontSize,20));
        
         std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "");
         
@@ -287,11 +287,11 @@ namespace cocostudio
             }
             else if (name == "ShadowOffsetX")
             {
-                shadowOffset.width = atof(value.c_str());
+                shadowOffset.width = (float)atof(value.c_str());
             }
             else if (name == "ShadowOffsetY")
             {
-                shadowOffset.height = atof(value.c_str());
+                shadowOffset.height = (float)atof(value.c_str());
             }
             else if (name == "ShadowBlurRadius")
             {
@@ -434,7 +434,7 @@ namespace cocostudio
         label->setTouchScaleChangeEnabled(touchScaleEnabled);
         
         int fontSize = options->fontSize();
-        label->setFontSize(fontSize);
+        label->setFontSize((float)fontSize);
 
         Size areaSize = Size(options->areaWidth(), options->areaHeight());
         if (!areaSize.equals(Size::ZERO))

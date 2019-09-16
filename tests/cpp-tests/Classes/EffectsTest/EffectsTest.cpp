@@ -358,10 +358,10 @@ bool EffectBaseTest::init()
         if(isRectEffect())
         {
             Size visibleSize = Director::getInstance()->getVisibleSize();
-            Rect gridRect = Rect(visibleSize.width * 0.2,
-                                 visibleSize.height * 0.2,
-                                 visibleSize.width * 0.6,
-                                 visibleSize.height * 0.6);
+            Rect gridRect = Rect(visibleSize.width * 0.2f,
+                                 visibleSize.height * 0.2f,
+                                 visibleSize.width * 0.6f,
+                                 visibleSize.height * 0.6f);
             _gridNodeTarget = NodeGrid::create(gridRect);
         }
         else

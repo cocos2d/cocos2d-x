@@ -5148,9 +5148,9 @@ SpriteSlice9Test1::SpriteSlice9Test1()
         s3->runAction(action3);
 
         if (i==2) {
-            s3->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s2->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s1->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s3->setCenterRectNormalized(Rect(0.4f, 0.4f, 0.2f, 0.2f));
+            s2->setCenterRectNormalized(Rect(0.4f, 0.4f, 0.2f, 0.2f));
+            s1->setCenterRectNormalized(Rect(0.4f, 0.4f, 0.2f, 0.2f));
         }
 
         // "anchor points"
@@ -5213,9 +5213,9 @@ SpriteSlice9Test2::SpriteSlice9Test2()
         s3->runAction(action3);
 
         if (i==2) {
-            s3->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s2->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s1->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s3->setCenterRectNormalized(Rect(0.4f, 0.4f, 0.2f, 0.2f));
+            s2->setCenterRectNormalized(Rect(0.4f, 0.4f, 0.2f, 0.2f));
+            s1->setCenterRectNormalized(Rect(0.4f, 0.4f, 0.2f, 0.2f));
         }
 
         // "anchor points"
@@ -5277,9 +5277,9 @@ SpriteSlice9Test3::SpriteSlice9Test3()
 
         // enable slice 9, only in the first row
         if (i==2) {
-            s1->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s2->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s3->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s1->setCenterRectNormalized(Rect(0.4f, 0.4f, 0.2f, 0.2f));
+            s2->setCenterRectNormalized(Rect(0.4f, 0.4f, 0.2f, 0.2f));
+            s3->setCenterRectNormalized(Rect(0.4f, 0.4f, 0.2f, 0.2f));
         }
 
 
@@ -5422,18 +5422,18 @@ void SpriteSlice9Test5::update(float dt)
 
     // cap the value between 0 and 0.8
     float x = ((cos(angle) + sin(angle*3)) + 2) / 5.0f;
-    float y1 = (sin(angle) + 1) / 2.5;
-    float y2 = (sin(angle+M_PI_2) + 1) / 2.5;
+    float y1 = (sin(angle) + 1) / 2.5f;
+    float y2 = (sin(angle+M_PI_2) + 1) / 2.5f;
     float y = y1;
     for (int i=0; i<3; ++i) {
         if (i==1) {
-            x = 0.8 - x;
+            x = 0.8f - x;
             y = y2;
         } else if (i==2) {
-            y = 0.8 - y;
+            y = 0.8f - y;
         }
 
-        Rect rect(x,y,0.2, 0.2);
+        Rect rect(x,y,0.2f, 0.2f);
         _sprites[i]->setCenterRectNormalized(rect);
     }
 }

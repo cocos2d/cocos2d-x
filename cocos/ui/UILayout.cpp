@@ -1110,7 +1110,7 @@ float Layout::calculateNearestDistance(Widget* baseWidget)
         int length;
         if (layout)
         {
-            length = layout->calculateNearestDistance(baseWidget);
+            length = (int)layout->calculateNearestDistance(baseWidget);
         }
         else
         {
@@ -1118,7 +1118,7 @@ float Layout::calculateNearestDistance(Widget* baseWidget)
             if (w && w->isFocusEnabled())
             {
                 Vec2 wPosition = this->getWorldCenterPoint(w);
-                length = (wPosition - widgetPosition).length();
+                length = (int)(wPosition - widgetPosition).length();
             }
             else
             {
@@ -1128,7 +1128,7 @@ float Layout::calculateNearestDistance(Widget* baseWidget)
         
         if (length < distance)
         {
-            distance = length;
+            distance = (float)length;
         }
         
         
@@ -1148,14 +1148,14 @@ float Layout::calculateFarthestDistance(cocos2d::ui::Widget *baseWidget)
         int length;
         if (layout)
         {
-            length = layout->calculateFarthestDistance(baseWidget);
+            length = (int)layout->calculateFarthestDistance(baseWidget);
         }
         else
         {
             Widget* w = dynamic_cast<Widget*>(node);
             if (w && w->isFocusEnabled()) {
                 Vec2 wPosition = this->getWorldCenterPoint(w);
-                length = (wPosition - widgetPosition).length();
+                length = (int)(wPosition - widgetPosition).length();
             }
             else
             {
@@ -1165,7 +1165,7 @@ float Layout::calculateFarthestDistance(cocos2d::ui::Widget *baseWidget)
         
         if (length > distance)
         {
-            distance = length;
+            distance = (float)length;
         }
     }
     return distance;

@@ -299,13 +299,13 @@ bool UITextFieldTest_LineWrap::init()
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create("No Event","fonts/Marker Felt.ttf",30);
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
-        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
         Text *alert = Text::create("TextField line wrap","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         // Create the textfield

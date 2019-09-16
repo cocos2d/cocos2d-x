@@ -261,9 +261,9 @@ bool BasicPhysics3DDemo::init()
         {
             for(int j = 0;j<ARRAY_SIZE_Z;j++)
             {
-                float x = 1.0*i + start_x;
-                float y = 5.0+1.0*k + start_y;
-                float z = 1.0*j + start_z;
+                float x = 1.0f*i + start_x;
+                float y = 5.0f+1.0f*k + start_y;
+                float z = 1.0f*j + start_z;
                 
                 auto sprite = PhysicsSprite3D::create("Sprite3DTest/box.c3t", &rbDes);
                 sprite->setTexture("Images/CyanSquare.png");
@@ -347,9 +347,9 @@ bool Physics3DKinematicDemo::init()
             {
                 for(int j = 0;j<ARRAY_SIZE_Z;j++)
                 {
-                    float x = 1.0*i + start_x;
-                    float y = 5.0+1.0*k + start_y;
-                    float z = 1.0*j + start_z;
+                    float x = 1.0f*i + start_x;
+                    float y = 5.0f+1.0f*k + start_y;
+                    float z = 1.0f*j + start_z;
                     rbDes.originalTransform.setIdentity();
                     rbDes.originalTransform.translate(x, y, z);
 
@@ -617,9 +617,9 @@ bool Physics3DTerrainDemo::init()
         {
             for(int j = 0;j<ARRAY_SIZE_Z;j++)
             {
-                float x = 1.0*i + start_x;
-                float y = 5.0+1.0*k + start_y;
-                float z = 1.0*j + start_z;
+                float x = 1.0f*i + start_x;
+                float y = 5.0f+1.0f*k + start_y;
+                float z = 1.0f*j + start_z;
 
                 auto sprite = PhysicsSprite3D::create("Sprite3DTest/sphere.c3b", &rbDes);
                 sprite->setTexture("Sprite3DTest/plane.png");

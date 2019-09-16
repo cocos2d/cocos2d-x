@@ -70,7 +70,7 @@ bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Vec2 
                 
         _startPos=pos; // starting position of the colour picker        
         boxPos          = 35;    // starting position of the virtual box area for picking a colour
-        boxSize         = _background->getContentSize().width / 2;    // the size (width and height) of the virtual box for picking a colour from
+        boxSize         = (int)_background->getContentSize().width / 2;    // the size (width and height) of the virtual box for picking a colour from
         return true;
     }
     else
@@ -110,8 +110,8 @@ void ControlSaturationBrightnessPicker::updateWithHSV(HSV hsv)
 void ControlSaturationBrightnessPicker::updateDraggerWithHSV(HSV hsv)
 {
     // Set the position of the slider to the correct saturation and brightness
-    Vec2 pos(_startPos.x + boxPos + (boxSize*(1 - hsv.s)),
-                              _startPos.y + boxPos + (boxSize*hsv.v));
+    Vec2 pos(_startPos.x + boxPos + (float)(boxSize*(1 - hsv.s)),
+                              _startPos.y + boxPos + (float)(boxSize*hsv.v));
     
     // update
     updateSliderPosition(pos);

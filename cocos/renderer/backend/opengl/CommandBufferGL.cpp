@@ -591,7 +591,7 @@ void CommandBufferGL::setLineWidth(float lineWidth)
 }
 
 
-void CommandBufferGL::setScissorRect(bool isEnabled, float x, float y, float width, float height)
+void CommandBufferGL::setScissorRect(bool isEnabled, int x, int y, unsigned int width, unsigned int height)
 {
     if(isEnabled)
     {
@@ -624,7 +624,7 @@ void CommandBufferGL::captureScreen(std::function<void(const unsigned char*, int
         callback(nullptr, 0, 0);
         return;
     }
-    for (int row = 0; row < _viewPort.h; ++row)
+    for (unsigned int row = 0; row < _viewPort.h; ++row)
     {
         memcpy(flippedBuffer.get() + (_viewPort.h - row - 1) * _viewPort.w * 4, buffer.get() + row * _viewPort.w * 4, _viewPort.w * 4);
     }

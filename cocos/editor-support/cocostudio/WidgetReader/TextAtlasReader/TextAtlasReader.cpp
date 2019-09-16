@@ -123,7 +123,7 @@ namespace cocostudio
         } //end of for loop
         
         if (type == (Widget::TextureResType)0) {
-            labelAtlas->setProperty(stringValue, charMapFileName, itemWidth, itemHeight, startCharMap);
+            labelAtlas->setProperty(stringValue, charMapFileName, (int)itemWidth, (int)itemHeight, startCharMap);
         }
         this->endSetBasicProperties(widget);
     }

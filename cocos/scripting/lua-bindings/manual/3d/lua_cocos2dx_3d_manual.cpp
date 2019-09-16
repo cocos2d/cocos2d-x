@@ -481,7 +481,7 @@ int lua_cocos2dx_3d_Terrain_getHeight(lua_State* L)
             ok &= luaval_to_number(L, 3,&arg1, "cc.Terrain:getHeight");
 
             if (!ok) { break; }
-            double ret = cobj->getHeight(arg0, arg1);
+            double ret = (double)cobj->getHeight((float)arg0, (float)arg1);
             tolua_pushnumber(L,(lua_Number)ret);
             return 1;
         }
@@ -501,7 +501,7 @@ int lua_cocos2dx_3d_Terrain_getHeight(lua_State* L)
             ok &= luaval_to_vec3(L, 4, &arg2);
 
             if (!ok) { break; }
-            double ret = cobj->getHeight(arg0, arg1, &arg2);
+            double ret = (float)cobj->getHeight((float)arg0, (float)arg1, &arg2);
             tolua_pushnumber(L,(lua_Number)ret);
             vec3_to_luaval(L, arg2);
             return 2;
@@ -1851,7 +1851,7 @@ int lua_cocos2dx_3d_OBB_getCorners(lua_State* L)
             return 0;
         }
 
-        for (int i = 1 ; i <= len; i++)
+        for (size_t i = 1 ; i <= len; i++)
         {
             lua_pushnumber(L,i);
             lua_gettable(L,2);
@@ -1870,7 +1870,7 @@ int lua_cocos2dx_3d_OBB_getCorners(lua_State* L)
 
         lua_newtable(L);
 
-        for (int i = 1; i <= len; i++)
+        for (size_t i = 1; i <= len; i++)
         {
             lua_pushnumber(L, i);
             vec3_to_luaval(L, arg0[i - 1]);

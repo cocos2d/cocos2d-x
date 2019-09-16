@@ -609,7 +609,7 @@ void Renderer::drawBatchedTriangles()
         // capacity full ?
         if (batchesTotal + 1 >= _triBatchesToDrawCapacity)
         {
-            _triBatchesToDrawCapacity *= 1.4;
+            _triBatchesToDrawCapacity *= 1.4f;
             _triBatchesToDraw = (TriBatchToDraw*) realloc(_triBatchesToDraw, sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
         }
         
@@ -924,7 +924,7 @@ const ScissorRect& Renderer::getScissorRect() const
     return _scissorState.rect;
 }
 
-void Renderer::setScissorRect(float x, float y, float width, float height)
+void Renderer::setScissorRect(int x, int y, unsigned int width, unsigned int height)
 {
     _scissorState.rect.x = x;
     _scissorState.rect.y = y;

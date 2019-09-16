@@ -329,15 +329,15 @@ void PhysicsDemoLogoSmash::onEnter()
         {
             if (getPixel(x, y))
             {
-                float xJitter = 0.05 * frand();
-                float yJitter = 0.05 * frand();
+                float xJitter = 0.05f * frand();
+                float yJitter = 0.05f * frand();
                 
                 Node* ball = makeBall(Vec2(2*(x - LOGO_WIDTH/2 + xJitter) + VisibleRect::getVisibleRect().size.width/2,
                                            2*(LOGO_HEIGHT-y + yJitter) + VisibleRect::getVisibleRect().size.height/2 - LOGO_HEIGHT/2),
                                       0.95f, PhysicsMaterial(0.01f, 0.0f, 0.0f));
                 
                 auto physicsBody = ball->getPhysicsBody();
-                physicsBody->setMass(1.0);
+                physicsBody->setMass(1.0f);
                 physicsBody->setMoment(PHYSICS_INFINITY);
                 
                 _ball->addChild(ball);
@@ -1455,7 +1455,7 @@ void PhysicsContactTest::resetTest()
         position.x = position.x * CCRANDOM_0_1();
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Vec2(size.width / 2, size.height / 2);
-        Vec2 velocity((CCRANDOM_0_1() - 0.5) * 200, (CCRANDOM_0_1() - 0.5) * 200);
+        Vec2 velocity((CCRANDOM_0_1() - 0.5f) * 200, (CCRANDOM_0_1() - 0.5f) * 200);
         auto box = makeBox(position, size, 1, PhysicsMaterial(0.1f, 1, 0.0f));
         auto boxBody = box->getPhysicsBody();
         boxBody->setVelocity(velocity);
@@ -1474,7 +1474,7 @@ void PhysicsContactTest::resetTest()
         position.x = position.x * CCRANDOM_0_1();
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Vec2(size.width / 2, size.height / 2);
-        Vec2 velocity((CCRANDOM_0_1() - 0.5) * 200, (CCRANDOM_0_1() - 0.5) * 200);
+        Vec2 velocity((CCRANDOM_0_1() - 0.5f) * 200, (CCRANDOM_0_1() - 0.5f) * 200);
         auto box = makeBox(position, size, 2, PhysicsMaterial(0.1f, 1, 0.0f));
         auto boxBody = box->getPhysicsBody();
         boxBody->setVelocity(velocity);
@@ -1493,7 +1493,7 @@ void PhysicsContactTest::resetTest()
         position.x = position.x * CCRANDOM_0_1();
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Vec2(size.width / 2, size.height / 2);
-        Vec2 velocity((CCRANDOM_0_1() - 0.5) * 300, (CCRANDOM_0_1() - 0.5) * 300);
+        Vec2 velocity((CCRANDOM_0_1() - 0.5f) * 300, (CCRANDOM_0_1() - 0.5f) * 300);
         auto triangle = makeTriangle(position, size, 1, PhysicsMaterial(0.1f, 1, 0.0f));
         auto triangleBody = triangle->getPhysicsBody();
         triangleBody->setVelocity(velocity);
@@ -1512,7 +1512,7 @@ void PhysicsContactTest::resetTest()
         position.x = position.x * CCRANDOM_0_1();
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Vec2(size.width / 2, size.height / 2);
-        Vec2 velocity((CCRANDOM_0_1() - 0.5) * 300, (CCRANDOM_0_1() - 0.5) * 300);
+        Vec2 velocity((CCRANDOM_0_1() - 0.5f) * 300, (CCRANDOM_0_1() - 0.5f) * 300);
         auto triangle = makeTriangle(position, size, 2, PhysicsMaterial(0.1f, 1, 0.0f));
         auto triangleBody = triangle->getPhysicsBody();
         triangleBody->setVelocity(velocity);

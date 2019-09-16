@@ -63,7 +63,7 @@ bool UIPageViewTest::init()
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
                                               widgetSize.height / 2.0f +
-                                              _displayValueLabel->getContentSize().height * 1.5));
+                                              _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the black background
@@ -273,7 +273,7 @@ bool UIPageViewTouchPropagationTest::init()
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
                                              widgetSize.height / 2.0f +
-                                             _displayValueLabel->getContentSize().height * 1.5));
+                                             _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the black background
@@ -766,7 +766,7 @@ bool UIPageViewVerticalTest::init()
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
                                              widgetSize.height / 2.0f +
-                                             _displayValueLabel->getContentSize().height * 1.5));
+                                             _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the black background
@@ -856,7 +856,7 @@ bool UIPageViewDisableTouchTest::init()
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
                                              widgetSize.height / 2.0f +
-                                             _displayValueLabel->getContentSize().height * 1.5));
+                                             _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the black background
@@ -930,7 +930,7 @@ bool UIPageViewChildSizeTest::init()
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
             widgetSize.height / 2.0f +
-            _displayValueLabel->getContentSize().height * 1.5));
+            _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
 
         // Add the black background

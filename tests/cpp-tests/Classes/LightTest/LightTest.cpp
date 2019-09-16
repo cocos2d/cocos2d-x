@@ -238,17 +238,17 @@ void LightTest::update( float delta )
 
     if (_pointLight)
     {
-        _pointLight->setPositionX(100.0f * cosf(angleDelta + 2.0 * delta));
+        _pointLight->setPositionX(100.0f * cosf(angleDelta + 2.0f * delta));
         _pointLight->setPositionY(100.0f);
-        _pointLight->setPositionZ(100.0f * sinf(angleDelta + 2.0 * delta));
+        _pointLight->setPositionZ(100.0f * sinf(angleDelta + 2.0f * delta));
     }
 
     if (_spotLight)
     {
-        _spotLight->setPositionX(100.0f * cosf(angleDelta + 4.0 * delta));
+        _spotLight->setPositionX(100.0f * cosf(angleDelta + 4.0f * delta));
         _spotLight->setPositionY(100.0f);
-        _spotLight->setPositionZ(100.0f * sinf(angleDelta + 4.0 * delta));
-        _spotLight->setDirection(-Vec3(cosf(angleDelta + 4.0 * delta), 1.0, sinf(angleDelta + 4.0 * delta)));
+        _spotLight->setPositionZ(100.0f * sinf(angleDelta + 4.0f * delta));
+        _spotLight->setDirection(-Vec3(cosf(angleDelta + 4.0f * delta), 1.0f, sinf(angleDelta + 4.0f * delta)));
     }
 
     angleDelta += delta;

@@ -40,10 +40,10 @@ bool QuestionContainerSprite::init()
         auto size = Director::getInstance()->getWinSize();
         auto corner = Sprite::create("Images/bugs/corner.png");
 
-        int width = size.width * 0.9f - (corner->getContentSize().width * 2);
-        int height = size.height * 0.15f  - (corner->getContentSize().height * 2);
-        auto layer = LayerColor::create(Color4B(255, 255, 255, 255 * .75), width, height);
-        layer->setPosition(Vec2(-width / 2, -height / 2));
+        int width = int(size.width * 0.9f - (corner->getContentSize().width * 2));
+        int height = int(size.height * 0.15f  - (corner->getContentSize().height * 2));
+        auto layer = LayerColor::create(Color4B(255, 255, 255, 255 * .75), (float)width, (float)height);
+        layer->setPosition(Vec2(-width / 2.0f, -height / 2.0f));
 
         //First button is blue,
         //Second is red
@@ -80,25 +80,25 @@ bool QuestionContainerSprite::init()
         addChild(corner4);
 
         auto edge = Sprite::create("Images/bugs/edge.png");
-        edge->setScaleX(width);
+        edge->setScaleX((float)width);
         edge->setPosition(Vec2(corner->getPosition().x + (corner->getContentSize().width / 2) + (width / 2), corner->getPosition().y));
         addChild(edge);
         
         auto edge2 = Sprite::create("Images/bugs/edge.png");
-        edge2->setScaleX(width);
+        edge2->setScaleX((float)width);
         edge2->setPosition(Vec2(corner->getPosition().x + (corner->getContentSize().width / 2) + (width / 2), -corner->getPosition().y));
         edge2->setFlippedY(true);
         addChild(edge2);
 
         auto edge3 = Sprite::create("Images/bugs/edge.png");
         edge3->setRotation(90);
-        edge3->setScaleX(height);
+        edge3->setScaleX((float)height);
         edge3->setPosition(Vec2(corner->getPosition().x, corner->getPosition().y + (corner->getContentSize().height / 2) + (height / 2)));
         addChild(edge3);
 
         auto edge4 = Sprite::create("Images/bugs/edge.png");
         edge4->setRotation(270);
-        edge4->setScaleX(height);
+        edge4->setScaleX((float)height);
         edge4->setPosition(Vec2(-corner->getPosition().x, corner->getPosition().y + (corner->getContentSize().height / 2) + (height / 2)));
         addChild(edge4);
 

@@ -54,9 +54,9 @@ Color3B::Color3B(const Color4B& color)
 {}
 
 Color3B::Color3B(const Color4F& color)
-: r(color.r * 255.0f)
-, g(color.g * 255.0f)
-, b(color.b * 255.0f)
+: r(static_cast<uint8_t>(color.r * 255.0f))
+, g(static_cast<uint8_t>(color.g * 255.0f))
+, b(static_cast<uint8_t>(color.b * 255.0f))
 {}
 
 bool Color3B::operator==(const Color3B& right) const
@@ -111,10 +111,10 @@ Color4B::Color4B(const Color3B& color, uint8_t _a)
 {}
 
 Color4B::Color4B(const Color4F& color)
-: r(color.r * 255)
-, g(color.g * 255)
-, b(color.b * 255)
-, a(color.a * 255)
+: r(static_cast<uint8_t>(color.r * 255))
+, g(static_cast<uint8_t>(color.g * 255))
+, b(static_cast<uint8_t>(color.b * 255))
+, a(static_cast<uint8_t>(color.a * 255))
 {}
 
 bool Color4B::operator==(const Color4B& right) const

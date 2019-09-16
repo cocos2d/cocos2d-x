@@ -119,15 +119,15 @@ namespace cocostudio
             }
             else if (attriname == "Intensity")
             {
-                intensity = atof(value.c_str());
+                intensity = (float)atof(value.c_str());
             }
             else if (attriname == "Range")
             {
-                range = atof(value.c_str());
+                range = (float)atof(value.c_str());
             }
             else if (attriname == "OuterAngle")
             {
-                outerAngle = atof(value.c_str());
+                outerAngle = (float)atof(value.c_str());
             }
             else if (attriname == "Enable")
             {

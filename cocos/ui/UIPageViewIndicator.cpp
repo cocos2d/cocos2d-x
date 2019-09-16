@@ -34,7 +34,7 @@ NS_CC_BEGIN
 
 namespace {
     static const float SPACE_BETWEEN_INDEX_NODES_DEFAULT = 23;
-    static const uint8_t INDEX_NODES_OPACITY_DEFAULT = 0.3*255;
+    static const uint8_t INDEX_NODES_OPACITY_DEFAULT = static_cast<uint8_t>(0.3*255);
 }
 
 namespace ui {

@@ -420,7 +420,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             {
                 if (!_configName.empty())
                 {
-                    modeB.startRadius = dictionary["maxRadius"].asInt();
+                    modeB.startRadius = (float)dictionary["maxRadius"].asInt();
                 }
                 else
                 {
@@ -429,7 +429,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 modeB.startRadiusVar = dictionary["maxRadiusVariance"].asFloat();
                 if (!_configName.empty())
                 {
-                    modeB.endRadius = dictionary["minRadius"].asInt();
+                    modeB.endRadius = (float)dictionary["minRadius"].asInt();
                 }
                 else
                 {
@@ -447,7 +447,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 
                 if (!_configName.empty())
                 {
-                    modeB.rotatePerSecond = dictionary["rotatePerSecond"].asInt();
+                    modeB.rotatePerSecond = (float)dictionary["rotatePerSecond"].asInt();
                 }
                 else
                 {
@@ -879,7 +879,7 @@ void ParticleSystem::update(float dt)
                 _emitCounter = 0.f;
         }
         
-        int emitCount = MIN(totalParticles - _particleCount, _emitCounter / rate);
+        int emitCount = MIN(totalParticles - _particleCount, (int)_emitCounter / rate);
         addParticles(emitCount);
         _emitCounter -= rate * emitCount;
         

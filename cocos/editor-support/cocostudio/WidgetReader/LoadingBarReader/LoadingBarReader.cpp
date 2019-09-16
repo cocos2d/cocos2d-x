@@ -87,7 +87,7 @@ namespace cocostudio
         LoadingBar* loadingBar = static_cast<LoadingBar*>(widget);
         this->beginSetBasicProperties(widget);
         float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
-        int percent = loadingBar->getPercent();
+        int percent = (int)loadingBar->getPercent();
         
         stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         
@@ -134,7 +134,7 @@ namespace cocostudio
         if (loadingBar->isScale9Enabled()) {
             loadingBar->setCapInsets(Rect(capsx, capsy, capsWidth, capsHeight));
         }
-        loadingBar->setPercent(percent);
+        loadingBar->setPercent((float)percent);
         this->endSetBasicProperties(widget);
     }
     
@@ -173,7 +173,7 @@ namespace cocostudio
         /**/
         
         loadingBar->setDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, P_Direction)));
-        loadingBar->setPercent(DICTOOL->getIntValue_json(options, P_Percent,100));
+        loadingBar->setPercent((float)DICTOOL->getIntValue_json(options, P_Percent,100));
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
@@ -340,7 +340,7 @@ namespace cocostudio
         loadingBar->setDirection(LoadingBar::Direction(direction));
         
         int percent = options->percent();
-        loadingBar->setPercent(percent);
+        loadingBar->setPercent((float)percent);
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());

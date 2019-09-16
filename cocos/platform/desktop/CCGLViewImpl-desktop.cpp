@@ -302,8 +302,8 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #endif
 
-    int neededWidth = rect.size.width * _frameZoomFactor;
-    int neededHeight = rect.size.height * _frameZoomFactor;
+    int neededWidth = (int)(rect.size.width * _frameZoomFactor);
+    int neededHeight = int(rect.size.height * _frameZoomFactor);
 
     _mainWindow = glfwCreateWindow(neededWidth, neededHeight, _viewName.c_str(), _monitor, nullptr);
 
@@ -394,7 +394,7 @@ bool GLViewImpl::initWithFullScreen(const std::string& viewName)
         return false;
 
     const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
-    return initWithRect(viewName, Rect(0, 0, videoMode->width, videoMode->height), 1.0f, false);
+    return initWithRect(viewName, Rect(0.0f, 0.0f, (float)videoMode->width, (float)videoMode->height), 1.0f, false);
 }
 
 bool GLViewImpl::initWithFullscreen(const std::string &viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor)
@@ -410,7 +410,7 @@ bool GLViewImpl::initWithFullscreen(const std::string &viewname, const GLFWvidmo
     glfwWindowHint(GLFW_BLUE_BITS, videoMode.blueBits);
     glfwWindowHint(GLFW_GREEN_BITS, videoMode.greenBits);
     
-    return initWithRect(viewname, Rect(0, 0, videoMode.width, videoMode.height), 1.0f, false);
+    return initWithRect(viewname, Rect(0.0, 0.0, (float)videoMode.width, (float)videoMode.height), 1.0f, false);
 }
 
 bool GLViewImpl::isOpenGLReady()
@@ -581,13 +581,13 @@ void GLViewImpl::setFullscreen(const GLFWvidmode &videoMode, GLFWmonitor *monito
 
 void GLViewImpl::setWindowed(int width, int height) {
     if (!this->isFullscreen()) {
-        this->setFrameSize(width, height);
+        this->setFrameSize((float)width, (float)height);
     } else {
         const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
         int xpos = 0, ypos = 0;
         glfwGetMonitorPos(_monitor, &xpos, &ypos);
-        xpos += (videoMode->width - width) * 0.5;
-        ypos += (videoMode->height - height) * 0.5;
+        xpos += (int)(videoMode->width - width) * 0.5f;
+        ypos += (int)(videoMode->height - height) * 0.5f;
         _monitor = nullptr;
         glfwSetWindowMonitor(_mainWindow, nullptr, xpos, ypos, width, height, GLFW_DONT_CARE);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -650,7 +650,7 @@ void GLViewImpl::updateFrameSize()
             {
                 _retinaFactor = 1;
             }
-            glfwSetWindowSize(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
+            glfwSetWindowSize(_mainWindow, (int)(_screenSize.width * _retinaFactor * _frameZoomFactor), (int)(_screenSize.height *_retinaFactor * _frameZoomFactor));
 
             _isInRetinaMonitor = false;
         }
@@ -666,10 +666,10 @@ void GLViewImpl::setFrameSize(float width, float height)
 void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
 {
     Viewport vp;
-    vp.x = x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor;
-    vp.y = y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor;
-    vp.w = w * _scaleX * _retinaFactor * _frameZoomFactor;
-    vp.h = h * _scaleY * _retinaFactor * _frameZoomFactor;
+    vp.x = int(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor);
+    vp.y = int(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor);
+    vp.w = unsigned int(w * _scaleX * _retinaFactor * _frameZoomFactor);
+    vp.h = unsigned int(h * _scaleY * _retinaFactor * _frameZoomFactor);
     Camera::setDefaultViewport(vp);
 }
 
@@ -907,8 +907,8 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, 
         Size baseDesignSize = _designResolutionSize;
         ResolutionPolicy baseResolutionPolicy = _resolutionPolicy;
 
-        int frameWidth = width / _frameZoomFactor;
-        int frameHeight = height / _frameZoomFactor;
+        int frameWidth = (int)(width / _frameZoomFactor);
+        int frameHeight = (int)(height / _frameZoomFactor);
         setFrameSize(frameWidth, frameHeight);
         setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
         Director::getInstance()->setViewport();

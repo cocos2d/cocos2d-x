@@ -126,7 +126,7 @@ void ProcessBase::update(float dt)
         *	if _currentFrame is bigger or equal than m_iTotalFrames, then reduce it until _currentFrame is
         *  smaller than m_iTotalFrames
         */
-        _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
+        _currentFrame = fmodf(_currentFrame, (float)_nextFrameIndex);
     }
 
     updateHandler();
@@ -152,7 +152,7 @@ void ProcessBase::gotoFrame(int frameIndex)
 
 int ProcessBase::getCurrentFrameIndex()
 {
-    _curFrameIndex = (_rawDuration-1) * _currentPercent;
+    _curFrameIndex = (int)((_rawDuration-1) * _currentPercent);
     return _curFrameIndex;
 }
 

@@ -44,8 +44,8 @@ HttpClientTest::HttpClientTest()
     const int MARGIN = 40;
     const int SPACE = 35;
 
-    const int LEFT = winSize.width / 4;
-    const int RIGHT = winSize.width / 4 * 3;
+    const int LEFT = (int)(winSize.width / 4);
+    const int RIGHT = (int)(winSize.width / 4 * 3);
     
     auto menuRequest = Menu::create();
     menuRequest->setPosition(Vec2::ZERO);
@@ -54,66 +54,66 @@ HttpClientTest::HttpClientTest()
     // Get 
     auto labelGet = Label::createWithTTF("Test Get", "fonts/arial.ttf", 22);
     auto itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientTest::onMenuGetTestClicked, this, false));
-    itemGet->setPosition(LEFT, winSize.height - MARGIN - SPACE);
+    itemGet->setPosition((float)LEFT, winSize.height - (float)MARGIN - (float)SPACE);
     menuRequest->addChild(itemGet);
     
     // Post
     auto labelPost = Label::createWithTTF("Test Post", "fonts/arial.ttf", 22);
     auto itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientTest::onMenuPostTestClicked, this, false));
-    itemPost->setPosition(LEFT, winSize.height - MARGIN - 2 * SPACE);
+    itemPost->setPosition((float)LEFT, winSize.height - (float)MARGIN - 2.0f * SPACE);
     menuRequest->addChild(itemPost);
     
     // Post Binary
     auto labelPostBinary = Label::createWithTTF("Test Post Binary", "fonts/arial.ttf", 22);
     auto itemPostBinary = MenuItemLabel::create(labelPostBinary, CC_CALLBACK_1(HttpClientTest::onMenuPostBinaryTestClicked, this, false));
-    itemPostBinary->setPosition(LEFT, winSize.height - MARGIN - 3 * SPACE);
+    itemPostBinary->setPosition((float)LEFT, winSize.height - (float)MARGIN - 3.0f * SPACE);
     menuRequest->addChild(itemPostBinary);
 
     // Put
     auto labelPut = Label::createWithTTF("Test Put", "fonts/arial.ttf", 22);
     auto itemPut = MenuItemLabel::create(labelPut, CC_CALLBACK_1(HttpClientTest::onMenuPutTestClicked, this, false));
-    itemPut->setPosition(LEFT, winSize.height - MARGIN - 4 * SPACE);
+    itemPut->setPosition((float)LEFT, winSize.height - (float)MARGIN - 4.0f * SPACE);
     menuRequest->addChild(itemPut);
 
     // Delete
     auto labelDelete = Label::createWithTTF("Test Delete", "fonts/arial.ttf", 22);
     auto itemDelete = MenuItemLabel::create(labelDelete, CC_CALLBACK_1(HttpClientTest::onMenuDeleteTestClicked, this, false));
-    itemDelete->setPosition(LEFT, winSize.height - MARGIN - 5 * SPACE);
+    itemDelete->setPosition((float)LEFT, winSize.height - (float)MARGIN - 5.0f * SPACE);
     menuRequest->addChild(itemDelete);
 
     // Get for sendImmediate
     labelGet = Label::createWithTTF("Test Immediate Get", "fonts/arial.ttf", 22);
     itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientTest::onMenuGetTestClicked, this, true));
-    itemGet->setPosition(RIGHT, winSize.height - MARGIN - SPACE);
+    itemGet->setPosition((float)RIGHT, winSize.height - (float)MARGIN - (float)SPACE);
     menuRequest->addChild(itemGet);
 
     // Post for sendImmediate
     labelPost = Label::createWithTTF("Test Immediate Post", "fonts/arial.ttf", 22);
     itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientTest::onMenuPostTestClicked, this, true));
-    itemPost->setPosition(RIGHT, winSize.height - MARGIN - 2 * SPACE);
+    itemPost->setPosition((float)RIGHT, winSize.height - (float)MARGIN - 2.0f * SPACE);
     menuRequest->addChild(itemPost);
 
     // Post Binary for sendImmediate
     labelPostBinary = Label::createWithTTF("Test Immediate Post Binary", "fonts/arial.ttf", 22);
     itemPostBinary = MenuItemLabel::create(labelPostBinary, CC_CALLBACK_1(HttpClientTest::onMenuPostBinaryTestClicked, this, true));
-    itemPostBinary->setPosition(RIGHT, winSize.height - MARGIN - 3 * SPACE);
+    itemPostBinary->setPosition((float)RIGHT, winSize.height - (float)MARGIN - 3.0f * SPACE);
     menuRequest->addChild(itemPostBinary);
 
     // Put for sendImmediate
     labelPut = Label::createWithTTF("Test Immediate Put", "fonts/arial.ttf", 22);
     itemPut = MenuItemLabel::create(labelPut, CC_CALLBACK_1(HttpClientTest::onMenuPutTestClicked, this, true));
-    itemPut->setPosition(RIGHT, winSize.height - MARGIN - 4 * SPACE);
+    itemPut->setPosition((float)RIGHT, winSize.height - (float)MARGIN - 4.0f * SPACE);
     menuRequest->addChild(itemPut);
 
     // Delete for sendImmediate
     labelDelete = Label::createWithTTF("Test Immediate Delete", "fonts/arial.ttf", 22);
     itemDelete = MenuItemLabel::create(labelDelete, CC_CALLBACK_1(HttpClientTest::onMenuDeleteTestClicked, this, true));
-    itemDelete->setPosition(RIGHT, winSize.height - MARGIN - 5 * SPACE);
+    itemDelete->setPosition((float)RIGHT, winSize.height - (float)MARGIN - 5.0f * SPACE);
     menuRequest->addChild(itemDelete);
     
     // Response Code Label
     _labelStatusCode = Label::createWithTTF("HTTP Status Code", "fonts/arial.ttf", 18);
-    _labelStatusCode->setPosition(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE);
+    _labelStatusCode->setPosition(winSize.width / 2,  winSize.height - (float)MARGIN - 6.0f * SPACE);
     addChild(_labelStatusCode);
 }
 
@@ -411,7 +411,7 @@ HttpClientClearRequestsTest::HttpClientClearRequestsTest()
     const int MARGIN = 40;
     const int SPACE = 35;
     
-    const int CENTER = winSize.width / 2;
+    const int CENTER = (int)(winSize.width / 2);
     
     auto menuRequest = Menu::create();
     menuRequest->setPosition(Vec2::ZERO);
@@ -420,23 +420,23 @@ HttpClientClearRequestsTest::HttpClientClearRequestsTest()
     // Get
     auto labelGet = Label::createWithTTF("Test Clear all Get", "fonts/arial.ttf", 22);
     auto itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientClearRequestsTest::onMenuCancelAllClicked, this));
-    itemGet->setPosition(CENTER, winSize.height - MARGIN - SPACE);
+    itemGet->setPosition((float)CENTER, winSize.height - (float)MARGIN - (float)SPACE);
     menuRequest->addChild(itemGet);
     
     // Post
     auto labelPost = Label::createWithTTF("Test Clear but only with the tag DELETE", "fonts/arial.ttf", 22);
     auto itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientClearRequestsTest::onMenuCancelSomeClicked, this));
-    itemPost->setPosition(CENTER, winSize.height - MARGIN - 2 * SPACE);
+    itemPost->setPosition((float)CENTER, winSize.height - (float)MARGIN - 2.0f * SPACE);
     menuRequest->addChild(itemPost);
     
     // Response Code Label
     _labelStatusCode = Label::createWithTTF("HTTP Status Code", "fonts/arial.ttf", 18);
-    _labelStatusCode->setPosition(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE);
+    _labelStatusCode->setPosition(winSize.width / 2,  winSize.height - MARGIN - 6.0f * SPACE);
     addChild(_labelStatusCode);
     
     // Tracking Data Label
     _labelTrakingData = Label::createWithTTF("Got 0 of 0 expected http requests", "fonts/arial.ttf", 16);
-    _labelTrakingData->setPosition(CENTER,  winSize.height - MARGIN - 5 * SPACE);
+    _labelTrakingData->setPosition((float)CENTER,  winSize.height - (float)MARGIN - 5.0f * SPACE);
     addChild(_labelTrakingData);
     
     _totalExpectedRequests = 0;

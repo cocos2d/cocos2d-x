@@ -118,7 +118,7 @@ void SpritePolygonTestCase::updateDrawNode()
                 const auto count = polygoninfo.triangles.indexCount/3;
                 const auto indices = polygoninfo.triangles.indices;
                 const auto verts = polygoninfo.triangles.verts;
-                for(ssize_t i = 0; i < count; i++)
+                for(unsigned int i = 0; i < count; i++)
                 {
                     //draw 3 lines
                     Vec3 from = verts[indices[i*3]].vertices;
@@ -175,7 +175,7 @@ SpritePolygonTest1::SpritePolygonTest1()
 void SpritePolygonTest1::initSprites()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto offset = Vec2(0.15*s.width,0);
+    auto offset = Vec2(0.15f*s.width,0);
     auto filename = s_pathGrossini;
     
     //Sprite
@@ -229,7 +229,7 @@ SpritePolygonTest2::SpritePolygonTest2()
 void SpritePolygonTest2::initSprites()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto offset = Vec2(0.15*s.width,0);
+    auto offset = Vec2(0.15f*s.width,0);
     auto filename = s_pathGrossini;
     Rect head = Rect(30,25,25,25);
     
@@ -322,7 +322,7 @@ void SpritePolygonTestSlider::changeEpsilon(cocos2d::Ref *pSender, cocos2d::ui::
     if (type == cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
     {
         cocos2d::ui::Slider* slider = dynamic_cast<cocos2d::ui::Slider*>(pSender);
-        float epsilon = powf(slider->getPercent()/100.0,2)*19.0f + 1.0f;
+        float epsilon = powf(slider->getPercent()/100.0f,2)*19.0f + 1.0f;
         for(auto child : _children)
         {
             if(child->getName().size())
@@ -526,14 +526,14 @@ SpritePolygonPerformance::SpritePolygonPerformance()
     _spriteCount = _vertCount = _triCount = _pixelCount = _continuousLowDt =0;
     auto size = Director::getInstance()->getVisibleSize();
     _elapsedTime = 0;
-    _posX = _leftX = size.width*0.15;
-    _rightX = size.width*0.85;
+    _posX = _leftX = size.width*0.15f;
+    _rightX = size.width*0.85f;
     _posY = size.height/2;
     prevDt = 0.016f;
     goRight = true;
     ended = false;
-    _continuousHighDtTime = 0.0;
-    _waitingTime = 0.0;
+    _continuousHighDtTime = 0.0f;
+    _waitingTime = 0.0f;
     
     _isNeedDebugMenu = false;
 }
@@ -562,14 +562,14 @@ Node *SpritePolygonPerformance::makeSprite()
 
 void SpritePolygonPerformance::update(float dt)
 {
-    dt = dt*0.3 + prevDt*0.7;
+    dt = dt*0.3f + prevDt*0.7f;
     prevDt = dt;
     _elapsedTime += dt;
-    int loops = (0.025-dt)*1000;
-    if(dt < 0.025 && loops>0)
+    int loops = (0.025f-dt)*1000;
+    if(dt < 0.025f && loops>0)
     {
-        _continuousHighDtTime = clampf(_continuousHighDtTime-dt*2, 0.0, 1.0);
-        _waitingTime = clampf(_waitingTime-dt, 0.0, 5.0);
+        _continuousHighDtTime = clampf(_continuousHighDtTime-dt*2, 0.0f, 1.0f);
+        _waitingTime = clampf(_waitingTime-dt, 0.0f, 5.0f);
         _continuousLowDt++;
     }
     else
@@ -817,7 +817,7 @@ Issue14017Test::Issue14017Test()
 void Issue14017Test::initSprites()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto offset = Vec2(0.15*s.width,0);
+    auto offset = Vec2(0.15f*s.width,0);
     auto filename = "Images/bug14017.png";
 
     //Sprite

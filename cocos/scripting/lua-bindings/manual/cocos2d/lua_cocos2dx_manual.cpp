@@ -448,7 +448,7 @@ static int tolua_cocos2d_Menu_create(lua_State* tolua_S)
     if (argc > 0 )
     {
         Vector<MenuItem*> items;
-        uint32_t i = 1;
+        int i = 1;
         while (i <= argc)
         {
 #if COCOS2D_DEBUG >= 1
@@ -598,7 +598,7 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
             return 0;
         }
 
-        for (uint32_t i = 0; i < argc; ++i)
+        for (int i = 0; i < argc; ++i)
         {
 #if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(tolua_S, i + 2,"cc.MenuItem",0,&tolua_err) )
@@ -1414,7 +1414,7 @@ static int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* L)
         if (!tolua_isnumber(L, 2, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        double interval = tolua_tonumber(L, 2, 0);
+        float interval = (float)tolua_tonumber(L, 2, 0);
         Device::setAccelerometerInterval(interval);
         return 0;
     }
@@ -3194,14 +3194,14 @@ static int tolua_cocos2dx_DrawNode_drawPolygon(lua_State* tolua_S)
             goto tolua_lerror;
         }
 #endif
-        size_t size = lua_tonumber(tolua_S, 3);
+        size_t size = static_cast<size_t>(lua_tonumber(tolua_S, 3));
         if ( size > 0 )
         {
             cocos2d::Vec2* points = new (std::nothrow) cocos2d::Vec2[size];
             if (NULL == points)
                 return 0;
 
-            for (int i = 0; i < size; i++)
+            for (size_t i = 0; i < size; i++)
             {
                 lua_pushnumber(tolua_S,i + 1);
                 lua_gettable(tolua_S,2);
@@ -3287,7 +3287,7 @@ int tolua_cocos2dx_DrawNode_drawSolidPoly(lua_State* tolua_S)
             if (NULL == points)
                 return 0;
 
-            for (int i = 0; i < size; i++)
+            for (size_t i = 0; i < size; i++)
             {
                 lua_pushnumber(tolua_S,i + 1);
                 lua_gettable(tolua_S,2);
@@ -3366,7 +3366,7 @@ int tolua_cocos2dx_DrawNode_drawPoly(lua_State* tolua_S)
             if (NULL == points)
                 return 0;
 
-            for (int i = 0; i < size; i++)
+            for (size_t i = 0; i < size; i++)
             {
                 lua_pushnumber(tolua_S,i + 1);
                 lua_gettable(tolua_S,2);
@@ -3464,7 +3464,7 @@ int tolua_cocos2dx_DrawNode_drawCardinalSpline(lua_State* tolua_S)
         ok &= luaval_to_color4f(tolua_S, 5, &arg3, "cc.DrawNode:drawCardinalSpline");
         if(!ok)
             return 0;
-        self->drawCardinalSpline(config, arg1, arg2, arg3);
+        self->drawCardinalSpline(config, (float)arg1, arg2, arg3);
         return 0;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.DrawNode:drawCardinalSpline",argc, 4);
@@ -3574,7 +3574,7 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
             if (NULL == points)
                 return 0;
 
-            for (int i = 0; i < size; i++)
+            for (unsigned int i = 0; i < size; i++)
             {
                 lua_pushnumber(tolua_S,i + 1);
                 lua_gettable(tolua_S,2);
@@ -3614,7 +3614,7 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
             if (nullptr == points)
                 return 0;
 
-            for (int i = 0; i < size; i++)
+            for (unsigned int i = 0; i < size; i++)
             {
                 lua_pushnumber(tolua_S,i + 1);
                 lua_gettable(tolua_S,2);
@@ -6153,8 +6153,8 @@ static int lua_cocos2dx_Label_createWithTTF00(lua_State* L)
             return 0;
 
 
-        int alignment = tolua_tonumber(L, 4, 1);
-        int lineSize  = tolua_tonumber(L, 5, 0);
+        int alignment = (int)tolua_tonumber(L, 4, 1);
+        int lineSize  = (int)tolua_tonumber(L, 5, 0);
         cocos2d::Label* ret = cocos2d::Label::createWithTTF(ttfConfig, text, static_cast<TextHAlignment>(alignment), lineSize);
         int ID = ret ? (int)(ret->_ID) : -1;
         int* luaID = ret ? &(ret->_luaID) : nullptr;
@@ -6197,7 +6197,7 @@ static int lua_cocos2dx_Label_createWithTTF01(lua_State* L)
         {
             std::string text = tolua_tostring(L, 2, "");
             std::string fontFile = tolua_tostring(L, 3, "");
-            float fontSize   = tolua_tonumber(L, 4, 0);
+            float fontSize   = (float)tolua_tonumber(L, 4, 0);
             cocos2d::Size dimensions = cocos2d::Size::ZERO;
             if (lua_istable(L, 5))
             {
@@ -6642,7 +6642,7 @@ int lua_cocos2dx_TMXLayer_setTiles(lua_State* tolua_S)
             return 0;
         }
 
-        for (int i = 1 ; i <= len; i++)
+        for (size_t i = 1 ; i <= len; i++)
         {
             arg0[i - 1] = (uint32_t)tolua_tofieldnumber(tolua_S, 2, i, 0);
         }
@@ -7513,7 +7513,7 @@ int lua_cocos2dx_AutoPolygon_generatePolygon(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AutoPolygon_generatePolygon'", nullptr);
             return 0;
         }
-        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, (float)arg2));
         object_to_luaval<cocos2d::PolygonInfo>(tolua_S, "cc.PolygonInfo",(cocos2d::PolygonInfo*)ret);
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         return 1;
@@ -7533,7 +7533,7 @@ int lua_cocos2dx_AutoPolygon_generatePolygon(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AutoPolygon_generatePolygon'", nullptr);
             return 0;
         }
-        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2, arg3));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, (float)arg2, (float)arg3));
         object_to_luaval<cocos2d::PolygonInfo>(tolua_S, "cc.PolygonInfo",(cocos2d::PolygonInfo*)ret);
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         return 1;
@@ -7830,10 +7830,10 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
             if (!ok)
                 return 0;
 
-            x = tolua_tonumber(tolua_S, 2, 0);
-            y = tolua_tonumber(tolua_S, 3, 0);
-            z = tolua_tonumber(tolua_S, 4, 0);
-            w = tolua_tonumber(tolua_S, 5, 0);
+            x = (float)tolua_tonumber(tolua_S, 2, 0);
+            y = (float)tolua_tonumber(tolua_S, 3, 0);
+            z = (float)tolua_tonumber(tolua_S, 4, 0);
+            w = (float)tolua_tonumber(tolua_S, 5, 0);
 
             mat.transformVector(x,y,z,w, &dst);
             vec3_to_luaval(tolua_S, dst);
@@ -8255,7 +8255,7 @@ int tolua_cocos2d_Mat4_createRotationZ(lua_State* tolua_S)
             ok &= luaval_to_mat4(tolua_S, 1, &mat);
             if (!ok)
                 return 0;
-            angle = lua_tonumber(tolua_S, 2);
+            angle = (float)lua_tonumber(tolua_S, 2);
             cocos2d::Mat4::createRotationZ(angle, &mat);
             mat4_to_luaval(tolua_S, mat);
             return 1;
@@ -8785,7 +8785,7 @@ static int tolua_cocos2d_bytearray_intv(lua_State *L)
             }
             lua_pop(L, 1);
             lua_newtable(L);
-            for (auto idx = 0; idx < arg.size(); idx++)
+            for (size_t idx = 0; idx < arg.size(); idx++)
             {
                 lua_pushnumber(L, arg[idx]);
                 lua_rawseti(L, 1, idx + 1);
@@ -8832,7 +8832,7 @@ static int tolua_cocos2d_bytearray_floatv(lua_State *L)
             }
             lua_pop(L, 1);
             lua_newtable(L);
-            for (auto idx = 0; idx < arg.size(); idx++)
+            for (size_t idx = 0; idx < arg.size(); idx++)
             {
                 lua_pushnumber(L, arg[idx]);
                 lua_rawseti(L, 1, idx + 1);

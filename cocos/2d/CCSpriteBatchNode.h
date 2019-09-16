@@ -215,7 +215,7 @@ public:
      * This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.
      * For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont).
      */
-    void insertQuadFromSprite(Sprite *sprite, ssize_t index);
+    void insertQuadFromSprite(Sprite *sprite, size_t index);
     /* This is the opposite of "addQuadFromSprite.
      * It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
      */
@@ -224,7 +224,7 @@ public:
     /** reserves capacity for the batch node.
      If the current capacity is bigger, nothing happens.
      otherwise, a new capacity is allocated */
-    void reserveCapacity(ssize_t newCapacity);
+    void reserveCapacity(size_t newCapacity);
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
@@ -254,7 +254,7 @@ protected:
      This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void updateQuadFromSprite(Sprite *sprite, ssize_t index);   
+    void updateQuadFromSprite(Sprite *sprite, size_t index);   
 
     void updateAtlasIndex(Sprite* sprite, ssize_t* curIndex);
     void swap(ssize_t oldIndex, ssize_t newIndex);

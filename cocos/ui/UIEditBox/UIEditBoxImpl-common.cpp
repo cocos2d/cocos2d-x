@@ -104,8 +104,8 @@ void EditBoxImplCommon::initInactiveLabels(const Size& size)
     _labelPlaceHolder->enableWrap(false);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
 
-    setFont(pDefaultFontName, size.height*2/3);
-    setPlaceholderFont(pDefaultFontName, size.height*2/3);
+    setFont(pDefaultFontName, (int)(size.height*2/3));
+    setPlaceholderFont(pDefaultFontName, (int)(size.height*2/3));
 }
 
 void EditBoxImplCommon::placeInactiveLabels(const Size& size)
@@ -160,14 +160,14 @@ void EditBoxImplCommon::setFont(const char* pFontName, int fontSize)
 {
     _fontName = pFontName;
     _fontSize = fontSize;
-    this->setNativeFont(pFontName, fontSize * _label->getNodeToWorldAffineTransform().a);
+    this->setNativeFont(pFontName, int(fontSize * _label->getNodeToWorldAffineTransform().a));
     if (!_fontName.empty())
     {
         _label->setSystemFontName(pFontName);
     }
     if (fontSize > 0)
     {
-        _label->setSystemFontSize(fontSize);
+        _label->setSystemFontSize((float)fontSize);
     }
 }
 
@@ -182,14 +182,14 @@ void EditBoxImplCommon::setPlaceholderFont(const char* pFontName, int fontSize)
 {
     _placeholderFontName = pFontName;
     _placeholderFontSize = fontSize;
-    this->setNativePlaceholderFont(pFontName, fontSize * _labelPlaceHolder->getNodeToWorldAffineTransform().a);
+    this->setNativePlaceholderFont(pFontName, int(fontSize * _labelPlaceHolder->getNodeToWorldAffineTransform().a));
     if (!_placeholderFontName.empty())
     {
         _labelPlaceHolder->setSystemFontName(pFontName);
     }
     if (fontSize > 0)
     {
-        _labelPlaceHolder->setSystemFontSize(fontSize);
+        _labelPlaceHolder->setSystemFontSize((float)fontSize);
     }
 }
 

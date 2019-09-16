@@ -51,7 +51,7 @@ BoneNode* BoneNode::create(int length)
     BoneNode* ret = new (std::nothrow) BoneNode();
     if (ret && ret->init())
     {
-        ret->setDebugDrawLength(length);
+        ret->setDebugDrawLength((float)length);
         ret->autorelease();
     }
     else
@@ -241,8 +241,8 @@ cocos2d::Rect BoneNode::getVisibleSkinsRect() const
     cocos2d::Rect displayRect = cocos2d::Rect(0, 0, 0, 0);
     if (_isRackShow && _rootSkeleton != nullptr && _rootSkeleton->_isRackShow)
     {
-        maxx = _rackLength;
-        maxy = _rackWidth;
+        maxx = (float)_rackLength;
+        maxy = (float)_rackWidth;
         first = false;
     }
 
@@ -291,13 +291,13 @@ void BoneNode::setBlendFunc(const cocos2d::BlendFunc& blendFunc)
 
 void BoneNode::setDebugDrawLength(float length)
 {
-    _rackLength = length;
+    _rackLength = (int)length;
     updateVertices();
 }
 
 void BoneNode::setDebugDrawWidth(float width)
 {
-    _rackWidth = width;
+    _rackWidth = (int)width;
     updateVertices();
 }
 
@@ -451,7 +451,7 @@ void BoneNode::updateVertices()
         _squareVertices[0].x = _squareVertices[2].x = _rackLength * .1f;
         _squareVertices[2].y = _rackWidth * .5f;
         _squareVertices[0].y = -_squareVertices[2].y;
-        _squareVertices[3].x = _rackLength;
+        _squareVertices[3].x = (float)_rackLength;
 
         for (int i = 0; i < 4; i++)
         {

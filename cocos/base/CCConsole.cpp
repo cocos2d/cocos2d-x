@@ -1285,7 +1285,7 @@ void Console::commandResolution(int /*fd*/, const std::string& args)
     
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [=](){
-        Director::getInstance()->getOpenGLView()->setDesignResolutionSize(width, height, static_cast<ResolutionPolicy>(policy));
+        Director::getInstance()->getOpenGLView()->setDesignResolutionSize((float)width, (float)height, static_cast<ResolutionPolicy>(policy));
     } );
 }
 
@@ -1346,8 +1346,8 @@ void Console::commandTouchSubCommandTap(int fd, const std::string& args)
     if((argv.size() == 3 ) && (Console::Utility::isFloat(argv[1]) && Console::Utility::isFloat(argv[2])))
     {
         
-        float x = utils::atof(argv[1].c_str());
-        float y = utils::atof(argv[2].c_str());
+        float x = (float)utils::atof(argv[1].c_str());
+        float y = (float)utils::atof(argv[2].c_str());
         
         std::srand ((unsigned)time(nullptr));
         _touchId = rand();
@@ -1373,10 +1373,10 @@ void Console::commandTouchSubCommandSwipe(int fd, const std::string& args)
        && (Console::Utility::isFloat(argv[3])) && (Console::Utility::isFloat(argv[4])))
     {
         
-        float x1 = utils::atof(argv[1].c_str());
-        float y1 = utils::atof(argv[2].c_str());
-        float x2 = utils::atof(argv[3].c_str());
-        float y2 = utils::atof(argv[4].c_str());
+        float x1 = (float)utils::atof(argv[1].c_str());
+        float y1 = (float)utils::atof(argv[2].c_str());
+        float x2 = (float)utils::atof(argv[3].c_str());
+        float y2 = (float)utils::atof(argv[4].c_str());
         
         std::srand ((unsigned)time(nullptr));
         _touchId = rand();

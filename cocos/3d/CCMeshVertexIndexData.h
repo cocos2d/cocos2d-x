@@ -116,7 +116,7 @@ public:
     backend::Buffer* getVertexBuffer() const { return _vertexBuffer; }
     
     /** get attributes count */
-    ssize_t getMeshVertexAttribCount() const { return _attribs.size(); }
+    size_t getMeshVertexAttribCount() const { return _attribs.size(); }
     
     /** get attribute by index */
     const MeshVertexAttrib& getMeshVertexAttrib(ssize_t index) const { return _attribs[index]; }

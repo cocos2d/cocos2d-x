@@ -98,7 +98,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, ui::Scale9Sprit
 
         // Set the default color and opacity
         setColor(Color3B::WHITE);
-        setOpacity(255.0f);
+        setOpacity(255);
         setOpacityModifyRGB(true);
         
         // Initialize the dispatch table

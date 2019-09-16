@@ -158,7 +158,7 @@ public:
      * @param wdith Specifies the width of the scissor box
      * @param height Specifies the height of the scissor box
      */
-    virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
+    virtual void setScissorRect(bool isEnabled, int x, int y, unsigned int width, unsigned int height) override;
     
     /**
      * Set depthStencil status

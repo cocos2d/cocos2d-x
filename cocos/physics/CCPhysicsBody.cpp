@@ -343,7 +343,7 @@ void PhysicsBody::setRotation(float rotation)
 {
     _recordedRotation = rotation;
     _recordedAngle = - (rotation + _rotationOffset) * (M_PI / 180.0);
-    cpBodySetAngle(_cpBody, _recordedAngle);
+    cpBodySetAngle(_cpBody, static_cast<cpFloat>(_recordedAngle));
 }
 
 void PhysicsBody::setScale(float scaleX, float scaleY)
@@ -396,7 +396,7 @@ float PhysicsBody::getRotation()
 {
     if (_recordedAngle != cpBodyGetAngle(_cpBody)) {
         _recordedAngle = cpBodyGetAngle(_cpBody);
-        _recordedRotation = - _recordedAngle * 180.0 / M_PI - _rotationOffset;
+        _recordedRotation = float(- _recordedAngle * 180.0f / M_PI - _rotationOffset);
     }
     return _recordedRotation;
 }

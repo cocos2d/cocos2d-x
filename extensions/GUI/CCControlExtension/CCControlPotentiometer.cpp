@@ -224,7 +224,7 @@ float ControlPotentiometer::angleInDegreesBetweenLineFromPoint_toPoint_toLineFro
     float atanB = atan2(c, d);
     
     // convert radiants to degrees
-    return (atanA - atanB) * 180 / M_PI;
+    return (float)((atanA - atanB) * 180 / M_PI);
 }
 
 void ControlPotentiometer::potentiometerBegan(Vec2 /*location*/)

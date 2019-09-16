@@ -388,12 +388,15 @@ float Text::getShadowBlurRadius() const
 Color4B Text::getShadowColor() const
 {
     Color4F effect = _labelRenderer->getShadowColor();
-    return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
+    return Color4B(static_cast<uint8_t>(effect.r * 255), 
+                   static_cast<uint8_t>(effect.g * 255), 
+                   static_cast<uint8_t>(effect.b * 255),
+                   static_cast<uint8_t>(effect.a * 255));
 }
 
 int Text::getOutlineSize() const
 {
-    return _labelRenderer->getOutlineSize();
+    return (int)_labelRenderer->getOutlineSize();
 }
 LabelEffect Text::getLabelEffectType() const
 {
@@ -402,7 +405,10 @@ LabelEffect Text::getLabelEffectType() const
 Color4B Text::getEffectColor() const
 {
     Color4F effect = _labelRenderer->getEffectColor();
-    return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
+    return Color4B(static_cast<uint8_t>(effect.r * 255), 
+                   static_cast<uint8_t>(effect.g * 255),
+                   static_cast<uint8_t>(effect.b * 255),
+                   static_cast<uint8_t>(effect.a * 255));
 }
 
 Sprite * Text::getLetter(int lettetIndex)
@@ -451,7 +457,7 @@ void Text::copySpecialProperties(Widget *widget)
         }
         if (label->isShadowEnabled())
         {
-            enableShadow(label->getShadowColor(),label->getShadowOffset(),label->getShadowBlurRadius());
+            enableShadow(label->getShadowColor(),label->getShadowOffset(),(int)label->getShadowBlurRadius());
         }
     }
 }

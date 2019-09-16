@@ -93,16 +93,16 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         Vec2 offset = this->calculateLayerOffset(layerInfo->_offset);
         this->setPosition(CC_POINT_PIXELS_TO_POINTS(offset));
 
-        _atlasIndexArray = ccCArrayNew(totalNumberOfTiles);
+        _atlasIndexArray = ccCArrayNew((size_t)totalNumberOfTiles);
 
         float width = 0;
         float height = 0;
         if (_layerOrientation == TMXOrientationHex) {
             if (_staggerAxis == TMXStaggerAxis_X) {
-                height = _mapTileSize.height * (_layerSize.height + 0.5);
+                height = _mapTileSize.height * (_layerSize.height + 0.5f);
                 width = (_mapTileSize.width + _hexSideLength) * ((int)(_layerSize.width / 2)) + _mapTileSize.width * ((int)_layerSize.width % 2);
             } else {
-                width = _mapTileSize.width * (_layerSize.width + 0.5);
+                width = _mapTileSize.width * (_layerSize.width + 0.5f);
                 height = (_mapTileSize.height + _hexSideLength) * ((int)(_layerSize.height / 2)) + _mapTileSize.height * ((int)_layerSize.height % 2);
             }
         } else {
@@ -195,7 +195,7 @@ void TMXLayer::setupTiles()
                 if (_staggerIndex == TMXStaggerIndex_Odd)
                 {
                     if (x >= _layerSize.width/2)
-                        newX = (x - std::ceil(_layerSize.width/2)) * 2 + 1;
+                        newX = (int)(x - std::ceil(_layerSize.width/2)) * 2 + 1;
                     else
                         newX = x * 2;
                 } else {
@@ -467,20 +467,20 @@ intptr_t TMXLayer::getZForPos(const Vec2& pos) const
         if (_staggerIndex == TMXStaggerIndex_Odd)
         {
             if (((int)pos.x % 2) == 0)
-                z = pos.x / 2 + pos.y * _layerSize.width;
+                z = static_cast<intptr_t>(pos.x / 2 + pos.y * _layerSize.width);
             else
-                z = pos.x / 2 + std::ceil(_layerSize.width / 2) + pos.y * _layerSize.width;
+                z = static_cast<intptr_t>(pos.x / 2 + std::ceil(_layerSize.width / 2) + pos.y * _layerSize.width);
         } else {
             // TMXStaggerIndex_Even
             if (((int)pos.x % 2) == 1)
-                z = pos.x / 2 + pos.y * _layerSize.width;
+                z = static_cast<intptr_t>(pos.x / 2 + pos.y * _layerSize.width);
             else
-                z = pos.x / 2 + std::floor(_layerSize.width / 2) + pos.y * _layerSize.width;
+                z = static_cast<intptr_t>(pos.x / 2 + std::floor(_layerSize.width / 2) + pos.y * _layerSize.width);
         }
     }
     else
     {
-        z = (pos.x + pos.y * _layerSize.width);
+        z = static_cast<intptr_t>(pos.x + pos.y * _layerSize.width);
     }
 
     CCASSERT(z != -1, "Invalid Z");
@@ -595,7 +595,7 @@ void TMXLayer::setTileGID(uint32_t gid, const Vec2& pos, TMXTileFlags flags)
         // modifying an existing tile with a non-empty tile
         else 
         {
-            int z = (int) pos.x + (int) pos.y * _layerSize.width;
+            int z = (int) pos.x + (int) (pos.y * _layerSize.width);
             Sprite *sprite = static_cast<Sprite*>(getChildByTag(z));
             if (sprite)
             {
@@ -649,7 +649,7 @@ void TMXLayer::removeTileAt(const Vec2& pos)
 
     if (gid) 
     {
-        int z = pos.x + pos.y * _layerSize.width;
+        int z = (int)(pos.x + pos.y * _layerSize.width);
         ssize_t atlasIndex = atlasIndexForExistantZ(z);
 
         // remove tile from GID map
@@ -698,12 +698,12 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
         {
             if(_staggerAxis == TMXStaggerAxis_Y)
             {
-                int diffX = (_staggerIndex == TMXStaggerIndex_Even) ? _mapTileSize.width/2 : 0;
+                int diffX = (_staggerIndex == TMXStaggerIndex_Even) ? (int)_mapTileSize.width/2 : 0;
                 ret.set(pos.x * _mapTileSize.width + diffX, -pos.y * (_mapTileSize.height - (_mapTileSize.width - _hexSideLength) / 2));
             }
             else if(_staggerAxis == TMXStaggerAxis_X)
             {
-                int diffY = (_staggerIndex == TMXStaggerIndex_Odd) ? _mapTileSize.height/2 : 0;
+                int diffY = (_staggerIndex == TMXStaggerIndex_Odd) ? (int)_mapTileSize.height/2 : 0;
                 ret.set(pos.x * (_mapTileSize.width - (_mapTileSize.width - _hexSideLength) / 2), -pos.y * _mapTileSize.height + diffY);
             }
             break;

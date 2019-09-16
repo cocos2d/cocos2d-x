@@ -203,8 +203,8 @@ void Director::setDefaultValues()
     Configuration *conf = Configuration::getInstance();
 
     // default FPS
-    double fps = conf->getValue("cocos2d.x.fps", Value(kDefaultFPS)).asDouble();
-    _oldAnimationInterval = _animationInterval = 1.0 / fps;
+    float fps = (float)conf->getValue("cocos2d.x.fps", Value(kDefaultFPS)).asDouble();
+    _oldAnimationInterval = _animationInterval = 1.0f / fps;
 
     // Display FPS
     _displayStats = conf->getValue("cocos2d.x.display_fps", Value(false)).asBool();
@@ -1292,10 +1292,10 @@ void Director::createStatsLabel()
 
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    const int height_spacing = 22 / CC_CONTENT_SCALE_FACTOR();
-    _drawnVerticesLabel->setPosition(Vec2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
-    _drawnBatchesLabel->setPosition(Vec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
+    const int height_spacing = (int)(22 / CC_CONTENT_SCALE_FACTOR());
+    _drawnVerticesLabel->setPosition(Vec2(0.0f, height_spacing*2.0f) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(Vec2(0.0f, height_spacing*1.0f) + CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
 #endif // #if !CC_STRIP_FPS

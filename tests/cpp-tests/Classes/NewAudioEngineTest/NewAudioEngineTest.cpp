@@ -691,7 +691,7 @@ bool AudioIssue18597Test::init()
             char timeString[20] = {0};
             sprintf(timeString, "Time %2.2f", _time);
             dynamic_cast<Label *>(this->getChildByTag(999))->setString(timeString);
-        }, 0.05, 1000000, 0, "update label quickly");
+        }, 0.05f, 1000000, 0, "update label quickly");
 
         return true;
     }

@@ -105,7 +105,7 @@ flatbuffers::Offset<flatbuffers::Table> TabControlReader::createOptionsWithFlatB
         }
         else if (attriname == "SelectedTabZoom")
         {
-            selectedTabZoom = atof(value.c_str());
+            selectedTabZoom = (float)atof(value.c_str());
         }
         else if (attriname == "SelectedTabIndex")
         {
@@ -183,8 +183,8 @@ void TabControlReader::setPropsWithFlatBuffers(cocos2d::Node* node, const flatbu
     int headerPlace = options->headerPlace();
     tabControl->ignoreHeadersTextureSize(options->ignoreHeaderTextureSize() != 0);
     tabControl->setHeaderDockPlace((cocos2d::ui::TabControl::Dock)headerPlace);
-    tabControl->setHeaderWidth(options->headerWidth());
-    tabControl->setHeaderHeight(options->headerHeight());
+    tabControl->setHeaderWidth((float)options->headerWidth());
+    tabControl->setHeaderHeight((float)options->headerHeight());
     tabControl->setHeaderSelectedZoom(options->selectedTabZoom());
     
     int tabItemCount = options->tabItems()->size();
@@ -568,7 +568,7 @@ void TabHeaderReader::setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuf
     auto header = static_cast<cocos2d::ui::TabHeader*>(node);
     auto options = (flatbuffers::TabHeaderOption*)nodeOption;
     
-    header->setTitleFontSize(options->fontSize());
+    header->setTitleFontSize((float)options->fontSize());
     header->setTitleText(options->titleText()->c_str());
     auto textColor = options->textColor();
     Color4B titleColor(textColor->r(), textColor->g(), textColor->b(), textColor->a());

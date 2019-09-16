@@ -408,10 +408,10 @@ void ParticleSystemQuad::updateParticleQuads()
         
         for (int i = 0; i < _particleCount; ++i,++quad,++r,++g,++b,++a)
         {
-            uint8_t colorR = *r * *a * 255;
-            uint8_t colorG = *g * *a * 255;
-            uint8_t colorB = *b * *a * 255;
-            uint8_t colorA = *a * 255;
+            uint8_t colorR = static_cast<uint8_t>(*r * *a * 255);
+            uint8_t colorG = static_cast<uint8_t>(*g * *a * 255);
+            uint8_t colorB = static_cast<uint8_t>(*b * *a * 255);
+            uint8_t colorA = static_cast<uint8_t>(*a * 255);
             quad->bl.colors.set(colorR, colorG, colorB, colorA);
             quad->br.colors.set(colorR, colorG, colorB, colorA);
             quad->tl.colors.set(colorR, colorG, colorB, colorA);
@@ -428,10 +428,10 @@ void ParticleSystemQuad::updateParticleQuads()
         
         for (int i = 0; i < _particleCount; ++i,++quad,++r,++g,++b,++a)
         {
-            uint8_t colorR = *r * 255;
-            uint8_t colorG = *g * 255;
-            uint8_t colorB = *b * 255;
-            uint8_t colorA = *a * 255;
+            uint8_t colorR = static_cast<uint8_t>(*r * 255);
+            uint8_t colorG = static_cast<uint8_t>(*g * 255);
+            uint8_t colorB = static_cast<uint8_t>(*b * 255);
+            uint8_t colorA = static_cast<uint8_t>(*a * 255);
             quad->bl.colors.set(colorR, colorG, colorB, colorA);
             quad->br.colors.set(colorR, colorG, colorB, colorA);
             quad->tl.colors.set(colorR, colorG, colorB, colorA);

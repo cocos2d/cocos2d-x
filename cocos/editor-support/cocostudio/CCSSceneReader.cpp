@@ -518,12 +518,12 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode 
         
         if (key == "x")
         {
-            x = utils::atof(value.c_str());
+            x = (float)utils::atof(value.c_str());
             node->setPositionX(x);
         }
         else if (key == "y")
         {
-            y = utils::atof(value.c_str());
+            y = (float)utils::atof(value.c_str());
             node->setPositionY(y);
         }
         else if (key == "visible")
@@ -543,17 +543,17 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode 
         }
         else if(key == "scalex")
         {
-            fScaleX = utils::atof(value.c_str());
+            fScaleX = (float)utils::atof(value.c_str());
             node->setScaleX(fScaleX);
         }
         else if(key == "scaley")
         {
-            fScaleY = atof(value.c_str());
+            fScaleY = (float)atof(value.c_str());
             node->setScaleY(fScaleY);
         }
         else if(key == "rotation")
         {
-            fRotationZ = utils::atof(value.c_str());
+            fRotationZ = (float)utils::atof(value.c_str());
             node->setRotation(fRotationZ);
         }
         else if(key == "name")

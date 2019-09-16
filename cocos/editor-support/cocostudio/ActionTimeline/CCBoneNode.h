@@ -117,11 +117,11 @@ public:
 
     // bone's debug draw's length
     virtual void setDebugDrawLength(float length);
-    virtual float getDebugDrawLength() const { return _rackLength; }
+    virtual float getDebugDrawLength() const { return (float)_rackLength; }
 
     // bone's debug draw's width
     virtual void setDebugDrawWidth(float width);
-    virtual float getDebugDrawWidth() const { return _rackWidth; }
+    virtual float getDebugDrawWidth() const { return (float)_rackWidth; }
 
     // bone's debug draw's width
     virtual void setDebugDrawColor(const cocos2d::Color4F &color);

@@ -68,7 +68,7 @@ public:
      @param file The file path.
      @param capacity Capacity for Quads.
     */
-    static TextureAtlas* create(const std::string& file , ssize_t capacity);
+    static TextureAtlas* create(const std::string& file , size_t capacity);
 
     /** Creates a TextureAtlas with a previously initialized Texture2D object, and
      * with an initial capacity for n Quads.
@@ -77,7 +77,7 @@ public:
      @param texture A texture2D object pointer.
      @param capacity Capacity for Quads.
      */
-    static TextureAtlas* createWithTexture(Texture2D *texture, ssize_t capacity);
+    static TextureAtlas* createWithTexture(Texture2D *texture, size_t capacity);
     /**
      * @js ctor
      */
@@ -95,7 +95,7 @@ public:
      @param file The file path.
      @param capacity Capacity for Quads.
     */
-    bool initWithFile(const std::string& file, ssize_t capacity);
+    bool initWithFile(const std::string& file, size_t capacity);
 
     /** Initializes a TextureAtlas with a previously initialized Texture2D object, and
     * with an initial capacity for Quads. 
@@ -104,21 +104,21 @@ public:
      @param texture A texture2D object pointer.
      @param capacity Capacity for Quads.
     */
-    bool initWithTexture(Texture2D *texture, ssize_t capacity);
+    bool initWithTexture(Texture2D *texture, size_t capacity);
 
     /** Updates a Quad (texture, vertex and color) at a certain index.
     @param quad Quad that are going to be rendered.
     @param index Index must be between 0 and the atlas capacity - 1.
     @since v0.8
     */
-    void updateQuad(V3F_C4B_T2F_Quad* quad, ssize_t index);
+    void updateQuad(V3F_C4B_T2F_Quad* quad, size_t index);
 
     /** Inserts a Quad (texture, vertex and color) at a certain index.
      @param quad Quad that are going to be rendered.
      @param index Index must be between 0 and the atlas capacity - 1.
      @since v0.8
     */
-    void insertQuad(V3F_C4B_T2F_Quad* quad, ssize_t index);
+    void insertQuad(V3F_C4B_T2F_Quad* quad, size_t index);
 
     /** Inserts a c array of quads at a given index.
      @param quads Quad that are going to be rendered.
@@ -127,24 +127,24 @@ public:
      @attention This method doesn't enlarge the array when amount + index > totalQuads.
      @since v1.1
     */
-    void insertQuads(V3F_C4B_T2F_Quad* quads, ssize_t index, ssize_t amount);
+    void insertQuads(V3F_C4B_T2F_Quad* quads, size_t index, size_t amount);
 
     /** Removes the quad that is located at a certain index and inserts it at a new index.
     This operation is faster than removing and inserting in a quad in 2 different steps.
      @since v0.7.2
     */
-    void insertQuadFromIndex(ssize_t fromIndex, ssize_t newIndex);
+    void insertQuadFromIndex(size_t fromIndex, size_t newIndex);
 
     /** Removes a quad at a given index number.
     The capacity remains the same, but the total number of quads to be drawn is reduced in 1.
     @since v0.7.2
     */
-    void removeQuadAtIndex(ssize_t index);
+    void removeQuadAtIndex(size_t index);
 
     /** Removes a amount of quads starting from index.
         @since 1.1
      */
-    void removeQuadsAtIndex(ssize_t index, ssize_t amount);
+    void removeQuadsAtIndex(size_t index, size_t amount);
     /** Removes all Quads.
     The TextureAtlas capacity remains untouched. No memory is freed.
     The total number of quads to be drawn will be 0.
@@ -159,19 +159,19 @@ public:
      
      @param capacity Capacity for Quads.
     */
-    bool resizeCapacity(ssize_t capacity);
+    bool resizeCapacity(size_t capacity);
 
     /**
      Used internally by ParticleBatchNode.
      don't use this unless you know what you're doing.
      @since 1.1
     */
-    void increaseTotalQuadsWith(ssize_t amount);
+    void increaseTotalQuadsWith(size_t amount);
 
     /** Moves an amount of quads from oldIndex at newIndex.
      @since v1.1
      */
-    void moveQuadsFromIndex(ssize_t oldIndex, ssize_t amount, ssize_t newIndex);
+    void moveQuadsFromIndex(size_t oldIndex, size_t amount, size_t newIndex);
 
     /**
      Moves quads from index till totalQuads to the newIndex.
@@ -179,14 +179,14 @@ public:
      This method doesn't enlarge the array if newIndex + quads to be moved > capacity.
      @since 1.1
     */
-    void moveQuadsFromIndex(ssize_t index, ssize_t newIndex);
+    void moveQuadsFromIndex(size_t index, size_t newIndex);
 
     /**
      Ensures that after a realloc quads are still empty.
      Used internally by ParticleBatchNode.
      @since 1.1
     */
-    void fillWithEmptyQuadsFromIndex(ssize_t index, ssize_t amount);
+    void fillWithEmptyQuadsFromIndex(size_t index, size_t amount);
 
     /** Whether or not the array buffer of the VBO needs to be updated.*/
     bool isDirty() { return _dirty; }

@@ -443,15 +443,15 @@ void TextField::setFontSize(int size)
 {
     if (_fontType == FontType::SYSTEM)
     {
-        _textFieldRenderer->setSystemFontSize(size);
+        _textFieldRenderer->setSystemFontSize((float)size);
     }
     else if (_fontType == FontType::BMFONT) {
-        _textFieldRenderer->setBMFontSize(size);
+        _textFieldRenderer->setBMFontSize((float)size);
     }
     else
     {
         TTFConfig config = _textFieldRenderer->getTTFConfig();
-        config.fontSize = size;
+        config.fontSize = (float)size;
         _textFieldRenderer->setTTFConfig(config);
     }
     _fontSize = size;
@@ -477,7 +477,7 @@ void TextField::setFontName(const std::string& name)
         else {
             TTFConfig config = _textFieldRenderer->getTTFConfig();
             config.fontFilePath = name;
-            config.fontSize = _fontSize;
+            config.fontSize = (float)_fontSize;
             _textFieldRenderer->setTTFConfig(config);
             _fontType = FontType::TTF;
         }

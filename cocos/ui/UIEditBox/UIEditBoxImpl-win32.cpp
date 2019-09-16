@@ -274,10 +274,10 @@ namespace ui {
         ::SetWindowPos(
             _hwndEdit,
             HWND_NOTOPMOST,
-            rect.origin.x,
-            rect.origin.y,
-            rect.size.width,
-            rect.size.height,
+            (int)rect.origin.x,
+            (int)rect.origin.y,
+            (int)rect.size.width,
+            (int)rect.size.height,
             SWP_NOZORDER);
     }
 

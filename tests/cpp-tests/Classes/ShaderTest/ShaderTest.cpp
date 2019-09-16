@@ -205,7 +205,7 @@ void ShaderNode::updateUniforms()
     _locScreenSize  = _programState->getUniformLocation("u_screenSize");
     
     const Vec2& frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
-    float retinaFactor = Director::getInstance()->getOpenGLView()->getRetinaFactor();
+    float retinaFactor = (float)Director::getInstance()->getOpenGLView()->getRetinaFactor();
     auto screenSizeInPixels = frameSize * retinaFactor;
     _programState->setUniform(_locScreenSize, &screenSizeInPixels, sizeof(screenSizeInPixels));
 }
@@ -607,7 +607,7 @@ bool ShaderRetroEffect::init()
         auto director = Director::getInstance();
         const auto& screenSizeLocation = p->getUniformLocation("u_screenSize");
         const auto& frameSize = director->getOpenGLView()->getFrameSize();
-        float retinaFactor = director->getOpenGLView()->getRetinaFactor();
+        float retinaFactor = (float)director->getOpenGLView()->getRetinaFactor();
         auto screenSizeInPixels = frameSize * retinaFactor;
         p->setUniform(screenSizeLocation, &screenSizeInPixels, sizeof(screenSizeInPixels));
         
@@ -639,10 +639,10 @@ void ShaderRetroEffect::update(float dt)
         if (sprite != nullptr)
         {
             auto oldPosition = sprite->getPosition();
-            sprite->setPosition(Vec2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
+            sprite->setPosition(Vec2( oldPosition.x, sinf( _accum * 2 + i/2.0f) * 20  ));
             
             // add fabs() to prevent negative scaling
-            float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
+            float scaleY = ( sinf( _accum * 2 + i/2.0f + 0.707) );
             
             sprite->setScaleY(scaleY);
         }

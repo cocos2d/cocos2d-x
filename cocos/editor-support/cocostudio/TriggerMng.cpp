@@ -274,7 +274,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                         else
                                         {
                                             int nV = atoi(str3);
-                                            float fV = utils::atof(str3);
+                                            float fV = (float)utils::atof(str3);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);
@@ -350,7 +350,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                         else
                                         {
                                             int nV = atoi(str5);
-                                            float fV = utils::atof(str5);
+                                            float fV = (float)utils::atof(str5);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);

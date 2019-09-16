@@ -199,11 +199,11 @@ void ActionTimeline::step(float delta)
         return;
     }
     _time += delta * _timeSpeed;
-    float deltaCurrFrameTime = std::abs(_time - _currentFrame * _frameInternal);
+    float deltaCurrFrameTime = (float)std::abs(_time - _currentFrame * _frameInternal);
     if (deltaCurrFrameTime < _frameInternal)
         return;
 
-    const float endtoffset = _time - _endFrame * _frameInternal;
+    const float endtoffset = (float)_time - _endFrame * _frameInternal;
     if (endtoffset < _frameInternal)
     {
         _currentFrame = (int)(_time / _frameInternal);

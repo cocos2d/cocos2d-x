@@ -281,7 +281,7 @@ void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 // // ccCArray for Values (c structures)
 
 /** Allocates and initializes a new C array with specified capacity */
-ccCArray* ccCArrayNew(ssize_t capacity)
+ccCArray* ccCArrayNew(size_t capacity)
 {
 	if (capacity == 0)
     {

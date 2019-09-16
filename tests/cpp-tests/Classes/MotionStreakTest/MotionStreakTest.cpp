@@ -208,7 +208,7 @@ void Issue12226::onEnter()
 
     outer->setUserData(_streak);
 
-    const uint32_t length = (radius * 0.95);
+    const uint32_t length = (radius * 0.95f);
 
     std::function<void(float)> updateMotionStreak = [=](float dt) {
 

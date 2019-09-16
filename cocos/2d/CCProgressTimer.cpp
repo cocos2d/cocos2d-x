@@ -237,7 +237,7 @@ void ProgressTimer::updateColor()
     if (!_vertexData.empty())
     {
         const Color4B& sc = _sprite->getQuad().tl.colors;
-        for (int i = 0; i < _vertexData.size(); ++i)
+        for (size_t i = 0; i < _vertexData.size(); ++i)
         {
             _vertexData[i].colors = sc;
         }

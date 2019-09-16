@@ -99,7 +99,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass, MeshCom
     // Parse and set attributes
     parseAttributes();
     int offset = 0;
-    for (auto k = 0; k < attributeCount; k++)
+    for (size_t k = 0; k < attributeCount; k++)
     {
         auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
         setVertexAttribPointer(

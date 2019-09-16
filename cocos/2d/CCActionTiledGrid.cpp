@@ -242,7 +242,7 @@ Size ShuffleTiles::getDelta(const Size& pos) const
 {
     Vec2    pos2;
 
-    unsigned int idx = pos.width * _gridSize.height + pos.height;
+    unsigned int idx = (unsigned int)(pos.width * _gridSize.height + pos.height);
 
     pos2.x = (float)(_tilesOrder[idx] / (int)_gridSize.height);
     pos2.y = (float)(_tilesOrder[idx] % (int)_gridSize.height);
@@ -279,7 +279,7 @@ void ShuffleTiles::startWithTarget(Node *target)
         std::srand(_seed);
     }
 
-    _tilesCount = _gridSize.width * _gridSize.height;
+    _tilesCount = (unsigned int)(_gridSize.width * _gridSize.height);
     _tilesOrder = new unsigned int[_tilesCount];
 
     /**
@@ -604,7 +604,7 @@ void TurnOffTiles::startWithTarget(Node *target)
         std::srand(_seed);
     }
 
-    _tilesCount = _gridSize.width * _gridSize.height;
+    _tilesCount = (unsigned int)(_gridSize.width * _gridSize.height);
     _tilesOrder = new unsigned int[_tilesCount];
 
     for (unsigned int i = 0; i < _tilesCount; ++i)
@@ -778,7 +778,7 @@ bool SplitRows::initWithDuration(float duration, unsigned int rows)
 {
     _rows = rows;
 
-    return TiledGrid3DAction::initWithDuration(duration, Size(1, rows));
+    return TiledGrid3DAction::initWithDuration(duration, Size(1.0f, (float)rows));
 }
 
 SplitRows* SplitRows::clone() const
@@ -797,7 +797,7 @@ void SplitRows::update(float time)
 {
     for (unsigned int j = 0; j < _gridSize.height; ++j)
     {
-        Quad3 coords = getOriginalTile(Vec2(0, j));
+        Quad3 coords = getOriginalTile(Vec2(0.0f, (float)j));
         float    direction = 1;
 
         if ( (j % 2 ) == 0 )
@@ -810,7 +810,7 @@ void SplitRows::update(float time)
         coords.tl.x += direction * _winSize.width * time;
         coords.tr.x += direction * _winSize.width * time;
 
-        setTile(Vec2(0, j), coords);
+        setTile(Vec2(0.0f, (float)j), coords);
     }
 }
 

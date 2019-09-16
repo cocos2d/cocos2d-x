@@ -770,22 +770,22 @@ static int lua_cocos2dx_LayoutParameter_setMargin(lua_State* L)
         Margin margin;
         lua_pushstring(L, "left");
         lua_gettable(L,2);
-        margin.left = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        margin.left = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
             
         lua_pushstring(L, "top");
         lua_gettable(L,2);
-        margin.top = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        margin.top = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
             
         lua_pushstring(L, "right");
         lua_gettable(L,2);
-        margin.right = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        margin.right = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
             
         lua_pushstring(L, "bottom");
         lua_gettable(L,2);
-        margin.bottom = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        margin.bottom = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
         
         self->setMargin(margin);

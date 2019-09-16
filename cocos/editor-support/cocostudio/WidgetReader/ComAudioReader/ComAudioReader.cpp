@@ -96,7 +96,7 @@ namespace cocostudio
             }
             else if (attriname == "Volume")
             {
-                volume = atof(value.c_str());
+                volume = (float)atof(value.c_str());
             }
             else if (attriname == "Name")
             {
@@ -146,7 +146,7 @@ namespace cocostudio
                                              builder->CreateString(name),
                                              enabled,
                                              loop,
-                                             volume,
+                                             static_cast<int32_t>(volume),
                                              CreateResourceData(*builder,
                                                                 builder->CreateString(path),
                                                                 builder->CreateString(plist),

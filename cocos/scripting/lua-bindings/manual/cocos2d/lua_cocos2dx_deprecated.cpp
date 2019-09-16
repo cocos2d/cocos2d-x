@@ -1528,7 +1528,7 @@ static int tolua_cocos2d_kmGLLoadMatrix00(lua_State* tolua_S)
     {
         Mat4 mat4;
         size_t len = lua_objlen(tolua_S, 1);
-        for (int i = 0; i < len; i++)
+        for (size_t i = 0; i < len; i++)
         {
             lua_pushnumber(tolua_S,i + 1);
             lua_gettable(tolua_S,1);
@@ -1541,7 +1541,7 @@ static int tolua_cocos2d_kmGLLoadMatrix00(lua_State* tolua_S)
             else
 #endif
             {
-                mat4.m[i] = tolua_tonumber(tolua_S, -1, 0);
+                mat4.m[i] = (float)tolua_tonumber(tolua_S, -1, 0);
                 lua_pop(tolua_S, 1);
             }
         }

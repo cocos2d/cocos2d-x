@@ -110,7 +110,7 @@ int Label::getFirstWordLen(const std::u32string& utf32Text, int startIndex, int 
                 break;
         }
 
-        nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
+        nextLetterX += (int)(letterDef.xAdvance * _bmfontScale + _additionalKerning);
 
         len++;
     }
@@ -140,7 +140,7 @@ void Label::updateBMFontScale()
     auto font = _fontAtlas->getFont();
     if (_currentLabelType == LabelType::BMFONT) {
         FontFNT *bmFont = (FontFNT*)font;
-        float originalFontSize = bmFont->getOriginalFontSize();
+        float originalFontSize = (float)bmFont->getOriginalFontSize();
         _bmfontScale = _bmFontSize * CC_CONTENT_SCALE_FACTOR() / originalFontSize;
     }else{
         _bmfontScale = 1.0f;
@@ -238,7 +238,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
             {
                 float newLetterWidth = 0.f;
                 if (_horizontalKernings && letterIndex < textLen - 1)
-                    newLetterWidth = _horizontalKernings[letterIndex + 1];
+                    newLetterWidth = (float)_horizontalKernings[letterIndex + 1];
                 newLetterWidth += letterDef.xAdvance * _bmfontScale + _additionalKerning;
 
                 nextLetterX += newLetterWidth;

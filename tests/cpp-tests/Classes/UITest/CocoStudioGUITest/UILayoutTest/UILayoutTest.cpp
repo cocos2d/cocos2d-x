@@ -789,15 +789,15 @@ bool UILayoutTest_Layout_Scaled_Widget::init()
         _uiLayer->addChild(layout);
         
         ImageView* imageView_Center1 = ImageView::create("cocosui/scrollviewbg.png");
-        imageView_Center1->setScale(0.5);
+        imageView_Center1->setScale(0.5f);
         layout->addChild(imageView_Center1);
         
         ImageView* imageView_Center2 = ImageView::create("cocosui/scrollviewbg.png");
-        imageView_Center2->setScale(1.2);
+        imageView_Center2->setScale(1.2f);
         layout->addChild(imageView_Center2);
         
         ImageView* imageView_Center3 = ImageView::create("cocosui/scrollviewbg.png");
-        imageView_Center3->setScale(0.8);
+        imageView_Center3->setScale(0.8f);
         layout->addChild(imageView_Center3);
         
         return true;

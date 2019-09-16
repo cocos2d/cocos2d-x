@@ -104,7 +104,7 @@ namespace cocostudio
         
         ListView* listView = static_cast<ListView*>(widget);
                 
-        int direction = DICTOOL->getFloatValue_json(options, P_Direction,2);
+        int direction = (int)DICTOOL->getFloatValue_json(options, P_Direction,2);
         listView->setDirection((ScrollView::Direction)direction);
         
         ListView::Gravity gravity = (ListView::Gravity)DICTOOL->getIntValue_json(options, P_Gravity,3);
@@ -170,19 +170,19 @@ namespace cocostudio
             }
             else if (name == "Scale9OriginX")
             {
-                capInsets.origin.x = atof(value.c_str());
+                capInsets.origin.x = (float)atof(value.c_str());
             }
             else if (name == "Scale9OriginY")
             {
-                capInsets.origin.y = atof(value.c_str());
+                capInsets.origin.y = (float)atof(value.c_str());
             }
             else if (name == "Scale9Width")
             {
-                capInsets.size.width = atof(value.c_str());
+                capInsets.size.width = (float)atof(value.c_str());
             }
             else if (name == "Scale9Height")
             {
-                capInsets.size.height = atof(value.c_str());
+                capInsets.size.height = (float)atof(value.c_str());
             }
             else if (name == "DirectionType")
             {
@@ -224,11 +224,11 @@ namespace cocostudio
                     
                     if (name == "Width")
                     {
-                        innerSize.width = atof(value.c_str());
+                        innerSize.width = (float)atof(value.c_str());
                     }
                     else if (name == "Height")
                     {
-                        innerSize.height = atof(value.c_str());
+                        innerSize.height = (float)atof(value.c_str());
                     }
                     
                     attributeInnerNodeSize = attributeInnerNodeSize->Next();
@@ -245,11 +245,11 @@ namespace cocostudio
                     
                     if (name == "X")
                     {
-                        scale9Size.width = atof(value.c_str());
+                        scale9Size.width = (float)atof(value.c_str());
                     }
                     else if (name == "Y")
                     {
-                        scale9Size.height = atof(value.c_str());
+                        scale9Size.height = (float)atof(value.c_str());
                     }
                     
                     attributeSize = attributeSize->Next();
@@ -340,11 +340,11 @@ namespace cocostudio
                     
                     if (name == "ScaleX")
                     {
-                        colorVector.x = atof(value.c_str());
+                        colorVector.x = (float)atof(value.c_str());
                     }
                     else if (name == "ScaleY")
                     {
-                        colorVector.y = atof(value.c_str());
+                        colorVector.y = (float)atof(value.c_str());
                     }
                     
                     attributeColorVector = attributeColorVector->Next();
@@ -574,7 +574,7 @@ namespace cocostudio
             }
         }
         
-        float itemMargin = options->itemMargin();
+        float itemMargin = static_cast<float>(options->itemMargin());
         listView->setItemsMargin(itemMargin);
         
         auto widgetReader = WidgetReader::getInstance();

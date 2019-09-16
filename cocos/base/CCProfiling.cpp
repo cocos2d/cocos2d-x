@@ -159,7 +159,7 @@ void ProfilingEndTimingBlock(const char *timerName)
     long duration = static_cast<long>(chrono::duration_cast<chrono::microseconds>(now - timer->_startTime).count());
 
     timer->totalTime += duration;
-    timer->_averageTime1 = (timer->_averageTime1 + duration) / 2.0f;
+    timer->_averageTime1 = long((timer->_averageTime1 + duration) / 2.0f);
     timer->_averageTime2 = timer->totalTime / timer->numberOfCalls;
     timer->maxTime = MAX( timer->maxTime, duration);
     timer->minTime = MIN( timer->minTime, duration);

@@ -182,7 +182,7 @@ void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, flo
         
         RenderTexture* finalRtx = nullptr;
         
-        auto rtx = RenderTexture::create(size.width, size.height, backend::PixelFormat::RGBA8888, PixelFormat::D24S8);
+        auto rtx = RenderTexture::create((int)size.width, (int)size.height, backend::PixelFormat::RGBA8888, PixelFormat::D24S8);
         // rtx->setKeepMatrix(true);
         Point savedPos = startNode->getPosition();
         Point anchor;
@@ -203,7 +203,7 @@ void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, flo
             Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
             sprite->setAnchorPoint(Point(0, 0));
             sprite->setFlippedY(true);
-            finalRtx = RenderTexture::create(size.width * scale, size.height * scale, backend::PixelFormat::RGBA8888, PixelFormat::D24S8);
+            finalRtx = RenderTexture::create((int)(size.width * scale), (int)(size.height * scale), backend::PixelFormat::RGBA8888, PixelFormat::D24S8);
             
             sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
             finalRtx->begin();

@@ -449,7 +449,7 @@ bool UISliderIssue12249Test::init()
         slider->loadBarTexture("cocosui/sliderTrack.png");
         slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
         slider->loadProgressBarTexture("cocosui/sliderProgress.png");
-        slider->setContentSize(Size(300, slider->getContentSize().height * 1.5));
+        slider->setContentSize(Size(300, slider->getContentSize().height * 1.5f));
         slider->setMaxPercent(10000);
         slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 2.0f*/));
         slider->addEventListener(CC_CALLBACK_2(UISliderIssue12249Test::sliderEvent, this));

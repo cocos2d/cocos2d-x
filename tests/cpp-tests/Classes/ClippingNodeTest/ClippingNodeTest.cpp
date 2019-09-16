@@ -324,15 +324,15 @@ void NestedTest::setup()
         clipper->setAnchorPoint(Vec2(0.5, 0.5));
         clipper->setPosition(parent->getContentSize().width / 2, parent->getContentSize().height / 2);
         clipper->setAlphaThreshold(0.05f);
-        clipper->runAction(RepeatForever::create(RotateBy::create(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90)));
+        clipper->runAction(RepeatForever::create(RotateBy::create(i % 3 ? 1.33f : 1.66f, i % 2 ? 90.0f : -90.0f)));
         parent->addChild(clipper);
         
         auto stencil = Sprite::create(s_pathGrossini);
-        stencil->setScale( 2.5 - (i * (2.5 / depth)) );
+        stencil->setScale( 2.5f - (i * (2.5f / depth)) );
         stencil->setAnchorPoint( Vec2(0.5, 0.5) );
         stencil->setPosition(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2);
         stencil->setVisible(false);
-        stencil->runAction(Sequence::createWithTwoActions(DelayTime::create(i), Show::create()));
+        stencil->runAction(Sequence::createWithTwoActions(DelayTime::create((float)i), Show::create()));
         clipper->setStencil(stencil);
 
         clipper->addChild(stencil);
@@ -406,8 +406,8 @@ void HoleDemo::setup()
 
 void HoleDemo::pokeHoleAtPoint(Vec2 point)
 {
-    float scale = CCRANDOM_0_1() * 0.2 + 0.9;
-    float rotation = CCRANDOM_0_1() * 360;
+    float scale = (float)CCRANDOM_0_1() * 0.2f + 0.9f;
+    float rotation = (float)CCRANDOM_0_1() * 360.0f;
     
     auto hole = Sprite::create("Images/hole_effect.png");
     hole->setPosition( point );
@@ -592,7 +592,7 @@ void RawStencilBufferTest::initCommands()
     blend.dst = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
     for (int i = 0, cmdIndex = 0; i < _planeCount; i++)
     {
-        auto stencilPoint = planeSize * (_planeCount - i);
+        auto stencilPoint = planeSize * (float)(_planeCount - i);
         stencilPoint.x = winPoint.x;
 
         auto& cmd = _renderCmds[cmdIndex];
@@ -962,7 +962,7 @@ void ClippingToRenderTextureTest::reproduceBug()
 
     // container rendered on Texture the size of the screen and because Clipping node use stencil buffer so we need to
     // create RenderTexture with depthStencil format parameter
-    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888, PixelFormat::D24S8);
+    RenderTexture* rt = RenderTexture::create((int)visibleSize.width, (int)visibleSize.height, backend::PixelFormat::RGBA8888, PixelFormat::D24S8);
     rt->setPosition(visibleSize.width/2, visibleSize.height/2);
     this->addChild(rt);
 

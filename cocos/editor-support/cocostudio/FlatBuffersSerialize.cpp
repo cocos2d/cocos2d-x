@@ -574,7 +574,7 @@ Offset<NodeAction> FlatBuffersSerialize::createNodeAction(const tinyxml2::XMLEle
         }
         else if (name == "Speed")
         {
-            speed = atof(value.c_str());
+            speed = (float)atof(value.c_str());
         }
         else if (name == "ActivedAnimationName")
         {
@@ -803,11 +803,11 @@ Offset<flatbuffers::PointFrame> FlatBuffersSerialize::createPointFrame(const tin
         
         if (name == "X")
         {
-            position.x = atof(value.c_str());
+            position.x = (float)atof(value.c_str());
         }
         else if (name == "Y")
         {
-            position.y = atof(value.c_str());
+            position.y = (float)atof(value.c_str());
         }
         else if (name == "FrameIndex")
         {
@@ -846,11 +846,11 @@ Offset<flatbuffers::ScaleFrame> FlatBuffersSerialize::createScaleFrame(const tin
         
         if (name == "X")
         {
-            scale.x = atof(value.c_str());
+            scale.x = (float)atof(value.c_str());
         }
         else if (name == "Y")
         {
-            scale.y = atof(value.c_str());
+            scale.y = (float)atof(value.c_str());
         }
         else if (name == "FrameIndex")
         {
@@ -1258,11 +1258,11 @@ flatbuffers::Offset<flatbuffers::EasingData> FlatBuffersSerialize::createEasingD
                 
                 if (name == "X")
                 {
-                    pointF.x = atof(value.c_str());
+                    pointF.x = (float)atof(value.c_str());
                 }
                 else if (name == "Y")
                 {
-                    pointF.y = atof(value.c_str());
+                    pointF.y = (float)atof(value.c_str());
                 }
                 attribute = attribute->Next();
             }
@@ -1536,7 +1536,7 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
         std::string value = objattri->Value();
         if (name == "InnerActionSpeed")
         {
-            innerspeed = atof(objattri->Value());
+            innerspeed = (float)atof(objattri->Value());
             break;
         }
         objattri = objattri->Next();

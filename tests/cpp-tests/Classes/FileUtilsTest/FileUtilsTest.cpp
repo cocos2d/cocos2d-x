@@ -295,7 +295,7 @@ void TestIsDirectoryExist::onEnter()
     FileUtilsDemo::onEnter();
     auto s = Director::getInstance()->getWinSize();
     auto util = FileUtils::getInstance();
-    int x = s.width/2, y = s.height/3;
+    int x = (int)s.width/2, y = (int)s.height/3;
 
     Label* label = nullptr;
     std::string dir;
@@ -1324,12 +1324,12 @@ void TestListFiles::onEnter()
     char cntBuffer[200] = { 0 };
     snprintf(cntBuffer, 200, "'fonts/' %zu, $defaultResourceRootPath %zu",listFonts.size(), list.size());
 
-    for(int i=0;i<listFonts.size();i++)
+    for(size_t i=0;i<listFonts.size();i++)
     {
         CCLOG("fonts/ %d: \t %s", i, listFonts[i].c_str());
     }
 
-    for(int i=0;i<list.size();i++)
+    for(size_t i=0;i<list.size();i++)
     {
         CCLOG("defResRootPath %d: \t %s", i, list[i].c_str());
     }

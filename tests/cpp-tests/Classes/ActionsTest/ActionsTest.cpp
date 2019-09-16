@@ -1425,7 +1425,7 @@ void ActionStacked::onEnter()
 
 void ActionStacked::addNewSpriteWithCoords(Vec2 p)
 {
-    int idx = CCRANDOM_0_1() * 1400 / 100;
+    int idx = int(CCRANDOM_0_1() * 1400 / 100);
     int x = (idx%5) * 85;
     int y = (idx/5) * 121;
     
@@ -2425,13 +2425,13 @@ void SequenceWithFinalInstant::onEnter()
     
     const auto action =
       cocos2d::Sequence::create
-      (cocos2d::DelayTime::create(0.05),
+      (cocos2d::DelayTime::create(0.05f),
        cocos2d::CallFunc::create(f),
        nullptr);
 
     _target->runAction(action);
     _manager->update(0);
-    _manager->update(0.05 - FLT_EPSILON);
+    _manager->update(0.05f - (float)FLT_EPSILON);
 
     if ( action->isDone() && !called )
         assert(false);

@@ -748,7 +748,7 @@ void UIButtonTestZoomScale::sliderEvent(Ref *pSender, Slider::EventType type)
         Slider* slider = dynamic_cast<Slider*>(pSender);
         int percent = slider->getPercent();
         Button* btn = (Button*)_uiLayer->getChildByName("button");
-        float zoomScale = percent * 0.01;
+        float zoomScale = percent * 0.01f;
         btn->setZoomScale(zoomScale);
         _displayValueLabel->setString(StringUtils::format("Zoom Scale: %f", zoomScale));
     }
@@ -1278,13 +1278,13 @@ bool UIButtonScale9ChangeSpriteFrame::init()
         sprite->setScale9Enabled(true);
         sprite->setCapInsets(Rect(32, 32, 32, 32));
         sprite->setContentSize(Size(96 * 1.5, 96));
-        sprite->setNormalizedPosition(Vec2(0.2, 0.5));
+        sprite->setNormalizedPosition(Vec2(0.2f, 0.5f));
         this->addChild(sprite);
         
         auto button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button->setScale9Enabled(true);
         button->setContentSize(Size(100, 50));
-        button->setNormalizedPosition(Vec2(0.6, 0.5));
+        button->setNormalizedPosition(Vec2(0.6f, 0.5f));
         button->setTitleText("Press me");
         addChild(button);
         

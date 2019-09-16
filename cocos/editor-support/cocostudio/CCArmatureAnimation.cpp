@@ -232,7 +232,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
         if(movementBoneData && movementBoneData->frameList.size() > 0)
         {
             _tweenList.push_back(tween);
-            movementBoneData->duration = _movementData->duration;
+            movementBoneData->duration = (float)_movementData->duration;
             tween->play(movementBoneData, durationTo, durationTween, loop, tweenEasing);
 
             tween->setProcessScale(_processScale);
@@ -441,8 +441,8 @@ void ArmatureAnimation::updateHandler()
         case ANIMATION_TO_LOOP_FRONT:
         {
             _loopType = ANIMATION_LOOP_FRONT;
-            _currentPercent = fmodf(_currentPercent, 1);
-            _currentFrame = _nextFrameIndex == 0 ? 0 : fmodf(_currentFrame, _nextFrameIndex);
+            _currentPercent = fmodf(_currentPercent, 1.0f);
+            _currentFrame = _nextFrameIndex == 0 ? 0.0f : fmodf(_currentFrame, (float)_nextFrameIndex);
             _nextFrameIndex = _durationTween > 0 ? _durationTween : 1;
 
             movementEvent(_armature, START, _movementID);
@@ -451,7 +451,7 @@ void ArmatureAnimation::updateHandler()
         default:
         {
             //_currentPercent = fmodf(_currentPercent, 1);
-            _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
+            _currentFrame = fmodf(_currentFrame, (float)_nextFrameIndex);
             _toIndex = 0;
 
             movementEvent(_armature, LOOP_COMPLETE, _movementID);

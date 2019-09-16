@@ -139,7 +139,7 @@ typedef struct _ccCArray {
 } ccCArray;
 
 /** Allocates and initializes a new C array with specified capacity */
-ccCArray* ccCArrayNew(ssize_t capacity);
+ccCArray* ccCArrayNew(size_t capacity);
 
 /** Frees C array after removing all remaining values. Silently ignores nil arr. */
 void ccCArrayFree(ccCArray *arr);

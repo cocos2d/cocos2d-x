@@ -720,7 +720,7 @@ namespace cocos2d { namespace network {
                 return 0;
             }
 
-            memcpy(buf, coTask._buf.data(), dataLen);
+            memcpy(buf, coTask._buf.data(), static_cast<size_t>(dataLen));
             coTask._buf.resize(0);
             return dataLen;
         };

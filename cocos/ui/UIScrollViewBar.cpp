@@ -49,7 +49,7 @@ _direction(direction),
 _upperHalfCircle(nullptr),
 _lowerHalfCircle(nullptr),
 _body(nullptr),
-_opacity(255 * DEFAULT_SCROLLBAR_OPACITY),
+_opacity(static_cast<uint8_t>(255 * DEFAULT_SCROLLBAR_OPACITY)),
 _marginFromBoundary(DEFAULT_MARGIN),
 _marginForLength(DEFAULT_MARGIN),
 _touching(false),
@@ -203,7 +203,7 @@ void ScrollViewBar::processAutoHide(float deltaTime)
     if(_autoHideRemainingTime <= _autoHideTime)
     {
         _autoHideRemainingTime = MAX(0, _autoHideRemainingTime);
-        ProtectedNode::setOpacity(_opacity * (_autoHideRemainingTime / _autoHideTime));
+        ProtectedNode::setOpacity(static_cast<uint8_t>(_opacity * (_autoHideRemainingTime / _autoHideTime)));
     }
 }
 

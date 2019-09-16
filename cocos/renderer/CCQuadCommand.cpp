@@ -63,7 +63,7 @@ void QuadCommand::reIndex(int indicesCount)
     if (indicesCount > __indexCapacity)
     {
         // if resizing is needed, get needed size plus 25%, but not bigger that max size
-        indicesCount *= 1.25;
+        indicesCount *= 1.25f;
         indicesCount = std::min(indicesCount, 65536);
 
         CCLOG("cocos2d: QuadCommand: resizing index size from [%d] to [%d]", __indexCapacity, indicesCount);

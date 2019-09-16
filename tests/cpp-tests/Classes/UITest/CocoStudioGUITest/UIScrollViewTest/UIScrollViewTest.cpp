@@ -294,7 +294,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         // Add the alert
         Text* alert = Text::create("ScrollView scroll to percent both direction without scroll bar","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -350,7 +350,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         // Add the alert
         Text* alert = Text::create("ScrollView scroll to percent both direction bounce","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));

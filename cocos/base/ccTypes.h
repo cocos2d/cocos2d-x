@@ -629,10 +629,10 @@ struct CC_DLL Viewport
     
 struct CC_DLL ScissorRect
 {
-    float x = 0;
-    float y = 0;
-    float width = 0;
-    float height = 0;
+    int x = 0;
+    int y = 0;
+    unsigned int width = 0;
+    unsigned int height = 0;
 };
 
 enum class ClearFlag : uint8_t

@@ -505,7 +505,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Widget::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
-        setPercent(getPercentWithBallPos(_touchBeganPosition));
+        setPercent((int)getPercentWithBallPos(_touchBeganPosition));
         percentChangedEvent(EventType::ON_SLIDEBALL_DOWN);
     }
     return pass;
@@ -514,7 +514,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
 void Slider::onTouchMoved(Touch *touch, Event* /*unusedEvent*/)
 {
     _touchMovePosition = touch->getLocation();
-    setPercent(getPercentWithBallPos(_touchMovePosition));
+    setPercent((int)getPercentWithBallPos(_touchMovePosition));
 }
 
 void Slider::onTouchEnded(Touch *touch, Event *unusedEvent)

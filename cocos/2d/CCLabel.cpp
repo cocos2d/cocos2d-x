@@ -160,7 +160,7 @@ public:
         auto displayedOpacity = _displayedOpacity;
         if(!_letterVisible)
         {
-            displayedOpacity = 0.0f;
+            displayedOpacity = 0;
         }
         Color4B color4(_displayedColor.r, _displayedColor.g, _displayedColor.b, displayedOpacity);
         // special opacity for premultiplied textures
@@ -285,7 +285,7 @@ Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::str
 
     if (ret && ret->setBMFontFilePath(bmfontFilePath,imageOffset))
     {
-        ret->setMaxLineWidth(maxLineWidth);
+        ret->setMaxLineWidth((float)maxLineWidth);
         ret->setString(text);
         ret->autorelease();
 
@@ -377,7 +377,7 @@ bool Label::initWithTTF(const TTFConfig& ttfConfig, const std::string& text, Tex
 {
     if (FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && setTTFConfig(ttfConfig))
     {
-        setMaxLineWidth(maxLineWidth);
+        setMaxLineWidth((float)maxLineWidth);
         setString(text);
         return true;
     }
@@ -795,7 +795,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
     if (std::abs(fontSize) < FLT_EPSILON) {
         FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
         if (bmFont) {
-            float originalFontSize = bmFont->getOriginalFontSize();
+            float originalFontSize = (float)bmFont->getOriginalFontSize();
             _bmFontSize = originalFontSize / CC_CONTENT_SCALE_FACTOR();
         }
     }
@@ -1248,7 +1248,7 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
             _currLabelEffect = LabelEffect::OUTLINE;
             _contentDirty = true;
         }
-        _outlineSize = outlineSize;
+        _outlineSize = (float)outlineSize;
     }
 }
 
@@ -1702,7 +1702,7 @@ void Label::updateEffectUniforms(BatchCommand &batch, TextureAtlas* textureAtlas
         if (_shadowEnabled) {
             Color3B oldColor = _realColor;
             uint8_t oldOPacity = _displayedOpacity;
-            _displayedOpacity = _shadowColor4F.a * (oldOPacity / 255.0f) * 255;
+            _displayedOpacity = static_cast<uint8_t>(_shadowColor4F.a * (oldOPacity / 255.0f) * 255);
             setColor(Color3B(_shadowColor4F));
             batch.shadowCommand.updateVertexBuffer(textureAtlas->getQuads(), (unsigned int)(textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad)) );
             batch.shadowCommand.init(_globalZOrder);
@@ -2199,7 +2199,7 @@ void Label::updateColor()
         quads = textureAtlas->getQuads();
         auto count = textureAtlas->getTotalQuads();
 
-        for (int index = 0; index < count; ++index)
+        for (size_t index = 0; index < count; ++index)
         {
             quads[index].bl.colors = color4;
             quads[index].br.colors = color4;
@@ -2277,7 +2277,7 @@ FontDefinition Label::_getFontDefinition() const
     if (_fontAtlas && !_fontAtlas->getFontName().empty()) fontName = _fontAtlas->getFontName();
 
     systemFontDef._fontName = fontName;
-    systemFontDef._fontSize = _systemFontSize;
+    systemFontDef._fontSize = (int)_systemFontSize;
     systemFontDef._alignment = _hAlignment;
     systemFontDef._vertAlignment = _vAlignment;
     systemFontDef._dimensions.width = _labelWidth;
@@ -2294,10 +2294,10 @@ FontDefinition Label::_getFontDefinition() const
     {
         systemFontDef._stroke._strokeEnabled = true;
         systemFontDef._stroke._strokeSize = _outlineSize;
-        systemFontDef._stroke._strokeColor.r = _effectColorF.r * 255;
-        systemFontDef._stroke._strokeColor.g = _effectColorF.g * 255;
-        systemFontDef._stroke._strokeColor.b = _effectColorF.b * 255;
-        systemFontDef._stroke._strokeAlpha = _effectColorF.a * 255;
+        systemFontDef._stroke._strokeColor.r = static_cast<uint8_t>(_effectColorF.r * 255);
+        systemFontDef._stroke._strokeColor.g = static_cast<uint8_t>(_effectColorF.g * 255);
+        systemFontDef._stroke._strokeColor.b = static_cast<uint8_t>(_effectColorF.b * 255);
+        systemFontDef._stroke._strokeAlpha = static_cast<uint8_t>(_effectColorF.a * 255);
     }
     else
     {

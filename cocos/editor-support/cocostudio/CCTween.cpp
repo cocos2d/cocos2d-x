@@ -118,7 +118,7 @@ void Tween::play(MovementBoneData *movementBoneData, int durationTo, int duratio
     bool difMovement = movementBoneData != _movementBoneData;
 
     setMovementBoneData(movementBoneData);
-    _rawDuration = _movementBoneData->duration;
+    _rawDuration = (int)_movementBoneData->duration;
 
     FrameData *nextKeyFrame = _movementBoneData->getFrameData(0);
     _tweenData->displayIndex = nextKeyFrame->displayIndex;
@@ -145,7 +145,7 @@ void Tween::play(MovementBoneData *movementBoneData, int durationTo, int duratio
     }
     else if (_movementBoneData->frameList.size() > 1)
     {
-        _durationTween = durationTween * _movementBoneData->scale;
+        _durationTween = durationTween * (int)_movementBoneData->scale;
 
         if (loop && _movementBoneData->delay != 0)
         {
@@ -265,7 +265,7 @@ void Tween::updateHandler()
         break;
         default:
         {
-            _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
+            _currentFrame = fmodf(_currentFrame, (float)_nextFrameIndex);
         }
         break;
         }
@@ -273,7 +273,7 @@ void Tween::updateHandler()
 
     if (_currentPercent < 1 && _loopType <= ANIMATION_TO_LOOP_BACK)
     {
-        _currentPercent = sin(_currentPercent * CC_HALF_PI);
+        _currentPercent = (float)sin(_currentPercent * CC_HALF_PI);
     }
 
     float percent  = _currentPercent;
@@ -382,10 +382,10 @@ FrameData *Tween::tweenNodeTo(float percent, FrameData *node)
 
 void Tween::tweenColorTo(float percent, FrameData *node)
 {
-    node->a = _from->a + percent * _between->a;
-    node->r = _from->r + percent * _between->r;
-    node->g = _from->g + percent * _between->g;
-    node->b = _from->b + percent * _between->b;
+    node->a = (int)(_from->a + percent * _between->a);
+    node->r = (int)(_from->r + percent * _between->r);
+    node->g = (int)(_from->g + percent * _between->g);
+    node->b = (int)(_from->b + percent * _between->b);
     _bone->updateColor();
 }
 
@@ -453,7 +453,7 @@ float Tween::updateFrameData(float currentPercent)
             //! Guaranteed to trigger frame event
             if(!from->strEvent.empty() && !_animation->isIgnoreFrameEvent())
             {
-                _animation->frameEvent(_bone, from->strEvent, from->frameID, playedTime);
+                _animation->frameEvent(_bone, from->strEvent, from->frameID, (int)playedTime);
             }
 
             if (playedTime == from->frameID || (_passLastFrame && _fromIndex == length-1))

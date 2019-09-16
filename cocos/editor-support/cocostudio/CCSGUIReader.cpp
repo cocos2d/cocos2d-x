@@ -766,7 +766,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
-        button->setTitleFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+        button->setTitleFontSize((float)DICTOOL->getIntValue_json(options, "fontSize"));
     }
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
@@ -888,7 +888,7 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(Widget*widge
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
-        label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
+        label->setFontSize((float)DICTOOL->getIntValue_json(options, "fontSize"));
     }
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
@@ -935,7 +935,7 @@ void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(Widget*
         const char* cmf_tp = tp_c.append(cmft).c_str();
         
         labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"),DICTOOL->getIntValue_json(options,"itemHeight"),DICTOOL->getStringValue_json(options, "startCharMap"));
-        labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR() ,DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(), DICTOOL->getStringValue_json(options, "startCharMap"));
+        labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp, (int)(DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR()) , (int)(DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR()), DICTOOL->getStringValue_json(options, "startCharMap"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -1018,7 +1018,7 @@ void WidgetPropertiesReader0250::setPropsForScrollViewFromJsonDictionary(Widget*
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
     scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
-	int direction = DICTOOL->getFloatValue_json(options, "direction");
+	int direction = (int)DICTOOL->getFloatValue_json(options, "direction");
     scrollView->setDirection((ScrollView::Direction)direction);
     scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, "bounceEnable"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -1172,7 +1172,7 @@ void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(Widget 
         loadingBar->loadTexture(imageFileName_tp);
     }
     loadingBar->setDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, "direction")));
-    loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
+    loadingBar->setPercent((float)DICTOOL->getIntValue_json(options, "percent"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
@@ -1295,9 +1295,9 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
                 SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
             }
         }else if (key == "designWidth"){
-            fileDesignWidth =  utils::atof(tpChildArray[i].GetValue(cocoLoader));
+            fileDesignWidth = (float)utils::atof(tpChildArray[i].GetValue(cocoLoader));
         }else if (key == "designHeight"){
-            fileDesignHeight = utils::atof(tpChildArray[i].GetValue(cocoLoader));
+            fileDesignHeight = (float)utils::atof(tpChildArray[i].GetValue(cocoLoader));
         }else if (key == "widgetTree"){
             
             if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {

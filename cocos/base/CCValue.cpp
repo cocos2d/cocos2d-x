@@ -583,7 +583,7 @@ float Value::asFloat() const
 
     if (_type == Type::STRING)
     {
-        return utils::atof(_field.strVal->c_str());
+        return (float)utils::atof(_field.strVal->c_str());
     }
 
     if (_type == Type::INTEGER)

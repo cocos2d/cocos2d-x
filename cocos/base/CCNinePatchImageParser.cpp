@@ -47,7 +47,7 @@ NinePatchImageParser::NinePatchImageParser(Image* image)
 ,_imageFrame(Rect::ZERO)
 ,_isRotated(false)
 {
-    this->_imageFrame = Rect(0,0,image->getWidth(), image->getHeight());
+    this->_imageFrame = Rect(0.0f, 0.0f, (float)image->getWidth(), (float)image->getHeight());
     CCASSERT(image->getPixelFormat()==backend::PixelFormat::RGBA8888,
              "unsupported format, currently only supports rgba8888");
 }
@@ -65,18 +65,18 @@ int NinePatchImageParser::getFrameHeight()const
 {
     if (_isRotated)
     {
-        return _imageFrame.size.width;
+        return (int)_imageFrame.size.width;
     }
-    return _imageFrame.size.height;
+    return (int)_imageFrame.size.height;
 }
 
 int NinePatchImageParser::getFrameWidth()const
 {
     if (_isRotated)
     {
-        return _imageFrame.size.height;
+        return (int)_imageFrame.size.height;
     }
-    return _imageFrame.size.width;
+    return (int)_imageFrame.size.width;
 }
 
 int NinePatchImageParser::getPixelOriginOffset(Direction direction)const
@@ -111,7 +111,7 @@ Vec2 NinePatchImageParser::parseHorizontalMargin()const
     int x1 = 0;
     int x2 = 0;
     
-    int length = _imageFrame.origin.x + this->getFrameWidth();
+    int length = int(_imageFrame.origin.x + this->getFrameWidth());
     for(int i = (int)_imageFrame.origin.x; i <= length ; i++)
     {
         unsigned char pixel = *(data + (i - (int)_imageFrame.origin.x) * 4 +3);
@@ -144,7 +144,7 @@ Vec2 NinePatchImageParser::parseVerticalMargin()const
     unsigned char lastPixel = *(data + 3);
     
     int length = (int)(_imageFrame.origin.y + this->getFrameHeight());
-    for(int i = _imageFrame.origin.y; i <= length; i++)
+    for(int i = (int)_imageFrame.origin.y; i <= length; i++)
     {
         unsigned char pixel = *(data + (i - (int)_imageFrame.origin.y) * imageWidth * 4 + 3);
         if(pixel != lastPixel)

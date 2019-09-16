@@ -333,17 +333,17 @@ ActionFadeFrame::~ActionFadeFrame()
 
 void ActionFadeFrame::setOpacity(int opacity)
 {
-	_opacity = opacity;
+	_opacity = (float)opacity;
 }
 
 int ActionFadeFrame::getOpacity()
 {
-	return _opacity;
+	return (int)_opacity;
 }
 
 ActionInterval* ActionFadeFrame::getAction(float fDuration)
 {
-	return this->getEasingAction(FadeTo::create(fDuration,_opacity));
+	return this->getEasingAction(FadeTo::create(fDuration,static_cast<uint8_t>(_opacity)));
 }
 
 

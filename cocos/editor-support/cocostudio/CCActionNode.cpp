@@ -204,7 +204,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     }
     float ActionNode::valueToFloat(const std::string& value)
     {
-        return utils::atof(value.c_str());
+        return (float)utils::atof(value.c_str());
     }
     
     void ActionNode::initWithBinary(CocoLoader *cocoLoader,

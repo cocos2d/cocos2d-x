@@ -477,7 +477,7 @@ void CommandBufferMTL::setLineWidth(float lineWidth)
 {
 }
 
-void CommandBufferMTL::setScissorRect(bool isEnabled, float x, float y, float width, float height)
+void CommandBufferMTL::setScissorRect(bool isEnabled, int x, int y, unsigned int width, unsigned int height)
 {
     MTLScissorRect scissorRect;
     if(isEnabled)

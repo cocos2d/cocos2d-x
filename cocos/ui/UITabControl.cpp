@@ -153,7 +153,7 @@ namespace ui
 
     void TabControl::setHeaderWidth(float headerWidth)
     {
-        _headerWidth = headerWidth;
+        _headerWidth = (int)headerWidth;
         if (_headerDockPlace == Dock::TOP || _headerDockPlace == Dock::BOTTOM)
             initTabHeadersPos(0);
         if (_headerDockPlace == Dock::LEFT || _headerDockPlace == Dock::RIGHT)
@@ -162,7 +162,7 @@ namespace ui
 
     void TabControl::setHeaderHeight(float headerHeight)
     {
-        _headerHeight = headerHeight;
+        _headerHeight = (int)headerHeight;
         if (_headerDockPlace == Dock::LEFT || _headerDockPlace == Dock::RIGHT)
             initTabHeadersPos(0);
         if (_headerDockPlace == Dock::TOP || _headerDockPlace == Dock::BOTTOM)
@@ -229,21 +229,21 @@ namespace ui
         switch (_headerDockPlace)
         {
         case Dock::TOP:
-            deltaPos.x = _headerWidth;
+            deltaPos.x = (float)_headerWidth;
             break;
         case Dock::LEFT:
-            originX = _headerWidth;
+            originX = (float)_headerWidth;
             originY = _contentSize.height - _headerHeight * .5f;
-            deltaPos.y = 0 - _headerHeight;
+            deltaPos.y = (float)(- _headerHeight);
             break;
         case Dock::BOTTOM:
-            originY = _headerHeight;
-            deltaPos.x = _headerWidth;
+            originY = (float)_headerHeight;
+            deltaPos.x = (float)_headerWidth;
             break;
         case Dock::RIGHT:
             originX = _contentSize.width - _headerWidth;
             originY = _contentSize.height - _headerHeight * .5f;
-            deltaPos.y = 0 - _headerHeight;
+            deltaPos.y = (float)- _headerHeight;
             break;
         default:
             break;

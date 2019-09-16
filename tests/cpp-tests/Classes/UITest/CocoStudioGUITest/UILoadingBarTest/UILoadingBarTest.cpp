@@ -129,8 +129,8 @@ void UILoadingBarTest_Left::update(float delta)
     }
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
     LoadingBar* loadingBarCopy = static_cast<LoadingBar*>(_uiLayer->getChildByTag(1));
-    loadingBar->setPercent(_count);
-    loadingBarCopy->setPercent(_count);
+    loadingBar->setPercent((float)_count);
+    loadingBarCopy->setPercent((float)_count);
 }
 
 void UILoadingBarTest_Left::printWidgetResources(cocos2d::Ref* sender)
@@ -189,7 +189,7 @@ void UILoadingBarTest_Right::update(float delta)
         _count = 0;
     }
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
-    loadingBar->setPercent(_count);
+    loadingBar->setPercent((float)_count);
 }
 
 // UILoadingBarTest_Left_Scale9
@@ -244,7 +244,7 @@ void UILoadingBarTest_Left_Scale9::update(float delta)
         _count = 0;
     }
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
-    loadingBar->setPercent(_count);
+    loadingBar->setPercent((float)_count);
 }
 
 // UILoadingBarTest_Right_Scale9
@@ -300,7 +300,7 @@ void UILoadingBarTest_Right_Scale9::update(float delta)
         _count = 0;
     }
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
-    loadingBar->setPercent(_count);
+    loadingBar->setPercent((float)_count);
 }
 
 // UILoadingBarTest_Scale9_State_Change
@@ -443,7 +443,7 @@ void UILoadingBarReloadTexture::update(float delta)
         _count = 0;
     }
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
-    loadingBar->setPercent(_count);
+    loadingBar->setPercent((float)_count);
 }
 
 
@@ -479,7 +479,7 @@ bool UILoadingBarIssue12249::init()
         // Create the loading bar
         LoadingBar* loadingBar = LoadingBar::create("cocosui/sliderProgress.png");
         loadingBar->setScale9Enabled(true);
-        loadingBar->setContentSize(Size(200, loadingBar->getContentSize().height * 1.5));
+        loadingBar->setContentSize(Size(200, loadingBar->getContentSize().height * 1.5f));
         loadingBar->setTag(0);
         loadingBar->setPosition(Vec2(widgetSize.width / 2.0f,
                                      widgetSize.height / 2.0f + loadingBar->getContentSize().height / 4.0f));
@@ -487,7 +487,7 @@ bool UILoadingBarIssue12249::init()
         LoadingBar* loadingBarCopy = LoadingBar::create();
         loadingBarCopy->setScale9Enabled(true);
         loadingBarCopy->loadTexture("cocosui/sliderProgress.png");
-        loadingBarCopy->setContentSize(Size(200, loadingBarCopy->getContentSize().height * 1.5));
+        loadingBarCopy->setContentSize(Size(200, loadingBarCopy->getContentSize().height * 1.5f));
         loadingBarCopy->setTag(1);
         loadingBarCopy->setPosition(loadingBar->getPosition()
                                     + Vec2(0, -40));
@@ -532,8 +532,8 @@ void UILoadingBarIssue12249::update(float delta)
     }
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
     LoadingBar* loadingBarCopy = static_cast<LoadingBar*>(_uiLayer->getChildByTag(1));
-    loadingBar->setPercent(_count);
-    loadingBarCopy->setPercent(_count);
+    loadingBar->setPercent((float)_count);
+    loadingBarCopy->setPercent((float)_count);
 }
 
 // UILoadingBarTest_Direction

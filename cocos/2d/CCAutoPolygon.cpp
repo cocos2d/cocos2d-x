@@ -166,7 +166,7 @@ float PolygonInfo::getArea() const
     float area = 0;
     V3F_C4B_T2F *verts = triangles.verts;
     unsigned short *indices = triangles.indices;
-    for(int i = 0; i < triangles.indexCount; i+=3)
+    for(unsigned int i = 0; i < triangles.indexCount; i+=3)
     {
         auto A = verts[indices[i]].vertices;
         auto B = verts[indices[i+1]].vertices;
@@ -267,8 +267,8 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
     int stepy = 0;
     int prevx = 0;
     int prevy = 0;
-    int startx = start.x;
-    int starty = start.y;
+    int startx = (int)start.x;
+    int starty = (int)start.y;
     int curx = startx;
     int cury = starty;
     unsigned int count = 0;
@@ -526,7 +526,7 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     ClipperLib::PolyTree out;
     for(const auto& pt : points)
     {
-        subj << ClipperLib::IntPoint(pt.x* PRECISION, pt.y * PRECISION);
+        subj << ClipperLib::IntPoint(static_cast<ClipperLib::cInt>(pt.x* PRECISION), static_cast<ClipperLib::cInt>(pt.y * PRECISION));
     }
     ClipperLib::ClipperOffset co;
     co.AddPath(subj, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
@@ -551,9 +551,9 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     //create the clipping rect
     ClipperLib::Path clamp;
     clamp.push_back(ClipperLib::IntPoint(0, 0));
-    clamp.push_back(ClipperLib::IntPoint(rect.size.width/_scaleFactor * PRECISION, 0));
-    clamp.push_back(ClipperLib::IntPoint(rect.size.width/_scaleFactor * PRECISION, rect.size.height/_scaleFactor * PRECISION));
-    clamp.push_back(ClipperLib::IntPoint(0, rect.size.height/_scaleFactor * PRECISION));
+    clamp.push_back(ClipperLib::IntPoint(static_cast<ClipperLib::cInt>(rect.size.width/_scaleFactor * PRECISION), static_cast<ClipperLib::cInt>(0)));
+    clamp.push_back(ClipperLib::IntPoint(static_cast<ClipperLib::cInt>(rect.size.width/_scaleFactor * PRECISION), static_cast<ClipperLib::cInt>(rect.size.height/_scaleFactor * PRECISION)));
+    clamp.push_back(ClipperLib::IntPoint(static_cast<ClipperLib::cInt>(0), static_cast<ClipperLib::cInt>(rect.size.height/_scaleFactor * PRECISION)));
     cl.AddPath(clamp, ClipperLib::ptClip, true);
     cl.Execute(ClipperLib::ctIntersection, out);
     
@@ -614,7 +614,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
             if(found)
             {
                 //if we found the same vertex, don't add to verts, but use the same vertex with indices
-                indices.push_back(j);
+                indices.push_back(static_cast<unsigned short>(j));
                 idx++;
             }
             else
@@ -668,8 +668,8 @@ void AutoPolygon::calculateUV(const Rect& rect, V3F_C4B_T2F* verts, ssize_t coun
      */
     
     CCASSERT(_width && _height, "please specify width and height for this AutoPolygon instance");
-    float texWidth  = _width;
-    float texHeight = _height;
+    auto texWidth  = _width;
+    auto texHeight = _height;
 
     auto end = &verts[count];
     for(auto i = verts; i != end; ++i)
@@ -690,7 +690,7 @@ Rect AutoPolygon::getRealRect(const Rect& rect)
     {
         //if the instance doesn't have width and height, then the whole operation is kaput
         CCASSERT(_height && _width, "Please specify a width and height for this instance before using its functions");
-        realRect = Rect(0,0, _width, _height);
+        realRect = Rect(0.0f,0.0f, (float)_width, (float)_height);
     }
     else{
         //rect is specified, so convert to real rect

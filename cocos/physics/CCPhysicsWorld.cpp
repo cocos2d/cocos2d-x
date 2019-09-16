@@ -202,7 +202,7 @@ static void DrawCircle(cpVect p, cpFloat /*a*/, cpFloat r, cpSpaceDebugColor out
     
     for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
     {
-        float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
+        float angle = (float)(i * M_PI) / (float)CIRCLE_SEG_NUM * 2.0f;
         Vec2 d(radius * cosf(angle), radius * sinf(angle));
         seg[i] = centre + d;
     }

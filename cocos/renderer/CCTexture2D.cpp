@@ -484,7 +484,7 @@ bool Texture2D::initWithString(const char *text, const std::string& fontName, fl
    
     
     tempDef._fontName      = fontName;
-    tempDef._fontSize      = fontSize;
+    tempDef._fontSize      = (int)fontSize;
     tempDef._dimensions    = dimensions;
     tempDef._alignment     = hAlignment;
     tempDef._vertAlignment = vAlignment;
@@ -576,8 +576,10 @@ bool Texture2D::initWithBackendTexture(backend::TextureBackend *texture)
     CC_SAFE_RELEASE(_texture);
     _texture = dynamic_cast<backend::Texture2DBackend*>(texture);
     CC_ASSERT(_texture);
-    _pixelsWide = _contentSize.width = _texture->getWidth();
-    _pixelsHigh = _contentSize.height = _texture->getHeight();
+    _contentSize.width = (float)_texture->getWidth();
+    _contentSize.height = (float)_texture->getHeight();
+    _pixelsWide = _texture->getWidth();
+    _pixelsHigh = _texture->getHeight();
     return true;
 }
 

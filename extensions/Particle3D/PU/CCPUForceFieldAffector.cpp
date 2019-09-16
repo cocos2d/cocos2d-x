@@ -288,7 +288,7 @@ void PUForceFieldAffector::preUpdateAffector( float deltaTime )
             _movementFrequencyCount -= _movementFrequency;
         }
 
-        _displacement = sin(2.0f * M_PI * _movementFrequencyCount/_movementFrequency) * _movement;
+        _displacement = (float)sin(2.0f * M_PI * _movementFrequencyCount/_movementFrequency) * _movement;
         _forceField.setForceFieldPositionBase(_basePosition + _displacement);
     }
 }

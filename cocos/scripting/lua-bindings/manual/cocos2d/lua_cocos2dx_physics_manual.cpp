@@ -552,7 +552,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
             CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
-        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgePolygon(arg0, arg1, arg2, arg3);
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgePolygon(arg0, arg1, arg2, (float)arg3);
         CC_SAFE_DELETE_ARRAY(arg0);
         do {
                 if (nullptr != ret)
@@ -672,7 +672,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
             CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
-        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgeChain(arg0, arg1, arg2, arg3);
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgeChain(arg0, arg1, arg2, (float)arg3);
         CC_SAFE_DELETE_ARRAY(arg0);
         do {
             if (nullptr != ret)
@@ -1051,7 +1051,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateMoment(lua_State* tolua_S)
             CC_SAFE_DELETE_ARRAY(arg1);
             return 0;
         }
-        double ret = cocos2d::PhysicsShapePolygon::calculateMoment(arg0, arg1, arg2);
+        double ret = cocos2d::PhysicsShapePolygon::calculateMoment((float)arg0, arg1, arg2);
         CC_SAFE_DELETE_ARRAY(arg1);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
@@ -1074,7 +1074,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_calculateMoment(lua_State* tolua_S)
             CC_SAFE_DELETE_ARRAY(arg1);
             return 0;
         }
-        double ret = cocos2d::PhysicsShapePolygon::calculateMoment(arg0, arg1, arg2, arg3);
+        double ret = cocos2d::PhysicsShapePolygon::calculateMoment((float)arg0, arg1, arg2, arg3);
         CC_SAFE_DELETE_ARRAY(arg1);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
@@ -1397,7 +1397,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_create(lua_State* tolua_S)
             CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
-        cocos2d::PhysicsShapeEdgePolygon* ret = cocos2d::PhysicsShapeEdgePolygon::create(arg0, arg1, arg2, arg3);
+        cocos2d::PhysicsShapeEdgePolygon* ret = cocos2d::PhysicsShapeEdgePolygon::create(arg0, arg1, arg2, (float)arg3);
         CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapeEdgePolygon>(tolua_S, "cc.PhysicsShapeEdgePolygon",(cocos2d::PhysicsShapeEdgePolygon*)ret);
         return 1;
@@ -1484,7 +1484,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_create(lua_State* tolua_S)
             CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
-        cocos2d::PhysicsShapeEdgeChain* ret = cocos2d::PhysicsShapeEdgeChain::create(arg0, arg1, arg2, arg3);
+        cocos2d::PhysicsShapeEdgeChain* ret = cocos2d::PhysicsShapeEdgeChain::create(arg0, arg1, arg2, (float)arg3);
         CC_SAFE_DELETE_ARRAY(arg0);
         object_to_luaval<cocos2d::PhysicsShapeEdgeChain>(tolua_S, "cc.PhysicsShapeEdgeChain",(cocos2d::PhysicsShapeEdgeChain*)ret);
         return 1;

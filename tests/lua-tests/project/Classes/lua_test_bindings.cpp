@@ -567,7 +567,7 @@ int lua_cocos2dx_DrawNode3D_drawCube(lua_State* L)
             goto tolua_lerror;
 #endif
         size_t size = lua_objlen(L, 2);
-        for (int i = 0; i < size; i++)
+        for (size_t i = 0; i < size; i++)
         {
             lua_pushnumber(L, i + 1);
             lua_gettable(L, 2);

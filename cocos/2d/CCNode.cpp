@@ -1970,7 +1970,7 @@ void Node::setOpacity(uint8_t opacity)
 
 void Node::updateDisplayedOpacity(uint8_t parentOpacity)
 {
-    _displayedOpacity = _realOpacity * parentOpacity/255.0;
+    _displayedOpacity = static_cast<uint8_t>(_realOpacity * parentOpacity/255.0);
     updateColor();
     
     if (_cascadeOpacityEnabled)
@@ -2055,9 +2055,9 @@ void Node::setColor(const Color3B& color)
 
 void Node::updateDisplayedColor(const Color3B& parentColor)
 {
-    _displayedColor.r = _realColor.r * parentColor.r/255.0;
-    _displayedColor.g = _realColor.g * parentColor.g/255.0;
-    _displayedColor.b = _realColor.b * parentColor.b/255.0;
+    _displayedColor.r = static_cast<uint8_t>(_realColor.r * parentColor.r/255.0);
+    _displayedColor.g = static_cast<uint8_t>(_realColor.g * parentColor.g/255.0);
+    _displayedColor.b = static_cast<uint8_t>(_realColor.b * parentColor.b/255.0);
     updateColor();
     
     if (_cascadeColorEnabled)

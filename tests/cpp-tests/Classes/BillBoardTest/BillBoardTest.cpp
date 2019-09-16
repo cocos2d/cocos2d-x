@@ -137,7 +137,7 @@ BillBoardTest::BillBoardTest()
         auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
         billboard->setScale(0.5f);
         billboard->setPosition3D(Vec3(0.0f, 0.0f,  CCRANDOM_MINUS1_1() * 150.0f));
-        billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        billboard->setOpacity(static_cast<uint8_t>(CCRANDOM_0_1() * 128) + 128);
         _billboards.push_back(billboard);
         layer->addChild(billboard);
         _layerBillBoard->addChild(layer);
@@ -179,9 +179,9 @@ BillBoardTest::BillBoardTest()
 
     TTFConfig ttfConfig("fonts/arial.ttf", 16);
     auto label1 = Label::createWithTTF(ttfConfig,"rotate+");
-    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,10));
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,10.0f));
     auto label2 = Label::createWithTTF(ttfConfig,"rotate-");
-    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,-10));
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,-10.0f));
     auto menu = Menu::create(menuItem1, menuItem2, nullptr);
     menu->setPosition(Vec2::ZERO);
     menuItem1->setPosition( Vec2( s.width-80, VisibleRect::top().y-160) );
@@ -241,7 +241,7 @@ void BillBoardTest::addNewBillBoardWithCoords(Vec3 p)
         auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
         billboard->setScale(0.5f);
         billboard->setPosition3D(Vec3(p.x, p.y, -150.0f + 30 * i));
-        billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        billboard->setOpacity(static_cast<uint8_t>(CCRANDOM_0_1() * 128) + 128);
         
         _layerBillBoard->addChild(billboard);
         _billboards.push_back(billboard);
@@ -269,7 +269,7 @@ void BillBoardTest::addNewAniBillBoardWithCoords(Vec3 p)
 
         auto action = Animate::create(animation);
         billboardAni->runAction(RepeatForever::create(action));
-        billboardAni->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        billboardAni->setOpacity(static_cast<uint8_t>(CCRANDOM_0_1() * 128) + 128);
         _billboards.push_back(billboardAni);
     }
 }

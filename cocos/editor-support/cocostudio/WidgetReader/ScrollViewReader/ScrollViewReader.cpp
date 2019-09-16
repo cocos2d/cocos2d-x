@@ -115,7 +115,7 @@ namespace cocostudio
         float innerWidth = DICTOOL->getFloatValue_json(options, P_InnerWidth, 200);
         float innerHeight = DICTOOL->getFloatValue_json(options, P_InnerHeight, 200);
         scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
-        int direction = DICTOOL->getFloatValue_json(options, P_Direction, 1);
+        int direction = (int)DICTOOL->getFloatValue_json(options, P_Direction, 1);
         scrollView->setDirection((ScrollView::Direction)direction);
         scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, P_BounceEnable));
 
@@ -175,19 +175,19 @@ namespace cocostudio
             }
             else if (name == "Scale9OriginX")
             {
-                capInsets.origin.x = atof(value.c_str());
+                capInsets.origin.x = (float)atof(value.c_str());
             }
             else if (name == "Scale9OriginY")
             {
-                capInsets.origin.y = atof(value.c_str());
+                capInsets.origin.y = (float)atof(value.c_str());
             }
             else if (name == "Scale9Width")
             {
-                capInsets.size.width = atof(value.c_str());
+                capInsets.size.width = (float)atof(value.c_str());
             }
             else if (name == "Scale9Height")
             {
-                capInsets.size.height = atof(value.c_str());
+                capInsets.size.height = (float)atof(value.c_str());
             }
             else if (name == "ScrollDirectionType")
             {
@@ -218,7 +218,7 @@ namespace cocostudio
             }
             else if (name.compare("BarAutoHideTime") == 0)
             {
-                scrollbarAutoHideTime = atof(value.c_str());
+                scrollbarAutoHideTime = (float)atof(value.c_str());
             }
             attribute = attribute->Next();
         }
@@ -239,11 +239,11 @@ namespace cocostudio
 
                     if (name == "Width")
                     {
-                        innerSize.width = atof(value.c_str());
+                        innerSize.width = (float)atof(value.c_str());
                     }
                     else if (name == "Height")
                     {
-                        innerSize.height = atof(value.c_str());
+                        innerSize.height = (float)atof(value.c_str());
                     }
 
                     attribute = attribute->Next();
@@ -260,11 +260,11 @@ namespace cocostudio
 
                     if (name == "X")
                     {
-                        scale9Size.width = atof(value.c_str());
+                        scale9Size.width = (float)atof(value.c_str());
                     }
                     else if (name == "Y")
                     {
-                        scale9Size.height = atof(value.c_str());
+                        scale9Size.height = (float)atof(value.c_str());
                     }
 
                     attribute = attribute->Next();
@@ -355,11 +355,11 @@ namespace cocostudio
 
                     if (name == "ScaleX")
                     {
-                        colorVector.x = atof(value.c_str());
+                        colorVector.x = (float)atof(value.c_str());
                     }
                     else if (name == "ScaleY")
                     {
-                        colorVector.y = atof(value.c_str());
+                        colorVector.y = (float)atof(value.c_str());
                     }
 
                     attribute = attribute->Next();

@@ -443,7 +443,7 @@ void SpriteBatchNode::increaseAtlasCapacity()
     }
 }
 
-void SpriteBatchNode::reserveCapacity(ssize_t newCapacity)
+void SpriteBatchNode::reserveCapacity(size_t newCapacity)
 {
     if (newCapacity <= _textureAtlas->getCapacity())
         return;
@@ -685,7 +685,7 @@ void SpriteBatchNode::setTexture(Texture2D *texture)
 // SpriteSheet Extension
 //implementation SpriteSheet (TMXTiledMapExtension)
 
-void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, ssize_t index)
+void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, size_t index)
 {
     CCASSERT( sprite != nullptr, "Argument must be non-nullptr");
     CCASSERT( dynamic_cast<Sprite*>(sprite), "CCSpriteBatchNode only supports Sprites as children");
@@ -710,7 +710,7 @@ void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, ssize_t index)
     sprite->updateTransform();
 }
 
-void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, ssize_t index)
+void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, size_t index)
 {
     CCASSERT(sprite != nullptr, "Argument must be non-nil");
     CCASSERT(dynamic_cast<Sprite*>(sprite) != nullptr, "CCSpriteBatchNode only supports Sprites as children");
@@ -745,7 +745,7 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
     auto it = _descendants.begin();
     for (auto itEnd = _descendants.end(); it != itEnd; ++it)
     {
-        if((*it)->getAtlasIndex() >= z)
+        if((*it)->getAtlasIndex() >= (unsigned int)z)
             break;
     }
 

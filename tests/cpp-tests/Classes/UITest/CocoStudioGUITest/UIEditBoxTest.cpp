@@ -57,7 +57,7 @@ bool UIEditBoxTest::init()
         addChild(_TTFShowEditReturn);
         
         
-        auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1);
+        auto editBoxSize = Size(visibleSize.width - 100.0f, visibleSize.height * 0.1f);
         
         // top
         std::string pNormalSprite = "extensions/green_edit.png";
