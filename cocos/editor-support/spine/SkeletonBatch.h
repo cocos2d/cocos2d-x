@@ -62,7 +62,6 @@ namespace spine {
         cocos2d::backend::ProgramState      *   _programState = nullptr;
         cocos2d::backend::UniformLocation       _locMVP;
         cocos2d::backend::UniformLocation       _locTexture;
-        cocos2d::backend::VertexLayout          _vertexLayout;
 		
 		// pool of commands
 		std::vector<cocos2d::TrianglesCommand*> _commandsPool;

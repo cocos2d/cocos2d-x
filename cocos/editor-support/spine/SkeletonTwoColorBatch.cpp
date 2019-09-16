@@ -89,7 +89,6 @@ namespace {
 
 
     std::shared_ptr<backend::ProgramState>  __twoColorProgramState = nullptr;
-    backend::VertexLayout                   __vertexLayout;
     backend::UniformLocation                __locPMatrix;
     backend::UniformLocation                __locTexture;
 
@@ -104,11 +103,13 @@ namespace {
         __locPMatrix = programState->getUniformLocation("u_PMatrix");
         __locTexture = programState->getUniformLocation("u_texture");
 
-        __vertexLayout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(spine::V3F_C4B_C4B_T2F, position), false);
-        __vertexLayout.setAttribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color), true);
-        __vertexLayout.setAttribute("a_color2", 2, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color2), true);
-        __vertexLayout.setAttribute("a_texCoords", 3, backend::VertexFormat::FLOAT2, offsetof(spine::V3F_C4B_C4B_T2F, texCoords), false);
-        __vertexLayout.setLayout(sizeof(spine::V3F_C4B_C4B_T2F), backend::VertexStepMode::VERTEX);
+        auto layout = programState->getVertexLayout();
+
+        layout->setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(spine::V3F_C4B_C4B_T2F, position), false);
+        layout->setAttribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color), true);
+        layout->setAttribute("a_color2", 2, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color2), true);
+        layout->setAttribute("a_texCoords", 3, backend::VertexFormat::FLOAT2, offsetof(spine::V3F_C4B_C4B_T2F, texCoords), false);
+        layout->setLayout(sizeof(spine::V3F_C4B_C4B_T2F));
 
         __twoColorProgramState = std::shared_ptr<backend::ProgramState>(programState);
     }
@@ -174,7 +175,6 @@ void TwoColorTrianglesCommand::updateCommandPipelineDescriptor()
     _locPMatrix                             = __locPMatrix;
     _locTexture                             = __locTexture;
     _pipelineDescriptor.programState        = _programState;
-    _pipelineDescriptor.vertexLayout        = __vertexLayout;
 }
 
 TwoColorTrianglesCommand::~TwoColorTrianglesCommand() 

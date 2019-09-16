@@ -57,11 +57,14 @@ void SkeletonBatch::destroyInstance () {
 SkeletonBatch::SkeletonBatch () {
     
     _programState = new backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
-	
-    _vertexLayout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
-    _vertexLayout.setAttribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
-    _vertexLayout.setAttribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
-    _vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
+
+    auto vertexLayout = _programState->getVertexLayout();
+
+    vertexLayout->setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
+    vertexLayout->setAttribute("a_color", 2, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+    vertexLayout->setAttribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
+    vertexLayout->setLayout(sizeof(_vertices[0]));
+
 
     _locMVP     = _programState->getUniformLocation("u_MVPMatrix");
     _locTexture = _programState->getUniformLocation("u_texture");
@@ -174,7 +177,6 @@ cocos2d::TrianglesCommand* SkeletonBatch::nextFreeCommand() {
     {
         CCASSERT(_programState, "programState should not be null");
         pipelineDescriptor.programState = _programState->clone();
-        pipelineDescriptor.vertexLayout = _vertexLayout;
     }
     return command;
 }
