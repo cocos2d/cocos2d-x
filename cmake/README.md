@@ -60,7 +60,7 @@ cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos
 open Cocos2d-x.xcodeproj
 ```
 
-The parameter `-DCMAKE_OSX_SYSROOT=iphoneos` is optional, it generates a build for running on the iOS device. If you want to run in the simulator, please add `-DCMAKE_OSX_SYSROOT=iphonesimulator`, but remember you can't run a metal-support app in the simulator until Xcode 11.
+The parameter `-DCMAKE_OSX_SYSROOT=iphoneos` is optional, it generates a build for running on the iOS device. If you want to run in the simulator, please add `-DCMAKE_OSX_SYSROOT=iphonesimulator`, but remember you can't run a metal-support app in the simulator until Xcode 11 and MacOS 10.15.
 
 if you want to sign iOS app in CMake, you will need to fill development team ID into `set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "")`, or select to sign in Xcode after project files generated.
 
