@@ -87,7 +87,7 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
 -(id)init:(void*)videoPlayer
 {
     if (self = [super init]) {
-        self.playerController = [AVPlayerViewController new];
+        self.playerController = [[AVPlayerViewController new] autorelease];
 
         [self setRepeatEnabled:FALSE];
         [self showPlaybackControls:TRUE];
