@@ -82,7 +82,6 @@ typedef struct
     int width;
     bool hasAlpha;
     bool isPremultipliedAlpha;
-    float        strokeSize;
     unsigned char* data;
 } tImageInfo;
 
