@@ -83,10 +83,6 @@ typedef struct
     bool hasAlpha;
     bool isPremultipliedAlpha;
     float        strokeSize;
-    float        tintColorR;
-    float        tintColorG;
-    float        tintColorB;
-    float        tintColorA;
     unsigned char* data;
 } tImageInfo;
 
@@ -267,8 +263,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
         }
         
         // alignment
-        NSTextAlignment textAlign = FontUtils::_calculateTextAlignment(align);
-        
+        NSTextAlignment textAlign = FontUtils::_calculateTextAlignment(align)
         NSMutableParagraphStyle *paragraphStyle = FontUtils::_calculateParagraphStyle(enableWrap, overflow);
         [paragraphStyle setAlignment:textAlign];
         
@@ -284,24 +279,18 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 
         NSSize realDimensions;
         
-        if (overflow == 2) {
+        if (overflow == 2)
             realDimensions = _calculateRealSizeForString(&stringWithAttributes, font, dimensions, enableWrap);
-        } else {
-            realDimensions = _calculateStringSize(stringWithAttributes, font, &dimensions, enableWrap, overflow);
-        }
-        
+        else
+            realDimensions = _calculateStringSize(stringWithAttributes, font, &dimensions, enableWrap, overflow);        
 
         // Mac crashes if the width or height is 0
         CC_BREAK_IF(realDimensions.width <= 0 || realDimensions.height <= 0);
-        
        
-        if(dimensions.width <= 0.f) {
+        if(dimensions.width <= 0.f)
             dimensions.width = realDimensions.width;
-        }
-        if (dimensions.height <= 0.f) {
-            dimensions.height = realDimensions.height;
-        }
-      
+        if (dimensions.height <= 0.f)
+            dimensions.height = realDimensions.height;      
         
         //Alignment
         CGFloat xPadding = FontUtils::_calculateTextDrawStartWidth(align, realDimensions, dimensions);
@@ -329,20 +318,8 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
         NSGraphicsContext* g = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:g];
-
         [stringWithAttributes drawInRect:textRect];
-
         [NSGraphicsContext restoreGraphicsState];
-
-//        [[NSGraphicsContext currentContext] setShouldAntialias:NO];
-//
-//        NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
-//        [image lockFocus];
-//        // patch for mac retina display and lableTTF
-//        [[NSAffineTransform transform] set];
-//        [stringWithAttributes drawInRect:textRect];
-//        NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
-//        [image unlockFocus];
 
         auto data = (unsigned char*) [offscreenRep bitmapData];  //Use the same buffer to improve the performance.
 
@@ -358,8 +335,6 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
             info->isPremultipliedAlpha = true;
             ret = true;
         }
-//        [bitmap release];
-//        [image release];
     } while (0);
     return ret;
 }
@@ -371,10 +346,6 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         tImageInfo info = {0};
         info.width = textDefinition._dimensions.width;
         info.height = textDefinition._dimensions.height;
-        info.tintColorR             = textDefinition._fontFillColor.r / 255.0f;
-        info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;
-        info.tintColorB             = textDefinition._fontFillColor.b / 255.0f;
-        info.tintColorA             = textDefinition._fontAlpha / 255.0f;
         
         if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, &textDefinition._fontFillColor, textDefinition._fontAlpha, textDefinition._enableWrap, textDefinition._overflow))
         {
