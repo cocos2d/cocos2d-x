@@ -491,7 +491,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
         headersDef = (type == GL_VERTEX_SHADER ?
             "#version 100\n precision highp float;\n precision highp int;\n" :
-            "#version 100\n precision mediump float;\n precision mediump int;\n");
+            "#version 100\n precision highp float;\n precision highp int;\n");
 #elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         headersDef = (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision mediump int;\n");
 #endif
