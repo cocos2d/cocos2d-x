@@ -262,7 +262,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
         }
         
         // alignment
-        NSTextAlignment textAlign = FontUtils::_calculateTextAlignment(align)
+        NSTextAlignment textAlign = FontUtils::_calculateTextAlignment(align);
         NSMutableParagraphStyle *paragraphStyle = FontUtils::_calculateParagraphStyle(enableWrap, overflow);
         [paragraphStyle setAlignment:textAlign];
         
