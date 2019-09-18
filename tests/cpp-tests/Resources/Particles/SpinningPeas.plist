@@ -103,6 +103,6 @@
 	<key>tangentialAccelVariance</key>
 	<real>0</real>
 	<key>textureFileName</key>
-	<string>particle.png</string>
+	<string>pea.png</string>
 </dict>
 </plist>
