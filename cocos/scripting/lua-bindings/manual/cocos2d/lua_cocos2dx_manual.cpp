@@ -7343,7 +7343,7 @@ static int lua_cocos2dx_backend_ProgramState_getUniformLocation(lua_State* tolua
 
                 if (!ok) { break; }
                 cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
-                uniformLocation_to_luaval(tolua_S, ret);
+                uniformLocation_to_luaval(tolua_S, ret); 
                 return 1;
             }
             else if (lua_isnumber(tolua_S, -1))
@@ -7396,23 +7396,23 @@ static int lua_cocos2dx_ProgramState_setUniform(lua_State *tolua_S)
     {
         cocos2d::backend::UniformLocation location;
         
-        if (lua_isstring(tolua_S, -2))
+        if (lua_isstring(tolua_S, 2))
         {
-            location = self->getUniformLocation(lua_tostring(tolua_S, -2));
+            location = self->getUniformLocation(lua_tostring(tolua_S, 2));
         } 
-        else if (lua_istable(tolua_S, -2))
+        else if (lua_istable(tolua_S, 2))
         {
-            ok &= luaval_to_uniformLocation(tolua_S, -2, location, "lua_cocos2dx_ProgramState_setUniform");
+            ok &= luaval_to_uniformLocation(tolua_S, 2, location, "ccb.ProgramState:setUniform");
         }
 
-        if (ok & lua_istable(tolua_S, -1))
+        if (ok & lua_istable(tolua_S, 3))
         {
-            int len = lua_objlen(tolua_S, -1);
+            int len = lua_objlen(tolua_S, 3);
             std::vector<uint8_t> buffer(len);
 
             for (int i = 0; i < len; i++)
             {
-                lua_rawgeti(tolua_S, -1, i + 1);
+                lua_rawgeti(tolua_S, 3, i + 1);
                 buffer[i] = lua_tointeger(tolua_S, -1);
                 lua_pop(tolua_S, 1);
             }
