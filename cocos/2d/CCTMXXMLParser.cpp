@@ -416,9 +416,9 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
     {
         TMXTilesetInfo* tileset = tmxMapInfo->getTilesets().back();
         
-        double tileOffsetX = attributeDict["x"].asDouble();
+        float tileOffsetX = attributeDict["x"].asFloat();
         
-        double tileOffsetY = attributeDict["y"].asDouble();
+        float tileOffsetY = attributeDict["y"].asFloat();
         
         tileset->_tileOffset = Vec2(tileOffsetX, tileOffsetY);
         

@@ -77,6 +77,7 @@ public:
      * @param yy The y coordinate.
      */
     Vec2(float xx, float yy);
+    Vec2(int xx, int yy) : Vec2((float)xx, (float)yy) {}
 
     /**
      * Constructs a new vector from the values in the specified array.

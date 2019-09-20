@@ -264,7 +264,7 @@ void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         Vec2::ZERO,
         Vec2(size.width, 0),
         Vec2(size.width, size.height),
-        Vec2(0, size.height)
+        Vec2(0.0f, size.height)
     };
     _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 }

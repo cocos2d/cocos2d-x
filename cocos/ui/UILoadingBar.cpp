@@ -101,7 +101,7 @@ void LoadingBar::initRenderer()
     _barRenderer = Scale9Sprite::create();
     _barRenderer->setScale9Enabled(false);
     addProtectedChild(_barRenderer, BAR_RENDERER_Z, -1);
-    _barRenderer->setAnchorPoint(Vec2(0.0,0.5));
+    _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
 }
 
     
@@ -117,7 +117,7 @@ void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
     {
         case Direction::LEFT:
             _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
-            _barRenderer->setPosition(Vec2(0,_contentSize.height*0.5f));
+            _barRenderer->setPosition(Vec2(0.0f,_contentSize.height*0.5f));
             break;
         case Direction::RIGHT:
             _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));

@@ -93,13 +93,13 @@ void EditBoxImplCommon::initInactiveLabels(const Size& size)
     const char* pDefaultFontName = this->getNativeDefaultFontName();
 
     _label = Label::create();
-    _label->setAnchorPoint(Vec2(0,1));
+    _label->setAnchorPoint(Vec2(0.0f,1.0f));
     _label->setOverflow(Label::Overflow::CLAMP);
     _label->setVisible(false);
     _editBox->addChild(_label, kLabelZOrder);
 
     _labelPlaceHolder = Label::create();
-    _labelPlaceHolder->setAnchorPoint(Vec2(0, 1.0f));
+    _labelPlaceHolder->setAnchorPoint(Vec2(0.0f, 1.0f));
     _labelPlaceHolder->setTextColor(Color4B::GRAY);
     _labelPlaceHolder->enableWrap(false);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
@@ -115,20 +115,20 @@ void EditBoxImplCommon::placeInactiveLabels(const Size& size)
     auto placeholderSize = _labelPlaceHolder->getContentSize();
 
     if(_editBoxInputMode == EditBox::InputMode::ANY){
-        _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height - CC_EDIT_BOX_PADDING));
+        _label->setPosition(Vec2((float)CC_EDIT_BOX_PADDING, size.height - CC_EDIT_BOX_PADDING));
         _label->setVerticalAlignment(TextVAlignment::TOP);
         _label->enableWrap(true);
 
-        _labelPlaceHolder->setPosition(Vec2(CC_EDIT_BOX_PADDING,
+        _labelPlaceHolder->setPosition(Vec2((float)CC_EDIT_BOX_PADDING,
                                             size.height - CC_EDIT_BOX_PADDING));
         _labelPlaceHolder->setVerticalAlignment(TextVAlignment::TOP);
     }
     else {
         _label->enableWrap(false);
-        _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height));
+        _label->setPosition(Vec2((float)CC_EDIT_BOX_PADDING, size.height));
         _label->setVerticalAlignment(TextVAlignment::CENTER);
 
-        _labelPlaceHolder->setPosition(Vec2(CC_EDIT_BOX_PADDING,
+        _labelPlaceHolder->setPosition(Vec2((float)CC_EDIT_BOX_PADDING,
                                             (size.height + placeholderSize.height) / 2));
         _labelPlaceHolder->setVerticalAlignment(TextVAlignment::CENTER);
     }

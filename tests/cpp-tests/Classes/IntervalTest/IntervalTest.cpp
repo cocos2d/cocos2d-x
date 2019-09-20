@@ -108,7 +108,7 @@ IntervalTest::IntervalTest()
     auto sprite = Sprite::create(s_pathGrossini);
     sprite->setPosition(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50);
     
-    auto jump = JumpBy::create(3, Vec2(s.width-80,0), 50, 4);
+    auto jump = JumpBy::create(3, Vec2(s.width-80,0.0f), 50, 4);
     
     addChild(sprite);
     sprite->runAction( RepeatForever::create(Sequence::create(jump, jump->reverse(), nullptr) ));

@@ -78,7 +78,7 @@ bool UIEditBoxTest::init()
                                         "cocosui/animationbuttonpressed.png");
         auto buttonSize = button->getContentSize();
         button->setTitleText("Single Line");
-        button->setPosition(_editName->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        button->setPosition(_editName->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         button->addClickEventListener([=](Ref* ref){
             _editName->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
         });
@@ -100,7 +100,7 @@ bool UIEditBoxTest::init()
        
         auto buttonPassword = (ui::Button*)button->clone();
         buttonPassword->setTitleText("Multiline");
-        buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         buttonPassword->addClickEventListener([=](Ref* ref){
             _editPassword->setInputMode(ui::EditBox::InputMode::ANY);
         });
@@ -126,7 +126,7 @@ bool UIEditBoxTest::init()
         
         auto buttonEmail = (ui::Button*)button->clone();
         buttonEmail->setTitleText("Multiline");
-        buttonEmail->setPosition(_editEmailParent->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonEmail->setPosition(_editEmailParent->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         buttonEmail->addClickEventListener([=](Ref* ref){
             _editEmail->setInputMode(ui::EditBox::InputMode::ANY);
         });
@@ -211,7 +211,7 @@ bool UIEditBoxTestToggleVisibility::init()
                                         "cocosui/animationbuttonpressed.png");
         auto buttonSize = button->getContentSize();
         button->setTitleText("Toggle Visibility");
-        button->setPosition(_editName->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        button->setPosition(_editName->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         button->addClickEventListener([=](Ref* ref){
             _editName->setVisible(!_editName->isVisible());
         });
@@ -232,7 +232,7 @@ bool UIEditBoxTestToggleVisibility::init()
         
         auto buttonPassword = (ui::Button*)button->clone();
         buttonPassword->setTitleText("Toggle Visibility");
-        buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         buttonPassword->addClickEventListener([=](Ref* ref){
             _editPassword->setVisible(!_editPassword->isVisible());
         });
@@ -258,7 +258,7 @@ bool UIEditBoxTestToggleVisibility::init()
         
         auto buttonEmail = (ui::Button*)button->clone();
         buttonEmail->setTitleText("Toggle Visibility");
-        buttonEmail->setPosition(_editEmailParent->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonEmail->setPosition(_editEmailParent->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         buttonEmail->addClickEventListener([=](Ref* ref){
             _editEmail->setVisible(!_editEmail->isVisible());
         });

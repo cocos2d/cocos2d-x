@@ -199,7 +199,7 @@ bool SceneTestLayer3::init()
 
         auto sprite = Sprite::create(s_pathGrossini);
         addChild(sprite);
-        sprite->setPosition( Vec2(s.width/2, 40) );
+        sprite->setPosition( Vec2(s.width/2, 40.0f) );
         auto rotate = RotateBy::create(2, 360);
         auto repeat = RepeatForever::create(rotate);
         sprite->runAction(repeat);
