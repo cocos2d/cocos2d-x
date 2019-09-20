@@ -219,7 +219,7 @@ Vec3 jump(const Vec3* pV1, const Vec3* pV2, float height, float t)
     pOut.x = pV1->x + t * (pV2->x - pV1->x);
     pOut.y = pV1->y + t * (pV2->y - pV1->y);
     pOut.z = pV1->z + t * (pV2->z - pV1->z);
-    pOut.y += height * sinf(M_PI * t);
+    pOut.y += height * sinf((float)M_PI * t);
     return pOut;
 }
 
@@ -258,7 +258,7 @@ void NavMeshBaseTestDemo::moveAgents(const cocos2d::Vec3 &des)
 void NavMeshBaseTestDemo::update(float delta)
 {
     for (auto iter : _agents){
-        float speed = iter.first->getCurrentVelocity().length() * 0.2;
+        float speed = iter.first->getCurrentVelocity().length() * 0.2f;
         iter.second->setSpeed(0.0f < speed ? speed : 0.0f);
     }
 }
