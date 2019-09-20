@@ -280,6 +280,27 @@ bool js_cocos2dx_Texture2D_initWithMipmaps(JSContext *cx, uint32_t argc, jsval *
         args.rval().set(jsret);
         return true;
     }
+    if (argc == 6) {
+        cocos2d::_MipmapInfo* arg0 = nullptr;
+        int arg1 = 0;
+        cocos2d::Texture2D::PixelFormat arg2;
+        int arg3 = 0;
+        int arg4 = 0;
+        bool arg5;
+        #pragma warning NO CONVERSION TO NATIVE FOR _MipmapInfo*
+		ok = false;
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
+        ok &= jsval_to_int32(cx, args.get(4), (int32_t *)&arg4);
+        arg5 = JS::ToBoolean(args.get(5));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Texture2D_initWithMipmaps : Error processing arguments");
+        bool ret = cobj->initWithMipmaps(arg0, arg1, arg2, arg3, arg4, arg5);
+        JS::RootedValue jsret(cx);
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
 
     JS_ReportError(cx, "js_cocos2dx_Texture2D_initWithMipmaps : wrong number of arguments: %d, was expecting %d", argc, 5);
     return false;
