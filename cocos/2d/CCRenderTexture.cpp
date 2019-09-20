@@ -253,7 +253,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         _texture = new (std::nothrow) Texture2D();
         if (_texture)
         {
-            _texture->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
+            _texture->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h), CC_ENABLE_PREMULTIPLIED_ALPHA != 0);
         }
         else
         {
@@ -267,7 +267,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             _textureCopy = new (std::nothrow) Texture2D();
             if (_textureCopy)
             {
-                _textureCopy->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
+                _textureCopy->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h), CC_ENABLE_PREMULTIPLIED_ALPHA != 0);
             }
             else
             {
@@ -303,7 +303,11 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         _texture->release();
         _sprite->setFlippedY(true);
 
-        _sprite->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
+#if CC_ENABLE_PREMULTIPLIED_ALPHA != 0
+        _sprite->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);
+#else
+        _sprite->setBlendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED);
+#endif
         _sprite->setOpacityModifyRGB(true);
 
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
@@ -664,11 +668,11 @@ Image* RenderTexture::newImage(bool flipImage)
                        savedBufferWidth * 4);
             }
 
-            image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8, true);
+            image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8, _texture->hasPremultipliedAlpha());
         }
         else
         {
-            image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8, true);
+            image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8, _texture->hasPremultipliedAlpha());
         }
         
     } while (0);
