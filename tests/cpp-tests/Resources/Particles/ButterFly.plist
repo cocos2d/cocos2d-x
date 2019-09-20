@@ -111,7 +111,7 @@
 	<key>tangentialAcceleration</key>
 	<real>-92.11000061035156</real>
 	<key>textureFileName</key>
-	<string>particle.png</string>
+	<string>butterfly.png</string>
 	<key>yCoordFlipped</key>
 	<integer>1</integer>
 </dict>
