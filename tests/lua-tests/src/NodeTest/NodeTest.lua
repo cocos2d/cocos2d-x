@@ -428,9 +428,11 @@ local function CameraOrbitTest_onEnterOrExit(tag)
 	if tag == "enter" then
 		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION3_D)
         cc.Director:getInstance():getRenderer():setDepthTest(true)
+        cc.Director:getInstance():getRenderer():setDepthWrite(true)
 	elseif tag == "exit" then
 		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT)
         cc.Director:getInstance():getRenderer():setDepthTest(false)
+        cc.Director:getInstance():getRenderer():setDepthWrite(false)
 	end
 end
 
