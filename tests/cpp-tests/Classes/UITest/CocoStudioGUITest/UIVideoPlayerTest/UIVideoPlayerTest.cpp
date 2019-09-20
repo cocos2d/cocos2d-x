@@ -43,6 +43,10 @@ bool VideoPlayerTest::init()
     
     _visibleRect = Director::getInstance()->getOpenGLView()->getVisibleRect();
 
+    // Should create video first to make sure video is destryed first. If not, then may crash.
+    // Because when destroying video, it will stop video which may trigger stopped event listener.
+    createVideo();
+
     MenuItemFont::setFontSize(16);
 
     auto fullSwitch = MenuItemFont::create("FullScreenSwitch", CC_CALLBACK_1(VideoPlayerTest::menuFullScreenCallback, this));
@@ -95,8 +99,6 @@ bool VideoPlayerTest::init()
     _loopStatusLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
     _loopStatusLabel->setPosition(Vec2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 185));
     _uiLayer->addChild(_loopStatusLabel);
-    
-    createVideo();
 
     return true;
 }

@@ -27,6 +27,39 @@
 
 USING_NS_CC;
 
+
+class DurationRecorder {
+public:
+    void startTick(const std::string &key) {
+        _durations[key] = - now();
+    }
+
+    int endTick(const std::string &key) {
+        auto n = now();
+        auto itr = _durations.find(key);
+        if(_durations.find(key) == _durations.end())
+        {
+            return -1;
+        }
+        else if(itr->second < 0) {
+            itr->second = n + itr->second;
+        }
+        return itr->second;
+    }
+
+    inline int64_t now() const{
+        return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    }
+
+    void reset() {
+        _durations.clear();
+    }
+
+private:
+    std::map<std::string, int64_t > _durations;
+};
+
+
 NewRendererTests::NewRendererTests()
 {
     ADD_TEST_CASE(NewSpriteTest);
@@ -41,6 +74,8 @@ NewRendererTests::NewRendererTests()
     ADD_TEST_CASE(RendererBatchQuadTri);
     ADD_TEST_CASE(RendererUniformBatch);
     ADD_TEST_CASE(RendererUniformBatch2);
+    ADD_TEST_CASE(SpriteCreation);
+    ADD_TEST_CASE(NonBatchSprites);
 }
 
 std::string MultiSceneTest::title() const
@@ -779,3 +814,275 @@ std::string RendererUniformBatch2::subtitle() const
 {
     return "Mixing different shader states should work ok";
 }
+
+
+NonBatchSprites::NonBatchSprites()
+{
+    Size s = Director::getInstance()->getWinSize();
+    _spritesAnchor = Node::create();
+    _spritesAnchor->setPosition(0, 0);
+    addChild(_spritesAnchor);
+
+
+    _totalSprites = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "sprites");
+    _totalSprites->setColor(Color3B::YELLOW);
+    _totalSprites->enableOutline(Color4B::RED, 2);
+    _totalSprites->setPosition(s.width/2, s.height/2);
+
+    addChild(_totalSprites);
+
+    scheduleUpdate();
+}
+
+void NonBatchSprites::createSprite()
+{
+
+    Size s = Director::getInstance()->getWinSize();
+    Sprite* sprite = nullptr;
+    if (_spriteIndex % 2 == 0)
+    {
+        sprite = Sprite::create("Images/grossini_dance_05.png");
+    }
+    else
+    {
+        sprite = Sprite::create("Images/grossini_dance_01.png");
+    }
+
+    if (!sprite) return;
+    auto r = rand_0_1() * 0.6 + 0.2;
+    sprite->setScale(r, r);
+    float x = ((float)std::rand()) / RAND_MAX;
+    float y = ((float)std::rand()) / RAND_MAX;
+    sprite->runAction(RepeatForever::create(RotateBy::create(1, 45)));
+
+    sprite->setPosition(Vec2(x * s.width, y * s.height));
+    _spritesAnchor->addChild(sprite);
+
+    _spriteIndex++;
+    std::stringstream ss;
+    ss << _spriteIndex << " sprites";
+    _totalSprites->setString(ss.str());
+}
+
+void NonBatchSprites::update(float dt)
+{
+    
+    if( dt <= 1.0f / 28.0f && dt >= 1.0f/ 31.0f)
+    {
+        _around30fps.hit();
+    }
+    else
+    {
+        _around30fps.cancel();
+    }
+    
+    _maDt = 0.7f * _maDt  + 0.3f * dt;
+    _rmaDt = 0.5f * _rmaDt  + 0.5f * dt;
+    if(_maDt <= DEST_DT_30FPS) {
+        _contSlow.cancel();
+        _contFast.hit();
+        if(_contFast.ok()){
+            auto t2 = DEST_DT_30FPS - _rmaDt;
+            auto delta = (int)(t2 / _rmaDt * _spriteIndex * 0.1);
+            delta =std::min(20, std::max(1, delta));
+            for(int i =0 ;i< delta; i++) {
+                createSprite();
+            }
+        }
+    }else{
+        _contSlow.hit();
+        _contFast.cancel();
+    }
+
+    if(_contSlow.ok() || _around30fps.ok())
+    {
+        unscheduleUpdate();
+        std::stringstream ss;
+        ss << _spriteIndex << " sprites, DONE!";
+        _totalSprites->setString(ss.str());
+        _totalSprites->setScale(1.2);
+    }
+}
+
+NonBatchSprites::~NonBatchSprites()
+{
+
+}
+
+std::string NonBatchSprites::title() const
+{
+    return "Non Batched Sprites";
+}
+
+std::string NonBatchSprites::subtitle() const
+{
+#if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG == 1
+    return "DEBUG: simulate lots of sprites, drop to 30 fps";
+#else
+    return "RELEASE: simulate lots of sprites, drop to 30 fps";
+#endif
+}
+
+
+
+SpriteCreation::SpriteCreation()
+{
+
+    Size s = Director::getInstance()->getWinSize();
+    Node* parent = Node::create();
+    parent->setPosition(s.width / 2,s.height / 2);
+    addChild(parent);
+
+
+#define KEY_CREATION "11"
+#define KEY_DESTROYATION "22"
+
+    labelCreate = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "Sprite Creation: ..");
+    labelDestory= Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "Destroy Sprites: ..");
+
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(65);
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(SpriteCreation::delSpritesCallback, this));
+    decrease->setColor(Color3B(0, 200, 20));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(SpriteCreation::addSpritesCallback, this));
+    increase->setColor(Color3B(0, 200, 20));
+
+    auto menu = Menu::create(decrease, increase, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setPosition(Vec2(s.width / 2, s.height - 105));
+    addChild(menu, 1);
+
+    TTFConfig ttfCount("fonts/Marker Felt.ttf", 30);
+    _labelSpriteNum = Label::createWithTTF(ttfCount, "Label");
+    _labelSpriteNum->setColor(Color3B(0, 200, 20));
+    _labelSpriteNum->setPosition(Vec2(s.width / 2, s.height - 130));
+    addChild(_labelSpriteNum);
+
+    updateSpriteCountLabel(totalSprites);
+
+    labelCreate->setPosition(0, -20);
+    labelDestory->setPosition(0, -50);
+
+    parent->addChild(labelCreate);
+    parent->addChild(labelDestory);
+
+    doTest();
+}
+
+void SpriteCreation::updateSpriteCountLabel(int x)
+{
+    totalSprites = std::max(1, x);
+    std::stringstream ss;
+    ss << totalSprites << " sprites";
+    _labelSpriteNum->setString(ss.str());
+}
+
+void SpriteCreation::doTest()
+{
+
+    DurationRecorder perf;
+    std::vector<std::string> predefineTextures = {
+            "Images/concave.png",
+            "Images/atlastest.png",
+            "Images/grossini_dance_atlas-mono.png",
+            "Images/HelloWorld.png",
+            "Images/background1.png",
+            "Images/background2.png",
+            "Images/stone.png",
+            "Images/issue_17116.png",
+            "Images/sprite_polygon_crash.png",
+            "Images/bitmapFontTest3.png",
+            "Images/cocos-html5.png",
+            "Images/Fog.png",
+            "Images/poly_test_textures.png",
+            "Images/powered.png",
+            "Images/bug14017.png",
+            "Images/test-rgba1.png",
+            "Images/grossinis_heads.png",
+            "Images/cocos2dbanner.png"
+    };
+
+
+    std::vector<Sprite*> spriteCache;
+    spriteCache.reserve(totalSprites);
+
+    perf.startTick(KEY_CREATION);
+
+    for (int i=0; i< totalSprites; ++i)
+    {
+        auto* sprite = new Sprite();
+        if(sprite == nullptr )
+        {
+            break;
+        }
+        if(!sprite->initWithFile(predefineTextures[i % predefineTextures.size()]))
+        {
+            delete sprite;
+            break;
+        }
+        spriteCache.push_back(sprite);
+    }
+
+    auto creationDuration = perf.endTick(KEY_CREATION);
+    perf.startTick(KEY_DESTROYATION);
+
+    for (int i=0; i< totalSprites; ++i)
+    {
+        spriteCache[i]->release();
+    }
+    auto destroyDuration = perf.endTick(KEY_DESTROYATION);
+    std::stringstream ss;
+    auto t1_ms = creationDuration * 1.0 / 1000000;
+    ss << "Create "<< spriteCache.size()  << " sprites takes " << t1_ms<< " ms, " << (int64_t)(spriteCache.size() * 1000 / t1_ms) << " sprites per second!";
+    labelCreate->setString(ss.str());
+
+    if(t1_ms < 100) {
+        suggestDelta =(int) (0.5 * totalSprites);
+    } else if (t1_ms < 1000) {
+        suggestDelta =(int) (0.2 * totalSprites);
+    } else if(t1_ms) {
+        suggestDelta =(int) (0.1 * totalSprites);
+    }
+
+    suggestDelta = suggestDelta < 1000 ? 1000 : suggestDelta - suggestDelta % 1000;
+
+    ss.str("");
+    auto t2_ms = destroyDuration * 1.0 / 1000000;
+    ss << "Destroy "<< spriteCache.size() << " sprites takes " <<  t2_ms<< " ms, " << (int64_t)(spriteCache.size() * 1000 / t2_ms) << " sprites per second!" ;
+    labelDestory->setString(ss.str());
+
+    spriteCache.clear();
+}
+
+void SpriteCreation::addSpritesCallback(cocos2d::Ref *)
+{
+    updateSpriteCountLabel(totalSprites + suggestDelta);
+    doTest();
+}
+
+void SpriteCreation::delSpritesCallback(cocos2d::Ref *)
+{
+    updateSpriteCountLabel(totalSprites - suggestDelta);
+    doTest();
+}
+
+SpriteCreation::~SpriteCreation()
+{
+
+}
+
+std::string SpriteCreation::title() const
+{
+    return "Sprite Creation";
+}
+
+std::string SpriteCreation::subtitle() const
+{
+#if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG == 1
+    return "In debug mode";
+#else
+    return "In release mode";
+#endif
+}
+
+
