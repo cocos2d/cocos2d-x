@@ -220,6 +220,7 @@ CommandBufferMTL::~CommandBufferMTL()
 
 void CommandBufferMTL::beginFrame()
 {
+    _autoReleasePool = [[NSAutoreleasePool alloc] init];
     dispatch_semaphore_wait(_frameBoundarySemaphore, DISPATCH_TIME_FOREVER);
 
     _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
@@ -366,6 +367,7 @@ void CommandBufferMTL::endFrame()
     [_mtlCommandBuffer commit];
     [_mtlCommandBuffer release];
     DeviceMTL::resetCurrentDrawable();
+    [_autoReleasePool drain];
 }
 
 void CommandBufferMTL::afterDraw()

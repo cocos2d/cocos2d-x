@@ -195,6 +195,7 @@ private:
     
     dispatch_semaphore_t _frameBoundarySemaphore;
     RenderPassDescriptor _prevRenderPassDescriptor;
+    NSAutoreleasePool* _autoReleasePool = nil;
 };
 
 // end of _metal group
