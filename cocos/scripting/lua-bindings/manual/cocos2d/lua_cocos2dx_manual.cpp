@@ -448,7 +448,7 @@ static int tolua_cocos2d_Menu_create(lua_State* tolua_S)
     if (argc > 0 )
     {
         Vector<MenuItem*> items;
-        uint32_t i = 1;
+        int i = 1;
         while (i <= argc)
         {
 #if COCOS2D_DEBUG >= 1
@@ -598,7 +598,7 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
             return 0;
         }
 
-        for (uint32_t i = 0; i < argc; ++i)
+        for (auto i = 0; i < argc; ++i)
         {
 #if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(tolua_S, i + 2,"cc.MenuItem",0,&tolua_err) )
@@ -1414,7 +1414,7 @@ static int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* L)
         if (!tolua_isnumber(L, 2, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        double interval = tolua_tonumber(L, 2, 0);
+        float interval = (float)tolua_tonumber(L, 2, 0);
         Device::setAccelerometerInterval(interval);
         return 0;
     }
@@ -1997,7 +1997,7 @@ int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
         }
         else
         {
-            uint32_t i = 1;
+            int i = 1;
             while (i <= argc)
             {
 #if COCOS2D_DEBUG >= 1
@@ -7830,10 +7830,10 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
             if (!ok)
                 return 0;
 
-            x = tolua_tonumber(tolua_S, 2, 0);
-            y = tolua_tonumber(tolua_S, 3, 0);
-            z = tolua_tonumber(tolua_S, 4, 0);
-            w = tolua_tonumber(tolua_S, 5, 0);
+            x = (float)tolua_tonumber(tolua_S, 2, 0);
+            y = (float)tolua_tonumber(tolua_S, 3, 0);
+            z = (float)tolua_tonumber(tolua_S, 4, 0);
+            w = (float)tolua_tonumber(tolua_S, 5, 0);
 
             mat.transformVector(x,y,z,w, &dst);
             vec3_to_luaval(tolua_S, dst);
@@ -8832,7 +8832,7 @@ static int tolua_cocos2d_bytearray_floatv(lua_State *L)
             }
             lua_pop(L, 1);
             lua_newtable(L);
-            for (auto idx = 0; idx < arg.size(); idx++)
+            for (size_t idx = 0; idx < arg.size(); idx++)
             {
                 lua_pushnumber(L, arg[idx]);
                 lua_rawseti(L, 1, idx + 1);

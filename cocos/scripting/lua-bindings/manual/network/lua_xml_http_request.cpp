@@ -382,6 +382,9 @@ static int lua_cocos2dx_XMLHttpRequest_constructor(lua_State* L)
     if (argc == 0)
     {
         self = new (std::nothrow) LuaMinXmlHttpRequest();
+#if COCOS2D_DEBUG >= 1
+        if (self == nullptr) goto tolua_lerror;
+#endif
         tolua_pushusertype(L, (void*)self, "cc.XMLHttpRequest");
         tolua_register_gc(L, lua_gettop(L));
         return 1;
@@ -772,7 +775,7 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
         
         self->getByteData(tmpData);
         
-        for (int i = 0 ; i < self->getDataSize(); i++)
+        for (size_t i = 0 ; i < self->getDataSize(); i++)
         {
             LuaValue value = LuaValue::intValue(tmpData[i]);
             array.push_back(value);

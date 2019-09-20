@@ -420,10 +420,10 @@ int LuaEngine::handleAccelerometerEvent(void* data)
         return 0;
     
     Acceleration* accelerationValue = static_cast<Acceleration*>(basicScriptData->value);
-    _stack->pushFloat(accelerationValue->x);
-    _stack->pushFloat(accelerationValue->y);
-    _stack->pushFloat(accelerationValue->z);
-    _stack->pushFloat(accelerationValue->timestamp);
+    _stack->pushFloat(float(accelerationValue->x));
+    _stack->pushFloat(float(accelerationValue->y));
+    _stack->pushFloat(float(accelerationValue->z));
+    _stack->pushFloat(float(accelerationValue->timestamp));
     int ret = _stack->executeFunctionByHandler(handler, 4);
     _stack->clean();
     return ret;
