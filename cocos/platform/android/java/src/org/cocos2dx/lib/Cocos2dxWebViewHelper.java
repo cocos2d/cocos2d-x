@@ -127,23 +127,15 @@ public class Cocos2dxWebViewHelper {
     }
 
     public static void setBackgroundTransparent(final int index) {
-        if(android.os.Build.VERSION.SDK_INT >10) {
-            sCocos2dxActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Cocos2dxWebView webView = webViews.get(index);
-                    if (webView != null) {
-                        webView.setBackgroundColor(Color.TRANSPARENT);
-                        try {
-                            Method method = webView.getClass().getMethod("setLayerType",int.class,Paint.class);
-                            method.invoke(webView,WebView.LAYER_TYPE_SOFTWARE,null);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxWebView webView = webViews.get(index);
+                if (webView != null) {
+                    webView.setBackgroundColor(Color.TRANSPARENT);
                 }
-            });
-        }
+            }
+        });
     }
 
     public static void setOpacityWebView(final int index, final float opacity) {
