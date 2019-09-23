@@ -259,17 +259,6 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _recursiveDirty = false;
         setDirty(false);
 
-        if (!texture || !texture->hasPremultipliedAlpha())
-        {
-            _opacityModifyRGB = false;
-            _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-        }
-        else
-        {
-            _opacityModifyRGB = true;
-            _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-        }
-
         _flippedX = _flippedY = false;
 
         // default transform anchor: center
