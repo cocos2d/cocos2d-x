@@ -623,7 +623,7 @@ void TurnOffTiles::update(float time)
     for (unsigned int i = 0; i < _tilesCount; i++ )
     {
         t = _tilesOrder[i];
-        Vec2 tilePos( (int)(t / _gridSize.height), t % (int)_gridSize.height );
+        Vec2 tilePos((t /_gridSize.height), (float)(t % (int)_gridSize.height));
 
         if ( i < l )
         {
