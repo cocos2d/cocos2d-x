@@ -28,10 +28,6 @@
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include <stdlib.h>
 
-#if LUA_VERSION_NUM > 501
-#define lua_setfenv lua_setuservalue
-#endif
-
 using namespace cocos2d;
 
 static int s_function_ref_id = 0;
