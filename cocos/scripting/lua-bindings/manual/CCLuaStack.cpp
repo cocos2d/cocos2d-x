@@ -60,6 +60,10 @@ extern "C" {
 #include "deprecated/CCDouble.h"
 #include "platform/CCFileUtils.h"
 
+#if LUA_VERSION_NUM > 501
+#define lua_open luaL_newstate
+#endif
+
 namespace {
     int get_string_for_print(lua_State * L, std::string* out)
     {
