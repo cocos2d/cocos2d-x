@@ -138,10 +138,11 @@ public:
      @param pixelsWide The image width.
      @param pixelsHigh The image height.
      @param contentSize The image content size.
+     @param preMultipliedAlpha The texture has premultiplied alpha
      * @js NA
      * @lua NA
      */
-    bool initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize) { return initWithData(data, dataLen, pixelFormat, pixelFormat, pixelsWide, pixelsHigh, contentSize);}
+    bool initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize, bool preMultipliedAlpha = false) { return initWithData(data, dataLen, pixelFormat, pixelFormat, pixelsWide, pixelsHigh, contentSize, preMultipliedAlpha);}
 
     /** Initializes with a texture2d with data.
      
@@ -152,10 +153,11 @@ public:
      @param pixelsWide The image width.
      @param pixelsHigh The image height.
      @param contentSize The image content size.
+     @param preMultipliedAlpha The texture has premultiplied alpha
      * @js NA
      * @lua NA
      */
-    bool initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& contentSize);
+    bool initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& contentSize, bool preMultipliedAlpha = false);
     
     /** Initializes with mipmaps. 
      
@@ -164,8 +166,9 @@ public:
      @param pixelFormat The image pixelFormat.
      @param pixelsWide The image width.
      @param pixelsHigh The image height.
+     @param preMultipliedAlpha The texture has premultiplied alpha
      */
-    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh);
+    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha = false);
     
     /** Update with texture data.
      
@@ -228,7 +231,7 @@ public:
     bool initWithString(const char *text, const FontDefinition& textDefinition);
     
     //TODO: minggo: is it resaonable?
-    bool initWithBackendTexture(backend::TextureBackend* texture);
+    bool initWithBackendTexture(backend::TextureBackend* texture, bool preMultipliedAlpha = false);
     void setRenderTarget(bool renderTarget);
     inline bool isRenderTarget() const { return _isRenderTarget; }
 

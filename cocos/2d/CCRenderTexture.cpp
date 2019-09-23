@@ -196,7 +196,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, backend::PixelFormat fo
         _texture2D = new (std::nothrow) Texture2D();
         if (_texture2D)
         {
-            _texture2D->initWithBackendTexture(texture);
+            _texture2D->initWithBackendTexture(texture, CC_ENABLE_PREMULTIPLIED_ALPHA != 0);
             _texture2D->setRenderTarget(true);
             texture->release();
         }
@@ -240,8 +240,14 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, backend::PixelFormat fo
 #if defined(CC_USE_GL) || defined(CC_USE_GLES)
         _sprite->setFlippedY(true);
 #endif
-        _sprite->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
+
+#if CC_ENABLE_PREMULTIPLIED_ALPHA != 0
+        _sprite->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);
         _sprite->setOpacityModifyRGB(true);
+#else
+        _sprite->setBlendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED);
+        _sprite->setOpacityModifyRGB(false);
+#endif
         
         // Disabled by default.
         _autoDraw = false;
@@ -472,7 +478,7 @@ void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool fli
     Image *image = new (std::nothrow) Image();
     
     auto initCallback = [&, savedBufferWidth, savedBufferHeight, imageCallback](Image* image, const unsigned char* tempData){
-        image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8, true);
+        image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8, _texture2D->hasPremultipliedAlpha());
         imageCallback(image);
     };
     auto callback = std::bind(initCallback, image, std::placeholders::_1);
