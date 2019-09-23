@@ -52,7 +52,7 @@ bool luaval_to_Physics3DRigidBodyDes(lua_State* L,int lo,cocos2d::Physics3DRigid
     {
         lua_pushstring(L, "mass");
         lua_gettable(L, lo);
-        outValue->mass = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->mass = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
         
         lua_pushstring(L, "localInertia");
@@ -553,7 +553,7 @@ int lua_cocos2dx_physics3d_Physics3DShape_createHeightfield(lua_State* L)
             tolua_error(L,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DShape_createHeightfield'", nullptr);
             return 0;
         }
-        cocos2d::Physics3DShape* ret = cocos2d::Physics3DShape::createHeightfield(arg0, arg1, &arg2[0], arg3, arg4, arg5, arg6, arg7);
+        cocos2d::Physics3DShape* ret = cocos2d::Physics3DShape::createHeightfield(arg0, arg1, &arg2[0], (float)arg3, (float)arg4, (float)arg5, arg6, arg7);
         object_to_luaval<cocos2d::Physics3DShape>(L, "cc.Physics3DShape",(cocos2d::Physics3DShape*)ret);
         return 1;
     }
@@ -582,7 +582,7 @@ int lua_cocos2dx_physics3d_Physics3DShape_createHeightfield(lua_State* L)
             tolua_error(L,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DShape_createHeightfield'", nullptr);
             return 0;
         }
-        cocos2d::Physics3DShape* ret = cocos2d::Physics3DShape::createHeightfield(arg0, arg1, &arg2[0], arg3, arg4, arg5, arg6, arg7, arg8);
+        cocos2d::Physics3DShape* ret = cocos2d::Physics3DShape::createHeightfield(arg0, arg1, &arg2[0], (float)arg3, (float)arg4, (float)arg5, arg6, arg7, arg8);
         object_to_luaval<cocos2d::Physics3DShape>(L, "cc.Physics3DShape",(cocos2d::Physics3DShape*)ret);
         return 1;
     }

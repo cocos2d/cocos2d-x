@@ -15,24 +15,26 @@ matrix:
     - os: osx
       env: BUILD_TARGET=mac_cmake
       language: cpp
-      osx_image: xcode9.3
+      osx_image: xcode10.3
       sudo: required
     # iOS_cmake
-    # - os: osx
-    #   env: BUILD_TARGET=ios_cmake
-    #   language: cpp
-    #   osx_image: xcode9.3
-    #   sudo: required
+    - os: osx
+      env: BUILD_TARGET=ios_cmake
+      language: cpp
+      osx_image: xcode11
+      sudo: required
     # android cmake
     - os: linux
       env: BUILD_TARGET=android_cmake
       language: android
       sudo: required
+      dist: xenial
     # android_lua cmake
     - os: linux
       env: BUILD_TARGET=android_lua_cmake
       language: android
       sudo: required
+      dist: xenial
       addons:
         apt:
           sources:
@@ -48,6 +50,7 @@ matrix:
       env: BUILD_TARGET=android_cocos_new_test
       language: android
       sudo: required
+      dist: xenial
     - os: linux
       dist: xenial
       env: BUILD_TARGET=linux_cocos_new_test
@@ -58,6 +61,9 @@ script:
 - tools/travis-scripts/run-script.sh
 before_install:
 - tools/travis-scripts/before-install.sh
+
+jdk:
+  - oraclejdk8
 
 cache:
   bundler: true

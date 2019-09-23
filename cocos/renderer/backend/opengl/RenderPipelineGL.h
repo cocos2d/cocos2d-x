@@ -34,7 +34,6 @@
 CC_BACKEND_BEGIN
 
 class ProgramGL;
-class BlendStateGL;
 /**
  * @addtogroup _opengl
  * @{
@@ -49,23 +48,20 @@ public:
     /**
      * @param descriptor Specifies render pipeline descriptor.
      */
-    RenderPipelineGL(const RenderPipelineDescriptor& descriptor);
+    RenderPipelineGL() = default;
     ~RenderPipelineGL();
-    
+
+    virtual void update(const PipelineDescriptor & pipelineDescirptor, const RenderPassDescriptor& renderpassDescriptor) override;
     /**
      * Get program instance.
      * @return Program instance.
      */
     inline ProgramGL* getProgram() const { return _programGL; }
 
-    /**
-     * Get blend state.
-     * @return Blend state.
-     */
-    inline BlendStateGL* getBlendState() const { return _blendState; }
 private:
+    void updateBlendState(const BlendDescriptor& descriptor);
+
     ProgramGL* _programGL = nullptr;
-    BlendStateGL* _blendState = nullptr;
 };
 // end of _opengl group
 /// @}

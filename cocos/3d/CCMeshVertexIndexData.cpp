@@ -109,12 +109,9 @@ void MeshVertexData::setVertexData(const std::vector<float> &vertexData)
 MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
 {
     auto vertexdata = new (std::nothrow) MeshVertexData();
-    int pervertexsize = meshdata.getPerVertexSize();
     vertexdata->_vertexBuffer = backend::Device::getInstance()->newBuffer(meshdata.vertex.size() * sizeof(meshdata.vertex[0]), backend::BufferType::VERTEX, backend::BufferUsage::STATIC);
     //CC_SAFE_RETAIN(vertexdata->_vertexBuffer);
     
-    int offset = 0;
-
     vertexdata->_sizePerVertex = meshdata.getPerVertexSize();
 
     vertexdata->_attribs = meshdata.attribs;

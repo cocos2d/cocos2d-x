@@ -129,24 +129,24 @@ bool CameraBackgroundDepthBrush::init()
     auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
     pipelineDescriptor.programState = _programState;
 
-    auto &layout = pipelineDescriptor.vertexLayout;
+    auto layout = _programState->getVertexLayout();
     const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        layout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
+        layout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+        layout->setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
     }
     iter = attributeInfo.find("a_texCoord");
     if(iter != attributeInfo.end())
     {
-        layout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), true);
+        layout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), true);
     }
-    layout.setLayout(sizeof(_vertices[0]));
+    layout->setLayout(sizeof(_vertices[0]));
 
     _vertices.resize(4);
     _vertices[0].vertices = Vec3(-1, -1, 0);
@@ -416,13 +416,13 @@ bool CameraBackgroundSkyBoxBrush::init()
 
 
     auto &pipelineDescriptor                            = _customCommand.getPipelineDescriptor();
-    auto &layout                                        = pipelineDescriptor.vertexLayout;
+    auto layout                                         = _programState->getVertexLayout();
     pipelineDescriptor.programState                     = _programState;
     // disable blend
     pipelineDescriptor.blendDescriptor.blendEnabled     = false;
 
-    layout.setAttribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT3, 0, false);
-    layout.setLayout(sizeof(Vec3));
+    layout->setAttribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT3, 0, false);
+    layout->setLayout(sizeof(Vec3));
 
     initBuffer();
 

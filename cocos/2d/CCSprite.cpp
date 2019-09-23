@@ -352,29 +352,44 @@ void Sprite::setTexture(const std::string &filename)
 void Sprite::setVertexLayout()
 {
     //set vertexLayout according to V3F_C4B_T2F structure
-    auto& vertexLayout = _trianglesCommand.getPipelineDescriptor().vertexLayout;
-    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
-    auto iter = attributeInfo.find("a_position");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
-    }
-    iter = attributeInfo.find("a_texCoord");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
-    }
-    iter = attributeInfo.find("a_color");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
-    }
-    vertexLayout.setLayout(sizeof(V3F_C4B_T2F));
+    //auto& vertexLayout = _trianglesCommand.getPipelineDescriptor().vertexLayout;
+    auto vertexLayout = _programState->getVertexLayout();
+    ///a_position
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_POSITION,
+                              _programState->getAttributeLocation(backend::Attribute::POSITION),
+                              backend::VertexFormat::FLOAT3,
+                              0,
+                              false);
+    ///a_texCoord
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_TEXCOORD,
+                              _programState->getAttributeLocation(backend::Attribute::TEXCOORD),
+                              backend::VertexFormat::FLOAT2,
+                              offsetof(V3F_C4B_T2F, texCoords),
+                              false);
+    
+    ///a_color
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_COLOR,
+                              _programState->getAttributeLocation(backend::Attribute::COLOR),
+                              backend::VertexFormat::UBYTE4,
+                              offsetof(V3F_C4B_T2F, colors),
+                              true);
+    vertexLayout->setLayout(sizeof(V3F_C4B_T2F));
 }
 
 void Sprite::updateShaders(const char* vert, const char* frag)
 {
     auto programState = new (std::nothrow) backend::ProgramState(vert, frag);
+    setProgramState(programState);
+    CC_SAFE_RELEASE_NULL(programState);
+}
+
+void Sprite::setProgramState(backend::ProgramType type)
+{
+    if(_programState != nullptr &&
+       _programState->getProgram()->getProgramType() == type)
+        return;
+    
+    auto programState = new (std::nothrow) backend::ProgramState(type);
     setProgramState(programState);
     CC_SAFE_RELEASE_NULL(programState);
 }
@@ -391,9 +406,9 @@ void Sprite::setProgramState(backend::ProgramState *programState)
     }
     pipelineDescriptor.programState = _programState;
 
-    _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
-    _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
-    _alphaTextureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture1");
+    _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::MVP_MATRIX);
+    _textureLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::TEXTURE);
+    _alphaTextureLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::TEXTURE1);
 
     setVertexLayout();
     updateProgramState();
@@ -403,8 +418,8 @@ void Sprite::setProgramState(backend::ProgramState *programState)
 void Sprite::setTexture(Texture2D *texture)
 {
     auto isETC1 = texture && texture->getAlphaTextureName();
-    updateShaders(positionTextureColor_vert, (isETC1) ? etc1_frag : positionTextureColor_frag);
-    
+    setProgramState((isETC1) ? backend::ProgramType::ETC1 : backend::ProgramType::POSITION_TEXTURE_COLOR);
+
     CCASSERT(! _batchNode || (texture &&  texture == _batchNode->getTexture()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");

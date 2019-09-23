@@ -100,11 +100,9 @@ private:
     backend::ProgramState * _programState       = nullptr;
     bool _currentDepthMask                      = true;
     bool _dirtyBuffer                           = true;
-    backend::PrimitiveType  _primitiveType      = backend::PrimitiveType::POINT;
     backend::Buffer       * _vertexBuffer       = nullptr;
     
     //RenderState::StateBlock     _stateBlock;
-    backend::VertexLayout       _defaultLayout;
     std::vector<V3F_C4F>        _vertices;
     std::vector<Primitive*>     _primitiveList;
     backend::UniformLocation    _locMVP;

@@ -28,7 +28,6 @@
 #include "TextureGL.h"
 #include "DepthStencilStateGL.h"
 #include "ProgramGL.h"
-#include "BlendStateGL.h"
 #include "base/ccMacros.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
@@ -88,6 +87,8 @@ CommandBufferGL::CommandBufferGL()
 CommandBufferGL::~CommandBufferGL()
 {
     glDeleteFramebuffers(1, &_generatedFBO);
+    CC_SAFE_RELEASE_NULL(_renderPipeline);
+
     cleanResources();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -319,19 +320,14 @@ void CommandBufferGL::setIndexBuffer(Buffer* buffer)
     _indexBuffer = static_cast<BufferGL*>(buffer);
 }
 
-void CommandBufferGL::setVertexBuffer(unsigned int index, Buffer* buffer)
+void CommandBufferGL::setVertexBuffer(Buffer* buffer)
 {
     assert(buffer != nullptr);
-    if (buffer == nullptr)
+    if (buffer == nullptr || _vertexBuffer == buffer)
         return;
     
     buffer->retain();
-    
-    if (index >= _vertexBuffers.size())
-        _vertexBuffers.resize(index + 1);
-
-    CC_SAFE_RELEASE(_vertexBuffers[index]);
-    _vertexBuffers[index] = static_cast<BufferGL*>(buffer);
+    _vertexBuffer = static_cast<BufferGL*>(buffer);
 }
 
 void CommandBufferGL::setProgramState(ProgramState* programState)
@@ -395,12 +391,6 @@ void CommandBufferGL::prepareDrawing() const
     else
         DepthStencilStateGL::reset();
     
-    // Set blend state.
-    if (_renderPipeline->getBlendState())
-        _renderPipeline->getBlendState()->apply();
-    else
-        BlendStateGL::reset();
-    
     // Set cull mode.
     if (CullMode::NONE == _cullMode)
     {
@@ -416,33 +406,24 @@ void CommandBufferGL::prepareDrawing() const
 void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
 {
     // Bind vertex buffers and set the attributes.
-    int i = 0;
-    const auto& attributeInfos = program->getAttributeInfos();
-    const auto& vertexLayouts = getVertexLayouts();
-    for (const auto& vertexBuffer : _vertexBuffers)
-    {
-        if (! vertexBuffer)
-            continue;
-        if (i >= attributeInfos.size())
-            break;
-        
-        glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getHandler());
+    auto vertexLayout = _programState->getVertexLayout();
+    
+    if (!vertexLayout->isValid())
+        return;
+    
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer->getHandler());
 
-        const auto& attributeInfo = attributeInfos[i];
-        const auto &layouts = vertexLayouts->at(i);
-        for (const auto& attribute : attributeInfo)
-        {
-            const auto &layoutInfo = layouts.getAttributes().at(attribute.name);
-            glEnableVertexAttribArray(attribute.location);
-            glVertexAttribPointer(attribute.location,
-                UtilsGL::getGLAttributeSize(layoutInfo.format),
-                UtilsGL::toGLAttributeType(layoutInfo.format),
-                layoutInfo.needToBeNormallized,
-                layouts.getStride(),
-                (GLvoid*)layoutInfo.offset);
-        }
-        
-        ++i;
+    const auto& attributes = vertexLayout->getAttributes();
+    for (const auto& attributeInfo : attributes)
+    {
+        const auto& attribute = attributeInfo.second;
+        glEnableVertexAttribArray(attribute.index);
+        glVertexAttribPointer(attribute.index,
+            UtilsGL::getGLAttributeSize(attribute.format),
+            UtilsGL::toGLAttributeType(attribute.format),
+            attribute.needToBeNormallized,
+            vertexLayout->getStride(),
+            (GLvoid*)attribute.offset);
     }
 }
 
@@ -451,7 +432,10 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
     if (_programState)
     {
         auto& callbacks = _programState->getCallbackUniforms();
-        auto& uniformInfos = _programState->getVertexUniformInfos();
+        auto& uniformInfos = _programState->getProgram()->getAllActiveUniformInfo(ShaderStage::VERTEX);
+        std::size_t bufferSize = 0;
+        char* buffer = nullptr;
+        _programState->getVertexUniformBuffer(&buffer, bufferSize);
 
         for (auto &cb : callbacks)
         {
@@ -461,23 +445,16 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
         int i = 0;
         for(auto& iter : uniformInfos)
         {
-            auto& uniformInfo = iter.uniformInfo;
-            if(uniformInfo.bufferSize <= 0)
+            auto& uniformInfo = iter.second;
+            if(uniformInfo.size <= 0)
                 continue;
 
             int elementCount = uniformInfo.count;
-            if (uniformInfo.isArray)
-            {
-                CCASSERT(uniformInfo.count * uniformInfo.bufferSize >= iter.data.size(), "uniform data size mismatch!");
-                //iter.data.reserve(uniformInfo.count * uniformInfo.bufferSize);
-                elementCount = std::min(elementCount, (int)(iter.data.size() / uniformInfo.bufferSize));
-            }
-
             setUniform(uniformInfo.isArray,
                 uniformInfo.location,
                 elementCount,
                 uniformInfo.type,
-                (void*)iter.data.data());
+                (void*)(buffer + uniformInfo.bufferOffset));
         }
         
         const auto& textureInfo = _programState->getVertexTextureInfos();
@@ -600,13 +577,8 @@ void CommandBufferGL::setUniform(bool isArray, GLuint location, unsigned int siz
 void CommandBufferGL::cleanResources()
 {
     CC_SAFE_RELEASE_NULL(_indexBuffer);
-    CC_SAFE_RELEASE_NULL(_renderPipeline);
-    CC_SAFE_RELEASE_NULL(_programState);
-      
-    for (const auto& vertexBuffer : _vertexBuffers)
-        CC_SAFE_RELEASE(vertexBuffer);
-    
-    _vertexBuffers.clear();
+    CC_SAFE_RELEASE_NULL(_programState);  
+    CC_SAFE_RELEASE_NULL(_vertexBuffer);
 }
 
 void CommandBufferGL::setLineWidth(float lineWidth)

@@ -77,8 +77,6 @@ public:
         JPG,
         //! PNG
         PNG,
-        //! TIFF
-        TIFF,
         //! WebP
         WEBP,
         //! PVR
@@ -155,11 +153,12 @@ public:
      @param    isToRGB        whether the image is saved as RGB format.
      */
     bool saveToFile(const std::string &filename, bool isToRGB = true);
+    void premultiplyAlpha();
+    void reversePremultipliedAlpha();   
 
 protected:
     bool initWithJpgData(const unsigned char *  data, ssize_t dataLen);
     bool initWithPngData(const unsigned char * data, ssize_t dataLen);
-    bool initWithTiffData(const unsigned char * data, ssize_t dataLen);
     bool initWithWebpData(const unsigned char * data, ssize_t dataLen);
     bool initWithPVRData(const unsigned char * data, ssize_t dataLen);
     bool initWithPVRv2Data(const unsigned char * data, ssize_t dataLen);
@@ -173,7 +172,7 @@ protected:
     bool saveImageToPNG(const std::string& filePath, bool isToRGB = true);
     bool saveImageToJPG(const std::string& filePath);
     
-    void premultipliedAlpha();
+
     
 protected:
     /**
@@ -216,7 +215,6 @@ protected:
     Format detectFormat(const unsigned char * data, ssize_t dataLen);
     bool isPng(const unsigned char * data, ssize_t dataLen);
     bool isJpg(const unsigned char * data, ssize_t dataLen);
-    bool isTiff(const unsigned char * data, ssize_t dataLen);
     bool isWebp(const unsigned char * data, ssize_t dataLen);
     bool isPvr(const unsigned char * data, ssize_t dataLen);
     bool isEtc(const unsigned char * data, ssize_t dataLen);

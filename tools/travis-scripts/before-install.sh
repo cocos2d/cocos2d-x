@@ -41,15 +41,6 @@ function install_python_module_for_osx()
     sudo pip install Cheetah
 }
 
-function install_latest_python()
-{
-    python -V
-    eval "$(pyenv init -)"
-    pyenv install 2.7.14
-    pyenv global 2.7.14
-    python -V
-}
-
 # set up environment according os and target
 function install_environement_for_pull_request()
 {
@@ -65,7 +56,6 @@ function install_environement_for_pull_request()
     fi
 
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        install_latest_python
         install_python_module_for_osx
     fi
 
@@ -78,7 +68,6 @@ function install_environement_for_pull_request()
 function install_environement_for_after_merge()
 {
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        install_latest_python
         install_python_module_for_osx
     fi
 
@@ -86,6 +75,9 @@ function install_environement_for_after_merge()
     install_android_ndk
     download_deps
 }
+
+cmake --version
+python -V
 
 if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
     sudo apt-get update

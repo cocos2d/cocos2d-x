@@ -595,25 +595,28 @@ static Texture2D* _getTexture(Label* label)
 
 void Label::setVertexLayout(PipelineDescriptor& pipelineDescriptor)
 {
-    auto& layout = pipelineDescriptor.vertexLayout;
-    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
-    auto iter = attributeInfo.find("a_position");
-    if(iter != attributeInfo.end())
-    {
-        layout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
-    }
-    iter = attributeInfo.find("a_texCoord");
-    if(iter != attributeInfo.end())
-    {
-        layout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
-    }
-    iter = attributeInfo.find("a_color");
-    if(iter != attributeInfo.end())
-    {
-        layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
-    }
-    layout.setLayout(sizeof(V3F_C4B_T2F));
-
+    auto vertexLayout = _programState->getVertexLayout();
+    ///a_position
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_POSITION,
+                        _programState->getAttributeLocation(backend::Attribute::POSITION),
+                        backend::VertexFormat::FLOAT3,
+                        0,
+                        false);
+    
+    ///a_texCoord
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_TEXCOORD,
+                        _programState->getAttributeLocation(backend::Attribute::TEXCOORD),
+                        backend::VertexFormat::FLOAT2,
+                        offsetof(V3F_C4B_T2F, texCoords),
+                        false);
+    
+    ///a_color
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_COLOR,
+                        _programState->getAttributeLocation(backend::Attribute::COLOR),
+                        backend::VertexFormat::UBYTE4, 
+                        offsetof(V3F_C4B_T2F, colors), 
+                        true);
+    vertexLayout->setLayout(sizeof(V3F_C4B_T2F));
 }
 
 void Label::setProgramState(backend::ProgramState *programState)
@@ -637,21 +640,13 @@ void Label::setProgramState(backend::ProgramState *programState)
 
 void Label::updateShaderProgram()
 {
-    const char* vert = nullptr;
-    const char* frag = nullptr;
-    
+    auto programType = backend::ProgramType::POSITION_TEXTURE_COLOR;
     if (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP)
     {
         auto texture = _getTexture(this);
         if(texture && texture->getAlphaTextureName())
         {
-            vert = positionTextureColor_vert;
-            frag = etc1_frag;
-        }
-        else
-        {
-            vert = positionTextureColor_vert;
-            frag = positionTextureColor_frag;
+            programType = backend::ProgramType::ETC1;
         }
     }
     else
@@ -661,40 +656,30 @@ void Label::updateShaderProgram()
             case cocos2d::LabelEffect::NORMAL:
                 if (_useDistanceField)
                 {
-                    vert = positionTextureColor_vert;
-                    frag = label_distanceNormal_frag;
+                    programType = backend::ProgramType::LABEL_DISTANCE_NORMAL;
                 }
                 else if (_useA8Shader)
                 {
-                    vert = positionTextureColor_vert;
-                    frag = label_normal_frag;
+                    programType = backend::ProgramType::LABEL_NORMAL;
                 }
                 else
                 {
                     auto texture = _getTexture(this);
                     if(texture && texture->getAlphaTextureName())
                     {
-                        vert = positionTextureColor_vert;
-                        frag = etc1_frag;
-                    }
-                    else
-                    {
-                        vert = positionTextureColor_vert;
-                        frag = positionTextureColor_frag;
+                        programType = backend::ProgramType::ETC1;
                     }
                 }
                 break;
             case cocos2d::LabelEffect::OUTLINE:
                 {
-                    vert = positionTextureColor_vert;
-                    frag = labelOutline_frag;
+                    programType = backend::ProgramType::LABLE_OUTLINE;
                 }
                 break;
             case cocos2d::LabelEffect::GLOW:
                 if (_useDistanceField)
                 {
-                        vert = positionTextureColor_vert;
-                        frag = labelDistanceFieldGlow_frag;
+                    programType = backend::ProgramType::LABLE_DISTANCEFIELD_GLOW;
                 }
                 break;
             default:
@@ -703,7 +688,7 @@ void Label::updateShaderProgram()
     }
 
     CC_SAFE_RELEASE(_programState);
-    _programState = new backend::ProgramState(vert, frag);
+    _programState = new backend::ProgramState(programType);
 
     updateUniformLocations();
 
@@ -740,12 +725,12 @@ void Label::updateBatchCommand(Label::BatchCommand &batch)
 
 void Label::updateUniformLocations()
 {
-    _mvpMatrixLocation      = _programState->getUniformLocation("u_MVPMatrix");
-    _textureLocation        = _programState->getUniformLocation("u_texture");
-    _alphaTextureLocation   = _programState->getUniformLocation("u_texture1");
-    _textColorLocation      = _programState->getUniformLocation("u_textColor");
-    _effectColorLocation    = _programState->getUniformLocation("u_effectColor");
-    _effectTypeLocation     = _programState->getUniformLocation("u_effectType");
+    _mvpMatrixLocation      = _programState->getUniformLocation(backend::Uniform::MVP_MATRIX);
+    _textureLocation        = _programState->getUniformLocation(backend::Uniform::TEXTURE);
+    _alphaTextureLocation   = _programState->getUniformLocation(backend::Uniform::TEXTURE1);
+    _textColorLocation      = _programState->getUniformLocation(backend::Uniform::TEXT_COLOR);
+    _effectColorLocation    = _programState->getUniformLocation(backend::Uniform::EFFECT_COLOR);
+    _effectTypeLocation     = _programState->getUniformLocation(backend::Uniform::EFFECT_TYPE);
 }
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)

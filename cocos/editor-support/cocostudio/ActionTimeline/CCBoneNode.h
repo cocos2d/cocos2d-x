@@ -215,8 +215,8 @@ protected:
 
     bool              _isRackShow = false;
     cocos2d::Color4F  _rackColor = cocos2d::Color4F::WHITE;
-    int               _rackLength = 50;
-    int               _rackWidth = 20;
+    float               _rackLength = 50.0f;
+    float               _rackWidth = 20.0f;
 
     cocos2d::Vector<BoneNode*> _childBones;
     cocos2d::Vector<SkinNode*> _boneSkins;

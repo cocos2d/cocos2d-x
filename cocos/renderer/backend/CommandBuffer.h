@@ -98,10 +98,9 @@ public:
 
     /**
      * Set a global buffer for all vertex shaders at the given bind point index 0.
-     * @param index An index in the buffer argument table.
      * @param buffer The vertex buffer to be setted in the buffer argument table.
      */
-    virtual void setVertexBuffer(unsigned int index, Buffer* buffer) = 0;
+    virtual void setVertexBuffer(Buffer* buffer) = 0;
 
     /**
      * Set unifroms and textures
@@ -185,24 +184,11 @@ public:
      */
     void setStencilReferenceValue(unsigned int frontRef, unsigned int backRef);
 
-    /**
-     * Get vertex layout.
-     * @return A vector of vertex layout.
-     */
-    inline const std::shared_ptr<std::vector<VertexLayout>>& getVertexLayouts() const { return _vertexLayouts; }
-    
-    /**
-     * Update vertex layoutjj.
-     * @param layout Specifies the vertex layout.
-     */
-    void updateVertexLayouts(const std::shared_ptr<std::vector<VertexLayout>> &layout) { _vertexLayouts = layout; }
-
 protected:
     virtual ~CommandBuffer() = default;
     
     unsigned int _stencilReferenceValueFront = 0; ///< front stencil reference value.
     unsigned int _stencilReferenceValueBack = 0; ///< back stencil reference value.
-    std::shared_ptr<std::vector<VertexLayout>> _vertexLayouts; ///< vertex layout.
 };
 
 // end of _backend group

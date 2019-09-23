@@ -81,7 +81,7 @@ bool DrawNode3D::init()
     _customCommand.setBeforeCallback(CC_CALLBACK_0(DrawNode3D::onBeforeDraw, this));
     _customCommand.setAfterCallback(CC_CALLBACK_0(DrawNode3D::onAfterDraw, this));
 
-    auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
+    auto layout = _programStateLine->getVertexLayout();
 #define INITIAL_VERTEX_BUFFER_LENGTH 512
 
     ensureCapacity(INITIAL_VERTEX_BUFFER_LENGTH);
@@ -93,14 +93,14 @@ bool DrawNode3D::init()
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        layout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        layout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
+        layout->setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
     }
-    layout.setLayout(sizeof(V3F_C4B));
+    layout->setLayout(sizeof(V3F_C4B));
     
     _customCommand.createVertexBuffer(sizeof(V3F_C4B), INITIAL_VERTEX_BUFFER_LENGTH, CustomCommand::BufferUsage::DYNAMIC);
     _isDirty = true;

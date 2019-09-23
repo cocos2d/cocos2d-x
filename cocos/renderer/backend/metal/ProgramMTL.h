@@ -50,25 +50,33 @@ public:
     ProgramMTL(const std::string& vertexShader, const std::string& fragmentShader);
     virtual ~ProgramMTL();
     
-    /// @name Setters & Getters
-    /**
-     * Get vertex uniform infomation.
-     * @return Vertex uniform information. Key is uniform name, Value is corresponding uniform info.
-     */
-    virtual const std::unordered_map<std::string, UniformInfo>& getVertexUniformInfos() const override;
-    
-    /**
-     * Get fragment uniform information.
-     * @return Fragment uniform information. Key is uniform name, Value is corresponding uniform info.
-     */
-    virtual const std::unordered_map<std::string, UniformInfo>& getFragmentUniformInfos() const override;
-    
     /**
      * Get uniform location by name.
      * @param uniform Specifies the uniform name.
      * @return The uniform location.
      */
     virtual UniformLocation getUniformLocation(const std::string& uniform) const override;
+
+    /**
+     * Get uniform location by engine built-in uniform enum name.
+     * @param name Specifies the engine built-in uniform enum name.
+     * @return The uniform location.
+     */
+    virtual UniformLocation getUniformLocation(backend::Uniform name) const override;
+    
+    /**
+     * Get attribute location by attribute name.
+     * @param name Specifies the attribute name.
+     * @return The attribute location.
+     */
+    virtual int getAttributeLocation(const std::string& name) const override;
+
+    /**
+     * Get attribute location by engine built-in attribute enum name.
+     * @param name Specifies the engine built-in attribute enum name.
+     * @return The attribute location.
+     */
+    virtual int getAttributeLocation(Attribute name) const override;
     
     /**
      * Get vertex shader module.
@@ -99,6 +107,27 @@ public:
      * @return Maximum fragment location.
      */
     virtual int getMaxFragmentLocation() const override;
+    
+    /**
+     * Get uniform buffer size in bytes that can hold all the uniforms.
+     * @param stage Specifies the shader stage. The symbolic constant can be either VERTEX or FRAGMENT.
+     * @return The uniform buffer size in bytes.
+     */
+    virtual std::size_t getUniformBufferSize(ShaderStage stage) const override;
+
+    /**
+     * Get a uniformInfo in given location from the specific shader stage.
+     * @param stage Specifies the shader stage. The symbolic constant can be either VERTEX or FRAGMENT.
+     * @param location Specifies the uniform locaion.
+     * @return The uniformInfo.
+     */
+    virtual const UniformInfo& getActiveUniformInfo(ShaderStage stage, int location) const override;
+
+    /**
+     * Get all uniformInfos.
+     * @return The uniformInfos.
+     */
+    virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo(ShaderStage stage) const override;
 
 private:
     ShaderModuleMTL* _vertexShader = nullptr;

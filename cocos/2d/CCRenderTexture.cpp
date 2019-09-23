@@ -354,6 +354,28 @@ void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, uint3
     // setOrderOfArrival(0);
 }
 
+bool RenderTexture::saveToFileAsNonPMA(const std::string& filename, bool isRGBA, std::function<void(RenderTexture*, const std::string&)> callback)
+{
+    std::string basename(filename);
+    std::transform(basename.begin(), basename.end(), basename.begin(), ::tolower);
+
+    if (basename.find(".png") != std::string::npos)
+    {
+        return saveToFileAsNonPMA(filename, Image::Format::PNG, isRGBA, callback);
+    }
+    else if (basename.find(".jpg") != std::string::npos)
+    {
+        if (isRGBA) CCLOG("RGBA is not supported for JPG format.");
+        return saveToFileAsNonPMA(filename, Image::Format::JPG, false, callback);
+    }
+    else
+    {
+        CCLOG("Only PNG and JPG format are supported now!");
+    }
+
+    return saveToFileAsNonPMA(filename, Image::Format::JPG, false, callback);
+}     
+                                                              
 bool RenderTexture::saveToFile(const std::string& filename, bool isRGBA, std::function<void (RenderTexture*, const std::string&)> callback)
 {
     std::string basename(filename);
@@ -376,6 +398,23 @@ bool RenderTexture::saveToFile(const std::string& filename, bool isRGBA, std::fu
     return saveToFile(filename, Image::Format::JPG, false, callback);
 }
 
+bool RenderTexture::saveToFileAsNonPMA(const std::string& fileName, Image::Format format, bool isRGBA, std::function<void(RenderTexture*, const std::string&)> callback)
+{
+    CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
+        "the image can only be saved as JPG or PNG format");
+    if (isRGBA && format == Image::Format::JPG) CCLOG("RGBA is not supported for JPG format");
+
+    _saveFileCallback = callback;
+
+    std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
+    _saveToFileCommand.init(_globalZOrder);
+    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA, true);
+
+    Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
+    return true;
+}
+
+
 bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format, bool isRGBA, std::function<void (RenderTexture*, const std::string&)> callback)
 {
     CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
@@ -386,17 +425,21 @@ bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format
     
     std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
     _saveToFileCommand.init(_globalZOrder);
-    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA);
+    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA, false);
     
     Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
     return true;
 }
 
-void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
+void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA, bool forceNonPMA)
 {
-    auto callbackFunc = [&, filename, isRGBA](Image* image){
+    auto callbackFunc = [&, filename, isRGBA, forceNonPMA](Image* image){
         if (image)
         {
+            if (forceNonPMA && image->hasPremultipliedAlpha())
+            {
+                image->reversePremultipliedAlpha();
+            }
             image->saveToFile(filename, !isRGBA);
         }
         if(_saveFileCallback)
@@ -429,7 +472,7 @@ void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool fli
     Image *image = new (std::nothrow) Image();
     
     auto initCallback = [&, savedBufferWidth, savedBufferHeight, imageCallback](Image* image, const unsigned char* tempData){
-        image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
+        image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8, true);
         imageCallback(image);
     };
     auto callback = std::bind(initCallback, image, std::placeholders::_1);

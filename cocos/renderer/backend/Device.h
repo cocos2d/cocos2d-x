@@ -30,7 +30,6 @@
 #include "RenderPassDescriptor.h"
 #include "Texture.h"
 #include "DepthStencilState.h"
-#include "BlendState.h"
 #include "ProgramCache.h"
 #include "ShaderCache.h"
 #include "DeviceInfo.h"
@@ -98,18 +97,11 @@ public:
     virtual DepthStencilState* createDepthStencilState(const DepthStencilDescriptor& descriptor) = 0;
 
     /**
-     * Create an auto released BlendState object.
-     * @param descriptor Specifies blend description.
-     * @return An auto release BlendState object.
-     */
-    virtual BlendState* createBlendState(const BlendDescriptor& descriptor) = 0;
-
-    /**
      * New a RenderPipeline object, not auto released.
      * @param descriptor Specifies render pipeline description.
      * @return A RenderPipeline object.
      */
-    virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) = 0;
+    virtual RenderPipeline* newRenderPipeline() = 0;
 
     /**
      * This property controls whether or not the drawables'

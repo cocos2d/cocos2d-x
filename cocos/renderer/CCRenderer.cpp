@@ -168,8 +168,6 @@ Renderer::Renderer()
 
     // for the batched TriangleCommand
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
-    
-    _renderPipelineCache.reserve(100);
 }
 
 Renderer::~Renderer()
@@ -180,12 +178,7 @@ Renderer::~Renderer()
     free(_triBatchesToDraw);
     
     CC_SAFE_RELEASE(_commandBuffer);
-    
-    for (auto pipeline :_renderPipelineCache)
-    {
-        pipeline.second->release();
-    }
-    _renderPipelineCache.clear();
+    CC_SAFE_RELEASE(_renderPipeline);
 }
 
 void Renderer::init()
@@ -197,6 +190,8 @@ void Renderer::init()
 
     auto device = backend::Device::getInstance();
     _commandBuffer = device->newCommandBuffer();
+    _renderPipeline = device->newRenderPipeline();
+    _commandBuffer->setRenderPipeline(_renderPipeline);
 }
 
 void Renderer::addCommand(RenderCommand* command)
@@ -634,7 +629,7 @@ void Renderer::drawBatchedTriangles()
     for (int i = 0; i < batchesTotal; ++i)
     {
         beginRenderPass(_triBatchesToDraw[i].cmd);
-        _commandBuffer->setVertexBuffer(0, _vertexBuffer);
+        _commandBuffer->setVertexBuffer(_vertexBuffer);
         _commandBuffer->setIndexBuffer(_indexBuffer);
         auto& pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
         _commandBuffer->setProgramState(pipelineDescriptor.programState);
@@ -664,7 +659,7 @@ void Renderer::drawCustomCommand(RenderCommand *command)
     if (cmd->getBeforeCallback()) cmd->getBeforeCallback()();
 
     beginRenderPass(command);
-    _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
+    _commandBuffer->setVertexBuffer(cmd->getVertexBuffer());
     _commandBuffer->setProgramState(cmd->getPipelineDescriptor().programState);
     
     auto drawType = cmd->getDrawType();
@@ -752,122 +747,19 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     return ret;
 }
 
-backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor)
-{
-    struct
-    {
-        void* program;
-        unsigned int vertexLayoutInfo[32];
-        backend::PixelFormat colorAttachment;
-        backend::PixelFormat depthAttachment;
-        backend::PixelFormat stencilAttachment;
-        bool blendEnabled;
-        unsigned int writeMask;
-        unsigned int rgbBlendOperation;
-        unsigned int alphaBlendOperation;
-        unsigned int sourceRGBBlendFactor;
-        unsigned int destinationRGBBlendFactor;
-        unsigned int sourceAlphaBlendFactor;
-        unsigned int destinationAlphaBlendFactor;
-    }hashMe;
-    
-    memset(&hashMe, 0, sizeof(hashMe));
-    hashMe.program = renderPipelineDescriptor.programState->getProgram();
-    hashMe.colorAttachment = renderPipelineDescriptor.colorAttachmentsFormat[0];
-    hashMe.depthAttachment = renderPipelineDescriptor.depthAttachmentFormat;
-    hashMe.stencilAttachment = renderPipelineDescriptor.stencilAttachmentFormat;
-    hashMe.blendEnabled = blendDescriptor.blendEnabled;
-    hashMe.writeMask = (unsigned int)blendDescriptor.writeMask;
-    hashMe.rgbBlendOperation = (unsigned int)blendDescriptor.rgbBlendOperation;
-    hashMe.alphaBlendOperation = (unsigned int)blendDescriptor.alphaBlendOperation;
-    hashMe.sourceRGBBlendFactor = (unsigned int)blendDescriptor.sourceRGBBlendFactor;
-    hashMe.destinationRGBBlendFactor = (unsigned int)blendDescriptor.destinationRGBBlendFactor;
-    hashMe.sourceAlphaBlendFactor = (unsigned int)blendDescriptor.sourceAlphaBlendFactor;
-    hashMe.destinationAlphaBlendFactor = (unsigned int)blendDescriptor.destinationAlphaBlendFactor;
-    int index = 0;
-    for(const auto& vertexLayout : *renderPipelineDescriptor.vertexLayouts)
-    {
-        if (!vertexLayout.isValid())
-            continue;
-        
-        const auto& attributes = vertexLayout.getAttributes();
-        for (const auto& it : attributes)
-        {
-            auto &attribute = it.second;
-            /*
-             stepFunction:1     stride:15       offest:10       format:5        needNormalized:1
-                bit31           bit30 ~ bit16   bit15 ~ bit6    bit5 ~ bit1     bit0
-             */
-            hashMe.vertexLayoutInfo[index++] =
-                ((unsigned int)vertexLayout.getVertexStepMode() & 0x1) << 31 |
-                ((unsigned int)(vertexLayout.getStride() & 0x7FFF)) << 16 |
-                ((unsigned int)attribute.offset & 0x3FF) << 6 |
-                ((unsigned int)attribute.format & 0x1F) << 1 |
-                ((unsigned int)attribute.needToBeNormallized & 0x1);
-        }
-    }
-    
-    unsigned int hash = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
-    auto iter = _renderPipelineCache.find(hash);
-    if (_renderPipelineCache.end() == iter)
-    {
-        auto renderPipeline = backend::Device::getInstance()->newRenderPipeline(renderPipelineDescriptor);
-        _renderPipelineCache.emplace(hash, renderPipeline);
-        return renderPipeline;
-    }
-    else
-    {
-        return iter->second;
-    }
-}
-
 void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, const backend::RenderPassDescriptor& renderPassDescriptor)
 {
-    backend::RenderPipelineDescriptor renderPipelineDescriptor;
-    renderPipelineDescriptor.programState = pipelineDescriptor.programState;
-    renderPipelineDescriptor.vertexLayouts->push_back(pipelineDescriptor.vertexLayout);
-    
     auto device = backend::Device::getInstance();
-    auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
-    renderPipelineDescriptor.blendState = blendState;
-    
-    if (renderPassDescriptor.needColorAttachment)
-    {
-        // FIXME: now just handle color attachment 0.
-        if (renderPassDescriptor.colorAttachmentsTexture[0])
-            renderPipelineDescriptor.colorAttachmentsFormat[0] = renderPassDescriptor.colorAttachmentsTexture[0]->getTextureFormat();
-    }
-    
+    _renderPipeline->update(pipelineDescriptor, renderPassDescriptor);
     backend::DepthStencilState* depthStencilState = nullptr;
     auto needDepthStencilAttachment = renderPassDescriptor.depthTestEnabled || renderPassDescriptor.stencilTestEnabled;
     if (needDepthStencilAttachment)
     {
         depthStencilState = device->createDepthStencilState(_depthStencilDescriptor);
-        
-        if(renderPassDescriptor.depthAttachmentTexture)
-        {
-            renderPipelineDescriptor.depthAttachmentFormat = renderPassDescriptor.depthAttachmentTexture->getTextureFormat();
-        }
-        else
-        {
-            renderPipelineDescriptor.depthAttachmentFormat = PixelFormat::D24S8;
-        }
-    
-        if (renderPassDescriptor.stencilAttachmentTexture)
-        {
-            renderPipelineDescriptor.stencilAttachmentFormat = renderPassDescriptor.stencilAttachmentTexture->getTextureFormat();
-        }
-        else
-        {
-            renderPipelineDescriptor.stencilAttachmentFormat = PixelFormat::D24S8;
-        }
     }
-
-    _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));
     _commandBuffer->setDepthStencilState(depthStencilState);
-#ifndef CC_USE_METAL
-    // Extra layout info is required in OpenGL, which can not be quried from ProgramGL
-    _commandBuffer->updateVertexLayouts(renderPipelineDescriptor.vertexLayouts);
+#ifdef CC_USE_METAL
+    _commandBuffer->setRenderPipeline(_renderPipeline);
 #endif
 }
 

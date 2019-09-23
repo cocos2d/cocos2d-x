@@ -29,7 +29,6 @@
 #include "ShaderModuleMTL.h"
 #include "DepthStencilStateMTL.h"
 #include "TextureMTL.h"
-#include "BlendStateMTL.h"
 #include "Utils.h"
 #include "ProgramMTL.h"
 #include "DeviceInfoMTL.h"
@@ -124,18 +123,9 @@ DepthStencilState* DeviceMTL::createDepthStencilState(const DepthStencilDescript
     return ret;
 }
 
-BlendState* DeviceMTL::createBlendState(const BlendDescriptor& descriptor)
+RenderPipeline* DeviceMTL::newRenderPipeline()
 {
-    auto ret = new (std::nothrow) BlendStateMTL(descriptor);
-    if (ret)
-        ret->autorelease();
-    
-    return ret;
-}
-
-RenderPipeline* DeviceMTL::newRenderPipeline(const RenderPipelineDescriptor& descriptor)
-{
-    return new (std::nothrow) RenderPipelineMTL(_mtlDevice, descriptor);
+    return new (std::nothrow) RenderPipelineMTL(_mtlDevice);
 }
 
 Program* DeviceMTL::newProgram(const std::string& vertexShader, const std::string& fragmentShader)

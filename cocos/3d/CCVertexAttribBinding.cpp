@@ -30,7 +30,6 @@
 NS_CC_BEGIN
 
 
-static uint32_t __maxVertexAttribs = 0;
 static std::vector<VertexAttribBinding*> __vertexAttribBindingCache;
 
 VertexAttribBinding::VertexAttribBinding() :
@@ -65,7 +64,6 @@ VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, P
         if (b->_meshIndexData == meshIndexData && b->_programState == pass->getProgramState())
         {
             // Found a match!
-            command->getPipelineDescriptor().vertexLayout = *b->_vertexLayout;
             return b;
         }
     }
@@ -87,7 +85,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass, MeshCom
 
     auto programState = pass->getProgramState();
 
-    _vertexLayout = &command->getPipelineDescriptor().vertexLayout;
+    _vertexLayout = programState->getVertexLayout();
 
     _meshIndexData = meshIndexData;
     _meshIndexData->retain();

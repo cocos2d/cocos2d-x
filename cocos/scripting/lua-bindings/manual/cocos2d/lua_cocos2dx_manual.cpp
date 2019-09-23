@@ -448,7 +448,7 @@ static int tolua_cocos2d_Menu_create(lua_State* tolua_S)
     if (argc > 0 )
     {
         Vector<MenuItem*> items;
-        uint32_t i = 1;
+        int i = 1;
         while (i <= argc)
         {
 #if COCOS2D_DEBUG >= 1
@@ -598,7 +598,7 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
             return 0;
         }
 
-        for (uint32_t i = 0; i < argc; ++i)
+        for (auto i = 0; i < argc; ++i)
         {
 #if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(tolua_S, i + 2,"cc.MenuItem",0,&tolua_err) )
@@ -1414,7 +1414,7 @@ static int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* L)
         if (!tolua_isnumber(L, 2, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        double interval = tolua_tonumber(L, 2, 0);
+        float interval = (float)tolua_tonumber(L, 2, 0);
         Device::setAccelerometerInterval(interval);
         return 0;
     }
@@ -1997,7 +1997,7 @@ int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
         }
         else
         {
-            uint32_t i = 1;
+            int i = 1;
             while (i <= argc)
             {
 #if COCOS2D_DEBUG >= 1
@@ -2798,7 +2798,7 @@ static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
     if (argc > 0)
     {
         Vector<FiniteTimeAction*> array;
-        uint32_t i = 1;
+        int i = 1;
 
         if (1 == argc && tolua_istable(tolua_S, 2, 0, &tolua_err))
         {
@@ -2890,7 +2890,7 @@ int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
             }
 
             CC_SAFE_DELETE_ARRAY(arr);
-            CardinalSplineBy* tolua_ret = CardinalSplineBy::create(dur, points, ten);
+            CardinalSplineBy* tolua_ret = CardinalSplineBy::create((float)dur, points, (float)ten);
             if (NULL != tolua_ret)
             {
                 int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -2954,7 +2954,7 @@ int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
             }
 
             CC_SAFE_DELETE_ARRAY(arr);
-            CatmullRomBy* tolua_ret = CatmullRomBy::create(dur, points);
+            CatmullRomBy* tolua_ret = CatmullRomBy::create((float)dur, points);
             if (NULL != tolua_ret)
             {
                 int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -3018,7 +3018,7 @@ int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
             }
 
             CC_SAFE_DELETE_ARRAY(arr);
-            CatmullRomTo* tolua_ret = CatmullRomTo::create(dur, points);
+            CatmullRomTo* tolua_ret = CatmullRomTo::create((float)dur, points);
             if (NULL != tolua_ret)
             {
                 int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -3079,7 +3079,7 @@ int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
         config.endPosition = arr[2];
         CC_SAFE_DELETE_ARRAY(arr);
 
-        BezierBy* tolua_ret = BezierBy::create(t, config);
+        BezierBy* tolua_ret = BezierBy::create((float)t, config);
         if (NULL != tolua_ret)
         {
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -3139,7 +3139,7 @@ int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
         config.endPosition = arr[2];
         CC_SAFE_DELETE_ARRAY(arr);
 
-        BezierTo* tolua_ret = BezierTo::create(t, config);
+        BezierTo* tolua_ret = BezierTo::create((float)t, config);
         if (NULL != tolua_ret)
         {
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -3194,7 +3194,7 @@ static int tolua_cocos2dx_DrawNode_drawPolygon(lua_State* tolua_S)
             goto tolua_lerror;
         }
 #endif
-        size_t size = lua_tonumber(tolua_S, 3);
+        int size = lua_tointeger(tolua_S, 3);
         if ( size > 0 )
         {
             cocos2d::Vec2* points = new (std::nothrow) cocos2d::Vec2[size];
@@ -3287,7 +3287,7 @@ int tolua_cocos2dx_DrawNode_drawSolidPoly(lua_State* tolua_S)
             if (NULL == points)
                 return 0;
 
-            for (int i = 0; i < size; i++)
+            for (unsigned int i = 0; i < size; i++)
             {
                 lua_pushnumber(tolua_S,i + 1);
                 lua_gettable(tolua_S,2);
@@ -3366,7 +3366,7 @@ int tolua_cocos2dx_DrawNode_drawPoly(lua_State* tolua_S)
             if (NULL == points)
                 return 0;
 
-            for (int i = 0; i < size; i++)
+            for (unsigned int i = 0; i < size; i++)
             {
                 lua_pushnumber(tolua_S,i + 1);
                 lua_gettable(tolua_S,2);
@@ -3464,7 +3464,7 @@ int tolua_cocos2dx_DrawNode_drawCardinalSpline(lua_State* tolua_S)
         ok &= luaval_to_color4f(tolua_S, 5, &arg3, "cc.DrawNode:drawCardinalSpline");
         if(!ok)
             return 0;
-        self->drawCardinalSpline(config, arg1, arg2, arg3);
+        self->drawCardinalSpline(config, (float)arg1, arg2, arg3);
         return 0;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.DrawNode:drawCardinalSpline",argc, 4);
@@ -3574,7 +3574,7 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
             if (NULL == points)
                 return 0;
 
-            for (int i = 0; i < size; i++)
+            for (unsigned int i = 0; i < size; i++)
             {
                 lua_pushnumber(tolua_S,i + 1);
                 lua_gettable(tolua_S,2);
@@ -3614,7 +3614,7 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
             if (nullptr == points)
                 return 0;
 
-            for (int i = 0; i < size; i++)
+            for (unsigned int i = 0; i < size; i++)
             {
                 lua_pushnumber(tolua_S,i + 1);
                 lua_gettable(tolua_S,2);
@@ -6153,8 +6153,8 @@ static int lua_cocos2dx_Label_createWithTTF00(lua_State* L)
             return 0;
 
 
-        int alignment = tolua_tonumber(L, 4, 1);
-        int lineSize  = tolua_tonumber(L, 5, 0);
+        int alignment = (int)tolua_tonumber(L, 4, 1);
+        int lineSize  = (int)tolua_tonumber(L, 5, 0);
         cocos2d::Label* ret = cocos2d::Label::createWithTTF(ttfConfig, text, static_cast<TextHAlignment>(alignment), lineSize);
         int ID = ret ? (int)(ret->_ID) : -1;
         int* luaID = ret ? &(ret->_luaID) : nullptr;
@@ -6197,7 +6197,7 @@ static int lua_cocos2dx_Label_createWithTTF01(lua_State* L)
         {
             std::string text = tolua_tostring(L, 2, "");
             std::string fontFile = tolua_tostring(L, 3, "");
-            float fontSize   = tolua_tonumber(L, 4, 0);
+            float fontSize   = (float)tolua_tonumber(L, 4, 0);
             cocos2d::Size dimensions = cocos2d::Size::ZERO;
             if (lua_istable(L, 5))
             {
@@ -6420,7 +6420,7 @@ static int lua_cocos2dx_Console_addCommand(lua_State* tolua_S)
             handler = (  toluafix_ref_function(tolua_S,3,0));
             ScriptHandlerMgr::getInstance()->addCustomHandler((void*)cobj, handler);
 
-            struct Console::Command outValue = {
+            Console::Command outValue = {
                 name,
                 help,
                 [=](int fd, const std::string& args)
@@ -6642,7 +6642,7 @@ int lua_cocos2dx_TMXLayer_setTiles(lua_State* tolua_S)
             return 0;
         }
 
-        for (int i = 1 ; i <= len; i++)
+        for (size_t i = 1 ; i <= len; i++)
         {
             arg0[i - 1] = (uint32_t)tolua_tofieldnumber(tolua_S, 2, i, 0);
         }
@@ -7282,75 +7282,6 @@ int lua_cocos2dx_set_PipelineDescriptor_programState(lua_State* tolua_S)
 #endif
 }
 
-
-
-int lua_cocos2dx_get_PipelineDescriptor_vertexLayout(lua_State* tolua_S)
-{
-    cocos2d::PipelineDescriptor* cobj = nullptr;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S, 1, "cc.PipelineDescriptor", 0, &tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::PipelineDescriptor*)  tolua_tousertype(tolua_S, 1, 0);
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == cobj)
-    {
-        tolua_error(tolua_S, "invalid 'self' in function 'lua_cocos2dx_get_PipelineDescriptor_vertexLayout'\n", nullptr);
-        return 0;
-    }
-#endif
-    tolua_pushusertype(tolua_S, &cobj->vertexLayout, "ccb.VertexLayout");
-    return 1;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_get_PipelineDescriptor_vertexLayout'.", &tolua_err);
-                return 0;
-#endif
-}
-
-
-
-int lua_cocos2dx_set_PipelineDescriptor_vertexLayout(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::PipelineDescriptor* self = nullptr;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S, 1, "cc.PipelineDescriptor", 0, &tolua_err)) goto tolua_lerror;
-#endif
-
-    self = (cocos2d::PipelineDescriptor*)  tolua_tousertype(tolua_S, 1, 0);
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == self)
-    {
-        tolua_error(tolua_S, "invalid 'self' in function 'lua_cocos2dx_set_PipelineDescriptor_vertexLayout'\n", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (1 == argc)
-    {
-        cocos2d::backend::VertexLayout *layout = nullptr;
-        luaval_to_object<cocos2d::backend::VertexLayout>(tolua_S, 2, "ccb.VertexLayout", &layout, "lua_cocos2dx_set_PipelineDescriptor_programState");
-        self->vertexLayout = *layout;
-        return 0;
-    }
-
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_set_PipelineDescriptor_vertexLayout'.", &tolua_err);
-                return 0;
-#endif
-}
-
 static void extendPolygonInfo(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "cc.PolygonInfo");
@@ -7377,9 +7308,66 @@ static void extendPipelineDescriptor(lua_State *tolua_S)
     if (lua_istable(tolua_S, -1))
     {
         tolua_variable(tolua_S, "programState", lua_cocos2dx_get_PipelineDescriptor_programState, lua_cocos2dx_set_PipelineDescriptor_programState);
-        tolua_variable(tolua_S, "vertexLayout", lua_cocos2dx_get_PipelineDescriptor_vertexLayout, lua_cocos2dx_set_PipelineDescriptor_vertexLayout);
     }
     lua_pop(tolua_S, 1);
+}
+
+
+static int lua_cocos2dx_backend_ProgramState_getUniformLocation(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::ProgramState* cobj = nullptr;
+    bool ok = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S, 1, "ccb.ProgramState", 0, &tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::backend::ProgramState*)tolua_tousertype(tolua_S, 1, 0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_backend_ProgramState_getUniformLocation'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S) - 1;
+    do {
+        if (argc == 1) {
+            if (lua_isstring(tolua_S, -1))
+            {
+                std::string arg0;
+                ok &= luaval_to_std_string(tolua_S, 2, &arg0, "ccb.ProgramState:getUniformLocation");
+
+                if (!ok) { break; }
+                cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
+                uniformLocation_to_luaval(tolua_S, ret); 
+                return 1;
+            }
+            else if (lua_isnumber(tolua_S, -1))
+            {
+                cocos2d::backend::Uniform arg0;
+                ok &= luaval_to_int32(tolua_S, 2, (int *)&arg0, "ccb.ProgramState:getUniformLocation");
+
+                if (!ok) { break; }
+                cocos2d::backend::UniformLocation ret = cobj->getUniformLocation(arg0);
+                uniformLocation_to_luaval(tolua_S, ret);
+                return 1;
+            }
+        }
+    } while (0);
+    
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.ProgramState:getUniformLocation", argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_backend_ProgramState_getUniformLocation'.", &tolua_err);
+#endif
+
+    return 0;
 }
 
 static int lua_cocos2dx_ProgramState_setUniform(lua_State *tolua_S)
@@ -7408,23 +7396,23 @@ static int lua_cocos2dx_ProgramState_setUniform(lua_State *tolua_S)
     {
         cocos2d::backend::UniformLocation location;
         
-        if (lua_isstring(tolua_S, -2))
+        if (lua_isstring(tolua_S, 2))
         {
-            location = self->getUniformLocation(lua_tostring(tolua_S, -2));
+            location = self->getUniformLocation(lua_tostring(tolua_S, 2));
         } 
-        else if (lua_istable(tolua_S, -2))
+        else if (lua_istable(tolua_S, 2))
         {
-            ok &= luaval_to_uniformLocation(tolua_S, -2, location, "lua_cocos2dx_ProgramState_setUniform");
+            ok &= luaval_to_uniformLocation(tolua_S, 2, location, "ccb.ProgramState:setUniform");
         }
 
-        if (ok & lua_istable(tolua_S, -1))
+        if (ok & lua_istable(tolua_S, 3))
         {
-            int len = lua_objlen(tolua_S, -1);
+            int len = lua_objlen(tolua_S, 3);
             std::vector<uint8_t> buffer(len);
 
             for (int i = 0; i < len; i++)
             {
-                lua_rawgeti(tolua_S, -1, i + 1);
+                lua_rawgeti(tolua_S, 3, i + 1);
                 buffer[i] = lua_tointeger(tolua_S, -1);
                 lua_pop(tolua_S, 1);
             }
@@ -7459,6 +7447,7 @@ static void extendProgramState(lua_State *tolua_S)
     if (lua_istable(tolua_S, -1))
     {
         tolua_function(tolua_S, "setUniform", lua_cocos2dx_ProgramState_setUniform);
+        tolua_function(tolua_S, "getUniformLocation", lua_cocos2dx_backend_ProgramState_getUniformLocation);
     }
     tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
@@ -7524,7 +7513,7 @@ int lua_cocos2dx_AutoPolygon_generatePolygon(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AutoPolygon_generatePolygon'", nullptr);
             return 0;
         }
-        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, (float)arg2));
         object_to_luaval<cocos2d::PolygonInfo>(tolua_S, "cc.PolygonInfo",(cocos2d::PolygonInfo*)ret);
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         return 1;
@@ -7544,7 +7533,7 @@ int lua_cocos2dx_AutoPolygon_generatePolygon(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AutoPolygon_generatePolygon'", nullptr);
             return 0;
         }
-        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2, arg3));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, (float)arg2, (float)arg3));
         object_to_luaval<cocos2d::PolygonInfo>(tolua_S, "cc.PolygonInfo",(cocos2d::PolygonInfo*)ret);
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         return 1;
@@ -7841,10 +7830,10 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
             if (!ok)
                 return 0;
 
-            x = tolua_tonumber(tolua_S, 2, 0);
-            y = tolua_tonumber(tolua_S, 3, 0);
-            z = tolua_tonumber(tolua_S, 4, 0);
-            w = tolua_tonumber(tolua_S, 5, 0);
+            x = (float)tolua_tonumber(tolua_S, 2, 0);
+            y = (float)tolua_tonumber(tolua_S, 3, 0);
+            z = (float)tolua_tonumber(tolua_S, 4, 0);
+            w = (float)tolua_tonumber(tolua_S, 5, 0);
 
             mat.transformVector(x,y,z,w, &dst);
             vec3_to_luaval(tolua_S, dst);
@@ -8266,7 +8255,7 @@ int tolua_cocos2d_Mat4_createRotationZ(lua_State* tolua_S)
             ok &= luaval_to_mat4(tolua_S, 1, &mat);
             if (!ok)
                 return 0;
-            angle = lua_tonumber(tolua_S, 2);
+            angle = (float)lua_tonumber(tolua_S, 2);
             cocos2d::Mat4::createRotationZ(angle, &mat);
             mat4_to_luaval(tolua_S, mat);
             return 1;
@@ -8796,7 +8785,7 @@ static int tolua_cocos2d_bytearray_intv(lua_State *L)
             }
             lua_pop(L, 1);
             lua_newtable(L);
-            for (auto idx = 0; idx < arg.size(); idx++)
+            for (size_t idx = 0; idx < arg.size(); idx++)
             {
                 lua_pushnumber(L, arg[idx]);
                 lua_rawseti(L, 1, idx + 1);
@@ -8843,7 +8832,7 @@ static int tolua_cocos2d_bytearray_floatv(lua_State *L)
             }
             lua_pop(L, 1);
             lua_newtable(L);
-            for (auto idx = 0; idx < arg.size(); idx++)
+            for (size_t idx = 0; idx < arg.size(); idx++)
             {
                 lua_pushnumber(L, arg[idx]);
                 lua_rawseti(L, 1, idx + 1);

@@ -107,12 +107,12 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
     setAnchorPoint(Vec2(0.5f, 0.5f));
     
     // init custom command
-    auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
-    layout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
+    auto layout = _programState->getVertexLayout();
+    layout->setAttribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
 
     float w = SIZE_X, h = SIZE_Y;
     Vec2 vertices[6] = { Vec2(0,0), Vec2(w,0), Vec2(w,h), Vec2(0,0), Vec2(0,h), Vec2(w,h) };
-    layout.setLayout(sizeof(Vec2));
+    layout->setLayout(sizeof(Vec2));
 
     /*
      * TODO: the Y-coordinate of subclasses are flipped in metal
@@ -202,6 +202,12 @@ void ShaderNode::updateUniforms()
     _locTime        = _programState->getUniformLocation("u_Time");
     _locSinTime     = _programState->getUniformLocation("u_SinTime");
     _locCosTime     = _programState->getUniformLocation("u_CosTime");
+    _locScreenSize  = _programState->getUniformLocation("u_screenSize");
+    
+    const Vec2& frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
+    float retinaFactor = Director::getInstance()->getOpenGLView()->getRetinaFactor();
+    auto screenSizeInPixels = frameSize * retinaFactor;
+    _programState->setUniform(_locScreenSize, &screenSizeInPixels, sizeof(screenSizeInPixels));
 }
 
 /// ShaderMonjori
@@ -598,8 +604,13 @@ bool ShaderRetroEffect::init()
         char * fragSource = (char*)fragStr.c_str();
 
         auto p = new backend::ProgramState(positionTextureColor_vert, fragSource);
-
         auto director = Director::getInstance();
+        const auto& screenSizeLocation = p->getUniformLocation("u_screenSize");
+        const auto& frameSize = director->getOpenGLView()->getFrameSize();
+        float retinaFactor = director->getOpenGLView()->getRetinaFactor();
+        auto screenSizeInPixels = frameSize * retinaFactor;
+        p->setUniform(screenSizeLocation, &screenSizeInPixels, sizeof(screenSizeInPixels));
+        
         auto s = director->getWinSize();
 
         _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");

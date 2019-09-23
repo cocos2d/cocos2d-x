@@ -62,6 +62,8 @@ public:
 #endif
     
     virtual bool createDirectory(const std::string& path) const override;
+    virtual std::string getPathForDirectory(const std::string &dir, const std::string &resolutionDiretory, const std::string &searchPath) const override;
+
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
     virtual bool removeDirectory(const std::string& dirPath) const override;

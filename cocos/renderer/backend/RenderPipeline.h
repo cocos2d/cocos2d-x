@@ -27,9 +27,10 @@
 #include "Macros.h"
 #include "Types.h"
 #include "base/CCRef.h"
+#include "renderer/CCPipelineDescriptor.h"
+#include "renderer/backend/RenderPassDescriptor.h"
 
 CC_BACKEND_BEGIN
-
 /**
  * @addtogroup _backend
  * @{
@@ -40,6 +41,9 @@ CC_BACKEND_BEGIN
  */
 class RenderPipeline : public cocos2d::Ref
 {
+public:
+    virtual void update(const PipelineDescriptor & pipelineDescirptor, const RenderPassDescriptor& renderpassDescriptor) = 0;
+    
 protected:
     virtual ~RenderPipeline() = default;
 };

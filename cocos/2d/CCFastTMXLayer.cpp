@@ -141,8 +141,8 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
     {
         Size s = Director::getInstance()->getVisibleSize();
         const Vec2 &anchor = getAnchorPoint();
-        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * anchor.x,
-                     Camera::getVisitingCamera()->getPositionY() - s.height * anchor.y,
+        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * (anchor.x == 0.0f ? 0.5f : anchor.x),
+                         Camera::getVisitingCamera()->getPositionY() - s.height * (anchor.y == 0.0f ? 0.5f : anchor.y),
                      s.width,
                      s.height);
 
@@ -420,24 +420,24 @@ void TMXLayer::updatePrimitives()
                 auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
                 pipelineDescriptor.programState = programState;
             }
-            auto& vertexLayout = pipelineDescriptor.vertexLayout;
+            auto vertexLayout = pipelineDescriptor.programState->getVertexLayout();
             const auto& attributeInfo = pipelineDescriptor.programState->getProgram()->getActiveAttributes();
             auto iterAttribute = attributeInfo.find("a_position");
             if(iterAttribute != attributeInfo.end())
             {
-                vertexLayout.setAttribute("a_position", iterAttribute->second.location, backend::VertexFormat::FLOAT3, 0, false);
+                vertexLayout->setAttribute("a_position", iterAttribute->second.location, backend::VertexFormat::FLOAT3, 0, false);
             }
             iterAttribute = attributeInfo.find("a_texCoord");
             if(iterAttribute != attributeInfo.end())
             {
-                vertexLayout.setAttribute("a_texCoord", iterAttribute->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
+                vertexLayout->setAttribute("a_texCoord", iterAttribute->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
             }
             iterAttribute = attributeInfo.find("a_color");
             if(iterAttribute != attributeInfo.end())
             {
-                vertexLayout.setAttribute("a_color", iterAttribute->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+                vertexLayout->setAttribute("a_color", iterAttribute->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
             }
-            vertexLayout.setLayout(sizeof(V3F_C4B_T2F));
+            vertexLayout->setLayout(sizeof(V3F_C4B_T2F));
             _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
             _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
             pipelineDescriptor.programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());

@@ -340,12 +340,12 @@ bool luaval_to_vec2(lua_State* L,int lo,cocos2d::Vec2* outValue, const char* fun
     {
         lua_pushstring(L, "x");
         lua_gettable(L, lo);
-        outValue->x = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->x = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "y");
         lua_gettable(L, lo);
-        outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->y = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
     }
     return ok;
@@ -372,17 +372,17 @@ bool luaval_to_vec3(lua_State* L,int lo,cocos2d::Vec3* outValue, const char* fun
     {
         lua_pushstring(L, "x");
         lua_gettable(L, lo);
-        outValue->x = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->x = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "y");
         lua_gettable(L, lo);
-        outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->y = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "z");
         lua_gettable(L, lo);
-        outValue->z = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->z = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
     }
     return ok;
@@ -409,22 +409,22 @@ bool luaval_to_vec4(lua_State* L,int lo,cocos2d::Vec4* outValue, const char* fun
     {
         lua_pushstring(L, "x");
         lua_gettable(L, lo);
-        outValue->x = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->x = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "y");
         lua_gettable(L, lo);
-        outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->y = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "z");
         lua_gettable(L, lo);
-        outValue->z = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->z = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "w");
         lua_gettable(L, lo);
-        outValue->w = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->w = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
     }
     return ok;
@@ -490,17 +490,17 @@ bool luaval_to_physics_material(lua_State* L,int lo,PhysicsMaterial* outValue, c
     {
         lua_pushstring(L, "density");
         lua_gettable(L, lo);
-        outValue->density = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->density = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "restitution");
         lua_gettable(L, lo);
-        outValue->restitution = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->restitution = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "friction");
         lua_gettable(L, lo);
-        outValue->friction = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->friction = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
     }
     return ok;
@@ -580,12 +580,12 @@ bool luaval_to_size(lua_State* L,int lo,Size* outValue, const char* funcName)
     {
         lua_pushstring(L, "width");  /* L: paramStack key */
         lua_gettable(L,lo);/* L: paramStack paramStack[lo][key] */
-        outValue->width = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->width = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);/* L: paramStack*/
 
         lua_pushstring(L, "height");
         lua_gettable(L,lo);
-        outValue->height = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->height = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
     }
 
@@ -612,22 +612,22 @@ bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcName)
     {
         lua_pushstring(L, "x");
         lua_gettable(L,lo);
-        outValue->origin.x = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->origin.x = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
 
         lua_pushstring(L, "y");
         lua_gettable(L,lo);
-        outValue->origin.y = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->origin.y = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
 
         lua_pushstring(L, "width");
         lua_gettable(L,lo);
-        outValue->size.width = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->size.width = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
 
         lua_pushstring(L, "height");
         lua_gettable(L,lo);
-        outValue->size.height = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->size.height = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
     }
 
@@ -654,22 +654,22 @@ bool luaval_to_color4b(lua_State* L,int lo,Color4B* outValue, const char* funcNa
     {
         lua_pushstring(L, "r");
         lua_gettable(L,lo);
-        outValue->r = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->r = lua_isnil(L,-1) ? 0 : static_cast<uint8_t>(lua_tonumber(L,-1));
         lua_pop(L,1);
 
         lua_pushstring(L, "g");
         lua_gettable(L,lo);
-        outValue->g = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->g = lua_isnil(L,-1) ? 0 : static_cast<uint8_t>(lua_tonumber(L,-1));
         lua_pop(L,1);
 
         lua_pushstring(L, "b");
         lua_gettable(L,lo);
-        outValue->b = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->b = lua_isnil(L,-1) ? 0 : static_cast<uint8_t>(lua_tonumber(L,-1));
         lua_pop(L,1);
 
         lua_pushstring(L, "a");
         lua_gettable(L,lo);
-        outValue->a = lua_isnil(L,-1) ? 255 : lua_tonumber(L,-1);
+        outValue->a = lua_isnil(L,-1) ? 255 : static_cast<uint8_t>(lua_tonumber(L,-1));
         lua_pop(L,1);
     }
 
@@ -696,22 +696,22 @@ bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue, const char* funcNa
     {
         lua_pushstring(L, "r");
         lua_gettable(L,lo);
-        outValue->r = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->r = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
 
         lua_pushstring(L, "g");
         lua_gettable(L,lo);
-        outValue->g = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->g = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
 
         lua_pushstring(L, "b");
         lua_gettable(L,lo);
-        outValue->b = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->b = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
 
         lua_pushstring(L, "a");
         lua_gettable(L,lo);
-        outValue->a = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->a = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
     }
 
@@ -738,17 +738,17 @@ bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcNa
     {
         lua_pushstring(L, "r");
         lua_gettable(L,lo);
-        outValue->r = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->r = lua_isnil(L,-1) ? 0 : static_cast<uint8_t>(lua_tonumber(L,-1));
         lua_pop(L,1);
 
         lua_pushstring(L, "g");
         lua_gettable(L,lo);
-        outValue->g = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->g = lua_isnil(L,-1) ? 0 : static_cast<uint8_t>(lua_tonumber(L,-1));
         lua_pop(L,1);
 
         lua_pushstring(L, "b");
         lua_gettable(L,lo);
-        outValue->b = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->b = lua_isnil(L,-1) ? 0 : static_cast<uint8_t>(lua_tonumber(L,-1));
         lua_pop(L,1);
     }
 
@@ -945,7 +945,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
             lua_gettable(L,lo);
             if (!lua_isnil(L,-1))
             {
-                outValue->_shadow._shadowOpacity = lua_tonumber(L,-1);
+                outValue->_shadow._shadowOpacity = (float)lua_tonumber(L,-1);
             }
             lua_pop(L,1);
         }
@@ -1011,7 +1011,7 @@ bool luaval_to_ttfconfig(lua_State* L,int lo, cocos2d::TTFConfig* outValue, cons
 
         lua_pushstring(L, "fontSize");
         lua_gettable(L,lo);
-        outValue->fontSize = lua_isnumber(L, -1)?(int)lua_tointeger(L, -1) : 0;
+        outValue->fontSize = lua_isnumber(L, -1)?(float)lua_tointeger(L, -1) : 0.0f;
         lua_pop(L,1);
 
         lua_pushstring(L, "glyphs");
@@ -1071,7 +1071,7 @@ bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* 
                 lua_gettable(L,lo);
                 if (tolua_isnumber(L, -1, 0, &tolua_err))
                 {
-                    outValue->m[i] = tolua_tonumber(L, -1, 0);
+                    outValue->m[i] = (float)tolua_tonumber(L, -1, 0);
                 }
                 else
                 {
@@ -1976,22 +1976,22 @@ bool luaval_to_quaternion(lua_State* L,int lo,cocos2d::Quaternion* outValue, con
     {
         lua_pushstring(L, "x");
         lua_gettable(L, lo);
-        outValue->x = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->x = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "y");
         lua_gettable(L, lo);
-        outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->y = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "z");
         lua_gettable(L, lo);
-        outValue->z = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->z = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "w");
         lua_gettable(L, lo);
-        outValue->w = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->w = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
     }
     return ok;
@@ -2017,22 +2017,22 @@ bool luaval_to_texparams(lua_State* L,int lo,cocos2d::Texture2D::TexParams* outV
     {
         lua_pushstring(L, "minFilter");
         lua_gettable(L, lo);
-        outValue->minFilter = utils::toBackendSamplerFilter(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
+        outValue->minFilter = utils::toBackendSamplerFilter(lua_isnil(L, -1) ? 0 : lua_tointeger(L, -1));
         lua_pop(L, 1);
 
         lua_pushstring(L, "magFilter");
         lua_gettable(L, lo);
-        outValue->magFilter = utils::toBackendSamplerFilter(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
+        outValue->magFilter = utils::toBackendSamplerFilter(lua_isnil(L, -1) ? 0 : lua_tointeger(L, -1));
         lua_pop(L, 1);
 
         lua_pushstring(L, "wrapS");
         lua_gettable(L, lo);
-        outValue->sAddressMode = utils::toBackendAddressMode(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
+        outValue->sAddressMode = utils::toBackendAddressMode(lua_isnil(L, -1) ? 0 : lua_tointeger(L, -1));
         lua_pop(L, 1);
 
         lua_pushstring(L, "wrapT");
         lua_gettable(L, lo);
-        outValue->tAddressMode = utils::toBackendAddressMode(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
+        outValue->tAddressMode = utils::toBackendAddressMode(lua_isnil(L, -1) ? 0 : lua_tointeger(L, -1));
         lua_pop(L, 1);
     }
     return ok;
@@ -2054,21 +2054,19 @@ bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::Tex2F* outValue, const char*
         ok = false;
     }
 
-
     if (ok)
     {
         lua_pushstring(L, "u");
         lua_gettable(L, lo);
-        outValue->u = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->u = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_pushstring(L, "v");
         lua_gettable(L, lo);
-        outValue->v = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->v = lua_isnil(L, -1) ? 0.0f : (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
     }
     return ok;
-
 }
 
 
@@ -3286,7 +3284,7 @@ void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node)
 }
 
 
-bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayout& outLayout,  char *message)
+bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayout& outLayout, const char *message)
 {
     if (L == nullptr)
         return false;
@@ -3302,7 +3300,7 @@ bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayou
 }
 
 
-bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::SamplerDescriptor& output, char *message)
+bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::SamplerDescriptor& output, const char *message)
 {
     if (L == nullptr)
         return false;
@@ -3342,17 +3340,23 @@ bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::Sample
     return true;
 }
 
-bool luaval_to_uniformLocation(lua_State* L, int pos, cocos2d::backend::UniformLocation& loc, char *message)
+bool luaval_to_uniformLocation(lua_State* L, int pos, cocos2d::backend::UniformLocation& loc, const char *message)
 {
     if (L == nullptr)
         return false;
 
     lua_pushstring(L, "location");
-    lua_gettable(L, pos);
+    lua_gettable(L, pos );
     if (lua_isnil(L, -1)) {
         CCASSERT(false, "invalidate UniformLocation value");
     }
-    loc.location = lua_tointeger(L, -1);
+    int len = lua_objlen(L, -1);
+    for (int i=0;i<len;i++)
+    {
+        lua_rawgeti(L, -1, i + 1);
+        loc.location[i] = lua_tointeger(L, -1);
+        lua_pop(L, 1);
+    }
     lua_pop(L, 1);
 
     lua_pushstring(L, "shaderStage");
@@ -3371,10 +3375,16 @@ void uniformLocation_to_luaval(lua_State* L, const cocos2d::backend::UniformLoca
         return;
 
     lua_newtable(L);
-
     lua_pushstring(L, "location");
-    lua_pushinteger(L, static_cast<int>(loc.location));
+    lua_newtable(L);
+    for (int i=1;i<=2;i++)
+    {
+        lua_pushnumber(L, i);
+        lua_pushinteger(L, static_cast<int>(loc.location[i-1]));
+        lua_rawset(L, -3);
+    }
     lua_rawset(L, -3);
+
     lua_pushstring(L, "shaderStage");
     lua_pushinteger(L, static_cast<int>(loc.shaderStage));
     lua_rawset(L, -3);

@@ -136,7 +136,7 @@ namespace
             mtlDescritpor.colorAttachments[0].storeAction = MTLStoreActionStore;
         }
         
-        if(descriptor.depthTestEnabled || descriptor.stencilTestEnabled)
+        if(descriptor.needDepthStencilAttachment())
         {
             // Set depth attachment
             {
@@ -220,6 +220,7 @@ CommandBufferMTL::~CommandBufferMTL()
 
 void CommandBufferMTL::beginFrame()
 {
+    _autoReleasePool = [[NSAutoreleasePool alloc] init];
     dispatch_semaphore_wait(_frameBoundarySemaphore, DISPATCH_TIME_FOREVER);
 
     _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
@@ -292,7 +293,7 @@ void CommandBufferMTL::setWinding(Winding winding)
     [_mtlRenderEncoder setFrontFacingWinding:toMTLWinding(winding)];
 }
 
-void CommandBufferMTL::setVertexBuffer(unsigned int index, Buffer* buffer)
+void CommandBufferMTL::setVertexBuffer(Buffer* buffer)
 {
     // Vertex buffer is bound in index 0.
     [_mtlRenderEncoder setVertexBuffer:static_cast<BufferMTL*>(buffer)->getMTLBuffer()
@@ -366,6 +367,7 @@ void CommandBufferMTL::endFrame()
     [_mtlCommandBuffer commit];
     [_mtlCommandBuffer release];
     DeviceMTL::resetCurrentDrawable();
+    [_autoReleasePool drain];
 }
 
 void CommandBufferMTL::afterDraw()
@@ -452,18 +454,22 @@ void CommandBufferMTL::setUniformBuffer() const
         }
         
         // Uniform buffer is bound to index 1.
-        auto vertexUniformBuffer = _programState->getVertexUniformBuffer();
-        if(vertexUniformBuffer.size() > 0)
+        std::size_t bufferSize = 0;
+        char* vertexBuffer = nullptr;
+        _programState->getVertexUniformBuffer(&vertexBuffer, bufferSize);
+        if(vertexBuffer)
         {
-            [_mtlRenderEncoder setVertexBytes:vertexUniformBuffer.data()
-                                       length:vertexUniformBuffer.size() atIndex:1];
+            [_mtlRenderEncoder setVertexBytes:vertexBuffer
+                                       length:bufferSize 
+                                       atIndex:1];
         }
         
-        auto fragmentUniformBuffer = _programState->getFragmentUniformBuffer();
-        if(fragmentUniformBuffer.size() > 0)
+        char* fragmentBuffer = nullptr;
+        _programState->getFragmentUniformBuffer(&fragmentBuffer, bufferSize);
+        if(fragmentBuffer)
         {
-            [_mtlRenderEncoder setFragmentBytes:fragmentUniformBuffer.data()
-                                         length:fragmentUniformBuffer.size()
+            [_mtlRenderEncoder setFragmentBytes:fragmentBuffer
+                                         length:bufferSize
                                         atIndex:1];
         }
     }
