@@ -271,7 +271,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 
         if (!texture || !texture->hasPremultipliedAlpha())
         {
-            _opacityModifyRGB = true;
+            _opacityModifyRGB = false;
             _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         }
         else
