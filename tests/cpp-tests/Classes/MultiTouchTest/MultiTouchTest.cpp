@@ -47,8 +47,8 @@ public:
         DrawNode* drawNode = DrawNode::create();
         auto s = Director::getInstance()->getWinSize();
         Color4F color(touchColor.r/255.0f, touchColor.g/255.0f, touchColor.b/255.0f, 1.0f);
-        drawNode->drawLine(Vec2(0, touchPoint.y), Vec2(s.width, touchPoint.y), color);
-        drawNode->drawLine(Vec2(touchPoint.x, 0), Vec2(touchPoint.x, s.height), color);
+        drawNode->drawLine(Vec2(0.0f, touchPoint.y), Vec2(s.width, touchPoint.y), color);
+        drawNode->drawLine(Vec2(touchPoint.x, 0.0f), Vec2(touchPoint.x, s.height), color);
         drawNode->drawDot(touchPoint, 3, color);
         addChild(drawNode);
     }
@@ -74,7 +74,7 @@ bool MultiTouchTest::init()
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         
         auto title = Label::createWithSystemFont("Please touch the screen!", "", 24);
-        title->setPosition(VisibleRect::top()+Vec2(0, -40));
+        title->setPosition(VisibleRect::top()+Vec2(0.0f, -40.0f));
         addChild(title);
         
         return true;

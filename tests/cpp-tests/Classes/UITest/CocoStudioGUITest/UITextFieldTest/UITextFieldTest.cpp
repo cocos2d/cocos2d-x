@@ -298,7 +298,7 @@ bool UITextFieldTest_LineWrap::init()
         
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create("No Event","fonts/Marker Felt.ttf",30);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5));
         _uiLayer->addChild(_displayValueLabel);
         
@@ -312,7 +312,7 @@ bool UITextFieldTest_LineWrap::init()
         TextField* textField = TextField::create("input words here","fonts/Marker Felt.ttf",30);
         textField->ignoreContentAdaptWithSize(false);
         ((Label*)(textField->getVirtualRenderer()))->setLineBreakWithoutSpace(true);
-        textField->setContentSize(Size(240, 170));
+        textField->setContentSize(Size(240.0f, 170.0f));
         textField->setString("input words here");
         textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
         textField->setTextVerticalAlignment(TextVAlignment::CENTER);

@@ -61,7 +61,7 @@ void MotionStreakTest1::onEnter()
     // the target object is offset from root, and the streak is moved to follow it
     _target = Sprite::create(s_pathR1);
     _root->addChild(_target);
-    _target->setPosition(Vec2(s.width/4, 0));
+    _target->setPosition(Vec2(s.width/4, 0.0f));
 
     // create the streak object and add it to the scene
     _streak = MotionStreak::create(2, 3, 32, Color3B::GREEN, s_streak);

@@ -598,7 +598,7 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
             return 0;
         }
 
-        for (auto i = 0; i < argc; ++i)
+        for (int i = 0; i < argc; ++i)
         {
 #if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(tolua_S, i + 2,"cc.MenuItem",0,&tolua_err) )
@@ -2403,7 +2403,7 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
         if (!ok)
             return 0;
 
-        cobj->setAnchorPoint(cocos2d::Vec2(x,y));
+        cobj->setAnchorPoint(cocos2d::Vec2((float)x,(float)y));
         lua_settop(tolua_S, 1);
         return 1;
     }
@@ -7830,10 +7830,10 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
             if (!ok)
                 return 0;
 
-            x = (float)tolua_tonumber(tolua_S, 2, 0);
-            y = (float)tolua_tonumber(tolua_S, 3, 0);
-            z = (float)tolua_tonumber(tolua_S, 4, 0);
-            w = (float)tolua_tonumber(tolua_S, 5, 0);
+            x = tolua_tonumber(tolua_S, 2, 0);
+            y = tolua_tonumber(tolua_S, 3, 0);
+            z = tolua_tonumber(tolua_S, 4, 0);
+            w = tolua_tonumber(tolua_S, 5, 0);
 
             mat.transformVector(x,y,z,w, &dst);
             vec3_to_luaval(tolua_S, dst);
@@ -8832,7 +8832,7 @@ static int tolua_cocos2d_bytearray_floatv(lua_State *L)
             }
             lua_pop(L, 1);
             lua_newtable(L);
-            for (size_t idx = 0; idx < arg.size(); idx++)
+            for (auto idx = 0; idx < arg.size(); idx++)
             {
                 lua_pushnumber(L, arg[idx]);
                 lua_rawseti(L, 1, idx + 1);

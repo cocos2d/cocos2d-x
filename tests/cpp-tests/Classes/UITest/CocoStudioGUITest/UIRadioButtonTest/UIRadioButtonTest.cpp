@@ -165,17 +165,17 @@ bool UIRadioButtonTwoGroupsTest::init()
         
         // Add a label in which the radio button events will be displayed
         _groupEventLabel = Text::create("RadioButtonGroup : No Event", "fonts/Marker Felt.ttf", 25);
-        _groupEventLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _groupEventLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _groupEventLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 70));
         _uiLayer->addChild(_groupEventLabel);
         
         _buttonEventLabel = Text::create("RadioButton : No Event", "fonts/Marker Felt.ttf", 25);
-        _buttonEventLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _buttonEventLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _buttonEventLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 35));
         _uiLayer->addChild(_buttonEventLabel);
         
         _logConsole = Text::create("", "fonts/Marker Felt.ttf", 10);
-        _logConsole->setAnchorPoint(Vec2(0, 1));
+        _logConsole->setAnchorPoint(Vec2(0.0f, 1.0f));
         _logConsole->setPosition(Vec2(widgetSize.width / 2.0f + 110, widgetSize.height / 2.0f + 55));
         _uiLayer->addChild(_logConsole);
 

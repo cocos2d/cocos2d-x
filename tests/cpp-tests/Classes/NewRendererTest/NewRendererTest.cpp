@@ -237,8 +237,8 @@ NewClippingNodeTest::NewClippingNodeTest()
 
     auto clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
-    clipper->setContentSize(  Size(200, 200) );
-    clipper->setAnchorPoint(  Vec2(0.5, 0.5) );
+    clipper->setContentSize(  Size(200.0f, 200.0f) );
+    clipper->setAnchorPoint(  Vec2(0.5f, 0.5f) );
     clipper->setPosition( Vec2(s.width / 2, s.height / 2) );
 
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
@@ -264,7 +264,7 @@ NewClippingNodeTest::NewClippingNodeTest()
 
     auto content = Sprite::create("Images/background2.png");
     content->setTag( kTagContentNode );
-    content->setAnchorPoint(  Vec2(0.5, 0.5) );
+    content->setAnchorPoint(  Vec2(0.5f, 0.5f) );
     content->setPosition( Vec2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
     clipper->addChild(content);
 
@@ -620,13 +620,13 @@ CaptureScreenTest::CaptureScreenTest()
 	
     auto sp1 = Sprite::create("Images/grossini.png");
     sp1->setPosition(left);
-    auto move1 = MoveBy::create(1, Vec2(s.width/2, 0));
+    auto move1 = MoveBy::create(1, Vec2(s.width/2, 0.0f));
     auto seq1 = RepeatForever::create(Sequence::create(move1, move1->reverse(), nullptr));
     addChild(sp1);
     sp1->runAction(seq1);
     auto sp2 = Sprite::create("Images/grossinis_sister1.png");
     sp2->setPosition(right);
-    auto move2 = MoveBy::create(1, Vec2(-s.width/2, 0));
+    auto move2 = MoveBy::create(1, Vec2(-s.width/2, 0.0f));
     auto seq2 = RepeatForever::create(Sequence::create(move2, move2->reverse(), nullptr));
     addChild(sp2);
     sp2->runAction(seq2);
@@ -693,13 +693,13 @@ CaptureNodeTest::CaptureNodeTest()
 
     auto sp1 = Sprite::create("Images/grossini.png");
     sp1->setPosition(left);
-    auto move1 = MoveBy::create(1, Vec2(s.width / 2, 0));
+    auto move1 = MoveBy::create(1, Vec2(s.width / 2, 0.0f));
     auto seq1 = RepeatForever::create(Sequence::create(move1, move1->reverse(), nullptr));
     addChild(sp1);
     sp1->runAction(seq1);
     auto sp2 = Sprite::create("Images/grossinis_sister1.png");
     sp2->setPosition(right);
-    auto move2 = MoveBy::create(1, Vec2(-s.width / 2, 0));
+    auto move2 = MoveBy::create(1, Vec2(-s.width / 2, 0.0f));
     auto seq2 = RepeatForever::create(Sequence::create(move2, move2->reverse(), nullptr));
     addChild(sp2);
     sp2->runAction(seq2);
@@ -769,7 +769,7 @@ BugAutoCulling::BugAutoCulling()
     }
     this->scheduleOnce([=](float){
         auto camera = Director::getInstance()->getRunningScene()->getCameras().front();
-        auto move  = MoveBy::create(2.0, Vec2(2 * s.width, 0));
+        auto move  = MoveBy::create(2.0f, Vec2(2 * s.width, 0.0f));
         camera->runAction(Sequence::create(move, move->reverse(),nullptr));
     }, 1.0f, "lambda-autoculling-bug");
 }
@@ -803,7 +803,7 @@ RendererBatchQuadTri::RendererBatchQuadTri()
         addChild(label);
 
         auto sprite = Sprite::create("fonts/tuffy_bold_italic-charmap.png");
-        sprite->setTextureRect(Rect(0,0,100,100));
+        sprite->setTextureRect(Rect(0.0f,0.0f,100.0f,100.0f));
         sprite->setPosition(Vec2(x,y));
         sprite->setColor(Color3B::BLUE);
         addChild(sprite);

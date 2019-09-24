@@ -798,7 +798,7 @@ void SplitRows::startWithTarget(Node *target)
 
 void SplitRows::update(float time)
 {
-    for (unsigned int j = 0; j < _gridSize.height; ++j)
+    for (int j = 0; j < _gridSize.height; ++j)
     {
         Vec2 pos(0, (float)j);
         Quad3 coords = getOriginalTile(pos);
@@ -856,7 +856,6 @@ void SplitCols::update(float time)
 {
     for (unsigned int i = 0; i < _gridSize.width; ++i)
     {
-        Vec2 pos((float)i, 0);
         Quad3 coords = getOriginalTile(pos);
         float    direction = 1;
 

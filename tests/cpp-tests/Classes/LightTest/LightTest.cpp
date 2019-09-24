@@ -43,8 +43,8 @@ LightTest::LightTest()
     auto s = Director::getInstance()->getWinSize();
     auto camera = Camera::createPerspective(60, (float)s.width/s.height, 1.0f, 1000.0f);
     camera->setCameraFlag(CameraFlag::USER1);
-    camera->setPosition3D(Vec3(0.0, 100, 100));
-    camera->lookAt(Vec3(0.0, 0.0, 0.0), Vec3(0.0, 1.0, 0.0));
+    camera->setPosition3D(Vec3(0.0f, 100.0f, 100.0f));
+    camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
     addChild(camera);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 15);
@@ -120,8 +120,8 @@ void LightTest::addSprite()
     {
         std::string fileName = "Sprite3DTest/orc.c3b";
         auto sprite = Sprite3D::create(fileName);
-        sprite->setRotation3D(Vec3(0.0, 180.0, 0.0));
-        sprite->setPosition(Vec2(0.0, 0.0));
+        sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
+        sprite->setPosition(Vec2(0.0f, 0.0f));
         sprite->setScale(2.0);
         auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
         sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
@@ -139,7 +139,7 @@ void LightTest::addSprite()
     {
         std::string fileName = "Sprite3DTest/sphere.c3b";
         auto sprite = Sprite3D::create(fileName);
-        sprite->setPosition(Vec2(30.0, 0.0));
+        sprite->setPosition(Vec2(30.0f, 0.0f));
         addChild(sprite);
         sprite->setCameraMask(2);
     }
@@ -148,7 +148,7 @@ void LightTest::addSprite()
         std::string fileName = "Sprite3DTest/sphere.c3b";
         auto sprite = Sprite3D::create(fileName);
         sprite->setScale(0.5f);
-        sprite->setPosition(Vec2(-50.0, 0.0));
+        sprite->setPosition(Vec2(-50.0f, 0.0f));
         addChild(sprite);
         sprite->setCameraMask(2);
     }
@@ -157,7 +157,7 @@ void LightTest::addSprite()
         std::string fileName = "Sprite3DTest/sphere.c3b";
         auto sprite = Sprite3D::create(fileName);
         sprite->setScale(0.5f);
-        sprite->setPosition(Vec2(-30.0, 10.0));
+        sprite->setPosition(Vec2(-30.0f, 10.0f));
         addChild(sprite);
         sprite->setCameraMask(2);
     }
