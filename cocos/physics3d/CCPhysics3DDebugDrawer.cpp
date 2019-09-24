@@ -106,7 +106,7 @@ void Physics3DDebugDrawer::draw( Renderer *renderer)
         _dirty = false;
     }
 
-    _customCommand.setIndexDrawInfo(0, _buffer.size());
+    _customCommand.setVertexDrawInfo(0, _buffer.size());
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _buffer.size());
 
