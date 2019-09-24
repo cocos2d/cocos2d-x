@@ -110,8 +110,8 @@ void ControlSaturationBrightnessPicker::updateWithHSV(HSV hsv)
 void ControlSaturationBrightnessPicker::updateDraggerWithHSV(HSV hsv)
 {
     // Set the position of the slider to the correct saturation and brightness
-    Vec2 pos(_startPos.x + boxPos + (boxSize*(1 - hsv.s)),
-                              _startPos.y + boxPos + (boxSize*hsv.v));
+    Vec2 pos(_startPos.x + boxPos + (boxSize*(1 - (float)hsv.s)),
+                              _startPos.y + boxPos + (boxSize*(float)hsv.v));
     
     // update
     updateSliderPosition(pos);

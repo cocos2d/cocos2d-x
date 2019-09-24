@@ -80,7 +80,7 @@ ChipmunkTest::ChipmunkTest()
 #endif
     addChild(parent, 0, kTagParentNode);
 
-    addNewSpriteAtPosition(cocos2d::Vec2(200,200));
+    addNewSpriteAtPosition(cocos2d::Vec2(200.0f,200.0f));
 
     // menu for debug layer
     MenuItemFont::setFontSize(18);
@@ -142,7 +142,7 @@ void ChipmunkTest::initPhysics()
 	cpHastySpaceSetThreads(_space, 0);
 #endif
 
-    cpSpaceSetGravity(_space, cpv(0, -100));
+    cpSpaceSetGravity(_space, cpv(0.0f, -100.0f));
 
     //
     // rogue shapes

@@ -623,7 +623,7 @@ void TurnOffTiles::update(float time)
     for (unsigned int i = 0; i < _tilesCount; i++ )
     {
         t = _tilesOrder[i];
-        Vec2 tilePos( (unsigned int)(t / _gridSize.height), t % (unsigned int)_gridSize.height );
+        Vec2 tilePos((t /_gridSize.height), (float)(t % (int)_gridSize.height));
 
         if ( i < l )
         {
@@ -795,9 +795,9 @@ void SplitRows::startWithTarget(Node *target)
 
 void SplitRows::update(float time)
 {
-    for (unsigned int j = 0; j < _gridSize.height; ++j)
+    for (int j = 0; j < _gridSize.height; ++j)
     {
-        Quad3 coords = getOriginalTile(Vec2(0, j));
+        Quad3 coords = getOriginalTile(Vec2(0.0f, (float)j));
         float    direction = 1;
 
         if ( (j % 2 ) == 0 )
@@ -810,7 +810,7 @@ void SplitRows::update(float time)
         coords.tl.x += direction * _winSize.width * time;
         coords.tr.x += direction * _winSize.width * time;
 
-        setTile(Vec2(0, j), coords);
+        setTile(Vec2(0.0f, (float)j), coords);
     }
 }
 
@@ -852,7 +852,7 @@ void SplitCols::update(float time)
 {
     for (unsigned int i = 0; i < _gridSize.width; ++i)
     {
-        Quad3 coords = getOriginalTile(Vec2(i, 0));
+        Quad3 coords = getOriginalTile(Vec2((float)i, 0.0f));
         float    direction = 1;
 
         if ( (i % 2 ) == 0 )
@@ -865,7 +865,7 @@ void SplitCols::update(float time)
         coords.tl.y += direction * _winSize.height * time;
         coords.tr.y += direction * _winSize.height * time;
 
-        setTile(Vec2(i, 0), coords);
+        setTile(Vec2((float)i, 0.0f), coords);
     }
 }
 

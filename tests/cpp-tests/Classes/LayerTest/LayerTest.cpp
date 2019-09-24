@@ -132,7 +132,7 @@ void LayerTestCascadingOpacityB::onEnter()
     auto layer1 = LayerColor::create(Color4B(192, 0, 0, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
     
-    layer1->setPosition( Vec2(0, s.height/2));
+    layer1->setPosition( Vec2(0.0f, s.height/2));
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -143,9 +143,9 @@ void LayerTestCascadingOpacityB::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Vec2( s.width*1/3, 0));
-    sister2->setPosition( Vec2( s.width*2/3, 0));
-    label->setPosition( Vec2( s.width/2, 0));
+    sister1->setPosition( Vec2( s.width*1/3, 0.0f));
+    sister2->setPosition( Vec2( s.width*2/3, 0.0f));
+    label->setPosition( Vec2( s.width/2, 0.0f));
     
     layer1->runAction(
      RepeatForever::create(
@@ -185,7 +185,7 @@ void LayerTestCascadingOpacityC::onEnter()
     layer1->setCascadeColorEnabled(false);
     layer1->setCascadeOpacityEnabled(false);
     
-    layer1->setPosition( Vec2(0, s.height/2));
+    layer1->setPosition( Vec2(0.0f, s.height/2));
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -196,9 +196,9 @@ void LayerTestCascadingOpacityC::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Vec2( s.width*1/3, 0));
-    sister2->setPosition( Vec2( s.width*2/3, 0));
-    label->setPosition( Vec2( s.width/2, 0));
+    sister1->setPosition( Vec2( s.width*1/3, 0.0f));
+    sister2->setPosition( Vec2( s.width*2/3, 0.0f));
+    label->setPosition( Vec2( s.width/2, 0.0f));
     
     layer1->runAction(
      RepeatForever::create(
@@ -286,7 +286,7 @@ void LayerTestCascadingColorB::onEnter()
     auto s = Director::getInstance()->getWinSize();
     auto layer1 = LayerColor::create(Color4B(255, 255, 255, 255), s.width, s.height/2);
     
-    layer1->setPosition( Vec2(0, s.height/2));
+    layer1->setPosition( Vec2(0.0f, s.height/2));
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -297,9 +297,9 @@ void LayerTestCascadingColorB::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Vec2( s.width*1/3, 0));
-    sister2->setPosition( Vec2( s.width*2/3, 0));
-    label->setPosition( Vec2( s.width/2, 0));
+    sister1->setPosition( Vec2( s.width*1/3, 0.0f));
+    sister2->setPosition( Vec2( s.width*2/3, 0.0f));
+    label->setPosition( Vec2( s.width/2, 0.0f));
     
     layer1->runAction(
      RepeatForever::create(
@@ -338,7 +338,7 @@ void LayerTestCascadingColorC::onEnter()
     auto s = Director::getInstance()->getWinSize();
     auto layer1 = LayerColor::create(Color4B(255, 255, 255, 255), s.width, s.height/2);
     layer1->setCascadeColorEnabled(false);
-    layer1->setPosition( Vec2(0, s.height/2));
+    layer1->setPosition( Vec2(0.0f, s.height/2));
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -349,9 +349,9 @@ void LayerTestCascadingColorC::onEnter()
     layer1->addChild(label);
     this->addChild( layer1, 0, kTagLayer);
     
-    sister1->setPosition( Vec2( s.width*1/3, 0));
-    sister2->setPosition( Vec2( s.width*2/3, 0));
-    label->setPosition( Vec2( s.width/2, 0));
+    sister1->setPosition( Vec2( s.width*1/3, 0.0f));
+    sister2->setPosition( Vec2( s.width*2/3, 0.0f));
+    label->setPosition( Vec2( s.width/2, 0.0f));
     
     layer1->runAction(
      RepeatForever::create(
@@ -547,7 +547,7 @@ LayerGradientTest::LayerGradientTest()
     auto menu = Menu::create(item, nullptr);
     addChild(menu);
     auto s = Director::getInstance()->getWinSize();
-    menu->setPosition(Vec2(s.width / 2, 100));
+    menu->setPosition(Vec2(s.width / 2, 100.0f));
 }
 
 void LayerGradientTest::toggleItem(Ref *sender)
@@ -754,18 +754,18 @@ std::string LayerIgnoreAnchorPointScale::subtitle() const
 LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
 {
     auto layer1 = LayerGradient::create(Color4B(255, 0, 0, 255), Color4B(255, 0, 255, 255));
-    layer1->setContentSize(Size(80, 80));
-    layer1->setPosition(Vec2(50,50));
+    layer1->setContentSize(Size(80.0f, 80.0f));
+    layer1->setPosition(Vec2(50.0f,50.0f));
     addChild(layer1);
     
     auto layer2 = LayerGradient::create(Color4B(0, 0, 0, 127), Color4B(255, 255, 255, 127));
-    layer2->setContentSize(Size(80, 80));
-    layer2->setPosition(Vec2(100,90));
+    layer2->setContentSize(Size(80.0f, 80.0f));
+    layer2->setPosition(Vec2(100.0f,90.0f));
     addChild(layer2);
     
     auto layer3 = LayerGradient::create();
-    layer3->setContentSize(Size(80, 80));
-    layer3->setPosition(Vec2(150,140));
+    layer3->setContentSize(Size(80.0f, 80.0f));
+    layer3->setPosition(Vec2(150.0f,140.0f));
     layer3->setStartColor(Color3B(255, 0, 0));
     layer3->setEndColor(Color3B(255, 0, 255));
     layer3->setStartOpacity(255);
@@ -798,7 +798,7 @@ void LayerBug3162A::onEnter()
     {
         _layer[i] = LayerColor::create(color[i]);
         _layer[i]->setContentSize(size);
-        _layer[i]->setPosition(Vec2(size.width/2, size.height/2) - Vec2(20, 20));
+        _layer[i]->setPosition(Vec2(size.width/2, size.height/2) - Vec2(20.0f, 20.0f));
         _layer[i]->setOpacity(150);
         _layer[i]->setCascadeOpacityEnabled(true);
         if (i > 0)
@@ -841,7 +841,7 @@ void LayerBug3162B::onEnter()
     {
         _layer[i] = LayerColor::create(color[i]);
         _layer[i]->setContentSize(size);
-        _layer[i]->setPosition(Vec2(size.width/2, size.height/2) - Vec2(20, 20));
+        _layer[i]->setPosition(Vec2(size.width/2, size.height/2) - Vec2(20.0f, 20.0f));
         //_layer[i]->setOpacity(150);
         if (i > 0)
         {
@@ -920,11 +920,11 @@ void LayerRadialGradientTest::onEnter()
     addChild(_layer);
     
     auto scaleSlider = LayerRadialGradientTest::createSlider();
-    scaleSlider->setPosition(Vec2(50, 130));
+    scaleSlider->setPosition(Vec2(50.0f, 130.0f));
     addChild(scaleSlider);
     
     auto listview = createListView();
-    listview->setPosition(Vec2(100, 150));
+    listview->setPosition(Vec2(100.0f, 150.0f));
     addChild(listview);
 }
 

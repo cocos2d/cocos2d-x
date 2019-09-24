@@ -57,7 +57,7 @@ bool Bug12847Layer::init()
         {
             sprite1 = Sprite::create("Images/bug12847_sprite.png");
             sprite1->getTexture()->setAliasTexParameters();
-            sprite1->setPosition(Vec2(_visibleSize.width/3, 50));
+            sprite1->setPosition(Vec2(_visibleSize.width/3, 50.0f));
             this->addChild(sprite1, 1);
             
             sprite2 = Sprite::create("Images/bug12847_sprite.png");
@@ -71,7 +71,7 @@ bool Bug12847Layer::init()
             
             sprite3 = Sprite::createWithSpriteFrameName("bug12847_sprite2.png");
             sprite3->getTexture()->setAliasTexParameters();
-            sprite3->setPosition(Vec2(_visibleSize.width * 2/3, 50));
+            sprite3->setPosition(Vec2(_visibleSize.width * 2/3, 50.0f));
             this->addChild(sprite3, 1);
             
             sprite4 = Sprite::createWithSpriteFrameName("bug12847_sprite2.png");

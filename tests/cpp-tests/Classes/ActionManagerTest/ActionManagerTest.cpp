@@ -127,7 +127,7 @@ void LogicTest::onEnter()
     grossini->setPosition(VisibleRect::center());
 
     grossini->runAction( Sequence::create( 
-                                                MoveBy::create(1, Vec2(150,0)),
+                                                MoveBy::create(1, Vec2(150.0f,0.0f)),
                                                 CallFuncN::create(CC_CALLBACK_1(LogicTest::bugMe,this)),
                                                 nullptr) 
                         );
@@ -171,7 +171,7 @@ void PauseTest::onEnter()
     addChild(grossini, 0, kTagGrossini);
     grossini->setPosition(VisibleRect::center() );
     
-    auto action = MoveBy::create(1, Vec2(150,0));
+    auto action = MoveBy::create(1, Vec2(150.0f,0.0f));
 
     auto director = Director::getInstance();
     director->getActionManager()->addAction(action, grossini, true);
@@ -205,7 +205,7 @@ void StopActionTest::onEnter()
     addChild(l);
     l->setPosition(VisibleRect::center().x, VisibleRect::top().y - 75);
 
-    auto pMove = MoveBy::create(2, Vec2(200, 0));
+    auto pMove = MoveBy::create(2, Vec2(200.0f, 0.0f));
     auto pCallback = CallFunc::create(CC_CALLBACK_0(StopActionTest::stopAction,this));
     auto pSequence = Sequence::create(pMove, pCallback, nullptr);
     pSequence->setTag(kTagSequence);
@@ -241,8 +241,8 @@ void StopAllActionsTest::onEnter()
     addChild(l);
     l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75) );
     
-    auto pMove1 = MoveBy::create(2, Vec2(200, 0));
-    auto pMove2 = MoveBy::create(2, Vec2(-200, 0));
+    auto pMove1 = MoveBy::create(2, Vec2(200.0f, 0.0f));
+    auto pMove2 = MoveBy::create(2, Vec2(-200.0f, 0.0f));
     auto pSequenceMove = Sequence::createWithTwoActions(pMove1, pMove2);
     auto pRepeatMove = RepeatForever::create(pSequenceMove);
     pRepeatMove->setTag(kTagSequence);
@@ -331,8 +331,8 @@ void StopActionsByFlagsTest::onEnter()
     addChild(l);
     l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75) );
 
-    auto pMove1 = MoveBy::create(2, Vec2(200, 0));
-    auto pMove2 = MoveBy::create(2, Vec2(-200, 0));
+    auto pMove1 = MoveBy::create(2, Vec2(200.0f, 0.0f));
+    auto pMove2 = MoveBy::create(2, Vec2(-200.0f, 0.0f));
     auto pSequenceMove = Sequence::createWithTwoActions(pMove1, pMove2);
     auto pRepeatMove = RepeatForever::create(pSequenceMove);
     pRepeatMove->setFlags(kMoveFlag | kRepeatForeverFlag);
@@ -394,7 +394,7 @@ void Issue14050Test::onEnter()
     sprite->initWithFile("Images/grossini.png");
     sprite->autorelease();
 
-    auto move = MoveBy::create(2, Vec2(100, 100));
+    auto move = MoveBy::create(2, Vec2(100.0f, 100.0f));
     sprite->runAction(move);
 }
 

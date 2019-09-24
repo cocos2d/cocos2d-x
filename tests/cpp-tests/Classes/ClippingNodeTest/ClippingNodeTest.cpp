@@ -122,7 +122,7 @@ void BasicTest::setup()
     
     auto clipper = this->clipper();
     clipper->setTag( kTagClipperNode );
-    clipper->setAnchorPoint(Vec2(0.5, 0.5));
+    clipper->setAnchorPoint(Vec2(0.5f, 0.5f));
     clipper->setPosition(s.width / 2 - 50, s.height / 2 - 50);
     clipper->setStencil(stencil);
     this->addChild(clipper);
@@ -321,15 +321,15 @@ void NestedTest::setup()
 
         auto clipper = ClippingNode::create();
         clipper->setContentSize(Size(size, size));
-        clipper->setAnchorPoint(Vec2(0.5, 0.5));
+        clipper->setAnchorPoint(Vec2(0.5f, 0.5f));
         clipper->setPosition(parent->getContentSize().width / 2, parent->getContentSize().height / 2);
         clipper->setAlphaThreshold(0.05f);
-        clipper->runAction(RepeatForever::create(RotateBy::create(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90)));
+        clipper->runAction(RepeatForever::create(RotateBy::create(i % 3 ? 1.33f : 1.66f, i % 2 ? 90.0f : -90.0f)));
         parent->addChild(clipper);
         
         auto stencil = Sprite::create(s_pathGrossini);
-        stencil->setScale( 2.5 - (i * (2.5 / depth)) );
-        stencil->setAnchorPoint( Vec2(0.5, 0.5) );
+        stencil->setScale( 2.5f - (i * (2.5f / depth)) );
+        stencil->setAnchorPoint( Vec2(0.5f, 0.5f) );
         stencil->setPosition(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2);
         stencil->setVisible(false);
         stencil->runAction(Sequence::createWithTwoActions(DelayTime::create(i), Show::create()));
@@ -373,7 +373,7 @@ void HoleDemo::setup()
     transform = AffineTransformScale(transform, target->getScale(), target->getScale());
 
     _outerClipper->setContentSize(SizeApplyAffineTransform(target->getContentSize(), transform));
-    _outerClipper->setAnchorPoint( Vec2(0.5, 0.5) );
+    _outerClipper->setAnchorPoint( Vec2(0.5f, 0.5f) );
     _outerClipper->setPosition(Vec2(this->getContentSize()) * 0.5f);
     _outerClipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     
@@ -453,18 +453,18 @@ void ScrollViewDemo::setup()
 {
     auto clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
-    clipper->setContentSize(  Size(200, 200) );
-    clipper->setAnchorPoint(  Vec2(0.5, 0.5) );
+    clipper->setContentSize(  Size(200.0f, 200.0f) );
+    clipper->setAnchorPoint(  Vec2(0.5f, 0.5f) );
     clipper->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
     auto stencil = DrawNode::create();
     Vec2 rectangle[4];
-    rectangle[0] = Vec2(0, 0);
-    rectangle[1] = Vec2(clipper->getContentSize().width, 0);
+    rectangle[0] = Vec2(0.0f, 0.0f);
+    rectangle[1] = Vec2(clipper->getContentSize().width, 0.0f);
     rectangle[2] = Vec2(clipper->getContentSize().width, clipper->getContentSize().height);
-    rectangle[3] = Vec2(0, clipper->getContentSize().height);
+    rectangle[3] = Vec2(0.0f, clipper->getContentSize().height);
     
     Color4F white(1, 1, 1, 1);
     stencil->drawPolygon(rectangle, 4, white, 1, white);
@@ -472,7 +472,7 @@ void ScrollViewDemo::setup()
 
     auto content = Sprite::create(s_back2);
     content->setTag( kTagContentNode );
-    content->setAnchorPoint(  Vec2(0.5, 0.5) );
+    content->setAnchorPoint(  Vec2(0.5f, 0.5f) );
     content->setPosition(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2);
     clipper->addChild(content);
     
@@ -601,9 +601,9 @@ void RawStencilBufferTest::initCommands()
         cmd.setBeforeCallback( CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i) );
         Vec2 vertices[] = {
             Vec2::ZERO,
-            Vec2(stencilPoint.x, 0),
+            Vec2(stencilPoint.x, 0.0f),
             stencilPoint,
-            Vec2(0, stencilPoint.y)
+            Vec2(0.0f, stencilPoint.y)
         };
         unsigned short indices[] = {0, 2, 1, 0, 3, 2};
         cmd.createVertexBuffer(sizeof(Vec2), 4, backend::BufferUsage::STATIC);
@@ -625,9 +625,9 @@ void RawStencilBufferTest::initCommands()
         cmd2.setBeforeCallback(CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i));
         Vec2 vertices2[] = {
             Vec2::ZERO,
-            Vec2(winPoint.x, 0),
+            Vec2(winPoint.x, 0.0f),
             winPoint,
-            Vec2(0, winPoint.y)
+            Vec2(0.0f, winPoint.y)
         };
         cmd2.createVertexBuffer(sizeof(Vec2), 4, backend::BufferUsage::STATIC);
         cmd2.updateVertexBuffer(vertices2, sizeof(vertices2));
@@ -899,7 +899,7 @@ void ClippingToRenderTextureTest::expectedBehaviour()
     stencil->drawPolygon(triangle, 3, green, 0, green);
 
     auto clipper = ClippingNode::create();
-    clipper->setAnchorPoint(Point(0.5, 0.5));
+    clipper->setAnchorPoint(Point(0.5f, 0.5f));
     clipper->setPosition( Point(visibleSize.width/2, visibleSize.height/2) );
     clipper->setStencil(stencil);
     clipper->setInverted(true);
@@ -945,7 +945,7 @@ void ClippingToRenderTextureTest::reproduceBug()
     stencil->drawPolygon(triangle, 3, green, 0, green);
 
     auto clipper = ClippingNode::create();
-    clipper->setAnchorPoint(Point(0.5, 0.5));
+    clipper->setAnchorPoint(Point(0.5f, 0.5f));
     clipper->setPosition( Point(visibleSize.width/2, visibleSize.height/2) );
     clipper->setStencil(stencil);
     clipper->setInverted(true);
@@ -986,13 +986,13 @@ std::string ClippingRectangleNodeTest::subtitle() const
 void ClippingRectangleNodeTest::setup()
 {
     auto clipper = ClippingRectangleNode::create();
-    clipper->setClippingRegion(Rect(this->getContentSize().width / 2 - 100, this->getContentSize().height / 2 - 100, 200, 200));
+    clipper->setClippingRegion(Rect(this->getContentSize().width / 2 - 100, this->getContentSize().height / 2 - 100, 200.0f, 200.0f));
     clipper->setTag( kTagClipperNode );
     this->addChild(clipper);
     
     auto content = Sprite::create(s_back2);
     content->setTag( kTagContentNode );
-    content->setAnchorPoint(  Vec2(0.5, 0.5) );
+    content->setAnchorPoint(  Vec2(0.5f, 0.5f) );
     content->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
     clipper->addChild(content);
 }

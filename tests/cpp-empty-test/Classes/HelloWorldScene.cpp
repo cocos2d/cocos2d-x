@@ -94,7 +94,7 @@ bool HelloWorld::init()
     auto s = Director::getInstance()->getWinSize();
     Size boxSize(100.0f, 100.0f);
     auto box = LayerColor::create(Color4B(255,255,0,255));
-    box->setAnchorPoint(Vec2(0.5,0.5));
+    box->setAnchorPoint(Vec2(0.5f,0.5f));
     box->setContentSize( boxSize );
     box->setIgnoreAnchorPointForPosition(false);
     box->setPosition(s.width/2, s.height - 100 - box->getContentSize().height/2);

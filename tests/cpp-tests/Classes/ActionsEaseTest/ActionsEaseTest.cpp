@@ -82,7 +82,7 @@ void SpriteEase::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130,0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130,0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseIn::create(move->clone(), 2.5f);
@@ -135,7 +135,7 @@ void SpriteEaseInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130,0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
 //    id move_back = move->reverse();
     
     auto move_ease_inout1 = EaseInOut::create(move->clone(), 0.65f);
@@ -174,7 +174,7 @@ void SpriteEaseExponential::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130,0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseExponentialIn::create(move->clone());
@@ -210,7 +210,7 @@ void SpriteEaseExponentialInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease = EaseExponentialInOut::create(move->clone() );
@@ -243,7 +243,7 @@ void SpriteEaseSine::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseSineIn::create(move->clone() );
@@ -280,7 +280,7 @@ void SpriteEaseSineInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130,0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease = EaseSineInOut::create(move->clone() );
@@ -312,7 +312,7 @@ void SpriteEaseElastic::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseElasticIn::create(move->clone() );
@@ -348,7 +348,7 @@ void SpriteEaseElasticInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
 
     auto move_ease_inout1 = EaseElasticInOut::create(move->clone(), 0.3f);
     auto move_ease_inout_back1 = move_ease_inout1->reverse();
@@ -387,7 +387,7 @@ void SpriteEaseBounce::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseBounceIn::create(move->clone() );
@@ -424,7 +424,7 @@ void SpriteEaseBounceInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease = EaseBounceInOut::create(move->clone() );
@@ -457,7 +457,7 @@ void SpriteEaseBack::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseBackIn::create(move->clone());
@@ -493,7 +493,7 @@ void SpriteEaseBackInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease = EaseBackInOut::create(move->clone() );
@@ -537,13 +537,13 @@ void SpriteEaseBezier::onEnter()
     
     // sprite 1
     ccBezierConfig bezier;
-    bezier.controlPoint_1 = Vec2(0, s.height/2);
-    bezier.controlPoint_2 = Vec2(300, -s.height/2);
-    bezier.endPosition = Vec2(300,100);
+    bezier.controlPoint_1 = Vec2(0.0f, s.height/2);
+    bezier.controlPoint_2 = Vec2(300.0f, -s.height/2);
+    bezier.endPosition = Vec2(300.0f,100.0f);
     
     auto bezierForward = BezierBy::create(3, bezier);
     auto bezierEaseForward = EaseBezierAction::create(bezierForward);
-    bezierEaseForward->setBezierParamer(0.5, 0.5, 1.0, 1.0);
+    bezierEaseForward->setBezierParamer(0.5f, 0.5f, 1.0f, 1.0f);
     
     auto bezierEaseBack = bezierEaseForward->reverse();
     auto rep = RepeatForever::create(Sequence::create( bezierEaseForward, bezierEaseBack, nullptr));
@@ -552,19 +552,19 @@ void SpriteEaseBezier::onEnter()
     // sprite 2
     _tamara->setPosition(80,160);
 	ccBezierConfig bezier2;
-    bezier2.controlPoint_1 = Vec2(100, s.height/2);
-    bezier2.controlPoint_2 = Vec2(200, -s.height/2);
-    bezier2.endPosition = Vec2(240,160);
+    bezier2.controlPoint_1 = Vec2(100.0f, s.height/2);
+    bezier2.controlPoint_2 = Vec2(200.0f, -s.height/2);
+    bezier2.endPosition = Vec2(240.0f,160.0f);
     
     auto bezierTo1 = BezierTo::create(2, bezier2);
     auto bezierEaseTo1 = EaseBezierAction::create(bezierTo1);
-    bezierEaseTo1->setBezierParamer(0.5, 0.5, 1.0, 1.0);
+    bezierEaseTo1->setBezierParamer(0.5f, 0.5f, 1.0f, 1.0f);
     
     // sprite 3
-    _kathia->setPosition(400,160);
+    _kathia->setPosition(400.0f,160.0f);
     auto bezierTo2 = BezierTo::create(2, bezier2);
     auto bezierEaseTo2 = EaseBezierAction::create(bezierTo2);
-    bezierEaseTo2->setBezierParamer(0.0, 0.5, -5.0, 1.0);
+    bezierEaseTo2->setBezierParamer(0.0f, 0.5f, -5.0f, 1.0f);
 
     
     _grossini->runAction( rep);
@@ -588,7 +588,7 @@ void SpriteEaseQuadratic::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseQuadraticActionIn::create(move->clone() );
@@ -623,7 +623,7 @@ void SpriteEaseQuadraticInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease = EaseQuadraticActionInOut::create(move->clone() );
@@ -656,7 +656,7 @@ void SpriteEaseQuartic::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseQuarticActionIn::create(move->clone() );
@@ -691,7 +691,7 @@ void SpriteEaseQuarticInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease = EaseQuarticActionInOut::create(move->clone() );
@@ -723,7 +723,7 @@ void SpriteEaseQuintic::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseQuinticActionIn::create(move->clone() );
@@ -759,7 +759,7 @@ void SpriteEaseQuinticInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease = EaseQuinticActionInOut::create(move->clone() );
@@ -791,7 +791,7 @@ void SpriteEaseCircle::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseCircleActionIn::create(move->clone() );
@@ -827,7 +827,7 @@ void SpriteEaseCircleInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease = EaseCircleActionInOut::create(move->clone() );
@@ -859,7 +859,7 @@ void SpriteEaseCubic::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease_in = EaseCubicActionIn::create(move->clone() );
@@ -895,7 +895,7 @@ void SpriteEaseCubicInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Vec2(VisibleRect::right().x-130, 0.0f));
     auto move_back = move->reverse();
     
     auto move_ease = EaseCubicActionInOut::create(move->clone() );
@@ -929,9 +929,9 @@ void SpeedTest::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     // rotate and jump
-    auto jump1 = JumpBy::create(4, Vec2(-s.width+80, 0), 100, 4);
+    auto jump1 = JumpBy::create(4.0f, Vec2(-s.width+80, 0.0f), 100.0f, 4);
     auto jump2 = jump1->reverse();
-    auto rot1 = RotateBy::create(4, 360*2);
+    auto rot1 = RotateBy::create(4.0f, 360*2.0f);
     auto rot2 = rot1->reverse();
     
     auto seq3_1 = Sequence::create(jump2, jump1, nullptr);

@@ -424,7 +424,7 @@ bool ControlSwitch::onTouchBegan(Touch *pTouch, Event* /*pEvent*/)
 void ControlSwitch::onTouchMoved(Touch *pTouch, Event* /*pEvent*/)
 {
     Vec2 location    = this->locationFromTouch(pTouch);
-    location            = Vec2(location.x - _initialTouchXPosition, 0);
+    location            = Vec2(location.x - _initialTouchXPosition, 0.0f);
     
     _moved              = true;
     

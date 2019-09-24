@@ -488,15 +488,15 @@ bool EffectSpriteTest::init()
         auto menu = Menu::create(itemPrev, itemNext, nullptr);
         menu->alignItemsHorizontally();
         menu->setScale(0.5);
-        menu->setAnchorPoint(Vec2(0,0));
-        menu->setPosition(Vec2(s.width/2,70));
+        menu->setAnchorPoint(Vec2(0.0f,0.0f));
+        menu->setPosition(Vec2(s.width/2,70.0f));
         addChild(menu);
 
         _sprite = EffectSprite::create("Images/grossini.png");
-        _sprite->setPosition(Vec2(0, s.height/2));
+        _sprite->setPosition(Vec2(0.0f, s.height/2));
         addChild(_sprite);
 
-        auto jump = JumpBy::create(4, Vec2(s.width,0), 100, 4);
+        auto jump = JumpBy::create(4, Vec2(s.width,0.0f), 100, 4);
         auto rot = RotateBy::create(4, 720);
         auto spawn = Spawn::create(jump, rot, nullptr);
         auto rev = spawn->reverse();
@@ -549,7 +549,7 @@ bool EffectSpriteLamp::init()
         Mat4 mat = _sprite->getNodeToWorldTransform();
         Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
         lampEffect->setLightColor(Color4F(1,1,1,1));
-        lampEffect->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+        lampEffect->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50.0f));
         lampEffect->setKBump(2);
         _sprite->setEffect(lampEffect);
         _effect = lampEffect;
@@ -575,7 +575,7 @@ void EffectSpriteLamp::onTouchesBegan(const std::vector<Touch*>& touches, Event 
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
         Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
-        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50.0f));
     }
 }
 
@@ -590,7 +590,7 @@ void EffectSpriteLamp::onTouchesMoved(const std::vector<Touch*>& touches, Event 
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
         Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
-        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50.0f));
     }
 }
 
@@ -605,6 +605,6 @@ void EffectSpriteLamp::onTouchesEnded(const std::vector<Touch*>& touches, Event 
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
         Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
-        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50.0f));
     }
 }

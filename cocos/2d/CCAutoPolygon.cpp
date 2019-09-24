@@ -249,13 +249,13 @@ unsigned int AutoPolygon::getSquareValue(unsigned int x, unsigned int y, const R
     //NOTE: due to the way we pick points from texture, rect needs to be smaller, otherwise it goes outside 1 pixel
     auto fixedRect = Rect(rect.origin, rect.size-Size(2,2));
     
-    Vec2 tl = Vec2(x-1, y-1);
+    Vec2 tl((float)x-1, (float)y-1);
     sv += (fixedRect.containsPoint(tl) && getAlphaByPos(tl) > threshold)? 1 : 0;
-    Vec2 tr = Vec2(x, y-1);
+    Vec2 tr((float)x, (float)y-1);
     sv += (fixedRect.containsPoint(tr) && getAlphaByPos(tr) > threshold)? 2 : 0;
-    Vec2 bl = Vec2(x-1, y);
+    Vec2 bl((float)x-1, (float)y);
     sv += (fixedRect.containsPoint(bl) && getAlphaByPos(bl) > threshold)? 4 : 0;
-    Vec2 br = Vec2(x, y);
+    Vec2 br((float)x, (float)y);
     sv += (fixedRect.containsPoint(br) && getAlphaByPos(br) > threshold)? 8 : 0;
     CCASSERT(sv != 0 && sv != 15, "square value should not be 0, or 15");
     return sv;

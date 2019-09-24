@@ -66,7 +66,7 @@ void Material_Sprite3DTest::onEnter()
     sprite->setScale(8.f);
     sprite->setTexture("Sprite3DTest/boss.png");
     this->addChild(sprite);
-    sprite->setPositionNormalized(Vec2(0.5,0.5));
+    sprite->setPositionNormalized(Vec2(0.5f,0.5f));
 }
 
 std::string Material_Sprite3DTest::subtitle() const
@@ -296,7 +296,7 @@ void Material_setTechnique::onEnter()
     auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite->setScale(6);
     this->addChild(sprite);
-    sprite->setPositionNormalized(Vec2(0.5,0.5));
+    sprite->setPositionNormalized(Vec2(0.5f,0.5f));
     _sprite = sprite;
 
 
@@ -313,7 +313,7 @@ void Material_setTechnique::onEnter()
     this->schedule(CC_CALLBACK_1(Material_setTechnique::changeMaterial, this),  1, "cookie");
     _techniqueState = 0;
 
-    auto rot = RotateBy::create(5, Vec3(30,60,270));
+    auto rot = RotateBy::create(5, Vec3(30.0f,60.0f,270.0f));
     auto repeat = RepeatForever::create(rot);
     sprite->runAction(repeat);
 }
@@ -354,12 +354,12 @@ void Material_clone::onEnter()
     auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite->setScale(3);
     this->addChild(sprite);
-    sprite->setPositionNormalized(Vec2(0.25, 0.5));
+    sprite->setPositionNormalized(Vec2(0.25f, 0.5f));
 
     Material *mat = Material::createWithFilename("Materials/3d_effects.material");
     sprite->setMaterial(mat);
 
-    auto rot = RotateBy::create(5, Vec3(360,240,120));
+    auto rot = RotateBy::create(5, Vec3(360.0f,240.0f,120.0f));
     auto repeat = RepeatForever::create(rot);
     sprite->runAction(repeat);
 
@@ -367,7 +367,7 @@ void Material_clone::onEnter()
     auto sprite2 = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite2->setScale(3);
     this->addChild(sprite2);
-    sprite2->setPositionNormalized(Vec2(0.5, 0.5));
+    sprite2->setPositionNormalized(Vec2(0.5f, 0.5f));
     sprite2->setMaterial(mat);
     sprite2->runAction(repeat->clone());
 
@@ -375,7 +375,7 @@ void Material_clone::onEnter()
     auto sprite3 = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite3->setScale(3);
     this->addChild(sprite3);
-    sprite3->setPositionNormalized(Vec2(0.75, 0.5));
+    sprite3->setPositionNormalized(Vec2(0.75f, 0.5f));
     auto mat2 = mat->clone();
     sprite3->setMaterial(mat2);
     sprite3->runAction(repeat->clone());

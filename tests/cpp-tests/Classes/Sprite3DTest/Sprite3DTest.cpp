@@ -99,7 +99,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
     orc->setScale(5);
     orc->setPositionNormalized(Vec2(.5f, .3f));
     orc->setPositionZ(40);
-    orc->setRotation3D(Vec3(0, 180, 0));
+    orc->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
     orc->setGlobalZOrder(-1);
 
     addChild(orc);
@@ -107,8 +107,8 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
     auto ship = Sprite3D::create("Sprite3DTest/boss1.obj");
     ship->setScale(5);
     ship->setTexture("Sprite3DTest/boss.png");
-    ship->setPositionNormalized(Vec2(.5, .5));
-    ship->setRotation3D(Vec3(90, 0, 0));
+    ship->setPositionNormalized(Vec2(.5f, .5f));
+    ship->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
     ship->setForceDepthWrite(true);
 
     addChild(ship);
@@ -132,7 +132,7 @@ std::string Sprite3DForceDepthTest::subtitle() const
 Sprite3DEmptyTest::Sprite3DEmptyTest()
 {
     auto s = Sprite3D::create();
-    s->setPositionNormalized(Vec2(.5, .5));
+    s->setPositionNormalized(Vec2(.5f, .5f));
     auto l = Label::create();
     l->setString("Test");
     s->addChild(l);
@@ -254,8 +254,8 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     this->addChild(camera);
 
     //adjust cylinder's position & rotation
-    cylinder->setPosition3D(Vec3(0, -15, -50));
-    cylinder->setRotation3D(Vec3(-90, 0, 0));
+    cylinder->setPosition3D(Vec3(0.0f, -15.0f, -50.0f));
+    cylinder->setRotation3D(Vec3(-90.0f, 0.0f, 0.0f));
 
     //the callback function update cylinder's texcoord
     schedule(CC_SCHEDULE_SELECTOR(Sprite3DUVAnimationTest::cylinderUpdate));
@@ -335,12 +335,12 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     //create Camera
     _camera = Camera::createPerspective(60, visibleSize.width / visibleSize.height, 0.1f, 200);
     _camera->setCameraFlag(CameraFlag::USER1);
-    _camera->setPosition3D(Vec3(0, 20, 25));
-    _camera->setRotation3D(Vec3(-60, 0, 0));
+    _camera->setPosition3D(Vec3(0.0f, 20.0f, 25.0f));
+    _camera->setRotation3D(Vec3(-60.0f, 0.0f, 0.0f));
 
     //create a plane
     _plane = Sprite3D::create("Sprite3DTest/plane.c3t");
-    _plane->setRotation3D(Vec3(90, 0, 0));
+    _plane->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
 
 
     auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
@@ -357,8 +357,8 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     //create the orc
     _orc = Sprite3D::create("Sprite3DTest/orc.c3b");
     _orc->setScale(0.2f);
-    _orc->setRotation3D(Vec3(0, 180, 0));
-    _orc->setPosition3D(Vec3(0, 0, 10));
+    _orc->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
+    _orc->setPosition3D(Vec3(0.0f, 0.0f, 10.0f));
     _targetPos = _orc->getPosition3D();
     location = _state->getUniformLocation("u_target_pos");
     _state->setUniform(location, &_targetPos, sizeof(_targetPos));
@@ -570,9 +570,9 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
     teapot->setMaterial(mat);
 
-    teapot->setPosition3D(Vec3(0, -5, -20));
-    teapot->setRotation3D(Vec3(-90, 180, 0));
-    auto rotate_action = RotateBy::create(1.5, Vec3(0, 30, 0));
+    teapot->setPosition3D(Vec3(0.0f, -5.0f, -20.0f));
+    teapot->setRotation3D(Vec3(-90.0f, 180.0f, 0.0f));
+    auto rotate_action = RotateBy::create(1.5f, Vec3(0.0f, 30.0f, 0.0f));
     teapot->runAction(RepeatForever::create(rotate_action));
     addChild(teapot);
     addChild(_camera);
@@ -619,8 +619,8 @@ Sprite3DLightMapTest::Sprite3DLightMapTest()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     _camera = Camera::createPerspective(60, visibleSize.width / visibleSize.height, 0.1f, 200);
     _camera->setCameraFlag(CameraFlag::USER1);
-    _camera->setPosition3D(Vec3(0, 25, 15));
-    _camera->setRotation3D(Vec3(-35, 0, 0));
+    _camera->setPosition3D(Vec3(0.0f, 25.0f, 15.0f));
+    _camera->setRotation3D(Vec3(-35.0f, 0.0f, 0.0f));
     auto LightMapScene = Sprite3D::create("Sprite3DTest/LightMapScene.c3b");
     LightMapScene->setScale(0.1f);
     addChild(LightMapScene);
@@ -695,18 +695,18 @@ Sprite3DHitTest::Sprite3DHitTest()
 
     //add to scene
     addChild(sprite1);
-    sprite1->runAction(RepeatForever::create(RotateBy::create(3, 360)));
+    sprite1->runAction(RepeatForever::create(RotateBy::create(3.0f, 360.0f)));
 
     auto sprite2 = Sprite3D::create("Sprite3DTest/boss1.obj");
 
     sprite2->setScale(4.f);
     sprite2->setTexture("Sprite3DTest/boss.png");
     sprite2->setPosition(Vec2(s.width / 2, s.height / 2));
-    sprite2->setAnchorPoint(Vec2(0.5, 0.5));
+    sprite2->setAnchorPoint(Vec2(0.5f, 0.5f));
 
     //add to scene
     addChild(sprite2);
-    sprite2->runAction(RepeatForever::create(RotateBy::create(3, -360)));
+    sprite2->runAction(RepeatForever::create(RotateBy::create(3.0f, -360.0f)));
 
 
     // Make sprite1 touchable
@@ -852,7 +852,7 @@ AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
     item1->setPosition(s.width * .5f, s.height * .8f);
 
     auto pMenu1 = Menu::create(item1, nullptr);
-    pMenu1->setPosition(Vec2(0, 0));
+    pMenu1->setPosition(Vec2(0.0f, 0.0f));
     this->addChild(pMenu1, 10);
 
     auto node = Node::create();
@@ -939,7 +939,7 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     std::string fileName = "Sprite3DTest/orc.c3b";
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(3);
-    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
     sprite->setPosition(Vec2(p.x, p.y));
     addChild(sprite);
     _sprits.push_back(sprite);
@@ -1057,7 +1057,7 @@ void Sprite3DWithSkinOutlineTest::addNewSpriteWithCoords(Vec2 p)
     sprite->setMaterial(material);
 
     sprite->setScale(3);
-    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
     addChild(sprite);
     sprite->setPosition(Vec2(p.x, p.y));
 
@@ -1254,7 +1254,7 @@ void AttachmentTest::addNewSpriteWithCoords(Vec2 p)
     std::string fileName = "Sprite3DTest/orc.c3b";
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(5);
-    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
     addChild(sprite);
     sprite->setPosition(Vec2(p.x, p.y));
 
@@ -1318,7 +1318,7 @@ Sprite3DReskinTest::Sprite3DReskinTest()
     item4->setUserData((void*)SkinType::PANTS);
     item5->setUserData((void*)SkinType::SHOES);
     auto pMenu1 = Menu::create(item1, item2, item3, item4, item5, nullptr);
-    pMenu1->setPosition(Vec2(0, 0));
+    pMenu1->setPosition(Vec2(0.0f, 0.0f));
     this->addChild(pMenu1, 10);
 
 }
@@ -1346,7 +1346,7 @@ void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
     std::string fileName = "Sprite3DTest/ReskinGirl.c3b";
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(4);
-    sprite->setRotation3D(Vec3(0, 0, 0));
+    sprite->setRotation3D(Vec3(0.0f, 0.0f, 0.0f));
     addChild(sprite);
     sprite->setPosition(Vec2(p.x, p.y - 60));
     auto animation = Animation3D::create(fileName);
@@ -1686,7 +1686,7 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
     std::string fileName = "Sprite3DTest/orc.c3b";
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(5);
-    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
     addChild(sprite);
     sprite->setPosition(Vec2(p.x - 80, p.y));
 
@@ -1709,7 +1709,7 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
     sprite->setScale(5);
     sprite->setScaleX(-5);
     sprite->setCullFace(CullFaceSide::FRONT);
-    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
     addChild(sprite);
     sprite->setPosition(Vec2(p.x + 80, p.y));
 
@@ -1804,8 +1804,8 @@ UseCaseSprite3D::UseCaseSprite3D()
     auto menu = Menu::create(itemPrev, itemNext, nullptr);
     menu->alignItemsHorizontally();
     menu->setScale(0.5);
-    menu->setAnchorPoint(Vec2(0, 0));
-    menu->setPosition(Vec2(s.width / 2, 70));
+    menu->setAnchorPoint(Vec2(0.0f, 0.0f));
+    menu->setPosition(Vec2(s.width / 2, 70.0f));
 
     _label = Label::create();
     _label->setPosition(s.width * 0.5f, s.height * 0.8f);
@@ -1857,7 +1857,7 @@ void UseCaseSprite3D::switchCase()
         circleBack->addChild(circle);
         circle->runAction(RepeatForever::create(RotateBy::create(3, Vec3(0.f, 0.f, 360.f))));
 
-        circleBack->setRotation3D(Vec3(-90, -90, 0));
+        circleBack->setRotation3D(Vec3(-90.0f, -90.0f, 0.0f));
 
         auto pos = sprite->getPosition3D();
         circleBack->setPosition3D(Vec3(pos.x, pos.y, pos.z - 1));
@@ -1906,7 +1906,7 @@ void UseCaseSprite3D::switchCase()
         item2->setPosition(Vec2(s.width * 0.5f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height * 2.f));
 
         auto pMenu1 = Menu::create(item1, item2, nullptr);
-        pMenu1->setPosition(Vec2(0, 0));
+        pMenu1->setPosition(Vec2(0.0f, 0.0f));
         layer->addChild(pMenu1);
 
         layer->setTag(101);
@@ -1991,9 +1991,9 @@ NodeAnimationTest::NodeAnimationTest()
 
     auto menu = Menu::create(itemPrev, itemNext, nullptr);
     menu->alignItemsHorizontally();
-    menu->setScale(0.5);
-    menu->setAnchorPoint(Vec2(0, 0));
-    menu->setPosition(Vec2(s.width / 2, 70));
+    menu->setScale(0.5f);
+    menu->setAnchorPoint(Vec2(0.0f, 0.0f));
+    menu->setPosition(Vec2(s.width / 2, 70.0f));
     addChild(menu);
 
     addNewSpriteWithCoords(Vec2(s.width / 2.f, s.height / 2.f));
@@ -2014,7 +2014,7 @@ void NodeAnimationTest::addNewSpriteWithCoords(Vec2 p)
     // add jumping ball
     std::string fileName = "Sprite3DTest/ball.c3b";
     auto sprite = Sprite3D::create(fileName);
-    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
     sprite->setScale(3);
     sprite->setPosition(Vec2(s.width / 2.f, s.height / 3.f));
     sprite->setTexture("Sprite3DTest/teapot.png");
@@ -2038,7 +2038,7 @@ void NodeAnimationTest::addNewSpriteWithCoords(Vec2 p)
     // add jumping orc
     fileName = "Sprite3DTest/orc_jump.c3t";
     sprite = Sprite3D::create(fileName);
-    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
     sprite->setScale(3);
     sprite->setPosition(Vec2(s.width / 2.f, s.height / 3.f));
     sprite->setVisible(false);
@@ -2123,10 +2123,10 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     auto cubeTexLoc = state->getUniformLocation("u_cubeTex");
     state->setTexture(cubeTexLoc, 0, _textureCube->getBackendTexture());
 
-    _teapot->setPosition3D(Vec3(0, -5, 0));
-    _teapot->setRotation3D(Vec3(-90, 180, 0));
+    _teapot->setPosition3D(Vec3(0.0f, -5.0f, 0.0f));
+    _teapot->setRotation3D(Vec3(-90.0f, 180.0f, 0.0f));
 
-    auto rotate_action = RotateBy::create(1.5, Vec3(0, 30, 0));
+    auto rotate_action = RotateBy::create(1.5, Vec3(0.0f, 30.0f, 0.0f));
     _teapot->runAction(RepeatForever::create(rotate_action));
 
     addChild(_teapot);
@@ -2206,7 +2206,7 @@ Issue9767::Issue9767()
     item1->setPosition(Vec2(s.width * 0.9f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height));
 
     auto pMenu1 = Menu::create(item1, nullptr);
-    pMenu1->setPosition(Vec2(0, 0));
+    pMenu1->setPosition(Vec2(0.0f, 0.0f));
     addChild(pMenu1);
 }
 
@@ -2351,7 +2351,7 @@ Sprite3DVertexColorTest::Sprite3DVertexColorTest()
     auto s = Director::getInstance()->getWinSize();
 
     auto sprite = Sprite3D::create("Sprite3DTest/box_VertexCol.c3t");
-    sprite->setPosition(Vec2(0, 0));
+    sprite->setPosition(Vec2(0.0f, 0.0f));
     sprite->setScale(1.0f);
     sprite->setCameraMask(2);
     auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/VertexColor.material");
@@ -2405,7 +2405,7 @@ CameraBackgroundClearTest::CameraBackgroundClearTest()
     item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
     
     auto pMenu1 = Menu::create(item1, nullptr);
-    pMenu1->setPosition(Vec2(0,0));
+    pMenu1->setPosition(Vec2(0.0f,0.0f));
     this->addChild(pMenu1, 10);
     
     //setup camera
@@ -2522,7 +2522,7 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
 
     {
         auto sprite = Sprite3D::create("Sprite3DTest/sphere.c3b");
-        sprite->setPosition(Vec2(-30, 0));
+        sprite->setPosition(Vec2(-30.0f, 0.0f));
         sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
         sprite->setScale(2.0);
         sprite->setCameraMask(2);
@@ -2535,7 +2535,7 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
     if (maxAttributes > 8)
     {
         auto sprite = Sprite3D::create("Sprite3DTest/sphere_bumped.c3b");
-        sprite->setPosition(Vec2(30, 0));
+        sprite->setPosition(Vec2(30.0f, 0.0f));
         sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
         sprite->setScale(20.0);
         sprite->setCameraMask(2);
@@ -2607,7 +2607,7 @@ Sprite3DPropertyTest::Sprite3DPropertyTest()
 
     _sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
     _sprite->setPosition(20.f, 0.f);
-    _sprite->setRotation3D(Vec3(0, 180, 0));
+    _sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
     _meshTex = _sprite->getMesh()->getTexture();
     _texFile = _meshTex->getPath();
     addChild(_sprite);
@@ -2632,7 +2632,7 @@ Sprite3DPropertyTest::Sprite3DPropertyTest()
     item3->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 6));
 
     auto pMenu1 = Menu::create(item1, item2, item3,nullptr);
-    pMenu1->setPosition(Vec2(0, 0));
+    pMenu1->setPosition(Vec2(0.0f, 0.0f));
     this->addChild(pMenu1, 10);
 
     scheduleUpdate();
