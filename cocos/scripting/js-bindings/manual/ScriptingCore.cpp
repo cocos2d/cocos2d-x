@@ -126,6 +126,20 @@ static void ReportException(JSContext *cx)
     }
 }
 
+static void errorHandler(JSContext *cx, const char *message, JSErrorReport *report) {
+    
+     if (cx && report)
+    {
+        JS::RootedValue errorContext(cx);
+        if (JS_GetPendingException(cx, &errorContext))
+        {
+            JS_ClearPendingException(cx);
+        }
+        ScriptingCore::reportError(cx, message, report, errorContext)
+    }
+
+}
+
 static void onGarbageCollect(JSRuntime* rt, JSGCStatus status, void* data)
 {
     /* We finalize any pending toggle refs before doing any garbage collection,
@@ -642,7 +656,7 @@ void ScriptingCore::createGlobalContext() {
     JS::RuntimeOptionsRef(_rt).setIon(true);
     JS::RuntimeOptionsRef(_rt).setBaseline(true);
 
-    JS_SetErrorReporter(_cx, ScriptingCore::reportError);
+    JS_SetErrorReporter(_cx, errorHandler);
 #if defined(JS_GC_ZEAL) && defined(DEBUG)
     JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
@@ -934,12 +948,25 @@ void ScriptingCore::cleanup()
     _needCleanup = false;
 }
 
-void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
+void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report, JS::HandleValue errorContext)
 {
     js_log("%s:%u:%s\n",
             report->filename ? report->filename : "<no filename=\"filename\">",
             (unsigned int) report->lineno,
             message);
+    if (errorContext.isObject())
+    {
+        std::string stackStr = "";
+        JS::RootedObject errObj(cx, errorContext.toObjectOrNull());
+        JS::RootedValue stack(cx);
+        if (JS_GetProperty(cx, errObj, "stack", &stack) && stack.isString())
+        {
+            JS::RootedString jsstackStr(cx, stack.toString());
+            stackStr = JS_EncodeStringToUTF8(cx, jsstackStr);
+            js_log("Stack: %s\n", stackStr.c_str());
+        }
+    }
+
 }
 
 
