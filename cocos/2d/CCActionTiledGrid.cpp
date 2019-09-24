@@ -244,10 +244,10 @@ Size ShuffleTiles::getDelta(const Size& pos) const
 {
     unsigned int idx = static_cast<unsigned int>(pos.width * _gridSize.height + pos.height);
 
-    int x = _tilesOrder[idx] / (int)_gridSize.height - pos.width;
-    int y = _tilesOrder[idx] % (int)_gridSize.height - pos.height;
+    float x = _tilesOrder[idx] / (_gridSize.height - pos.width);
+    float y = (float)(_tilesOrder[idx] % (int)(_gridSize.height - pos.height));
 
-    return Size((float)x, (float)y);
+    return Size(x, y);
 }
 
 void ShuffleTiles::placeTile(const Vec2& pos, Tile *t)
@@ -624,7 +624,7 @@ void TurnOffTiles::update(float time)
     for (unsigned int i = 0; i < _tilesCount; i++ )
     {
         t = _tilesOrder[i];
-        Vec2 tilePos( (unsigned int)(t / _gridSize.height), t % (unsigned int)_gridSize.height );
+        Vec2 tilePos(t / _gridSize.height, (float)(t % (unsigned int)_gridSize.height));
 
         if ( i < l )
         {
@@ -800,7 +800,8 @@ void SplitRows::update(float time)
 {
     for (unsigned int j = 0; j < _gridSize.height; ++j)
     {
-        Quad3 coords = getOriginalTile(Vec2(0, j));
+        Vec2 pos(0, (float)j);
+        Quad3 coords = getOriginalTile(pos);
         float    direction = 1;
 
         if ( (j % 2 ) == 0 )
@@ -813,7 +814,7 @@ void SplitRows::update(float time)
         coords.tl.x += direction * _winSize.width * time;
         coords.tr.x += direction * _winSize.width * time;
 
-        setTile(Vec2(0, j), coords);
+        setTile(pos, coords);
     }
 }
 
@@ -855,7 +856,8 @@ void SplitCols::update(float time)
 {
     for (unsigned int i = 0; i < _gridSize.width; ++i)
     {
-        Quad3 coords = getOriginalTile(Vec2(i, 0));
+        Vec2 pos((float)i, 0);
+        Quad3 coords = getOriginalTile(pos);
         float    direction = 1;
 
         if ( (i % 2 ) == 0 )
@@ -868,7 +870,7 @@ void SplitCols::update(float time)
         coords.tl.y += direction * _winSize.height * time;
         coords.tr.y += direction * _winSize.height * time;
 
-        setTile(Vec2(i, 0), coords);
+        setTile(pos, coords);
     }
 }
 
