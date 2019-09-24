@@ -1425,12 +1425,13 @@ void ActionStacked::onEnter()
 
 void ActionStacked::addNewSpriteWithCoords(Vec2 p)
 {
-    int idx = CCRANDOM_0_1() * 1400 / 100;
-    int x = (idx%5) * 85;
-    int y = (idx/5) * 121;
+    int idx = static_cast<int>(CCRANDOM_0_1() * 1400 / 100);
+    float w = 85.0f;
+    float h = 121.0f;
+    float x = (idx%5) * w;
+    float y = (idx/5) * h;
     
-    
-    auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(x,y,85,121));
+    auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(x,y,w,h));
     
     sprite->setPosition(p);
     this->addChild(sprite);
@@ -2425,13 +2426,13 @@ void SequenceWithFinalInstant::onEnter()
     
     const auto action =
       cocos2d::Sequence::create
-      (cocos2d::DelayTime::create(0.05),
+      (cocos2d::DelayTime::create(0.05f),
        cocos2d::CallFunc::create(f),
        nullptr);
 
     _target->runAction(action);
     _manager->update(0);
-    _manager->update(0.05 - FLT_EPSILON);
+    _manager->update(0.05f - FLT_EPSILON);
 
     if ( action->isDone() && !called )
         assert(false);

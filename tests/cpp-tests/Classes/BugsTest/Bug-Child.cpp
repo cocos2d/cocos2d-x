@@ -118,7 +118,7 @@ bool BugCameraMask::init()
     updateSpriteMaskLabel();
     
     auto label = Label::create();
-    label->setPosition(size.width/2, size.height * 0.9);
+    label->setPosition(size.width/2, size.height * 0.9f);
     label->setString("Sprite should always run action.");
     addChild(label);
     
