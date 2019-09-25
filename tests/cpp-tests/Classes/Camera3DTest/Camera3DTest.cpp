@@ -363,16 +363,16 @@ void Camera3DTestDemo::onEnter()
     //draw x
     for( int j =-20; j<=20 ;j++)
     {
-        line->drawLine(Vec3(-100, 0, 5*j),Vec3(100,0,5*j),Color4F(1,0,0,1));
+        line->drawLine(Vec3(-100.0f, 0.0f, 5.0f*j),Vec3(100.0f,0.0f,5.0f*j),Color4F(1,0,0,1));
     }
     //draw z
     for( int j =-20; j<=20 ;j++)
     {
-        line->drawLine(Vec3(5*j, 0, -100),Vec3(5*j,0,100),Color4F(0,0,1,1));
+        line->drawLine(Vec3(5.0f*j, 0.0f, -100.0f),Vec3(5.0f*j,0.0f,100.0f),Color4F(0,0,1,1));
     }
     //draw y
-    line->drawLine(Vec3(0, -50, 0),Vec3(0,0,0),Color4F(0,0.5,0,1));
-    line->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
+    line->drawLine(Vec3(0.0f, -50.0f, 0.0f),Vec3(0,0,0),Color4F(0,0.5,0,1));
+    line->drawLine(Vec3(0, 0, 0),Vec3(0,50.0f,0),Color4F(0,1,0,1));
     _layer3D->addChild(line);
 
     _layer3D->setCameraMask(2);
@@ -1068,15 +1068,15 @@ void CameraArcBallDemo::onEnter()
     //draw x
     for( int j =-20; j<=20 ;j++)
     {
-        _drawGrid->drawLine(Vec3(-100, 0, 5*j),Vec3(100,0,5*j),Color4F(1,0,0,1));
+        _drawGrid->drawLine(Vec3(-100.0f, 0, 5.0f*j),Vec3(100.0f,0,5.0f*j),Color4F(1,0,0,1));
     }
     //draw z
     for( int j =-20; j<=20 ;j++)
     {
-        _drawGrid->drawLine(Vec3(5*j, 0, -100),Vec3(5*j,0,100),Color4F(0,0,1,1));
+        _drawGrid->drawLine(Vec3(5.0f*j, 0, -100.0f),Vec3(5.0f*j,0,100.0f),Color4F(0,0,1,1));
     }
     //draw y
-    _drawGrid->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
+    _drawGrid->drawLine(Vec3(0, 0, 0),Vec3(0,50.0f,0),Color4F(0,1,0,1));
     _layer3D->addChild(_drawGrid);
 
     _layer3D->setCameraMask(2);
@@ -1103,10 +1103,10 @@ void CameraArcBallDemo::onTouchsMoved( const std::vector<Touch*> &touchs, Event 
             Size visibleSize = Director::getInstance()->getVisibleSize();
             Vec2 prelocation = touchs[0]->getPreviousLocationInView();
             Vec2 location = touchs[0]->getLocationInView();
-            location.x = 2.0 * (location.x) / (visibleSize.width) - 1.0f;
-            location.y = 2.0 * (visibleSize.height - location.y) / (visibleSize.height) - 1.0f;
-            prelocation.x = 2.0 * (prelocation.x) / (visibleSize.width) - 1.0f;
-            prelocation.y = 2.0 * (visibleSize.height - prelocation.y) / (visibleSize.height) - 1.0f;
+            location.x = 2.0f * (location.x) / (visibleSize.width) - 1.0f;
+            location.y = 2.0f * (visibleSize.height - location.y) / (visibleSize.height) - 1.0f;
+            prelocation.x = 2.0f * (prelocation.x) / (visibleSize.width) - 1.0f;
+            prelocation.y = 2.0f * (visibleSize.height - prelocation.y) / (visibleSize.height) - 1.0f;
 
             Vec3 axes;
             float angle;
@@ -1141,7 +1141,7 @@ void CameraArcBallDemo::calculateArcBall( cocos2d::Vec3 & axis, float & angle, f
     Vec3::cross(p2, p1, &axis);  //calculate rotation axis
     axis.normalize();
 
-    float t = (p2 - p1).length() / (2.0 * _radius);
+    float t = (p2 - p1).length() / (2.0f * _radius);
     //clamp -1 to 1
     if (t > 1.0) t = 1.0;
     if (t < -1.0) t = -1.0;
@@ -1160,7 +1160,7 @@ float CameraArcBallDemo::projectToSphere( float r, float x, float y )
     }                         
     else                               //on hyperbola
     {
-        t = r / 1.41421356237309504880;
+        t = r / 1.41421356237309504880f;
         z = t*t / d;
     }
     return z;
