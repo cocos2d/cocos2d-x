@@ -856,6 +856,7 @@ void SplitCols::update(float time)
 {
     for (unsigned int i = 0; i < _gridSize.width; ++i)
     {
+        Vec2 pos((float)i, 0);
         Quad3 coords = getOriginalTile(pos);
         float    direction = 1;
 
