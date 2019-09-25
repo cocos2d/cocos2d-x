@@ -1298,14 +1298,16 @@ void PhysicsContactTest::onEnter()
     decrease1->setTag(1);
     increase1->setTag(1);
     
+    float prevMenuPos = getSubtitleLable()->getPosition().y - getSubtitleLable()->getContentSize().height;
+    float menuStep = (getSubtitleLable()->getPosition().y  -getRestartTestItem()->getPosition().y)*0.25f;
     auto menu1 = Menu::create(decrease1, increase1, nullptr);
     menu1->alignItemsHorizontally();
-    menu1->setPosition(Vec2(s.width / 2, s.height - 50));
+    menu1->setPosition(Vec2(s.width / 2, prevMenuPos));
     addChild(menu1, 1);
     
     auto label = Label::createWithTTF("yellow box", "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Vec2(s.width / 2 - 150, s.height - 50));
+    label->setPosition(Vec2(s.width / 2 - 150, prevMenuPos));
     
     auto decrease2 = MenuItemFont::create(" - ", CC_CALLBACK_1(PhysicsContactTest::onDecrease, this));
     decrease2->setColor(Color3B(0, 200, 20));
@@ -1316,13 +1318,13 @@ void PhysicsContactTest::onEnter()
     
     auto menu2 = Menu::create(decrease2, increase2, nullptr);
     menu2->alignItemsHorizontally();
-    menu2->setPosition(Vec2(s.width / 2, s.height - 90));
+    menu2->setPosition(Vec2(s.width / 2, prevMenuPos -= menuStep));
     addChild(menu2, 1);
     
     label = Label::createWithTTF("blue box", "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Vec2(s.width / 2 - 150, s.height - 90));
-    
+    label->setPosition(Vec2(s.width / 2 - 150, prevMenuPos));
+
     auto decrease3 = MenuItemFont::create(" - ", CC_CALLBACK_1(PhysicsContactTest::onDecrease, this));
     decrease3->setColor(Color3B(0, 200, 20));
     auto increase3 = MenuItemFont::create(" + ", CC_CALLBACK_1(PhysicsContactTest::onIncrease, this));
@@ -1332,13 +1334,13 @@ void PhysicsContactTest::onEnter()
     
     auto menu3 = Menu::create(decrease3, increase3, nullptr);
     menu3->alignItemsHorizontally();
-    menu3->setPosition(Vec2(s.width / 2, s.height - 130));
+    menu3->setPosition(Vec2(s.width / 2, prevMenuPos -= menuStep));
     addChild(menu3, 1);
     
     label = Label::createWithTTF("yellow triangle", "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Vec2(s.width / 2 - 150, s.height - 130));
-    
+    label->setPosition(Vec2(s.width / 2 - 150, prevMenuPos));
+
     auto decrease4 = MenuItemFont::create(" - ", CC_CALLBACK_1(PhysicsContactTest::onDecrease, this));
     decrease4->setColor(Color3B(0, 200, 20));
     auto increase4 = MenuItemFont::create(" + ", CC_CALLBACK_1(PhysicsContactTest::onIncrease, this));
@@ -1348,13 +1350,13 @@ void PhysicsContactTest::onEnter()
     
     auto menu4 = Menu::create(decrease4, increase4, nullptr);
     menu4->alignItemsHorizontally();
-    menu4->setPosition(Vec2(s.width / 2, s.height - 170));
+    menu4->setPosition(Vec2(s.width / 2, prevMenuPos -= menuStep));
     addChild(menu4, 1);
     
     label = Label::createWithTTF("blue triangle", "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Vec2(s.width / 2 - 150, s.height - 170));
-    
+    label->setPosition(Vec2(s.width / 2 - 150, prevMenuPos));
+
     resetTest();
 }
 
@@ -1414,28 +1416,30 @@ void PhysicsContactTest::resetTest()
     this->addChild(root);
     
     auto s = VisibleRect::getVisibleRect().size;
+    float prevMenuPos = getSubtitleLable()->getPosition().y - getSubtitleLable()->getContentSize().height;
+    float menuStep = (getSubtitleLable()->getPosition().y - getRestartTestItem()->getPosition().y)*0.25f;
     std::string strNum;
     char buffer[10];
     
     sprintf(buffer, "%d", _yellowBoxNum);
     auto label = Label::createWithTTF(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
-    label->setPosition(Vec2(s.width / 2, s.height - 50));
+    label->setPosition(Vec2(s.width / 2, prevMenuPos));
     
     sprintf(buffer, "%d", _blueBoxNum);
     label = Label::createWithTTF(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
-    label->setPosition(Vec2(s.width / 2, s.height - 90));
+    label->setPosition(Vec2(s.width / 2, prevMenuPos-=menuStep));
     
     sprintf(buffer, "%d", _yellowTriangleNum);
     label = Label::createWithTTF(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
-    label->setPosition(Vec2(s.width / 2, s.height - 130));
+    label->setPosition(Vec2(s.width / 2, prevMenuPos-=menuStep));
     
     sprintf(buffer, "%d", _blueTriangleNum);
     label = Label::createWithTTF(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
-    label->setPosition(Vec2(s.width / 2, s.height - 170));
+    label->setPosition(Vec2(s.width / 2, prevMenuPos-=menuStep));
     
     auto wall = Node::create();
     wall->addComponent(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1, 0.0f)));
