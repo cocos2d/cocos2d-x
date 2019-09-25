@@ -194,8 +194,8 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     float tileSizeMax = std::max(tileSize.width, tileSize.height);
     if (_layerOrientation == FAST_TMX_ORIENTATION_ORTHO)
     {
-        tilesOverX = ceil(tileSizeMax / mapTileSize.width) - 1;
-        tilesOverY = ceil(tileSizeMax / mapTileSize.height) - 1;
+        tilesOverX = (int)ceil(tileSizeMax / mapTileSize.width) - 1;
+        tilesOverY = (int)ceil(tileSizeMax / mapTileSize.height) - 1;
         
         if (tilesOverX < 0) tilesOverX = 0;
         if (tilesOverY < 0) tilesOverY = 0;
@@ -207,8 +207,8 @@ void TMXLayer::updateTiles(const Rect& culledRect)
         if (overTileRect.size.height < 0) overTileRect.size.height = 0;
         overTileRect = RectApplyTransform(overTileRect, nodeToTileTransform);
         
-        tilesOverX = ceil(overTileRect.origin.x + overTileRect.size.width) - floor(overTileRect.origin.x);
-        tilesOverY = ceil(overTileRect.origin.y + overTileRect.size.height) - floor(overTileRect.origin.y);
+        tilesOverX = (int)(ceil(overTileRect.origin.x + overTileRect.size.width) - floor(overTileRect.origin.x));
+        tilesOverY = (int)(ceil(overTileRect.origin.y + overTileRect.size.height) - floor(overTileRect.origin.y));
     }
     else
     {
@@ -223,10 +223,10 @@ void TMXLayer::updateTiles(const Rect& culledRect)
         _indicesVertexZNumber[iter.first] = iter.second;
     }
     
-    int yBegin = std::max(0.f,visibleTiles.origin.y - tilesOverY);
-    int yEnd = std::min(_layerSize.height,visibleTiles.origin.y + visibleTiles.size.height + tilesOverY);
-    int xBegin = std::max(0.f,visibleTiles.origin.x - tilesOverX);
-    int xEnd = std::min(_layerSize.width,visibleTiles.origin.x + visibleTiles.size.width + tilesOverX);
+    int yBegin = static_cast<int>(std::max(0.f,visibleTiles.origin.y - tilesOverY));
+    int yEnd = static_cast<int>(std::min(_layerSize.height,visibleTiles.origin.y + visibleTiles.size.height + tilesOverY));
+    int xBegin = static_cast<int>(std::max(0.f,visibleTiles.origin.x - tilesOverX));
+    int xEnd = static_cast<int>(std::min(_layerSize.width,visibleTiles.origin.x + visibleTiles.size.width + tilesOverX));
     
     for (int y =  yBegin; y < yEnd; ++y)
     {
@@ -235,12 +235,12 @@ void TMXLayer::updateTiles(const Rect& culledRect)
             int tileIndex = getTileIndexByPos(x, y);
             if(_tiles[tileIndex] == 0) continue;
             
-            int vertexZ = getVertexZForPos(Vec2(x,y));
+            int vertexZ = getVertexZForPos(Vec2((float)x,(float)y));
             auto iter = _indicesVertexZNumber.find(vertexZ);
             int offset = iter->second;
             iter->second++;
             
-            int quadIndex = _tileToQuadIndex[tileIndex];
+            unsigned short quadIndex = static_cast<unsigned short>(_tileToQuadIndex[tileIndex]);
             CC_ASSERT(-1 != quadIndex);
             _indices[6 * offset + 0] = quadIndex * 4 + 0;
             _indices[6 * offset + 1] = quadIndex * 4 + 1;
@@ -326,7 +326,7 @@ void TMXLayer::setupTiles()
             break;
     }
 
-    _screenTileCount = _screenGridSize.width * _screenGridSize.height;
+    _screenTileCount = (int)(_screenGridSize.width * _screenGridSize.height);
 
 }
 
@@ -476,12 +476,12 @@ void TMXLayer::updateTotalQuads()
 
         if (_texture->hasPremultipliedAlpha()) 
         {
-            color.r *= color.a / 255.0f;
-            color.g *= color.a / 255.0f;
-            color.b *= color.a / 255.0f;
+            auto alpha = color.a / 255.0f;
+            color.r = static_cast<uint8_t>(color.r * alpha);
+            color.g = static_cast<uint8_t>(color.g * alpha);
+            color.b = static_cast<uint8_t>(color.b * alpha);
         }
 
-        
         int quadIndex = 0;
         for(int y = 0; y < _layerSize.height; ++y)
         {
@@ -501,11 +501,12 @@ void TMXLayer::updateTotalQuads()
                 
                 float left, right, top, bottom, z;
                 
-                z = getVertexZForPos(Vec2(x, y));
-                auto iter = _indicesVertexZOffsets.find(z);
+                int zPos = getVertexZForPos(Vec2((float)x, (float)y));
+                z = (float)zPos;
+                auto iter = _indicesVertexZOffsets.find(zPos);
                 if(iter == _indicesVertexZOffsets.end())
                 {
-                    _indicesVertexZOffsets[z] = 1;
+                    _indicesVertexZOffsets[zPos] = 1;
                 }
                 else
                 {
@@ -613,7 +614,7 @@ Sprite* TMXLayer::getTileAt(const Vec2& tileCoordinate)
     
     // if GID == 0, then no tile is present
     if( gid ) {
-        int index = (int) tileCoordinate.x + (int) tileCoordinate.y * _layerSize.width;
+        int index = (int) tileCoordinate.x + (int)(tileCoordinate.y * _layerSize.width);
         
         auto it = _spriteContainer.find(index);
         if (it != _spriteContainer.end())
@@ -714,7 +715,7 @@ void TMXLayer::removeTileAt(const Vec2& tileCoordinate)
     
     if( gid ) {
         
-        int z = (int) tileCoordinate.x + (int) tileCoordinate.y * _layerSize.width;
+        int z = (int) tileCoordinate.x + (int)(tileCoordinate.y * _layerSize.width);
         
         // remove tile from GID map
         setFlaggedTileGIDByIndex(z, 0);
@@ -824,13 +825,13 @@ void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flag
     // empty tile. create a new one
     else if (currentGID == 0)
     {
-        int z = (int) tileCoordinate.x + (int) tileCoordinate.y * _layerSize.width;
+        int z = (int) tileCoordinate.x + (int)(tileCoordinate.y * _layerSize.width);
         setFlaggedTileGIDByIndex(z, gidAndFlags);
     }
     // modifying an existing tile with a non-empty tile
     else
     {
-        int z = (int) tileCoordinate.x + (int) tileCoordinate.y * _layerSize.width;
+        int z = (int) tileCoordinate.x + (int)(tileCoordinate.y * _layerSize.width);
         auto it = _spriteContainer.find(z);
         if (it != _spriteContainer.end())
         {

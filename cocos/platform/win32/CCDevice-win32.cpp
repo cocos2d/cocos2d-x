@@ -42,7 +42,7 @@ int Device::getDPI()
         int PixelsX = GetDeviceCaps(hScreenDC, HORZRES);
         int MMX = GetDeviceCaps(hScreenDC, HORZSIZE);
         ReleaseDC(nullptr, hScreenDC);
-        dpi = 254.0f*PixelsX / MMX / 10;
+        dpi = (int)(254.0f*PixelsX / MMX / 10);
     }
     return dpi;
 }
@@ -493,7 +493,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     {
         BitmapDC& dc = sharedBitmapDC();
 
-        if (!dc.setFont(textDefinition._fontName.c_str(), textDefinition._fontSize,false))
+        if (!dc.setFont(textDefinition._fontName.c_str(), (int)textDefinition._fontSize,false))
         {
             log("Can't found font(%s), use system default", textDefinition._fontName.c_str());
         }
@@ -501,7 +501,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         // draw text
         // does changing to SIZE here affects the font size by rounding from float?
         SIZE size = { (LONG)textDefinition._dimensions.width,(LONG)textDefinition._dimensions.height };
-        CC_BREAK_IF(!dc.drawText(text, size, align, textDefinition._fontName.c_str(), textDefinition._fontSize, textDefinition._enableWrap, textDefinition._overflow));
+        CC_BREAK_IF(!dc.drawText(text, size, align, textDefinition._fontName.c_str(), (int)textDefinition._fontSize, textDefinition._enableWrap, textDefinition._overflow));
 
         int dataLen = size.cx * size.cy * 4;
         unsigned char* dataBuf = (unsigned char*)malloc(sizeof(unsigned char) * dataLen);

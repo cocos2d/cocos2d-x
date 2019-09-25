@@ -249,7 +249,7 @@ void AudioCache::readDataTask(unsigned int selfId)
         }
         else
         {
-            _queBufferFrames = sampleRate * QUEUEBUFFER_TIME_STEP;
+            _queBufferFrames = static_cast<uint32_t>(sampleRate * QUEUEBUFFER_TIME_STEP);
             BREAK_IF_ERR_LOG(_queBufferFrames == 0, "_queBufferFrames == 0");
 
             const uint32_t queBufferBytes = _queBufferFrames * bytesPerFrame;

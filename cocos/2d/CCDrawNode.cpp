@@ -225,7 +225,7 @@ void DrawNode::updateUniforms(const Mat4 &transform, CustomCommand& cmd)
     auto mvpLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     pipelineDescriptor.programState->setUniform(mvpLocation, matrixMVP.m, sizeof(matrixMVP.m));
 
-    float alpha = _displayedOpacity / 255.0;
+    float alpha = _displayedOpacity / 255.0f;
     auto alphaUniformLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha");
     pipelineDescriptor.programState->setUniform(alphaUniformLocation, &alpha, sizeof(alpha));
 }
@@ -444,7 +444,7 @@ void DrawNode::drawCardinalSpline(PointArray *config, float tension,  unsigned i
             p = config->count() - 1;
             lt = 1;
         } else {
-            p = dt / deltaT;
+            p = static_cast<ssize_t>(dt / deltaT);
             lt = (dt - deltaT * (float)p) / deltaT;
         }
         

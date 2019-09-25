@@ -45,7 +45,7 @@ Camera* Camera::create()
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
     camera->autorelease();
-    camera->setDepth(0.f);
+    camera->setDepth(0);
     
     return camera;
 }
