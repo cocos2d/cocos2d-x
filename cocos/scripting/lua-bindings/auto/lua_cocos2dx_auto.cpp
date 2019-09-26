@@ -2603,6 +2603,23 @@ int lua_cocos2dx_Texture2D_initWithBackendTexture(lua_State* tolua_S)
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
+    if (argc == 2) 
+    {
+        cocos2d::backend::TextureBackend* arg0;
+        bool arg1;
+
+        ok &= luaval_to_object<cocos2d::backend::TextureBackend>(tolua_S, 2, "ccb.TextureBackend",&arg0, "cc.Texture2D:initWithBackendTexture");
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.Texture2D:initWithBackendTexture");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Texture2D_initWithBackendTexture'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithBackendTexture(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Texture2D:initWithBackendTexture",argc, 1);
     return 0;
 
