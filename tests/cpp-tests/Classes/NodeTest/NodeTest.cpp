@@ -106,8 +106,8 @@ void NodeTest2::onEnter()
     auto sp3 = Sprite::create(s_pathSister1);
     auto sp4 = Sprite::create(s_pathSister2);
     
-    sp1->setPosition(Vec2(100, s.height /2 ));
-    sp2->setPosition(Vec2(380, s.height /2 ));
+    sp1->setPosition(Vec2(100.0f, s.height /2 ));
+    sp2->setPosition(Vec2(380.0f, s.height /2 ));
     addChild(sp1);
     addChild(sp2);
     
@@ -192,10 +192,10 @@ NodeTest5::NodeTest5()
     auto sp1 = Sprite::create(s_pathSister1);
     auto sp2 = Sprite::create(s_pathSister2);
     
-    sp1->setPosition(Vec2(100,160));
-    sp2->setPosition(Vec2(380,160));
+    sp1->setPosition(Vec2(100.0f,160.0f));
+    sp2->setPosition(Vec2(380.0f,160.0f));
 
-    auto rot = RotateBy::create(2, 360);
+    auto rot = RotateBy::create(2.0f, 360.0f);
     auto rot_back = rot->reverse();
     auto forever = RepeatForever::create(Sequence::create(rot, rot_back, nullptr));
     auto forever2 = forever->clone();
@@ -247,10 +247,10 @@ NodeTest6::NodeTest6()
     auto sp2 = Sprite::create(s_pathSister2);
     auto sp21 = Sprite::create(s_pathSister2);
         
-    sp1->setPosition(Vec2(100,160));
-    sp2->setPosition(Vec2(380,160));
+    sp1->setPosition(Vec2(100.0f,160.0f));
+    sp2->setPosition(Vec2(380.0f,160.0f));
         
-    auto rot = RotateBy::create(2, 360);
+    auto rot = RotateBy::create(2.0f, 360.0f);
     auto rot_back = rot->reverse();
     auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, nullptr));
     auto forever11 = forever1->clone();
@@ -360,9 +360,9 @@ StressTest2::StressTest2()
     auto sublayer = Layer::create();
     
     auto sp1 = Sprite::create(s_pathSister1);
-    sp1->setPosition( Vec2(80, s.height/2) );
+    sp1->setPosition( Vec2(80.0f, s.height/2) );
     
-    auto move = MoveBy::create(3, Vec2(350,0));
+    auto move = MoveBy::create(3, Vec2(350.0f,0.0f));
     auto move_ease_inout3 = EaseInOut::create(move->clone(), 2.0f);
     auto move_ease_inout_back3 = move_ease_inout3->reverse();
     auto seq3 = Sequence::create( move_ease_inout3, move_ease_inout_back3, nullptr);
@@ -371,7 +371,7 @@ StressTest2::StressTest2()
 
     auto fire = ParticleFire::create();
     fire->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
-    fire->setPosition( Vec2(80, s.height/2-50) );
+    fire->setPosition( Vec2(80.0f, s.height/2-50) );
     
     auto copy_seq3 = seq3->clone();
 
@@ -489,11 +489,11 @@ NodeToWorld::NodeToWorld()
     menu->setPosition( Vec2(backSize.width/2, backSize.height/2));
     back->addChild(menu);
     
-    auto rot = RotateBy::create(5, 360);
+    auto rot = RotateBy::create(5.0f, 360.0f);
     auto fe = RepeatForever::create( rot);
     item->runAction( fe );
     
-    auto move = MoveBy::create(3, Vec2(200,0));
+    auto move = MoveBy::create(3.0f, Vec2(200.0f,0.0f));
     auto move_back = move->reverse();
     auto seq = Sequence::create( move, move_back, nullptr);
     auto fe2 = RepeatForever::create(seq);
@@ -520,13 +520,13 @@ NodeToWorld3D::NodeToWorld3D()
     Size s = Director::getInstance()->getWinSize();
     auto parent = Node::create();
     parent->setContentSize(s);
-    parent->setAnchorPoint(Vec2(0.5, 0.5));
+    parent->setAnchorPoint(Vec2(0.5f, 0.5f));
     parent->setPosition(s.width/2, s.height/2);
     this->addChild(parent);
 
     auto back = Sprite::create(s_back3);
     parent->addChild( back, -10);
-    back->setAnchorPoint( Vec2(0,0) );
+    back->setAnchorPoint( Vec2(0.0f,0.0f) );
     auto backSize = back->getContentSize();
 
     auto item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
@@ -539,7 +539,7 @@ NodeToWorld3D::NodeToWorld3D()
     auto fe = RepeatForever::create( rot);
     item->runAction( fe );
 
-    auto move = MoveBy::create(3, Vec2(200,0));
+    auto move = MoveBy::create(3, Vec2(200.0f,0.0f));
     auto move_back = move->reverse();
     auto seq = Sequence::create( move, move_back, nullptr);
     auto fe2 = RepeatForever::create(seq);
@@ -729,8 +729,8 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0);
     sprite->setPosition(Vec2(s.width/5*1, s.height/5*1));
     sprite->setColor(Color3B::RED);
-    sprite->setTextureRect(Rect(0, 0, 120, 50));
-    orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
+    sprite->setTextureRect(Rect(0.0f, 0.0f, 120.0f, 50.0f));
+    orbit = OrbitCamera::create(10.0f, 1.0f, 0.0f, 0.0f, 360.0f, 0.0f, 0.0f);
     sprite->runAction(RepeatForever::create( orbit ));
 //        [sprite setAnchorPoint: Vec2(0,1));
 
@@ -741,8 +741,8 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0, 40);
     sprite->setPosition(Vec2(s.width/5*1, s.height/5*4));
     sprite->setColor(Color3B::BLUE);
-    sprite->setTextureRect(Rect(0, 0, 120, 50));
-    orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
+    sprite->setTextureRect(Rect(0.0f, 0.0f, 120.0f, 50.0f));
+    orbit = OrbitCamera::create(10.0f, 1.0f, 0.0f, 0.0f, 360.0f, 0.0f, 0.0f);
     sprite->runAction(RepeatForever::create( orbit ));
 
 
@@ -751,8 +751,8 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0);    
     sprite->setPosition(Vec2(s.width/5*4, s.height/5*1));
     sprite->setColor(Color3B::YELLOW);
-    sprite->setTextureRect(Rect(0, 0, 120, 50));
-    orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
+    sprite->setTextureRect(Rect(0.0f, 0.0f, 120.0f, 50.0f));
+    orbit = OrbitCamera::create(10.0f, 1.0f, 0.0f, 0.0f, 360.0f, 0.0f, 0.0f);
     sprite->runAction(RepeatForever::create( orbit) );
 
     
@@ -761,8 +761,8 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0, 40);
     sprite->setPosition(Vec2(s.width/5*4, s.height/5*4));
     sprite->setColor(Color3B::GREEN);
-    sprite->setTextureRect(Rect(0, 0, 120, 50));
-    orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
+    sprite->setTextureRect(Rect(0.0f, 0.0f, 120.0f, 50.0f));
+    orbit = OrbitCamera::create(10.0f, 1.0f, 0.0f, 0.0f, 360.0f, 0.0f, 0.0f);
     sprite->runAction( RepeatForever::create( orbit ) );
 
     // CENTER
@@ -770,8 +770,8 @@ CameraCenterTest::CameraCenterTest()
     addChild( sprite, 0, 40);
     sprite->setPosition(Vec2(s.width/2, s.height/2));
     sprite->setColor(Color3B::WHITE);
-    sprite->setTextureRect(Rect(0, 0, 120, 50));
-    orbit = OrbitCamera::create(10, 1, 0, 0, 360, 0, 0);
+    sprite->setTextureRect(Rect(0.0f, 0.0f, 120.0f, 50.0f));
+    orbit = OrbitCamera::create(10.0f, 1.0f, 0.0f, 0.0f, 360.0f, 0.0f, 0.0f);
     sprite->runAction(RepeatForever::create( orbit ) );
 }
 
@@ -1144,11 +1144,11 @@ NodeNormalizedPositionTest1::NodeNormalizedPositionTest1()
 {
     Sprite *sprites[5];
     Vec2 positions[5];
-    positions[0] = Vec2(0,0);
-    positions[1] = Vec2(0,1);
-    positions[2] = Vec2(0.5,0.5);
-    positions[3] = Vec2(1,0);
-    positions[4] = Vec2(1,1);
+    positions[0] = Vec2(0.0f,0.0f);
+    positions[1] = Vec2(0.0f,1.0f);
+    positions[2] = Vec2(0.5f,0.5f);
+    positions[3] = Vec2(1.0f,0.0f);
+    positions[4] = Vec2(1.0f,1.0f);
 
     for(int i=0; i<5; i++) {
         sprites[i] = Sprite::create("Images/grossini.png");
@@ -1177,11 +1177,11 @@ NodeNormalizedPositionTest2::NodeNormalizedPositionTest2()
 {
     Sprite *sprites[5];
     Vec2 positions[5];
-    positions[0] = Vec2(0,0);
-    positions[1] = Vec2(0,1);
-    positions[2] = Vec2(0.5,0.5);
-    positions[3] = Vec2(1,0);
-    positions[4] = Vec2(1,1);
+    positions[0] = Vec2(0.0f,0.0f);
+    positions[1] = Vec2(0.0f,1.0f);
+    positions[2] = Vec2(0.5f,0.5f);
+    positions[3] = Vec2(1.0f,0.0f);
+    positions[4] = Vec2(1.0f,1.0f);
 
     for(int i=0; i<5; i++) {
         sprites[i] = Sprite::create("Images/grossini.png");
@@ -1230,7 +1230,7 @@ NodeNormalizedPositionBugTest::NodeNormalizedPositionBugTest()
 {
     Vec2 position;
    
-    position = Vec2(0.5,0.5);
+    position = Vec2(0.5f,0.5f);
 
     
     sprite = Sprite::create("Images/grossini.png");
@@ -1486,7 +1486,7 @@ void Issue16100Test::onEnter()
     this->addChild(sprite);
 
     sprite->setPosition(-200,s.height/3);
-    auto moveby = MoveBy::create(2, Vec2(400,0));
+    auto moveby = MoveBy::create(2, Vec2(400.0f,0.0f));
     auto movebyback = moveby->reverse();
     auto seq = Sequence::create(moveby, movebyback, nullptr);
     auto forever = RepeatForever::create(seq);
@@ -1501,7 +1501,7 @@ void Issue16100Test::onEnter()
     this->addChild(sister);
 
     sister->setPosition(-200,s.height*2/3);
-    auto moveby1 = MoveBy::create(2, Vec2(400,0));
+    auto moveby1 = MoveBy::create(2, Vec2(400.0f,0.0f));
     auto movebyback1 = moveby1->reverse();
     auto seq1 = Sequence::create(moveby1, movebyback1, nullptr);
     auto forever1 = RepeatForever::create(seq1);

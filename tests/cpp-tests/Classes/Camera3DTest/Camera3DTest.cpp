@@ -67,7 +67,7 @@ CameraRotationTest::CameraRotationTest()
     auto s = Director::getInstance()->getWinSize();
     
     _camControlNode = Node::create();
-    _camControlNode->setPositionNormalized(Vec2(.5,.5));
+    _camControlNode->setPositionNormalized(Vec2(0.5f,0.5f));
     addChild(_camControlNode);
 
     _camNode = Node::create();
@@ -86,30 +86,30 @@ CameraRotationTest::CameraRotationTest()
     //Billboards
     //Yellow is at the back
     bill1 = BillBoard::create("Images/Icon.png");
-    bill1->setPosition3D(Vec3(50, 10, -10));
+    bill1->setPosition3D(Vec3(50.0f, 10.0f, -10.0f));
     bill1->setColor(Color3B::YELLOW);
     bill1->setScale(0.6f);
     sp3d->addChild(bill1);
     
     l1 = Label::create();
-    l1->setPosition(Vec2(0,-10));
+    l1->setPosition(Vec2(0.0f,-10.0f));
     l1->setString("Billboard1");
     l1->setColor(Color3B::WHITE);
     l1->setScale(3);
     bill1->addChild(l1);
 
     auto p1 = ParticleSystemQuad::create("Particles/SmallSun.plist");
-    p1->setPosition(30,80);
+    p1->setPosition(30.0f,80.0f);
     bill1->addChild(p1);
     
     bill2 = BillBoard::create("Images/Icon.png");
-    bill2->setPosition3D(Vec3(-50, -10, 10));
+    bill2->setPosition3D(Vec3(-50.0f, -10.0f, 10.0f));
     bill2->setScale(0.6f);
     sp3d->addChild(bill2);
     
     l2 = Label::create();
     l2->setString("Billboard2");
-    l2->setPosition(Vec2(0,-10));
+    l2->setPosition(Vec2(0.0f,-10.0f));
     l2->setColor(Color3B::WHITE);
     l2->setScale(3);
     bill2->addChild(l2);
@@ -363,16 +363,16 @@ void Camera3DTestDemo::onEnter()
     //draw x
     for( int j =-20; j<=20 ;j++)
     {
-        line->drawLine(Vec3(-100, 0, 5*j),Vec3(100,0,5*j),Color4F(1,0,0,1));
+        line->drawLine(Vec3(-100.0f, 0.0f, 5.0f*j),Vec3(100.0f,0.0f,5.0f*j),Color4F(1,0,0,1));
     }
     //draw z
     for( int j =-20; j<=20 ;j++)
     {
-        line->drawLine(Vec3(5*j, 0, -100),Vec3(5*j,0,100),Color4F(0,0,1,1));
+        line->drawLine(Vec3(5.0f*j, 0.0f, -100.0f),Vec3(5.0f*j,0.0f,100.0f),Color4F(0,0,1,1));
     }
     //draw y
-    line->drawLine(Vec3(0, -50, 0),Vec3(0,0,0),Color4F(0,0.5,0,1));
-    line->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
+    line->drawLine(Vec3(0.0f, -50.0f, 0.0f),Vec3(0,0,0),Color4F(0,0.5,0,1));
+    line->drawLine(Vec3(0, 0, 0),Vec3(0,50.0f,0),Color4F(0,1,0,1));
     _layer3D->addChild(line);
 
     _layer3D->setCameraMask(2);
@@ -827,7 +827,7 @@ void CameraCullingDemo::update(float dt)
 void CameraCullingDemo::reachEndCallBack()
 {
     _cameraFirst->stopActionByTag(100);
-    auto inverse = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0));
+    auto inverse = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0.0f));
     inverse->retain();
     
     _moveAction->release();
@@ -844,11 +844,11 @@ void CameraCullingDemo::switchViewCallback(Ref* sender)
     
     if (_cameraFirst == nullptr)
     {
-        _cameraFirst = Camera::createPerspective(30, (float)s.width/s.height, 10, 200);
+        _cameraFirst = Camera::createPerspective(30.0f, (float)s.width/s.height, 10.0f, 200.0f);
         _cameraFirst->setCameraFlag(CameraFlag::USER8);
-        _cameraFirst->setPosition3D(Vec3(-100,0,0));
-        _cameraFirst->lookAt(Vec3(1000,0,0));
-        _moveAction = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0));
+        _cameraFirst->setPosition3D(Vec3(-100.0f,0.0f,0.0f));
+        _cameraFirst->lookAt(Vec3(1000.0f,0.0f,0.0f));
+        _moveAction = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0.0f));
         _moveAction->retain();
         auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(CameraCullingDemo::reachEndCallBack, this)), nullptr);
         seq->setTag(100);
@@ -860,7 +860,7 @@ void CameraCullingDemo::switchViewCallback(Ref* sender)
     {
         _cameraThird = Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
         _cameraThird->setCameraFlag(CameraFlag::USER8);
-        _cameraThird->setPosition3D(Vec3(0, 130, 130));
+        _cameraThird->setPosition3D(Vec3(0.0f, 130.0f, 130.0f));
         _cameraThird->lookAt(Vec3(0,0,0));
         addChild(_cameraThird);
     }
@@ -892,8 +892,8 @@ void CameraCullingDemo::addSpriteCallback(Ref* sender)
         for (int z = -_row; z < _row; z++)
         {
             auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
-            sprite->setPosition3D(Vec3(x * 30, 0, z * 30));
-            sprite->setRotation3D(Vec3(0,180,0));
+            sprite->setPosition3D(Vec3(x * 30.0f, 0.0f, z * 30.0f));
+            sprite->setRotation3D(Vec3(0.0f,180.0f,0.0f));
             _objects.push_back(sprite);
             _layer3D->addChild(sprite);
         }
@@ -921,7 +921,7 @@ void CameraCullingDemo::delSpriteCallback(Ref* sender)
         for (int z = -_row; z < _row; z++)
         {
             auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
-            sprite->setPosition3D(Vec3(x * 30, 0, z * 30));
+            sprite->setPosition3D(Vec3(x * 30.0f, 0.0f, z * 30.0f));
             _objects.push_back(sprite);
             _layer3D->addChild(sprite);
         }
@@ -1045,22 +1045,22 @@ void CameraArcBallDemo::onEnter()
     {
         _camera=Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
         _camera->setCameraFlag(CameraFlag::USER1);
-        _camera->setPosition3D(Vec3(0, 10, 50));
-        _camera->lookAt(Vec3(0, 0, 0), Vec3(0, 1, 0));
+        _camera->setPosition3D(Vec3(0.0f, 10.0f, 50.0f));
+        _camera->lookAt(Vec3(0, 0, 0), Vec3(0.0f, 1.0f, 0.0f));
         _camera->retain();
         _layer3D->addChild(_camera);
     }
 
     _sprite3D1 = Sprite3D::create("Sprite3DTest/orc.c3b");
     _sprite3D1->setScale(0.5);
-    _sprite3D1->setRotation3D(Vec3(0,180,0));
+    _sprite3D1->setRotation3D(Vec3(0.0f,180.0f,0.0f));
     _sprite3D1->setPosition3D(Vec3(0,0,0));
     _layer3D->addChild(_sprite3D1);
 
     _sprite3D2 = Sprite3D::create("Sprite3DTest/boss.c3b");
     _sprite3D2->setScale(0.6f);
-    _sprite3D2->setRotation3D(Vec3(-90,0,0));
-    _sprite3D2->setPosition3D(Vec3(20,0,0));
+    _sprite3D2->setRotation3D(Vec3(-90.0f,0.0f,0.0f));
+    _sprite3D2->setPosition3D(Vec3(20.0f,0.0f,0.0f));
     _layer3D->addChild(_sprite3D2);
 
     _drawGrid =DrawNode3D::create();
@@ -1068,15 +1068,15 @@ void CameraArcBallDemo::onEnter()
     //draw x
     for( int j =-20; j<=20 ;j++)
     {
-        _drawGrid->drawLine(Vec3(-100, 0, 5*j),Vec3(100,0,5*j),Color4F(1,0,0,1));
+        _drawGrid->drawLine(Vec3(-100.0f, 0, 5.0f*j),Vec3(100.0f,0,5.0f*j),Color4F(1,0,0,1));
     }
     //draw z
     for( int j =-20; j<=20 ;j++)
     {
-        _drawGrid->drawLine(Vec3(5*j, 0, -100),Vec3(5*j,0,100),Color4F(0,0,1,1));
+        _drawGrid->drawLine(Vec3(5.0f*j, 0, -100.0f),Vec3(5.0f*j,0,100.0f),Color4F(0,0,1,1));
     }
     //draw y
-    _drawGrid->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
+    _drawGrid->drawLine(Vec3(0, 0, 0),Vec3(0,50.0f,0),Color4F(0,1,0,1));
     _layer3D->addChild(_drawGrid);
 
     _layer3D->setCameraMask(2);
@@ -1103,10 +1103,10 @@ void CameraArcBallDemo::onTouchsMoved( const std::vector<Touch*> &touchs, Event 
             Size visibleSize = Director::getInstance()->getVisibleSize();
             Vec2 prelocation = touchs[0]->getPreviousLocationInView();
             Vec2 location = touchs[0]->getLocationInView();
-            location.x = 2.0 * (location.x) / (visibleSize.width) - 1.0f;
-            location.y = 2.0 * (visibleSize.height - location.y) / (visibleSize.height) - 1.0f;
-            prelocation.x = 2.0 * (prelocation.x) / (visibleSize.width) - 1.0f;
-            prelocation.y = 2.0 * (visibleSize.height - prelocation.y) / (visibleSize.height) - 1.0f;
+            location.x = 2.0f * (location.x) / (visibleSize.width) - 1.0f;
+            location.y = 2.0f * (visibleSize.height - location.y) / (visibleSize.height) - 1.0f;
+            prelocation.x = 2.0f * (prelocation.x) / (visibleSize.width) - 1.0f;
+            prelocation.y = 2.0f * (visibleSize.height - prelocation.y) / (visibleSize.height) - 1.0f;
 
             Vec3 axes;
             float angle;
@@ -1141,7 +1141,7 @@ void CameraArcBallDemo::calculateArcBall( cocos2d::Vec3 & axis, float & angle, f
     Vec3::cross(p2, p1, &axis);  //calculate rotation axis
     axis.normalize();
 
-    float t = (p2 - p1).length() / (2.0 * _radius);
+    float t = (p2 - p1).length() / (2.0f * _radius);
     //clamp -1 to 1
     if (t > 1.0) t = 1.0;
     if (t < -1.0) t = -1.0;
@@ -1160,7 +1160,7 @@ float CameraArcBallDemo::projectToSphere( float r, float x, float y )
     }                         
     else                               //on hyperbola
     {
-        t = r / 1.41421356237309504880;
+        t = r / 1.41421356237309504880f;
         z = t*t / d;
     }
     return z;
@@ -1293,19 +1293,19 @@ void FogTestDemo::onEnter()
     _layer3D->addChild(_sprite3D1);
     _sprite3D1->setPosition3D( Vec3( 0, 0,0 ) );
     _sprite3D1->setScale(2.0f);
-    _sprite3D1->setRotation3D(Vec3(-90,180,0));
+    _sprite3D1->setRotation3D(Vec3(-90.0f,180.0f,0.0f));
 
     _layer3D->addChild(_sprite3D2);
-    _sprite3D2->setPosition3D( Vec3( 0, 0,-20 ) );
+    _sprite3D2->setPosition3D( Vec3( 0.0f, 0.0f,-20.0f) );
     _sprite3D2->setScale(2.0f);
-    _sprite3D2->setRotation3D(Vec3(-90,180,0));
+    _sprite3D2->setRotation3D(Vec3(-90.0f,180.0f,0.0f));
 
     if (_camera == nullptr)
     {
         _camera=Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
         _camera->setCameraFlag(CameraFlag::USER1);
-        _camera->setPosition3D(Vec3(0, 30, 40));
-        _camera->lookAt(Vec3(0,0,0), Vec3(0, 1, 0));
+        _camera->setPosition3D(Vec3(0.0f, 30.0f, 40.0f));
+        _camera->lookAt(Vec3(0,0,0), Vec3(0.0f, 1.0f, 0.0f));
 
         _layer3D->addChild(_camera);
     }
@@ -1517,8 +1517,8 @@ void BackgroundColorBrushTest::onEnter()
     
     {
         // 1st Camera
-        auto camera = Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
-        camera->setPosition3D(Vec3(0, 0, 200));
+        auto camera = Camera::createPerspective(60.0f, (float)s.width/s.height, 1.0f, 1000.0f);
+        camera->setPosition3D(Vec3(0.0f, 0.0f, 200.0f));
         camera->lookAt(Vec3::ZERO);
         camera->setDepth(-2);
         camera->setCameraFlag(CameraFlag::USER1);
@@ -1527,11 +1527,11 @@ void BackgroundColorBrushTest::onEnter()
         // 3D model
         auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
         model->setScale(4);
-        model->setPosition3D(Vec3(20, 0, 0));
+        model->setPosition3D(Vec3(20.0f, 0.0f, 0.0f));
         model->setTexture("Sprite3DTest/boss.png");
         model->setCameraMask(static_cast<unsigned short>(CameraFlag::USER1));
         addChild(model);
-        model->runAction(RepeatForever::create(RotateBy::create(1.f, Vec3(10, 20, 30))));
+        model->runAction(RepeatForever::create(RotateBy::create(1.f, Vec3(10.0f, 20.0f, 30.0f))));
     }
     
     {
@@ -1544,7 +1544,7 @@ void BackgroundColorBrushTest::onEnter()
         auto camera = Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
         auto colorBrush = CameraBackgroundBrush::createColorBrush(Color4F(.1f, .1f, 1.f, .5f), 1.f);
         camera->setBackgroundBrush(colorBrush);
-        camera->setPosition3D(Vec3(0, 0, 200));
+        camera->setPosition3D(Vec3(0.0f, 0.0f, 200.0f));
         camera->lookAt(Vec3::ZERO);
         camera->setDepth(-1);
         camera->setCameraFlag(CameraFlag::USER2);
@@ -1565,10 +1565,10 @@ void BackgroundColorBrushTest::onEnter()
         // 3D model for 2nd camera
         auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
         model->setScale(4);
-        model->setPosition3D(Vec3(-20, 0, 0));
+        model->setPosition3D(Vec3(-20.0f, 0.0f, 0.0f));
         model->setTexture("Sprite3DTest/boss.png");
         model->setCameraMask(static_cast<unsigned short>(CameraFlag::USER2));
         base->addChild(model);
-        model->runAction(RepeatForever::create(RotateBy::create(1.f, Vec3(10, 20, 30))));
+        model->runAction(RepeatForever::create(RotateBy::create(1.f, Vec3(10.0f, 20.0f, 30.0f))));
     }
 }

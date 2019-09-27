@@ -127,7 +127,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
         
         child->setPosition( Vec2( dstPoint.x + offset, dstPoint.y) );
         child->runAction(
-                         EaseElasticOut::create(MoveBy::create(2, Vec2(dstPoint.x - offset,0)), 0.35f)
+                         EaseElasticOut::create(MoveBy::create(2, Vec2(dstPoint.x - offset,0.0f)), 0.35f)
                          );
         i++;
     }
@@ -259,7 +259,7 @@ void MenuLayer2::alignMenusH()
             // TIP: if no padding, padding = 5
             menu->alignItemsHorizontally();            
             auto p = menu->getPosition();
-            menu->setPosition(p + Vec2(0,30));
+            menu->setPosition(p + Vec2(0.0f,30.0f));
             
         } 
         else 
@@ -267,7 +267,7 @@ void MenuLayer2::alignMenusH()
             // TIP: but padding is configurable
             menu->alignItemsHorizontallyWithPadding(40);
             auto p = menu->getPosition();
-            menu->setPosition(p - Vec2(0,30));
+            menu->setPosition(p - Vec2(0.0f,30.0f));
         }        
     }
 }
@@ -283,14 +283,14 @@ void MenuLayer2::alignMenusV()
             // TIP: if no padding, padding = 5
             menu->alignItemsVertically();            
             auto p = menu->getPosition();
-            menu->setPosition(p + Vec2(100,0));
+            menu->setPosition(p + Vec2(100.0f,0.0f));
         } 
         else 
         {
             // TIP: but padding is configurable
             menu->alignItemsVerticallyWithPadding(40);    
             auto p = menu->getPosition();
-            menu->setPosition(p - Vec2(100,0));
+            menu->setPosition(p - Vec2(100.0f,0.0f));
         }        
     }
 }

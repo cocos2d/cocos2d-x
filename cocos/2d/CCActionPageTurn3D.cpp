@@ -74,7 +74,7 @@ void PageTurn3D::update(float time)
     float deltaTheta = sqrtf(time);
     float theta = deltaTheta > 0.5f ? (float)M_PI_2*deltaTheta : (float)M_PI_2*(1-deltaTheta);
     
-    float rotateByYAxis = (2-time)* M_PI;
+    float rotateByYAxis = (2-time)* (float)M_PI;
     
     float sinTheta = sinf(theta);
     float cosTheta = cosf(theta);
@@ -83,8 +83,9 @@ void PageTurn3D::update(float time)
     {
         for (int j = 0; j <= _gridSize.height; ++j)
         {
+            Vec2 pos((float)i, (float)j);
             // Get original vertex
-            Vec3 p = getOriginalVertex(Vec2(i ,j));
+            Vec3 p = getOriginalVertex(pos);
             
             p.x -= getGridRect().origin.x;
             float R = sqrtf((p.x * p.x) + ((p.y - ay) * (p.y - ay)));
@@ -124,7 +125,7 @@ void PageTurn3D::update(float time)
             
             // Set new coords
             p.x += getGridRect().origin.x;
-            setVertex(Vec2(i, j), p);
+            setVertex(pos, p);
             
         }
     }

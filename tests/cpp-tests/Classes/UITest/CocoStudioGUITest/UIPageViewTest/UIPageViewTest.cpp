@@ -204,7 +204,7 @@ bool UIPageViewButtonTest::init()
                 }
                 
                 LinearLayoutParameter *parameter = LinearLayoutParameter::create();
-                parameter->setMargin(Margin(0,0,100,0));
+                parameter->setMargin(Margin(0.0f,0.0f,100.0f,0.0f));
                 innerBox->setLayoutParameter(parameter);
                 
                 outerBox->addChild(innerBox);
@@ -289,7 +289,7 @@ bool UIPageViewTouchPropagationTest::init()
         // Create the page view
         PageView* pageView = PageView::create();
         pageView->setContentSize(Size(240.0f, 130.0f));
-        pageView->setAnchorPoint(Vec2(0.5,0.5));
+        pageView->setAnchorPoint(Vec2(0.5f,0.5f));
         Size backgroundSize = background->getContentSize();
         pageView->setPosition(Vec2(widgetSize.width / 2.0f ,widgetSize.height / 2.0f));
         pageView->setBackGroundColor(Color3B::GREEN);
@@ -314,7 +314,7 @@ bool UIPageViewTouchPropagationTest::init()
                 }
                 
                 LinearLayoutParameter *parameter = LinearLayoutParameter::create();
-                parameter->setMargin(Margin(0,0,100,0));
+                parameter->setMargin(Margin(0.0f,0.0f,100.0f,0.0f));
                 innerBox->setLayoutParameter(parameter);
                 
                 outerBox->addChild(innerBox);
@@ -347,15 +347,15 @@ bool UIPageViewTouchPropagationTest::init()
         _uiLayer->addChild(pageView);
         
         Text *propagationText = Text::create("Allow Propagation", "Arial", 10);
-        propagationText->setAnchorPoint(Vec2(0,0.5));
+        propagationText->setAnchorPoint(Vec2(0.0f,0.5f));
         propagationText->setTextColor(Color4B::RED);
-        propagationText->setPosition(Vec2(0, pageView->getPosition().y + 50));
+        propagationText->setPosition(Vec2(0.0f, pageView->getPosition().y + 50));
         _uiLayer->addChild(propagationText);
         
         Text *swallowTouchText = Text::create("Swallow Touches", "Arial", 10);
-        swallowTouchText->setAnchorPoint(Vec2(0,0.5));
+        swallowTouchText->setAnchorPoint(Vec2(0.f,0.5f));
         swallowTouchText->setTextColor(Color4B::RED);
-        swallowTouchText->setPosition(Vec2(0, pageView->getPosition().y));
+        swallowTouchText->setPosition(Vec2(0.0f, pageView->getPosition().y));
         _uiLayer->addChild(swallowTouchText);
         
         // Create the checkbox
@@ -364,7 +364,7 @@ bool UIPageViewTouchPropagationTest::init()
                                               "cocosui/check_box_active.png",
                                               "cocosui/check_box_normal_disable.png",
                                               "cocosui/check_box_active_disable.png");
-        checkBox1->setPosition(propagationText->getPosition() + Vec2(propagationText->getContentSize().width/2, -20));
+        checkBox1->setPosition(propagationText->getPosition() + Vec2(propagationText->getContentSize().width/2, -20.0f));
         
         checkBox1->setName("propagation");
         _uiLayer->addChild(checkBox1);
@@ -376,7 +376,7 @@ bool UIPageViewTouchPropagationTest::init()
                                               "cocosui/check_box_active.png",
                                               "cocosui/check_box_normal_disable.png",
                                               "cocosui/check_box_active_disable.png");
-        checkBox2->setPosition(swallowTouchText->getPosition() + Vec2(swallowTouchText->getContentSize().width/2, -20));
+        checkBox2->setPosition(swallowTouchText->getPosition() + Vec2(swallowTouchText->getContentSize().width/2, -20.0f));
 
         checkBox2->setName("swallow");
         _uiLayer->addChild(checkBox2);
@@ -486,7 +486,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         PageView* pageView = PageView::create();
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->setContentSize(Size(240.0f, 130.0f));
-        pageView->setAnchorPoint(Vec2(0.5,0.5));
+        pageView->setAnchorPoint(Vec2(0.5f,0.5f));
         Size backgroundSize = background->getContentSize();
         pageView->setPosition(Vec2(widgetSize.width / 2.0f ,widgetSize.height / 2.0f));
         pageView->setBackGroundColor(Color3B::GREEN);
@@ -514,7 +514,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
                 }
                 
                 LinearLayoutParameter *parameter = LinearLayoutParameter::create();
-                parameter->setMargin(Margin(0,0,100,0));
+                parameter->setMargin(Margin(0.0f,0.0f,100.0f,0.0f));
                 innerBox->setLayoutParameter(parameter);
                 
                 outerBox->addChild(innerBox);
@@ -552,7 +552,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
                 }
                 
                 LinearLayoutParameter *parameter = LinearLayoutParameter::create();
-                parameter->setMargin(Margin(0,0,100,0));
+                parameter->setMargin(Margin(0.0f,0.0f,100.0f,0.0f));
                 innerBox->setLayoutParameter(parameter);
                 outerBox->addChild(innerBox);
             }
@@ -687,7 +687,7 @@ bool UIPageViewJumpToPageTest::init()
 
             ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
             imageView->setScale9Enabled(true);
-            imageView->setContentSize(Size(240, 130));
+            imageView->setContentSize(Size(240.0f, 130.0f));
             imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(imageView);
 
@@ -796,7 +796,7 @@ bool UIPageViewVerticalTest::init()
             
             ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
             imageView->setScale9Enabled(true);
-            imageView->setContentSize(Size(240, 130));
+            imageView->setContentSize(Size(240.0f, 130.0f));
             imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(imageView);
             
@@ -889,7 +889,7 @@ bool UIPageViewDisableTouchTest::init()
             
             ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
             imageView->setScale9Enabled(true);
-            imageView->setContentSize(Size(240, 130));
+            imageView->setContentSize(Size(240.0f, 130.0f));
             imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(imageView);
             
@@ -1053,7 +1053,7 @@ bool UIPageViewIndicatorTest::init()
             
             ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
             imageView->setScale9Enabled(true);
-            imageView->setContentSize(Size(240, 130));
+            imageView->setContentSize(Size(240.0f, 130.0f));
             imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(imageView);
             

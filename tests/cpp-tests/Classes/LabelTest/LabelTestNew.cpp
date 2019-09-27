@@ -213,8 +213,8 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     auto s = Director::getInstance()->getWinSize();
     
     auto drawNode = DrawNode::create();
-    drawNode->drawLine( Vec2(0, s.height/2), Vec2(s.width, s.height/2), Color4F(1.0, 1.0, 1.0, 1.0) );
-    drawNode->drawLine( Vec2(s.width/2, 0), Vec2(s.width/2, s.height), Color4F(1.0, 1.0, 1.0, 1.0) );
+    drawNode->drawLine( Vec2(0.0f, s.height/2), Vec2(s.width, s.height/2), Color4F(1.0f, 1.0f, 1.0f, 1.0f) );
+    drawNode->drawLine( Vec2(s.width/2, 0.0f), Vec2(s.width/2, s.height), Color4F(1.0f, 1.0f, 1.0f, 1.0f) );
     addChild(drawNode, -1);
 
     // Upper Label
@@ -254,7 +254,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     // Bottom Label
     auto label2 = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "00.0");
     addChild(label2, 0, kTagBitmapAtlas2);
-    label2->setPosition( Vec2(s.width/2.0f, 80) );
+    label2->setPosition( Vec2(s.width/2.0f, 80.0f) );
     
     auto lastChar = (Sprite*) label2->getLetter(3);
     lastChar->runAction( rot_4ever->clone() );
@@ -472,7 +472,7 @@ LabelFNTandTTFEmpty::LabelFNTandTTFEmpty()
     
     auto label3 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
     addChild(label3, 0, kTagBitmapAtlas3);
-    label3->setPosition(Vec2(s.width/2, 100));
+    label3->setPosition(Vec2(s.width/2, 100.0f));
 
     schedule(CC_CALLBACK_1(LabelFNTandTTFEmpty::updateStrings, this), 1.0f, "update_strings_key");
 
@@ -919,7 +919,7 @@ LabelFNTBounds::LabelFNTBounds()
         Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
         Vec2(origin.width, labelSize.height + origin.height)
     };
-    drawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
+    drawNode->drawPoly(vertices, 4, true, Color4F(1.0f, 1.0f, 1.0f, 1.0f));
     addChild(drawNode);
 }
 
@@ -941,7 +941,7 @@ LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
     TTFConfig ttfConfig("fonts/arial.ttf", 14);
     auto label1 = Label::createWithTTF(ttfConfig, LongSentencesExample, TextHAlignment::CENTER,size.width);
     label1->setPosition( Vec2(size.width/2, size.height/2) );
-    label1->setAnchorPoint(Vec2(0.5, 1.0));
+    label1->setAnchorPoint(Vec2(0.5f, 1.0f));
     addChild(label1);
 }
 
@@ -1056,19 +1056,19 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
     drawNode->setAnchorPoint(Vec2(0, 0));
     this->addChild(drawNode);
     drawNode->drawSegment(
-        Vec2(size.width * 0.1, size.height * 0.8),
-        Vec2(size.width * 0.1, 0), 1, Color4F(1, 0, 0, 1));
+        Vec2(size.width * 0.1f, size.height * 0.8f),
+        Vec2(size.width * 0.1, 0.0f), 1, Color4F(1.0f, 0.0f, 0.0f, 1.0f));
     drawNode->drawSegment(
-        Vec2(size.width * 0.85, size.height * 0.8),
-        Vec2(size.width * 0.85, 0), 1, Color4F(1, 0, 0, 1));
+        Vec2(size.width * 0.85f, size.height * 0.8f),
+        Vec2(size.width * 0.85f, 0.0f), 1, Color4F(1.0f, 0.0f, 0.0f, 1.0f));
     
     TTFConfig ttfConfig("fonts/HKYuanMini.ttf", 25, GlyphCollection::DYNAMIC);
     auto label1 = Label::createWithTTF(ttfConfig,
-        "你好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
+        "你好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75f);
     if(label1) {
         label1->setTextColor(Color4B(128, 255, 255, 255));
-        label1->setPosition(Vec2(size.width * 0.1, size.height * 0.6));
-        label1->setAnchorPoint(Vec2(0, 0.5));
+        label1->setPosition(Vec2(size.width * 0.1f, size.height * 0.6f));
+        label1->setAnchorPoint(Vec2(0.0f, 0.5f));
         this->addChild(label1);
         // Demo for unloadFontAtlasTTF function, after it been called, all UI widget
         //  use the special font must reset font, because the old one is invalid.
@@ -1077,20 +1077,20 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
     }
 
     auto label2 = Label::createWithTTF(ttfConfig,
-        "早上好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
+        "早上好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75f);
     if(label2) {
         label2->setTextColor(Color4B(255, 128, 255, 255));
-        label2->setPosition(Vec2(size.width * 0.1, size.height * 0.4));
-        label2->setAnchorPoint(Vec2(0, 0.5));
+        label2->setPosition(Vec2(size.width * 0.1f, size.height * 0.4f));
+        label2->setAnchorPoint(Vec2(0.0f, 0.5f));
         this->addChild(label2);
     }
 
     auto label3 = Label::createWithTTF(ttfConfig,
-        "美好的一天啊美好的一天啊美好的一天啊", TextHAlignment::LEFT, size.width * 0.75);
+        "美好的一天啊美好的一天啊美好的一天啊", TextHAlignment::LEFT, size.width * 0.75f);
     if(label3) {
         label3->setTextColor(Color4B(255, 255, 128, 255));
-        label3->setPosition(Vec2(size.width * 0.1, size.height * 0.2));
-        label3->setAnchorPoint(Vec2(0, 0.5));
+        label3->setPosition(Vec2(size.width * 0.1f, size.height * 0.2f));
+        label3->setAnchorPoint(Vec2(0.0f, 0.5f));
         this->addChild(label3);
     }
 }
@@ -1232,9 +1232,9 @@ LabelTTFDistanceField::LabelTTFDistanceField()
     Vec2 vertices[4] =
     {
         Vec2::ZERO,
-        Vec2(labelContentSize.width, 0),
+        Vec2(labelContentSize.width, 0.0f),
         Vec2(labelContentSize.width, labelContentSize.height),
-        Vec2(0, labelContentSize.height)
+        Vec2(0.0f, labelContentSize.height)
     };
     borderDraw->drawPoly(vertices, 4, true, Color4F::RED);
 
@@ -1252,9 +1252,9 @@ LabelTTFDistanceField::LabelTTFDistanceField()
     Vec2 vertices2[4] =
     {
         Vec2::ZERO,
-        Vec2(labelContentSize2.width, 0),
+        Vec2(labelContentSize2.width, 0.0f),
         Vec2(labelContentSize2.width, labelContentSize2.height),
-        Vec2(0, labelContentSize2.height)
+        Vec2(0.0f, labelContentSize2.height)
     };
     borderDraw2->drawPoly(vertices2, 4, true, Color4F::GREEN);
 }
@@ -1347,7 +1347,7 @@ void LabelShadowTest::onEnter()
     slider2->loadBarTexture("cocosui/sliderTrack.png");
     slider2->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     slider2->loadProgressBarTexture("cocosui/sliderProgress.png");
-    slider2->setPosition(Vec2(size.width * 0.15f, size.height / 2.0));
+    slider2->setPosition(Vec2(size.width * 0.15f, size.height / 2.0f));
     slider2->setRotation(90);
     slider2->setPercent(52);
     slider2->addEventListener(CC_CALLBACK_2(LabelShadowTest::sliderEvent, this));
@@ -1380,7 +1380,7 @@ void LabelShadowTest::onEnter()
     addChild(shadowLabelGrow);
 
     shadowLabelBMFont = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "BMFont:Shadow");
-    shadowLabelBMFont->setPosition( Vec2(size.width/2, horizontalSliderY + step * (0.5f + 0)));
+    shadowLabelBMFont->setPosition( Vec2(size.width/2, horizontalSliderY + step * 0.5f));
     shadowLabelBMFont->setColor( Color3B::RED );
     shadowLabelBMFont->enableShadow(Color4B::GREEN);
     addChild(shadowLabelBMFont);
@@ -1563,7 +1563,7 @@ LabelTTFOldNew::LabelTTFOldNew()
         Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
         Vec2(origin.width, labelSize.height + origin.height)
     };
-    drawNode->drawPoly(vertices, 4, true, Color4F(1.0, 0.0, 0.0, 1.0));
+    drawNode->drawPoly(vertices, 4, true, Color4F(1.0f, 0.0f, 0.0f, 1.0f));
     
     labelSize = label2->getContentSize();
     origin    = Director::getInstance()->getWinSize();
@@ -1578,7 +1578,7 @@ LabelTTFOldNew::LabelTTFOldNew()
         Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
         Vec2(origin.width, labelSize.height + origin.height)
     };
-    drawNode->drawPoly(vertices2, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
+    drawNode->drawPoly(vertices2, 4, true, Color4F(1.0f, 1.0f, 1.0f, 1.0f));
     
     addChild(drawNode);
 }
@@ -1636,7 +1636,7 @@ LabelAlignmentTest::LabelAlignmentTest()
         MenuItemFont::create("Right", CC_CALLBACK_1(LabelAlignmentTest::setAlignmentRight, this)),
         nullptr);
     menu->alignItemsVerticallyWithPadding(4);
-    menu->setPosition(Vec2(50, s.height / 2 - 20));
+    menu->setPosition(Vec2(50.0f, s.height / 2 - 20));
     this->addChild(menu);
 
     menu = Menu::create(
@@ -1894,7 +1894,7 @@ std::string LabelIssue9255Test::subtitle() const
 
 LabelSmallDimensionsTest::LabelSmallDimensionsTest()
 {
-    auto label = Label::createWithSystemFont("Hello World!", "fonts/arial.ttf", 24, Size(30,100));
+    auto label = Label::createWithSystemFont("Hello World!", "fonts/arial.ttf", 24, Size(30.0f,100.0f));
     label->setPosition(VisibleRect::center());
     addChild(label);
 }
@@ -2259,7 +2259,7 @@ void LabelLayoutBaseTest::initFontSizeChange(const cocos2d::Size& size)
     stepper->setScale(0.5);
 
     fontSizeLabel->setPosition(stepper->getPosition() -
-                               Vec2(stepper->getContentSize().width/2  + fontSizeLabel->getContentSize().width/2,0));
+                               Vec2(stepper->getContentSize().width/2  + fontSizeLabel->getContentSize().width/2,0.0f));
     this->addChild(fontSizeLabel);
 }
 
@@ -2338,7 +2338,7 @@ void LabelLayoutBaseTest::initAlignmentOption(const cocos2d::Size& size)
         MenuItemFont::create("Right", CC_CALLBACK_1(LabelLayoutBaseTest::setAlignmentRight, this)),
         nullptr);
     menu->alignItemsVerticallyWithPadding(4);
-    menu->setPosition(Vec2(50, size.height / 2 - 20));
+    menu->setPosition(Vec2(50.0f, size.height / 2 - 20));
     this->addChild(menu);
 
     menu = Menu::create(
@@ -2369,7 +2369,7 @@ void LabelLayoutBaseTest::initSliders(const cocos2d::Size& size)
     slider2->loadBarTexture("cocosui/sliderTrack.png");
     slider2->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     slider2->loadProgressBarTexture("cocosui/sliderProgress.png");
-    slider2->setPosition(Vec2(size.width * 0.2f, size.height / 2.0));
+    slider2->setPosition(Vec2(size.width * 0.2f, size.height / 2.0f));
     slider2->setRotation(90);
     slider2->setPercent(52);
     addChild(slider2);
@@ -2495,10 +2495,10 @@ void LabelLayoutBaseTest::updateDrawNodeSize(const cocos2d::Size &drawNodeSize)
         Vec2(origin.width, drawNodeSize.height + origin.height)
     };
     _drawNode->clear();
-    _drawNode->drawLine(vertices[0], vertices[1], Color4F(1.0, 1.0, 1.0, 1.0));
-    _drawNode->drawLine(vertices[0], vertices[3], Color4F(1.0, 1.0, 1.0, 1.0));
-    _drawNode->drawLine(vertices[2], vertices[3], Color4F(1.0, 1.0, 1.0, 1.0));
-    _drawNode->drawLine(vertices[1], vertices[2], Color4F(1.0, 1.0, 1.0, 1.0));
+    _drawNode->drawLine(vertices[0], vertices[1], Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+    _drawNode->drawLine(vertices[0], vertices[3], Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+    _drawNode->drawLine(vertices[2], vertices[3], Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+    _drawNode->drawLine(vertices[1], vertices[2], Color4F(1.0f, 1.0f, 1.0f, 1.0f));
 
 }
 
@@ -2756,7 +2756,7 @@ void LabelToggleTypeTest::initToggleCheckboxes()
         this->addChild(radioButton);
         
         auto label = Label::createWithSystemFont(labelTypes.at(i), "Arial", 20);
-        label->setPosition(radioButton->getPosition() + Vec2(50,0));
+        label->setPosition(radioButton->getPosition() + Vec2(50.0f,0.0f));
         this->addChild(label);
     }
 }
@@ -2901,7 +2901,7 @@ void LabelSystemFontTest::initToggleCheckboxes()
         this->addChild(radioButton);
 
         auto label = Label::createWithSystemFont(labelTypes.at(i), "Arial", 20);
-        label->setPosition(radioButton->getPosition() + Vec2(50,0));
+        label->setPosition(radioButton->getPosition() + Vec2(50.0f,0.0f));
         this->addChild(label);
     }
 }
@@ -3014,7 +3014,7 @@ LabelRichText::LabelRichText()
     if (richText2)
     {
         richText2->ignoreContentAdaptWithSize(false);
-        richText2->setContentSize(Size(400, 400));
+        richText2->setContentSize(Size(400.0f, 400.0f));
         richText2->setPosition(center);
 
         addChild(richText2);
@@ -3300,7 +3300,7 @@ LabelLocalizationTest::LabelLocalizationTest()
         this->addChild(radioButton);
 
         auto label = Label::createWithSystemFont(labelTypes.at(i), "Arial", 20);
-        label->setPosition(radioButton->getPosition() + Vec2(50, 0));
+        label->setPosition(radioButton->getPosition() + Vec2(50.0f, 0.0f));
         this->addChild(label);
     }
 
@@ -3309,18 +3309,18 @@ LabelLocalizationTest::LabelLocalizationTest()
     _label1->setPosition(Vec2(winSize.width / 2, winSize.height * 1 / 3));
 
     Label * label = Label::createWithSystemFont("From json data :", "Arial", 24);
-    label->setAnchorPoint(Vec2(0, 0.5));
+    label->setAnchorPoint(Vec2(0.0f, 0.5f));
     addChild(label, 0);
-    label->setPosition(Vec2(20, winSize.height * 1 / 3 + 24));
+    label->setPosition(Vec2(20.0f, winSize.height * 1 / 3 + 24));
 
     _label2 = Label::createWithSystemFont(_localizationBin->getLocalizationString("Text Label"), "Arial", 24);
     addChild(_label2, 0);
     _label2->setPosition(Vec2(winSize.width / 2, winSize.height * 1 / 2));
 
     label = Label::createWithSystemFont("From binary data :", "Arial", 24);
-    label->setAnchorPoint(Vec2(0, 0.5));
+    label->setAnchorPoint(Vec2(0.0f, 0.5f));
     addChild(label, 0);
-    label->setPosition(Vec2(20, winSize.height * 1 / 2 + 24));
+    label->setPosition(Vec2(20.0f, winSize.height * 1 / 2 + 24));
 }
 
 std::string LabelLocalizationTest::title() const
@@ -3486,7 +3486,7 @@ LabelIssue16717::LabelIssue16717()
 
     {
         auto label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 70);
-        label->setPosition(VisibleRect::center() + Vec2(0, 40));
+        label->setPosition(VisibleRect::center() + Vec2(0.0f, 40.0f));
         label->enableOutline(Color4B(0, 255, 0, 100), 10); // Set 100 alpha for outline
         label->setTextColor(Color4B(0, 0, 255, 100)); // Also set 100 alpha for text
         addChild(label);
@@ -3494,7 +3494,7 @@ LabelIssue16717::LabelIssue16717()
 
     {
         auto label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 70);
-        label->setPosition(VisibleRect::center() + Vec2(0, -40));
+        label->setPosition(VisibleRect::center() + Vec2(0.0f, -40.0f));
         label->enableOutline(Color4B(0, 255, 0, 100), 10); // Set 100 alpha for outline
         label->setTextColor(Color4B(0, 255, 0, 100)); // Also set 100 alpha for text
         addChild(label);

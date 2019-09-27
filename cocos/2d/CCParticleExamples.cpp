@@ -1076,7 +1076,7 @@ bool ParticleSnow::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height + 10);
-        setPosVar(Vec2(winSize.width/2, 0));
+        setPosVar(Vec2(winSize.width/2, 0.0f));
 
         // angle
         _angle = -90;
@@ -1188,7 +1188,7 @@ bool ParticleRain::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height);
-        setPosVar(Vec2(winSize.width/2, 0));
+        setPosVar(Vec2(winSize.width/2, 0.0f));
 
         // life of particles
         _life = 4.5f;

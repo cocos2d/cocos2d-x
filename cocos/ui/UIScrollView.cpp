@@ -166,7 +166,7 @@ void ScrollView::onSizeChanged()
     float innerSizeWidth = MAX(orginInnerSizeWidth, _contentSize.width);
     float innerSizeHeight = MAX(orginInnerSizeHeight, _contentSize.height);
     _innerContainer->setContentSize(Size(innerSizeWidth, innerSizeHeight));
-    setInnerContainerPosition(Vec2(0, _contentSize.height - _innerContainer->getContentSize().height));
+    setInnerContainerPosition(Vec2(0.0f, _contentSize.height - _innerContainer->getContentSize().height));
 
     if (_verticalScrollBar != nullptr)
     {
@@ -1090,10 +1090,10 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
             switch (_direction)
             {
                 case Direction::HORIZONTAL:
-                    offsetInInch = convertDistanceFromPointToInch(Vec2(std::abs(sender->getTouchBeganPosition().x - touchPoint.x), 0));
+                    offsetInInch = convertDistanceFromPointToInch(Vec2(std::abs(sender->getTouchBeganPosition().x - touchPoint.x), 0.0f));
                     break;
                 case Direction::VERTICAL:
-                    offsetInInch = convertDistanceFromPointToInch(Vec2(0, std::abs(sender->getTouchBeganPosition().y - touchPoint.y)));
+                    offsetInInch = convertDistanceFromPointToInch(Vec2(0.0f, std::abs(sender->getTouchBeganPosition().y - touchPoint.y)));
                     break;
                 case Direction::BOTH:
                     offsetInInch = convertDistanceFromPointToInch(sender->getTouchBeganPosition() - touchPoint);

@@ -427,7 +427,7 @@ protected:
     Color3B _endColor = Color3B::BLACK;
     uint8_t _startOpacity = 255;
     uint8_t _endOpacity = 255;
-    Vec2   _alongVector = {0, -1};
+    Vec2   _alongVector = {0.0f, -1.0f};
     bool    _compressedInterpolation = true;
 };
 

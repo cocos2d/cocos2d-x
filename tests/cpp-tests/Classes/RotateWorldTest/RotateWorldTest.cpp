@@ -81,7 +81,7 @@ void SpriteLayer::onEnter()
     spriteSister2->setScale(1.5f);
     
     sprite->setPosition(Vec2(x/2,y/2));
-    spriteSister1->setPosition(Vec2(40,y/2));
+    spriteSister1->setPosition(Vec2(40.0f,y/2));
     spriteSister2->setPosition(Vec2(x-40,y/2));
 
     auto rot = RotateBy::create(16, -3600);
@@ -162,7 +162,7 @@ bool RotateWorldTest::init()
         auto layer = RotateWorldMainLayer::create();
 
         addChild(layer);
-        runAction(RotateBy::create(4, -360));
+        runAction(RotateBy::create(4.0f, -360.0f));
 
         return true;
     }

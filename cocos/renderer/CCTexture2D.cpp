@@ -222,7 +222,7 @@ bool Texture2D::hasPremultipliedAlpha() const
     return _hasPremultipliedAlpha;
 }
 
-bool Texture2D::initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/)
+bool Texture2D::initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/, bool preMultipliedAlpha)
 {
     CCASSERT(dataLen>0 && pixelsWide>0 && pixelsHigh>0, "Invalid size");
 
@@ -230,10 +230,10 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, backend::PixelFo
     MipmapInfo mipmap;
     mipmap.address = (unsigned char*)data;
     mipmap.len = static_cast<int>(dataLen);
-    return initWithMipmaps(&mipmap, 1, pixelFormat, renderFormat, pixelsWide, pixelsHigh);
+    return initWithMipmaps(&mipmap, 1, pixelFormat, renderFormat, pixelsWide, pixelsHigh, preMultipliedAlpha);
 }
 
-bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh)
+bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha)
 {
     //the pixelFormat must be a certain value 
     CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
@@ -341,7 +341,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::Pi
     _maxS = 1;
     _maxT = 1;
 
-    _hasPremultipliedAlpha = false;
+    _hasPremultipliedAlpha = preMultipliedAlpha;
     _hasMipmaps = mipmapsNum > 1;
 
     return true;
@@ -441,11 +441,8 @@ bool Texture2D::initWithImage(Image *image, backend::PixelFormat format)
 
         //pixel format of data is not converted, renderFormat can be different from pixelFormat
         //it will be done later
-        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getPixelFormat(), renderFormat, imageWidth, imageHeight);
-        
-        // set the premultiplied tag
-        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
-        
+        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getPixelFormat(), renderFormat, imageWidth, imageHeight, image->hasPremultipliedAlpha());
+
         return true;
     }
     else if (image->isCompressed())
@@ -455,20 +452,14 @@ bool Texture2D::initWithImage(Image *image, backend::PixelFormat format)
             CCLOG("cocos2d: WARNING: This image is compressed and we can't convert it for now");
         }
         
-        initWithData(tempData, tempDataLen, image->getPixelFormat(), imageWidth, imageHeight, imageSize);
-        
-        // set the premultiplied tag
-        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        initWithData(tempData, tempDataLen, image->getPixelFormat(), imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha());
         
         return true;
     }
     else
     {
         //after conversion, renderFormat == pixelFormat of data
-        initWithData(tempData, tempDataLen, imagePixelFormat, renderFormat, imageWidth, imageHeight, imageSize);
-        
-        // set the premultiplied tag
-        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        initWithData(tempData, tempDataLen, imagePixelFormat, renderFormat, imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha());
         
         return true;
     }
@@ -570,7 +561,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     return ret;
 }
 
-bool Texture2D::initWithBackendTexture(backend::TextureBackend *texture)
+bool Texture2D::initWithBackendTexture(backend::TextureBackend *texture, bool preMultipliedAlpha)
 {
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(_texture);
@@ -578,6 +569,8 @@ bool Texture2D::initWithBackendTexture(backend::TextureBackend *texture)
     CC_ASSERT(_texture);
     _pixelsWide = _contentSize.width = _texture->getWidth();
     _pixelsHigh = _contentSize.height = _texture->getHeight();
+    _hasPremultipliedAlpha = preMultipliedAlpha;
+
     return true;
 }
 

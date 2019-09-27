@@ -305,8 +305,8 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setDirection(ui::ScrollView::Direction::BOTH);
-        sc->setInnerContainerSize(Size(480, 320));
-        sc->setContentSize(Size(100,100));
+        sc->setInnerContainerSize(Size(480.0f, 320.0f));
+        sc->setContentSize(Size(100.0f,100.0f));
 		sc->setScrollBarEnabled(false);
         Size backgroundSize = background->getContentSize();
         sc->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -315,7 +315,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
                               (backgroundSize.height - sc->getContentSize().height) / 2.0f));
         sc->scrollToPercentBothDirection(Vec2(50, 50), 1, true);
         ImageView* iv = ImageView::create("cocosui/Hello.png");
-        iv->setPosition(Vec2(240, 160));
+        iv->setPosition(Vec2(240.0f, 160.0f));
         sc->addChild(iv);
         _uiLayer->addChild(sc);
         
@@ -362,19 +362,19 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setBounceEnabled(true);
         sc->setDirection(ui::ScrollView::Direction::BOTH);
-        sc->setInnerContainerSize(Size(480, 320));
-        sc->setContentSize(Size(100,100));
-		sc->setScrollBarPositionFromCornerForHorizontal(Vec2(5, sc->getContentSize().height - 5));
-		sc->setScrollBarPositionFromCornerForVertical(Vec2(sc->getContentSize().width - 5, 5));
+        sc->setInnerContainerSize(Size(480.0f, 320.0f));
+        sc->setContentSize(Size(100.0f,100.0f));
+		sc->setScrollBarPositionFromCornerForHorizontal(Vec2(5.0f, sc->getContentSize().height - 5));
+		sc->setScrollBarPositionFromCornerForVertical(Vec2(sc->getContentSize().width - 5, 5.0f));
 		sc->setScrollBarAutoHideEnabled(false);
         Size backgroundSize = background->getContentSize();
         sc->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                               (backgroundSize.width - sc->getContentSize().width) / 2.0f,
                               (widgetSize.height - backgroundSize.height) / 2.0f +
                               (backgroundSize.height - sc->getContentSize().height) / 2.0f));
-        sc->scrollToPercentBothDirection(Vec2(50, 50), 1, true);
+        sc->scrollToPercentBothDirection(Vec2(50.0f, 50.0f), 1, true);
         ImageView* iv = ImageView::create("cocosui/Hello.png");
-        iv->setPosition(Vec2(240, 160));
+        iv->setPosition(Vec2(240.0f, 160.0f));
         sc->addChild(iv);
         _uiLayer->addChild(sc);
         return true;
@@ -427,7 +427,7 @@ bool UIScrollViewNestTest::init()
                                      (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
                                      (widgetSize.height - backgroundSize.height) / 2.0f +
                                      (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
-		scrollView->setScrollBarPositionFromCornerForVertical(Vec2(scrollView->getContentSize().width - 4, 4));
+		scrollView->setScrollBarPositionFromCornerForVertical(Vec2(scrollView->getContentSize().width - 4, 4.0f));
 		scrollView->setScrollBarColor(Color3B::BLUE);
         _uiLayer->addChild(scrollView);
         
@@ -464,14 +464,14 @@ bool UIScrollViewNestTest::init()
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setBounceEnabled(true);
         sc->setDirection(ui::ScrollView::Direction::BOTH);
-        sc->setInnerContainerSize(Size(480, 320));
-        sc->setContentSize(Size(100,100));
+        sc->setInnerContainerSize(Size(480.0f, 320.0f));
+        sc->setContentSize(Size(100.0f,100.0f));
         sc->setPropagateTouchEvents(false);
-        sc->setPosition(Vec2(180,100));
-        sc->scrollToPercentBothDirection(Vec2(50, 50), 1, true);
-		sc->setScrollBarPositionFromCorner(Vec2(4, 4));
+        sc->setPosition(Vec2(180.0f,100.0f));
+        sc->scrollToPercentBothDirection(Vec2(50.0f, 50.0f), 1, true);
+		sc->setScrollBarPositionFromCorner(Vec2(4.0f, 4.0f));
         ImageView* iv = ImageView::create("cocosui/Hello.png");
-        iv->setPosition(Vec2(240, 160));
+        iv->setPosition(Vec2(240.0f, 160.0f));
         sc->addChild(iv);
 
         

@@ -269,8 +269,8 @@ void CardinalSplineTo::update(float time)
     }
     else 
     {
-        p = time / _deltaT;
-        lt = (time - _deltaT * (float)p) / _deltaT;
+        p = (ssize_t)(time / _deltaT);
+        lt = (time - _deltaT * p) / _deltaT;
     }
     
     // Interpolate
