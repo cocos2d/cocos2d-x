@@ -336,30 +336,30 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
                 break;
             }
 
-            auto glyphMinX = outRect.origin.x;
-            auto glyphMaxX = outRect.origin.x + outWidth;
-            auto glyphMinY = -outHeight - outRect.origin.y;
-            auto glyphMaxY = -outRect.origin.y;
+            int glyphMinX = (int)outRect.origin.x;
+            int glyphMaxX = (int)(outRect.origin.x + outWidth);
+            int glyphMinY = (int)(-outHeight - outRect.origin.y);
+            int glyphMaxY = (int)-outRect.origin.y;
 
-            auto outlineMinX = bbox.xMin >> 6;
-            auto outlineMaxX = bbox.xMax >> 6;
-            auto outlineMinY = bbox.yMin >> 6;
-            auto outlineMaxY = bbox.yMax >> 6;
+            int outlineMinX = bbox.xMin >> 6;
+            int outlineMaxX = bbox.xMax >> 6;
+            int outlineMinY = bbox.yMin >> 6;
+            int outlineMaxY = bbox.yMax >> 6;
             auto outlineWidth = outlineMaxX - outlineMinX;
             auto outlineHeight = outlineMaxY - outlineMinY;
 
             auto blendImageMinX = MIN(outlineMinX, glyphMinX);
             auto blendImageMaxY = MAX(outlineMaxY, glyphMaxY);
-            int blendWidth = (int)(MAX(outlineMaxX, glyphMaxX) - blendImageMinX);
-            int blendHeight = (int)(blendImageMaxY - MIN(outlineMinY, glyphMinY));
+            auto blendWidth = MAX(outlineMaxX, glyphMaxX) - blendImageMinX;
+            auto blendHeight = blendImageMaxY - MIN(outlineMinY, glyphMinY);
 
-            outRect.origin.x = blendImageMinX;
+            outRect.origin.x = (float)blendImageMinX;
             outRect.origin.y = -blendImageMaxY + _outlineSize;
 
             unsigned char *blendImage = nullptr;
             if (blendWidth > 0 && blendHeight > 0)
             {
-                long index, index2;
+                int index, index2;
                 int imageSize = blendWidth * blendHeight * 2;
                 blendImage = new (std::nothrow) unsigned char[imageSize];
                 memset(blendImage, 0, imageSize);
@@ -370,7 +370,7 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
                 {
                     for (int y = 0; y < outlineHeight; ++y)
                     {
-                        index = (long)(px + x + ((py + y) * blendWidth));
+                        index = px + x + ((py + y) * blendWidth);
                         index2 = x + (y * outlineWidth);
                         blendImage[2 * index] = outlineBitmap[index2];
                     }
@@ -382,7 +382,7 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
                 {
                     for (int y = 0; y < outHeight; ++y)
                     {
-                        index = (long)(px + x + ((y + py) * blendWidth));
+                        index = px + x + ((y + py) * blendWidth);
                         index2 = x + (y * outWidth);
                         blendImage[2 * index + 1] = copyBitmap[index2];
                     }
