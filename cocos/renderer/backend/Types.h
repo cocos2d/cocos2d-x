@@ -328,6 +328,7 @@ enum class TextureCubeFace : uint32_t
 
 enum ProgramType
 {
+    INVALID_PROGRAM = -1,
     POSITION_COLOR_LENGTH_TEXTURE,
     POSITION_COLOR_TEXTURE_AS_POINTSIZE,
     POSITION_COLOR,

@@ -178,7 +178,7 @@ protected:
     
     std::string _vertexShader; ///< Vertex shader.
     std::string _fragmentShader; ///< Fragment shader.
-    ProgramType _programType; ///< built-in program type.
+    ProgramType _programType = ProgramType::INVALID_PROGRAM; ///< built-in program type.
 };
 
 //end of _backend group
