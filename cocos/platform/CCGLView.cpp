@@ -246,10 +246,10 @@ Vec2 GLView::getVisibleOrigin() const
 void GLView::setViewPortInPoints(float x , float y , float w , float h)
 {
     Viewport vp;
-    vp.x = x * _scaleX + _viewPortRect.origin.x;
-    vp.y = y * _scaleY + _viewPortRect.origin.y;
-    vp.w = w * _scaleX;
-    vp.h = h * _scaleY;
+    vp.x = (int)(x * _scaleX + _viewPortRect.origin.x);
+    vp.y = (int)(y * _scaleY + _viewPortRect.origin.y);
+    vp.w = (unsigned int)(w * _scaleX);
+    vp.h = (unsigned int)(h * _scaleY);
     Camera::setDefaultViewport(vp);
 }
 
@@ -258,8 +258,8 @@ void GLView::setScissorInPoints(float x , float y , float w , float h)
     auto renderer = Director::getInstance()->getRenderer();
     renderer->setScissorRect((int)(x * _scaleX + _viewPortRect.origin.x),
                              (int)(y * _scaleY + _viewPortRect.origin.y),
-                             (int)(w * _scaleX),
-                             (int)(h * _scaleY));
+                             (unsigned int)(w * _scaleX),
+                             (unsigned int)(h * _scaleY));
 }
 
 bool GLView::isScissorEnabled()

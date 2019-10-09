@@ -52,7 +52,7 @@ FontAtlas::FontAtlas(Font &theFont)
     _fontFreeType = dynamic_cast<FontFreeType*>(_font);
     if (_fontFreeType)
     {
-        _lineHeight = _font->getFontMaxHeight();
+        _lineHeight = (float)_font->getFontMaxHeight();
         _fontAscender = _fontFreeType->getFontAscender();
         _letterEdgeExtend = 2;
 
@@ -203,7 +203,7 @@ void FontAtlas::scaleFontLetterDefinition(float scaleFactor)
         letterDefinition.height *= scaleFactor;
         letterDefinition.offsetX *= scaleFactor;
         letterDefinition.offsetY *= scaleFactor;
-        letterDefinition.xAdvance *= scaleFactor;
+        letterDefinition.xAdvance = (int)(letterDefinition.xAdvance * scaleFactor);
     }
 }
 
@@ -379,7 +379,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
     auto scaleFactor = CC_CONTENT_SCALE_FACTOR();
     auto  pixelFormat = _fontFreeType->getOutlineSize() > 0 ? backend::PixelFormat::AI88 : backend::PixelFormat::A8;
 
-    float startY = _currentPageOrigY;
+    int startY = (int)_currentPageOrigY;
 
     for (auto&& it : codeMapOfNewChar)
     {
@@ -401,7 +401,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
                 {
                     updateTextureContent(pixelFormat, startY);
 
-                    startY = 0.0f;
+                    startY = 0;
 
                     _currentPageOrigY = 0;
                     memset(_currentPageData, 0, _currentPageDataSize);
@@ -428,7 +428,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
             {
                 _currLineHeight = glyphHeight;
             }
-            _fontFreeType->renderCharAt(_currentPageData, _currentPageOrigX + adjustForExtend, _currentPageOrigY + adjustForExtend, bitmap, bitmapWidth, bitmapHeight);
+            _fontFreeType->renderCharAt(_currentPageData, (int)_currentPageOrigX + adjustForExtend, (int)_currentPageOrigY + adjustForExtend, bitmap, bitmapWidth, bitmapHeight);
 
             tempDef.U = _currentPageOrigX;
             tempDef.V = _currentPageOrigY;
@@ -471,7 +471,7 @@ void FontAtlas::updateTextureContent(backend::PixelFormat format, int startY)
     auto outlineSize = _fontFreeType->getOutlineSize();
     if (outlineSize > 0 && format == backend::PixelFormat::AI88)
     {
-        int nLen = CacheTextureWidth * (_currentPageOrigY - startY + _currLineHeight);
+        int nLen = CacheTextureWidth * ((int)_currentPageOrigY - startY + _currLineHeight);
         data = _currentPageData + CacheTextureWidth * (int)startY * 2;
         memset(_currentPageDataRGBA, 0, 4 * nLen);
         for (auto i = 0; i < nLen; i++)
@@ -479,12 +479,12 @@ void FontAtlas::updateTextureContent(backend::PixelFormat format, int startY)
             _currentPageDataRGBA[i*4] = data[i*2];
             _currentPageDataRGBA[i*4+3] = data[i*2+1];
         }
-        _atlasTextures[_currentPage]->updateWithData(_currentPageDataRGBA, 0, startY, CacheTextureWidth, _currentPageOrigY - startY + _currLineHeight);
+        _atlasTextures[_currentPage]->updateWithData(_currentPageDataRGBA, 0, startY, CacheTextureWidth, (int)_currentPageOrigY - startY + _currLineHeight);
     }
     else
     {
         data = _currentPageData + CacheTextureWidth * (int)startY;
-       _atlasTextures[_currentPage]->updateWithData(data, 0, startY, CacheTextureWidth, _currentPageOrigY - startY + _currLineHeight);
+       _atlasTextures[_currentPage]->updateWithData(data, 0, startY, CacheTextureWidth, (int)_currentPageOrigY - startY + _currLineHeight);
     }
 }
 

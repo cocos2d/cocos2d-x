@@ -119,7 +119,7 @@ int Application::run()
             // Sleep(3) may make a sleep of 2ms or 4ms. Therefore, we subtract 1ms here to make Sleep time shorter.
             // If 'waitMS' is equal or less than 1ms, don't sleep and run into next loop to
             // boost CPU to next frame accurately.
-            waitMS = (_animationInterval.QuadPart - interval) * 1000LL / freq.QuadPart - 1L;
+            waitMS = static_cast<LONG>((_animationInterval.QuadPart - interval) * 1000LL / freq.QuadPart - 1L);
             if (waitMS > 1L)
                 Sleep(waitMS);
         }
