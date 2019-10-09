@@ -71,6 +71,12 @@ void TrianglesCommand::init(float globalOrder, Texture2D* texture, const BlendFu
     }
 }
 
+void TrianglesCommand::updateMaterialID()
+{
+    setSkipBatching(false);
+    generateMaterialID();
+}
+
 TrianglesCommand::~TrianglesCommand()
 {
 }
