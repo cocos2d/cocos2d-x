@@ -26,6 +26,7 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 #include "renderer/ccShaders.h"
+#include "renderer/backend/Device.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -144,10 +145,11 @@ void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &fr
         std::string vertexFilePath = fileUtiles->fullPathForFilename(vert);
         vertSource = fileUtiles->getStringFromFile(vertexFilePath);
     }
-
-    auto programState = new backend::ProgramState(vertSource.c_str(), fragSource.c_str());
+    auto program = backend::Device::getInstance()->newProgram(vertSource.c_str(), fragSource.c_str());
+    auto programState = new backend::ProgramState(program);
     setProgramState(programState);
     CC_SAFE_RELEASE(programState);
+    CC_SAFE_RELEASE(program);
 }
 
 void ShaderNode::update(float dt)
@@ -472,9 +474,11 @@ void SpriteBlur::initProgram()
     std::string fragSource = FileUtils::getInstance()->getStringFromFile(
         FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh"));
 
-    auto programState = new backend::ProgramState(positionTextureColor_vert, fragSource.data());
+    auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.data());
+    auto programState = new backend::ProgramState(program);
     setProgramState(programState);
-    CC_SAFE_RELEASE_NULL(programState);
+    CC_SAFE_RELEASE(programState);
+    CC_SAFE_RELEASE(program);
     
     auto size = getTexture()->getContentSizeInPixels();
 
@@ -603,7 +607,8 @@ bool ShaderRetroEffect::init()
         auto fragStr = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"));
         char * fragSource = (char*)fragStr.c_str();
 
-        auto p = new backend::ProgramState(positionTextureColor_vert, fragSource);
+        auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource);
+        auto p = new backend::ProgramState(program);
         auto director = Director::getInstance();
         const auto& screenSizeLocation = p->getUniformLocation("u_screenSize");
         const auto& frameSize = director->getOpenGLView()->getFrameSize();
@@ -623,6 +628,7 @@ bool ShaderRetroEffect::init()
         addChild(_label);
 
         scheduleUpdate();
+        CC_SAFE_RELEASE(program);
         return true;
     }
 
@@ -793,8 +799,8 @@ bool ShaderMultiTexture::init()
         auto * fu = FileUtils::getInstance();
         auto vertexShader = fu->getStringFromFile("Shaders/example_MultiTexture.vsh");
         auto fragmentShader = fu->getStringFromFile("Shaders/example_MultiTexture.fsh");
-
-        auto programState = new backend::ProgramState(vertexShader.c_str(), fragmentShader.c_str() );
+        auto program = backend::Device::getInstance()->newProgram(vertexShader.c_str(), fragmentShader.c_str());
+        auto programState = new backend::ProgramState(program);
         _sprite->setProgramState(programState);
 
         SET_TEXTURE(programState, "u_texture1", 1,  right->getTexture()->getBackendTexture());
@@ -811,6 +817,7 @@ bool ShaderMultiTexture::init()
         menu->setPosition(s.width * 7 / 8, s.height / 2);
 
         CC_SAFE_RELEASE(programState);
+        CC_SAFE_RELEASE(program);
         return true;
     }
 

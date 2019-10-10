@@ -37,7 +37,8 @@ NS_CC_BEGIN
 
 NavMeshDebugDraw::NavMeshDebugDraw()
 {
-    _programState = new backend::ProgramState(positionColor_vert, positionColor_frag);
+    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_COLOR);
+    _programState = new backend::ProgramState(program);
     _locMVP = _programState->getUniformLocation("u_MVPMatrix");
 
     auto vertexLayout = _programState->getVertexLayout();

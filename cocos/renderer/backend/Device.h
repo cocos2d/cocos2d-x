@@ -114,10 +114,26 @@ public:
     virtual void setFrameBufferOnly(bool frameBufferOnly) = 0;
 
     /**
+     * Create an auto released Program.
+     * @param vertexShader Specifes this is a vertex shader source.
+     * @param fragmentShader Specifes this is a fragment shader source.
+     * @return A Program instance.
+     */
+    virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) = 0;
+
+    /**
+     * Create an auto released engine built-in Program.
+     * @param type Specifes the program type.
+     * @return A Program instance.
+     */
+    virtual Program* createBuiltinProgram(ProgramType type);
+    
+    /**
      * Get a DeviceInfo object.
      * @return A DeviceInfo object.
      */
     inline DeviceInfo* getDeviceInfo() const { return _deviceInfo; }
+
 protected:
     /**
      * New a shaderModule, not auto released.
@@ -126,17 +142,9 @@ protected:
      * @return A ShaderModule object.
      */
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) = 0;
-    
-    /**
-     * New a Program, not auto released.
-     * @param vertexShader Specifes this is a vertex shader source.
-     * @param fragmentShader Specifes this is a fragment shader source.
-     * @return A Program object.
-     */
-    virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) = 0;
-    
+        
     DeviceInfo* _deviceInfo = nullptr; ///< Device information.
-    
+
 private:
     static Device* _instance;
 };

@@ -26,6 +26,8 @@
 #include "NewRendererTest.h"
 #include <chrono>
 #include <sstream>
+#include "renderer/backend/Device.h"
+
 USING_NS_CC;
 
 class DurationRecorder {
@@ -861,9 +863,9 @@ cocos2d::backend::ProgramState* RendererUniformBatch::createBlurProgramState()
     auto fileUtiles = FileUtils::getInstance();
     auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-    auto programState = new backend::ProgramState(positionTextureColor_vert, fragSource.c_str());
-
-
+    auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
+    auto programState = new backend::ProgramState(program);
+    CC_SAFE_RELEASE(program);
 
     backend::UniformLocation loc = programState->getUniformLocation("resolution");
     auto resolution = Vec2(85, 121);
@@ -888,8 +890,9 @@ cocos2d::backend::ProgramState* RendererUniformBatch::createSepiaProgramState()
     auto fileUtiles = FileUtils::getInstance();
     auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-    auto glprogram = new backend::ProgramState(positionTextureColor_vert, fragSource.c_str());
-    
+    auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
+    auto glprogram = new backend::ProgramState(program);
+    CC_SAFE_RELEASE(program);
     return glprogram;
 }
 
@@ -944,8 +947,9 @@ backend::ProgramState* RendererUniformBatch2::createBlurProgramState()
     auto fileUtiles = FileUtils::getInstance();
     auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-    
-    auto programState = new backend::ProgramState(positionTextureColor_vert, fragSource.c_str());
+    auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
+    auto programState = new backend::ProgramState(program);
+    CC_SAFE_RELEASE(program);
 
     backend::UniformLocation loc = programState->getUniformLocation("resolution");
     auto resolution = Vec2(85, 121);
@@ -970,8 +974,9 @@ backend::ProgramState*  RendererUniformBatch2::createSepiaProgramState()
     auto fileUtiles = FileUtils::getInstance();
     auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-    auto glprogram = new backend::ProgramState(positionTextureColor_vert, fragSource.c_str());
-
+    auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
+    auto glprogram = new backend::ProgramState(program);
+    CC_SAFE_RELEASE(program);
     return glprogram;
 }
 

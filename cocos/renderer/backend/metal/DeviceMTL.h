@@ -120,6 +120,14 @@ public:
     virtual void setFrameBufferOnly(bool frameBufferOnly) override;
 
     /**
+     * New a Program, not auto release.
+     * @param vertexShader Specifes this is a vertex shader source.
+     * @param fragmentShader Specifes this is a fragment shader source.
+     * @return A Program instance.
+     */
+    virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) override;
+
+    /**
      * Get a MTLDevice object.
      * @return A MTLDevice object.
      */
@@ -139,14 +147,6 @@ protected:
      * @return A ShaderModule object.
      */
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) override;
-    
-    /**
-     * New a Program.
-     * @param vertexShader Specifes this is a vertex shader source.
-     * @param fragmentShader Specifes this is a fragment shader source.
-     * @return A Program object.
-     */
-    virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) override;
     
 private:
     static CAMetalLayer* _metalLayer;

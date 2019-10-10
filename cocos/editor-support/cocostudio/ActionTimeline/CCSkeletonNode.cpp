@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "math/TransformUtils.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccShaders.h"
+#include "renderer/backend/Device.h"
 #include "base/ccUtils.h"
 #include <stack>
 
@@ -53,7 +54,8 @@ bool SkeletonNode::init()
 
     // init _customCommand  
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    _programState = new (std::nothrow) cocos2d::backend::ProgramState(cocos2d::position_vert, cocos2d::positionColor_frag);
+    auto* program = cocos2d::backend::Device::getInstance()->createBuiltinProgram(cocos2d::backend::ProgramType::POSITION);
+    _programState = new (std::nothrow) cocos2d::backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
 
     _mvpLocation = _programState->getUniformLocation("u_MVPMatrix");

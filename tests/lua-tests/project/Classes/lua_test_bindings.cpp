@@ -25,6 +25,7 @@
 #include "lua_test_bindings.h"
 #include "cocos2d.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -151,8 +152,8 @@ bool DrawNode3D::init()
 {
 
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-
-    _programState = new backend::ProgramState(lineColor3D_vert, lineColor3D_frag);
+    auto program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::LINE_COLOR_3D);
+    _programState = new backend::ProgramState(program);
 
     _locMVPMatrix = _programState->getUniformLocation("u_MVPMatrix");
 

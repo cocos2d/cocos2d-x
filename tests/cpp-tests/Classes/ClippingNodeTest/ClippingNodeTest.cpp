@@ -33,6 +33,7 @@
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Device.h"
 #include "renderer/ccShaders.h"
 
 USING_NS_CC;
@@ -577,7 +578,8 @@ void RawStencilBufferTest::initCommands()
     };
     _disableStencilCallback.init(_globalZOrder);
 
-    _programState = new (std::nothrow) backend::ProgramState(positionUColor_vert, positionUColor_frag);
+    auto program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_UCOLOR);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     _locColor = _programState->getProgram()->getUniformLocation("u_color");
     _locMVPMatrix = _programState->getProgram()->getUniformLocation("u_MVPMatrix");
     const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -753,7 +755,8 @@ void RawStencilBufferTestAlphaTest::setup()
     RawStencilBufferTest::setup();
     for(int i = 0; i < _planeCount; ++i)
     {
-        auto programState = new backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
+        auto program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR_ALPHA_TEST);
+        auto programState = new backend::ProgramState(program);
         programState->setUniform(programState->getUniformLocation("u_alpha_value"), &_alphaThreshold, sizeof(_alphaThreshold));
         _spritesStencil.at(i)->setProgramState(programState);
     }

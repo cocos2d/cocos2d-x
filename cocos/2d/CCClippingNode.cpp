@@ -29,6 +29,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Device.h"
 #include "base/CCDirector.h"
 #include "base/CCStencilStateManager.h"
 
@@ -198,7 +199,8 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     auto alphaThreshold = this->getAlphaThreshold();
     if (alphaThreshold < 1)
     {
-        auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
+        auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR_ALPHA_TEST);
+        auto programState = new (std::nothrow) backend::ProgramState(program);
         auto alphaLocation = programState->getUniformLocation("u_alpha_value");
         programState->setUniform(alphaLocation, &alphaThreshold, sizeof(alphaThreshold));
         setProgramStateRecursively(_stencil, programState);

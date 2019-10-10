@@ -40,13 +40,15 @@
 #include "base/ccUtils.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
 ParticleBatchNode::ParticleBatchNode()
 {
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    _programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "testResource.h"
 #include "ui/UISlider.h"
 #include  "platform/CCFileUtils.h"
+#include "renderer/backend/Device.h"
 
 USING_NS_CC;
 
@@ -1270,9 +1271,10 @@ void FogTestDemo::onEnter()
 
     auto vertexSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.vert");
     auto fragSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.frag");
-
-    _programState1 = new backend::ProgramState(vertexSource, fragSource);
-    _programState2 = new backend::ProgramState(vertexSource, fragSource);
+    auto program = backend::Device::getInstance()->newProgram(vertexSource, fragSource);
+    _programState1 = new backend::ProgramState(program);
+    _programState2 = new backend::ProgramState(program);
+    CC_SAFE_RELEASE(program);
     
     _sprite3D1 = Sprite3D::create("Sprite3DTest/teapot.c3b");
     _sprite3D2 = Sprite3D::create("Sprite3DTest/teapot.c3b");

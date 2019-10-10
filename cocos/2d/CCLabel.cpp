@@ -48,6 +48,7 @@
 #include "2d/CCFontFNT.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -688,7 +689,8 @@ void Label::updateShaderProgram()
     }
 
     CC_SAFE_RELEASE(_programState);
-    _programState = new backend::ProgramState(programType);
+    auto* program = backend::Device::getInstance()->createBuiltinProgram(programType);
+    _programState = new backend::ProgramState(program);
 
     updateUniformLocations();
 

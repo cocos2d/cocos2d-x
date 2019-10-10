@@ -25,6 +25,7 @@
 
 #include "DrawNode3D.h"
 #include "renderer/backend/Buffer.h"
+#include "renderer/backend/Device.h"
 NS_CC_BEGIN
 
 
@@ -73,7 +74,8 @@ bool DrawNode3D::init()
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     auto &pd = _customCommand.getPipelineDescriptor();
-    _programStateLine = new backend::ProgramState(lineColor3D_vert, lineColor3D_frag);
+    auto program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::LINE_COLOR_3D);
+    _programStateLine = new backend::ProgramState(program);
     pd.programState = _programStateLine;
     
     _locMVPMatrix = _programStateLine->getUniformLocation("u_MVPMatrix");

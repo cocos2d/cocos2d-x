@@ -78,19 +78,10 @@ public:
     using UniformCallback = std::function<void(ProgramState*, const UniformLocation &)>;
 
     /**
-     * @param vertexShader Specifies the vertex shader.
-     * @param fragmentShader Specifies the fragment shader.
-     * @see `ProgramState(ProgramType type)`
+     * @param program Specifies the program.
      */
-    ProgramState(const std::string& vertexShader, const std::string& fragmentShader);
+    ProgramState(Program* program);
     
-    /**
-     * Create an program state object more efficient by engine built-in program type.
-     * @param type Specifies the built-in program type.
-     * @see `ProgramState(const std::string& vertexShader, const std::string& fragmentShader)`
-     */
-    ProgramState(ProgramType type);
-
     ///destructor
     virtual ~ProgramState();
     
@@ -306,7 +297,7 @@ protected:
     void resetUniforms();
 
     ///Initialize.
-    void init();
+    bool init(Program* program);
     
 #ifdef CC_USE_METAL
     /**

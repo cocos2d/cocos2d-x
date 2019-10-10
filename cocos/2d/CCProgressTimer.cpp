@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -47,7 +48,8 @@ namespace
     backend::ProgramState* initPipelineDescriptor(cocos2d::CustomCommand& command, bool ridal, backend::UniformLocation &locMVP, backend::UniformLocation &locTexture)
     {
         auto& pipelieDescriptor = command.getPipelineDescriptor();
-        auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+        auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+        auto programState = new (std::nothrow) backend::ProgramState(program);
         CC_SAFE_RELEASE(pipelieDescriptor.programState);
         pipelieDescriptor.programState = programState;
         
