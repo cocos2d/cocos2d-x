@@ -98,6 +98,9 @@ public:
     const unsigned short* getIndices() const { return _triangles.indices; }
     /**Get the model view matrix.*/
     const Mat4& getModelView() const { return _mv; }
+    
+    /** update material ID */
+    void updateMaterialID();
   
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
