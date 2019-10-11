@@ -891,9 +891,9 @@ cocos2d::backend::ProgramState* RendererUniformBatch::createSepiaProgramState()
     auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
-    auto glprogram = new backend::ProgramState(program);
+    auto programState = new backend::ProgramState(program);
     CC_SAFE_RELEASE(program);
-    return glprogram;
+    return programState;
 }
 
 std::string RendererUniformBatch::title() const
@@ -975,9 +975,9 @@ backend::ProgramState*  RendererUniformBatch2::createSepiaProgramState()
     auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
-    auto glprogram = new backend::ProgramState(program);
+    auto programState = new backend::ProgramState(program);
     CC_SAFE_RELEASE(program);
-    return glprogram;
+    return programState;
 }
 
 std::string RendererUniformBatch2::title() const

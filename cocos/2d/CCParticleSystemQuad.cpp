@@ -44,14 +44,13 @@ THE SOFTWARE.
 #include "base/ccUTF8.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
-#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
 ParticleSystemQuad::ParticleSystemQuad()
 {
     auto& pipelieDescriptor = _quadCommand.getPipelineDescriptor();
-    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
     _programState = new (std::nothrow) backend::ProgramState(program);
     pipelieDescriptor.programState = _programState;
     _mvpMatrixLocaiton = pipelieDescriptor.programState->getUniformLocation("u_MVPMatrix");

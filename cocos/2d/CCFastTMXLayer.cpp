@@ -408,7 +408,7 @@ void TMXLayer::updatePrimitives()
             if (_useAutomaticVertexZ)
             {
                 CC_SAFE_RELEASE(pipelineDescriptor.programState);
-                auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR_ALPHA_TEST);
+                auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR_ALPHA_TEST);
                 auto programState = new (std::nothrow) backend::ProgramState(program);
                 pipelineDescriptor.programState = programState;
                 _alphaValueLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha_value");
@@ -417,7 +417,7 @@ void TMXLayer::updatePrimitives()
             else
             {
                 CC_SAFE_RELEASE(pipelineDescriptor.programState);
-                auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+                auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
                 auto programState = new (std::nothrow) backend::ProgramState(program);
                 pipelineDescriptor.programState = programState;
             }

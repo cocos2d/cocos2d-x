@@ -30,7 +30,6 @@
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTextureCube.h"
 #include "renderer/ccShaders.h"
-#include "renderer/backend/Device.h"
 #include "2d/CCCamera.h"
 
 NS_CC_BEGIN
@@ -66,7 +65,7 @@ bool Skybox::init()
     _customCommand.setAfterCallback(CC_CALLBACK_0(Skybox::onAfterDraw, this));
 
     // create and set our custom shader
-    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::SKYBOX_3D);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::SKYBOX_3D);
     _programState = new backend::ProgramState(program);
 
     auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();

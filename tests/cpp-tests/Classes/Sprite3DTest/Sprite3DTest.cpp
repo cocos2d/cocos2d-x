@@ -29,7 +29,6 @@
 #include "2d/CCCameraBackgroundBrush.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCMotionStreak3D.h"
-#include "renderer/backend/Device.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 
@@ -2222,13 +2221,13 @@ void Issue9767::menuCallback_SwitchShader(cocos2d::Ref* sender)
     if (_shaderType == Issue9767::ShaderType::SHADER_TEX)
     {
         _shaderType = Issue9767::ShaderType::SHADER_COLOR;
-        auto program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_3D);
+        auto program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_3D);
         _programState = new backend::ProgramState(program);
     }
     else
     {
         _shaderType = Issue9767::ShaderType::SHADER_TEX;
-        auto program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_3D);
+        auto program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_3D);
         _programState = new backend::ProgramState(program);
     }
     _sprite->setProgramState(_programState);

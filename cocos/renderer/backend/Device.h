@@ -122,13 +122,6 @@ public:
     virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) = 0;
 
     /**
-     * Create an auto released engine built-in Program.
-     * @param type Specifes the program type.
-     * @return A Program instance.
-     */
-    virtual Program* createBuiltinProgram(ProgramType type);
-    
-    /**
      * Get a DeviceInfo object.
      * @return A DeviceInfo object.
      */

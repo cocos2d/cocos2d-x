@@ -32,7 +32,6 @@
 #include "renderer/CCRenderState.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/Buffer.h"
-#include "renderer/backend/Device.h"
 
 #if CC_USE_3D_PHYSICS
 
@@ -128,7 +127,7 @@ Physics3DDebugDrawer::~Physics3DDebugDrawer()
 void Physics3DDebugDrawer::init()
 {
     CC_SAFE_RELEASE_NULL(_programState);
-    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_COLOR);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR);
     _programState = new backend::ProgramState(program);
     _locMVP = _programState->getUniformLocation("u_MVPMatrix");
     

@@ -388,7 +388,7 @@ void Sprite::setProgramState(backend::ProgramType type)
        _programState->getProgram()->getProgramType() == type)
         return;
     
-    auto* program = backend::Device::getInstance()->createBuiltinProgram(type);
+    auto* program = backend::Program::getBuiltinProgram(type);
     auto programState = new (std::nothrow) backend::ProgramState(program);
     setProgramState(programState);
     CC_SAFE_RELEASE_NULL(programState);

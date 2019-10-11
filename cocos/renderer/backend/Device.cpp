@@ -28,10 +28,4 @@ CC_BACKEND_BEGIN
 
 Device* Device::_instance = nullptr;
 
-Program* Device::createBuiltinProgram(ProgramType type)
-{
-    return ProgramCache::getInstance()->createBuiltinProgram(type);
-}
-
-
 CC_BACKEND_END

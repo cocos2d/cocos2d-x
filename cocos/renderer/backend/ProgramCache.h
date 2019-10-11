@@ -49,9 +49,9 @@ public:
     
     /** purges the cache. It releases the retained instance. */
     static void destroyInstance();
-   
+    
     /// get built-in program
-    backend::Program* createBuiltinProgram(ProgramType type);
+    backend::Program* getBuiltinProgram(ProgramType type) const;
     
     /**
      * Remove a program object from cache.

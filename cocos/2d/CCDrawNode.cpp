@@ -34,7 +34,6 @@
 #include "base/ccUtils.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
-#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -150,7 +149,7 @@ bool DrawNode::init()
 void DrawNode::updateShader()
 {
     CC_SAFE_RELEASE(_programState);
-    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_COLOR_LENGTH_TEXTURE);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR_LENGTH_TEXTURE);
     _programState = new (std::nothrow) backend::ProgramState(program);
     _customCommand.getPipelineDescriptor().programState = _programState;
     setVertexLayout(_customCommand);
@@ -158,7 +157,7 @@ void DrawNode::updateShader()
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
 
     CC_SAFE_RELEASE(_programStatePoint);
-    program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_COLOR_TEXTURE_AS_POINTSIZE);
+    program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR_TEXTURE_AS_POINTSIZE);
     _programStatePoint = new (std::nothrow) backend::ProgramState(program);
     _customCommandGLPoint.getPipelineDescriptor().programState = _programStatePoint;
     setVertexLayout(_customCommandGLPoint);
@@ -166,7 +165,7 @@ void DrawNode::updateShader()
     _customCommandGLPoint.setPrimitiveType(CustomCommand::PrimitiveType::POINT);
 
     CC_SAFE_RELEASE(_programStateLine);
-    program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_COLOR_LENGTH_TEXTURE);
+    program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR_LENGTH_TEXTURE);
     _programStateLine = new (std::nothrow) backend::ProgramState(program);
     _customCommandGLLine.getPipelineDescriptor().programState = _programStateLine;
     setVertexLayout(_customCommandGLLine);

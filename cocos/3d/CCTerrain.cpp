@@ -115,7 +115,7 @@ void cocos2d::Terrain::setLightDir(const Vec3& lightDir)
 
 bool Terrain::initProperties()
 {
-    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::TERRAIN_3D);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::TERRAIN_3D);
     _programState = new backend::ProgramState(program);
 
     _stateBlock.depthWrite = true;

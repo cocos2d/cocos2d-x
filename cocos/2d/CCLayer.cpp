@@ -44,7 +44,6 @@ THE SOFTWARE.
 #include "renderer/backend/Buffer.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
-#include "renderer/backend/Device.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/desktop/CCGLViewImpl-desktop.h"
@@ -289,7 +288,7 @@ LayerColor::LayerColor()
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_COLOR);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR);
     _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     
@@ -707,7 +706,7 @@ LayerRadialGradient* LayerRadialGradient::create()
 LayerRadialGradient::LayerRadialGradient()
 {
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::LAYER_RADIA_GRADIENT);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::LAYER_RADIA_GRADIENT);
     _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");

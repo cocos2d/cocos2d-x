@@ -194,14 +194,14 @@ bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
         if (tex)
         {
             _texture = tex;
-            auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::PARTICLE_TEXTURE_3D);
+            auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::PARTICLE_TEXTURE_3D);
             _programState = new backend::ProgramState(program);
         }
     }
 
     if (!_programState)
     {
-        auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::PARTICLE_COLOR_3D);
+        auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::PARTICLE_COLOR_3D);
         _programState = new backend::ProgramState(program);
     }
 

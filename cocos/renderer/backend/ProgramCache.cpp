@@ -27,6 +27,21 @@
 #include "ShaderModule.h"
 #include "renderer/ccShaders.h"
 #include "base/ccMacros.h"
+#include "base/CCConfiguration.h"
+
+namespace std
+{
+    template <>
+    struct hash<cocos2d::backend::ProgramType>
+    {
+        typedef cocos2d::backend::ProgramType argument_type;
+        typedef std::size_t result_type;
+        result_type operator()(argument_type const& v) const
+        {
+            return hash<int>()(static_cast<int>(v));
+        }
+    };
+}
 
 CC_BACKEND_BEGIN
 
@@ -233,7 +248,7 @@ void ProgramCache::addProgram(ProgramType type)
     ProgramCache::_cachedPrograms.emplace(type, program);
 }
 
-backend::Program* ProgramCache::createBuiltinProgram(ProgramType type)
+backend::Program* ProgramCache::getBuiltinProgram(ProgramType type) const
 {
     const auto& iter = ProgramCache::_cachedPrograms.find(type);
     if (ProgramCache::_cachedPrograms.end() != iter)

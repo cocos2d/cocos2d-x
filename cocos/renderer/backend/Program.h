@@ -51,6 +51,12 @@ class Program : public Ref
 {
 public:
     /**
+     * Get engine built-in program.
+     * @param type Specifies the built-in program type.
+     */
+    static Program* getBuiltinProgram(ProgramType type);
+    
+    /**
      * Get uniform location by name.
      * @param uniform Specifies the uniform name.
      * @return The uniform location.

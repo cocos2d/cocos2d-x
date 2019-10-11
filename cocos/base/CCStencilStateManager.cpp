@@ -28,7 +28,6 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
-#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -37,7 +36,7 @@ int StencilStateManager::s_layer = -1;
 StencilStateManager::StencilStateManager()
 {
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    auto* program = backend::Device::getInstance()->createBuiltinProgram(backend::ProgramType::POSITION_UCOLOR);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_UCOLOR);
     _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     
