@@ -150,7 +150,6 @@ public:
 private:
     void initWithZeros();
 
-    SamplerDescriptor _samplerDescriptor;
     TextureInfoGL _textureInfo;
     EventListener* _backToForegroundListener = nullptr;
 };
