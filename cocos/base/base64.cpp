@@ -45,7 +45,7 @@ int _base64Decode(const unsigned char *input, unsigned int input_len, unsigned c
     }
 
     char_count = 0;
-    unsigned char bits = 0;
+    int bits = 0;
     for( input_idx=0; input_idx < input_len ; input_idx++ ) {
         c = input[ input_idx ];
         if (c == '=')
