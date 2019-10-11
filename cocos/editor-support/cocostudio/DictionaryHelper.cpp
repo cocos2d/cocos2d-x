@@ -81,6 +81,10 @@ int DictionaryHelper::getIntValue_json(const rapidjson::Value& root, const char*
     return nRet;
 }
 
+unsigned char DictionaryHelper::getUCharValue_json(const rapidjson::Value& root, const char* key, int def)
+{
+    return static_cast<unsigned char>(getIntValue_json(root, key, def));
+}
 
 float DictionaryHelper::getFloatValue_json(const rapidjson::Value& root,const char* key, float def)
 {

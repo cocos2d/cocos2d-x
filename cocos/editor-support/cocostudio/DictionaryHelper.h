@@ -48,7 +48,8 @@ public:
     const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key, int idx);
     const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, int idx);
     
-	int   getIntValue_json(const rapidjson::Value& root, const char* key, int def = 0);
+    int   getIntValue_json(const rapidjson::Value& root, const char* key, int def = 0);
+    unsigned char getUCharValue_json(const rapidjson::Value& root, const char* key, int def = 0);
 	float getFloatValue_json(const rapidjson::Value& root,const char* key, float def = 0.0f);
     bool  getBooleanValue_json(const rapidjson::Value& root,const char* key, bool def = false);
     const char* getStringValue_json(const rapidjson::Value& root,const char* key, const char *def = NULL);
