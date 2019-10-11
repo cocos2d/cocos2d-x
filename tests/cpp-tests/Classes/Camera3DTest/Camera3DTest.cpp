@@ -1324,12 +1324,13 @@ void FogTestDemo::onEnter()
 
                                                                 auto vertexSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.vert");
                                                                 auto fragSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.frag");
-
-                                                                _programState1 = new backend::ProgramState(vertexSource, fragSource);
-                                                                _programState2 = new backend::ProgramState(vertexSource, fragSource);
+                                                                auto program = backend::Device::getInstance()->newProgram(vertexSource, fragSource);
+                                                                _programState1 = new backend::ProgramState(program);
+                                                                _programState2 = new backend::ProgramState(program);
 
                                                                 _sprite3D1->setProgramState(_programState1);
                                                                 _sprite3D2->setProgramState(_programState2);
+                                                                CC_SAFE_RELEASE(program);
                                                                 
                                                                 auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
                                                                 float   fogStart    = 10;
