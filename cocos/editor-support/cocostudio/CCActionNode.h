@@ -162,6 +162,7 @@ public:
     */
     virtual bool isActionDoneOnce();
 protected:
+    uint8_t valueToUChar(const std::string& value);
     int valueToInt(const std::string& value);
     bool valueToBool(const std::string& value);
     float valueToFloat(const std::string& value);

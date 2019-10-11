@@ -151,13 +151,13 @@ void ControlColourPicker::setEnabled(bool enabled)
 //need two events to prevent an infinite loop! (can't update huePicker when the huePicker triggers the callback due to Control::EventType::VALUE_CHANGED)
 void ControlColourPicker::updateControlPicker()
 {
-    _huePicker->setHue(_hsv.h);
+    _huePicker->setHue((float)_hsv.h);
     _colourPicker->updateWithHSV(_hsv);
 }
 
 void ControlColourPicker::updateHueAndControlPicker()
 {
-    _huePicker->setHue(_hsv.h);
+    _huePicker->setHue((float)_hsv.h);
     _colourPicker->updateWithHSV(_hsv);
     _colourPicker->updateDraggerWithHSV(_hsv);
 }

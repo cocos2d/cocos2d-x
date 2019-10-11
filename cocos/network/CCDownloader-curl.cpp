@@ -714,7 +714,7 @@ namespace cocos2d { namespace network {
         _transferDataToBuffer = [this](void *buf, int64_t len)->int64_t
         {
             DownloadTaskCURL& coTask = *_currTask;
-            int64_t dataLen = coTask._buf.size();
+            auto dataLen = coTask._buf.size();
             if (len < dataLen)
             {
                 return 0;
@@ -722,7 +722,7 @@ namespace cocos2d { namespace network {
 
             memcpy(buf, coTask._buf.data(), dataLen);
             coTask._buf.resize(0);
-            return dataLen;
+            return static_cast<int64_t>(dataLen);
         };
 
         char key[128];

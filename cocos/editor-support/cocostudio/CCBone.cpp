@@ -275,8 +275,8 @@ void Bone::updateColor()
     Node *display = _displayManager->getDisplayRenderNode();
     if(display != nullptr)
     {
-        display->setColor(Color3B(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
-        display->setOpacity(_displayedOpacity * _tweenData->a / 255);
+        display->setColor(Color3B(static_cast<uint8_t>(_displayedColor.r * _tweenData->r / 255), static_cast<uint8_t>(_displayedColor.g * _tweenData->g / 255), static_cast<uint8_t>(_displayedColor.b * _tweenData->b / 255)));
+        display->setOpacity(static_cast<uint8_t>(_displayedOpacity * _tweenData->a / 255));
     }
 }
 

@@ -386,14 +386,14 @@ public:
     *
     * @param opacity the fade action opacity
     */
-    void setOpacity(int opacity);
+    void setOpacity(uint8_t opacity);
 
     /**
     * Gets the fade action opacity.
     *
     * @return the fade action opacity.
     */
-    int getOpacity();
+    uint8_t getOpacity();
 
     /**
     * Gets the ActionInterval of ActionFrame.
@@ -404,7 +404,7 @@ public:
     */
     virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
-    float _opacity;
+    uint8_t _opacity;
 };
 /**
 *  @js NA

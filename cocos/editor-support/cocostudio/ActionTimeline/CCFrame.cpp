@@ -714,9 +714,9 @@ void ColorFrame::onApply(float percent)
     if ((nullptr != _node) && (_betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
     {
         Color3B color;
-        color.r = _color.r+ _betweenRed   * percent;
-        color.g = _color.g+ _betweenGreen * percent;
-        color.b = _color.b+ _betweenBlue  * percent;
+        color.r = _color.r + static_cast<uint8_t>(_betweenRed   * percent);
+        color.g = _color.g + static_cast<uint8_t>(_betweenGreen * percent);
+        color.b = _color.b + static_cast<uint8_t>(_betweenBlue  * percent);
         
         _node->setColor(color);
     }
@@ -769,7 +769,7 @@ void AlphaFrame::onApply(float percent)
 {
     if (nullptr != _node)
     {
-        uint8_t alpha = _alpha + _betweenAlpha * percent;
+        uint8_t alpha = _alpha + static_cast<uint8_t>(_betweenAlpha * percent);
         _node->setOpacity(alpha);
     }
 }

@@ -77,7 +77,7 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
                                          int64_t totalBytesReceived,
                                          int64_t totalBytesExpected)
     {
-        this->onProgress(totalBytesExpected, totalBytesReceived, task.requestURL, task.identifier);
+        this->onProgress((double)totalBytesExpected, (double)totalBytesReceived, task.requestURL, task.identifier);
     };
     _downloader->onFileTaskSuccess = [this](const network::DownloadTask& task)
     {
@@ -657,7 +657,9 @@ void AssetsManagerEx::startUpdate()
     _downloadUnits.clear();
     _totalWaitToDownload = _totalToDownload = 0;
     _nextSavePoint = 0;
-    _percent = _percentByFile = _sizeCollected = _totalSize = 0;
+    _sizeCollected = 0;
+    _totalSize = 0.0;
+    _percent = _percentByFile = 0.0f;
     _downloadedSize.clear();
     _totalEnabled = false;
     
@@ -906,7 +908,9 @@ void AssetsManagerEx::updateAssets(const DownloadUnits& assets)
         _updateState = State::UPDATING;
         _downloadUnits.clear();
         _downloadedSize.clear();
-        _percent = _percentByFile = _sizeCollected = _totalSize = 0;
+        _percent = _percentByFile = 0.0f;
+        _sizeCollected = 0;
+        _totalSize = 0.0;
         _totalWaitToDownload = _totalToDownload = (int)assets.size();
         _nextSavePoint = 0;
         _totalEnabled = false;
@@ -1008,7 +1012,7 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
 {
     if (customId == VERSION_ID || customId == MANIFEST_ID)
     {
-        _percent = 100 * downloaded / total;
+        _percent = 100 * (float)(downloaded / total);
         // Notify progression event
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, customId);
         return;
@@ -1049,7 +1053,7 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
         
         if (_totalEnabled && _updateState == State::UPDATING)
         {
-            float currentPercent = 100 * totalDownloaded / _totalSize;
+            float currentPercent = 100 * (float)(totalDownloaded / _totalSize);
             // Notify at integer level change
             if ((int)currentPercent != (int)_percent) {
                 _percent = currentPercent;
@@ -1158,7 +1162,7 @@ void AssetsManagerEx::queueDowload()
     {
         // Save current download manifest information for resuming
         _tempManifest->saveToFile(_tempManifestPath);
-        _nextSavePoint += SAVE_POINT_INTERVAL;
+        _nextSavePoint += (float)SAVE_POINT_INTERVAL;
     }
 }
 

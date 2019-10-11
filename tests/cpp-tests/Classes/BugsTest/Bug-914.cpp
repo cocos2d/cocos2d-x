@@ -42,7 +42,7 @@ bool Bug914Layer::init()
         // ask director the the window size
         auto size = Director::getInstance()->getWinSize();
         LayerColor *layer;
-        for( int i=0;i < 5;i++)
+        for(uint8_t i=0;i < 5;i++)
         {
             layer = LayerColor::create(Color4B(i*20, i*20, i*20,255));
             layer->setContentSize(Size(i*100.0f, i*100.0f));

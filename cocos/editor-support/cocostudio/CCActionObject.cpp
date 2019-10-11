@@ -192,7 +192,7 @@ bool ActionObject::valueToBool(const std::string& value)
 }
 float ActionObject::valueToFloat(const std::string& value)
 {
-    return utils::atof(value.c_str());
+    return (float)utils::atof(value.c_str());
 }
 
 void ActionObject::addActionNode(ActionNode* node)

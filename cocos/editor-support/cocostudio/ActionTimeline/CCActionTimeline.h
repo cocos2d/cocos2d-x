@@ -219,7 +219,7 @@ protected:
     cocos2d::Vector<Timeline*> _timelineList;
 
     int     _duration;
-    double  _time;
+    float  _time;
     float   _timeSpeed;
     float   _frameInternal;
     bool    _playing;

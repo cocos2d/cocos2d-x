@@ -160,15 +160,16 @@ public:
         auto displayedOpacity = _displayedOpacity;
         if(!_letterVisible)
         {
-            displayedOpacity = 0.0f;
+            displayedOpacity = 0;
         }
         Color4B color4(_displayedColor.r, _displayedColor.g, _displayedColor.b, displayedOpacity);
         // special opacity for premultiplied textures
         if (_opacityModifyRGB)
         {
-            color4.r *= displayedOpacity / 255.0f;
-            color4.g *= displayedOpacity / 255.0f;
-            color4.b *= displayedOpacity / 255.0f;
+            auto opacity = displayedOpacity / 255.0f;
+            color4.r = static_cast<uint8_t>(color4.r * opacity);
+            color4.g = static_cast<uint8_t>(color4.g * opacity);
+            color4.b = static_cast<uint8_t>(color4.b * opacity);
         }
         _quad.bl.colors = color4;
         _quad.br.colors = color4;
@@ -265,7 +266,7 @@ Label* Label::createWithTTF(const std::string& text, const std::string& fontFile
     return nullptr;
 }
 
-Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment hAlignment /* = TextHAlignment::CENTER */, int maxLineWidth /* = 0 */)
+Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment hAlignment /* = TextHAlignment::CENTER */, float maxLineWidth /* = 0 */)
 {
     auto ret = new (std::nothrow) Label(hAlignment);
 
@@ -279,7 +280,7 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
     return nullptr;
 }
 
-Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& hAlignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Vec2& imageOffset /* = Vec2::ZERO */)
+Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& hAlignment /* = TextHAlignment::LEFT */, float maxLineWidth /* = 0 */, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     auto ret = new (std::nothrow) Label(hAlignment);
 
@@ -373,7 +374,7 @@ bool Label::initWithTTF(const std::string& text,
     return false;
 }
 
-bool Label::initWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment /*hAlignment*/, int maxLineWidth)
+bool Label::initWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment /*hAlignment*/, float maxLineWidth)
 {
     if (FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && setTTFConfig(ttfConfig))
     {
@@ -795,7 +796,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
     if (std::abs(fontSize) < FLT_EPSILON) {
         FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
         if (bmFont) {
-            float originalFontSize = bmFont->getOriginalFontSize();
+            auto originalFontSize = bmFont->getOriginalFontSize();
             _bmFontSize = originalFontSize / CC_CONTENT_SCALE_FACTOR();
         }
     }
@@ -1220,7 +1221,7 @@ void Label::enableGlow(const Color4B& glowColor)
     }
 }
 
-void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */)
+void Label::enableOutline(const Color4B& outlineColor,float outlineSize /* = -1 */)
 {
     CCASSERT(_currentLabelType == LabelType::STRING_TEXTURE || _currentLabelType == LabelType::TTF, "Only supported system font and TTF!");
 
@@ -1702,7 +1703,7 @@ void Label::updateEffectUniforms(BatchCommand &batch, TextureAtlas* textureAtlas
         if (_shadowEnabled) {
             Color3B oldColor = _realColor;
             uint8_t oldOPacity = _displayedOpacity;
-            _displayedOpacity = _shadowColor4F.a * (oldOPacity / 255.0f) * 255;
+            _displayedOpacity = static_cast<uint8_t>(_shadowColor4F.a * (oldOPacity / 255.0f) * 255);
             setColor(Color3B(_shadowColor4F));
             batch.shadowCommand.updateVertexBuffer(textureAtlas->getQuads(), (unsigned int)(textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad)) );
             batch.shadowCommand.init(_globalZOrder);
@@ -2186,9 +2187,10 @@ void Label::updateColor()
     // special opacity for premultiplied textures
     if (_isOpacityModifyRGB)
     {
-        color4.r *= _displayedOpacity/255.0f;
-        color4.g *= _displayedOpacity/255.0f;
-        color4.b *= _displayedOpacity/255.0f;
+        float opacity = _displayedOpacity / 255.0f;
+        color4.r = static_cast<uint8_t>(color4.r * opacity);
+        color4.g = static_cast<uint8_t>(color4.g * opacity);
+        color4.b = static_cast<uint8_t>(color4.b * opacity);
     }
 
     cocos2d::TextureAtlas* textureAtlas;
@@ -2199,7 +2201,7 @@ void Label::updateColor()
         quads = textureAtlas->getQuads();
         auto count = textureAtlas->getTotalQuads();
 
-        for (int index = 0; index < count; ++index)
+        for (size_t index = 0; index < count; ++index)
         {
             quads[index].bl.colors = color4;
             quads[index].br.colors = color4;
@@ -2294,10 +2296,10 @@ FontDefinition Label::_getFontDefinition() const
     {
         systemFontDef._stroke._strokeEnabled = true;
         systemFontDef._stroke._strokeSize = _outlineSize;
-        systemFontDef._stroke._strokeColor.r = _effectColorF.r * 255;
-        systemFontDef._stroke._strokeColor.g = _effectColorF.g * 255;
-        systemFontDef._stroke._strokeColor.b = _effectColorF.b * 255;
-        systemFontDef._stroke._strokeAlpha = _effectColorF.a * 255;
+        systemFontDef._stroke._strokeColor.r = static_cast<uint8_t>(_effectColorF.r * 255);
+        systemFontDef._stroke._strokeColor.g = static_cast<uint8_t>(_effectColorF.g * 255);
+        systemFontDef._stroke._strokeColor.b = static_cast<uint8_t>(_effectColorF.b * 255);
+        systemFontDef._stroke._strokeAlpha = static_cast<uint8_t>(_effectColorF.a * 255);
     }
     else
     {

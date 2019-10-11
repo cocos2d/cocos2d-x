@@ -239,9 +239,9 @@ void TMXLayer::updateTiles(const Rect& culledRect)
             auto iter = _indicesVertexZNumber.find(vertexZ);
             int offset = iter->second;
             iter->second++;
-            
+             //
+            CC_ASSERT(-1 != _tileToQuadIndex[tileIndex]);
             unsigned short quadIndex = static_cast<unsigned short>(_tileToQuadIndex[tileIndex]);
-            CC_ASSERT(-1 != quadIndex);
             _indices[6 * offset + 0] = quadIndex * 4 + 0;
             _indices[6 * offset + 1] = quadIndex * 4 + 1;
             _indices[6 * offset + 2] = quadIndex * 4 + 2;

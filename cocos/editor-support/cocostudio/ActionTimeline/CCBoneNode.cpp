@@ -51,7 +51,7 @@ BoneNode* BoneNode::create(int length)
     BoneNode* ret = new (std::nothrow) BoneNode();
     if (ret && ret->init())
     {
-        ret->setDebugDrawLength(length);
+        ret->setDebugDrawLength((float)length);
         ret->autorelease();
     }
     else

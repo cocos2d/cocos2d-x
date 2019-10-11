@@ -179,9 +179,9 @@ BillBoardTest::BillBoardTest()
 
     TTFConfig ttfConfig("fonts/arial.ttf", 16);
     auto label1 = Label::createWithTTF(ttfConfig,"rotate+");
-    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,10));
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,10.0f));
     auto label2 = Label::createWithTTF(ttfConfig,"rotate-");
-    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,-10));
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,-10.0f));
     auto menu = Menu::create(menuItem1, menuItem2, nullptr);
     menu->setPosition(Vec2::ZERO);
     menuItem1->setPosition( Vec2( s.width-80, VisibleRect::top().y-160) );

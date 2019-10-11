@@ -108,7 +108,7 @@ namespace cocostudio
         this->beginSetBasicProperties(widget);
         
         float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
-        int cri = 255, cgi = 255, cbi = 255;
+        uint8_t cri = 255, cgi = 255, cbi = 255;
         float scale9Width = 0.0f, scale9Height = 0.0f;
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
@@ -174,11 +174,11 @@ namespace cocostudio
             }else if(key == P_Scale9Height){
                 scale9Height = valueToFloat(value);
             }else if(key == P_TextColorR){
-                cri = valueToInt(value);
+                cri = valueToUChar(value);
             }else if(key == P_TextColorG){
-                cgi = valueToInt(value);
+                cgi = valueToUChar(value);
             }else if(key == P_TextColorB){
-                cbi = valueToInt(value);
+                cbi = valueToUChar(value);
             }else if(key == P_FontSize){
                 button->setTitleFontSize(valueToFloat(value));
             }else if(key == P_FontName){
@@ -256,13 +256,13 @@ namespace cocostudio
         }
         
      
-        int cri = DICTOOL->getIntValue_json(options, P_TextColorR,255);
-        int cgi = DICTOOL->getIntValue_json(options, P_TextColorG,255);
-        int cbi = DICTOOL->getIntValue_json(options, P_TextColorB,255);
+        uint8_t cri = DICTOOL->getUCharValue_json(options, P_TextColorR, 255);
+        uint8_t cgi = DICTOOL->getUCharValue_json(options, P_TextColorG, 255);
+        uint8_t cbi = DICTOOL->getUCharValue_json(options, P_TextColorB, 255);
         button->setTitleColor(Color3B(cri,cgi,cbi));
   
         
-        button->setTitleFontSize(DICTOOL->getIntValue_json(options, P_FontSize,14));
+        button->setTitleFontSize(DICTOOL->getFloatValue_json(options, P_FontSize,14));
         
 
         button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName, ""));
@@ -327,19 +327,19 @@ namespace cocostudio
             }
             else if (name == "Scale9OriginX")
             {
-                capInsets.origin.x = atof(value.c_str());
+                capInsets.origin.x = (float)atof(value.c_str());
             }
             else if (name == "Scale9OriginY")
             {
-                capInsets.origin.y = atof(value.c_str());
+                capInsets.origin.y = (float)atof(value.c_str());
             }
             else if (name == "Scale9Width")
             {
-                capInsets.size.width = atof(value.c_str());
+                capInsets.size.width = (float)atof(value.c_str());
             }
             else if (name == "Scale9Height")
             {
-                capInsets.size.height = atof(value.c_str());
+                capInsets.size.height = (float)atof(value.c_str());
             }
             else if (name == "ButtonText")
             {
@@ -375,11 +375,11 @@ namespace cocostudio
             }
             else if (name == "ShadowOffsetX")
             {
-                shadowOffset.width = atof(value.c_str());
+                shadowOffset.width = (float)atof(value.c_str());
             }
             else if (name == "ShadowOffsetY")
             {
-                shadowOffset.height = atof(value.c_str());
+                shadowOffset.height = (float)atof(value.c_str());
             }
             else if (name == "ShadowBlurRadius")
             {
@@ -406,11 +406,11 @@ namespace cocostudio
                     
                     if (name == "X")
                     {
-                        scale9Size.width = atof(value.c_str());
+                        scale9Size.width = (float)atof(value.c_str());
                     }
                     else if (name == "Y")
                     {
-                        scale9Size.height = atof(value.c_str());
+                        scale9Size.height = (float)atof(value.c_str());
                     }
                     
                     attribute = attribute->Next();
@@ -426,15 +426,15 @@ namespace cocostudio
                     
                     if (name == "R")
                     {
-                        textColor.r = atoi(value.c_str());
+                        textColor.r = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     else if (name == "G")
                     {
-                        textColor.g = atoi(value.c_str());
+                        textColor.g = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     else if (name == "B")
                     {
-                        textColor.b = atoi(value.c_str());
+                        textColor.b = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     
                     attribute = attribute->Next();
@@ -581,19 +581,19 @@ namespace cocostudio
                     
                     if (name == "A")
                     {
-                        outlineColor.a = atoi(value.c_str());
+                        outlineColor.a = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     else if (name == "R")
                     {
-                        outlineColor.r = atoi(value.c_str());
+                        outlineColor.r = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     else if (name == "G")
                     {
-                        outlineColor.g = atoi(value.c_str());
+                        outlineColor.g = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     else if (name == "B")
                     {
-                        outlineColor.b = atoi(value.c_str());
+                        outlineColor.b = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     
                     attribute = attribute->Next();
@@ -610,19 +610,19 @@ namespace cocostudio
                     
                     if (name == "A")
                     {
-                        shadowColor.a = atoi(value.c_str());
+                        shadowColor.a = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     else if (name == "R")
                     {
-                        shadowColor.r = atoi(value.c_str());
+                        shadowColor.r = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     else if (name == "G")
                     {
-                        shadowColor.g = atoi(value.c_str());
+                        shadowColor.g = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     else if (name == "B")
                     {
-                        shadowColor.b = atoi(value.c_str());
+                        shadowColor.b = static_cast<uint8_t>(atoi(value.c_str()));
                     }
                     
                     attribute = attribute->Next();
@@ -878,7 +878,7 @@ namespace cocostudio
         Color3B titleColor(textColor->r(), textColor->g(), textColor->b());
         button->setTitleColor(titleColor);
         
-        int titleFontSize = options->fontSize();
+        float titleFontSize = (float)options->fontSize();
         button->setTitleFontSize(titleFontSize);
         
         std::string titleFontName = options->fontName()->c_str();
@@ -917,7 +917,7 @@ namespace cocostudio
             {
                 Color4B outlineColor(f_outlineColor->r(), f_outlineColor->g(), f_outlineColor->b(), f_outlineColor->a());
                 auto label = button->getTitleRenderer();
-                label->enableOutline(outlineColor, options->outlineSize());
+                label->enableOutline(outlineColor, (float)options->outlineSize());
             }
         }
         

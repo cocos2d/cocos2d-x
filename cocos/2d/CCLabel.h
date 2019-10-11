@@ -55,7 +55,7 @@ typedef struct _ttfConfig
     const char *customGlyphs;
 
     bool distanceFieldEnabled;
-    int outlineSize;
+    float outlineSize;
 
     bool italics;
     bool bold;
@@ -63,7 +63,7 @@ typedef struct _ttfConfig
     bool strikethrough;
 
     _ttfConfig(const std::string& filePath = "",float size = CC_DEFAULT_FONT_LABEL_SIZE, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
-        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0,
+        const char *customGlyphCollection = nullptr, bool useDistanceField = false, float outline = 0,
                bool useItalics = false, bool useBold = false, bool useUnderline = false, bool useStrikethrough = false)
         : fontFilePath(filePath)
         , fontSize(size)
@@ -189,7 +189,7 @@ public:
     * @see TTFConfig setTTFConfig setMaxLineWidth
     */
     static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, 
-        TextHAlignment hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
+        TextHAlignment hAlignment = TextHAlignment::LEFT, float maxLineWidth = 0);
 
     /**
     * Allocates and initializes a Label, with a bitmap font file.
@@ -204,7 +204,7 @@ public:
     * @see setBMFontFilePath setMaxLineWidth
     */
     static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
-        const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0,
+        const TextHAlignment& hAlignment = TextHAlignment::LEFT, float maxLineWidth = 0,
         const Vec2& imageOffset = Vec2::ZERO);
 
     /**
@@ -349,7 +349,7 @@ public:
      * Enable outline effect to Label.
      * @warning Limiting use to only when the Label created with true type font or system font.
      */
-    virtual void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
+    virtual void enableOutline(const Color4B& outlineColor,float outlineSize = -1.0f);
 
     /**
     * Enable glow effect to Label.
@@ -634,7 +634,7 @@ CC_CONSTRUCTOR_ACCESS:
                      TextVAlignment vAlignment = TextVAlignment::TOP);
 
     bool initWithTTF(const TTFConfig& ttfConfig, const std::string& text,
-                     TextHAlignment hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
+                     TextHAlignment hAlignment = TextHAlignment::LEFT, float maxLineWidth = 0);
 
 protected:
     struct LetterInfo

@@ -119,7 +119,7 @@ public:
     float tweenRotate;       //! SkewX, SkewY, and TweenRotate effect the rotation
 
     bool isUseColorInfo;    //! Whether or not this frame have the color changed Info
-    int a, r, g, b;
+    uint8_t a, r, g, b;
 
 };
 

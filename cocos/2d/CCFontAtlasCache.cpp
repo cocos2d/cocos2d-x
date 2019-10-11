@@ -62,7 +62,7 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
 
     std::string key;
     char keyPrefix[ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE];
-    snprintf(keyPrefix, ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE, useDistanceField ? "df %.2f %d " : "%.2f %d ", config->fontSize, config->outlineSize);
+    snprintf(keyPrefix, ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE, useDistanceField ? "df %.2f %.2f " : "%.2f %.2f ", config->fontSize, config->outlineSize);
     std::string atlasName(keyPrefix);
     atlasName += realFontFilename;
 

@@ -823,7 +823,7 @@ Frame* ActionTimelineCache::loadAlphaFrameWithFlatBuffers(const flatbuffers::Int
 {
     AlphaFrame* frame = AlphaFrame::create();
     
-    int alpha = flatbuffers->value();
+    uint8_t alpha = (uint8_t)flatbuffers->value();
     
     frame->setAlpha(alpha);
     

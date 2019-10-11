@@ -331,12 +331,12 @@ ActionFadeFrame::~ActionFadeFrame()
 
 }
 
-void ActionFadeFrame::setOpacity(int opacity)
+void ActionFadeFrame::setOpacity(uint8_t opacity)
 {
 	_opacity = opacity;
 }
 
-int ActionFadeFrame::getOpacity()
+uint8_t ActionFadeFrame::getOpacity()
 {
 	return _opacity;
 }

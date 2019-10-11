@@ -113,9 +113,9 @@ bool LabelAtlas::initWithString(const std::string& theString, const std::string&
 
     std::string textureFilename = relPathStr + dict["textureFilename"].asString();
 
-    unsigned int width = dict["itemWidth"].asInt() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int height = dict["itemHeight"].asInt() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int startChar = dict["firstChar"].asInt();
+    int width = (int)(dict["itemWidth"].asInt() / CC_CONTENT_SCALE_FACTOR());
+    int height = (int)(dict["itemHeight"].asInt() / CC_CONTENT_SCALE_FACTOR());
+    int startChar = dict["firstChar"].asInt();
 
 
     this->initWithString(theString, textureFilename, width, height, startChar);
@@ -131,7 +131,7 @@ void LabelAtlas::updateAtlasValues()
         return;
     }
 
-    ssize_t n = _string.length();
+    auto n = _string.length();
 
     const unsigned char *s = (unsigned char*)_string.c_str();
 
@@ -142,15 +142,15 @@ void LabelAtlas::updateAtlasValues()
     float itemHeightInPixels = _itemHeight * CC_CONTENT_SCALE_FACTOR();
     if (_ignoreContentScaleFactor)
     {
-        itemWidthInPixels = _itemWidth;
-        itemHeightInPixels = _itemHeight;
+        itemWidthInPixels = (float)_itemWidth;
+        itemHeightInPixels = (float)_itemHeight;
     }
 
     CCASSERT(n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
-    for(ssize_t i = 0; i < n; i++) {
+    for(size_t i = 0; i < n; i++) {
 
-        unsigned char a = s[i] - _mapStartChar;
+        unsigned char a = s[i] - (unsigned char)_mapStartChar;
         float row = (float) (a % _itemsPerRow);
         float col = (float) (a / _itemsPerRow);
 
@@ -196,7 +196,7 @@ void LabelAtlas::updateAtlasValues()
     }
     if (n > 0 ){
         _textureAtlas->setDirty(true);
-        ssize_t totalQuads = _textureAtlas->getTotalQuads();
+        auto totalQuads = _textureAtlas->getTotalQuads();
         if (n > totalQuads) {
             _textureAtlas->increaseTotalQuadsWith(static_cast<int>(n - totalQuads));
         }
@@ -206,7 +206,7 @@ void LabelAtlas::updateAtlasValues()
 //CCLabelAtlas - LabelProtocol
 void LabelAtlas::setString(const std::string &label)
 {
-    ssize_t len = label.size();
+    auto len = label.size();
     if (len > _textureAtlas->getTotalQuads())
     {
         _textureAtlas->resizeCapacity(len);
@@ -215,7 +215,7 @@ void LabelAtlas::setString(const std::string &label)
     _string = label;
     this->updateAtlasValues();
 
-    Size s = Size(len * _itemWidth, _itemHeight);
+    Size s((float)len * _itemWidth, (float)_itemHeight);
 
     this->setContentSize(s);
 
@@ -234,9 +234,10 @@ void LabelAtlas::updateColor()
         Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
         if (_isOpacityModifyRGB)
         {
-            color4.r *= _displayedOpacity/255.0f;
-            color4.g *= _displayedOpacity/255.0f;
-            color4.b *= _displayedOpacity/255.0f;
+            auto opacity = _displayedOpacity / 255.0f;
+            color4.r = static_cast<uint8_t>(color4.r * opacity);
+            color4.g = static_cast<uint8_t>(color4.g * opacity);
+            color4.b = static_cast<uint8_t>(color4.b * opacity);
         }
         auto quads = _textureAtlas->getQuads();
         ssize_t length = _string.length();

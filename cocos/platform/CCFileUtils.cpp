@@ -1595,7 +1595,7 @@ std::string FileUtils::getFileExtension(const std::string& filePath) const
     {
         fileExtension = filePath.substr(pos, filePath.length());
 
-        std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
+        std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), [](char c) { return static_cast<char>(::tolower(c)); });
     }
 
     return fileExtension;
