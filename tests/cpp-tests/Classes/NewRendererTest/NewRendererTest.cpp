@@ -865,6 +865,7 @@ cocos2d::backend::ProgramState* RendererUniformBatch::createBlurProgramState()
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
     auto programState = new backend::ProgramState(program);
+    programState->autorelease();
     CC_SAFE_RELEASE(program);
 
     backend::UniformLocation loc = programState->getUniformLocation("resolution");
@@ -892,6 +893,7 @@ cocos2d::backend::ProgramState* RendererUniformBatch::createSepiaProgramState()
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
     auto programState = new backend::ProgramState(program);
+    programState->autorelease();
     CC_SAFE_RELEASE(program);
     return programState;
 }
@@ -949,6 +951,7 @@ backend::ProgramState* RendererUniformBatch2::createBlurProgramState()
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
     auto programState = new backend::ProgramState(program);
+    programState->autorelease();
     CC_SAFE_RELEASE(program);
 
     backend::UniformLocation loc = programState->getUniformLocation("resolution");
@@ -976,6 +979,7 @@ backend::ProgramState*  RendererUniformBatch2::createSepiaProgramState()
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
     auto programState = new backend::ProgramState(program);
+    programState->autorelease();
     CC_SAFE_RELEASE(program);
     return programState;
 }
