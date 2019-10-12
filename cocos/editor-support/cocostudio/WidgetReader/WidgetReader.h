@@ -85,6 +85,7 @@ namespace cocostudio
         void endSetBasicProperties(cocos2d::ui::Widget *widget);
         
         
+        std::function<uint8_t(const std::string&)> valueToUChar;
         std::function<int(const std::string&)> valueToInt;
         std::function<bool(const std::string&)> valueToBool;
         std::function<float(const std::string&)> valueToFloat;
@@ -96,7 +97,7 @@ namespace cocostudio
         float _width ;
         float _height;
         cocos2d::Color3B _color;
-        int _opacity;
+        uint8_t _opacity;
         cocos2d::Vec2 _position;
         bool _isAdaptScreen;
         cocos2d::Vec2 _originalAnchorPoint;
@@ -236,14 +237,14 @@ namespace cocostudio
     
 #define CC_COLOR_PROPERTY_BINARY_READER \
     else if (key == P_Opacity) { \
-        _opacity = valueToInt(value); \
+        _opacity = static_cast<uint8_t>(valueToInt(value)); \
     }else if(key == P_ColorR){ \
-        _color.r = valueToInt(value);  \
+        _color.r = static_cast<uint8_t>(valueToInt(value));  \
     }else if(key == P_ColorG){  \
-        _color.g = valueToInt(value);  \
+        _color.g = static_cast<uint8_t>(valueToInt(value));  \
     }else if(key == P_ColorB)  \
     {\
-        _color.b = valueToInt(value);\
+        _color.b = static_cast<uint8_t>(valueToInt(value));\
     }else if(key == P_FlipX){\
         widget->setFlippedX(valueToBool(value));\
     }else if(key == P_FlipY){\
