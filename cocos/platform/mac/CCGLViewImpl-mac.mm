@@ -45,6 +45,7 @@ THE SOFTWARE.
 #endif /* CC_ICON_SET_SUPPORT */
 #include "renderer/backend/metal/DeviceMTL.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/backend/metal/Utils.h"
 
 NS_CC_BEGIN
 
@@ -879,13 +880,10 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, 
         Director::getInstance()->setViewport();
         Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_RESIZED, nullptr);
         
-        //update metal drawable size.
+        //update metal attachment texture size.
         int fbWidth, fbHeight;
         glfwGetFramebufferSize(_mainWindow, &fbWidth, &fbHeight);
-        CGSize size;
-        size.width = static_cast<CGFloat>(fbWidth);
-        size.height = static_cast<CGFloat>(fbHeight);
-        [backend::DeviceMTL::getCAMetalLayer() setDrawableSize:size];
+        backend::Utils::resizeDefaultAttachmentTexture(fbWidth, fbHeight);
     }
 }
 

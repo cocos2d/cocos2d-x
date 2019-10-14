@@ -49,6 +49,7 @@ public:
      * @param texture Specifies the texture to be setted to the color attachemnt.
      */
     static void updateDefaultColorAttachmentTexture(id<MTLTexture> texture);
+    static void resizeDefaultAttachmentTexture(int width, int height);
     
     /**
      * Get the default combined depth and stencil attachment pixel format.
