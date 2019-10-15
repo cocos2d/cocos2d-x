@@ -856,6 +856,42 @@ int lua_cocos2dx_backend_Program_getVertexShader(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_backend_Program_getBuiltinProgram(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccb.Program",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        cocos2d::backend::ProgramType arg0;
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.Program:getBuiltinProgram");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_Program_getBuiltinProgram'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::Program* ret = cocos2d::backend::Program::getBuiltinProgram(arg0);
+        object_to_luaval<cocos2d::backend::Program>(tolua_S, "ccb.Program",(cocos2d::backend::Program*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccb.Program:getBuiltinProgram",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Program_getBuiltinProgram'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_backend_Program_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Program)");
@@ -878,6 +914,7 @@ int lua_register_cocos2dx_backend_Program(lua_State* tolua_S)
         tolua_function(tolua_S,"getActiveAttributes",lua_cocos2dx_backend_Program_getActiveAttributes);
         tolua_function(tolua_S,"getAttributeLocation",lua_cocos2dx_backend_Program_getAttributeLocation);
         tolua_function(tolua_S,"getVertexShader",lua_cocos2dx_backend_Program_getVertexShader);
+        tolua_function(tolua_S,"getBuiltinProgram", lua_cocos2dx_backend_Program_getBuiltinProgram);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::backend::Program).name();
     g_luaType[typeName] = "ccb.Program";
@@ -1461,46 +1498,32 @@ int lua_cocos2dx_backend_ProgramState_constructor(lua_State* tolua_S)
     int argc = 0;
     cocos2d::backend::ProgramState* cobj = nullptr;
     bool ok  = true;
+
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
+
+
     argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 1) {
-            cocos2d::backend::ProgramType arg0;
-            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.ProgramState:ProgramState");
+    if (argc == 1) 
+    {
+        cocos2d::backend::Program* arg0;
 
-            if (!ok) { break; }
-            cobj = new cocos2d::backend::ProgramState(arg0);
-            cobj->autorelease();
-            int ID =  (int)cobj->_ID ;
-            int* luaID =  &cobj->_luaID ;
-            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccb.ProgramState");
-            return 1;
+        ok &= luaval_to_object<cocos2d::backend::Program>(tolua_S, 2, "ccb.Program",&arg0, "ccb.ProgramState:ProgramState");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_ProgramState_constructor'", nullptr);
+            return 0;
         }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 2) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.ProgramState:ProgramState");
-
-            if (!ok) { break; }
-            std::string arg1;
-            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccb.ProgramState:ProgramState");
-
-            if (!ok) { break; }
-            cobj = new cocos2d::backend::ProgramState(arg0, arg1);
-            cobj->autorelease();
-            int ID =  (int)cobj->_ID ;
-            int* luaID =  &cobj->_luaID ;
-            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccb.ProgramState");
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccb.ProgramState:ProgramState",argc, 2);
+        cobj = new cocos2d::backend::ProgramState(arg0);
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccb.ProgramState");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.ProgramState:ProgramState",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
