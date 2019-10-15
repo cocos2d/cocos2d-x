@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "renderer/CCQuadCommand.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
-
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -115,12 +115,14 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
 void SpriteBatchNode::updateShaders(const std::string &vertexShader, const std::string &fragmentShader)
 {
     auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
+    auto* program = backend::Device::getInstance()->newProgram(vertexShader, fragmentShader);
     CC_SAFE_RELEASE(_programState);
-    _programState = new (std::nothrow) backend::ProgramState(vertexShader, fragmentShader);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
-
+    CC_SAFE_RELEASE(program);
+    
     auto vertexLayout = _programState->getVertexLayout();
     const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");

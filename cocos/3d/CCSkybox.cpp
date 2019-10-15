@@ -65,8 +65,8 @@ bool Skybox::init()
     _customCommand.setAfterCallback(CC_CALLBACK_0(Skybox::onAfterDraw, this));
 
     // create and set our custom shader
-
-    _programState = new backend::ProgramState(CC3D_skybox_vert, CC3D_skybox_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::SKYBOX_3D);
+    _programState = new backend::ProgramState(program);
 
     auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
     auto layout = _programState->getVertexLayout();

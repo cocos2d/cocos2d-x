@@ -32,6 +32,7 @@
 #include "renderer/CCPass.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTexture2D.h"
+#include "renderer/backend/Device.h"
 #include "base/CCProperties.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
@@ -370,9 +371,9 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
         vertShaderSrc = defs + "\n" + vertShaderSrc;
         fragShaderSrc = defs + "\n" + fragShaderSrc;
 
-        auto programState = new backend::ProgramState(vertShaderSrc, fragShaderSrc);
+        auto* program = backend::Device::getInstance()->newProgram(vertShaderSrc, fragShaderSrc);
+        auto programState = new backend::ProgramState(program);
         pass->setProgramState(programState);
-
 
         // Parse uniforms only if the GLProgramState was created
         auto property = shaderProperties->getNextProperty();
@@ -396,6 +397,8 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
             }
             space = shaderProperties->getNextNamespace();
         }
+        CC_SAFE_RELEASE(program);
+        CC_SAFE_RELEASE(programState);
     }
 
     return true;
