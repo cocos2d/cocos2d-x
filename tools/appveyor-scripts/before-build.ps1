@@ -33,7 +33,9 @@ function Update-SubModule
 Update-SubModule
 
 Download-Deps
-
+& cmake --version
+& choco install cmake --pre --installargs 'ADD_CMAKE_TO_PATH=System'
+& cmake --version
 & python -m pip install retry
 
 If ($env:build_type -eq "windows32_cmake_test" ) {

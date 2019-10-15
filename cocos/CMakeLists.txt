@@ -144,6 +144,7 @@ if(XCODE OR VS)
     cocos_mark_code_files("cocos2d")
 endif()
 
+if(${CMAKE_VERSION} VERSION_LESS "3.16.0")
 if(WINDOWS)
     # precompiled header. Compilation time speedup ~4x.
     target_sources(cocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
@@ -151,4 +152,7 @@ if(WINDOWS)
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
     # compile c as c++. needed for precompiled header
     set_source_files_properties(${COCOS_SPINE_SRC} base/ccFPSImages.c PROPERTIES LANGUAGE CXX)
+endif()
+else()
+    target_precompile_headers(cocos2d PRIVATE precheader.h)
 endif()
