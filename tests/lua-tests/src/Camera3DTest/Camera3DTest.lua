@@ -720,8 +720,10 @@ function FogTestDemo:createLayer3D()
     local vertexShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/fog.vert")
     local fragmentShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/fog.frag")
 
-    self._shader1 = ccb.ProgramState:new(vertexShader, fragmentShader)
+    local program = ccb.Device:getInstance():newProgram(vertexShader, fragmentShader)
+    self._shader1 = ccb.ProgramState:new(program)
     self._shader2 = self._shader1:clone()
+    program:release()
 
     self._sprite3D1 = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
     self._sprite3D2 = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
