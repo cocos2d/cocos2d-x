@@ -34,7 +34,7 @@ Update-SubModule
 
 Download-Deps
 & cmake --version
-& choco install cmake --pre --installargs 'ADD_CMAKE_TO_PATH=System'
+& choco install cmake --pre
 & cmake --version
 & python -m pip install retry
 
