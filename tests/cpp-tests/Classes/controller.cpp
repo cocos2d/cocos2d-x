@@ -120,6 +120,7 @@ public:
         addTest("Touches", [](){return new TouchesTests(); });
         addTest("Transitions", [](){return new TransitionsTests(); });
         addTest("Unit Test", []() { return new UnitTests(); });
+        addTest("Unzip Test", []() {return new ZipTests();});
         addTest("URL Open Test", []() { return new OpenURLTests(); });
         addTest("UserDefault", []() { return new UserDefaultTests(); });
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
