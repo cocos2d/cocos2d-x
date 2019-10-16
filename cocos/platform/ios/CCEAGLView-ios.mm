@@ -131,7 +131,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
     if((self = [super initWithFrame:frame]))
     {
-        isUseUITextField = YES;
+        canBecomeFirstResponser_ = FALSE;
         pixelformat_ = format;
         depthFormat_ = depth;
         multiSampling_ = sampling;
@@ -163,6 +163,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         
         CAEAGLLayer*            eaglLayer = (CAEAGLLayer*)[self layer];
         
+        canBecomeFirstResponser_ = FALSE;
         pixelformat_ = kEAGLColorFormatRGB565;
         depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
         multiSampling_= NO;
@@ -511,26 +512,26 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (BOOL)canBecomeFirstResponder
 {
-    if (nil != markedText_) {
-        [markedText_ release];
-    }
-    markedText_ = nil;
-    if (isUseUITextField)
-    {
-        return NO;
-    }
-    return YES;
+    return canBecomeFirstResponser_;
 }
 
 - (BOOL)becomeFirstResponder
 {
-    isUseUITextField = NO;
     return [super becomeFirstResponder];
+}
+
+// Only invoked by engine can make become first responser, because `becomeFirstResponder`
+// may be invoked by system if using system input method. More detail information can refer
+// to https://github.com/cocos2d/cocos2d-x/issues/20174
+- (void) becomeFirstResponderInternal
+{
+    canBecomeFirstResponser_ = YES;
+    [self becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder
 {
-    isUseUITextField = YES;
+    canBecomeFirstResponser_ = FALSE;
     return [super resignFirstResponder];
 }
 
@@ -597,7 +598,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (NSString *)textInRange:(UITextRange *)range
 {
     CCLOG("textInRange");
-    return @"";
+    if (nil != markedText_) {
+        return markedText_;
+    }
+    return nil;
 }
 - (void)replaceRange:(UITextRange *)range withText:(NSString *)theText
 {
@@ -624,6 +628,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (UITextRange *)markedTextRange
 {
     CCLOG("markedTextRange");
+    if (nil != markedText_) {
+        return [[[UITextRange alloc] init] autorelease];
+    }
     return nil; // Nil if no marked text.
 }
 - (void)setMarkedTextStyle:(NSDictionary *)markedTextStyle

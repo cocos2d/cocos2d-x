@@ -96,7 +96,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     //fsaa addition
     BOOL                    multisampling_;
     unsigned int            requestedSamples_;
-    BOOL                    isUseUITextField;
+    BOOL                    canBecomeFirstResponser_;
 @private
     NSString *              markedText_;
     CGRect                  caretRect_;
@@ -157,6 +157,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis;
 -(void) doAnimationWhenAnotherEditBeClicked;
+
+- (void) becomeFirstResponderInternal;
 @end
 
 #endif // CC_PLATFORM_IOS

@@ -224,7 +224,7 @@ void GLViewImpl::setIMEKeyboardState(bool open)
 
     if (open)
     {
-        [eaglview becomeFirstResponder];
+        [eaglview becomeFirstResponderInternal];
     }
     else
     {
