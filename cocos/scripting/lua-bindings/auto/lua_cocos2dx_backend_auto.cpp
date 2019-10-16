@@ -3,6 +3,7 @@
 #include "renderer/backend/ProgramState.h"
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/VertexLayout.h"
+#include "renderer/backend/Device.h"
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
@@ -2440,6 +2441,114 @@ int lua_register_cocos2dx_backend_TextureCubemapBackend(lua_State* tolua_S)
     g_typeCast["TextureCubemapBackend"] = "ccb.TextureCubemapBackend";
     return 1;
 }
+
+int lua_cocos2dx_backend_Device_newProgram(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::Device* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.Device",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::Device*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_Device_newProgram'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        std::string arg0;
+        std::string arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccb.Device:newProgram");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccb.Device:newProgram");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_Device_newProgram'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::Program* ret = cobj->newProgram(arg0, arg1);
+        object_to_luaval<cocos2d::backend::Program>(tolua_S, "ccb.Program",(cocos2d::backend::Program*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.Device:newProgram",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Device_newProgram'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_backend_Device_getInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccb.Device",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_Device_getInstance'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::Device* ret = cocos2d::backend::Device::getInstance();
+        object_to_luaval<cocos2d::backend::Device>(tolua_S, "ccb.Device",(cocos2d::backend::Device*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccb.Device:getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Device_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_backend_Device_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (Device)");
+    return 0;
+}
+
+int lua_register_cocos2dx_backend_Device(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccb.Device");
+    tolua_cclass(tolua_S,"Device","ccb.Device","cc.Ref",nullptr);
+
+    tolua_beginmodule(tolua_S,"Device");
+        tolua_function(tolua_S,"newProgram",lua_cocos2dx_backend_Device_newProgram);
+        tolua_function(tolua_S,"getInstance", lua_cocos2dx_backend_Device_getInstance);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::Device).name();
+    g_luaType[typeName] = "ccb.Device";
+    g_typeCast["Device"] = "ccb.Device";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx_backend(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -2459,6 +2568,7 @@ TOLUA_API int register_all_cocos2dx_backend(lua_State* tolua_S)
 	lua_register_cocos2dx_backend_TextureCubeFace(tolua_S);
 	lua_register_cocos2dx_backend_VertexLayout(tolua_S);
 	lua_register_cocos2dx_backend_BlendFactor(tolua_S);
+	lua_register_cocos2dx_backend_Device(tolua_S);
 	lua_register_cocos2dx_backend_VertexFormat(tolua_S);
 	lua_register_cocos2dx_backend_VertexStepMode(tolua_S);
 	lua_register_cocos2dx_backend_StencilOperation(tolua_S);
