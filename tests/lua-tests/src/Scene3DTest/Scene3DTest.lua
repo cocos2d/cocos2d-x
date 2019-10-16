@@ -333,9 +333,9 @@ function Scene3DTest:create3DWorld()
 
     local cmVert = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.vert")
     local cmFrag = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.frag")
-
-    local state = ccb.ProgramState:new(cmVert, cmFrag)
-
+    local program = ccb.Device:getInstance():newProgram(cmVert, cmFrag)
+    local state = ccb.ProgramState:new(program)
+    program:release()
     --create the second texture for cylinder
     self._textureCube = cc.TextureCube:create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
                                        "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
