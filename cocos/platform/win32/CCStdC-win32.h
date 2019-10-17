@@ -140,11 +140,6 @@ inline errno_t strcpy_s(char *strDestination, size_t numberOfElements,
 #endif
 #endif // __MINGW32__
 
-// Conflicted with cocos2d::MessageBox, so we need to undef it.
-#ifdef MessageBox
-#undef MessageBox
-#endif
-
 // Conflicted with ParticleSystem::PositionType::RELATIVE, so we need to undef it.
 #ifdef RELATIVE
 #undef RELATIVE

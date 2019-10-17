@@ -316,7 +316,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
             message.append(_glfwError);
         }
 
-        MessageBox(message.c_str(), "Error launch application");
+        ccMessageBox(message.c_str(), "Error launch application");
         return false;
     }
     

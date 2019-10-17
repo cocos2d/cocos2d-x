@@ -39,7 +39,7 @@
 NS_CC_BEGIN
 
 // ios no MessageBox, use log instead
-void MessageBox(const char * msg, const char * title)
+void ccMessageBox(const char * msg, const char * title)
 {
     // only enable it on iOS.
     // FIXME: Implement it for tvOS

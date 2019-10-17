@@ -35,7 +35,7 @@ NS_CC_BEGIN
 
 #define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
-void MessageBox(const char * pszMsg, const char * pszTitle)
+void ccMessageBox(const char * pszMsg, const char * pszTitle)
 {
     std::wstring wsMsg = cocos2d::StringUtf8ToWideChar(pszMsg);
     std::wstring wsTitle = cocos2d::StringUtf8ToWideChar(pszTitle);
