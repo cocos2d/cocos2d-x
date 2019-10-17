@@ -206,6 +206,7 @@ list(APPEND GAME_HEADER
      Classes/OpenURLTest/OpenURLTest.h
      Classes/ConsoleTest/ConsoleTest.h
      Classes/MenuTest/MenuTest.h
+     Classes/ZipTest/ZipTests.h
      )
 
 list(APPEND GAME_SOURCE
@@ -329,8 +330,7 @@ list(APPEND GAME_SOURCE
      Classes/ZwoptexTest/ZwoptexTest.cpp
      Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
      Classes/controller.cpp
-     # Classes/VRTest/VRTest.cpp
-     # Classes/VRTest/VRTest.h
+     Classes/ZipTest/ZipTests.cpp
      )
 
 if(ANDROID OR IOS)

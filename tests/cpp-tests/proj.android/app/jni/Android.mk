@@ -142,6 +142,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/VRTest/VRTest.cpp \
 ../../../Classes/ZwoptexTest/ZwoptexTest.cpp \
 ../../../Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp \
+../../../Classes/ZipTest/ZipTests.cpp \
 ../../../Classes/controller.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \

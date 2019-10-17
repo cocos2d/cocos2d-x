@@ -389,7 +389,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"</Com
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\..\external\unzip\ioapi_mem.cpp" />
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
-    <ClCompile Include="..\..\external\unzip\unzip.cpp" />
+    <ClCompile Include="..\..\external\unzip\unzip.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ZLIB_DLL;ZLIB_INTERNAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="..\..\external\xxhash\xxhash.c" />
     <ClCompile Include="..\3d\CCAABB.cpp" />
     <ClCompile Include="..\3d\CCAnimate3D.cpp" />

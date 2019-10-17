@@ -1208,6 +1208,10 @@
 		ED545A771B68A1B600C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
 		ED545A781B68A1B800C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
 		ED545A791B68A1B900C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
+		ED7756AF2357280300239B75 /* zip in Resources */ = {isa = PBXBuildFile; fileRef = ED7756AE235727FF00239B75 /* zip */; };
+		ED7756B02357280500239B75 /* zip in Resources */ = {isa = PBXBuildFile; fileRef = ED7756AE235727FF00239B75 /* zip */; };
+		ED7756B42357283000239B75 /* ZipTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED7756B22357283000239B75 /* ZipTests.cpp */; };
+		ED7756B52357283000239B75 /* ZipTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED7756B22357283000239B75 /* ZipTests.cpp */; };
 		ED95C36921411F0D00E06058 /* WebSocketDelayTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED95C36721411E4A00E06058 /* WebSocketDelayTest.cpp */; };
 		ED95C36A21411F0F00E06058 /* WebSocketDelayTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED95C36721411E4A00E06058 /* WebSocketDelayTest.cpp */; };
 		ED95C36B21411F1200E06058 /* WebSocketDelayTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED95C36721411E4A00E06058 /* WebSocketDelayTest.cpp */; };
@@ -2357,6 +2361,9 @@
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		ED545A6C1B68A18300C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		ED545A721B68A1AC00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
+		ED7756AE235727FF00239B75 /* zip */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zip; path = "../tests/cpp-tests/Resources/zip"; sourceTree = "<group>"; };
+		ED7756B22357283000239B75 /* ZipTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZipTests.cpp; path = ZipTest/ZipTests.cpp; sourceTree = "<group>"; };
+		ED7756B32357283000239B75 /* ZipTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipTests.h; path = ZipTest/ZipTests.h; sourceTree = "<group>"; };
 		ED95C36721411E4A00E06058 /* WebSocketDelayTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocketDelayTest.cpp; sourceTree = "<group>"; };
 		ED95C36821411E4A00E06058 /* WebSocketDelayTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocketDelayTest.h; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -3199,6 +3206,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				ED7756B12357281400239B75 /* ZipTest */,
 				53367D531DC22891005862DE /* WindowTest */,
 				504C94991D1C51BE00E4E9B3 /* VRTest */,
 				50921EAC1B746D5F00C085CC /* DownloaderTest */,
@@ -3960,6 +3968,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				ED7756AE235727FF00239B75 /* zip */,
 				400308D720060F12000DFE6D /* strings */,
 				38FA2E75194AECF800FF2BE4 /* ActionTimeline */,
 				1AC35CA918CED84500F37B72 /* animations */,
@@ -4806,6 +4815,15 @@
 				D0FD03631A3B546400825BB5 /* AllocatorTest.h */,
 			);
 			name = AllocatorTest;
+			sourceTree = "<group>";
+		};
+		ED7756B12357281400239B75 /* ZipTest */ = {
+			isa = PBXGroup;
+			children = (
+				ED7756B22357283000239B75 /* ZipTests.cpp */,
+				ED7756B32357283000239B75 /* ZipTests.h */,
+			);
+			name = ZipTest;
 			sourceTree = "<group>";
 		};
 		FA94B0B81B8EF73D0074B261 /* performance-tests */ = {
@@ -5697,6 +5715,7 @@
 				1AC35CE818CED84500F37B72 /* extensions in Resources */,
 				1ACF6A521E4C52660033C137 /* cacert.pem in Resources */,
 				1AC35CDE18CED84500F37B72 /* components in Resources */,
+				ED7756AF2357280300239B75 /* zip in Resources */,
 				1AC35D0818CED84500F37B72 /* TileMaps in Resources */,
 				1AC35CE218CED84500F37B72 /* effect1.raw in Resources */,
 				B61E90CB1B12B74B00BE69EA /* NavMesh in Resources */,
@@ -5965,6 +5984,7 @@
 				1AC35D0518CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD318CED84500F37B72 /* background.ogg in Resources */,
 				1A7C8EB61FC3CAFF00CE8036 /* Images.xcassets in Resources */,
+				ED7756B02357280500239B75 /* zip in Resources */,
 				3E2BDB0119C5E5D40055CDCD /* background.wav in Resources */,
 				1AC35CCB18CED84500F37B72 /* animations in Resources */,
 				3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */,
@@ -6415,6 +6435,7 @@
 				504C949C1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */,
 				1AC35C5D18CECF0C00F37B72 /* Ball.cpp in Sources */,
 				1AC35BF318CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
+				ED7756B42357283000239B75 /* ZipTests.cpp in Sources */,
 				1AC35B3518CECF0C00F37B72 /* TestEntries.cpp in Sources */,
 				1AC35B2D18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
 				29080DDB191B595E0066F8DF /* UITextFieldTest.cpp in Sources */,
@@ -6815,6 +6836,7 @@
 				1AC35C1018CECF0C00F37B72 /* LabelTest.cpp in Sources */,
 				850F8A251B5F3A4F00780603 /* Bug-12847.cpp in Sources */,
 				59620E901921E5CF002021B6 /* Bug-Child.cpp in Sources */,
+				ED7756B52357283000239B75 /* ZipTests.cpp in Sources */,
 				29080DC8191B595E0066F8DF /* UISceneManager.cpp in Sources */,
 				1AC35C6A18CECF0C00F37B72 /* VisibleRect.cpp in Sources */,
 				1AC35C4018CECF0C00F37B72 /* ReleasePoolTest.cpp in Sources */,

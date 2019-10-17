@@ -238,6 +238,9 @@
     <Filter Include="Classes\WindowTest">
       <UniqueIdentifier>{b7379517-97f9-4b73-a75c-0706211e4264}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ZipTest">
+      <UniqueIdentifier>{283ea24f-6b14-4c86-a82c-7262ed4b02a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -644,6 +647,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketDelayTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ZipTest\ZipTests.cpp">
+      <Filter>Classes\ZipTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1204,6 +1210,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketDelayTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ZipTest\ZipTests.h">
+      <Filter>Classes\ZipTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
