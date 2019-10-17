@@ -11,6 +11,10 @@
         "project_path": "proj.ios",
         "project_name": "cpp-tests"
     }, 
+    "iphonesimulator_cfg": {
+        "project_path": "proj.ios",
+        "project_name": "cpp-tests"
+    }, 
     "project_type": "cpp", 
     "mac_cfg": {
         "project_path": "proj.mac",

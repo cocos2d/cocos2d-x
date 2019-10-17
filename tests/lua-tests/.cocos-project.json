@@ -14,6 +14,11 @@
         "project_name": "lua-tests",
         "cmake_path": "project"
     }, 
+    "iphonesimulator_cfg": {
+        "project_path": "project/proj.ios_mac/ios",
+        "project_name": "lua-tests",
+        "cmake_path": "project"
+    }, 
     "project_type": "lua", 
     "has_native": true,
     "mac_cfg": {
