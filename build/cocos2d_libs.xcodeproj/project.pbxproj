@@ -1286,6 +1286,7 @@
 		43015DC01B60DF4000E75161 /* CCComExtensionData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43015DBD1B60DF4000E75161 /* CCComExtensionData.cpp */; };
 		43015DC11B60DF4000E75161 /* CCComExtensionData.h in Headers */ = {isa = PBXBuildFile; fileRef = 43015DBE1B60DF4000E75161 /* CCComExtensionData.h */; };
 		43015DC21B60DF4000E75161 /* CCComExtensionData.h in Headers */ = {isa = PBXBuildFile; fileRef = 43015DBE1B60DF4000E75161 /* CCComExtensionData.h */; };
+		4621ED182359A92200E5C937 /* CCInputView-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4621ED172359A92200E5C937 /* CCInputView-ios.mm */; };
 		46270FA41E1CC6A200AAA098 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA21E1CC6A100AAA098 /* libcrypto.a */; };
 		46270FA51E1CC6A200AAA098 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA31E1CC6A100AAA098 /* libssl.a */; };
 		46270FA81E1CC84500AAA098 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA61E1CC84500AAA098 /* libcrypto.a */; };
@@ -5052,6 +5053,8 @@
 		3EACC99F19F5014D00EB3C5E /* CCLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLight.h; sourceTree = "<group>"; };
 		43015DBD1B60DF4000E75161 /* CCComExtensionData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComExtensionData.cpp; sourceTree = "<group>"; };
 		43015DBE1B60DF4000E75161 /* CCComExtensionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComExtensionData.h; sourceTree = "<group>"; };
+		4621ED172359A92200E5C937 /* CCInputView-ios.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCInputView-ios.mm"; sourceTree = "<group>"; };
+		4621ED192359A94700E5C937 /* CCInputView-ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCInputView-ios.h"; sourceTree = "<group>"; };
 		46270FA21E1CC6A100AAA098 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/openssl/prebuilt/mac/libcrypto.a; sourceTree = "<group>"; };
 		46270FA31E1CC6A100AAA098 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../external/openssl/prebuilt/mac/libssl.a; sourceTree = "<group>"; };
 		46270FA61E1CC84500AAA098 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/openssl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
@@ -8107,6 +8110,8 @@
 				503DD8DD1926736A00CD74DD /* CCPlatformDefine-ios.h */,
 				503DD8DE1926736A00CD74DD /* CCStdC-ios.h */,
 				503DD8DF1926736A00CD74DD /* OpenGL_Internal-ios.h */,
+				4621ED172359A92200E5C937 /* CCInputView-ios.mm */,
+				4621ED192359A94700E5C937 /* CCInputView-ios.h */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -11579,6 +11584,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 1551A334158F2AB200E66CFE;
@@ -13561,6 +13567,7 @@
 				5020A1F91D49912500E80C72 /* SkeletonJson.c in Sources */,
 				50ABBEBC1925AB6F00A911A9 /* ccUtils.cpp in Sources */,
 				50ABBE721925AB6F00A911A9 /* CCEventListenerMouse.cpp in Sources */,
+				4621ED182359A92200E5C937 /* CCInputView-ios.mm in Sources */,
 				B665E41B1AA80A6600DDB1C5 /* CCPUTextureRotator.cpp in Sources */,
 				B665E2971AA80A6500DDB1C5 /* CCPUEmitterManager.cpp in Sources */,
 				50ABC0001926664800A911A9 /* CCFileUtils-apple.mm in Sources */,
