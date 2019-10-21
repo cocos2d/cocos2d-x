@@ -81,7 +81,7 @@
 
 - (NSWritingDirection)baseWritingDirectionForPosition:(nonnull UITextPosition *)position inDirection:(UITextStorageDirection)direction {
     CCLOG("baseWritingDirectionForPosition");
-    return UITextWritingDirectionNatural;
+    return UITextWritingDirectionLeftToRight;
 }
 
 - (CGRect)caretRectForPosition:(nonnull UITextPosition *)position {
