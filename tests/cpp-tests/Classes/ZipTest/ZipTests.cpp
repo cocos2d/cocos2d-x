@@ -26,7 +26,7 @@
 
 #include "ZipTests.h"
 
-#include "unzip.h"
+#include "unzip/unzip.h"
 
 using namespace cocos2d;
 
