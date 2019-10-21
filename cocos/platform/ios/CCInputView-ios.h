@@ -1,4 +1,4 @@
 #import <UIKit/UIKit.h>
 
-@interface CCInputView : UIView <UIKeyInput, UITextInput, UITextInputTraits>
+@interface CCInputView : UIView <UIKeyInput>
 @end

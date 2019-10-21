@@ -14,14 +14,6 @@
 @synthesize myMarkedText;
 @synthesize isKeyboardShown;
 
-@synthesize beginningOfDocument;
-@synthesize endOfDocument;
-@synthesize hasText;
-@synthesize inputDelegate;
-@synthesize markedTextStyle;
-@synthesize selectedTextRange;
-@synthesize tokenizer;
-
 - (instancetype) initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame] ) {
         self.myMarkedText = nil;
@@ -334,5 +326,7 @@ namespace {
         dispatcher->dispatchKeyboardDidHide(notiInfo);
     }
 }
+
+@synthesize hasText;
 
 @end
