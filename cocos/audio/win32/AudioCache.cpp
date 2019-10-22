@@ -52,7 +52,6 @@ unsigned int __idIndex = 0;
 #define PCMDATA_CACHEMAXSIZE 1048576
 
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
 : _totalFrames(0)

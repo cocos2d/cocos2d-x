@@ -22,12 +22,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#define LOG_TAG "AudioEngine-Win32"
-
-#include "platform/CCPlatformConfig.h"
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
 #include "audio/win32/AudioEngine-win32.h"
 
 #ifdef OPENAL_PLAIN_INCLUDES
@@ -44,6 +38,8 @@
 #include "audio/win32/AudioDecoderManager.h"
 
 #include <windows.h>
+
+#define LOG_TAG "AudioEngine-Win32"
 
 // log, CCLOG aren't threadsafe, since we uses sub threads for parsing pcm data, threadsafe log output
 // is needed. Define the following macros (ALOGV, ALOGD, ALOGI, ALOGW, ALOGE) for threadsafe log output.
@@ -105,7 +101,6 @@ void audioLog(const char * format, ...)
 }
 
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 static ALCdevice *s_ALDevice = nullptr;
 static ALCcontext *s_ALContext = nullptr;
@@ -516,5 +511,3 @@ void AudioEngineImpl::uncacheAll()
 {
     _audioCaches.clear();
 }
-
-#endif
