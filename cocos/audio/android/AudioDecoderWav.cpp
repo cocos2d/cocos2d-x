@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "audio/android/tinysndfile.h"
 #include "platform/CCFileUtils.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 AudioDecoderWav::AudioDecoderWav()
 {
@@ -110,4 +110,4 @@ bool AudioDecoderWav::decodeToPcm()
     return ret;
 }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

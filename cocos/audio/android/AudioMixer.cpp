@@ -73,7 +73,7 @@ static const bool kUseFloat = false;
 // Set to default copy buffer size in frames for input processing.
 static const size_t kCopyBufferFrameCount = 256;
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 // ----------------------------------------------------------------------------
 
@@ -2098,4 +2098,4 @@ AudioMixer::process_hook_t AudioMixer::getProcessHook(int processType, uint32_t 
 }
 
 // ----------------------------------------------------------------------------
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

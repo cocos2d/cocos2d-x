@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "audio/android/AudioDecoderSLES.h"
 #include "platform/CCFileUtils.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 /* Explicitly requesting SL_IID_ANDROIDSIMPLEBUFFERQUEUE and SL_IID_PREFETCHSTATUS
 * on the UrlAudioPlayer object for decoding, SL_IID_METADATAEXTRACTION for retrieving the
@@ -643,4 +643,4 @@ void AudioDecoderSLES::decodeToPcmCallback(SLAndroidSimpleBufferQueueItf queueIt
     queryAudioInfo();
 }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

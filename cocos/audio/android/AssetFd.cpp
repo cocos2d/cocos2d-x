@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "audio/android/cutils/log.h"
 #include "audio/android/AssetFd.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 AssetFd::AssetFd(int assetFd)
         : _assetFd(assetFd)
@@ -45,4 +45,4 @@ AssetFd::~AssetFd()
     }
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {
