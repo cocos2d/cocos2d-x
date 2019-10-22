@@ -111,7 +111,7 @@ public:
 private:
     static const int FILE_COUNT = 2;
     std::string _files[FILE_COUNT];
-    cocos2d::experimental::AudioProfile _audioProfile;
+    cocos2d::AudioProfile _audioProfile;
     
     int _audioCount;
     cocos2d::Label* _showLabel;

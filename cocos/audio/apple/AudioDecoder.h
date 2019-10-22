@@ -28,7 +28,7 @@
 #include <stdint.h>
 #import <AudioToolbox/ExtendedAudioFile.h>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 /**
  * @brief The class for decoding compressed audio file to PCM buffer.
@@ -117,4 +117,4 @@ private:
     AudioStreamBasicDescription _outputFormat;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

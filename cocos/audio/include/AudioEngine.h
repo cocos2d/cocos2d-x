@@ -43,8 +43,6 @@
  */
 
 NS_CC_BEGIN
-namespace experimental {
-
 /**
  * @class AudioProfile
  *
@@ -368,7 +366,6 @@ protected:
     friend class AudioEngineImpl;
 };
 
-} // namespace experimental {
 NS_CC_END
 
 // end group

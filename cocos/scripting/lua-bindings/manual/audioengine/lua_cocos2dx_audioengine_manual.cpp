@@ -36,14 +36,14 @@
 
 static int lua_get_AudioProfile_name(lua_State* L)
 {
-    cocos2d::experimental::AudioProfile* self = nullptr;
+    cocos2d::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
     if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -65,14 +65,14 @@ tolua_lerror:
 static int lua_set_AudioProfile_name(lua_State* L)
 {
     int argc = 0;
-    cocos2d::experimental::AudioProfile* self = nullptr;
+    cocos2d::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
     if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -104,14 +104,14 @@ tolua_lerror:
 
 static int lua_get_AudioProfile_maxInstances(lua_State* L)
 {
-    cocos2d::experimental::AudioProfile* self = nullptr;
+    cocos2d::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
     if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -133,14 +133,14 @@ tolua_lerror:
 static int lua_set_AudioProfile_maxInstances(lua_State* L)
 {
     int argc = 0;
-    cocos2d::experimental::AudioProfile* self = nullptr;
+    cocos2d::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
     if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -172,14 +172,14 @@ tolua_lerror:
 
 static int lua_get_AudioProfile_minDelay(lua_State* L)
 {
-    cocos2d::experimental::AudioProfile* self = nullptr;
+    cocos2d::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
     if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -201,14 +201,14 @@ tolua_lerror:
 static int lua_set_AudioProfile_minDelay(lua_State* L)
 {
     int argc = 0;
-    cocos2d::experimental::AudioProfile* self = nullptr;
+    cocos2d::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
     if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -267,7 +267,7 @@ int lua_cocos2dx_audioengine_AudioEngine_setFinishCallback(lua_State* tolua_S)
     
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,3,0));
     
-        cocos2d::experimental::AudioEngine::setFinishCallback(arg0, [handler](int audioID, std::string filePath){
+        cocos2d::AudioEngine::setFinishCallback(arg0, [handler](int audioID, std::string filePath){
             LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
         
             stack->pushInt(audioID);
