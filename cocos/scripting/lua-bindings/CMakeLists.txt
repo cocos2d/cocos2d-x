@@ -76,7 +76,6 @@ set(lua_bindings_auto_headers
     auto/lua_cocos2dx_3d_auto.hpp
     auto/lua_cocos2dx_controller_auto.hpp
     auto/lua_cocos2dx_spine_auto.hpp
-    auto/lua_cocos2dx_experimental_webview_auto.hpp
     auto/lua_cocos2dx_studio_auto.hpp
     auto/lua_cocos2dx_auto.hpp
     auto/lua_cocos2dx_experimental_video_auto.hpp
@@ -121,25 +120,21 @@ if(APPLE)
     if(IOS)
         set(lua_bindings_manual_headers
             ${lua_bindings_manual_headers}
-            auto/lua_cocos2dx_experimental_webview_auto.hpp
-            manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
+            manual/ui/lua_cocos2dx_webview_manual.hpp
             )
         set(lua_bindings_manual_files
             ${lua_bindings_manual_files}
-            auto/lua_cocos2dx_experimental_webview_auto.cpp
-            manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
+            manual/ui/lua_cocos2dx_webview_manual.cpp
             )
     endif()
 elseif(ANDROID)
     set(lua_bindings_manual_headers
         ${lua_bindings_manual_headers}
-        auto/lua_cocos2dx_experimental_webview_auto.hpp
-        manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
+        manual/ui/lua_cocos2dx_webview_manual.hpp
         )
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
-        auto/lua_cocos2dx_experimental_webview_auto.cpp
-        manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
+        manual/ui/lua_cocos2dx_webview_manual.cpp
         )
 endif()
 

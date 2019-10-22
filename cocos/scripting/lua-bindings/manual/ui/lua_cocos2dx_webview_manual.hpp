@@ -36,7 +36,7 @@ extern "C" {
 }
 #endif
 
-TOLUA_API int register_all_cocos2dx_experimental_webview_manual(lua_State* L);
+TOLUA_API int register_all_cocos2dx_webview_manual(lua_State* L);
 
 #endif //#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_WEBVIEW_MANUAL_H
 #endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

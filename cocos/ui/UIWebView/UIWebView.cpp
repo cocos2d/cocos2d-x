@@ -22,11 +22,5 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "platform/CCPlatformConfig.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
 #include "ui/UIWebView/UIWebViewImpl-android.h"
 #include "ui/UIWebView/UIWebView-inl.h"
-
-#endif

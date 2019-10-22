@@ -22,15 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __COCOS2D_UI_WEBVIEW_H
-#define __COCOS2D_UI_WEBVIEW_H
-
-#include "platform/CCPlatformConfig.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_PLATFORM_OS_TVOS)
-
-
+#pragma once
 
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
@@ -42,8 +34,7 @@
  */
 
 NS_CC_BEGIN
-namespace experimental{
-    namespace ui{
+namespace ui{
         
 class WebViewImpl;
 
@@ -262,11 +253,8 @@ private:
     friend class WebViewImpl;
 };
         
-      } // namespace ui
-   } // namespace experimental
+} // namespace ui
 }//namespace cocos2d
 
-#endif
 // end group
 /// @}
-#endif //__COCOS2D_UI_WEBVIEW_H
