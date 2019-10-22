@@ -202,6 +202,10 @@ function(setup_cocos_app_config app_name)
     if(XCODE OR VS)
         cocos_mark_code_files(${app_name})
     endif()
+
+    if (XCODE)
+        cocos_config_app_xcode_property(${app_name})
+    endif()
 endfunction()
 
 # if cc_variable not set, then set it cc_value
@@ -210,52 +214,6 @@ macro(cocos_set_default_value cc_variable cc_value)
         set(${cc_variable} ${cc_value})
     endif()
 endmacro()
-
-# generate macOS app package infomations, need improve for example, the using of info.plist
-function(cocos_pak_xcode cocos_target)
-    set(oneValueArgs
-        INFO_PLIST
-        BUNDLE_NAME
-        BUNDLE_VERSION
-        COPYRIGHT
-        GUI_IDENTIFIER
-        ICON_FILE
-        INFO_STRING
-        LONG_VERSION_STRING
-        SHORT_VERSION_STRING
-        )
-    set(multiValueArgs)
-    cmake_parse_arguments(ARGS "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-
-    string(TIMESTAMP ARGS_COPYRIGHT_YEAR "%Y")
-    # set default value
-    cocos_set_default_value(ARGS_INFO_PLIST "MacOSXBundleInfo.plist.in")
-    cocos_set_default_value(ARGS_BUNDLE_NAME "\${PRODUCT_NAME}")
-    cocos_set_default_value(ARGS_BUNDLE_VERSION "1")
-    cocos_set_default_value(ARGS_COPYRIGHT "Copyright © ${ARGS_COPYRIGHT_YEAR}. All rights reserved.")
-    cocos_set_default_value(ARGS_GUI_IDENTIFIER "org.cocos2dx.${APP_NAME}")
-    cocos_set_default_value(ARGS_ICON_FILE "Icon")
-    cocos_set_default_value(ARGS_INFO_STRING "cocos2d-x app")
-    cocos_set_default_value(ARGS_LONG_VERSION_STRING "1.0.0")
-    cocos_set_default_value(ARGS_SHORT_VERSION_STRING "1.0")
-    # set default values for Info.plist template
-    set_target_properties(${cocos_target}
-                          PROPERTIES
-                          MACOSX_BUNDLE_INFO_PLIST ${ARGS_INFO_PLIST}
-                          )
-    set(MACOSX_BUNDLE_BUNDLE_NAME ${ARGS_BUNDLE_NAME} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_BUNDLE_VERSION ${ARGS_BUNDLE_VERSION} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_COPYRIGHT ${ARGS_COPYRIGHT} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_GUI_IDENTIFIER ${ARGS_GUI_IDENTIFIER} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_ICON_FILE ${ARGS_ICON_FILE} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_INFO_STRING ${ARGS_INFO_STRING} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_LONG_VERSION_STRING ${ARGS_LONG_VERSION_STRING} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${ARGS_SHORT_VERSION_STRING} PARENT_SCOPE)
-
-    message(STATUS "cocos package: ${cocos_target}, plist file: ${ARGS_INFO_PLIST}")
-
-   cocos_config_app_xcode_property(${cocos_target})
-endfunction()
 
 # set Xcode property for application, include all depend target
 macro(cocos_config_app_xcode_property cocos_app)
@@ -271,7 +229,6 @@ endmacro()
 # custom Xcode property for iOS target
 macro(cocos_config_target_xcode_property cocos_target)
     if(IOS)
-        set_xcode_property(${cocos_target} IPHONEOS_DEPLOYMENT_TARGET "8.0")
         set_xcode_property(${cocos_target} ENABLE_BITCODE "NO")
         set_xcode_property(${cocos_target} ONLY_ACTIVE_ARCH "YES")
     endif()
