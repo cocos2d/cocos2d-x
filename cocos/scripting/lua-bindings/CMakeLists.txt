@@ -121,20 +121,24 @@ if(APPLE)
         set(lua_bindings_manual_headers
             ${lua_bindings_manual_headers}
             manual/ui/lua_cocos2dx_webview_manual.hpp
+            auto/lua_cocos2dx_webview_auto.hpp
             )
         set(lua_bindings_manual_files
             ${lua_bindings_manual_files}
             manual/ui/lua_cocos2dx_webview_manual.cpp
+            auto/lua_cocos2dx_webview_auto.cpp
             )
     endif()
 elseif(ANDROID)
     set(lua_bindings_manual_headers
         ${lua_bindings_manual_headers}
         manual/ui/lua_cocos2dx_webview_manual.hpp
+        auto/lua_cocos2dx_webview_auto.hpp
         )
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/ui/lua_cocos2dx_webview_manual.cpp
+        auto/lua_cocos2dx_webview_auto.cpp
         )
 endif()
 
