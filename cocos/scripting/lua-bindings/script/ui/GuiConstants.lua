@@ -220,3 +220,10 @@ ccui.LayoutComponent.VerticalEdge = {
     Top = 2,
     Center = 3,
 }
+
+ccui.VideoPlayerEvent = {
+    PLAYING = 0,
+    PAUSED = 1,
+    STOPPED= 2,
+    COMPLETED =3,
+}

@@ -18,18 +18,18 @@ local function VideoPlayerTest()
     layer:addChild(videoStateLabel)
 
     local function onVideoEventCallback(sener, eventType)
-        if eventType == ccexp.VideoPlayerEvent.PLAYING then
+        if eventType == ccui.VideoPlayerEvent.PLAYING then
             videoStateLabel:setString("PLAYING")
-        elseif eventType == ccexp.VideoPlayerEvent.PAUSED then
+        elseif eventType == ccui.VideoPlayerEvent.PAUSED then
             videoStateLabel:setString("PAUSED")
-        elseif eventType == ccexp.VideoPlayerEvent.STOPPED then
+        elseif eventType == ccui.VideoPlayerEvent.STOPPED then
             videoStateLabel:setString("STOPPED")
-        elseif eventType == ccexp.VideoPlayerEvent.COMPLETED then
+        elseif eventType == ccui.VideoPlayerEvent.COMPLETED then
             videoStateLabel:setString("COMPLETED")
         end
     end
     local widgetSize = widget:getContentSize()
-    local videoPlayer = ccexp.VideoPlayer:create()
+    local videoPlayer = ccui.VideoPlayer:create()
     videoPlayer:setPosition(centerPos)
     videoPlayer:setAnchorPoint(cc.p(0.5, 0.5))
     videoPlayer:setContentSize(cc.size(widgetSize.width * 0.4,widgetSize.height * 0.4))

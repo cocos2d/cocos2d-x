@@ -759,7 +759,7 @@ void CaptureNodeTest::onCaptured(Ref*)
 BugAutoCulling::BugAutoCulling()
 {
     Size s = Director::getInstance()->getWinSize();
-    auto fastmap = cocos2d::experimental::TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
+    auto fastmap = cocos2d::FastTMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
     this->addChild(fastmap);
     for (int i = 0; i < 30; i++) {
         auto sprite = Sprite::create("Images/grossini.png");

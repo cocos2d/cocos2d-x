@@ -21,11 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#include "scripting/lua-bindings/manual/video/lua_cocos2dx_experimental_video_manual.hpp"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_video_manual.hpp"
 #include "ui/UIVideoPlayer.h"
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
@@ -34,18 +30,18 @@
 
 
 
-static int lua_cocos2dx_experimental_video_VideoPlayer_addEventListener(lua_State* L)
+static int lua_cocos2dx_video_VideoPlayer_addEventListener(lua_State* L)
 {
     
     int argc = 0;
-    cocos2d::experimental::ui::VideoPlayer* self = nullptr;
+    cocos2d::ui::VideoPlayer* self = nullptr;
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"ccexp.VideoPlayer",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.VideoPlayer",0,&tolua_err)) goto tolua_lerror;
 #endif
     
-    self = static_cast<cocos2d::experimental::ui::VideoPlayer*>(tolua_tousertype(L,1,0));
+    self = static_cast<cocos2d::ui::VideoPlayer*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
 	if (nullptr == self) {
@@ -67,7 +63,7 @@ static int lua_cocos2dx_experimental_video_VideoPlayer_addEventListener(lua_Stat
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        self->addEventListener([=](cocos2d::Ref* ref, cocos2d::experimental::ui::VideoPlayer::EventType eventType){
+        self->addEventListener([=](cocos2d::Ref* ref, cocos2d::ui::VideoPlayer::EventType eventType){
             LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
             
             stack->pushObject(ref, "cc.Ref");
@@ -78,27 +74,27 @@ static int lua_cocos2dx_experimental_video_VideoPlayer_addEventListener(lua_Stat
         
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.VideoPlayer:addEventListener",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.VideoPlayer:addEventListener",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(L, "#ferror in function 'lua_cocos2dx_experimental_VideoPlayer_addEventListener'.", &tolua_err);
+    tolua_error(L, "#ferror in function 'lua_cocos2dx_VideoPlayer_addEventListener'.", &tolua_err);
 #endif
     return 0;
 }
 
 static void extendVideoPlayer(lua_State* L)
 {
-    lua_pushstring(L, "ccexp.VideoPlayer");
+    lua_pushstring(L, "ccui.VideoPlayer");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
-        tolua_function(L, "addEventListener", lua_cocos2dx_experimental_video_VideoPlayer_addEventListener);
+        tolua_function(L, "addEventListener", lua_cocos2dx_video_VideoPlayer_addEventListener);
     }
     lua_pop(L, 1);
 }
 
-int register_all_cocos2dx_experimental_video_manual(lua_State* L)
+int register_all_cocos2dx_video_manual(lua_State* L)
 {
     if (nullptr == L)
         return 0;
@@ -107,5 +103,3 @@ int register_all_cocos2dx_experimental_video_manual(lua_State* L)
     
     return 0;
 }
-
-#endif

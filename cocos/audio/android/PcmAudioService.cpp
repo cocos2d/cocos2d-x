@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "audio/android/PcmAudioService.h"
 #include "audio/android/AudioMixerController.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 static std::vector<char> __silenceData;
 
@@ -197,4 +197,4 @@ void PcmAudioService::resume()
     }
 }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

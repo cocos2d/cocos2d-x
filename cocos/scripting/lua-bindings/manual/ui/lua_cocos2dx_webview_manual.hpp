@@ -22,11 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "base/ccConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
-#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_VIDEO_MANUAL_H
-#define COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_VIDEO_MANUAL_H
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,7 +32,4 @@ extern "C" {
 }
 #endif
 
-TOLUA_API int register_all_cocos2dx_experimental_video_manual(lua_State* L);
-
-#endif //#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_VIDEO_MANUAL_H
-#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+TOLUA_API int register_all_cocos2dx_webview_manual(lua_State* L);

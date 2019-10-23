@@ -31,7 +31,7 @@
 #include <assert.h>
 #include "audio/android/audio.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 
 class AudioResampler {
@@ -178,4 +178,4 @@ private:
 };
 
 // ----------------------------------------------------------------------------
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

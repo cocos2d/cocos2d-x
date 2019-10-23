@@ -22,12 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #pragma once
-
-#include "platform/CCPlatformConfig.h"
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include <condition_variable>
 #include <functional>
@@ -42,7 +37,6 @@
 #include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
-namespace experimental{
 
 class AudioCache;
 class AudioEngineImpl;
@@ -93,8 +87,4 @@ protected:
     friend class AudioEngineImpl;
 };
 
-}
 NS_CC_END
-
-#endif //CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-

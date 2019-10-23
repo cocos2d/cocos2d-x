@@ -22,12 +22,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-
-// Webview not available on tvOS
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
-
 #import <WebKit/WKWebView.h>
 #import <WebKit/WKUIDelegate.h>
 #import <WebKit/WKNavigationDelegate.h>
@@ -307,8 +301,7 @@
 
 
 namespace cocos2d {
-namespace experimental {
-    namespace ui{
+namespace ui{
 
 WebViewImpl::WebViewImpl(WebView *webView)
         : _uiWebViewWrapper([UIWebViewWrapper newWebViewWrapper]),
@@ -451,8 +444,5 @@ void WebViewImpl::setBackgroundTransparent(){
 }
 
         
-    } // namespace ui
-} // namespace experimental
+} // namespace ui
 } //namespace cocos2d
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
