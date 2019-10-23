@@ -22,8 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_AUDIOENGINE_LUA_COCOS2DX_AUDIOENGINE_MANUAL_H__
-#define COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_AUDIOENGINE_LUA_COCOS2DX_AUDIOENGINE_MANUAL_H__
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,5 +49,3 @@ TOLUA_API int  register_audioengine_module(lua_State* L);
 
 // end group
 /// @}
-
-#endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_AUDIOENGINE_LUA_COCOS2DX_AUDIOENGINE_MANUAL_H__

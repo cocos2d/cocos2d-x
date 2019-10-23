@@ -21,11 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "scripting/lua-bindings/manual/ui/lua_cocos2dx_video_manual.hpp"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
 #include "ui/UIVideoPlayer.h"
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
@@ -34,7 +30,7 @@
 
 
 
-static int lua_cocos2dx_experimental_video_VideoPlayer_addEventListener(lua_State* L)
+static int lua_cocos2dx_video_VideoPlayer_addEventListener(lua_State* L)
 {
     
     int argc = 0;
@@ -78,7 +74,7 @@ static int lua_cocos2dx_experimental_video_VideoPlayer_addEventListener(lua_Stat
         
         return 0;
     }
-    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.VideoPlayer:addEventListener",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.VideoPlayer:addEventListener",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -93,7 +89,7 @@ static void extendVideoPlayer(lua_State* L)
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
-        tolua_function(L, "addEventListener", lua_cocos2dx_experimental_video_VideoPlayer_addEventListener);
+        tolua_function(L, "addEventListener", lua_cocos2dx_video_VideoPlayer_addEventListener);
     }
     lua_pop(L, 1);
 }
@@ -107,5 +103,3 @@ int register_all_cocos2dx_video_manual(lua_State* L)
     
     return 0;
 }
-
-#endif
