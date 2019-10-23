@@ -30,7 +30,6 @@ set(lua_bindings_manual_headers
     manual/cocostudio/lua-cocos-studio-conversions.h
     manual/cocostudio/CustomGUIReader.h
     manual/ui/lua_cocos2dx_ui_manual.hpp
-    manual/ui/lua_cocos2dx_experimental_video_manual.hpp
     manual/controller/lua_cocos2dx_controller_manual.hpp
     )
 
@@ -63,7 +62,6 @@ set(lua_bindings_manual_files
     manual/network/lua_downloader.cpp
     #manual/spine/lua_cocos2dx_spine_manual.cpp
     manual/spine/LuaSkeletonAnimation.cpp
-    manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
     manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
@@ -78,7 +76,6 @@ set(lua_bindings_auto_headers
     auto/lua_cocos2dx_spine_auto.hpp
     auto/lua_cocos2dx_studio_auto.hpp
     auto/lua_cocos2dx_auto.hpp
-    auto/lua_cocos2dx_experimental_video_auto.hpp
     auto/lua_cocos2dx_navmesh_auto.hpp
     auto/lua_cocos2dx_csloader_auto.hpp
     auto/lua_cocos2dx_experimental_auto.hpp
@@ -94,7 +91,6 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_auto.cpp
     auto/lua_cocos2dx_controller_auto.cpp
     auto/lua_cocos2dx_experimental_auto.cpp
-    auto/lua_cocos2dx_experimental_video_auto.cpp
     auto/lua_cocos2dx_extension_auto.cpp
     auto/lua_cocos2dx_physics_auto.cpp
     #auto/lua_cocos2dx_spine_auto.cpp
@@ -122,11 +118,15 @@ if(APPLE)
             ${lua_bindings_manual_headers}
             manual/ui/lua_cocos2dx_webview_manual.hpp
             auto/lua_cocos2dx_webview_auto.hpp
+            auto/lua_cocos2dx_video_auto.hpp
+            manual/ui/lua_cocos2dx_video_manual.hpp
             )
         set(lua_bindings_manual_files
             ${lua_bindings_manual_files}
             manual/ui/lua_cocos2dx_webview_manual.cpp
             auto/lua_cocos2dx_webview_auto.cpp
+            manual/ui/lua_cocos2dx_video_manual.cpp
+            auto/lua_cocos2dx_video_auto.cpp
             )
     endif()
 elseif(ANDROID)
@@ -134,11 +134,15 @@ elseif(ANDROID)
         ${lua_bindings_manual_headers}
         manual/ui/lua_cocos2dx_webview_manual.hpp
         auto/lua_cocos2dx_webview_auto.hpp
+        auto/lua_cocos2dx_video_auto.hpp
+        manual/ui/lua_cocos2dx_video_manual.hpp
         )
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/ui/lua_cocos2dx_webview_manual.cpp
         auto/lua_cocos2dx_webview_auto.cpp
+        manual/ui/lua_cocos2dx_video_manual.cpp
+        auto/lua_cocos2dx_video_auto.cpp
         )
 endif()
 

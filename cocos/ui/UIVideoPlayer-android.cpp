@@ -87,7 +87,7 @@ void setUserInputEnabledJNI(int index, bool enableInput)
 
 //-----------------------------------------------------------------------------------------------------------
 
-using namespace cocos2d::experimental::ui;
+using namespace cocos2d::ui;
 
 static std::unordered_map<int, VideoPlayer*> s_allVideoPlayers;
 
