@@ -1148,8 +1148,8 @@ TOLUA_API int register_all_cocos2dx_audioengine(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
 	
-	tolua_module(tolua_S,"ccexp",0);
-	tolua_beginmodule(tolua_S,"ccexp");
+	tolua_module(tolua_S,"cc",0);
+	tolua_beginmodule(tolua_S,"cc");
 
 	lua_register_cocos2dx_audioengine_AudioProfile(tolua_S);
 	lua_register_cocos2dx_audioengine_AudioEngine(tolua_S);

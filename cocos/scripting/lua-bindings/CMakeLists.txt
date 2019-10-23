@@ -45,7 +45,6 @@ set(lua_bindings_manual_files
     manual/CCComponentLua.cpp
     manual/cocos2d/LuaScriptHandlerMgr.cpp
     manual/cocos2d/lua_cocos2dx_deprecated.cpp
-    manual/cocos2d/lua_cocos2dx_experimental_manual.cpp
     manual/cocos2d/lua_cocos2dx_manual.cpp
     manual/cocos2d/lua_cocos2dx_physics_manual.cpp
     manual/3d/lua_cocos2dx_3d_manual.cpp
@@ -78,7 +77,6 @@ set(lua_bindings_auto_headers
     auto/lua_cocos2dx_auto.hpp
     auto/lua_cocos2dx_navmesh_auto.hpp
     auto/lua_cocos2dx_csloader_auto.hpp
-    auto/lua_cocos2dx_experimental_auto.hpp
     auto/lua_cocos2dx_physics3d_auto.hpp
     auto/lua_cocos2dx_ui_auto.hpp
     auto/lua_cocos2dx_physics_auto.hpp
@@ -90,7 +88,6 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_3d_auto.cpp
     auto/lua_cocos2dx_auto.cpp
     auto/lua_cocos2dx_controller_auto.cpp
-    auto/lua_cocos2dx_experimental_auto.cpp
     auto/lua_cocos2dx_extension_auto.cpp
     auto/lua_cocos2dx_physics_auto.cpp
     #auto/lua_cocos2dx_spine_auto.cpp

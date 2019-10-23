@@ -78,7 +78,7 @@ static int lua_cocos2dx_video_VideoPlayer_addEventListener(lua_State* L)
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(L, "#ferror in function 'lua_cocos2dx_experimental_VideoPlayer_addEventListener'.", &tolua_err);
+    tolua_error(L, "#ferror in function 'lua_cocos2dx_VideoPlayer_addEventListener'.", &tolua_err);
 #endif
     return 0;
 }
