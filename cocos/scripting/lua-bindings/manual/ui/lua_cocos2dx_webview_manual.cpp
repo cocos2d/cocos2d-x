@@ -39,7 +39,7 @@ static int lua_cocos2dx_WebView_setOnShouldStartLoading(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"cc.WebView",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.WebView",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<cocos2d::ui::WebView*>(tolua_tousertype(L,1,0));
@@ -64,7 +64,7 @@ static int lua_cocos2dx_WebView_setOnShouldStartLoading(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         std::function<bool(ui::WebView *sender, const std::string &url)> callback = [L,handler](ui::WebView *sender, const std::string &url)->bool{
-            toluafix_pushusertype_ccobject(L, sender->_ID, &(sender->_luaID), (void*)sender,"cc.WebView");
+            toluafix_pushusertype_ccobject(L, sender->_ID, &(sender->_luaID), (void*)sender,"ccui.WebView");
             tolua_pushcppstring(L, url);
             return LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
         };
@@ -74,7 +74,7 @@ static int lua_cocos2dx_WebView_setOnShouldStartLoading(lua_State* L)
         
         return 0;
     }
-    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.WebView:setOnShouldStartLoading",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.WebView:setOnShouldStartLoading",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -91,7 +91,7 @@ static int lua_cocos2dx_WebView_setOnDidFinishLoading(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"cc.WebView",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.WebView",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<cocos2d::ui::WebView*>(tolua_tousertype(L,1,0));
@@ -116,7 +116,7 @@ static int lua_cocos2dx_WebView_setOnDidFinishLoading(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         std::function<void(ui::WebView *sender, const std::string &url)> callback = [L,handler](ui::WebView *sender, const std::string &url){
-            toluafix_pushusertype_ccobject(L, sender->_ID, &(sender->_luaID), (void*)sender,"cc.WebView");
+            toluafix_pushusertype_ccobject(L, sender->_ID, &(sender->_luaID), (void*)sender,"ccui.WebView");
             tolua_pushcppstring(L, url);
             LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
         };
@@ -125,7 +125,7 @@ static int lua_cocos2dx_WebView_setOnDidFinishLoading(lua_State* L)
         self->setOnDidFinishLoading(callback);
         return 0;
     }
-    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.WebView:setOnDidFinishLoading",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.WebView:setOnDidFinishLoading",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -142,7 +142,7 @@ static int lua_cocos2dx_WebView_setOnDidFailLoading(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"cc.WebView",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.WebView",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<cocos2d::ui::WebView*>(tolua_tousertype(L,1,0));
@@ -167,7 +167,7 @@ static int lua_cocos2dx_WebView_setOnDidFailLoading(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         std::function<void(ui::WebView *sender, const std::string &url)> callback = [L,handler](ui::WebView *sender, const std::string &url){
-            toluafix_pushusertype_ccobject(L, sender->_ID, &(sender->_luaID), (void*)sender,"cc.WebView");
+            toluafix_pushusertype_ccobject(L, sender->_ID, &(sender->_luaID), (void*)sender,"ccui.WebView");
             tolua_pushcppstring(L, url);
             LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
         };
@@ -176,7 +176,7 @@ static int lua_cocos2dx_WebView_setOnDidFailLoading(lua_State* L)
         self->setOnDidFailLoading(callback);
         return 0;
     }
-    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.WebView:setOnDidFailLoading",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.WebView:setOnDidFailLoading",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -187,7 +187,7 @@ tolua_lerror:
 
 static void extendWebView(lua_State* L)
 {
-    lua_pushstring(L, "cc.WebView");
+    lua_pushstring(L, "ccui.WebView");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {

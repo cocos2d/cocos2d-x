@@ -964,8 +964,8 @@ TOLUA_API int register_all_cocos2dx_webview(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
 	
-	tolua_module(tolua_S,"cc",0);
-	tolua_beginmodule(tolua_S,"cc");
+	tolua_module(tolua_S,"ccui",0);
+	tolua_beginmodule(tolua_S,"ccui");
 
 	lua_register_cocos2dx_webview_WebView(tolua_S);
 
