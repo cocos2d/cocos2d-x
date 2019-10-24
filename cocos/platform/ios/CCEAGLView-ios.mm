@@ -127,7 +127,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
     if((self = [super initWithFrame:frame]))
     {
-        self.autocorrectionType = UITextAutocorrectionTypeNo;
         self.textInputView = [[CCInputView alloc] initWithFrame:frame];
 
         if ([self respondsToSelector:@selector(setContentScaleFactor:)])

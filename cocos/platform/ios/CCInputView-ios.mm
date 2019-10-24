@@ -14,9 +14,18 @@
 @synthesize myMarkedText;
 @synthesize isKeyboardShown;
 
+@synthesize hasText;
+@synthesize selectedTextRange;
+@synthesize beginningOfDocument;
+@synthesize endOfDocument;
+@synthesize markedTextStyle;
+@synthesize tokenizer;
+@synthesize autocorrectionType;
+
 - (instancetype) initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame] ) {
         self.myMarkedText = nil;
+        self.autocorrectionType = UITextAutocorrectionTypeNo;
     }
     
     return self;
@@ -61,6 +70,14 @@
 
 
 #pragma TextInput protocol
+
+- (id<UITextInputDelegate>)inputDelegate {
+    return nil;
+}
+
+- (void)setInputDelegate:(id<UITextInputDelegate>)inputDelegate {
+    
+}
 
 - (void)deleteBackward {
     if (nil != self.myMarkedText) {
@@ -326,7 +343,5 @@ namespace {
         dispatcher->dispatchKeyboardDidHide(notiInfo);
     }
 }
-
-@synthesize hasText;
 
 @end
