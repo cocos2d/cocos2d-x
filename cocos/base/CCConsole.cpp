@@ -114,7 +114,7 @@ namespace {
         if (Director::getInstance()->getOpenGLView())
         {
             HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
-            PostMessage(hwnd,
+            SendMessage(hwnd,
                         WM_COPYDATA,
                         (WPARAM)(HWND)hwnd,
                         (LPARAM)(LPVOID)&myCDS);
