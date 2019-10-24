@@ -48,10 +48,9 @@ attribute vec4 a_blendIndex;
 
 attribute vec2 a_texCoord;
 
-// TODO minggo: currently can not declare variable outside function.
-//const int SKINNING_JOINT_COUNT = 60;
+const int SKINNING_JOINT_COUNT = 60;
 // Uniforms
-uniform vec4 u_matrixPalette[60 * 3];
+uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];
 uniform mat4 u_MVPMatrix;
 
 // Varyings
