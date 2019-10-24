@@ -279,7 +279,7 @@ function run_after_merge()
 }
 
 # build pull request
-if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [ x$GEN_BINDING_AND_COCOSFILE != x"true" ]; then
     run_pull_request
 fi
 
