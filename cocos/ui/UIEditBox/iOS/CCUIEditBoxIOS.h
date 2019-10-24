@@ -43,25 +43,25 @@
 @property (nonatomic, readwrite) BOOL returnPressed;
 
 - (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
-- ()doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
+- (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
 
 - (NSString *)getDefaultFontName;
 - (cocos2d::ui::EditBoxDelegate::EditBoxEndAction)getEndAction;
 
-- ()setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode;
-- ()setInputFlag:(cocos2d::ui::EditBox::InputFlag)flag;
-- ()setReturnType:(cocos2d::ui::EditBox::KeyboardReturnType)returnType;
-- ()setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment;
+- (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode;
+- (void)setInputFlag:(cocos2d::ui::EditBox::InputFlag)flag;
+- (void)setReturnType:(cocos2d::ui::EditBox::KeyboardReturnType)returnType;
+- (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment;
 
-- ()setPlaceHolder:(NSString *)text;
-- ()setPlaceholderFont:(UIFont *)font;
-- ()setPlaceholderTextColor:(UIColor *)color;
-- ()setVisible:(BOOL)visible;
-- ()setTextColor:(UIColor*)color;
-- ()setFont:(UIFont *)font;
-- ()updateFrame:(CGRect)rect;
+- (void)setPlaceHolder:(NSString *)text;
+- (void)setPlaceholderFont:(UIFont *)font;
+- (void)setPlaceholderTextColor:(UIColor *)color;
+- (void)setVisible:(BOOL)visible;
+- (void)setTextColor:(UIColor*)color;
+- (void)setFont:(UIFont *)font;
+- (void)updateFrame:(CGRect)rect;
 
-- ()openKeyboard;
-- ()closeKeyboard;
+- (void)openKeyboard;
+- (void)closeKeyboard;
 
 @end

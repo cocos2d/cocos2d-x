@@ -574,12 +574,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #pragma mark Writing direction
 
-- (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction
+- (NSWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction
 {
     CCLOG("baseWritingDirectionForPosition");
-    return UITextWritingDirectionNatural;
+    return NSWritingDirectionNatural;
 }
-- (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection forRange:(UITextRange *)range
+- (void)setBaseWritingDirection:(NSWritingDirection)writingDirection forRange:(UITextRange *)range
 {
     CCLOG("setBaseWritingDirection");
 }

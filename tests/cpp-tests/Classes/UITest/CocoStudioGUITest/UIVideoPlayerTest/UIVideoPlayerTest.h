@@ -57,14 +57,10 @@ private:
     void createVideo();
     void createSlider();
 
-    cocos2d::MenuItemFont* _hintItem;
     cocos2d::ui::VideoPlayer* _videoPlayer;
     cocos2d::Label* _videoStateLabel;
     cocos2d::Label* _loopStatusLabel;
     cocos2d::Rect _visibleRect;
-
-    cocos2d::Layer* _rootLayer;
-
 };
 
 
