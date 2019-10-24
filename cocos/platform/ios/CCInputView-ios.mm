@@ -14,6 +14,14 @@
 @synthesize myMarkedText;
 @synthesize isKeyboardShown;
 
+@synthesize hasText;
+@synthesize selectedTextRange;
+@synthesize beginningOfDocument;
+@synthesize endOfDocument;
+@synthesize markedTextStyle;
+@synthesize tokenizer;
+@synthesize autocorrectionType;
+
 - (instancetype) initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame] ) {
         self.myMarkedText = nil;
@@ -62,6 +70,14 @@
 
 
 #pragma TextInput protocol
+
+- (id<UITextInputDelegate>)inputDelegate {
+    return nil;
+}
+
+- (void)setInputDelegate:(id<UITextInputDelegate>)inputDelegate {
+    
+}
 
 - (void)deleteBackward {
     if (nil != self.myMarkedText) {
@@ -202,15 +218,6 @@
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {
     
 }
-
-@synthesize hasText;
-@synthesize inputDelegate;
-@synthesize selectedTextRange;
-@synthesize beginningOfDocument;
-@synthesize endOfDocument;
-@synthesize markedTextStyle;
-@synthesize tokenizer;
-@synthesize autocorrectionType;
 
 #pragma UIKeyboard notification
 
