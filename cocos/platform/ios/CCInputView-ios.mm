@@ -17,6 +17,7 @@
 - (instancetype) initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame] ) {
         self.myMarkedText = nil;
+        self.autocorrectionType = UITextAutocorrectionTypeNo;
     }
     
     return self;
@@ -35,14 +36,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onUIKeyboardNotification:)
                                                  name:UIKeyboardWillShowNotification object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onUIKeyboardNotification:)
                                                  name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onUIKeyboardNotification:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onUIKeyboardNotification:)
                                                  name:UIKeyboardDidHideNotification object:nil];
@@ -178,7 +179,7 @@
     if (nil != self.myMarkedText) {
         return self.myMarkedText;
     }
-    return nil;
+    return @"";
 }
 
 - (nullable UITextRange *)textRangeFromPosition:(nonnull UITextPosition *)fromPosition toPosition:(nonnull UITextPosition *)toPosition {
@@ -201,6 +202,15 @@
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {
     
 }
+
+@synthesize hasText;
+@synthesize inputDelegate;
+@synthesize selectedTextRange;
+@synthesize beginningOfDocument;
+@synthesize endOfDocument;
+@synthesize markedTextStyle;
+@synthesize tokenizer;
+@synthesize autocorrectionType;
 
 #pragma UIKeyboard notification
 
@@ -326,7 +336,5 @@ namespace {
         dispatcher->dispatchKeyboardDidHide(notiInfo);
     }
 }
-
-@synthesize hasText;
 
 @end
