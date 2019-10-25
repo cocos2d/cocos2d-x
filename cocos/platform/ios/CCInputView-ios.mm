@@ -5,7 +5,6 @@
 @interface CCInputView ()
 
 @property(nonatomic) NSString* myMarkedText;
-@property(nonatomic) BOOL isKeyboardShown;
 
 @end
 
@@ -332,6 +331,7 @@ namespace {
     else if (UIKeyboardDidShowNotification == type)
     {
         //CGSize screenSize = self.window.screen.bounds.size;
+        self.isKeyboardShown = YES;
         dispatcher->dispatchKeyboardDidShow(notiInfo);
     }
     else if (UIKeyboardWillHideNotification == type)
@@ -340,6 +340,7 @@ namespace {
     }
     else if (UIKeyboardDidHideNotification == type)
     {
+        self.isKeyboardShown = NO;
         dispatcher->dispatchKeyboardDidHide(notiInfo);
     }
 }
