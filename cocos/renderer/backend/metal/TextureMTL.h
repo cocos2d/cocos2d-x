@@ -54,7 +54,7 @@ public:
      * @param height Specifies the height of the texture image.
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      */
-    virtual void updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level) override;
+    virtual void updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level) override;
     
     /**
      * Update a two-dimensional texture image in a compressed format
@@ -64,7 +64,7 @@ public:
      * @param dataLen Specifies the totoal size of compressed image in bytes.
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      */
-    virtual void updateCompressedData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level) override;
+    virtual void updateCompressedData(uint8_t* data, std::size_t width , std::size_t height, std::size_t dataLen, std::size_t level) override;
     
     /**
      * Update a two-dimensional texture subimage
@@ -75,7 +75,7 @@ public:
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      * @param data Specifies a pointer to the image data in memory.
      */
-    virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint8_t* data) override;
+    virtual void updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data) override;
     
     /**
      * Update a two-dimensional texture subimage in a compressed format
@@ -87,7 +87,7 @@ public:
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      * @param data Specifies a pointer to the compressed image data in memory.
      */
-    virtual void updateCompressedSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t* data) override;
+    virtual void updateCompressedSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t dataLen, std::size_t level, uint8_t* data) override;
     
     /**
      * Update sampler
@@ -102,7 +102,7 @@ public:
      * @param flipImage Specifies if needs to flip the image.
      * @param callback Specifies a call back function to deal with the image.
      */
-    virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
+    virtual void getBytes(std::size_t x, std::size_t y, std::size_t width, std::size_t height, bool flipImage, std::function<void(const unsigned char*, std::size_t, std::size_t)> callback) override;
     
     /**
      * Generate mipmaps.
@@ -176,7 +176,7 @@ public:
      * @param flipImage Specifies if needs to flip the image.
      * @param callback
      */
-    virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
+    virtual void getBytes(std::size_t x, std::size_t y, std::size_t width, std::size_t height, bool flipImage, std::function<void(const unsigned char*, std::size_t, std::size_t)> callback) override;
     
     /**
      * Generate mipmaps.
@@ -215,8 +215,8 @@ private:
     id<MTLTexture> _mtlTexture = nil;
     id<MTLSamplerState> _mtlSamplerState = nil;
     MTLRegion _region;
-    unsigned int _bytesPerImage = 0;
-    unsigned int _bytesPerRow = 0;
+    std::size_t _bytesPerImage = 0;
+    std::size_t _bytesPerRow = 0;
 };
 
 // end of _metal group

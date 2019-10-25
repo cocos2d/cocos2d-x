@@ -268,15 +268,6 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
 //------------------------------------------------------------------------------------------------------------
 
 VideoPlayer::VideoPlayer()
-: _isPlaying(false)
-, _fullScreenDirty(false)
-, _fullScreenEnabled(false)
-, _keepAspectRatioEnabled(false)
-, _videoPlayerIndex(-1)
-, _eventCallback(nullptr)
-, _isLooping(false)
-, _isUserInputEnabled(true)
-, _styleType(StyleType::DEFAULT)
 {
     _videoView = [[UIVideoViewWrapperIos alloc] init:this];
 

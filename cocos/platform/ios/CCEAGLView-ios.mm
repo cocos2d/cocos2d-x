@@ -342,6 +342,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     [self.textInputView removeFromSuperview];
 }
 
+-(BOOL) isKeyboardShown
+{
+    [self.textInputView isKeyboardShown];
+}
+
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis
 {
     

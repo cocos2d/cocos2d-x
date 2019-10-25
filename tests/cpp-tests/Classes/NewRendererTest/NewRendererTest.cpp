@@ -46,7 +46,7 @@ public:
         else if(itr->second < 0) {
             itr->second = n + itr->second;
         }
-        return itr->second;
+        return static_cast<int>(itr->second);
     }
 
     inline int64_t now() const{

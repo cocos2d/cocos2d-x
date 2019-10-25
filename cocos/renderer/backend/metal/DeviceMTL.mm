@@ -90,7 +90,7 @@ CommandBuffer* DeviceMTL::newCommandBuffer()
     return new (std::nothrow) CommandBufferMTL(this);
 }
 
-Buffer* DeviceMTL::newBuffer(unsigned int size, BufferType type, BufferUsage usage)
+Buffer* DeviceMTL::newBuffer(std::size_t size, BufferType type, BufferUsage usage)
 {
     return new (std::nothrow) BufferMTL(_mtlDevice, size, type, usage);
 }

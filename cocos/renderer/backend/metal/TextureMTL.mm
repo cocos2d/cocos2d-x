@@ -65,9 +65,9 @@ namespace
         }
     }
     
-    void convertRGB2RGBA(uint8_t* src, uint8_t* dst, uint32_t length)
+    void convertRGB2RGBA(uint8_t* src, uint8_t* dst, std::size_t length)
     {
-        for (uint32_t i = 0; i < length; ++i)
+        for (std::size_t i = 0; i < length; ++i)
         {
             *dst++ = *src++;
             *dst++ = *src++;
@@ -77,7 +77,7 @@ namespace
     }
 
     
-    bool convertData(uint8_t* src, unsigned int length, PixelFormat format, uint8_t** out)
+    bool convertData(uint8_t* src, std::size_t length, PixelFormat format, uint8_t** out)
     {
         *out = src;
         bool converted = false;
@@ -114,9 +114,9 @@ namespace
         }
     }
     
-    uint32_t getBytesPerRowETC(MTLPixelFormat pixleFormat, uint32_t width)
+    std::size_t getBytesPerRowETC(MTLPixelFormat pixleFormat, std::size_t width)
     {
-        uint32_t bytesPerRow = 0;
+        std::size_t bytesPerRow = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         uint32_t bytesPerBlock = 0, blockWidth = 4;
         switch (pixleFormat) {
@@ -139,9 +139,9 @@ namespace
         return bytesPerRow;
     }
     
-    uint32_t getBytesPerRowS3TC(MTLPixelFormat pixleFormat, uint32_t width)
+    std::size_t getBytesPerRowS3TC(MTLPixelFormat pixleFormat, std::size_t width)
     {
-        uint32_t bytesPerRow = 0;
+        std::size_t bytesPerRow = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         uint32_t bytesPerBlock = 0, blockWidth = 4;
         switch (pixleFormat) {
@@ -161,10 +161,10 @@ namespace
         return bytesPerRow;
     }
     
-    uint32_t getBytesPerRow(PixelFormat textureFormat, uint32_t width, uint32_t bitsPerElement)
+    std::size_t getBytesPerRow(PixelFormat textureFormat, std::size_t width, std::size_t bitsPerElement)
     {
         MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(textureFormat);
-        uint32_t bytesPerRow = 0;
+        std::size_t bytesPerRow = 0;
         
         if(textureFormat >= PixelFormat::PVRTC4 &&
            textureFormat <= PixelFormat::PVRTC2A)
@@ -219,12 +219,12 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
     _bytesPerRow = descriptor.width * _bitsPerElement / 8 ;
 }
 
-void TextureMTL::updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level)
+void TextureMTL::updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level)
 {
     updateSubData(0, 0, width, height, level, data);
 }
 
-void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint8_t* data)
+void TextureMTL::updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data)
 {
     MTLRegion region =
     {
@@ -234,10 +234,10 @@ void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t widt
     
     uint8_t* convertedData = nullptr;
     bool converted = convertData(data,
-                                 (uint32_t)(width * height),
+                                 width * height,
                                  _textureFormat, &convertedData);
     
-    int bytesPerRow = getBytesPerRow(_textureFormat, width, _bitsPerElement);
+    std::size_t bytesPerRow = getBytesPerRow(_textureFormat, width, _bitsPerElement);
     
     [_mtlTexture replaceRegion:region
                    mipmapLevel:level
@@ -251,12 +251,12 @@ void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t widt
         _hasMipmaps = true;
 }
 
-void TextureMTL::updateCompressedData(uint8_t *data, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level)
+void TextureMTL::updateCompressedData(uint8_t *data, std::size_t width, std::size_t height, std::size_t dataLen, std::size_t level)
 {
     updateCompressedSubData(0, 0, width, height, dataLen, level, data);
 }
 
-void TextureMTL::updateCompressedSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t *data)
+void TextureMTL::updateCompressedSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t dataLen, std::size_t level, uint8_t *data)
 {
     updateSubData(xoffset, yoffset, width, height, level, data);
 }
@@ -312,7 +312,7 @@ void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor 
     [mtlDescriptor release];
 }
 
-void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
+void TextureMTL::getBytes(std::size_t x, std::size_t y, std::size_t width, std::size_t height, bool flipImage, std::function<void(const unsigned char*, std::size_t, std::size_t)> callback)
 {
     CC_ASSERT(width <= _width && height <= _height);
     
@@ -446,7 +446,7 @@ void TextureCubeMTL::updateFaceData(TextureCubeFace side, void *data)
                  bytesPerImage:_bytesPerImage];
 }
 
-void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
+void TextureCubeMTL::getBytes(std::size_t x, std::size_t y, std::size_t width, std::size_t height, bool flipImage, std::function<void(const unsigned char*, std::size_t, std::size_t)> callback)
 {
     CC_ASSERT(width <= _mtlTexture.width && height <= _mtlTexture.height);
     
