@@ -47,7 +47,7 @@ enum
 
 CocosNodeTests::CocosNodeTests()
 {
-    //ADD_TEST_CASE(CameraTest1);
+    ADD_TEST_CASE(CameraTest1);
     // TODO: Camera has been removed from CCNode; add new feature to support it
     // ADD_TEST_CASE(CameraTest2);
     //ADD_TEST_CASE(CameraCenterTest);
@@ -970,11 +970,13 @@ public:
         auto sprite = new (std::nothrow) MySprite;
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
-
-//        auto shaderState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-//        sprite->setGLProgramState(shaderState);
+        auto program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+        auto programState = new (std::nothrow) backend::ProgramState(program);
+        programState->autorelease();
+        sprite->setProgramState(programState);
         return sprite;
     }
+    virtual void setProgramState(backend::ProgramState* programState) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     void onDraw(const Mat4 &transform, uint32_t flags);
 
@@ -983,10 +985,39 @@ protected:
 
 };
 
+void MySprite::setProgramState(backend::ProgramState* programState)
+{
+    Sprite::setProgramState(programState);
+    name = "MySprite";
+    _customCommand.name = "MySprite_customCommand";
+    _trianglesCommand.name = "MySprite_triangleCommand";
+    if (_programState != programState)
+    {
+        CC_SAFE_RELEASE(_programState);
+        _programState = programState;
+        CC_SAFE_RETAIN(programState);
+    }
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.programState = programState;
+    _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::MVP_MATRIX);
+    _textureLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::TEXTURE);
+    
+    setVertexLayout();
+ 
+    programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
+    const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    if (programState && _mvpMatrixLocation)
+       programState->setUniform(_mvpMatrixLocation, projectionMat.m, sizeof(projectionMat.m));
+    
+    _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
+    _customCommand.createVertexBuffer(sizeof(V3F_C4B_T2F), 4, CustomCommand::BufferUsage::STATIC);
+    _customCommand.updateVertexBuffer(&_quad, 4*sizeof(V3F_C4B_T2F));
+}
+
 void MySprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
@@ -1057,14 +1088,14 @@ CameraTest1::CameraTest1()
     _sprite1->setPosition( Vec2(1*s.width/4, s.height/2) );
     _sprite1->setScale(0.5);
 
-    _sprite2 = Sprite::create(s_back3);
-    addChild( _sprite2 );
-    _sprite2->setPosition( Vec2(3*s.width/4, s.height/2) );
-    _sprite2->setScale(0.5);
+//    _sprite2 = Sprite::create(s_back3);
+//    addChild( _sprite2 );
+//    _sprite2->setPosition( Vec2(3*s.width/4, s.height/2) );
+//    _sprite2->setScale(0.5);
 
     auto camera = OrbitCamera::create(10, 0, 1, 0, 360, 0, 0);
     _sprite1->runAction( camera );
-    _sprite2->runAction( camera->clone() );
+//    _sprite2->runAction( camera->clone() );
 }
 
 std::string CameraTest1::title() const
