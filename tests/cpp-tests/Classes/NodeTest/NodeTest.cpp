@@ -47,10 +47,9 @@ enum
 
 CocosNodeTests::CocosNodeTests()
 {
-    //ADD_TEST_CASE(CameraTest1);
-    // TODO: Camera has been removed from CCNode; add new feature to support it
-    // ADD_TEST_CASE(CameraTest2);
-    //ADD_TEST_CASE(CameraCenterTest);
+    ADD_TEST_CASE(CameraTest1);
+    ADD_TEST_CASE(CameraTest2);
+    ADD_TEST_CASE(CameraCenterTest);
     ADD_TEST_CASE(NodeTest2);
     ADD_TEST_CASE(NodeTest4);
     ADD_TEST_CASE(NodeTest5);
@@ -970,11 +969,13 @@ public:
         auto sprite = new (std::nothrow) MySprite;
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
-
-//        auto shaderState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-//        sprite->setGLProgramState(shaderState);
+        auto program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+        auto programState = new (std::nothrow) backend::ProgramState(program);
+        programState->autorelease();
+        sprite->setProgramState(programState);
         return sprite;
     }
+    virtual void setProgramState(backend::ProgramState* programState) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     void onDraw(const Mat4 &transform, uint32_t flags);
 
@@ -983,10 +984,25 @@ protected:
 
 };
 
+void MySprite::setProgramState(backend::ProgramState* programState)
+{
+    Sprite::setProgramState(programState);
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.programState = programState;
+    _customCommand.getPipelineDescriptor().programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
+
+    _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
+    _customCommand.createVertexBuffer(sizeof(V3F_C4B_T2F), 4, CustomCommand::BufferUsage::STATIC);
+    _customCommand.updateVertexBuffer(&_quad, 4*sizeof(V3F_C4B_T2F));
+}
+
 void MySprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto mvpMatrix = projectionMat * transform;
+    _customCommand.getPipelineDescriptor().programState->setUniform(_mvpMatrixLocation, mvpMatrix.m, sizeof(mvpMatrix.m));
     _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
