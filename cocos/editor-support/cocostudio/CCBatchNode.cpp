@@ -60,9 +60,6 @@ BatchNode::~BatchNode()
 bool BatchNode::init()
 {
     bool ret = Node::init();
-    //TODO minggo
-//    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-
     return ret;
 }
 

@@ -181,9 +181,6 @@ bool Armature::init(const std::string& name)
 
         }
 
-//TODO minggo
-//        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);
 
