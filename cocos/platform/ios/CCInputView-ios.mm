@@ -249,7 +249,7 @@ namespace {
     CGSize viewSize = self.frame.size;
 
     CGFloat tmp;
-    switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
+    switch (getFixedOrientation([[[UIApplication sharedApplication].windows[0] windowScene] interfaceOrientation]))
     {
         case UIInterfaceOrientationPortrait:
             begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
@@ -340,7 +340,7 @@ namespace {
     }
     else if (UIKeyboardDidHideNotification == type)
     {
-        self.isKeyboardShown = FALSE;
+        self.isKeyboardShown = NO;
         dispatcher->dispatchKeyboardDidHide(notiInfo);
     }
 }

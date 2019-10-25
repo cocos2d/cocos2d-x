@@ -128,7 +128,7 @@ namespace {
         
         std::function<void(TextButton*)> _onTriggered = nullptr;
         
-        bool _enabled = false;
+        bool _enabled = true;
     };
     
     class SliderEx : public Slider

@@ -128,7 +128,16 @@ bool Application::openURL(const std::string &url)
 {
     NSString* msg = [NSString stringWithCString:url.c_str() encoding:NSUTF8StringEncoding];
     NSURL* nsUrl = [NSURL URLWithString:msg];
-    return [[UIApplication sharedApplication] openURL:nsUrl];
+    
+    id application = [UIApplication sharedApplication];
+    if ([application respondsToSelector:@selector(openURL:options:completionHandler:)] )
+    {
+        [application openURL:nsUrl options:@{} completionHandler:nil];
+    }
+    else
+    {
+        return [application openURL:nsUrl];
+    }
 }
 
 void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
