@@ -85,7 +85,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @synthesize surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
-@synthesize context=context_;
 @synthesize multiSampling=multiSampling_;
 
 + (Class) layerClass
