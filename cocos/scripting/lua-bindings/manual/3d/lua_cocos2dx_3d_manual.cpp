@@ -30,56 +30,6 @@
 #include "3d/CCSprite3D.h"
 #include "3d/CCTerrain.h"
 
-extern int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L);
-
-CC_DEPRECATED_ATTRIBUTE int lua_cocos2dx_3d_Sprite3D_setBlendFunc01(lua_State* L)
-{
-    int argc = 0;
-    cocos2d::Sprite3D* cobj = nullptr;
-
-    tolua_Error tolua_err;
-
-    if (!tolua_isusertype(L,1,"cc.Sprite3D",0,&tolua_err))
-        goto tolua_lerror;
-
-    cobj = (cocos2d::Sprite3D*)tolua_tousertype(L,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_3d_Sprite3D_setBlendFunc01'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(L)-1;
-    if (argc != 2)
-    {
-        goto tolua_lerror;
-    }
-    else
-    {
-        CCLOG("setBlendFunc of cc.Sprite3D will deprecate two int parameter form,please pass a table like {src = xx, dst = xx} as a parameter");
-
-        GLenum src, dst;
-        if (!luaval_to_int32(L, 2, (int32_t*)&src, "cc.Sprite3D:setBlendFunc"))
-            return 0;
-
-        if (!luaval_to_int32(L, 3, (int32_t*)&dst, "cc.Sprite3D:setBlendFunc"))
-            return 0;
-
-//TODO minggo
-//        BlendFunc blendFunc = {src, dst};
-//        cobj->setBlendFunc(blendFunc);
-
-        lua_settop(L, 1);
-        return 1;
-    }
-
-tolua_lerror:
-    return lua_cocos2dx_3d_Sprite3D_setBlendFunc(L);
-}
-
 int lua_cocos2dx_3d_Sprite3D_getAABB(lua_State* L)
 {
     int argc = 0;
@@ -210,7 +160,6 @@ static void extendSprite3D(lua_State* L)
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
-        tolua_function(L, "setBlendFunc", lua_cocos2dx_3d_Sprite3D_setBlendFunc01);
         tolua_function(L, "getAABB", lua_cocos2dx_3d_Sprite3D_getAABB);
         tolua_function(L, "createAsync", lua_cocos2dx_3d_Sprite3D_createAsync);
     }
