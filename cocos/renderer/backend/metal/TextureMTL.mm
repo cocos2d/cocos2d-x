@@ -24,6 +24,7 @@
  
 #include "TextureMTL.h"
 #include "Utils.h"
+#include "base/ccMacros.h"
 
 CC_BACKEND_BEGIN
 
@@ -43,7 +44,7 @@ namespace
                 ret = MTLSamplerAddressModeClampToEdge;
                 break;
             default:
-                assert(false);
+                CCASSERT(false, "Not supported sampler address mode!");
                 break;
         }
         return ret;
@@ -130,7 +131,7 @@ namespace
                 bytesPerBlock = 16;
                 break;
             default:
-                assert(false); //TODO coulsonwang
+                CCASSERT(false, "Not supported ETC format!");
                 break;
         }
         auto blocksPerRow = (width + (blockWidth - 1)) / blockWidth;

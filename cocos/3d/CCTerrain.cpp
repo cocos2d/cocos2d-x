@@ -1403,8 +1403,6 @@ void Terrain::Chunk::updateVerticesForLOD()
             }
     }
 
-    //TODO coulsonwang
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(TerrainVertexData)*_currentVertices.size(), &_currentVertices[0], GL_STREAM_DRAW);
     _oldLod = _currentLod;
 }
 
