@@ -130,6 +130,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis;
 -(void) doAnimationWhenAnotherEditBeClicked;
 
-- (void) showKeyboard;
-- (void) hideKeyboard;
+-(void) showKeyboard;
+-(void) hideKeyboard;
+-(BOOL) isKeyboardShown;
 @end

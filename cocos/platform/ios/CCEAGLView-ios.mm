@@ -77,9 +77,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #define IOS_MAX_TOUCHES_COUNT     10
 
 @interface CCEAGLView ()
-@property (nonatomic) UIView* textInputView;
-- (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
-- (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
+@property (nonatomic) CCInputView* textInputView;
 @end
 
 @implementation CCEAGLView
@@ -464,6 +462,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
     [self.textInputView resignFirstResponder];
     [self.textInputView removeFromSuperview];
+}
+
+-(BOOL) isKeyboardShown
+{
+    return [self.textInputView isKeyboardShown];
 }
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis
