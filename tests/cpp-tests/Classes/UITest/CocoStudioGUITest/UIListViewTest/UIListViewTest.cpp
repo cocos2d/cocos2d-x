@@ -46,16 +46,7 @@ UIListViewTests::UIListViewTests()
 // UIListViewTest_Vertical
 
 UIListViewTest_Vertical::UIListViewTest_Vertical()
-: _displayValueLabel(nullptr),
-_spawnCount(5), //spawnCount should > listview.width / templateWidth + 2
-_totalCount(50),
-_bufferZone(45), //bufferZone should be larger than List item width
-_updateTimer(0),
-_updateInterval(1.0f / 24), // you could tweak this value to adjust ListView data update rate
-_lastContentPosY(0), //use this value to detect if we are scrolling left or right
-_itemTemplateHeight(0)
 {
-    
 }
 
 UIListViewTest_Vertical::~UIListViewTest_Vertical()
@@ -303,14 +294,6 @@ void UIListViewTest_Vertical::selectedItemEventScrollView(Ref* pSender, ui::Scro
 // UIListViewTest_Horizontal
 
 UIListViewTest_Horizontal::UIListViewTest_Horizontal()
-: _displayValueLabel(nullptr),
-_spawnCount(4), //spawnCount should > listview.width / templateWidth + 2
-_totalCount(50),
-_bufferZone(140), //bufferZone should be larger than List item width
-_updateTimer(0),
-_updateInterval(1.0f / 24), // you could tweak this value to adjust ListView data update rate
-_lastContentPosX(0), //use this value to detect if we are scrolling left or right
-_itemTemplateWidth(0)
 {
 }
 
@@ -835,7 +818,7 @@ bool UIListViewTest_Magnetic::init()
     pButton->setTitleText("Next Magnetic");
     pButton->addClickEventListener([this](Ref*) {
         ListView::MagneticType eCurrentType = _listView->getMagneticType();
-        ListView::MagneticType eNextType;
+        ListView::MagneticType eNextType = ListView::MagneticType::NONE;
         std::string sString;
         if(eCurrentType == ListView::MagneticType::NONE)
         {

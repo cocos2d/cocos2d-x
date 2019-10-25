@@ -787,7 +787,7 @@ bool UIButtonTextOnly::init()
               button->getContentSize().height);
         button->setZoomScale(0.3f);
         button->setPressedActionEnabled(true);
-        button->addClickEventListener([this](Ref* sender) {
+        button->addClickEventListener([](Ref* sender) {
             CCLOG("clicked!");
         });
         _uiLayer->addChild(button);

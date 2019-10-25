@@ -128,7 +128,7 @@ CameraRotationTest::CameraRotationTest()
 
     //Listener
     _lis = EventListenerTouchOneByOne::create();
-    _lis->onTouchBegan = [this](Touch* t, Event* e) {
+    _lis->onTouchBegan = [](Touch* t, Event* e) {
         return true;
     };
 
@@ -411,11 +411,6 @@ void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool p
 }
 void Camera3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    for ( auto &item: touches )
-    {
-        auto touch = item;
-        auto location = touch->getLocation();
-    }
 }
 void Camera3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
@@ -1214,11 +1209,6 @@ void CameraArcBallDemo::update(float dt)
 // FogTestDemo
 FogTestDemo::FogTestDemo()
 : CameraBaseTest()
-, _layer3D(nullptr)
-, _cameraType(CameraType::Free)
-, _camera(nullptr)
-, _programState1(nullptr)
-, _programState2(nullptr)
 {
 }
 FogTestDemo::~FogTestDemo()

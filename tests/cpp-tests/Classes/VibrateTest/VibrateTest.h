@@ -51,11 +51,10 @@ public:
     virtual std::string title() const override;
     
 private:
-    float _duration;
+    float _duration = 0.f;
     
-    void* _durationLabel;
-    void* _durationSlider;
-    bool _updateTimeSlider;
+    void* _durationLabel = nullptr;
+    void* _durationSlider = nullptr;
 };
 
 
