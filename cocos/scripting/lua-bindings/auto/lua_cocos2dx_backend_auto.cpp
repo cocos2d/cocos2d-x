@@ -1923,20 +1923,20 @@ int lua_cocos2dx_backend_TextureBackend_getBytes(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 6) 
     {
-        int arg0;
-        int arg1;
-        int arg2;
-        int arg3;
+        unsigned int arg0;
+        unsigned int arg1;
+        unsigned int arg2;
+        unsigned int arg3;
         bool arg4;
-        std::function<void (const unsigned char *, int, int)> arg5;
+        std::function<void (const unsigned char *, unsigned int, unsigned int)> arg5;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccb.TextureBackend:getBytes");
+        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "ccb.TextureBackend:getBytes");
 
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccb.TextureBackend:getBytes");
+        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "ccb.TextureBackend:getBytes");
 
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "ccb.TextureBackend:getBytes");
+        ok &= luaval_to_uint32(tolua_S, 4,&arg2, "ccb.TextureBackend:getBytes");
 
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "ccb.TextureBackend:getBytes");
+        ok &= luaval_to_uint32(tolua_S, 5,&arg3, "ccb.TextureBackend:getBytes");
 
         ok &= luaval_to_boolean(tolua_S, 6,&arg4, "ccb.TextureBackend:getBytes");
 
