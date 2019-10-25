@@ -111,7 +111,6 @@ class EventListener;
 class CC_DLL Node : public Ref
 {
 public:
-    std::string name;
     /** Default tag used for all the nodes */
     static const int INVALID_TAG = -1;
 

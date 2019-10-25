@@ -42,7 +42,6 @@ NS_CC_BEGIN
 class CC_DLL RenderCommand
 {
 public:
-    std::string name;
     /**Enum the type of render command. */
     enum class Type
     {
