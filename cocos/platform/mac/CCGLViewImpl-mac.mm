@@ -446,19 +446,16 @@ void GLViewImpl::pollEvents()
 
 void GLViewImpl::enableRetina(bool enabled)
 {
-    //TODO coulsonwang
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//    _isRetinaEnabled = enabled;
-//    if (_isRetinaEnabled)
-//    {
-//        _retinaFactor = 1;
-//    }
-//    else
-//    {
-//        _retinaFactor = 2;
-//    }
-//    updateFrameSize();
-//#endif
+   _isRetinaEnabled = enabled;
+   if (_isRetinaEnabled)
+   {
+       _retinaFactor = 1;
+   }
+   else
+   {
+       _retinaFactor = 2;
+   }
+   updateFrameSize();
 }
 
 
