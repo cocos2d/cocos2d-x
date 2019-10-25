@@ -446,7 +446,6 @@ void GLViewImpl::pollEvents()
 
 void GLViewImpl::enableRetina(bool enabled)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
    _isRetinaEnabled = enabled;
    if (_isRetinaEnabled)
    {
@@ -457,7 +456,6 @@ void GLViewImpl::enableRetina(bool enabled)
        _retinaFactor = 2;
    }
    updateFrameSize();
-#endif
 }
 
 
