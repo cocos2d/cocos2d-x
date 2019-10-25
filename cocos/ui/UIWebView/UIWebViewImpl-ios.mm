@@ -292,7 +292,7 @@
                                                           completionHandler();
                                                       }]];
 
-    auto rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    auto rootViewController = [UIApplication sharedApplication].windows[0].rootViewController;
     [rootViewController presentViewController:alertController animated:YES completion:^{}];
 }
 

@@ -253,7 +253,7 @@ void ProgramState::setCallbackUniform(const backend::UniformLocation& uniformLoc
     _callbackUniforms[uniformLocation] = callback;
 }
 
-void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, const void* data, uint32_t size)
+void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, const void* data, std::size_t size)
 {
     switch (uniformLocation.shaderStage)
     {
@@ -273,7 +273,7 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
 }
 
 #ifdef CC_USE_METAL
-void ProgramState::convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, void* buffer)
+void ProgramState::convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, std::size_t srcSize, void* buffer)
 {
     auto basicType = static_cast<glslopt_basic_type>(uniformInfo.type);
     char* convertedData = new char[uniformInfo.size];
@@ -341,7 +341,7 @@ void ProgramState::convertAndCopyUniformData(const backend::UniformInfo& uniform
 }
 #endif
 
-void ProgramState::setVertexUniform(int location, const void* data, uint32_t size, uint32_t offset)
+void ProgramState::setVertexUniform(int location, const void* data, std::size_t size, std::size_t offset)
 {
     if(location < 0)
         return;
@@ -362,7 +362,7 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
 #endif
 }
 
-void ProgramState::setFragmentUniform(int location, const void* data, uint32_t size)
+void ProgramState::setFragmentUniform(int location, const void* data, std::size_t size)
 {
     if(location < 0)
         return;

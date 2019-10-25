@@ -135,6 +135,8 @@ namespace
                 return MTLBlendFactorSourceAlphaSaturated;
             case BlendFactor::BLEND_CLOLOR:
                 return MTLBlendFactorBlendColor;
+            default:
+                return MTLBlendFactorZero;
         }
     }
     
@@ -147,6 +149,8 @@ namespace
                 return MTLBlendOperationSubtract;
             case BlendOperation::RESERVE_SUBTRACT:
                 return MTLBlendOperationReverseSubtract;
+            default:
+                return MTLBlendOperationAdd;
         }
     }
 }

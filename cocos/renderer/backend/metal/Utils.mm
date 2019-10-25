@@ -152,7 +152,7 @@ MTLPixelFormat Utils::toMTLPixelFormat(PixelFormat textureFormat)
     }
 }
 
-void Utils::resizeDefaultAttachmentTexture(int width, int height)
+void Utils::resizeDefaultAttachmentTexture(std::size_t width, std::size_t height)
 {
     [backend::DeviceMTL::getCAMetalLayer() setDrawableSize:CGSizeMake(width, height)];
     [_defaultDepthStencilAttachmentTexture release];
@@ -184,7 +184,7 @@ void Utils::generateMipmaps(id<MTLTexture> texture)
     [commandBuffer commit];
 }
 
-void Utils::swizzleImage(unsigned char *image, int width, int height, MTLPixelFormat format)
+void Utils::swizzleImage(unsigned char *image, std::size_t width, std::size_t height, MTLPixelFormat format)
 {
     if(!image)
         return;
@@ -206,7 +206,7 @@ void Utils::swizzleImage(unsigned char *image, int width, int height, MTLPixelFo
     }
 }
 
-void Utils::getTextureBytes(int origX, int origY, int rectWidth, int rectHeight, id<MTLTexture> texture, std::function<void(const unsigned char*, int, int)> callback)
+void Utils::getTextureBytes(std::size_t origX, std::size_t origY, std::size_t rectWidth, std::size_t rectHeight, id<MTLTexture> texture, std::function<void(const unsigned char*, std::size_t, std::size_t)> callback)
 {
     NSUInteger texWidth = texture.width;
     NSUInteger texHeight = texture.height;

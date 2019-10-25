@@ -241,22 +241,22 @@ namespace ui{
             URL
         };
 
-        bool _isPlaying;
-        bool _isLooping;
-        bool _isUserInputEnabled;
-        bool _fullScreenDirty;
-        bool _fullScreenEnabled;
-        bool _keepAspectRatioEnabled;
+        bool _isPlaying = false;
+        bool _isLooping = false;
+        bool _isUserInputEnabled = true;
+        bool _fullScreenDirty = false;
+        bool _fullScreenEnabled = false;
+        bool _keepAspectRatioEnabled = false;
 
-        StyleType _styleType;
+        StyleType _styleType = StyleType::DEFAULT;
 
         std::string _videoURL;
         Source _videoSource;
 
-        int _videoPlayerIndex;
-        ccVideoPlayerCallback _eventCallback;
+        int _videoPlayerIndex = -1;
+        ccVideoPlayerCallback _eventCallback = nullptr;
 
-        void* _videoView;
+        void* _videoView = nullptr;
     };
 }
 

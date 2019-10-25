@@ -46,7 +46,7 @@ namespace {
     }
 }
 
-BufferGL::BufferGL(unsigned int size, BufferType type, BufferUsage usage)
+BufferGL::BufferGL(std::size_t size, BufferType type, BufferUsage usage)
 : Buffer(size, type, usage)
 {
     glGenBuffers(1, &_buffer);
@@ -89,7 +89,7 @@ void BufferGL::reloadBuffer()
     updateData(_data, _bufferAllocated);
 }
 
-void BufferGL::fillBuffer(void* data, unsigned int offset, unsigned int size)
+void BufferGL::fillBuffer(void* data, std::size_t offset, std::size_t size)
 {
     if(_bufferAlreadyFilled || !_needDefaultStoredData || BufferUsage::STATIC != _usage)
         return;
@@ -104,7 +104,7 @@ void BufferGL::fillBuffer(void* data, unsigned int offset, unsigned int size)
 }
 #endif
 
-void BufferGL::updateData(void* data, unsigned int size)
+void BufferGL::updateData(void* data, std::size_t size)
 {
     assert(size && size <= _size);
     
@@ -129,7 +129,7 @@ void BufferGL::updateData(void* data, unsigned int size)
     }
 }
 
-void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
+void BufferGL::updateSubData(void* data, std::size_t offset, std::size_t size)
 {
 
     CCASSERT(_bufferAllocated != 0, "updateData should be invoke before updateSubData");

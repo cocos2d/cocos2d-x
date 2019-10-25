@@ -409,7 +409,7 @@ void Grid3D::calculateVertexPoints()
     float height = (float)_texture->getPixelsHigh();
     float imageH = _texture->getContentSizeInPixels().height;
 
-    size_t x = 0, y = 0, i = 0;
+    int x = 0, y = 0, i = 0;
     CC_SAFE_FREE(_vertices);
     CC_SAFE_FREE(_originalVertices);
     CC_SAFE_FREE(_texCoordinates);

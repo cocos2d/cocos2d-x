@@ -108,9 +108,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** returns surface size in pixels */
 @property(nonatomic,readonly) CGSize surfaceSize;
 
-/** OpenGL context */
-@property(nonatomic,readonly) EAGLContext *context;
-
 @property(nonatomic,readwrite) BOOL multiSampling;
 
 
@@ -126,6 +123,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis;
 -(void) doAnimationWhenAnotherEditBeClicked;
 
-- (void) showKeyboard;
-- (void) hideKeyboard;
+-(void) showKeyboard;
+-(void) hideKeyboard;
+-(BOOL) isKeyboardShown; 
 @end

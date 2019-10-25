@@ -175,7 +175,7 @@ static CGSize _calculateShrinkedSizeForString(NSAttributedString **str,
 #define SENSOR_DELAY_GAME 0.02
 
 #if !defined(CC_TARGET_OS_TVOS)
-@interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
+@interface CCAccelerometerDispatcher : NSObject
 {
     cocos2d::Acceleration *_acceleration;
     CMMotionManager *_motionManager;
@@ -247,7 +247,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 
     double tmp = _acceleration->x;
 
-    switch ([[UIApplication sharedApplication] statusBarOrientation])
+    switch ([[[UIApplication sharedApplication].windows[0] windowScene] interfaceOrientation])
     {
         case UIInterfaceOrientationLandscapeRight:
             _acceleration->x = -_acceleration->y;
@@ -294,9 +294,10 @@ int Device::getDPI()
             scale = [[UIScreen mainScreen] scale];
         }
 
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        UIUserInterfaceIdiom userInterfaceIdiom = [UIDevice.currentDevice userInterfaceIdiom];
+        if (userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             dpi = 132 * scale;
-        } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        } else if (userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
             dpi = 163 * scale;
         } else {
             dpi = 160 * scale;
