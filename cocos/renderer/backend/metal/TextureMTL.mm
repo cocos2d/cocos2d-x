@@ -130,7 +130,7 @@ namespace
                 bytesPerBlock = 16;
                 break;
             default:
-                assert(false); //TODO coulsonwang
+                CCASSERT(false, "ETC format not supported!");
                 break;
         }
         auto blocksPerRow = (width + (blockWidth - 1)) / blockWidth;
