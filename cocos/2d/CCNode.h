@@ -967,7 +967,7 @@ public:
      *
      * @return An integer that identifies the node.
      *
-     * Please use `getTag()` instead.
+     * Please use `getName()` instead.
      */
      virtual int getTag() const;
     /**
