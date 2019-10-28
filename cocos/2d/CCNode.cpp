@@ -1963,10 +1963,12 @@ bool Node::addComponent(Component *component)
 {
     // lazy alloc
     if (!_componentContainer)
+    {
         _componentContainer = new (std::nothrow) ComponentContainer(this);
+        // should enable schedule update, then all components can receive this call back
+        scheduleUpdate();
+    }
     
-    // should enable schedule update, then all components can receive this call back
-    scheduleUpdate();
     
     return _componentContainer->add(component);
 }
