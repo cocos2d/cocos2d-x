@@ -913,8 +913,6 @@ void RotateTo::calculateAngles(float &startAngle, float &diffAngle, float dstAng
     }
 
     diffAngle = dstAngle - startAngle;
-    //fix angle when angle is bigger than 360
-    diffAngle = diffAngle - (int)diffAngle / 360 * 360;
     if (diffAngle > 180)
     {
         diffAngle -= 360;
