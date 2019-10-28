@@ -424,6 +424,7 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::TextureBacke
     if(location < 0)
         return;
     TextureInfo& info = textureInfo[location];
+    info.releaseTextures();
     info.slot = {slot};
     info.textures = {texture};
     info.retainTextures();
@@ -436,6 +437,7 @@ void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& sl
 {
     assert(slots.size() == textures.size());
     TextureInfo& info = textureInfo[location];
+    info.releaseTextures();
     info.slot = slots;
     info.textures = textures;
     info.retainTextures();
