@@ -977,7 +977,6 @@ public:
     }
     virtual void setProgramState(backend::ProgramState* programState) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 
 protected:
     CustomCommand _customCommand;
@@ -989,7 +988,6 @@ void MySprite::setProgramState(backend::ProgramState* programState)
     Sprite::setProgramState(programState);
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     pipelineDescriptor.programState = programState;
-    _customCommand.getPipelineDescriptor().programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
 
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
@@ -1006,41 +1004,6 @@ void MySprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     renderer->addCommand(&_customCommand);
 }
 
-void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
-{
-//    getGLProgram()->use();
-//    getGLProgram()->setUniformsForBuiltins(transform);
-
-//    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
-
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, _texture->getName());
-    
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-
-    #define kQuadSize sizeof(_quad.bl)
-//    size_t offset = (size_t)&_quad;
-
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-
-    // texCoords
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-
-    //TODO coulsonwang
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//
-//    CHECK_GL_ERROR_DEBUG();
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
-}
 //------------------------------------------------------------------
 //
 // CameraTest1

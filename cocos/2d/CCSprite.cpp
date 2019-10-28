@@ -450,7 +450,6 @@ void Sprite::setTexture(Texture2D *texture)
     }
     auto isETC1 = texture && texture->getAlphaTextureName();
     setProgramState((isETC1) ? backend::ProgramType::ETC1 : backend::ProgramType::POSITION_TEXTURE_COLOR);
-    updateProgramState();
 }
 
 void Sprite::updateProgramState()
