@@ -411,7 +411,7 @@ void Sprite::setProgramState(backend::ProgramState *programState)
     _alphaTextureLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::TEXTURE1);
 
     setVertexLayout();
-    updateProgramState();
+    updateProgramStateTexture();
     setMVPMatrixUniform();
 }
 
@@ -450,10 +450,10 @@ void Sprite::setTexture(Texture2D *texture)
         }
         updateBlendFunc();
     }
-    updateProgramState();
+    updateProgramStateTexture();
 }
 
-void Sprite::updateProgramState()
+void Sprite::updateProgramStateTexture()
 {
     if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
         return;
