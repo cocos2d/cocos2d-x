@@ -40,9 +40,9 @@ int _base64Decode(const unsigned char *input, unsigned int input_len, unsigned c
     unsigned int output_idx = 0;
 
     
-    for (size_t i = 0; i < (sizeof alphabet); i++) {
-        inalphabet[alphabet[i]] = 1;
-        decoder[alphabet[i]] = i;
+    for (char i = (sizeof alphabet) - 1; i >= 0 ; i--){
+        inalphabet[alphabet[static_cast<unsigned char>(i)]] = 1;
+        decoder[alphabet[static_cast<unsigned char>(i)]] = i;
     }
 
     char_count = 0;
