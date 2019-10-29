@@ -10,7 +10,7 @@ local scene = {
     enemies = {},
 
     onEnter = function(self)
-        ccexp.AudioEngine:play2d("background-music-aac.mp3", true)
+        cc.AudioEngine:play2d("background-music-aac.mp3", true)
     end,
 
     update = function(self, dt)
