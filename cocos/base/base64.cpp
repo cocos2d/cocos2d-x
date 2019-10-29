@@ -39,7 +39,8 @@ int _base64Decode(const unsigned char *input, unsigned int input_len, unsigned c
     unsigned int input_idx = 0;
     unsigned int output_idx = 0;
 
-    for (size_t i = (sizeof alphabet) - 1; i >= 0 ; i--) {
+    auto alphabetSize = sizeof(alphabet);
+    for (size_t i = 0; i < alphabetSize; i++){
         inalphabet[alphabet[i]] = 1;
         decoder[alphabet[i]] = i;
     }
