@@ -246,24 +246,34 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     _acceleration->timestamp = accelerometerData.timestamp;
 
     double tmp = _acceleration->x;
-
-    switch ([[[UIApplication sharedApplication].windows[0] windowScene] interfaceOrientation])
+    UIInterfaceOrientation orientation;
+    if (@available(iOS 13.0, *))
+    {
+        orientation = [[[UIApplication sharedApplication].windows[0] windowScene] interfaceOrientation];
+    }
+    else
+    {
+        // Fallback on earlier versions
+        orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    }
+    
+    switch (orientation)
     {
         case UIInterfaceOrientationLandscapeRight:
             _acceleration->x = -_acceleration->y;
             _acceleration->y = tmp;
             break;
-
+            
         case UIInterfaceOrientationLandscapeLeft:
             _acceleration->x = _acceleration->y;
             _acceleration->y = -tmp;
             break;
-
+            
         case UIInterfaceOrientationPortraitUpsideDown:
             _acceleration->x = -_acceleration->y;
             _acceleration->y = -tmp;
             break;
-
+            
         case UIInterfaceOrientationPortrait:
             break;
         default:
