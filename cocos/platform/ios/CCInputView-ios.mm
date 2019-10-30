@@ -249,7 +249,17 @@ namespace {
     CGSize viewSize = self.frame.size;
 
     CGFloat tmp;
-    switch (getFixedOrientation([[[UIApplication sharedApplication].windows[0] windowScene] interfaceOrientation]))
+    UIInterfaceOrientation orientation;
+    if (@available(iOS 13.0, *))
+    {
+        orientation = [[[UIApplication sharedApplication].windows[0] windowScene] interfaceOrientation];
+    }
+    else
+    {
+        // Fallback on earlier versions
+        orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    }
+    switch(orientation)
     {
         case UIInterfaceOrientationPortrait:
             begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
