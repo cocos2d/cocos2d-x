@@ -25,9 +25,6 @@
 
 #define LOG_TAG "AudioCache"
 
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
 #include "audio/apple/AudioCache.h"
 
 #import <Foundation/Foundation.h>
@@ -89,7 +86,6 @@ unsigned int __idIndex = 0;
 @end
 
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
 : _format(-1)
@@ -405,5 +401,3 @@ void AudioCache::invokingLoadCallbacks()
         _loadCallbacks.clear();
     });
 }
-
-#endif

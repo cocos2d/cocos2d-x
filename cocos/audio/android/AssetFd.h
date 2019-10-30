@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <unistd.h>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class AssetFd
 {
@@ -39,5 +39,5 @@ private:
     int _assetFd;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {
 

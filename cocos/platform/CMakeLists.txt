@@ -94,6 +94,7 @@ elseif(APPLE)
             platform/ios/CCPlatformDefine-ios.h
             platform/ios/CCStdC-ios.h
             platform/ios/OpenGL_Internal-ios.h
+            platform/ios/CCInputView-ios.h
             )
         set(COCOS_PLATFORM_SPECIFIC_SRC
             ${COCOS_PLATFORM_SPECIFIC_SRC}
@@ -104,6 +105,7 @@ elseif(APPLE)
             platform/ios/CCEAGLView-ios.mm
             platform/ios/CCGLViewImpl-ios.mm
             platform/ios/CCImage-ios.mm
+            platform/ios/CCInputView-ios.mm
             )
     endif()
 

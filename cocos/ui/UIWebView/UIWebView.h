@@ -22,15 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __COCOS2D_UI_WEBVIEW_H
-#define __COCOS2D_UI_WEBVIEW_H
-
-#include "platform/CCPlatformConfig.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_PLATFORM_OS_TVOS)
-
-
+#pragma once
 
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
@@ -42,8 +34,7 @@
  */
 
 NS_CC_BEGIN
-namespace experimental{
-    namespace ui{
+namespace ui{
         
 class WebViewImpl;
 
@@ -238,13 +229,10 @@ protected:
     virtual cocos2d::ui::Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     
-    std::function<bool(WebView *sender, const std::string &url)> _onShouldStartLoading;
-    
-    ccWebViewCallback _onDidFinishLoading;
-    
-    ccWebViewCallback _onDidFailLoading;
-   
-    ccWebViewCallback _onJSCallback;
+    std::function<bool(WebView *sender, const std::string &url)> _onShouldStartLoading = nullptr;
+    ccWebViewCallback _onDidFinishLoading = nullptr;
+    ccWebViewCallback _onDidFailLoading = nullptr;
+    ccWebViewCallback _onJSCallback = nullptr;
 
 CC_CONSTRUCTOR_ACCESS:
     /**
@@ -258,15 +246,12 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~WebView();
 
 private:
-    WebViewImpl *_impl;
+    WebViewImpl *_impl = nullptr;
     friend class WebViewImpl;
 };
         
-      } // namespace ui
-   } // namespace experimental
+} // namespace ui
 }//namespace cocos2d
 
-#endif
 // end group
 /// @}
-#endif //__COCOS2D_UI_WEBVIEW_H

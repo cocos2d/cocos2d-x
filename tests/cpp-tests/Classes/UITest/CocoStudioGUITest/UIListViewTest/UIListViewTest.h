@@ -48,21 +48,25 @@ protected:
     float getItemPositionYInView(cocos2d::ui::Widget* item) const;
     void updateItem(int itemID, int templateID);
     
-    cocos2d::ui::Text* _displayValueLabel;
-    //how many items we actually spawn, these items will be reused.
-    int _spawnCount;
-    // how many items we need for the ListView. Usually this is a big number.
-    int _totalCount;
-    //when item is away from bufferSzone, we relocate it.
-    float _bufferZone;
-    float _itemTemplateHeight;
-    float _updateInterval;
-    float _updateTimer;
-    float _lastContentPosY;
-    float _reuseItemOffset;
-    cocos2d::ui::ListView* _listView;
+    cocos2d::ui::Text* _displayValueLabel = nullptr;
+    // How many items we actually spawn, these items will be reused.
+    // Should > listview.width / templateWidth + 2.
+    int _spawnCount = 5;
+    // How many items we need for the ListView. Usually this is a big number.
+    int _totalCount = 50;
+    // when item is away from bufferSzone, we relocate it.
+    // Should be larger than List item width.
+    float _bufferZone = 45.f;
+    float _itemTemplateHeight = 0.f;
+    // Could tweak this value to adjust ListView data update rate.
+    float _updateInterval = (1.0f / 24);
+    float _updateTimer = 0.f;
+    // Use this value to detect if we are scrolling left or right
+    float _lastContentPosY = 0.f;
+    float _reuseItemOffset = 0.f;
+    cocos2d::ui::ListView* _listView =nullptr;
     std::vector<std::string> _array;
-    cocos2d::ui::Text* _indexLabels[3];
+    cocos2d::ui::Text* _indexLabels[3] = {nullptr};
 };
 
 class UIListViewTest_Horizontal : public UIScene
@@ -80,19 +84,21 @@ protected:
     float getItemPositionXInView(cocos2d::ui::Widget* item) const;
     void updateItem(int itemID, int templateID);
     
-    cocos2d::ui::Text* _displayValueLabel;
-    //how many items we actually spawn, these items will be reused.
-    int _spawnCount;
-    // how many items we need for the ListView. Usually this is a big number.
-    int _totalCount;
-    //when item is away from bufferSzone, we relocate it.
-    float _bufferZone;
-    float _itemTemplateWidth;
-    float _updateInterval;
-    float _updateTimer;
-    float _lastContentPosX;
-    float _reuseItemOffset;
-    cocos2d::ui::ListView* _listView;
+    cocos2d::ui::Text* _displayValueLabel = nullptr;
+    // How many items we actually spawn, these items will be reused.
+    // Should > listview.width / templateWidth + 2.
+    int _spawnCount = 4;
+    // How many items we need for the ListView. Usually this is a big number.
+    int _totalCount = 50;
+    // when item is away from bufferSzone, we relocate it.
+    float _bufferZone = 140.f;
+    float _itemTemplateWidth = 0.f;
+    // Could tweak this value to adjust ListView data update rate.
+    float _updateInterval = 1.0f / 24;
+    float _updateTimer = 0.f;
+    float _lastContentPosX = 0.f;
+    float _reuseItemOffset = 0.f;
+    cocos2d::ui::ListView* _listView = nullptr;
     
     std::vector<std::string> _array;
 };

@@ -47,10 +47,9 @@ enum
 
 CocosNodeTests::CocosNodeTests()
 {
-    //ADD_TEST_CASE(CameraTest1);
-    // TODO: Camera has been removed from CCNode; add new feature to support it
-    // ADD_TEST_CASE(CameraTest2);
-    //ADD_TEST_CASE(CameraCenterTest);
+    ADD_TEST_CASE(CameraTest1);
+    ADD_TEST_CASE(CameraTest2);
+    ADD_TEST_CASE(CameraCenterTest);
     ADD_TEST_CASE(NodeTest2);
     ADD_TEST_CASE(NodeTest4);
     ADD_TEST_CASE(NodeTest5);
@@ -970,61 +969,41 @@ public:
         auto sprite = new (std::nothrow) MySprite;
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
-
-//        auto shaderState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-//        sprite->setGLProgramState(shaderState);
+        auto program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+        auto programState = new (std::nothrow) backend::ProgramState(program);
+        programState->autorelease();
+        sprite->setProgramState(programState);
         return sprite;
     }
+    virtual void setProgramState(backend::ProgramState* programState) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 
 protected:
     CustomCommand _customCommand;
 
 };
 
+void MySprite::setProgramState(backend::ProgramState* programState)
+{
+    Sprite::setProgramState(programState);
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.programState = programState;
+
+    _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
+    _customCommand.createVertexBuffer(sizeof(V3F_C4B_T2F), 4, CustomCommand::BufferUsage::STATIC);
+    _customCommand.updateVertexBuffer(&_quad, 4*sizeof(V3F_C4B_T2F));
+}
+
 void MySprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto mvpMatrix = projectionMat * transform;
+    _customCommand.getPipelineDescriptor().programState->setUniform(_mvpMatrixLocation, mvpMatrix.m, sizeof(mvpMatrix.m));
     _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
-{
-//    getGLProgram()->use();
-//    getGLProgram()->setUniformsForBuiltins(transform);
-
-//    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
-
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, _texture->getName());
-    
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-
-    #define kQuadSize sizeof(_quad.bl)
-//    size_t offset = (size_t)&_quad;
-
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-
-    // texCoords
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-
-    //TODO coulsonwang
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//
-//    CHECK_GL_ERROR_DEBUG();
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
-}
 //------------------------------------------------------------------
 //
 // CameraTest1
@@ -1395,14 +1374,14 @@ void NodeNameTest::test(float dt)
     // search from parent
     // name is xxx/..
     i = 0;
-    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+    parent->getChildByName("node1")->enumerateChildren("node[[:digit:]]+/node/..", [&i](Node* node) -> bool {
         ++i;
         return true;
     });
     CCAssert(i == 1, "");
     
     i = 0;
-    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+    parent->getChildByName("node1")->enumerateChildren("node[[:digit:]]+/node/..", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
@@ -1441,11 +1420,11 @@ void NodeNameTest::test(float dt)
     CCAssert(i == 1, "");
     
     i = 0;
-    parent->enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
+    parent->getChildByName("node1")->enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
-    CCAssert(i == 100, "");
+    CCAssert(i == 110, "");
     
     // utils::findChildren()
     

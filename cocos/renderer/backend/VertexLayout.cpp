@@ -28,7 +28,7 @@
 
 CC_BACKEND_BEGIN
 
-void VertexLayout::setAttribute(const std::string &name, unsigned int index, VertexFormat format, unsigned int offset, bool needToBeNormallized)
+void VertexLayout::setAttribute(const std::string &name, std::size_t index, VertexFormat format, std::size_t offset, bool needToBeNormallized)
 {
     if(index == -1)
         return;
@@ -36,7 +36,7 @@ void VertexLayout::setAttribute(const std::string &name, unsigned int index, Ver
     _attributes[name] = { name, index, format, offset, needToBeNormallized };
 }
 
-void VertexLayout::setLayout(unsigned int stride)
+void VertexLayout::setLayout(std::size_t stride)
 {
     _stride = stride;
 }

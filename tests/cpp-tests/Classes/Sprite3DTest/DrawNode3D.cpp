@@ -58,7 +58,7 @@ void DrawNode3D::ensureCapacity(int count)
 {
     CCASSERT(count>=0, "capacity must be >= 0");
     
-    const int EXTENDED_SIZE = _bufferLines.size() + count;
+    auto EXTENDED_SIZE = _bufferLines.size() + count;
 
     _bufferLines.reserve(EXTENDED_SIZE);
 

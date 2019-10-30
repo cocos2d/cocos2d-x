@@ -4,10 +4,18 @@ cocos2d-x-4.0  ??
 [HIGHLIGHT]     Use CMake for all platforms
 
 [REFINE]        Update glfw to 3.3
+[REFINE]        Update minizip to 1.2
 
 [CHANGE]        remove deprecated functions
 [CHANGE]        remove h5 engine and JSB
 [CHANGE]        remove tiff
+[CHANGE]        remove `experimental` namespace
+
+[FIX]           system font can not work correctly on macOS 15
+[FIX]           TextField can not work if using system input to get Chinese characters with iOS13
+[FIX]           UIWebView uses WKWebView instead
+[FIX]           VideoPlayer uses AVPlayerController instead
+[FX]            lua crashes on 64it devcices 
 
 cocos2d-x-3.17 May.21 2018
 

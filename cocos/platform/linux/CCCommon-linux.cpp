@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-void MessageBox(const char * msg, const char * title)
+void ccMessageBox(const char * msg, const char * title)
 {
     log("%s: %s", title, msg);
 }

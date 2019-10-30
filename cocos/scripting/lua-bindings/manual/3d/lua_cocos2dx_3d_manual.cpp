@@ -30,56 +30,6 @@
 #include "3d/CCSprite3D.h"
 #include "3d/CCTerrain.h"
 
-extern int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L);
-
-CC_DEPRECATED_ATTRIBUTE int lua_cocos2dx_3d_Sprite3D_setBlendFunc01(lua_State* L)
-{
-    int argc = 0;
-    cocos2d::Sprite3D* cobj = nullptr;
-
-    tolua_Error tolua_err;
-
-    if (!tolua_isusertype(L,1,"cc.Sprite3D",0,&tolua_err))
-        goto tolua_lerror;
-
-    cobj = (cocos2d::Sprite3D*)tolua_tousertype(L,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_3d_Sprite3D_setBlendFunc01'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(L)-1;
-    if (argc != 2)
-    {
-        goto tolua_lerror;
-    }
-    else
-    {
-        CCLOG("setBlendFunc of cc.Sprite3D will deprecate two int parameter form,please pass a table like {src = xx, dst = xx} as a parameter");
-
-        GLenum src, dst;
-        if (!luaval_to_int32(L, 2, (int32_t*)&src, "cc.Sprite3D:setBlendFunc"))
-            return 0;
-
-        if (!luaval_to_int32(L, 3, (int32_t*)&dst, "cc.Sprite3D:setBlendFunc"))
-            return 0;
-
-//TODO minggo
-//        BlendFunc blendFunc = {src, dst};
-//        cobj->setBlendFunc(blendFunc);
-
-        lua_settop(L, 1);
-        return 1;
-    }
-
-tolua_lerror:
-    return lua_cocos2dx_3d_Sprite3D_setBlendFunc(L);
-}
-
 int lua_cocos2dx_3d_Sprite3D_getAABB(lua_State* L)
 {
     int argc = 0;
@@ -210,7 +160,6 @@ static void extendSprite3D(lua_State* L)
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
-        tolua_function(L, "setBlendFunc", lua_cocos2dx_3d_Sprite3D_setBlendFunc01);
         tolua_function(L, "getAABB", lua_cocos2dx_3d_Sprite3D_getAABB);
         tolua_function(L, "createAsync", lua_cocos2dx_3d_Sprite3D_createAsync);
     }
@@ -519,6 +468,67 @@ tolua_lerror:
     return 0;
 }
 
+int lua_cocos2dx_3d_Terrain_getIntersectionPoint(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Terrain* cobj = nullptr;
+    bool ok = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S, 1, "cc.Terrain", 0, &tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Terrain*)tolua_tousertype(tolua_S, 1, 0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_3d_Terrain_getIntersectionPoint'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S) - 1;
+    do {
+        if (argc == 2) {
+            cocos2d::Ray* arg0 = nullptr;
+            ok &= luaval_to_object<cocos2d::Ray>(tolua_S, 2, "cc.Ray", &arg0, "cc.Terrain:getIntersectionPoint");
+
+            if (!ok) { break; }
+            cocos2d::Vec3 arg1;
+            ok &= luaval_to_vec3(tolua_S, 3, &arg1, "cc.Terrain:getIntersectionPoint");
+
+            if (!ok) { break; }
+            bool ret = cobj->getIntersectionPoint(*arg0, arg1);
+            tolua_pushboolean(tolua_S, (bool)ret);
+            vec3_to_luaval(tolua_S, arg1);
+            return 2;
+        }
+    } while (0);
+    ok = true;
+    do {
+        if (argc == 1) {
+            cocos2d::Ray* arg0;
+            ok &= luaval_to_object<cocos2d::Ray>(tolua_S, 2, "cc.Ray", &arg0, "cc.Terrain:getIntersectionPoint");
+
+            if (!ok) { break; }
+            cocos2d::Vec3 ret = cobj->getIntersectionPoint(*arg0);
+            vec3_to_luaval(tolua_S, ret);
+            return 1;
+        }
+    } while (0);
+    ok = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:getIntersectionPoint", argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_3d_Terrain_getIntersectionPoint'.", &tolua_err);
+#endif
+
+ return 0;
+}
+
 static void extendTerrain(lua_State* L)
 {
     lua_pushstring(L, "cc.Terrain");
@@ -527,6 +537,7 @@ static void extendTerrain(lua_State* L)
     {
         tolua_function(L, "create", lua_cocos2dx_3d_Terrain_create);
         tolua_function(L, "getHeight", lua_cocos2dx_3d_Terrain_getHeight);
+        tolua_function(L, "getIntersectionPoint", lua_cocos2dx_3d_Terrain_getIntersectionPoint);
     }
     lua_pop(L, 1);
 }

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <mutex>
 #include <condition_variable>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class AudioDecoderSLES : public AudioDecoder
 {
@@ -94,4 +94,4 @@ private:
     friend class AudioDecoderProvider;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

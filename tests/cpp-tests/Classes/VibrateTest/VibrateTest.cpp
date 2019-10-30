@@ -72,8 +72,6 @@ namespace {
         
     private:
         TextButton()
-        : _enabled(true)
-        , _onTriggered(nullptr)
         {
             auto listener = EventListenerTouchOneByOne::create();
             listener->setSwallowTouches(true);
@@ -128,9 +126,9 @@ namespace {
             runAction(action);
         }
         
-        std::function<void(TextButton*)> _onTriggered;
+        std::function<void(TextButton*)> _onTriggered = nullptr;
         
-        bool _enabled;
+        bool _enabled = true;
     };
     
     class SliderEx : public Slider

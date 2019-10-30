@@ -635,7 +635,7 @@ protected:
     virtual void setDirtyRecursively(bool value);
     virtual void flipX();
     virtual void flipY();
-    virtual void updateProgramState();
+    virtual void updateProgramStateTexture();
 
     void updatePoly();
     void updateStretchFactor();

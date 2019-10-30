@@ -176,9 +176,7 @@ void Physics3DTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, cocos
     }
 }
 
-Physics3DTestDemo::Physics3DTestDemo( void )
-: _angle(0.0f)
-, _camera(nullptr)
+Physics3DTestDemo::Physics3DTestDemo()
 {
 
 }
@@ -188,7 +186,7 @@ void Physics3DTestDemo::update( float /*delta*/ )
     
 }
 
-Physics3DTestDemo::~Physics3DTestDemo( void )
+Physics3DTestDemo::~Physics3DTestDemo()
 {
     
 }

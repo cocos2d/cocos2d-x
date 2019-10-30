@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include <functional>
 #include <thread>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class ICallerThreadUtils
 {
@@ -39,4 +39,4 @@ public:
     virtual std::thread::id getCallerThreadId() = 0;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

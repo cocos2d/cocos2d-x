@@ -22,9 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __COCOS2D_UI_WEBVIEWIMPL_IOS_H_
-#define __COCOS2D_UI_WEBVIEWIMPL_IOS_H_
+#pragma once
 /// @cond DO_NOT_SHOW
 
 #include <stdint.h>
@@ -37,9 +35,8 @@ namespace cocos2d {
 class Data;
 class Renderer;
 class Mat4;
-    
-namespace experimental {
-    namespace ui{
+
+namespace ui{
     
 class WebView;
 
@@ -97,8 +94,6 @@ private:
 };
 
     } // namespace ui
-  } // namespace experimental
 }//namespace cocos2d
 
 /// @endcond
-#endif /* __COCOS2D_UI_WEBVIEWIMPL_IOS_H_ */

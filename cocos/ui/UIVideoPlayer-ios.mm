@@ -28,7 +28,7 @@
 // No Available on tvOS
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS && !defined(CC_TARGET_OS_TVOS)
 
-using namespace cocos2d::experimental::ui;
+using namespace cocos2d::ui;
 //-------------------------------------------------------------------------------------
 
 #include "platform/ios/CCEAGLView-ios.h"
@@ -87,7 +87,7 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
 -(id)init:(void*)videoPlayer
 {
     if (self = [super init]) {
-        self.playerController = [AVPlayerViewController new];
+        self.playerController = [[AVPlayerViewController new] autorelease];
 
         [self setRepeatEnabled:FALSE];
         [self showPlaybackControls:TRUE];
@@ -268,15 +268,6 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
 //------------------------------------------------------------------------------------------------------------
 
 VideoPlayer::VideoPlayer()
-: _isPlaying(false)
-, _fullScreenDirty(false)
-, _fullScreenEnabled(false)
-, _keepAspectRatioEnabled(false)
-, _videoPlayerIndex(-1)
-, _eventCallback(nullptr)
-, _isLooping(false)
-, _isUserInputEnabled(true)
-, _styleType(StyleType::DEFAULT)
 {
     _videoView = [[UIVideoViewWrapperIos alloc] init:this];
 

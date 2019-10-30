@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include <math.h>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 Track::Track(const PcmData &pcmData)
         : onStateChanged(nullptr)
@@ -103,4 +103,4 @@ void Track::setState(State state)
     }
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

@@ -117,5 +117,5 @@
 #include "VibrateTest/VibrateTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "SpriteFrameCacheTest/SpriteFrameCacheTest.h"
-
+#include "ZipTest/ZipTests.h"
 #endif

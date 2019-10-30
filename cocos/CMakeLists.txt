@@ -156,3 +156,9 @@ endif()
 else()
     target_precompile_headers(cocos2d PRIVATE precheader.h)
 endif()
+
+#if(XCODE)
+#    # Later versions of Xcode clang want to compile C++17 with aligned allocation turned on and this is only supported on iOS 11.0+
+#    # TODO: Only turn this off if ${CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET} < 11.0
+#    target_compile_options(cocos2d PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-aligned-allocation>)
+#endif()

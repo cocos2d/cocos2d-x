@@ -22,8 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_AUDIOENGINE_LUA_COCOS2DX_AUDIOENGINE_MANUAL_H__
-#define COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_AUDIOENGINE_LUA_COCOS2DX_AUDIOENGINE_MANUAL_H__
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,7 +39,7 @@ extern "C" {
 
 /**
  * Call this function can import the lua bindings for the audioengine module.
- * After registering, we could call the related audioengine code conveniently in the lua.eg,.ccexp.AudioEngine:stop(audioID).
+ * After registering, we could call the related audioengine code conveniently in the lua.eg,.cc.AudioEngine:stop(audioID).
  * If you don't want to use the audioengine module in the lua, you only don't call this registering function.
  * If you don't register the audioengine module, the package size would become smaller .
  * The current mechanism,this function is called in the lua_module_register.h
@@ -50,5 +49,3 @@ TOLUA_API int  register_audioengine_module(lua_State* L);
 
 // end group
 /// @}
-
-#endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_AUDIOENGINE_LUA_COCOS2DX_AUDIOENGINE_MANUAL_H__

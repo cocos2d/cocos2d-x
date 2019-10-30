@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "Tremolo/ivorbisfile.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class AudioDecoderOgg : public AudioDecoder
 {
@@ -43,4 +43,4 @@ protected:
     friend class AudioDecoderProvider;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

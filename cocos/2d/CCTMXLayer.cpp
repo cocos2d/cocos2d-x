@@ -424,7 +424,7 @@ Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
         
         for(const auto &child : _children) {
             Sprite* sp = static_cast<Sprite*>(child);
-            ssize_t ai = sp->getAtlasIndex();
+            auto ai = sp->getAtlasIndex();
             if ( ai >= indexForZ )
             {
                 sp->setAtlasIndex(ai+1);
@@ -449,8 +449,8 @@ Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
     setupTileSprite(tile ,pos ,gid);
 
     // get atlas index
-    ssize_t indexForZ = atlasIndexForExistantZ(z);
-    tile->setAtlasIndex(indexForZ);
+    auto indexForZ = atlasIndexForExistantZ(z);
+    tile->setAtlasIndex(static_cast<unsigned int>(indexForZ) );
     tile->setDirty(true);
     tile->updateTransform();
     _tiles[z] = gid;
@@ -671,7 +671,7 @@ void TMXLayer::removeTileAt(const Vec2& pos)
             // update possible children
             for(const auto &obj : _children) {
                 Sprite* child = static_cast<Sprite*>(obj);
-                ssize_t ai = child->getAtlasIndex();
+                auto ai = child->getAtlasIndex();
                 if ( ai >= atlasIndex )
                 {
                     child->setAtlasIndex(ai-1);

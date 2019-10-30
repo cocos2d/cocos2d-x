@@ -341,10 +341,10 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
             int glyphMinY = (int)(-outHeight - outRect.origin.y);
             int glyphMaxY = (int)-outRect.origin.y;
 
-            int outlineMinX = bbox.xMin >> 6;
-            int outlineMaxX = bbox.xMax >> 6;
-            int outlineMinY = bbox.yMin >> 6;
-            int outlineMaxY = bbox.yMax >> 6;
+            auto outlineMinX = bbox.xMin >> 6;
+            auto outlineMaxX = bbox.xMax >> 6;
+            auto outlineMinY = bbox.yMin >> 6;
+            auto outlineMaxY = bbox.yMax >> 6;
             auto outlineWidth = outlineMaxX - outlineMinX;
             auto outlineHeight = outlineMaxY - outlineMinY;
 
@@ -359,8 +359,8 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
             unsigned char *blendImage = nullptr;
             if (blendWidth > 0 && blendHeight > 0)
             {
-                int index, index2;
-                int imageSize = blendWidth * blendHeight * 2;
+                FT_Pos index, index2;
+                auto imageSize = blendWidth * blendHeight * 2;
                 blendImage = new (std::nothrow) unsigned char[imageSize];
                 memset(blendImage, 0, imageSize);
 

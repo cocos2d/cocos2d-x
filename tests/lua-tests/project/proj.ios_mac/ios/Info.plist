@@ -7,9 +7,9 @@
     <key>CFBundleDisplayName</key>
     <string>${PRODUCT_NAME}</string>
     <key>CFBundleExecutable</key>
-    <string>${MACOSX_BUNDLE_EXECUTABLE_NAME}</string>
+	<string>${EXECUTABLE_NAME}</string>
     <key>CFBundleIconFile</key>
-    <string>${MACOSX_BUNDLE_ICON_FILE}</string>
+    <string>Icon</string>
     <key>CFBundleIconFiles</key>
     <array>
         <string>Icon-57.png</string>
@@ -22,17 +22,19 @@
     <key>CFBundleIcons~ipad</key>
     <dict/>
     <key>CFBundleIdentifier</key>
-    <string>${MACOSX_BUNDLE_GUI_IDENTIFIER}</string>
+    <string>org.cocos2dx.$(PRODUCT_NAME)</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>${MACOSX_BUNDLE_BUNDLE_NAME}</string>
+    <string>$(PRODUCT_NAME)</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
     <string>????</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
     <key>CFBundleVersion</key>
-    <string>${MACOSX_BUNDLE_BUNDLE_VERSION}</string>
+    <string>1</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>
@@ -57,8 +59,6 @@
     <dict>
         <key>accelerometer</key>
         <true/>
-        <key>opengles-1</key>
-        <true/>
     </dict>
     <key>UIStatusBarHidden</key>
     <true/>
@@ -68,6 +68,6 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
     </array>
     <key>NSHumanReadableCopyright</key>
-    <string>${MACOSX_BUNDLE_COPYRIGHT}</string>
+    <string>Copyright © 2019. All rights reserved.</string>
 </dict>
 </plist>

@@ -337,7 +337,7 @@ void CommandBufferGL::setProgramState(ProgramState* programState)
     _programState = programState;
 }
 
-void CommandBufferGL::drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count)
+void CommandBufferGL::drawArrays(PrimitiveType primitiveType, std::size_t start,  std::size_t count)
 {
     prepareDrawing();
     glDrawArrays(UtilsGL::toGLPrimitiveType(primitiveType), start, count);
@@ -345,7 +345,7 @@ void CommandBufferGL::drawArrays(PrimitiveType primitiveType, unsigned int start
     cleanResources();
 }
 
-void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset)
+void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, std::size_t count, std::size_t offset)
 {
     prepareDrawing();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getHandler());

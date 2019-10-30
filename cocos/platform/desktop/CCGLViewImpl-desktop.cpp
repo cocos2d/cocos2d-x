@@ -316,7 +316,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
             message.append(_glfwError);
         }
 
-        MessageBox(message.c_str(), "Error launch application");
+        ccMessageBox(message.c_str(), "Error launch application");
         return false;
     }
 
@@ -367,7 +367,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
         sprintf(strComplain,
                 "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.",
                 glVersion);
-        MessageBox(strComplain, "OpenGL version too old");
+        ccMessageBox(strComplain, "OpenGL version too old");
         return false;
     }
 
@@ -1012,7 +1012,7 @@ bool GLViewImpl::initGlew()
     GLenum GlewInitResult = glewInit();
     if (GLEW_OK != GlewInitResult)
     {
-        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
+        ccMessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
         return false;
     }
 
@@ -1038,7 +1038,7 @@ bool GLViewImpl::initGlew()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     if(glew_dynamic_binding() == false)
     {
-        MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
+        ccMessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
         return false;
     }
 #endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

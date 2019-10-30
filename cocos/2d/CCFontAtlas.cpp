@@ -60,6 +60,13 @@ FontAtlas::FontAtlas(Font &theFont)
         {
             _letterPadding += 2 * FontFreeType::DistanceMapSpread;    
         }
+
+        auto outlineSize = _fontFreeType->getOutlineSize();
+        if (outlineSize > 0)
+        {
+            _lineHeight += 2 * outlineSize;
+        }
+
         
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         auto eventDispatcher = Director::getInstance()->getEventDispatcher();
@@ -87,7 +94,6 @@ void FontAtlas::reinit()
     auto outlineSize = _fontFreeType->getOutlineSize();
     if(outlineSize > 0)
     {
-        _lineHeight += 2 * outlineSize;
         _currentPageDataSize *= 2;
         
         _currentPageDataSizeRGBA = _currentPageDataSize * 2;
