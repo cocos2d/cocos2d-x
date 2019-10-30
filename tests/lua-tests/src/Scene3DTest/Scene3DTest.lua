@@ -473,26 +473,26 @@ function Scene3DTest:createDetailDlg()
     self._detailDlg:addChild(title)
     
     -- add a spine ffd animation on it
-    -- TODO: spine is not enable in V4.0
-    local skeletonNode = sp.SkeletonAnimation:create("spine/goblins-pro.json", "spine/goblins.atlas", 1.5)
-    skeletonNode:setAnimation(0, "walk", true)
-    skeletonNode:setSkin("goblin")
-
-    skeletonNode:setScale(0.25)
-    local windowSize = cc.Director:getInstance():getWinSize()
-    skeletonNode:setPosition(cc.p(dlgSize.width / 2, 20))
-    self._detailDlg:addChild(skeletonNode)
+    -- TODO coulsonwang: spine is not enable in V4.0
+--    local skeletonNode = sp.SkeletonAnimation:create("spine/goblins-pro.json", "spine/goblins.atlas", 1.5)
+--    skeletonNode:setAnimation(0, "walk", true)
+--    skeletonNode:setSkin("goblin")
+--
+--    skeletonNode:setScale(0.25)
+--    local windowSize = cc.Director:getInstance():getWinSize()
+--    skeletonNode:setPosition(cc.p(dlgSize.width / 2, 20))
+--    self._detailDlg:addChild(skeletonNode)
 
     local listener = cc.EventListenerTouchOneByOne:create()
     listener:registerScriptHandler(function (touch, event)
-        if (not skeletonNode:getDebugBonesEnabled()) then
-            skeletonNode:setDebugBonesEnabled(true)
-        elseif skeletonNode:getTimeScale() == 1 then
-            skeletonNode:setTimeScale(0.3)
-        else
-            skeletonNode:setTimeScale(1)
-            skeletonNode:setDebugBonesEnabled(false)
-        end
+--        if (not skeletonNode:getDebugBonesEnabled()) then
+--            skeletonNode:setDebugBonesEnabled(true)
+--        elseif skeletonNode:getTimeScale() == 1 then
+--            skeletonNode:setTimeScale(0.3)
+--        else
+--            skeletonNode:setTimeScale(1)
+--            skeletonNode:setDebugBonesEnabled(false)
+--        end
 
         return true
     end,cc.Handler.EVENT_TOUCH_BEGAN )
