@@ -236,6 +236,11 @@ function Camera3DTestDemo:onEnter()
                 local ndo = nearP.x * 0 + nearP.y * 1 + nearP.z * 0
                 dist= (0 - ndo) / ndd
                 local p =   cc.vec3add(nearP, cc.vec3mul(dir, dist))
+                
+                if p.x >  100 then p.x =  100 end
+                if p.x < -100 then p.x = -100 end
+                if p.z >  100 then p.z =  100 end
+                if p.z < -100 then p.z = -100 end
                 self._targetPos = p
             end
         end
