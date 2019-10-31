@@ -869,7 +869,7 @@ std::string AudioSwitchStateTest::title() const
 
 std::string AudioSwitchStateTest::subtitle() const
 {
-    return "Should not crash";
+    return "Should not crash. No sound is ok";
 }
 
 /////////////////////////////////////////////////////////////////////////
