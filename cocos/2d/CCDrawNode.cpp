@@ -30,7 +30,6 @@
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "2d/CCActionCatmullRom.h"
-#include "platform/CCGL.h"
 #include "base/ccUtils.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"

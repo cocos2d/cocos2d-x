@@ -23,10 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
 #include "platform/CCDevice.h"
 #include <string.h>
 #include <android/log.h>
@@ -183,8 +179,6 @@ void Device::vibrate(float duration)
 }
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 // this method is called by Cocos2dxBitmap
 extern "C"

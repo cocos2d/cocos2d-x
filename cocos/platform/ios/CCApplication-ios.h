@@ -23,19 +23,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CC_APPLICATION_IOS_H__
-#define __CC_APPLICATION_IOS_H__
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#pragma once
 
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
 
 NS_CC_BEGIN
-
-class Rect;
 
 class CC_DLL Application : public ApplicationProtocol
 {
@@ -108,7 +101,3 @@ protected:
 };
 
 NS_CC_END
-
-#endif // CC_PLATFORM_IOS
-
-#endif    // end of __CC_APPLICATION_IOS_H__

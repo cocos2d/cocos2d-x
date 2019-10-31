@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
 #include "base/CCRef.h"
-#include "platform/CCGL.h"
 #include "base/CCEnumClass.h"
 #include "renderer/backend/Types.h"
 

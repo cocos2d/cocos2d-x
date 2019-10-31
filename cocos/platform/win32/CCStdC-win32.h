@@ -23,12 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CC_STD_C_H__
-#define __CC_STD_C_H__
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#pragma once
 
 #include <BaseTsd.h>
 #ifndef __SSIZE_T
@@ -157,10 +152,3 @@ inline errno_t strcpy_s(char *strDestination, size_t numberOfElements,
 
 #undef min
 #undef max
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
-#endif  // __CC_STD_C_H__
-
-
-

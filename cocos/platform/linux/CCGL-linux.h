@@ -22,17 +22,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CCGL_H__
-#define __CCGL_H__
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+#pragma once
 
 #include "GL/glew.h"
 
 #define CC_GL_DEPTH24_STENCIL8      GL_DEPTH24_STENCIL8
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-
-#endif // __CCGL_H__

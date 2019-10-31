@@ -23,10 +23,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #import "CCApplication.h"
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #import <UIKit/UIKit.h>
 
@@ -145,5 +142,3 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 }
 
 NS_CC_END
-
-#endif // CC_PLATFORM_IOS
