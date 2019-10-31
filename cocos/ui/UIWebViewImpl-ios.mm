@@ -250,7 +250,7 @@
 
 #pragma mark - WKNavigationDelegate
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSString *url = [webView.URL absoluteString];
+    NSString *url = [[[navigationAction request] URL] absoluteString];
     if ([[webView.URL scheme] isEqualToString:self.jsScheme]) {
         self.onJsCallback([url UTF8String]);
         decisionHandler(WKNavigationActionPolicyCancel);
