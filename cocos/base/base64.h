@@ -29,10 +29,6 @@ THE SOFTWARE.
 /// @cond DO_NOT_SHOW
 
 #include "platform/CCPlatformMacros.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif    
     
 namespace cocos2d {
 
@@ -62,9 +58,6 @@ int CC_DLL base64Encode(const unsigned char *in, unsigned int inLength, char **o
 
 }//namespace   cocos2d 
 
-#ifdef __cplusplus
-}
-#endif    
 
 /// @endcond
 #endif // __SUPPORT_BASE64_H__
