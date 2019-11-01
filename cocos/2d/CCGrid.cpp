@@ -811,7 +811,7 @@ void TiledGrid3D::updateVertexAndTexCoordinate()
         memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
         memcpy((char*)_vertexBuffer + offset + sizeof(Vec3), &tempTexPointer[i], sizeof(Vec2));
     }
-    _drawCommand.createVertexBuffer((unsigned int)(sizeof(Vec3) + sizeof(Vec2) ), numOfPoints, CustomCommand::BufferUsage::DYNAMIC);
+    _drawCommand.createVertexBuffer((sizeof(Vec3) + sizeof(Vec2) ), numOfPoints, CustomCommand::BufferUsage::DYNAMIC);
     _drawCommand.updateVertexBuffer(_vertexBuffer, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
 
     _drawCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, gradSize * 6, CustomCommand::BufferUsage::DYNAMIC);
