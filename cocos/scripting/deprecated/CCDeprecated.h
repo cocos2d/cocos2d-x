@@ -467,7 +467,7 @@ CC_DEPRECATED_ATTRIBUTE extern const Color3B ccGRAY;
 
 CC_DEPRECATED_ATTRIBUTE extern const BlendFunc kCCBlendFuncDisable;
 
-CC_DEPRECATED_ATTRIBUTE static inline Color3B ccc3(GLubyte r, GLubyte g, GLubyte b)
+CC_DEPRECATED_ATTRIBUTE static inline Color3B ccc3(uint8_t r, uint8_t g, uint8_t b)
 {
     return Color3B(r, g, b);
 }
@@ -478,7 +478,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool ccc3BEqual(const Color3B &col1, const
 }
 
 CC_DEPRECATED_ATTRIBUTE static inline Color4B
-ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
+ccc4(const uint8_t r, const uint8_t g, const uint8_t b, const uint8_t o)
 {
     return Color4B(r, g, b, o);
 }
@@ -489,7 +489,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Color4F ccc4FFromccc3B(Color3B c)
 }
 
 CC_DEPRECATED_ATTRIBUTE static inline Color4F
-ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
+ccc4f(const float r, const float g, const float b, const float a)
 {
     return Color4F(r, g, b, a);
 }
@@ -501,7 +501,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Color4F ccc4FFromccc4B(Color4B c)
 
 CC_DEPRECATED_ATTRIBUTE static inline Color4B ccc4BFromccc4F(Color4F c)
 {
-        return Color4B((GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255));
+        return Color4B((uint8_t)(c.r*255), (uint8_t)(c.g*255), (uint8_t)(c.b*255), (uint8_t)(c.a*255));
 }
 
 CC_DEPRECATED_ATTRIBUTE static inline bool ccc4FEqual(Color4F a, Color4F b)
@@ -1003,9 +1003,9 @@ CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawQuadBezier(const Vec2& origin, const V
 CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& control2, const Vec2& destination, unsigned int segments);
 CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawCatmullRom( PointArray *arrayOfControlPoints, unsigned int segments );
 CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segments );
-CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
-CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
-CC_DEPRECATED_ATTRIBUTE void CC_DLL ccPointSize( GLfloat pointSize );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawColor4B( uint8_t r, uint8_t g, uint8_t b, uint8_t a );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawColor4F( float r, float g, float b, float a );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccPointSize( float pointSize );
 
 CC_DEPRECATED_ATTRIBUTE typedef Data CCData;
 CC_DEPRECATED_ATTRIBUTE typedef __Set CCSet;
