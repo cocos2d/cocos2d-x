@@ -403,6 +403,9 @@ if(APPLE)
     elseif(IOS)
         set_xcode_property(${APP_NAME} INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/Info.plist")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
+        if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
+            set_xcode_property(${APP_NAME} IPHONEOS_DEPLOYMENT_TARGET "8.0")
+        endif()
     endif()
 
     # For code-signing, set the DEVELOPMENT_TEAM:
