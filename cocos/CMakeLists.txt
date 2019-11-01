@@ -155,7 +155,7 @@ endif()
 
 if(XCODE)
     if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
-        set_xcode_property(${APP_NAME} IPHONEOS_DEPLOYMENT_TARGET "8.0")
+        set_xcode_property(cocos2d IPHONEOS_DEPLOYMENT_TARGET "8.0")
     endif()
 endif()
 
