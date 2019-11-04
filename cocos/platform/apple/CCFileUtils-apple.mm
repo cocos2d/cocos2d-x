@@ -315,6 +315,34 @@ bool FileUtilsApple::removeDirectory(const std::string& path) const
         return true;
 }
 
+std::string FileUtilsApple::getPathForDirectory(const std::string &dir, const std::string &resolutionDiretory, const std::string &searchPath) const
+{
+    auto path = searchPath + resolutionDiretory + dir;
+    
+    if(!path.empty() && path[path.length() -1] == '/') {
+        path.erase(path.end() - 1);
+    }
+    
+    if(path[0] == '/')
+    {
+        BOOL isDir = false;
+        if([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:dir.c_str()]
+                               isDirectory:&isDir]) {
+            return isDir ? path : "";
+        }
+    }
+    else
+    {
+        NSString *fullpath = [pimpl_->getBundle() pathForResource:[NSString stringWithUTF8String:path.c_str()]
+                                                           ofType:nil];
+        if(fullpath != nil) {
+            return [fullpath UTF8String];
+        }
+    }
+    return "";
+}
+
+
 std::string FileUtilsApple::getFullPathForFilenameWithinDirectory(const std::string& directory, const std::string& filename) const
 {
     if (directory[0] != '/')

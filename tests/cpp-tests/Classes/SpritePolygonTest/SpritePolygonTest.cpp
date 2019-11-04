@@ -345,7 +345,7 @@ void SpritePolygonTestSlider::changeEpsilon(cocos2d::Ref *pSender, cocos2d::ui::
 void SpritePolygonTestSlider::updateLabel(const cocos2d::Sprite *sp, const PolygonInfo &pinfo)
 {
     Label *label = (Label*)(sp->getChildByName(sp->getName()));
-    auto filename = sp->getName();
+    const auto& filename = sp->getName();
     auto size = pinfo.getRect().size/Director::getInstance()->getContentScaleFactor();
     label->setString(filename+"\nVerts: "+Value((int)pinfo.getVertCount()).asString()+ "\nPixels: "+Value((int)(pinfo.getArea()/(size.width*size.height)*100)).asString()+"%");
 }

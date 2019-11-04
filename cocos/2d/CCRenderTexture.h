@@ -159,7 +159,32 @@ public:
      * @param callback When the file is save finished,it will callback this function.
      * @return Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
+    bool saveToFileAsNonPMA(const std::string& filename, bool isRGBA = true, const std::function<void(RenderTexture*, const std::string&)>& callback = nullptr);
+
+
+    /** Saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
+     * Returns true if the operation is successful.
+     *
+     * @param filename The file name.
+     * @param isRGBA The file is RGBA or not.
+     * @param callback When the file is save finished,it will callback this function.
+     * @return Returns true if the operation is successful.
+     */
+    bool saveToFile(const std::string& filename, bool isRGBA = true, const std::function<void (RenderTexture*, const std::string&)>& callback = nullptr);
+
+    /** saves the texture into a file in non-PMA. The format could be JPG or PNG. The file will be saved in the Documents folder.
+        Returns true if the operation is successful.
+     * Notes: since v3.x, saveToFile will generate a custom command, which will be called in the following render->render().
+     * So if this function is called in a event handler, the actual save file will be called in the next frame. If we switch to a different scene, the game will crash.
+     * To solve this, add Director::getInstance()->getRenderer()->render(); after this function.
+     *
+     * @param filename The file name.
+     * @param format The image format.
+     * @param isRGBA The file is RGBA or not.
+     * @param callback When the file is save finished,it will callback this function.
+     * @return Returns true if the operation is successful.
+     */
+    bool saveToFileAsNonPMA(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void(RenderTexture*, const std::string&)>& callback);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
@@ -173,7 +198,7 @@ public:
      * @param callback When the file is save finished,it will callback this function.
      * @return Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
+    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, const std::function<void (RenderTexture*, const std::string&)>& callback = nullptr);
     
     /** Listen "come to background" message, and save render texture.
      * It only has effect on Android.
@@ -363,7 +388,7 @@ protected:
     void onClear();
     void onClearDepth();
 
-    void onSaveToFile(const std::string& fileName, bool isRGBA = true);
+    void onSaveToFile(const std::string& fileName, bool isRGBA = true, bool forceNonPMA = false);
 
     void setupDepthAndStencil(int powW, int powH);
     

@@ -273,7 +273,7 @@ namespace cocostudio
         return sprite;
     }
     
-    int SpriteReader::getResourceType(std::string key)
+    int SpriteReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

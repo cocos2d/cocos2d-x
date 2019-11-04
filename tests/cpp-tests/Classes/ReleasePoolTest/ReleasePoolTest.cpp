@@ -36,7 +36,7 @@ class TestObject : public Ref
 public:
     TestObject() : _name(""){}
     
-    TestObject(std::string name) : _name(name)
+    TestObject(std::string name) : _name(std::move(name))
     {
         CCLOG("TestObject:%s is created", _name.c_str());
     }

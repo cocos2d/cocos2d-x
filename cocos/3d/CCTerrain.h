@@ -369,7 +369,7 @@ public:
     /** set the alpha map*/
     void setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture);
     /**set the Detail Map */
-    void setDetailMap(unsigned int index, DetailMap detailMap);
+    void setDetailMap(unsigned int index, const DetailMap& detailMap);
 
     // Overrides, internal use only
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;

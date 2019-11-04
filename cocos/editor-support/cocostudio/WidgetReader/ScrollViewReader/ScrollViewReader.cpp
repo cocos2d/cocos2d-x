@@ -591,7 +591,7 @@ namespace cocostudio
         return scrollView;
     }
 
-    int ScrollViewReader::getResourceType(std::string key)
+    int ScrollViewReader::getResourceType(const std::string& key)
     {
         if (key == "Normal" || key == "Default")
         {

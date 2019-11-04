@@ -153,8 +153,9 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
     if( flags != 0 || _dirty || _quadsDirty || isViewProjectionUpdated)
     {
         Size s = Director::getInstance()->getVisibleSize();
-        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * 0.5f,
-                     Camera::getVisitingCamera()->getPositionY() - s.height * 0.5f,
+        const Vec2 &anchor = getAnchorPoint();
+        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * (anchor.x == 0.0f ? 0.5f : anchor.x),
+                     Camera::getVisitingCamera()->getPositionY() - s.height * (anchor.y == 0.0f ? 0.5f : anchor.y),
                      s.width,
                      s.height);
         
@@ -442,6 +443,11 @@ void TMXLayer::updatePrimitives()
     }
 }
 
+void TMXLayer::setOpacity(GLubyte opacity) {
+    Node::setOpacity(opacity);
+    _quadsDirty = true;
+}
+
 void TMXLayer::updateTotalQuads()
 {
     if(_quadsDirty)
@@ -453,6 +459,15 @@ void TMXLayer::updateTotalQuads()
         _indices.resize(6 * int(_layerSize.width * _layerSize.height));
         _tileToQuadIndex.resize(int(_layerSize.width * _layerSize.height),-1);
         _indicesVertexZOffsets.clear();
+
+        auto color = Color4B::WHITE;
+        color.a = getDisplayedOpacity();
+
+        if (_texture->hasPremultipliedAlpha()) {
+            color.r *= color.a / 255.0f;
+            color.g *= color.a / 255.0f;
+            color.b *= color.a / 255.0f;
+        }
         
         int quadIndex = 0;
         for(int y = 0; y < _layerSize.height; ++y)
@@ -551,11 +566,11 @@ void TMXLayer::updateTotalQuads()
                 quad.tl.texCoords.v = top;
                 quad.tr.texCoords.u = right;
                 quad.tr.texCoords.v = top;
-                
-                quad.bl.colors = Color4B::WHITE;
-                quad.br.colors = Color4B::WHITE;
-                quad.tl.colors = Color4B::WHITE;
-                quad.tr.colors = Color4B::WHITE;
+
+                quad.bl.colors = color;
+                quad.br.colors = color;
+                quad.tl.colors = color;
+                quad.tr.colors = color;
                 
                 ++quadIndex;
             }

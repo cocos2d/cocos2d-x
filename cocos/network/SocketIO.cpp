@@ -29,15 +29,16 @@
  ****************************************************************************/
 
 #include "network/SocketIO.h"
-#include "network/Uri.h"
-#include <algorithm>
-#include <sstream>
-#include <iterator>
-#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "network/WebSocket.h"
+#include "base/ccUTF8.h"
 #include "network/HttpClient.h"
+#include "network/Uri.h"
+#include "network/WebSocket.h"
+#include <algorithm>
+#include <iterator>
+#include <sstream>
+#include <utility>
 
 #include "json/rapidjson.h"
 #include "json/document-wrapper.h"
@@ -106,15 +107,15 @@ private:
 
 SocketIOPacket::SocketIOPacket() :_endpointseparator(""), _separator(":")
 {
-    _types.push_back("disconnect");
-    _types.push_back("connect");
-    _types.push_back("heartbeat");
-    _types.push_back("message");
-    _types.push_back("json");
-    _types.push_back("event");
-    _types.push_back("ack");
-    _types.push_back("error");
-    _types.push_back("noop");
+    _types.emplace_back("disconnect");
+    _types.emplace_back("connect");
+    _types.emplace_back("heartbeat");
+    _types.emplace_back("message");
+    _types.emplace_back("json");
+    _types.emplace_back("event");
+    _types.emplace_back("ack");
+    _types.emplace_back("error");
+    _types.emplace_back("noop");
 }
 
 SocketIOPacket::~SocketIOPacket()
@@ -235,20 +236,20 @@ SocketIOPacketV10x::SocketIOPacketV10x()
 {
     _separator = "";
     _endpointseparator = ",";
-    _types.push_back("disconnected");
-    _types.push_back("connected");
-    _types.push_back("heartbeat");
-    _types.push_back("pong");
-    _types.push_back("message");
-    _types.push_back("upgrade");
-    _types.push_back("noop");
-    _typesMessage.push_back("connect");
-    _typesMessage.push_back("disconnect");
-    _typesMessage.push_back("event");
-    _typesMessage.push_back("ack");
-    _typesMessage.push_back("error");
-    _typesMessage.push_back("binarevent");
-    _typesMessage.push_back("binaryack");
+    _types.emplace_back("disconnected");
+    _types.emplace_back("connected");
+    _types.emplace_back("heartbeat");
+    _types.emplace_back("pong");
+    _types.emplace_back("message");
+    _types.emplace_back("upgrade");
+    _types.emplace_back("noop");
+    _typesMessage.emplace_back("connect");
+    _typesMessage.emplace_back("disconnect");
+    _typesMessage.emplace_back("event");
+    _typesMessage.emplace_back("ack");
+    _typesMessage.emplace_back("error");
+    _typesMessage.emplace_back("binarevent");
+    _typesMessage.emplace_back("binaryack");
 }
 
 int SocketIOPacketV10x::typeAsNumber()const
@@ -1129,7 +1130,7 @@ void SIOClient::setConnected(bool connected)
     _connected = connected;
 }
 
-void SIOClient::on(const std::string& eventName, SIOEvent e)
+void SIOClient::on(const std::string& eventName, const SIOEvent& e)
 {
     _eventRegistry[eventName] = e;
 }

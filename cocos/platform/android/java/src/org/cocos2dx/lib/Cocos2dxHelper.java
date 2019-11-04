@@ -207,6 +207,39 @@ public class Cocos2dxHelper {
         
         return Cocos2dxHelper.sAssetsPath;
     }
+
+    //remove directory 
+    public static boolean removeDirectory(final String directory)
+    {
+        try{
+            File file = new File(directory);
+            recursionDeleteFile(file);
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+
+    private static void recursionDeleteFile(File file)
+    {
+        if (file.isFile()) {
+            file.delete();
+            return;
+        }
+        if (file.isDirectory()) {
+            File[] childrenFile = file.listFiles();
+            if (childrenFile == null || childrenFile.length == 0) {
+                file.delete();
+                return;
+            }
+            for (File f : childrenFile) {
+                recursionDeleteFile(f);
+            }
+            file.delete();
+        }
+    }
     
     public static ZipResourceFile getObbFile() {
         if (null == sOBBFile) {
@@ -486,6 +519,10 @@ public class Cocos2dxHelper {
     }
     
     public static void terminateProcess() {
+        // Remove it from recent apps.
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            sActivity.finishAndRemoveTask();
+        }
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 

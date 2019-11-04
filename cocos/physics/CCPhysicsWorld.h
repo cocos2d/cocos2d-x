@@ -167,7 +167,7 @@ public:
     * @param   end   A Vec2 object contains the end position of the ray.
     * @param   data   User defined data, it is passed to func. 
     */
-    void rayCast(PhysicsRayCastCallbackFunc func, const Vec2& start, const Vec2& end, void* data);
+    void rayCast(const PhysicsRayCastCallbackFunc& func, const Vec2& start, const Vec2& end, void* data);
     
     /**
     * Searches for physics shapes that contains in the rect. 
@@ -177,7 +177,7 @@ public:
     * @param   rect   A Rect object contains a rectangle's x, y, width and height.
     * @param   data   User defined data, it is passed to func. 
     */
-    void queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data);
+    void queryRect(const PhysicsQueryRectCallbackFunc& func, const Rect& rect, void* data);
     
     /**
     * Searches for physics shapes that contains the point. 
@@ -187,7 +187,7 @@ public:
     * @param   point   A Vec2 object contains the position of the point.
     * @param   data   User defined data, it is passed to func. 
     */
-    void queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& point, void* data);
+    void queryPoint(const PhysicsQueryPointCallbackFunc& func, const Vec2& point, void* data);
     
     /**
     * Get physics shapes that contains the point. 
@@ -326,7 +326,12 @@ public:
     * @return An integer number.
     */
     int getDebugDrawMask() { return _debugDrawMask; }
-    
+
+    /**
+    * Set the debug draw global Z order.
+    */
+    void setDebugDrawGlobalZOrder(float globalZOrder) { _debugDrawGlobalZOrder = globalZOrder; }
+
     /**
      * To control the step of physics.
      *
@@ -396,7 +401,8 @@ protected:
     bool _autoStep;
     DrawNode* _debugDraw;
     int _debugDrawMask;
-    
+    float _debugDrawGlobalZOrder;
+
     EventDispatcher* _eventDispatcher;
 
     Vector<PhysicsBody*> _delayAddBodies;

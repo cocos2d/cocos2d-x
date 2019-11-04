@@ -38,7 +38,7 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
     this->initShader();
 }
 
-void GLESDebugDraw::initShader( void )
+void GLESDebugDraw::initShader( )
 {
     mShaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
 

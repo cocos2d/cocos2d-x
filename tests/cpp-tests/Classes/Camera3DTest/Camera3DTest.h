@@ -106,7 +106,7 @@ public:
     virtual void onExit() override;
     // overrides
     virtual std::string title() const override;
-    void addNewSpriteWithCoords(cocos2d::Vec3 p,std::string fileName,bool playAnimation=false,float scale=1.0f,bool bindCamera=false);
+    void addNewSpriteWithCoords(cocos2d::Vec3 p,const std::string& fileName,bool playAnimation=false,float scale=1.0f,bool bindCamera=false);
 
     void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);

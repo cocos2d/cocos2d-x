@@ -940,6 +940,28 @@ void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorRepor
             report->filename ? report->filename : "<no filename=\"filename\">",
             (unsigned int) report->lineno,
             message);
+
+    if (cx)
+    {
+        JS::RootedValue errorContext(cx);
+        if (JS_GetPendingException(cx, &errorContext))
+        {
+            JS_ClearPendingException(cx);
+        }
+
+        if (errorContext.isObject())
+        {
+            std::string stackStr = "";
+            JS::RootedObject errObj(cx, errorContext.toObjectOrNull());
+            JS::RootedValue stack(cx);
+            if (JS_GetProperty(cx, errObj, "stack", &stack) && stack.isString())
+            {
+                JS::RootedString jsstackStr(cx, stack.toString());
+                stackStr = JS_EncodeStringToUTF8(cx, jsstackStr);
+                js_log("Stack: %s\n", stackStr.c_str());
+            }
+        }
+    }
 }
 
 

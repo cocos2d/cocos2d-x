@@ -26,11 +26,11 @@
 
 USING_NS_CC;
 
-Paddle::Paddle(void)
+Paddle::Paddle()
 {
 }
 
-Paddle::~Paddle(void)
+Paddle::~Paddle()
 {
 }
 

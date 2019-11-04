@@ -76,11 +76,11 @@ CocosNodeTests::CocosNodeTests()
     ADD_TEST_CASE(Issue16735Test);
 }
 
-TestCocosNodeDemo::TestCocosNodeDemo(void)
+TestCocosNodeDemo::TestCocosNodeDemo()
 {
 }
 
-TestCocosNodeDemo::~TestCocosNodeDemo(void)
+TestCocosNodeDemo::~TestCocosNodeDemo()
 {
 }
 
@@ -1384,14 +1384,14 @@ void NodeNameTest::test(float dt)
     // search from parent
     // name is xxx/..
     i = 0;
-    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+    parent->getChildByName("node1")->enumerateChildren("node[[:digit:]]+/node/..", [&i](Node* node) -> bool {
         ++i;
         return true;
     });
     CCAssert(i == 1, "");
     
     i = 0;
-    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+    parent->getChildByName("node1")->enumerateChildren("node[[:digit:]]+/node/..", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
@@ -1430,11 +1430,11 @@ void NodeNameTest::test(float dt)
     CCAssert(i == 1, "");
     
     i = 0;
-    parent->enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
+    parent->getChildByName("node1")->enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
-    CCAssert(i == 100, "");
+    CCAssert(i == 110, "");
     
     // utils::findChildren()
     

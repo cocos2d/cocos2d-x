@@ -812,7 +812,7 @@ public:
      * @param name The name to search for, supports c++11 regular expression.
      * Search syntax options:
      * `//`: Can only be placed at the begin of the search string. This indicates that it will search recursively.
-     * `..`: The search should move up to the node's parent. Can only be placed at the end of string.
+     * `/..`: The search should move up to the node's parent. Can only be placed at the end of string.
      * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children.
      *
      * @code
@@ -834,7 +834,7 @@ public:
      *
      * @since v3.2
      */
-    virtual void enumerateChildren(const std::string &name, std::function<bool(Node* node)> callback) const;
+    virtual void enumerateChildren(const std::string &name, const std::function<bool(Node* node)>& callback) const;
     /**
      * Returns the array of the node's children.
      *
@@ -967,7 +967,7 @@ public:
      *
      * @return An integer that identifies the node.
      *
-     * Please use `getTag()` instead.
+     * Please use `getName()` instead.
      */
      virtual int getTag() const;
     /**
@@ -1886,8 +1886,8 @@ protected:
     virtual void disableCascadeColor();
     virtual void updateColor() {}
     
-    bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
-    bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
+    bool doEnumerate(std::string name, const std::function<bool (Node *)>& callback) const;
+    bool doEnumerateRecursive(const Node* node, const std::string &name, const std::function<bool (Node *)>& callback) const;
     
     //check whether this camera mask is visible by the current visiting camera
     bool isVisitableByVisitingCamera() const;

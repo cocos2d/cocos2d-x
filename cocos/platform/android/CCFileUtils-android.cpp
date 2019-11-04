@@ -344,6 +344,14 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
     return fileList;
 }
 
+bool FileUtilsAndroid::removeDirectory(const std::string& path) const
+{
+    if (path.empty())
+        return false;
+    
+    return removeDirectoryJNI(path.c_str());
+}
+
 FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer) const
 {
     static const std::string apkprefix("assets/");

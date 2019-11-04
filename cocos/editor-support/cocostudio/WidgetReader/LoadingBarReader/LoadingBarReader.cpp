@@ -355,7 +355,7 @@ namespace cocostudio
         return loadingBar;
     }
     
-    int LoadingBarReader::getResourceType(std::string key)
+    int LoadingBarReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

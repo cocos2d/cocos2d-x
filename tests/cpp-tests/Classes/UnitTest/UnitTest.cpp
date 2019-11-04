@@ -502,9 +502,9 @@ void TemplateMapTest::onEnter()
     CCASSERT(mapForErase.size() == 18, "mapForErase's size is 18.");
 
     std::vector<std::string> itemsToRemove;
-    itemsToRemove.push_back("2");
-    itemsToRemove.push_back("3");
-    itemsToRemove.push_back("4");
+    itemsToRemove.emplace_back("2");
+    itemsToRemove.emplace_back("3");
+    itemsToRemove.emplace_back("4");
     mapForErase.erase(itemsToRemove);
     CCASSERT(mapForErase.size() == 15, "mapForErase's size is 15.");
 

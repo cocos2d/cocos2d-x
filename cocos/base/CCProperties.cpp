@@ -95,7 +95,7 @@ Properties* Properties::createNonRefCounted(const std::string& url)
     }
 
     // Calculate the file and full namespace path from the specified url.
-    std::string urlString = url;
+    const std::string& urlString = url;
     std::string fileString;
     std::vector<std::string> namespacePath;
     calculateNamespacePath(urlString, fileString, namespacePath);
@@ -235,7 +235,7 @@ void Properties::readProperties()
                 else
                 {
                     // Normal name/value pair
-                    _properties.push_back(Property(name, value));
+                    _properties.emplace_back(name, value);
                 }
             }
             else
@@ -383,11 +383,11 @@ void Properties::readProperties()
                             // Store "name value" as a name/value pair, or even just "name".
                             if (value != NULL)
                             {
-                                _properties.push_back(Property(name, value));
+                                _properties.emplace_back(name, value);
                             }
                             else
                             {
-                                _properties.push_back(Property(name, ""));
+                                _properties.emplace_back(name, "");
                             }
                         }
                     }
@@ -832,7 +832,7 @@ bool Properties::setString(const char* name, const char* value)
         }
 
         // There is no property with this name, so add one
-        _properties.push_back(Property(name, value ? value : ""));
+        _properties.emplace_back(name, value ? value : "");
     }
     else
     {

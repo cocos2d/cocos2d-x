@@ -31,29 +31,52 @@ matrix:
       sudo: required
     # android ndk-build
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=android_cpp_ndk-build
       language: android
       sudo: required
     # android_lua ndk-build
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=android_lua_ndk-build
       language: android
       sudo: required
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
     # android cmake
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=android_cpp_cmake
       language: android
       sudo: required
     # android_lua cmake
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=android_lua_cmake
       language: android
       sudo: required
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
     # android_js cmake
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=android_js_cmake
       language: android
       sudo: required
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
     # mac
     - os: osx
       env: BUILD_TARGET=mac
@@ -67,6 +90,7 @@ matrix:
       osx_image: xcode9.3
       sudo: required
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=android_cocos_new_cpp_test
       language: android
       sudo: required
@@ -80,6 +104,9 @@ script:
 - tools/travis-scripts/run-script.sh
 before_install:
 - tools/travis-scripts/before-install.sh
+
+jdk:
+  - oraclejdk8
 
 cache:
   bundler: true

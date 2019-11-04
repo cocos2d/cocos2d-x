@@ -271,6 +271,7 @@ void PhysicsWorld::debugDraw()
     {
         _debugDraw = DrawNode::create();
         _debugDraw->setIsolated(true);
+        _debugDraw->setGlobalZOrder(_debugDrawGlobalZOrder);
         _debugDraw->retain();
         Director::getInstance()->getRunningScene()->addChild(_debugDraw);
     }
@@ -395,7 +396,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     _eventDispatcher->dispatchEvent(&contact);
 }
 
-void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, const Vec2& point2, void* data)
+void PhysicsWorld::rayCast(const PhysicsRayCastCallbackFunc& func, const Vec2& point1, const Vec2& point2, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -418,7 +419,7 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, 
     }
 }
 
-void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data)
+void PhysicsWorld::queryRect(const PhysicsQueryRectCallbackFunc& func, const Rect& rect, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -439,7 +440,7 @@ void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect
     }
 }
 
-void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& point, void* data)
+void PhysicsWorld::queryPoint(const PhysicsQueryPointCallbackFunc& func, const Vec2& point, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -990,6 +991,7 @@ PhysicsWorld::PhysicsWorld()
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
 , _eventDispatcher(nullptr)
+, _debugDrawGlobalZOrder(0.f)
 {
     
 }

@@ -31,6 +31,8 @@
 #else // from our embedded sources
 #include "unzip.h"
 #endif
+#include "ioapi_mem.h"
+#include <memory>
 
 #include <zlib.h>
 #include <assert.h>
@@ -42,11 +44,9 @@
 #include "platform/CCFileUtils.h"
 #include <map>
 
-// FIXME: Other platforms should use upstream minizip like mingw-w64  
-#ifdef MINIZIP_FROM_SYSTEM
+// minizip 1.2.0 is same with other platforms
 #define unzGoToFirstFile64(A,B,C,D) unzGoToFirstFile2(A,B,C,D, NULL, 0, NULL, 0)
 #define unzGoToNextFile64(A,B,C,D) unzGoToNextFile2(A,B,C,D, NULL, 0, NULL, 0)
-#endif
 
 NS_CC_BEGIN
 
@@ -267,7 +267,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
     unsigned int totalBufferSize = bufferSize;
     
     *out = (unsigned char*)malloc( bufferSize );
-    if( ! out )
+    if(*out == NULL)
     {
         CCLOG("cocos2d: ZipUtils: out of memory");
         return -1;
@@ -511,6 +511,7 @@ class ZipFilePrivate
 {
 public:
     unzFile zipFile;
+    std::unique_ptr<ourmemory_s> memfs;
     
     // std::unordered_map is faster if available on the platform
     typedef std::unordered_map<std::string, struct ZipEntryInfo> FileListContainer;
@@ -741,10 +742,17 @@ int ZipFile::getCurrentFileInfo(std::string *filename, unz_file_info *info)
 bool ZipFile::initWithBuffer(const void *buffer, uLong size)
 {
     if (!buffer || size == 0) return false;
+
+    zlib_filefunc_def memory_file = { 0 };
     
-    _data->zipFile = unzOpenBuffer(buffer, size);
+    std::unique_ptr<ourmemory_t> memfs(new(std::nothrow) ourmemory_t{ (char*)const_cast<void*>(buffer), static_cast<uint32_t>(size), 0, 0, 0 });
+    if (!memfs) return false;
+    fill_memory_filefunc(&memory_file, memfs.get());
+    
+    _data->zipFile = unzOpen2(nullptr, &memory_file);
     if (!_data->zipFile) return false;
-    
+    _data->memfs = std::move(memfs);
+
     setFilter(emptyFilename);
     return true;
 }

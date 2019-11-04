@@ -25,10 +25,11 @@
 
 #include "ui/UIRichText.h"
 
-#include <sstream>
-#include <vector>
-#include <locale>
 #include <algorithm>
+#include <locale>
+#include <sstream>
+#include <utility>
+#include <vector>
 
 #include "platform/CCFileUtils.h"
 #include "platform/CCApplication.h"
@@ -50,14 +51,14 @@ class ListenerComponent : public Component
 public:
     static const std::string COMPONENT_NAME;    /*!< component name */
 
-    static ListenerComponent* create(Node* parent, const std::string& url, const RichText::OpenUrlHandler handleOpenUrl = nullptr)
+    static ListenerComponent* create(Node* parent, const std::string& url, const RichText::OpenUrlHandler& handleOpenUrl = nullptr)
     {
         auto component = new (std::nothrow) ListenerComponent(parent, url, handleOpenUrl);
         component->autorelease();
         return component;
     }
 
-    explicit ListenerComponent(Node* parent, const std::string& url, const RichText::OpenUrlHandler handleOpenUrl)
+    explicit ListenerComponent(Node* parent, const std::string& url, const RichText::OpenUrlHandler& handleOpenUrl)
     : _parent(parent)
     , _url(url)
     , _handleOpenUrl(handleOpenUrl)
@@ -346,7 +347,7 @@ public:
     
     void pushBackElement(RichElement* element);
     
-    static void setTagDescription(const std::string& tag, bool isFontElement, RichText::VisitEnterHandler handleVisitEnter);
+    static void setTagDescription(const std::string& tag, bool isFontElement, const RichText::VisitEnterHandler& handleVisitEnter);
     
     static void removeTagDescription(const std::string& tag);
     
@@ -820,7 +821,7 @@ void MyXMLVisitor::pushBackElement(RichElement* element)
     _richText->pushBackElement(element);
 }
 
-void MyXMLVisitor::setTagDescription(const std::string& tag, bool isFontElement, RichText::VisitEnterHandler handleVisitEnter)
+void MyXMLVisitor::setTagDescription(const std::string& tag, bool isFontElement, const RichText::VisitEnterHandler& handleVisitEnter)
 {
     MyXMLVisitor::_tagTables[tag] = {isFontElement, handleVisitEnter};
 }
@@ -1325,7 +1326,7 @@ std::string RichText::stringWithColor4B(const cocos2d::Color4B& color4b)
     return std::string(buf, 9);
 }
 
-void RichText::setTagDescription(const std::string& tag, bool isFontElement, VisitEnterHandler handleVisitEnter)
+void RichText::setTagDescription(const std::string& tag, bool isFontElement, const VisitEnterHandler& handleVisitEnter)
 {
     MyXMLVisitor::setTagDescription(tag, isFontElement, handleVisitEnter);
 }

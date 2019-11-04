@@ -157,7 +157,7 @@ class TestController;
 class TestSuite : public TestBase
 {
 public:
-    void addTestCase(const std::string& testName, std::function<cocos2d::Scene*()> callback);
+    void addTestCase(const std::string& testName, const std::function<cocos2d::Scene*()>& callback);
 
     virtual void restartCurrTest();
     virtual void enterNextTest();
@@ -181,7 +181,7 @@ class TestList : public TestBase, public cocos2d::extension::TableViewDataSource
 public:
     TestList();
 
-    void addTest(const std::string& testName, std::function<TestBase*()> callback);
+    void addTest(const std::string& testName, const std::function<TestBase*()>& callback);
 
     virtual void runThisTest() override;
 

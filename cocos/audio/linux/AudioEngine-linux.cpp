@@ -72,8 +72,6 @@ AudioEngineImpl::AudioEngineImpl()
 AudioEngineImpl::~AudioEngineImpl()
 {
     FMOD_RESULT result;
-    result = pSystem->close();
-    ERRCHECKWITHEXIT(result);
     result = pSystem->release();
     ERRCHECKWITHEXIT(result);
 }
@@ -109,7 +107,8 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath, bool loop, float vo
     int id = preload(fileFullPath, nullptr);
     if (id >= 0) {
         mapChannelInfo[id].loop=loop;
-        mapChannelInfo[id].channel->setPaused(true);
+        // channel is null here. Don't dereference it. It's only set in resume(id).
+        //mapChannelInfo[id].channel->setPaused(true);
         mapChannelInfo[id].volume = volume;
         AudioEngine::_audioIDInfoMap[id].state = AudioEngine::AudioState::PAUSED;
         resume(id);
@@ -287,8 +286,7 @@ void AudioEngineImpl::uncache(const std::string& path)
         }
         mapSound.erase(it);
     }
-    if (mapId.find(path) != mapId.end())
-        mapId.erase(path);
+    mapId.erase(path);
 }
 
 void AudioEngineImpl::uncacheAll()
@@ -303,7 +301,7 @@ void AudioEngineImpl::uncacheAll()
     mapId.clear();
 }
 
-int AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback)
+int AudioEngineImpl::preload(const std::string& filePath, const std::function<void(bool isSuccess)>& callback)
 {
     FMOD::Sound * sound = findSound(filePath);
     if (!sound) {
@@ -320,10 +318,9 @@ int AudioEngineImpl::preload(const std::string& filePath, std::function<void(boo
     }
 
     int id = static_cast<int>(mapChannelInfo.size()) + 1;
-    if (mapId.find(filePath) == mapId.end())
-        mapId.insert({filePath, id});
-    else
-        id = mapId.at(filePath);
+    // std::map::insert returns std::pair<iter, bool>
+    auto channelInfoIter = mapId.insert({filePath, id});
+    id = channelInfoIter.first->second;
 
     auto& chanelInfo = mapChannelInfo[id];
     chanelInfo.sound = sound;

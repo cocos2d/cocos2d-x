@@ -717,7 +717,7 @@ void TestGetContents::onEnter()
 
         // Text read string in text mode
         std::string ts = fs->getStringFromFile(_generatedFile);
-        if (ts != "\r\n\r\n")
+        if (strcmp(ts.c_str(), "\r\n\r\n")!=0)
             return std::string("failed: read as zero terminated string");
 
 
@@ -1413,7 +1413,7 @@ void TestListFiles::onEnter()
     std::vector<std::string> list = FileUtils::getInstance()->listFiles (defaultPath);
 
     char cntBuffer[200] = { 0 };
-    snprintf(cntBuffer, 200, "'fonts/' %d, $defaultResourceRootPath %d",listFonts.size(), list.size());
+    snprintf(cntBuffer, 200, "'fonts/' %zu, $defaultResourceRootPath %zu",listFonts.size(), list.size());
 
     for(int i=0;i<listFonts.size();i++)
     {

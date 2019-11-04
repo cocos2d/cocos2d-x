@@ -31,16 +31,17 @@
 #include "2d/CCSpriteFrameCache.h"
 #include "renderer/CCTextureCache.h"
 
+#include "editor-support/cocosbuilder/CCBAnimationManager.h"
+#include "editor-support/cocosbuilder/CCBKeyframe.h"
+#include "editor-support/cocosbuilder/CCBMemberVariableAssigner.h"
 #include "editor-support/cocosbuilder/CCBReader.h"
+#include "editor-support/cocosbuilder/CCBSelectorResolver.h"
+#include "editor-support/cocosbuilder/CCBSequenceProperty.h"
 #include "editor-support/cocosbuilder/CCNodeLoader.h"
 #include "editor-support/cocosbuilder/CCNodeLoaderLibrary.h"
 #include "editor-support/cocosbuilder/CCNodeLoaderListener.h"
-#include "editor-support/cocosbuilder/CCBMemberVariableAssigner.h"
-#include "editor-support/cocosbuilder/CCBSelectorResolver.h"
-#include "editor-support/cocosbuilder/CCBAnimationManager.h"
-#include "editor-support/cocosbuilder/CCBSequenceProperty.h"
-#include "editor-support/cocosbuilder/CCBKeyframe.h"
 #include <sstream>
+#include <utility>
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -191,7 +192,7 @@ CCBReader::CCBAnimationManagerMapPtr CCBReader::getAnimationManagers()
     return _animationManagers;
 }
 
-void CCBReader::setAnimationManagers(CCBAnimationManagerMapPtr x)
+void CCBReader::setAnimationManagers(const CCBAnimationManagerMapPtr& x)
 {
     _animationManagers = x;
 }
@@ -255,7 +256,7 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Ref *pOwner, co
 
 Node* CCBReader::readNodeGraphFromData(std::shared_ptr<cocos2d::Data> data, Ref *pOwner, const Size &parentSize)
 {
-    _data = data;
+    _data = std::move(data);
     _bytes =_data->getBytes();
     _currentByte = 0;
     _currentBit = 0;
@@ -320,7 +321,7 @@ void CCBReader::cleanUpNodeGraph(Node *node)
     }
 }
 
-Node* CCBReader::readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am)
+Node* CCBReader::readFileWithCleanUp(bool bCleanUp, const CCBAnimationManagerMapPtr& am)
 {
     if (! readHeader())
     {
@@ -1069,7 +1070,7 @@ Vector<CCBAnimationManager*>& CCBReader::getAnimationManagersForNodes()
     return _animationManagersForNodes;
 }
 
-void CCBReader::addOwnerOutletName(std::string name)
+void CCBReader::addOwnerOutletName(const std::string& name)
 {
     _ownerOutletNames.push_back(name);
 }
