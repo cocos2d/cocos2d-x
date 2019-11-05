@@ -22,8 +22,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "extensions/Particle3D/CCParticleSystem3D.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "extensions/Particle3D/CCParticle3DRender.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
