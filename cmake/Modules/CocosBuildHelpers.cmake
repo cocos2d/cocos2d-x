@@ -325,4 +325,3 @@ function(cocos_use_pkg target pkg)
     endif()
 
 endfunction()
-
