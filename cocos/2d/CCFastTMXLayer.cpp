@@ -36,6 +36,8 @@ THE SOFTWARE.
 
  */
 #include "2d/CCFastTMXLayer.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCSprite.h"
 #include "2d/CCCamera.h"

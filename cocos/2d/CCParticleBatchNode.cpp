@@ -29,6 +29,8 @@
  *
  */
 #include "2d/CCParticleBatchNode.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "2d/CCGrid.h"
 #include "2d/CCParticleSystem.h"
 #include "renderer/CCTextureCache.h"

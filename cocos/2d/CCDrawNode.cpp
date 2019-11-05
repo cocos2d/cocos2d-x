@@ -23,6 +23,8 @@
  */
 
 #include "2d/CCDrawNode.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
 #include "renderer/CCRenderer.h"
