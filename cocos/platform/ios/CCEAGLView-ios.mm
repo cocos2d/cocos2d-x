@@ -77,6 +77,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @interface CCEAGLView ()
 @property (nonatomic) CCInputView* textInputView;
+@property(nonatomic) BOOL isKeyboardShown;
+@property(nonatomic, copy) NSNotification* keyboardShowNotification;
+@property(nonatomic, assign) CGRect originalRect;
 @end
 
 @implementation CCEAGLView
@@ -84,6 +87,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
 @synthesize multiSampling=multiSampling_;
+@synthesize keyboardShowNotification = keyboardShowNotification_;
+@synthesize isKeyboardShown;
+@synthesize originalRect = originalRect_;
 
 + (Class) layerClass
 {
@@ -126,6 +132,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     {
         self.textInputView = [[CCInputView alloc] initWithFrame:frame];
 
+        originalRect_ = self.frame;
+        self.keyboardShowNotification = nil;
         if ([self respondsToSelector:@selector(setContentScaleFactor:)])
         {
             self.contentScaleFactor = [[UIScreen mainScreen] scale];
@@ -341,16 +349,206 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(BOOL) isKeyboardShown
 {
-    return [self.textInputView isKeyboardShown];
+    return self.isKeyboardShown;
 }
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis
 {
-    
+    [UIView beginAnimations:nil context:nullptr];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDuration:duration];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        
+        //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::GLView::getInstance()->getScaleY());
+        
+        if (dis < 0.0f) dis = 0.0f;
+
+        auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+        dis *= glview->getScaleY();
+        
+        dis /= self.contentScaleFactor;
+
+    #if defined(CC_TARGET_OS_TVOS)
+        self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+    #else
+        switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
+        {
+            case UIInterfaceOrientationPortrait:
+                self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+                break;
+                
+            case UIInterfaceOrientationPortraitUpsideDown:
+                self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y + dis, originalRect_.size.width, originalRect_.size.height);
+                break;
+                
+            case UIInterfaceOrientationLandscapeLeft:
+                self.frame = CGRectMake(originalRect_.origin.x - dis, originalRect_.origin.y , originalRect_.size.width, originalRect_.size.height);
+                break;
+                
+            case UIInterfaceOrientationLandscapeRight:
+                self.frame = CGRectMake(originalRect_.origin.x + dis, originalRect_.origin.y , originalRect_.size.width, originalRect_.size.height);
+                break;
+                
+            default:
+                break;
+        }
+    #endif
+        
+        [UIView commitAnimations];
 }
 
 -(void) doAnimationWhenAnotherEditBeClicked
 {
+    if (self.keyboardShowNotification != nil)
+    {
+        [[NSNotificationCenter defaultCenter]postNotification:self.keyboardShowNotification];
+    }
+}
+
+#pragma UIKeyboard notification
+
+#if !defined(CC_TARGET_OS_TVOS)
+namespace {
+    UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)
+    {
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        {
+            statusBarOrientation = UIInterfaceOrientationPortrait;
+        }
+        return statusBarOrientation;
+    }
+}
+#endif
+
+- (void)didMoveToWindow
+{
+#if !defined(CC_TARGET_OS_TVOS)
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardDidHideNotification object:nil];
+#endif
+}
+
+- (void)onUIKeyboardNotification:(NSNotification *)notif
+{
+    NSString * type = notif.name;
+    
+    NSDictionary* info = [notif userInfo];
+    CGRect begin = [self convertRect:
+                    [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue]
+                            fromView:self];
+    CGRect end = [self convertRect:
+                  [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue]
+                          fromView:self];
+    double aniDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    CGSize viewSize = self.frame.size;
+
+    CGFloat tmp;
+    switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
+    {
+        case UIInterfaceOrientationPortrait:
+            begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
+            end.origin.y = viewSize.height - end.origin.y - end.size.height;
+            break;
+            
+        case UIInterfaceOrientationPortraitUpsideDown:
+            begin.origin.x = viewSize.width - (begin.origin.x + begin.size.width);
+            end.origin.x = viewSize.width - (end.origin.x + end.size.width);
+            break;
+            
+        case UIInterfaceOrientationLandscapeLeft:
+            std::swap(begin.size.width, begin.size.height);
+            std::swap(end.size.width, end.size.height);
+            std::swap(viewSize.width, viewSize.height);
+            
+            tmp = begin.origin.x;
+            begin.origin.x = begin.origin.y;
+            begin.origin.y = viewSize.height - tmp - begin.size.height;
+            tmp = end.origin.x;
+            end.origin.x = end.origin.y;
+            end.origin.y = viewSize.height - tmp - end.size.height;
+            break;
+            
+        case UIInterfaceOrientationLandscapeRight:
+            std::swap(begin.size.width, begin.size.height);
+            std::swap(end.size.width, end.size.height);
+            std::swap(viewSize.width, viewSize.height);
+            
+            tmp = begin.origin.x;
+            begin.origin.x = begin.origin.y;
+            begin.origin.y = tmp;
+            tmp = end.origin.x;
+            end.origin.x = end.origin.y;
+            end.origin.y = tmp;
+            break;
+            
+        default:
+            break;
+    }
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleX = glview->getScaleX();
+    float scaleY = glview->getScaleY();
+    
+    // Convert to pixel coordinate
+    begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
+    end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
+    
+    float offestY = glview->getViewPortRect().origin.y;
+    if (offestY < 0.0f)
+    {
+        begin.origin.y += offestY;
+        begin.size.height -= offestY;
+        end.size.height -= offestY;
+    }
+    
+    // Convert to design coordinate
+    begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
+    end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
+
+    
+    cocos2d::IMEKeyboardNotificationInfo notiInfo;
+    notiInfo.begin = cocos2d::Rect(begin.origin.x,
+                                     begin.origin.y,
+                                     begin.size.width,
+                                     begin.size.height);
+    notiInfo.end = cocos2d::Rect(end.origin.x,
+                                   end.origin.y,
+                                   end.size.width,
+                                   end.size.height);
+    notiInfo.duration = (float)aniDuration;
+    
+    cocos2d::IMEDispatcher* dispatcher = cocos2d::IMEDispatcher::sharedDispatcher();
+    if (UIKeyboardWillShowNotification == type)
+    {
+        dispatcher->dispatchKeyboardWillShow(notiInfo);
+    }
+    else if (UIKeyboardDidShowNotification == type)
+    {
+        self.isKeyboardShown = YES;
+        dispatcher->dispatchKeyboardDidShow(notiInfo);
+    }
+    else if (UIKeyboardWillHideNotification == type)
+    {
+        dispatcher->dispatchKeyboardWillHide(notiInfo);
+    }
+    else if (UIKeyboardDidHideNotification == type)
+    {
+        self.isKeyboardShown = NO;
+        dispatcher->dispatchKeyboardDidHide(notiInfo);
+    }
 }
 
 @end
