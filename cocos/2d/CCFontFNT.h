@@ -30,6 +30,8 @@
 /// @cond DO_NOT_SHOW
 
 #include "2d/CCFont.h"
+#include <set>
+#include <unordered_map>
 
 NS_CC_BEGIN
 

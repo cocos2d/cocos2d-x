@@ -34,8 +34,6 @@
 #include "renderer/CCTextureCache.h"
 
 #include <cmath>
-#include <set>
-#include <unordered_map>
 
 NS_CC_BEGIN
 
