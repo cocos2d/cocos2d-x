@@ -114,7 +114,7 @@ namespace {
         if (Director::getInstance()->getOpenGLView())
         {
             HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
-            PostMessage(hwnd,
+            SendMessage(hwnd,
                         WM_COPYDATA,
                         (WPARAM)(HWND)hwnd,
                         (LPARAM)(LPVOID)&myCDS);
@@ -166,7 +166,9 @@ void log(const char * format, ...)
             delete[] buf;
         }
     } while (true);
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
     buf[nret] = '\n';
+#endif
     buf[++nret] = '\0';
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -189,8 +191,11 @@ void log(const char * format, ...)
         MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
         OutputDebugStringW(wszBuf);
         WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, tempBuf, sizeof(tempBuf), nullptr, FALSE);
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32     
         printf("%s", tempBuf);
-
+#else
+        printf("%s\n", tempBuf);
+#endif
         pos += dataSize;
 
     } while (pos < len);

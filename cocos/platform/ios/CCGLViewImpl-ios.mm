@@ -224,11 +224,11 @@ void GLViewImpl::setIMEKeyboardState(bool open)
 
     if (open)
     {
-        [eaglview becomeFirstResponder];
+        [eaglview showKeyboard];
     }
     else
     {
-        [eaglview resignFirstResponder];
+        [eaglview hideKeyboard];
     }
 }
 

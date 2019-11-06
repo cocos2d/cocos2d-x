@@ -305,10 +305,11 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 
 #if CC_ENABLE_PREMULTIPLIED_ALPHA != 0
         _sprite->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);
+        _sprite->setOpacityModifyRGB(true);
 #else
         _sprite->setBlendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED);
+        _sprite->setOpacityModifyRGB(false);
 #endif
-        _sprite->setOpacityModifyRGB(true);
 
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
         glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
