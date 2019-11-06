@@ -29,12 +29,14 @@ USING_NS_CC;
 #include <stdlib.h>
 #include <float.h>
 #include <set>
+#include <stddef.h> // offsetof
 #include "renderer/CCRenderer.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/Device.h"
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Buffer.h"
 #include "base/CCDirector.h"
+#include "base/ccTypes.h"
 #include "base/CCEventType.h"
 #include "2d/CCCamera.h"
 #include "platform/CCImage.h"

@@ -23,8 +23,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "extensions/Particle3D/PU/CCPUBillboardChain.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 #include "base/CCDirector.h"
 #include "renderer/ccShaders.h"

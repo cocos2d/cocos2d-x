@@ -30,7 +30,8 @@
 #include <spine/SkeletonTwoColorBatch.h>
 #include <spine/extension.h>
 #include <algorithm>
-
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "base/ccUtils.h"
 
 USING_NS_CC;

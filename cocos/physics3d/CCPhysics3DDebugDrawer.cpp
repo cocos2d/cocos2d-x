@@ -22,8 +22,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "physics3d/CCPhysics3D.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "base/CCConfiguration.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"

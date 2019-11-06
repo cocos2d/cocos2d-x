@@ -24,6 +24,8 @@
 
  ****************************************************************************/
 #include "2d/CCCameraBackgroundBrush.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "2d/CCCamera.h"
 #include "base/ccMacros.h"
 #include "base/ccUtils.h"

@@ -25,9 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #pragma once
 
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-
 #include <assert.h>
 
 #define CC_DLL 
@@ -45,5 +42,3 @@ THE SOFTWARE.
 #define NULL    ((void *)0)
 #endif
 #endif
-
-#endif // CC_PLATFORM_IOS

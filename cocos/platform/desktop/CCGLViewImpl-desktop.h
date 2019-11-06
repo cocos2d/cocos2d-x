@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #pragma once
 
+#include "platform/CCGL.h" 
 #include "base/CCRef.h"
 #include "platform/CCCommon.h"
 #include "platform/CCGLView.h"
