@@ -35,6 +35,7 @@
 
 USING_NS_CC;
 #define EVENT_AFTER_DRAW_RESET_POSITION "director_after_draw"
+#define EVENT_ON_DIRECTOR_RESET "director_reset"
 using std::max;
 #define INITIAL_SIZE (10000)
 #define MAX_VERTICES 64000
@@ -182,6 +183,10 @@ SkeletonTwoColorBatch::SkeletonTwoColorBatch () {
 	Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_AFTER_DRAW_RESET_POSITION, [this](EventCustom* eventCustom){
 		this->update(0);
 	});;
+	// when director is reset, all event lisners will be removed, so SkeletonTwoColorBatch::update won't been invoked anymore.
+	Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_ON_DIRECTOR_RESET, [this](EventCustom* eventCustom){
+		this->destroyInstance();
+	});
 	
 	_twoColorTintShader = cocos2d::GLProgram::createWithByteArrays(TWO_COLOR_TINT_VERTEX_SHADER, TWO_COLOR_TINT_FRAGMENT_SHADER);
 	_twoColorTintShaderState = GLProgramState::getOrCreateWithGLProgram(_twoColorTintShader);
@@ -199,6 +204,7 @@ SkeletonTwoColorBatch::SkeletonTwoColorBatch () {
 
 SkeletonTwoColorBatch::~SkeletonTwoColorBatch () {
 	Director::getInstance()->getEventDispatcher()->removeCustomEventListeners(EVENT_AFTER_DRAW_RESET_POSITION);
+	Director::getInstance()->getEventDispatcher()->removeCustomEventListeners(EVENT_ON_DIRECTOR_RESET);
 	
 	spUnsignedShortArray_dispose(_indices);
 	
@@ -207,7 +213,7 @@ SkeletonTwoColorBatch::~SkeletonTwoColorBatch () {
 		_commandsPool[i] = nullptr;
 	}
 	_twoColorTintShader->release();
-	delete _vertexBuffer;
+	delete[] _vertexBuffer;
 	delete _indexBuffer;
 }
 
