@@ -109,6 +109,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic,readonly) CGSize surfaceSize;
 
 @property(nonatomic,readwrite) BOOL multiSampling;
+@property(nonatomic, readonly) BOOL isKeyboardShown;
 
 
 /** CCEAGLView uses double-buffer. This method swaps the buffers */
@@ -125,5 +126,4 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(void) showKeyboard;
 -(void) hideKeyboard;
--(BOOL) isKeyboardShown; 
 @end
