@@ -30,6 +30,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Gravity;
@@ -38,6 +39,9 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cocos2dxEditBox extends EditText {
     /**
@@ -105,6 +109,10 @@ public class Cocos2dxEditBox extends EditText {
      */
     private final int kEditBoxInputFlagLowercaseAllCharacters = 5;
 
+    private final int kEditBoxInputRestrictionAlNum = 1 << 2;
+    private final int kEditBoxInputRestrictionSpace = 1 << 3;
+    private final int kEditBoxInputRestrictionPunct = 1 << 4;
+
     private final int kKeyboardReturnTypeDefault = 0;
     private final int kKeyboardReturnTypeDone = 1;
     private final int kKeyboardReturnTypeSend = 2;
@@ -126,7 +134,12 @@ public class Cocos2dxEditBox extends EditText {
 
     private int mInputFlagConstraints; 
     private int mInputModeConstraints;
+
+    private int mInputRestrictionConstraints;
+    private int mUneditableTextLength;
+
     private  int mMaxLength;
+    private  InputFilter.LengthFilter mLengthFilter;
 
     public Boolean getChangedTextProgrammatically() {
         return changedTextProgrammatically;
@@ -172,11 +185,42 @@ public class Cocos2dxEditBox extends EditText {
     public  void setMaxLength(int maxLength){
         this.mMaxLength = maxLength;
 
-        this.setFilters(new InputFilter[]{new InputFilter.LengthFilter(this.mMaxLength) });
+        this.mLengthFilter = new InputFilter.LengthFilter(this.mMaxLength) {
+            @Override
+            public CharSequence filter (CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if (source.length() == 1 && source.charAt(start) == '\n') {
+                    if (dest.length() == dstart) {
+                        return null;
+                    } else {
+                        return "";
+                    }
+                }
+
+                return super.filter(source, start, end, dest, dstart, dend);
+            }
+        };
+
+        InputFilter[] inputFilters = this.getFilters();
+        if (inputFilters.length > 0) {
+            List<InputFilter> inputFiltersList = new ArrayList<>();
+            for (InputFilter inputFilter : inputFilters) {
+                inputFiltersList.add(inputFilter);
+            }
+            inputFiltersList.add(this.mLengthFilter);
+
+            this.setFilters(inputFiltersList.toArray(new InputFilter[inputFiltersList.size()]));
+        } else {
+            this.setFilters(new InputFilter[]{this.mLengthFilter});
+        }
     }
 
     public void setMultilineEnabled(boolean flag){
         this.mInputModeConstraints |= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+    }
+
+    public boolean getMultilineEnabled()
+    {
+        return  ((this.mInputModeConstraints & InputType.TYPE_TEXT_FLAG_MULTI_LINE) == InputType.TYPE_TEXT_FLAG_MULTI_LINE);
     }
 
     public void setReturnType(int returnType) {
@@ -281,6 +325,95 @@ public class Cocos2dxEditBox extends EditText {
         }
 
         this.setInputType(this.mInputModeConstraints | this.mInputFlagConstraints);
+    }
+
+    private boolean IsPunctuationCharacter(char c) {
+        if (c == '\n')
+            return true;
+
+        int charType = Character.getType(c);
+        switch (charType) {
+            case Character.DASH_PUNCTUATION:
+            case Character.START_PUNCTUATION:
+            case Character.END_PUNCTUATION:
+            case Character.CONNECTOR_PUNCTUATION:
+            case Character.INITIAL_QUOTE_PUNCTUATION:
+            case Character.FINAL_QUOTE_PUNCTUATION:
+            case Character.OTHER_PUNCTUATION:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public void setInputRestriction(int inputRestriction) {
+        this.mInputRestrictionConstraints = inputRestriction;
+
+        final boolean alNumRestriction = (this.mInputRestrictionConstraints & kEditBoxInputRestrictionAlNum) == kEditBoxInputRestrictionAlNum;
+        final boolean spaceRestriction = (this.mInputRestrictionConstraints & kEditBoxInputRestrictionSpace) == kEditBoxInputRestrictionSpace;
+        final boolean punctRestriction = (this.mInputRestrictionConstraints & kEditBoxInputRestrictionPunct) == kEditBoxInputRestrictionPunct;
+        if (alNumRestriction || spaceRestriction || punctRestriction) {
+            InputFilter filter = new InputFilter() {
+                @Override
+                public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                    for (int i = start; i < end; i++) {
+                        // If the character is valid, let's continue checking the next one
+                        // but if its invalid let's return ending the check
+                        char c = source.charAt(i);
+                        if ((alNumRestriction && Character.isLetterOrDigit(c)) ||
+                            (spaceRestriction && Character.isSpaceChar(c)) ||
+                            (punctRestriction && IsPunctuationCharacter(c))) {
+                            continue;
+                        }
+
+                        return "";
+                    }
+
+                    return null; // Valid!
+                }
+            };
+
+            InputFilter[] inputFilters = this.getFilters();
+            if (inputFilters.length > 0) {
+                List<InputFilter> inputFiltersList = new ArrayList<>();
+                for (InputFilter inputFilter : inputFilters) {
+                    inputFiltersList.add(inputFilter);
+                }
+                inputFiltersList.add(filter);
+
+                this.setFilters(inputFiltersList.toArray(new InputFilter[inputFiltersList.size()]));
+            } else {
+                this.setFilters(new InputFilter[] { filter });
+            }
+        }
+    }
+
+    public void setUneditableTextLength(int uneditableTextLength) {
+        this.mUneditableTextLength = uneditableTextLength;
+
+        InputFilter filter = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if (dstart < Cocos2dxEditBox.this.mUneditableTextLength) {
+                    return dest.subSequence(dstart, dend);
+                }
+
+                return null;
+            }
+        };
+
+        InputFilter[] inputFilters = this.getFilters();
+        if (inputFilters.length > 0) {
+            List<InputFilter> inputFiltersList = new ArrayList<>();
+            for (InputFilter inputFilter : inputFilters) {
+                inputFiltersList.add(inputFilter);
+            }
+            inputFiltersList.add(filter);
+
+            this.setFilters(inputFiltersList.toArray(new InputFilter[inputFiltersList.size()]));
+        } else {
+            this.setFilters(new InputFilter[] { filter });
+        }
     }
 
     @Override

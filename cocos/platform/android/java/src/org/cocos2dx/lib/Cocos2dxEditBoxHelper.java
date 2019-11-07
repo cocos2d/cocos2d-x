@@ -392,6 +392,29 @@ public class Cocos2dxEditBoxHelper {
         });
     }
 
+    public static void setInputRestriction(final int index, final int inputRestriction) {
+        mCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxEditBox editBox = mEditBoxArray.get(index);
+                if (editBox != null) {
+                    editBox.setInputRestriction(inputRestriction);
+                }
+            }
+        });
+    }
+
+    public static void setUneditableTextLength(final int index, final int uneditableTextLength) {
+        mCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxEditBox editBox = mEditBoxArray.get(index);
+                if (editBox != null) {
+                    editBox.setUneditableTextLength(uneditableTextLength);
+                }
+            }
+        });
+    }
 
     public static void setEditBoxViewRect(final int index, final int left, final int top, final int maxWidth, final int maxHeight) {
         mCocos2dxActivity.runOnUiThread(new Runnable() {

@@ -88,4 +88,14 @@ public:
     virtual bool init() override;
 };
 
+class UIEditBoxTestRestrictions : public UIScene
+{
+public:
+    CREATE_FUNC(UIEditBoxTestRestrictions);
+    virtual bool init() override;
+    
+    cocos2d::ui::EditBox* _editbox;
+    cocos2d::ui::EditBox* _editbox2;
+};
+
 #endif /* defined(__cocos2d_tests__UIEditBoxTest__) */

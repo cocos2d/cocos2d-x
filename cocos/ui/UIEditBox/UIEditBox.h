@@ -124,6 +124,17 @@ namespace ui {
             GO,
             NEXT
         };
+        
+        /**
+         * @brief The EditBox::InputRestrictionFlag defines the flags to set how input is restricted
+         * to enter.
+         */
+        enum class InputRestrictionFlag
+        {
+            ALNUM = 1 << 2,
+            SPACE = 1 << 3,
+            PUNCT = 1 << 4
+        };
 
         /**
          * @brief The EditBox::InputMode defines the type of text that the user is allowed
@@ -664,6 +675,19 @@ namespace ui {
         void touchDownAction(Ref *sender, TouchEventType controlEvent);
 
         void openKeyboard() const;
+        
+        /**
+         * Adds a type of input restriction. For example just accept alpha-numeric keys
+         *
+         * @param inputRestriction Combination of masks to set, use the values set
+         * in the InputRestrictionFlag enum
+         */
+        void setInputRestriction(int inputRestriction);
+        
+        /**
+         * Makes that the first 'uneditableTextLength' characters can't be changed by the user
+         */
+        void setUneditableTextLength(int uneditableTextLength);
 
     protected:
         virtual void releaseUpEvent() override;

@@ -142,6 +142,9 @@ namespace ui {
     virtual void nativeCloseKeyboard() override;
     virtual void setNativeMaxLength(int maxLength) override;
 
+    virtual void setNativeInputRestriction(int inputRestriction) override;
+    virtual void setNativeUneditableTextLength(int uneditableTextLength) override;
+
   private:
     cocos2d::Vec2 convertDesignCoordToXamlCoord(const cocos2d::Vec2& designCoord);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance) override { CCLOG("Warning! doAnimationWhenKeyboardMove not supported on WinRT"); }

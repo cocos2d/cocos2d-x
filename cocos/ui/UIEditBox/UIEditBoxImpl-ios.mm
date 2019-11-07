@@ -213,7 +213,17 @@ void EditBoxImplIOS::nativeCloseKeyboard()
 {
     [_systemControl closeKeyboard];
 }
-    
+
+void EditBoxImplIOS::setNativeInputRestriction(int inputRestriction)
+{
+    //no-op all done in CCUIEditBoxIOS.mm using getInputRestriction()
+}
+
+void EditBoxImplIOS::setNativeUneditableTextLength(int uneditableTextLength)
+{
+    //no-op all done in CCUIEditBoxIOS.mm using getUneditableTextLength()
+}
+
 UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
 {
     CCASSERT(fontName != nullptr, "fontName can't be nullptr");

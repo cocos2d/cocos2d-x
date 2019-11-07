@@ -301,6 +301,16 @@ namespace ui {
         //don't need to implement
     }
 
+    void EditBoxImplWin::setNativeInputRestriction(int inputRestriction) 
+    { 
+        // not implemented yet     
+    }
+
+    void EditBoxImplWin::setNativeUneditableTextLength(int uneditableTextLength) 
+    { 
+        // not implemented yet     
+    } 
+
     void EditBoxImplWin::setNativeMaxLength(int maxLength)
     {
         ::SendMessageW(_hwndEdit, EM_LIMITTEXT, maxLength, 0);

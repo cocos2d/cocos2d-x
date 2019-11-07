@@ -106,6 +106,9 @@ public:
     virtual void openKeyboard();
     virtual void closeKeyboard();
 
+    virtual void setNativeInputRestriction(int inputRestriction) override;
+    virtual void setNativeUneditableTextLength(int uneditableTextLength) override;
+    
 private:
     Label* _label;
     Label* _labelPlaceHolder;

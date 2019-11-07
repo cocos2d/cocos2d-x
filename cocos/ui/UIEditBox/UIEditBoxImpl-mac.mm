@@ -222,6 +222,16 @@ void EditBoxImplMac::nativeCloseKeyboard()
     [_sysEdit closeKeyboard];
 }
 
+void EditBoxImplMac::setNativeInputRestriction(int inputRestriction)
+{
+    //no-op all done in CCUIEditBoxMac.mm using getInputRestriction()
+}
+
+void EditBoxImplMac::setNativeUneditableTextLength(int uneditableTextLength)
+{
+    //no-op all done in CCUIEditBoxMac.mm using getUneditableTextLength()
+}
+
 }
 
 NS_CC_END

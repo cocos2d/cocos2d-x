@@ -389,7 +389,36 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    int maxLength = getEditBoxImplIOS()->getMaxLength();
+    auto editBox = getEditBoxImplIOS();
+    
+    if (editBox->getUneditableTextLength() > 0) {
+        if (range.location < editBox->getUneditableTextLength() )
+        {
+            return NO;
+        }
+    }
+    
+    if (editBox->getInputRestriction() != 0)
+    {
+        bool alNumRestriction = (editBox->getInputRestriction() & (int) cocos2d::ui::EditBox::InputRestrictionFlag::ALNUM) == (int) cocos2d::ui::EditBox::InputRestrictionFlag::ALNUM;
+        bool spaceRestriction = (editBox->getInputRestriction() & (int) cocos2d::ui::EditBox::InputRestrictionFlag::SPACE) == (int) cocos2d::ui::EditBox::InputRestrictionFlag::SPACE;
+        bool punctRestriction = (editBox->getInputRestriction() & (int) cocos2d::ui::EditBox::InputRestrictionFlag::PUNCT) == (int) cocos2d::ui::EditBox::InputRestrictionFlag::PUNCT;
+        
+        if (alNumRestriction || spaceRestriction || punctRestriction) {
+            for (NSInteger charIdx=0; charIdx < text.length; charIdx++)
+            {
+                auto c = [text characterAtIndex:charIdx];
+                if ((alNumRestriction && isalnum(c) ) ||
+                    (spaceRestriction && isspace(c) ) ||
+                    (punctRestriction && (ispunct(c)  || c=='\n') )){
+                        continue;
+                    }
+                return NO;
+            }
+        }
+    }
+    
+    int maxLength = editBox->getMaxLength();
     if (maxLength < 0)
     {
         return YES;
@@ -477,7 +506,36 @@
  */
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    int maxLength = getEditBoxImplIOS()->getMaxLength();
+    auto editBox = getEditBoxImplIOS();
+    
+    if (editBox->getUneditableTextLength() > 0) {
+        if (range.location < editBox->getUneditableTextLength() )
+        {
+            return NO;
+        }
+    }
+    
+    if (editBox->getInputRestriction() != 0)
+    {
+        bool alNumRestriction = (editBox->getInputRestriction() & (int) cocos2d::ui::EditBox::InputRestrictionFlag::ALNUM) == (int) cocos2d::ui::EditBox::InputRestrictionFlag::ALNUM;
+        bool spaceRestriction = (editBox->getInputRestriction() & (int) cocos2d::ui::EditBox::InputRestrictionFlag::SPACE) == (int) cocos2d::ui::EditBox::InputRestrictionFlag::SPACE;
+        bool punctRestriction = (editBox->getInputRestriction() & (int) cocos2d::ui::EditBox::InputRestrictionFlag::PUNCT) == (int) cocos2d::ui::EditBox::InputRestrictionFlag::PUNCT;
+        
+        if (alNumRestriction || spaceRestriction || punctRestriction) {
+            for (NSInteger charIdx=0; charIdx < string.length; charIdx++)
+            {
+                auto c = [string characterAtIndex:charIdx];
+                if ((alNumRestriction && isalnum(c) ) ||
+                    (spaceRestriction && isspace(c) ) ||
+                    (punctRestriction && (ispunct(c)  || c=='\n') )){
+                    continue;
+                }
+                return NO;
+            }
+        }
+    }
+    
+    int maxLength = editBox->getMaxLength();
     if (maxLength < 0) {
         return YES;
     }

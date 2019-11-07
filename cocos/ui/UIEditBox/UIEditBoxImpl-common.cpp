@@ -61,6 +61,8 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 , _placeholderFontSize(-1)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
+, _inputRestriction(0)
+, _uneditableTextLength(0)
 , _maxLength(-1)
 , _editingMode(false)
 {
@@ -323,6 +325,20 @@ void EditBoxImplCommon::closeKeyboard()
     this->nativeCloseKeyboard();
     _editingMode = false;
 }
+
+
+void EditBoxImplCommon::setInputRestriction(int inputRestriction)
+{
+    this->setNativeInputRestriction(inputRestriction);
+    _inputRestriction = inputRestriction;
+}
+
+void EditBoxImplCommon::setUneditableTextLength(int uneditableTextLength)
+{
+    this->setNativeUneditableTextLength(uneditableTextLength);
+    _uneditableTextLength = uneditableTextLength;
+}
+
 
 void EditBoxImplCommon::onEndEditing(const std::string& /*text*/)
 {

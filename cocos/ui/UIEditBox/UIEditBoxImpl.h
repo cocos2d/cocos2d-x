@@ -82,6 +82,12 @@ namespace cocos2d {
             virtual void openKeyboard() = 0;
             virtual void closeKeyboard() = 0;
             
+            virtual void setInputRestriction(int inputRestriction) = 0;
+            virtual void setUneditableTextLength(int uneditableTextLength) = 0;
+
+            virtual int  getInputRestriction() = 0;
+            virtual int  getUneditableTextLength() = 0;
+            
             virtual void setPosition(const Vec2& pos) = 0;
             virtual void setVisible(bool visible) = 0;
             virtual void setContentSize(const Size& size) = 0;
