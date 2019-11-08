@@ -110,6 +110,7 @@ if(APPLE)
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
                               MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
+                              LINK_FLAGS "-pagezero_size 10000 -image_base 100000000"
                               )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
