@@ -65,10 +65,11 @@ LabelBMFont * LabelBMFont::create()
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vec2& imageOffset /* = Vec2::ZERO */)
+LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */, 
+    const Rect& imageRect /*= Rect::ZERO*/, bool imageRotated/* = false*/)
 {
     LabelBMFont *ret = new (std::nothrow) LabelBMFont();
-    if(ret && ret->initWithString(str, fntFile, width, alignment,imageOffset))
+    if(ret && ret->initWithString(str, fntFile, width, alignment, imageRect, imageRotated))
     {
         ret->autorelease();
         return ret;
@@ -77,9 +78,10 @@ LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntF
     return nullptr;
 }
 
-bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vec2& imageOffset /* = Vec2::ZERO */)
+bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */, 
+    const Rect& imageRect /*= Rect::ZERO*/, bool imageRotated/* = false*/)
 {
-    if (_label->setBMFontFilePath(fntFile,imageOffset))
+    if (_label->setBMFontFilePath(fntFile, imageRect, imageRotated))
     {
         _fntFile = fntFile;
         _label->setMaxLineWidth(width);
@@ -157,12 +159,12 @@ void LabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
 }
 
 // LabelBMFont - FntFile
-void LabelBMFont::setFntFile(const std::string& fntFile, const Vec2& imageOffset /* = Vec2::ZERO */)
+void LabelBMFont::setFntFile(const std::string& fntFile, const Rect& imageRect /*= Rect::ZERO*/, bool imageRotated /*= false*/)
 {
     if (_fntFile != fntFile)
     {
         _fntFile = fntFile;
-        _label->setBMFontFilePath(fntFile,imageOffset);
+        _label->setBMFontFilePath(fntFile, imageRect, imageRotated);
     }
 }
 

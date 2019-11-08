@@ -197,14 +197,30 @@ public:
     * @param text The initial text.
     * @param hAlignment Text horizontal alignment.
     * @param maxLineWidth The max line width.
-    * @param imageOffset
+    * @param imageRect
+    * @param imageRotated
     *
     * @return An automatically released Label object.
     * @see setBMFontFilePath setMaxLineWidth
     */
     static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
-        const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0,
-        const Vec2& imageOffset = Vec2::ZERO);
+        const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0, 
+        const Rect& imageRect = Rect::ZERO, bool imageRotated = false);
+
+    /**
+    * Allocates and initializes a Label, with a bitmap font file.
+    *
+    * @param bmfontPath A bitmap font file, it's a FNT format.
+    * @param text The initial text.
+    * @param hAlignment Text horizontal alignment.
+    * @param maxLineWidth The max line width.
+    * @param subTextureKey Name of entry in PLIST texture atlas/sprite sheet
+    *
+    * @return An automatically released Label object.
+    * @see setBMFontFilePath setMaxLineWidth
+    */
+    static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
+        const TextHAlignment& hAlignment, int maxLineWidth, const std::string& subTextureKey);
 
     /**
     * Allocates and initializes a Label, with char map configuration.
@@ -258,7 +274,13 @@ public:
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
     /** Sets a new bitmap font to Label */
-    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset = Vec2::ZERO, float fontSize = 0);
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, float fontSize = 0);
+
+    /** Sets a new bitmap font to Label */
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Rect& imageRect, bool imageRotated, float fontSize = 0);
+
+    /** Sets a new bitmap font to Label */
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const std::string& subTextureKey, float fontSize = 0);
 
     /** Returns the bitmap font used by the Label.*/
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
@@ -702,6 +724,10 @@ protected:
     int _numberOfLines;
 
     std::string _bmFontPath;
+    std::string _bmSubTextureKey;
+    Rect _bmRect;
+    bool _bmRotated;
+
     TTFConfig _fontConfig;
     float _outlineSize;
 
