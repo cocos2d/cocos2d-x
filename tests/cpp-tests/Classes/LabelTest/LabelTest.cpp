@@ -1285,7 +1285,7 @@ BMFontOneAtlas::BMFontOneAtlas()
     addChild(label1);
     label1->setPosition(Vec2(s.width/2, s.height/3*2));
 
-    auto label2 = LabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", 0, TextHAlignment::LEFT, Vec2(0, 128));
+    auto label2 = LabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", 0, TextHAlignment::LEFT, Rect(0, 128, 0, 0));
     addChild(label2);
     label2->setPosition(Vec2(s.width/2, s.height/3*1));
 }
