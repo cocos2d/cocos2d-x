@@ -95,14 +95,20 @@ public:
     virtual ~LabelBMFont();
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
-    static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT, const Rect& imageRect = Rect::ZERO, bool imageRotated = false);
+    static LabelBMFont* create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT, const Vec2& imageOffset = Vec2::ZERO);
+
+    /** creates a bitmap font atlas with an initial string and the FNT file */
+    static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment, const Rect& imageRect, bool imageRotated);
 
     /** Creates an label.
      */
     static LabelBMFont * create();
 
     /** init a bitmap font atlas with an initial string and the FNT file */
-    bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT, const Rect& imageRect = Rect::ZERO, bool imageRotated = false);
+    bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT, const Vec2& imageOffset = Vec2::ZERO);
+
+    /** init a bitmap font atlas with an initial string and the FNT file */
+    bool initWithString(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment, const Rect& imageRect, bool imageRotated);
 
     // super method
     virtual void setString(const std::string& newString) override;
@@ -117,7 +123,8 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
 
-    void setFntFile(const std::string& fntFile, const Rect& imageRect = Rect::ZERO, bool imageRotated = false);
+    void setFntFile(const std::string& fntFile, const Vec2& imageOffset = Vec2::ZERO);
+    void setFntFile(const std::string& fntFile, const Rect& imageRect, bool imageRotated);
     const std::string& getFntFile() const;
 
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;

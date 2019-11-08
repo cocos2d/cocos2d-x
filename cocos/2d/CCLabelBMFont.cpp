@@ -64,6 +64,12 @@ LabelBMFont * LabelBMFont::create()
     return nullptr;
 }
 
+LabelBMFont* LabelBMFont::create(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment, const Vec2& imageOffset)
+{
+    return create(str, fntFile, width, alignment, Rect(imageOffset.x, imageOffset.y, 0 ,0), false);
+}
+
+
 //LabelBMFont - Creation & Init
 LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */, 
     const Rect& imageRect /*= Rect::ZERO*/, bool imageRotated/* = false*/)
@@ -78,8 +84,14 @@ LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntF
     return nullptr;
 }
 
+bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,
+    const Vec2& imageOffset /* = Vec2::ZERO */)
+{
+    return initWithString(str, fntFile, width, alignment, Rect(imageOffset.x, imageOffset.y, 0, 0), false);
+}
+
 bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */, 
-    const Rect& imageRect /*= Rect::ZERO*/, bool imageRotated/* = false*/)
+    const Rect& imageRect, bool imageRotated)
 {
     if (_label->setBMFontFilePath(fntFile, imageRect, imageRotated))
     {
@@ -134,6 +146,7 @@ void LabelBMFont::setOpacityModifyRGB(bool var)
         child->setOpacityModifyRGB(var);
     }
 }
+
 bool LabelBMFont::isOpacityModifyRGB() const
 {
     return _label->isOpacityModifyRGB();
@@ -158,8 +171,13 @@ void LabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
     this->setContentSize(_label->getContentSize());
 }
 
+void LabelBMFont::setFntFile(const std::string& fntFile, const Vec2& imageOffset)
+{
+    setFntFile(fntFile, Rect(imageOffset.x, imageOffset.y, 0, 0), false);
+}
+
 // LabelBMFont - FntFile
-void LabelBMFont::setFntFile(const std::string& fntFile, const Rect& imageRect /*= Rect::ZERO*/, bool imageRotated /*= false*/)
+void LabelBMFont::setFntFile(const std::string& fntFile, const Rect& imageRect, bool imageRotated)
 {
     if (_fntFile != fntFile)
     {
