@@ -97,18 +97,12 @@ public:
     /** creates a bitmap font atlas with an initial string and the FNT file */
     static LabelBMFont* create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT, const Vec2& imageOffset = Vec2::ZERO);
 
-    /** creates a bitmap font atlas with an initial string and the FNT file */
-    static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment, const Rect& imageRect, bool imageRotated);
-
     /** Creates an label.
      */
     static LabelBMFont * create();
 
     /** init a bitmap font atlas with an initial string and the FNT file */
     bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT, const Vec2& imageOffset = Vec2::ZERO);
-
-    /** init a bitmap font atlas with an initial string and the FNT file */
-    bool initWithString(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment, const Rect& imageRect, bool imageRotated);
 
     // super method
     virtual void setString(const std::string& newString) override;

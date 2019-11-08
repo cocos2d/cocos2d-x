@@ -64,18 +64,11 @@ LabelBMFont * LabelBMFont::create()
     return nullptr;
 }
 
+//LabelBMFont - Creation & Init
 LabelBMFont* LabelBMFont::create(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment, const Vec2& imageOffset)
 {
-    return create(str, fntFile, width, alignment, Rect(imageOffset.x, imageOffset.y, 0 ,0), false);
-}
-
-
-//LabelBMFont - Creation & Init
-LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */, 
-    const Rect& imageRect /*= Rect::ZERO*/, bool imageRotated/* = false*/)
-{
-    LabelBMFont *ret = new (std::nothrow) LabelBMFont();
-    if(ret && ret->initWithString(str, fntFile, width, alignment, imageRect, imageRotated))
+    LabelBMFont* ret = new (std::nothrow) LabelBMFont();
+    if (ret && ret->initWithString(str, fntFile, width, alignment, imageOffset))
     {
         ret->autorelease();
         return ret;
@@ -87,13 +80,7 @@ LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntF
 bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,
     const Vec2& imageOffset /* = Vec2::ZERO */)
 {
-    return initWithString(str, fntFile, width, alignment, Rect(imageOffset.x, imageOffset.y, 0, 0), false);
-}
-
-bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */, 
-    const Rect& imageRect, bool imageRotated)
-{
-    if (_label->setBMFontFilePath(fntFile, imageRect, imageRotated))
+    if (_label->setBMFontFilePath(fntFile, Rect(imageOffset.x, imageOffset.y, 0, 0), false))
     {
         _fntFile = fntFile;
         _label->setMaxLineWidth(width);

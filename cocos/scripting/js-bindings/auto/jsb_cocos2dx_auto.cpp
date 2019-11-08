@@ -37593,34 +37593,14 @@ bool js_cocos2dx_LabelBMFont_initWithString(JSContext *cx, uint32_t argc, jsval 
         std::string arg1;
         double arg2 = 0;
         cocos2d::TextHAlignment arg3;
-        cocos2d::Rect arg4;
+        cocos2d::Vec2 arg4;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_std_string(cx, args.get(1), &arg1);
         ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
         ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
-        ok &= jsval_to_ccrect(cx, args.get(4), &arg4);
+        ok &= jsval_to_vector2(cx, args.get(4), &arg4);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LabelBMFont_initWithString : Error processing arguments");
         bool ret = cobj->initWithString(arg0, arg1, arg2, arg3, arg4);
-        JS::RootedValue jsret(cx);
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-    if (argc == 6) {
-        std::string arg0;
-        std::string arg1;
-        double arg2 = 0;
-        cocos2d::TextHAlignment arg3;
-        cocos2d::Rect arg4;
-        bool arg5;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
-        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
-        ok &= jsval_to_ccrect(cx, args.get(4), &arg4);
-        arg5 = JS::ToBoolean(args.get(5));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LabelBMFont_initWithString : Error processing arguments");
-        bool ret = cobj->initWithString(arg0, arg1, arg2, arg3, arg4, arg5);
         JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
@@ -37650,44 +37630,57 @@ bool js_cocos2dx_LabelBMFont_getFntFile(JSContext *cx, uint32_t argc, jsval *vp)
 }
 bool js_cocos2dx_LabelBMFont_setFntFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::LabelBMFont* cobj = (cocos2d::LabelBMFont *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LabelBMFont_setFntFile : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LabelBMFont_setFntFile : Error processing arguments");
-        cobj->setFntFile(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-    if (argc == 2) {
-        std::string arg0;
-        cocos2d::Rect arg1;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LabelBMFont_setFntFile : Error processing arguments");
-        cobj->setFntFile(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-    if (argc == 3) {
-        std::string arg0;
-        cocos2d::Rect arg1;
-        bool arg2;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
-        arg2 = JS::ToBoolean(args.get(2));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_LabelBMFont_setFntFile : Error processing arguments");
-        cobj->setFntFile(arg0, arg1, arg2);
-        args.rval().setUndefined();
-        return true;
-    }
+    cocos2d::LabelBMFont* cobj = nullptr;
 
-    JS_ReportError(cx, "js_cocos2dx_LabelBMFont_setFntFile : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj.set(args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::LabelBMFont *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_LabelBMFont_setFntFile : Invalid Native Object");
+    do {
+        if (argc == 3) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cocos2d::Rect arg1;
+            ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            bool arg2;
+            arg2 = JS::ToBoolean(args.get(2));
+            cobj->setFntFile(arg0, arg1, arg2);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setFntFile(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 2) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cocos2d::Vec2 arg1;
+            ok &= jsval_to_vector2(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            cobj->setFntFile(arg0, arg1);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_LabelBMFont_setFntFile : wrong number of arguments");
     return false;
 }
 bool js_cocos2dx_LabelBMFont_setAlignment(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37829,41 +37822,10 @@ bool js_cocos2dx_LabelBMFont_create(JSContext *cx, uint32_t argc, jsval *vp)
             cocos2d::TextHAlignment arg3;
             ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
             if (!ok) { ok = true; break; }
-            cocos2d::Rect arg4;
-            ok &= jsval_to_ccrect(cx, args.get(4), &arg4);
+            cocos2d::Vec2 arg4;
+            ok &= jsval_to_vector2(cx, args.get(4), &arg4);
             if (!ok) { ok = true; break; }
             cocos2d::LabelBMFont* ret = cocos2d::LabelBMFont::create(arg0, arg1, arg2, arg3, arg4);
-            jsval jsret = JSVAL_NULL;
-            if (ret) {
-                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::LabelBMFont>(cx, (cocos2d::LabelBMFont*)ret));
-            } else {
-                jsret = JSVAL_NULL;
-            };
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
-    do {
-        if (argc == 6) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            std::string arg1;
-            ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            double arg2 = 0;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
-            if (!ok) { ok = true; break; }
-            cocos2d::TextHAlignment arg3;
-            ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
-            if (!ok) { ok = true; break; }
-            cocos2d::Rect arg4;
-            ok &= jsval_to_ccrect(cx, args.get(4), &arg4);
-            if (!ok) { ok = true; break; }
-            bool arg5;
-            arg5 = JS::ToBoolean(args.get(5));
-            if (!ok) { ok = true; break; }
-            cocos2d::LabelBMFont* ret = cocos2d::LabelBMFont::create(arg0, arg1, arg2, arg3, arg4, arg5);
             jsval jsret = JSVAL_NULL;
             if (ret) {
                 jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::LabelBMFont>(cx, (cocos2d::LabelBMFont*)ret));
