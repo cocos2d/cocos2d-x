@@ -61,12 +61,11 @@ THE SOFTWARE.
     return YES;
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self resignFirstResponder];
     [self removeFromSuperview];
 }
-
 
 #pragma TextInput protocol
 
