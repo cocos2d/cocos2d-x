@@ -40,20 +40,6 @@ elseif(CMAKE_GENERATOR MATCHES Visual)
 endif()
 message(STATUS "CMAKE_GENERATOR: ${CMAKE_GENERATOR}")
 
-if(CMAKE_CONFIGURATION_TYPES)
-    set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Reset the configurations to what we need" FORCE)
-    message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
-else()
-    if(NOT CMAKE_BUILD_TYPE)
-        if(DEBUG_MODE) # build mode, Debug is default value
-            set(CMAKE_BUILD_TYPE Debug)
-        else()
-            set(CMAKE_BUILD_TYPE Release)
-        endif()
-    endif()
-    message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
-endif()
-
 # custom target property for lua/js link
 define_property(TARGET
     PROPERTY CC_JS_DEPEND
