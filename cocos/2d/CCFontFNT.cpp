@@ -26,6 +26,7 @@
 
 #include "2d/CCFontFNT.h"
 #include "2d/CCFontAtlas.h"
+#include "2d/CCSpriteFrameCache.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
