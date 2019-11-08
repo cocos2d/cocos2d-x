@@ -790,7 +790,7 @@ void Label::updateLabelLetters()
                     }
                     else
                     {
-                        letterSprite->setTextureRect(uvRect, false, uvRect.size);
+                        letterSprite->setTextureRect(uvRect, letterDef.rotated, uvRect.size);
                         letterSprite->setTextureAtlas(_batchNodes.at(letterDef.textureID)->getTextureAtlas());
                         letterSprite->setAtlasIndex(_lettersInfo[letterIndex].atlasIndex);
                     }
@@ -971,7 +971,7 @@ bool Label::updateQuads()
 
             if (_reusedRect.size.height > 0.f && _reusedRect.size.width > 0.f)
             {
-                _reusedLetter->setTextureRect(_reusedRect, false, _reusedRect.size);
+                _reusedLetter->setTextureRect(_reusedRect, letterDef.rotated, _reusedRect.size);
                 float letterPositionX = _lettersInfo[ctr].positionX + _linesOffsetX[_lettersInfo[ctr].lineIndex];
                 _reusedLetter->setPosition(letterPositionX, py);
                 auto index = static_cast<int>(_batchNodes.at(letterDef.textureID)->getTextureAtlas()->getTotalQuads());
@@ -1799,7 +1799,7 @@ Sprite* Label::getLetter(int letterIndex)
                 else
                 {
                     this->updateBMFontScale();
-                    letter = LabelLetter::createWithTexture(_fontAtlas->getTexture(textureID), uvRect);
+                    letter = LabelLetter::createWithTexture(_fontAtlas->getTexture(textureID), uvRect, letterDef.rotated);
                     letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
                     letter->setAtlasIndex(letterInfo.atlasIndex);
                     auto px = letterInfo.positionX + _bmfontScale * uvRect.size.width / 2 + _linesOffsetX[letterInfo.lineIndex];
