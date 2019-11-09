@@ -36,8 +36,7 @@
 
 //In iOS 12.0+, Screen Time's bug cause UIApplicationDidBecomeActiveNotification and UIApplicationWillResignActiveNotification do not fired
 //so we need to active CCDirectorCaller manually
--(void)viewDidAppear:(BOOL)animated
-{
+-(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [[CCDirectorCaller sharedDirectorCaller] setActive:YES];
 }
