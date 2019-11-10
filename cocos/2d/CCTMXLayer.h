@@ -36,7 +36,10 @@ NS_CC_BEGIN
 class TMXMapInfo;
 class TMXLayerInfo;
 class TMXTilesetInfo;
+class TMXTileAnimManager;
 struct _ccCArray;
+
+
 
 /**
  * @addtogroup _2d
@@ -294,6 +297,22 @@ public:
     */
     virtual std::string getDescription() const override;
 
+    /** Map from gid of animated tile to its instance.
+     *
+     * @return Map from gid of animated tile to its instance.
+     */
+    const std::map<uint32_t, std::vector<Vec2>>& getAnimTileCoord() {
+        return _animTileCoord;
+    }
+
+    bool hasTileAnimation() {
+        return !_animTileCoord.empty();
+    }
+
+    TMXTileAnimManager* getTileAnimManager() {
+        return _tileAnimManager;
+    }
+
 protected:
     Vec2 getPositionForIsoAt(const Vec2& pos);
     Vec2 getPositionForOrthoAt(const Vec2& pos);
@@ -353,6 +372,55 @@ protected:
     int _hexSideLength;
     /** properties from the layer. They can be added using Tiled */
     ValueMap _properties;
+
+    /** map from gid of animated tile to its instance. Also useful for optimization*/
+    std::map<uint32_t, std::vector<Vec2>> _animTileCoord;
+    /** pointer to the tile animation manager of this layer */
+    TMXTileAnimManager *_tileAnimManager = nullptr;
+};
+
+/** @brief TMXTileAnimTask represents the frame-tick task of an animated tile.
+ * It is a assistant class for TMXTileAnimTicker.
+ */
+class TMXTileAnimTask
+{
+public:
+    TMXTileAnimTask(TMXLayer *layer, TMXTileAnimInfo *animation, Vec2 &tilePos);
+    void tick(float dt);
+    void scheduleNextTick();
+    void unschedule();
+
+protected:
+    bool _started;
+    /** key of schedule task for specific animated tile */
+    std::string _key;
+    TMXLayer *_layer;
+    /** position of the animated tile */
+    Vec2 _tilePosition;
+    /** AnimationInfo on this tile */
+    TMXTileAnimInfo *_animation;
+    /** Index of the frame that should be drawn currently */
+    uint32_t _currentFrame;
+    uint32_t _frameCount;
+};
+
+/** @brief TMXTileAnimManager controls all tile animation of a layer.
+ */
+class TMXTileAnimManager : public Ref
+{
+public:
+    static TMXTileAnimManager * create(TMXLayer *layer);
+    explicit TMXTileAnimManager(TMXLayer *layer);
+
+    /** start tile animations */
+    void start();
+    /** stop tile animations */
+    void stop();
+
+    bool _started = false;
+    /** vector contains all tasks of this layer */
+    std::vector<TMXTileAnimTask> _tasks;
+    TMXLayer* _layer;
 };
 
 // end of tilemap_parallax_nodes group

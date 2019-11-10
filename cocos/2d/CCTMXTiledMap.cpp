@@ -273,4 +273,22 @@ int TMXTiledMap::getLayerNum()
     return _tmxLayerNum;
 }
 
+void TMXTiledMap::setTileAnimEnabled(bool enabled)
+{
+    for (auto& child : _children)
+    {
+        TMXLayer* layer = dynamic_cast<TMXLayer*>(child);
+        if(layer)
+        {
+            if(layer->hasTileAnimation())
+            {
+                if(enabled)
+                    layer->getTileAnimManager()->start();
+                else
+                    layer->getTileAnimManager()->stop();
+            }
+        }
+    }
+}
+
 NS_CC_END

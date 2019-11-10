@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" name="animation" tilewidth="32" tileheight="32" tilecount="36" columns="4">
+  <image source="tile_animation.png" width="128" height="288"/>
+  <tile id="4">
+   <animation>
+    <frame tileid="4" duration="100"/>
+    <frame tileid="5" duration="100"/>
+    <frame tileid="6" duration="100"/>
+    <frame tileid="7" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="12">
+   <animation>
+    <frame tileid="12" duration="100"/>
+    <frame tileid="13" duration="100"/>
+    <frame tileid="14" duration="100"/>
+    <frame tileid="15" duration="100"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxTYmBgUBrFgwYDAHz2DUk=
+  </data>
+ </layer>
+ <layer id="2" name="Tile Layer 2" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAesBLApKobBZgAAGYwAFE=
+  </data>
+ </layer>
+ <layer id="3" name="Tile Layer 3" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBj8gJcAJlXdYAYApbAA0Q==
+  </data>
+ </layer>
+</map>
