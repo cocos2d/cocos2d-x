@@ -197,6 +197,20 @@ public:
     * @param text The initial text.
     * @param hAlignment Text horizontal alignment.
     * @param maxLineWidth The max line width.
+    *
+    * @return An automatically released Label object.
+    * @see setBMFontFilePath setMaxLineWidth
+    */
+    static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
+        const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
+
+    /**
+    * Allocates and initializes a Label, with a bitmap font file.
+    *
+    * @param bmfontPath A bitmap font file, it's a FNT format.
+    * @param text The initial text.
+    * @param hAlignment Text horizontal alignment.
+    * @param maxLineWidth The max line width.
     * @param imageRect
     * @param imageRotated
     *
@@ -204,8 +218,7 @@ public:
     * @see setBMFontFilePath setMaxLineWidth
     */
     static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
-        const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0, 
-        const Rect& imageRect = Rect::ZERO, bool imageRotated = false);
+        const TextHAlignment& hAlignment, int maxLineWidth, const Rect& imageRect, bool imageRotated);
 
     /**
     * Allocates and initializes a Label, with a bitmap font file.
@@ -221,6 +234,21 @@ public:
     */
     static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
         const TextHAlignment& hAlignment, int maxLineWidth, const std::string& subTextureKey);
+
+    /**
+    * Allocates and initializes a Label, with a bitmap font file.
+    *
+    * @param bmfontPath A bitmap font file, it's a FNT format.
+    * @param text The initial text.
+    * @param hAlignment Text horizontal alignment.
+    * @param maxLineWidth The max line width.
+    * @param imageOffset Offset into larger texture
+    *
+    * @return An automatically released Label object.
+    * @see setBMFontFilePath setMaxLineWidth
+    */
+    CC_DEPRECATED_ATTRIBUTE static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
+            const TextHAlignment& hAlignment, int maxLineWidth, const Vec2& imageOffset);
 
     /**
     * Allocates and initializes a Label, with char map configuration.
@@ -281,6 +309,9 @@ public:
 
     /** Sets a new bitmap font to Label */
     virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const std::string& subTextureKey, float fontSize = 0);
+
+    /** Sets a new bitmap font to Label */
+    CC_DEPRECATED_ATTRIBUTE virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset, float fontSize = 0);
 
     /** Returns the bitmap font used by the Label.*/
     const std::string& getBMFontFilePath() const { return _bmFontPath;}

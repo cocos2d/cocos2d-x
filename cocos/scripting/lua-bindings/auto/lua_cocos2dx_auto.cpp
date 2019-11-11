@@ -58266,7 +58266,7 @@ int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
 
     do 
     {
-        if (argc == 5)
+        if (argc == 6)
         {
             std::string arg0;
             ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Label:createWithBMFont");
@@ -58280,10 +58280,13 @@ int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
             int arg3;
             ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "cc.Label:createWithBMFont");
             if (!ok) { break; }
-            std::string arg4;
-            ok &= luaval_to_std_string(tolua_S, 6,&arg4, "cc.Label:createWithBMFont");
+            cocos2d::Rect arg4;
+            ok &= luaval_to_rect(tolua_S, 6, &arg4, "cc.Label:createWithBMFont");
             if (!ok) { break; }
-            cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2, arg3, arg4);
+            bool arg5;
+            ok &= luaval_to_boolean(tolua_S, 7,&arg5, "cc.Label:createWithBMFont");
+            if (!ok) { break; }
+            cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2, arg3, arg4, arg5);
             object_to_luaval<cocos2d::Label>(tolua_S, "cc.Label",(cocos2d::Label*)ret);
             return 1;
         }
@@ -58362,8 +58365,8 @@ int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
             int arg3;
             ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "cc.Label:createWithBMFont");
             if (!ok) { break; }
-            cocos2d::Rect arg4;
-            ok &= luaval_to_rect(tolua_S, 6, &arg4, "cc.Label:createWithBMFont");
+            std::string arg4;
+            ok &= luaval_to_std_string(tolua_S, 6,&arg4, "cc.Label:createWithBMFont");
             if (!ok) { break; }
             cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2, arg3, arg4);
             object_to_luaval<cocos2d::Label>(tolua_S, "cc.Label",(cocos2d::Label*)ret);
@@ -58371,35 +58374,7 @@ int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
         }
     } while (0);
     ok  = true;
-    do 
-    {
-        if (argc == 6)
-        {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Label:createWithBMFont");
-            if (!ok) { break; }
-            std::string arg1;
-            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.Label:createWithBMFont");
-            if (!ok) { break; }
-            cocos2d::TextHAlignment arg2;
-            ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.Label:createWithBMFont");
-            if (!ok) { break; }
-            int arg3;
-            ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "cc.Label:createWithBMFont");
-            if (!ok) { break; }
-            cocos2d::Rect arg4;
-            ok &= luaval_to_rect(tolua_S, 6, &arg4, "cc.Label:createWithBMFont");
-            if (!ok) { break; }
-            bool arg5;
-            ok &= luaval_to_boolean(tolua_S, 7,&arg5, "cc.Label:createWithBMFont");
-            if (!ok) { break; }
-            cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2, arg3, arg4, arg5);
-            object_to_luaval<cocos2d::Label>(tolua_S, "cc.Label",(cocos2d::Label*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.Label:createWithBMFont",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.Label:createWithBMFont",argc, 5);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:

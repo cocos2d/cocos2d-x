@@ -572,6 +572,11 @@ FontFNT* FontFNT::create(const std::string& fntFilePath)
     return tempFont;
 }
 
+FontFNT* FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffset)
+{
+    return create(fntFilePath, Rect(imageOffset.x, imageOffset.y, 0, 0), false);
+}
+
 FontFNT::FontFNT(BMFontConfiguration *theContfig, const Rect& imageRect, bool imageRotated)
 : _configuration(theContfig)
 , _imageRectInPoints(CC_RECT_PIXELS_TO_POINTS(imageRect))

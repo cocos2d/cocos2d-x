@@ -243,6 +243,23 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
     return nullptr;
 }
 
+Label* Label::createWithBMFont(const std::string& bmfontPath, const std::string& text, const TextHAlignment& hAlignment, int maxLineWidth)
+{
+    auto ret = new (std::nothrow) Label(hAlignment);
+
+    if (ret && ret->setBMFontFilePath(bmfontPath))
+    {
+        ret->setMaxLineWidth(maxLineWidth);
+        ret->setString(text);
+        ret->autorelease();
+
+        return ret;
+    }
+
+    delete ret;
+    return nullptr;
+}
+
 Label* Label::createWithBMFont(const std::string& bmfontPath, const std::string& text, const TextHAlignment& hAlignment, int maxLineWidth, const Rect& imageRect, bool imageRotated)
 {
     auto ret = new (std::nothrow) Label(hAlignment);
@@ -275,6 +292,11 @@ Label* Label::createWithBMFont(const std::string& bmfontPath, const std::string&
 
     delete ret;
     return nullptr;
+}
+
+Label* Label::createWithBMFont(const std::string& bmfontPath, const std::string& text, const TextHAlignment& hAlignment, int maxLineWidth, const Vec2& imageOffset)
+{
+    return createWithBMFont(bmfontPath, text, hAlignment, maxLineWidth, Rect(imageOffset.x, imageOffset.y, 0, 0), false);
 }
 
 Label* Label::createWithCharMap(const std::string& plistFile)
@@ -750,6 +772,11 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const std::stri
     setFontAtlas(newAtlas);
 
     return true;
+}
+
+bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset, float fontSize)
+{
+    return setBMFontFilePath(bmfontFilePath, Rect(imageOffset.x, imageOffset.y, 0, 0), false);
 }
 
 void Label::setString(const std::string& text)

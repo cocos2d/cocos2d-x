@@ -36646,7 +36646,7 @@ bool js_cocos2dx_Label_createWithBMFont(JSContext *cx, uint32_t argc, jsval *vp)
     bool ok = true;
     
     do {
-        if (argc == 5) {
+        if (argc == 6) {
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
@@ -36659,10 +36659,13 @@ bool js_cocos2dx_Label_createWithBMFont(JSContext *cx, uint32_t argc, jsval *vp)
             int arg3 = 0;
             ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
             if (!ok) { ok = true; break; }
-            std::string arg4;
-            ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+            cocos2d::Rect arg4;
+            ok &= jsval_to_ccrect(cx, args.get(4), &arg4);
             if (!ok) { ok = true; break; }
-            cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2, arg3, arg4);
+            bool arg5;
+            arg5 = JS::ToBoolean(args.get(5));
+            if (!ok) { ok = true; break; }
+            cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2, arg3, arg4, arg5);
             jsval jsret = JSVAL_NULL;
             if (ret) {
                 jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Label>(cx, (cocos2d::Label*)ret));
@@ -36740,6 +36743,7 @@ bool js_cocos2dx_Label_createWithBMFont(JSContext *cx, uint32_t argc, jsval *vp)
             return true;
         }
     } while (0);
+    
     do {
         if (argc == 5) {
             std::string arg0;
@@ -36754,41 +36758,10 @@ bool js_cocos2dx_Label_createWithBMFont(JSContext *cx, uint32_t argc, jsval *vp)
             int arg3 = 0;
             ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
             if (!ok) { ok = true; break; }
-            cocos2d::Rect arg4;
-            ok &= jsval_to_ccrect(cx, args.get(4), &arg4);
+            std::string arg4;
+            ok &= jsval_to_std_string(cx, args.get(4), &arg4);
             if (!ok) { ok = true; break; }
             cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2, arg3, arg4);
-            jsval jsret = JSVAL_NULL;
-            if (ret) {
-                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Label>(cx, (cocos2d::Label*)ret));
-            } else {
-                jsret = JSVAL_NULL;
-            };
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
-    do {
-        if (argc == 6) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            std::string arg1;
-            ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            cocos2d::TextHAlignment arg2;
-            ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
-            if (!ok) { ok = true; break; }
-            int arg3 = 0;
-            ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
-            if (!ok) { ok = true; break; }
-            cocos2d::Rect arg4;
-            ok &= jsval_to_ccrect(cx, args.get(4), &arg4);
-            if (!ok) { ok = true; break; }
-            bool arg5;
-            arg5 = JS::ToBoolean(args.get(5));
-            if (!ok) { ok = true; break; }
-            cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2, arg3, arg4, arg5);
             jsval jsret = JSVAL_NULL;
             if (ret) {
                 jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Label>(cx, (cocos2d::Label*)ret));
