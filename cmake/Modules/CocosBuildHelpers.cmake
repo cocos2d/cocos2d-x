@@ -41,18 +41,17 @@ endfunction()
 
 
 function(cocos_copy_lua_scripts cocos_target src_dir dst_dir)
-    set(luacompile_target LUA_COPY-${cocos_target})
+    set(luacompile_target COPY_LUA-${cocos_target})
     if(NOT TARGET ${luacompile_target})
         add_custom_target(${luacompile_target} ALL
             COMMAND ${CMAKE_COMMAND} -E echo "Copying lua scripts ..."
         )
         add_dependencies(${cocos_target} ${luacompile_target})
-        add_dependencies(${luacompile_target} SYNC_RESOURCE-${cocos_target})
         set_target_properties(${luacompile_target} PROPERTIES
             FOLDER Utils
         )
     endif()
-    if(WINDOWS)
+    if(MSVC)
         add_custom_command(TARGET ${luacompile_target} POST_BUILD
             COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
                 -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m $<CONFIG>

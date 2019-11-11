@@ -26,7 +26,7 @@ def copy_if_newer(src, dst):
 
 def compile_lua(src, dst, luajit_command):
     command = "%s -b \"%s\" \"%s\"" % (luajit_command, src, dst)
-    print("compile lua %s -> %s" % (src, dst))
+    print("  Compiling %s " % src)
     ret = subprocess.call(command, shell=True, cwd = os.path.dirname(luajit_command))
     if ret != 0 :
         print("[error]: %s : failed to compile lua script %s" % (__file__, src))
@@ -75,17 +75,15 @@ if __name__ == "__main__":
     parser.add_argument("-d", dest="dst_dir")
     parser.add_argument("-l", dest="luajit", default= None)
     parser.add_argument("-m", dest="mode", default=None)
-#    parser.set_defaults(luajit=None)
     (args, unkonw) = parser.parse_known_args(sys.argv)
-    #args = parser.parse_args(sys.argv)
 
     need_compile = True
-    if args.luajit:
-        print("  luajit mode '%s'" % (args.mode))
+    # if args.luajit:
+    #     print("  luajit mode '%s'" % (args.mode))
 
     if args.mode == "Debug" and args.luajit:
         need_compile = False
-        print("  Skip luacompile in debug mode!")
+        print(" -Skip luacompile in debug mode!")
         
 
     create_files = 0
