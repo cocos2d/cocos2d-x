@@ -5,33 +5,87 @@ function(cocos_copy_target_res cocos_target)
     set(oneValueArgs COPY_TO)
     set(multiValueArgs FILES FOLDERS)
     cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+    if(NOT TARGET SYNC_RESOURCE-${cocos_target})
+        message(WARNING "SyncResource targe for ${cocos_target} is not defined")
+        return()
+    endif()
+
     # copy files
     foreach(cc_file ${opt_FILES})
         get_filename_component(file_name ${cc_file} NAME)
-        add_custom_command(TARGET ${cocos_target} POST_BUILD
-            #COMMAND ${CMAKE_COMMAND} -E echo "copy-file into Resources: ${file_name} ..."
+        add_custom_command(TARGET SYNC_RESOURCE-${cocos_target} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_file} "${opt_COPY_TO}/${file_name}"
         )
     endforeach()
     # copy folders files
     foreach(cc_folder ${opt_FOLDERS})
-        # file(GLOB_RECURSE folder_files "${cc_folder}/*")
-        # get_filename_component(folder_abs_path ${cc_folder} ABSOLUTE)
-        # foreach(res_file ${folder_files})
-        #     get_filename_component(res_file_abs_path ${res_file} ABSOLUTE)
-        #     file(RELATIVE_PATH res_file_relat_path ${folder_abs_path} ${res_file_abs_path})
-        #     add_custom_command(TARGET ${cocos_target} POST_BUILD
-        #         COMMAND ${CMAKE_COMMAND} -E echo "copy file into Resources: ${res_file_relat_path} ..."
-        #         COMMAND ${CMAKE_COMMAND} -E copy_if_different ${res_file} "${opt_COPY_TO}/${res_file_relat_path}"
-        #     )
-        # endforeach()
-        ### copy file by file is too slow on windows, the copy_directory improves a lot. 
-        add_custom_command(TARGET ${cocos_target} POST_BUILD
-                #COMMAND ${CMAKE_COMMAND} -E echo "copy-dir into Resources: ${opt_COPY_TO} ..."
-                COMMAND ${CMAKE_COMMAND} -E copy_directory ${cc_folder} "${opt_COPY_TO}"
-            )
+        add_custom_command(TARGET SYNC_RESOURCE-${cocos_target} POST_BUILD
+            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py -s ${cc_folder} -d ${opt_COPY_TO}
+        )
     endforeach()
 endfunction()
+
+## create a virtual target SYNC_RESOURCE-${cocos_target}
+## Update resource files in Resources/ folder everytime when `Run/Debug` target.
+function(cocos_def_copy_resource_target cocos_target)
+    add_custom_target(SYNC_RESOURCE-${cocos_target} ALL
+        COMMAND ${CMAKE_COMMAND} -E echo "Syncing resources for ${cocos_target} ..."
+    )
+    add_dependencies(${cocos_target} SYNC_RESOURCE-${cocos_target})
+    set_target_properties(SYNC_RESOURCE-${cocos_target} PROPERTIES
+        FOLDER Utils
+    )
+endfunction()
+
+
+function(cocos_copy_lua_scripts cocos_target src_dir dst_dir)
+    set(luacompile_target LUA_COPY-${cocos_target})
+    if(NOT TARGET ${luacompile_target})
+        add_custom_target(${luacompile_target} ALL
+            COMMAND ${CMAKE_COMMAND} -E echo "Copying lua scripts ..."
+        )
+        add_dependencies(${cocos_target} ${luacompile_target})
+        add_dependencies(${luacompile_target} SYNC_RESOURCE-${cocos_target})
+        set_target_properties(${luacompile_target} PROPERTIES
+            FOLDER Utils
+        )
+    endif()
+    if(WINDOWS)
+        add_custom_command(TARGET ${luacompile_target} POST_BUILD
+            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+            -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m $<CONFIG>
+        )
+        add_custom_command(TARGET ${luacompile_target} POST_BUILD
+            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+            -s ${src_dir} -d ${dst_dir}/64bit -l ${COCOS2DX_ROOT_PATH} -m $<CONFIG>
+        )
+    else()
+        if("${CMAKE_BUILD_TYPE}" STREQUAL "")
+            add_custom_command(TARGET ${luacompile_target} POST_BUILD
+                COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                -s ${src_dir} -d ${dst_dir}
+            )
+        else()
+            add_custom_command(TARGET ${luacompile_target} POST_BUILD
+                COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m ${CMAKE_BUILD_TYPE}
+            )
+            add_custom_command(TARGET ${luacompile_target} POST_BUILD
+                COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                -s ${src_dir} -d ${dst_dir}/64bit -l ${LUAJIT64_COMMAND} -m ${CMAKE_BUILD_TYPE}
+            )
+        endif()
+    endif()
+
+endfunction()
+
+
+function(cocos_get_resource_path output cocos_target)
+    get_target_property(rt_output ${cocos_target} RUNTIME_OUTPUT_DIRECTORY)
+    set(${output} ${rt_output}/${CMAKE_CFG_INTDIR}/Resources PARENT_SCOPE)
+endfunction()
+
 
 # mark `FILES` and files in `FOLDERS` as resource files, the destination is `RES_TO` folder
 # save all marked files in `res_out`
@@ -206,6 +260,11 @@ function(setup_cocos_app_config app_name)
     if (XCODE)
         cocos_config_app_xcode_property(${app_name})
     endif()
+
+    if(LINUX OR WINDOWS)
+        cocos_def_copy_resource_target(${app_name})
+    endif()
+
 endfunction()
 
 # if cc_variable not set, then set it cc_value
