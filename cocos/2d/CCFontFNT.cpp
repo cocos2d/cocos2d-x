@@ -518,11 +518,11 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Rect& imageRect,
     
     const auto tempFont = new FontFNT(newConf, imageRect, imageRotated);
     
-    tempFont->setFontSize(newConf->_fontSize);
     if (!tempFont)
     {
         return nullptr;
     }
+    tempFont->setFontSize(newConf->_fontSize);
     tempFont->autorelease();
     return tempFont;
 }
@@ -540,11 +540,11 @@ FontFNT* FontFNT::create(const std::string& fntFilePath, const std::string& subT
     }
     auto tempFont = new FontFNT(newConf, frame->getRectInPixels(), frame->isRotated());
 
-    tempFont->setFontSize(newConf->_fontSize);
     if (!tempFont)
     {
         return nullptr;
     }
+    tempFont->setFontSize(newConf->_fontSize);
     tempFont->autorelease();
     return tempFont;
 }
