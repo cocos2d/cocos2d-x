@@ -301,8 +301,8 @@ public:
      *
      * @return Map from gid of animated tile to its instance.
      */
-    const std::map<uint32_t, std::vector<Vec2>>& getAnimTileCoord() {
-        return _animTileCoord;
+    const std::map<uint32_t, std::vector<Vec2>>* getAnimTileCoord() {
+        return &_animTileCoord;
     }
 
     bool hasTileAnimation() {

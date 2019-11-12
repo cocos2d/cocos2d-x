@@ -857,7 +857,7 @@ std::string TMXLayer::getDescription() const
 cocos2d::TMXTileAnimManager::TMXTileAnimManager(cocos2d::TMXLayer *layer)
 {
     _layer = layer;
-    for(const auto &p : _layer->getAnimTileCoord())
+    for(const auto &p : *_layer->getAnimTileCoord())
     {
         for(auto tilePos : p.second)
         {
@@ -906,7 +906,7 @@ TMXTileAnimTask::TMXTileAnimTask(cocos2d::TMXLayer *layer, cocos2d::TMXTileAnimI
     _layer = layer;
     _animation = animation;
     _currentFrame = 0;
-    _frameCount = _animation->_frames.size();
+    _frameCount = static_cast<uint32_t>(_animation->_frames.size());
     _tilePosition = tilePos;
     _started = false;
     std::stringstream ss;

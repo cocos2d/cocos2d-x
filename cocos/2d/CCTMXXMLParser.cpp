@@ -685,7 +685,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         TMXTilesetInfo* info = tmxMapInfo->getTilesets().back();
         auto animInfo = info->_animationInfo.at(tmxMapInfo->getParentGID());
         // calculate gid of frame
-        animInfo->_frames.push_back(TMXTileAnimFrame(info->_firstGid + attributeDict["tileid"].asInt(), attributeDict["duration"].asFloat()));
+        animInfo->_frames.emplace_back(TMXTileAnimFrame(info->_firstGid + attributeDict["tileid"].asInt(), attributeDict["duration"].asFloat()));
     }
 }
 
