@@ -676,8 +676,6 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
     {
         TMXTilesetInfo* info = tmxMapInfo->getTilesets().back();
         info->_animationInfo.insert(tmxMapInfo->getParentGID(), TMXTileAnimInfo::create(tmxMapInfo->getParentGID()));
-        //tmxMapInfo->setParentGID(info->_firstGid + attributeDict["id"].asInt());
-        //tmxMapInfo->getTileProperties()[tmxMapInfo->getParentGID()] = Value(ValueMap());
         tmxMapInfo->setParentElement(TMXPropertyAnimation);
     }
     else if(elementName == "frame")

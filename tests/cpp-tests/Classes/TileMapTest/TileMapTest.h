@@ -420,7 +420,7 @@ public:
     virtual std::string title() const override;
 
     cocos2d::TMXTiledMap* map;
-    bool _animStarted = false;
+    bool _animStarted = true;
     void onTouchBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 

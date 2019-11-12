@@ -386,12 +386,21 @@ class TMXTileAnimTask
 {
 public:
     TMXTileAnimTask(TMXLayer *layer, TMXTileAnimInfo *animation, Vec2 &tilePos);
-    void tick(float dt);
-    void scheduleNextTick();
-    void unschedule();
+    /** start the animation task */
+    void start();
+    /** stop the animation task */
+    void stop();
+    bool isRunning() {
+        return _isRunning;
+    }
 
 protected:
-    bool _started;
+    /** set texture of tile to current frame */
+    void setCurrFrame();
+    /** tick to next frame and schedule next tick */
+    void tickAndScheduleNext(float dt);
+
+    bool _isRunning;
     /** key of schedule task for specific animated tile */
     std::string _key;
     TMXLayer *_layer;
@@ -412,10 +421,11 @@ public:
     static TMXTileAnimManager * create(TMXLayer *layer);
     explicit TMXTileAnimManager(TMXLayer *layer);
 
-    /** start tile animations */
-    void start();
-    /** stop tile animations */
-    void stop();
+    /** start all tile animations */
+    void startAll();
+    /** stop all tile animations */
+    void stopAll();
+
 
     bool _started = false;
     /** vector contains all tasks of this layer */

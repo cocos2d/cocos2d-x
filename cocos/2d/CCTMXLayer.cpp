@@ -861,7 +861,7 @@ cocos2d::TMXTileAnimManager::TMXTileAnimManager(cocos2d::TMXLayer *layer)
     {
         for(auto tilePos : p.second)
         {
-            _tasks.push_back(TMXTileAnimTask(_layer, _layer->getTileSet()->_animationInfo.at(p.first), tilePos));
+            _tasks.emplace_back(TMXTileAnimTask(_layer, _layer->getTileSet()->_animationInfo.at(p.first), tilePos));
         }
     }
 }
@@ -878,25 +878,25 @@ TMXTileAnimManager *TMXTileAnimManager::create(TMXLayer *layer)
     return nullptr;
 }
 
-void TMXTileAnimManager::start()
+void TMXTileAnimManager::startAll()
 {
     if(_started || _tasks.empty())
     return;
     _started = true;
     for(auto &task : _tasks)
     {
-        task.scheduleNextTick();
+        task.start();
     }
 }
 
-void TMXTileAnimManager::stop()
+void TMXTileAnimManager::stopAll()
 {
     if(!_started)
         return;
     _started = false;
     for(auto &task : _tasks)
     {
-        task.unschedule();
+        task.stop();
     }
 }
 
@@ -908,34 +908,37 @@ TMXTileAnimTask::TMXTileAnimTask(cocos2d::TMXLayer *layer, cocos2d::TMXTileAnimI
     _currentFrame = 0;
     _frameCount = static_cast<uint32_t>(_animation->_frames.size());
     _tilePosition = tilePos;
-    _started = false;
+    _isRunning = false;
     std::stringstream ss;
     ss << "TickAnimOnTilePos(" << _tilePosition.x << "," << _tilePosition.y << ")";
     _key = ss.str();
 }
 
-void TMXTileAnimTask::tick(float dt)
+void TMXTileAnimTask::tickAndScheduleNext(float dt)
 {
-    if(!_started)
-        return;
-    _currentFrame = (_currentFrame + 1) % _frameCount;
-    _layer->setTileGID(_animation->_frames[_currentFrame]._tileID, _tilePosition);
-    scheduleNextTick();
+    setCurrFrame();
+    _layer->getParent()->scheduleOnce(CC_CALLBACK_1(TMXTileAnimTask::tickAndScheduleNext, this), _animation->_frames[_currentFrame]._duration/1000.0f, _key);
 }
 
-void TMXTileAnimTask::scheduleNextTick()
+void TMXTileAnimTask::start()
 {
-    _started = true;
-//    std::stringstream ss;
-//    ss << "TickAnimOnTilePos(" << _tilePosition.x << "," << _tilePosition.y << ")";
-    _layer->getParent()->scheduleOnce(CC_CALLBACK_1(TMXTileAnimTask::tick, this), _animation->_frames[_currentFrame]._duration/1000.0f, _key);
+    _isRunning = true;
+    tickAndScheduleNext(0.0f);
 }
 
-void TMXTileAnimTask::unschedule()
+void TMXTileAnimTask::stop()
 {
-    _started = false;
+    _isRunning = false;
     _layer->getParent()->unschedule(_key);
 }
+
+void TMXTileAnimTask::setCurrFrame()
+{
+    _layer->setTileGID(_animation->_frames[_currentFrame]._tileID, _tilePosition);
+    _currentFrame = (_currentFrame + 1) % _frameCount;
+}
+
+
 
 NS_CC_END
 

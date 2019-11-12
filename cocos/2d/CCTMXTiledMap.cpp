@@ -283,9 +283,9 @@ void TMXTiledMap::setTileAnimEnabled(bool enabled)
             if(layer->hasTileAnimation())
             {
                 if(enabled)
-                    layer->getTileAnimManager()->start();
+                    layer->getTileAnimManager()->startAll();
                 else
-                    layer->getTileAnimManager()->stop();
+                    layer->getTileAnimManager()->stopAll();
             }
         }
     }

@@ -1742,7 +1742,7 @@ TileAnimTest::TileAnimTest()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 
-    map->setTileAnimEnabled(true);
+    map->setTileAnimEnabled(_animStarted);
 }
 
 std::string TileAnimTest::title() const
