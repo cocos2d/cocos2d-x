@@ -31,7 +31,6 @@ message(STATUS "PYTHON_PATH:"  ${PYTHON_COMMAND})
 message(STATUS "COCOS_COMMAND_PATH:"  ${COCOS_COMMAND})
 message(STATUS "HOST_SYSTEM:" ${CMAKE_HOST_SYSTEM_NAME})
 # the default behavior of build module
-option(DEBUG_MODE "Debug or Release?" ON)
 option(BUILD_LUA_LIBS "Build lua libraries" OFF)
 
 # include helper functions

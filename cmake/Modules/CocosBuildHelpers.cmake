@@ -21,7 +21,8 @@ function(cocos_copy_target_res cocos_target)
     # copy folders files
     foreach(cc_folder ${opt_FOLDERS})
         add_custom_command(TARGET SYNC_RESOURCE-${cocos_target} POST_BUILD
-            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py -s ${cc_folder} -d ${opt_COPY_TO}
+            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                -s ${cc_folder} -d ${opt_COPY_TO}
         )
     endforeach()
 endfunction()
@@ -54,11 +55,9 @@ function(cocos_copy_lua_scripts cocos_target src_dir dst_dir)
     if(WINDOWS)
         add_custom_command(TARGET ${luacompile_target} POST_BUILD
             COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-            -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m $<CONFIG>
-        )
-        add_custom_command(TARGET ${luacompile_target} POST_BUILD
+                -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m $<CONFIG>
             COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-            -s ${src_dir} -d ${dst_dir}/64bit -l ${COCOS2DX_ROOT_PATH} -m $<CONFIG>
+                -s ${src_dir} -d ${dst_dir}/64bit -l ${LUAJIT64_COMMAND} -m $<CONFIG>
         )
     else()
         if("${CMAKE_BUILD_TYPE}" STREQUAL "")
@@ -69,11 +68,9 @@ function(cocos_copy_lua_scripts cocos_target src_dir dst_dir)
         else()
             add_custom_command(TARGET ${luacompile_target} POST_BUILD
                 COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-                -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m ${CMAKE_BUILD_TYPE}
-            )
-            add_custom_command(TARGET ${luacompile_target} POST_BUILD
+                    -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m ${CMAKE_BUILD_TYPE}
                 COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-                -s ${src_dir} -d ${dst_dir}/64bit -l ${LUAJIT64_COMMAND} -m ${CMAKE_BUILD_TYPE}
+                    -s ${src_dir} -d ${dst_dir}/64bit -l ${LUAJIT64_COMMAND} -m ${CMAKE_BUILD_TYPE}
             )
         endif()
     endif()
