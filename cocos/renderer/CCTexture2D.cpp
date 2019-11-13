@@ -34,6 +34,7 @@ THE SOFTWARE.
 
 #include "renderer/CCTexture2D.h"
 #include "platform/CCImage.h"
+#include "platform/CCGL.h"
 #include "base/ccUtils.h"
 #include "platform/CCDevice.h"
 #include "base/ccConfig.h"
