@@ -1,9 +1,9 @@
 include(CMakeParseArguments)
 
 # copy resource `FILES` and `FOLDERS` to TARGET_FILE_DIR/Resources
-function(cocos_copy_target_res cocos_target)
-    set(oneValueArgs COPY_TO)
-    set(multiValueArgs FILES FOLDERS)
+function(cocos_link_target_res cocos_target)
+    set(oneValueArgs LINK_TO)
+    set(multiValueArgs FOLDERS)
     cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     if(NOT TARGET SYNC_RESOURCE-${cocos_target})
@@ -11,18 +11,12 @@ function(cocos_copy_target_res cocos_target)
         return()
     endif()
 
-    # copy files
-    foreach(cc_file ${opt_FILES})
-        get_filename_component(file_name ${cc_file} NAME)
-        add_custom_command(TARGET SYNC_RESOURCE-${cocos_target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_file} "${opt_COPY_TO}/${file_name}"
-        )
-    endforeach()
-    # copy folders files
+    # linking folders
     foreach(cc_folder ${opt_FOLDERS})
+        get_filename_component(link_folder ${cc_folder} DIRECTORY)
         add_custom_command(TARGET SYNC_RESOURCE-${cocos_target} POST_BUILD
-            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-                -s ${cc_folder} -d ${opt_COPY_TO}
+            COMMAND ${CMAKE_COMMAND} -E make_directory ${link_folder}
+            COMMAND ${CMAKE_COMMAND} -E create_symlink ${cc_folder} ${opt_LINK_TO}
         )
     endforeach()
 endfunction()
@@ -31,7 +25,7 @@ endfunction()
 ## Update resource files in Resources/ folder everytime when `Run/Debug` target.
 function(cocos_def_copy_resource_target cocos_target)
     add_custom_target(SYNC_RESOURCE-${cocos_target} ALL
-        COMMAND ${CMAKE_COMMAND} -E echo "Syncing resources for ${cocos_target} ..."
+        COMMAND ${CMAKE_COMMAND} -E echo "Linking resources for ${cocos_target} ..."
     )
     add_dependencies(${cocos_target} SYNC_RESOURCE-${cocos_target})
     set_target_properties(SYNC_RESOURCE-${cocos_target} PROPERTIES
@@ -55,8 +49,6 @@ function(cocos_copy_lua_scripts cocos_target src_dir dst_dir)
         add_custom_command(TARGET ${luacompile_target} POST_BUILD
             COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
                 -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m $<CONFIG>
-            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-                -s ${src_dir} -d ${dst_dir}/64bit -l ${LUAJIT64_COMMAND} -m $<CONFIG>
         )
     else()
         if("${CMAKE_BUILD_TYPE}" STREQUAL "")

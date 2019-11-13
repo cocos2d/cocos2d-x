@@ -144,6 +144,6 @@ endif()
 # copy resource on linux or WINDOWS
 if(LINUX OR WINDOWS)
     cocos_get_resource_path(APP_RES_DIR ${APP_NAME})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
+    cocos_link_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
     cocos_copy_lua_scripts(${APP_NAME} ${res_src_folders} ${APP_RES_DIR}/src )
 endif()
