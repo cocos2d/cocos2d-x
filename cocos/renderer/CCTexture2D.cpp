@@ -34,6 +34,7 @@ THE SOFTWARE.
 
 #include "renderer/CCTexture2D.h"
 #include "platform/CCImage.h"
+#include "platform/CCGL.h"
 #include "base/ccUtils.h"
 #include "platform/CCDevice.h"
 #include "base/ccConfig.h"
@@ -51,10 +52,6 @@ THE SOFTWARE.
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "renderer/CCTextureCache.h"
-#endif
-
-#ifndef CC_USE_METAL
-#include "platform/CCGL.h"
 #endif
 
 NS_CC_BEGIN
