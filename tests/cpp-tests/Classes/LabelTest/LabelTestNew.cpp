@@ -75,6 +75,8 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelFNTHundredLabels);
     ADD_TEST_CASE(LabelFNTPadding);
     ADD_TEST_CASE(LabelFNTOffset);
+    ADD_TEST_CASE(LabelFNTMultiFontAtlasNoRotation);
+    ADD_TEST_CASE(LabelFNTMultiFontAtlasWithRotation);
 
     ADD_TEST_CASE(LabelTTFFontsTestNew);
     ADD_TEST_CASE(LabelTTFLongLineWrapping);
@@ -932,6 +934,57 @@ std::string LabelFNTBounds::title() const
 std::string LabelFNTBounds::subtitle() const
 {
     return "Testing bounding-box";
+}
+
+LabelFNTMultiFontAtlasNoRotation::LabelFNTMultiFontAtlasNoRotation()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto label1 = Label::createWithBMFont("fonts/helvetica-32.fnt", "This is Helvetica");
+    addChild(label1);
+    label1->setPosition(Vec2(s.width / 2, s.height / 3 * 2));
+
+    auto label2 = Label::createWithBMFont("fonts/geneva-32.fnt", "And this is Geneva", TextHAlignment::LEFT, 0, Rect(0, 128, 0, 0), false);
+    addChild(label2);
+    label2->setPosition(Vec2(s.width / 2, s.height / 3 * 1));
+}
+
+std::string LabelFNTMultiFontAtlasNoRotation::title() const
+{
+    return "New Label + Multi-BM Font Atlas Test1";
+}
+
+std::string LabelFNTMultiFontAtlasNoRotation::subtitle() const
+{
+    return "Using 2 .fnt definitions that share the same texture atlas.";
+}
+
+LabelFNTMultiFontAtlasWithRotation::LabelFNTMultiFontAtlasWithRotation()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto spriteCache = SpriteFrameCache::getInstance();
+    spriteCache->addSpriteFramesWithFile("fonts/bmfont-rotated-test.plist");
+
+    // Label BMFont
+    auto label1 = Label::createWithBMFont("fonts/helvetica-regular-32.fnt", "Helvetica with SubTextureKey", TextHAlignment::CENTER, 0, "helvetica-regular-32.png");
+    label1->setPosition(Vec2(s.width / 2, s.height / 3 * 2));
+    this->addChild(label1);
+
+    const auto frame = spriteCache->getSpriteFrameByName("geneva-regular-32.png");
+    auto label2 = Label::createWithBMFont("fonts/geneva-regular-32.fnt", "Geneva with Rect and Rotated", TextHAlignment::CENTER, 0, frame->getRectInPixels(), frame->isRotated());
+    label2->setPosition(Vec2(s.width / 2, s.height / 3 * 1));
+    this->addChild(label2);
+}
+
+std::string LabelFNTMultiFontAtlasWithRotation::title() const
+{
+    return "New Label + Multi-BM Font Atlas Test2";
+}
+
+std::string LabelFNTMultiFontAtlasWithRotation::subtitle() const
+{
+    return "Using 2 .fnt definitions that share a PLIST texture atlas (rotated).";
 }
 
 LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()

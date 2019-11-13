@@ -223,6 +223,27 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelFNTMultiFontAtlasNoRotation : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelFNTMultiFontAtlasNoRotation);
+
+    LabelFNTMultiFontAtlasNoRotation();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+
+class LabelFNTMultiFontAtlasWithRotation : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelFNTMultiFontAtlasWithRotation);
+
+    LabelFNTMultiFontAtlasWithRotation();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class LabelTTFLongLineWrapping : public AtlasDemoNew
 {
 public:

@@ -65,10 +65,10 @@ LabelBMFont * LabelBMFont::create()
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vec2& imageOffset /* = Vec2::ZERO */)
+LabelBMFont* LabelBMFont::create(const std::string& str, const std::string& fntFile, float width, TextHAlignment alignment, const Vec2& imageOffset)
 {
-    LabelBMFont *ret = new (std::nothrow) LabelBMFont();
-    if(ret && ret->initWithString(str, fntFile, width, alignment,imageOffset))
+    LabelBMFont* ret = new (std::nothrow) LabelBMFont();
+    if (ret && ret->initWithString(str, fntFile, width, alignment, imageOffset))
     {
         ret->autorelease();
         return ret;
@@ -77,9 +77,10 @@ LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntF
     return nullptr;
 }
 
-bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vec2& imageOffset /* = Vec2::ZERO */)
+bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,
+    const Vec2& imageOffset /* = Vec2::ZERO */)
 {
-    if (_label->setBMFontFilePath(fntFile,imageOffset))
+    if (_label->setBMFontFilePath(fntFile, Rect(imageOffset.x, imageOffset.y, 0, 0), false))
     {
         _fntFile = fntFile;
         _label->setMaxLineWidth(width);
@@ -132,6 +133,7 @@ void LabelBMFont::setOpacityModifyRGB(bool var)
         child->setOpacityModifyRGB(var);
     }
 }
+
 bool LabelBMFont::isOpacityModifyRGB() const
 {
     return _label->isOpacityModifyRGB();
@@ -156,13 +158,18 @@ void LabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
     this->setContentSize(_label->getContentSize());
 }
 
+void LabelBMFont::setFntFile(const std::string& fntFile, const Vec2& imageOffset)
+{
+    setFntFile(fntFile, Rect(imageOffset.x, imageOffset.y, 0, 0), false);
+}
+
 // LabelBMFont - FntFile
-void LabelBMFont::setFntFile(const std::string& fntFile, const Vec2& imageOffset /* = Vec2::ZERO */)
+void LabelBMFont::setFntFile(const std::string& fntFile, const Rect& imageRect, bool imageRotated)
 {
     if (_fntFile != fntFile)
     {
         _fntFile = fntFile;
-        _label->setBMFontFilePath(fntFile,imageOffset);
+        _label->setBMFontFilePath(fntFile, imageRect, imageRotated);
     }
 }
 
