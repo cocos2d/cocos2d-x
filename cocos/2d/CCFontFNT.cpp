@@ -688,23 +688,20 @@ FontAtlas * FontFNT::createFontAtlas()
     if (_imageRotated)
         std::swap(rw, rh);
 
+    const auto left = _imageRectInPoints.origin.x;
+    const auto right = _imageRectInPoints.origin.x + rw;
+    const auto top = _imageRectInPoints.origin.y;
+
     for (auto&& e : _configuration->_fontDefDictionary)
     {
         BMFontDef& fontDef = e.second;
 
         FontLetterDefinition tempDefinition;
 
-        Rect tempRect;
-        
-        tempRect = fontDef.rect;
-        tempRect = CC_RECT_PIXELS_TO_POINTS(tempRect);
+        const auto tempRect = CC_RECT_PIXELS_TO_POINTS(fontDef.rect);
         
         tempDefinition.offsetX  = fontDef.xOffset;
         tempDefinition.offsetY  = fontDef.yOffset;
-
-        const float left = _imageRectInPoints.origin.x;
-        const float right = (_imageRectInPoints.origin.x + rw);
-        const float top = _imageRectInPoints.origin.y;
 
         if (_imageRotated)
         {
