@@ -58,7 +58,7 @@ bool ReleasePoolTest::init()
         return false;
     }
     // title
-    auto label = Label::createWithTTF("AutoreasePool Test", "fonts/arial.ttf", 32);
+    auto label = Label::createWithTTF("AutoreleasePool Test", "fonts/arial.ttf", 32);
     addChild(label, 9999);
     label->setPosition(Vec2(VisibleRect::center().x, VisibleRect::top().y - 30));
     
