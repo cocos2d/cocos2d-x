@@ -108,6 +108,9 @@ if(APPLE)
 
     if(MACOSX)
         set_xcode_property(${APP_NAME} INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist")
+        set_target_properties(${APP_NAME} PROPERTIES
+            LINK_FLAGS "-pagezero_size 10000 -image_base 100000000"
+        )
     elseif(IOS)
         set_xcode_property(${APP_NAME} INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/Info.plist")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
