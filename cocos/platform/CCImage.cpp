@@ -33,6 +33,10 @@ THE SOFTWARE.
 #include "base/CCData.h"
 #include "base/ccConfig.h" // CC_USE_JPEG, CC_USE_WEBP
 
+#ifndef CC_USE_METAL
+#include "platform/CCGL.h"
+#endif
+
 extern "C"
 {
     // To resolve link error when building 32bits with Xcode 6.

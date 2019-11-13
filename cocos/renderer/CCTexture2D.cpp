@@ -53,6 +53,10 @@ THE SOFTWARE.
     #include "renderer/CCTextureCache.h"
 #endif
 
+#ifndef CC_USE_METAL
+#include "platform/CCGL.h"
+#endif
+
 NS_CC_BEGIN
 
 
