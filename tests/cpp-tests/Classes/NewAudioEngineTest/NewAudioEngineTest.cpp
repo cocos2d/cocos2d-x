@@ -162,9 +162,9 @@ namespace {
             auto ret = new (std::nothrow) SliderEx();
             if (ret && ret->init())
             {
-                ret->loadBarTexture("cocosui/sliderTrack.png");
-                ret->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
-                ret->loadProgressBarTexture("cocosui/sliderProgress.png");
+                ret->loadBarTexture("extensions/sliderTrack.png");
+                ret->loadSlidBallTextures("extensions/sliderThumb.png", "extensions/sliderThumb.png", "");
+                ret->loadProgressBarTexture("extensions/sliderProgress.png");
                 ret->setTouchEnabled(true);
                 
                 ret->autorelease();
