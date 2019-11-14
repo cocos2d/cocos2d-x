@@ -14,11 +14,9 @@ if(CMAKE_TOOLCHAIN_FILE)
     message(STATUS "using toolchain file:" ${CMAKE_TOOLCHAIN_FILE})
 endif()
 
-set(COCOS2DX_CONSOLE_PATH ${COCOS2DX_ROOT_PATH}/tools/cocos2d-console/bin)
-
 find_program(PYTHON_COMMAND NAMES python2 python)
-find_program(COCOS_COMMAND NAME cocos 
-    PATHS ${COCOS2DX_CONSOLE_PATH} $ENV{COCOS_CONSOLE_ROOT})
+find_program(COCOS_COMMAND NAME cocos
+    PATHS ${COCOS2DX_ROOT_PATH}/tools/cocos2d-console/bin $ENV{COCOS_CONSOLE_ROOT})
 
 message(STATUS "PROJECT_NAME:" ${PROJECT_NAME})
 message(STATUS "PROJECT_SOURCE_DIR:" ${PROJECT_SOURCE_DIR})
@@ -44,14 +42,19 @@ include(CocosConfigDefine)
 # config libraries dependence
 include(CocosConfigDepend)
 
-set(COCOS2DX_LUAJIT_ROOT ${COCOS2DX_CONSOLE_PATH}/../plugins/plugin_luacompile/bin)
-if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
-    find_program(LUAJIT32_COMMAND NAMES luajit-win PATHS ${COCOS2DX_LUAJIT_ROOT}/32bit NO_SYSTEM_ENVIRONMENT_PATH)
-    find_program(LUAJIT64_COMMAND NAMES luajit-win PATHS ${COCOS2DX_LUAJIT_ROOT}/64bit NO_SYSTEM_ENVIRONMENT_PATH)
-elseif("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Linux")
-    find_program(LUAJIT32_COMMAND NAMES luajit-linux PATHS ${COCOS2DX_LUAJIT_ROOT}/32bit NO_SYSTEM_ENVIRONMENT_PATH)
-    find_program(LUAJIT64_COMMAND NAMES luajit-linux PATHS ${COCOS2DX_LUAJIT_ROOT}/64bit NO_SYSTEM_ENVIRONMENT_PATH)
+if(COCOS_COMMAND)
+    get_filename_component(cocos2dx_console_dir ${COCOS_COMMAND} DIRECTORY)
+    set(COCOS2DX_LUAJIT_ROOT ${cocos2dx_console_dir}/../plugins/plugin_luacompile/bin)
+    message(STATUS "COCOS2DX_LUAJIT_ROOT:" ${COCOS2DX_LUAJIT_ROOT})
+    if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
+        find_program(LUAJIT32_COMMAND NAMES luajit-win PATHS ${COCOS2DX_LUAJIT_ROOT}/32bit NO_SYSTEM_ENVIRONMENT_PATH)
+        find_program(LUAJIT64_COMMAND NAMES luajit-win PATHS ${COCOS2DX_LUAJIT_ROOT}/64bit NO_SYSTEM_ENVIRONMENT_PATH)
+    elseif("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Linux")
+        find_program(LUAJIT32_COMMAND NAMES luajit-linux PATHS ${COCOS2DX_LUAJIT_ROOT}/32bit NO_SYSTEM_ENVIRONMENT_PATH)
+        find_program(LUAJIT64_COMMAND NAMES luajit-linux PATHS ${COCOS2DX_LUAJIT_ROOT}/64bit NO_SYSTEM_ENVIRONMENT_PATH)
+    endif()
 endif()
+
 
 if(WINDOWS OR LINUX)
     message(STATUS "LUAJIT32_COMMAND:" ${LUAJIT32_COMMAND})

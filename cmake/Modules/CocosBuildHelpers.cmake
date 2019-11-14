@@ -14,6 +14,7 @@ function(cocos_link_target_res cocos_target)
     # linking folders
     foreach(cc_folder ${opt_FOLDERS})
         get_filename_component(link_folder ${cc_folder} DIRECTORY)
+        get_filename_component(link_folder_abs ${link_folder} ABSOLUTE)
         add_custom_command(TARGET SYNC_RESOURCE-${cocos_target} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E make_directory ${link_folder}
             COMMAND ${CMAKE_COMMAND} -E create_symlink ${cc_folder} ${opt_LINK_TO}

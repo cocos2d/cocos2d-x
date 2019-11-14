@@ -31,6 +31,7 @@ function do_retry()
 function build_linux()
 {
     echo "Building tests ..."
+    source ../environment.sh
     cd $COCOS2DX_ROOT
     mkdir -p linux-build
     cd linux-build
@@ -41,7 +42,7 @@ function build_linux()
 function build_mac_cmake()
 {
     NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
-    
+
     # pushd $COCOS2DX_ROOT
     # python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
     # popd
@@ -208,6 +209,7 @@ function run_pull_request()
     fi
 
     if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+        source ../environment.sh
         genernate_binding_codes
         pushd $COCOS2DX_ROOT
         update_cocos_files
