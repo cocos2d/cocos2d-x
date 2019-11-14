@@ -25,9 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #pragma once
 
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
 #ifdef __MINGW32__
 #include <string.h>
 #endif
@@ -59,6 +56,3 @@ THE SOFTWARE.
 #define NULL    ((void *)0)
 #endif
 #endif
-
-#endif //s CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-

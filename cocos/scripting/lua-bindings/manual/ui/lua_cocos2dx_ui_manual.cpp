@@ -25,10 +25,10 @@
 #include "scripting/lua-bindings/manual/ui/lua_cocos2dx_ui_manual.hpp"
 #include "scripting/lua-bindings/auto/lua_cocos2dx_ui_auto.hpp"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
-#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_video_auto.hpp"
-#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_video_manual.hpp"
-#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_webview_auto.hpp"
-#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_webview_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_video_auto.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_video_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_webview_auto.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_webview_manual.hpp"
 #endif
 
 #include "scripting/lua-bindings/manual/tolua_fix.h"
@@ -1183,10 +1183,10 @@ int register_ui_module(lua_State* L)
         register_all_cocos2dx_ui(L);
         register_all_cocos2dx_ui_manual(L);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
-        register_all_cocos2dx_experimental_video(L);
-        register_all_cocos2dx_experimental_video_manual(L);
-        register_all_cocos2dx_experimental_webview(L);
-        register_all_cocos2dx_experimental_webview_manual(L);
+        register_all_cocos2dx_video(L);
+        register_all_cocos2dx_video_manual(L);
+        register_all_cocos2dx_webview(L);
+        register_all_cocos2dx_webview_manual(L);
 #endif
         extendEventListenerFocusEvent(L);
     }

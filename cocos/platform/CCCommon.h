@@ -45,7 +45,7 @@ void CC_DLL LuaLog(const char * format);
 /**
 @brief Pop out a message box
 */
-void CC_DLL MessageBox(const char * msg, const char * title);
+void CC_DLL ccMessageBox(const char * msg, const char * title);
 
 /**
 @brief Enum the language type supported now

@@ -23,12 +23,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __CC_EGLVIEWIMPL_IPHONE_H__
-#define __CC_EGLVIEWIMPL_IPHONE_H__
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#pragma once
 
 #include "base/CCRef.h"
 #include "platform/CCCommon.h"
@@ -92,7 +87,3 @@ protected:
 };
 
 NS_CC_END
-
-#endif // CC_PLATFORM_IOS
-
-#endif    // end of __CC_EGLViewImpl_IPHONE_H__

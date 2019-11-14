@@ -23,7 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #include "platform/desktop/CCGLViewImpl-desktop.h"
 
 #include <cmath>
@@ -45,6 +44,7 @@ THE SOFTWARE.
 #endif /* CC_ICON_SET_SUPPORT */
 #include "renderer/backend/metal/DeviceMTL.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/backend/metal/Utils.h"
 
 NS_CC_BEGIN
 
@@ -315,7 +315,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
             message.append(_glfwError);
         }
 
-        MessageBox(message.c_str(), "Error launch application");
+        ccMessageBox(message.c_str(), "Error launch application");
         return false;
     }
     
@@ -445,19 +445,16 @@ void GLViewImpl::pollEvents()
 
 void GLViewImpl::enableRetina(bool enabled)
 {
-    //TODO coulsonwang
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//    _isRetinaEnabled = enabled;
-//    if (_isRetinaEnabled)
-//    {
-//        _retinaFactor = 1;
-//    }
-//    else
-//    {
-//        _retinaFactor = 2;
-//    }
-//    updateFrameSize();
-//#endif
+   _isRetinaEnabled = enabled;
+   if (_isRetinaEnabled)
+   {
+       _retinaFactor = 1;
+   }
+   else
+   {
+       _retinaFactor = 2;
+   }
+   updateFrameSize();
 }
 
 
@@ -879,13 +876,10 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, 
         Director::getInstance()->setViewport();
         Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_RESIZED, nullptr);
         
-        //update metal drawable size.
+        //update metal attachment texture size.
         int fbWidth, fbHeight;
         glfwGetFramebufferSize(_mainWindow, &fbWidth, &fbHeight);
-        CGSize size;
-        size.width = static_cast<CGFloat>(fbWidth);
-        size.height = static_cast<CGFloat>(fbHeight);
-        [backend::DeviceMTL::getCAMetalLayer() setDrawableSize:size];
+        backend::Utils::resizeDefaultAttachmentTexture(fbWidth, fbHeight);
     }
 }
 

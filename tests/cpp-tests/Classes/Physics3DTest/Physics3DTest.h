@@ -68,9 +68,9 @@ protected:
 
 protected:
     std::string    _title;
-    cocos2d::Camera *_camera;
-    float _angle;
-    bool _needShootBox;
+    cocos2d::Camera *_camera = nullptr;
+    float _angle = 0.f;
+    bool _needShootBox = false;
 };
 
 class BasicPhysics3DDemo : public Physics3DTestDemo

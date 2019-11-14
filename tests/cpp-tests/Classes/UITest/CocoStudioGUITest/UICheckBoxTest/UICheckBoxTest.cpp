@@ -53,7 +53,7 @@ bool UICheckBoxTest::init()
         
         // Add a label in which the checkbox events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
@@ -79,7 +79,7 @@ bool UICheckBoxTest::init()
         auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UICheckBoxTest::printWidgetResources, this));
         item1->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + item1->getContentSize().height * 3));
         auto pMenu1 = Menu::create(item1, nullptr);
-        pMenu1->setPosition(Vec2(0, 0));
+        pMenu1->setPosition(Vec2(0.0f, 0.0f));
         this->addChild(pMenu1, 10);
         
         return true;
@@ -139,7 +139,7 @@ bool UICheckBoxDefaultBehaviorTest::init()
         
         // Add a label in which the checkbox events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
@@ -163,8 +163,8 @@ bool UICheckBoxDefaultBehaviorTest::init()
                                               "cocosui/check_box_active.png");
         checkBox2->setPosition(Vec2(widgetSize.width / 2.0f - 150, widgetSize.height / 2.0f));
         checkBox2->ignoreContentAdaptWithSize(false);
-        checkBox2->setZoomScale(0.5);
-        checkBox2->setContentSize(Size(80,80));
+        checkBox2->setZoomScale(0.5f);
+        checkBox2->setContentSize(Size(80.0f,80.0f));
         checkBox2->setName("bigCheckBox");
         _uiLayer->addChild(checkBox2);
         
@@ -208,7 +208,7 @@ bool UICheckBoxCopyTest::init()
 
         // Add a label in which the checkbox events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
 
@@ -227,7 +227,7 @@ bool UICheckBoxCopyTest::init()
         _uiLayer->addChild(checkBox);
 
         auto checkboxCopy = checkBox->clone();
-        checkboxCopy->setPosition(checkBox->getPosition() + Vec2(50,0));
+        checkboxCopy->setPosition(checkBox->getPosition() + Vec2(50.0f,0.0f));
         _uiLayer->addChild(checkboxCopy);
 
 

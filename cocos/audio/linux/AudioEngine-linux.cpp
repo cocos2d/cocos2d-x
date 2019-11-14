@@ -34,7 +34,6 @@
 #include "platform/CCFileUtils.h"
 
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 AudioEngineImpl * g_AudioEngineImpl = nullptr;
 

@@ -34,12 +34,12 @@ THE SOFTWARE.
 namespace {
 
 std::mutex __playerContainerMutex;
-std::vector<cocos2d::experimental::UrlAudioPlayer*> __playerContainer;
+std::vector<cocos2d::UrlAudioPlayer*> __playerContainer;
 std::once_flag __onceFlag;
 
 }
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class SLUrlAudioPlayerCallbackProxy
 {
@@ -421,4 +421,4 @@ void UrlAudioPlayer::destroy()
     }
 }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

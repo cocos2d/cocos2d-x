@@ -23,8 +23,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "extensions/Particle3D/PU/CCPUBillboardChain.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 #include "base/CCDirector.h"
 #include "renderer/ccShaders.h"
@@ -655,13 +656,15 @@ void PUBillboardChain::init( const std::string &texFile )
         if (tex)
         {
             _texture = tex;
-            _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleTexture_frag);
+            auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::PARTICLE_TEXTURE_3D);
+            _programState = new backend::ProgramState(program);
         }
     }
     
     if(!_programState)
     {
-        _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleColor_frag);
+        auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::PARTICLE_COLOR_3D);
+        _programState = new backend::ProgramState(program);
     }
 
     auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();

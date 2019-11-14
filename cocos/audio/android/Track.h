@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <functional>
 #include <mutex>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class Track : public PcmBufferProvider, public IVolumeProvider
 {
@@ -104,4 +104,4 @@ private:
     friend class AudioMixerController;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

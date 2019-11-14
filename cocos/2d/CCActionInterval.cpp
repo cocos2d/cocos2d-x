@@ -2095,7 +2095,7 @@ Blink* Blink::reverse() const
 FadeIn* FadeIn::create(float d)
 {
     FadeIn* action = new (std::nothrow) FadeIn();
-    if (action && action->initWithDuration(d,255.0f))
+    if (action && action->initWithDuration(d,255))
     {
         action->autorelease();
         return action;
@@ -2132,7 +2132,7 @@ void FadeIn::startWithTarget(cocos2d::Node *target)
     if (nullptr != _reverseAction)
         this->_toOpacity = this->_reverseAction->_fromOpacity;
     else
-        _toOpacity = 255.0f;
+        _toOpacity = 255;
     
     if (target)
         _fromOpacity = target->getOpacity();
@@ -2145,7 +2145,7 @@ void FadeIn::startWithTarget(cocos2d::Node *target)
 FadeOut* FadeOut::create(float d)
 {
     FadeOut* action = new (std::nothrow) FadeOut();
-    if (action && action->initWithDuration(d,0.0f))
+    if (action && action->initWithDuration(d,0))
     {
         action->autorelease();
         return action;
@@ -2168,7 +2168,7 @@ void FadeOut::startWithTarget(cocos2d::Node *target)
     if (nullptr != _reverseAction)
         _toOpacity = _reverseAction->_fromOpacity;
     else
-        _toOpacity = 0.0f;
+        _toOpacity = 0;
     
     if (target)
         _fromOpacity = target->getOpacity();

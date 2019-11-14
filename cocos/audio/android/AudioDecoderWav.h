@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "audio/android/AudioDecoder.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class AudioDecoderWav : public AudioDecoder
 {
@@ -44,4 +44,4 @@ protected:
     friend class AudioDecoderProvider;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

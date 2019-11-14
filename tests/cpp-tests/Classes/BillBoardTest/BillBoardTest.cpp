@@ -49,12 +49,12 @@ BillBoardTests::BillBoardTests()
 BillBoardRotationTest::BillBoardRotationTest()
 {
     auto root = Sprite3D::create();
-    root->setPositionNormalized(Vec2(.5,.25));
+    root->setPositionNormalized(Vec2(0.5f,0.25f));
     addChild(root);
     
     auto model = Sprite3D::create("Sprite3DTest/orc.c3b");
     model->setScale(5);
-    model->setRotation3D(Vec3(0,180,0));
+    model->setRotation3D(Vec3(0.0f,180.0f,0.0f));
     root->addChild(model);
     
     auto bill = BillBoard::create();
@@ -66,19 +66,19 @@ BillBoardRotationTest::BillBoardRotationTest()
     bill->addChild(sp);
     
     auto lbl = Label::create();
-    lbl->setPosition(0, 30);
+    lbl->setPosition(0.0f, 30.0f);
     lbl->setString("+100");
     bill->addChild(lbl);
     
-    auto r = RotateBy::create(10, Vec3(0,360,0));
+    auto r = RotateBy::create(10, Vec3(0.0f,360.0f,0.0f));
     auto rp = RepeatForever::create(r);
     root->runAction(rp);
     
-    auto jump = JumpBy::create(1, Vec2(0, 0), 30, 1);
+    auto jump = JumpBy::create(1, Vec2(0.0f, 0.0f), 30, 1);
     auto scale = ScaleBy::create(2.f, 2.f, 2.f, 0.1f);
     auto seq = Sequence::create(jump,scale, NULL);
     
-    auto rot = RotateBy::create(2, Vec3(-90, 0, 0));
+    auto rot = RotateBy::create(2, Vec3(-90.0f, 0.0f, 0.0f));
     auto act = Spawn::create(seq, rot,NULL);
     
     auto scale2 = scale->reverse();
@@ -134,10 +134,10 @@ BillBoardTest::BillBoardTest()
     for (unsigned int i = 0; i < 4; ++i)
     {
         Layer *layer = Layer::create();
-        auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
+        auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5f)]);
         billboard->setScale(0.5f);
         billboard->setPosition3D(Vec3(0.0f, 0.0f,  CCRANDOM_MINUS1_1() * 150.0f));
-        billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        billboard->setOpacity(static_cast<uint8_t>(CCRANDOM_0_1() * 128 + 128));
         _billboards.push_back(billboard);
         layer->addChild(billboard);
         _layerBillBoard->addChild(layer);
@@ -162,20 +162,20 @@ BillBoardTest::BillBoardTest()
         _layerBillBoard->addChild(sprite3d);
     }
 
-    addNewBillBoardWithCoords(Vec3(20,5,0));
-    addNewBillBoardWithCoords(Vec3(60,5,0));
-    addNewBillBoardWithCoords(Vec3(100,5,0));
-    addNewBillBoardWithCoords(Vec3(140,5,0));
-    addNewBillBoardWithCoords(Vec3(180,5,0));
+    addNewBillBoardWithCoords(Vec3(20.0f,5.0f,0.0f));
+    addNewBillBoardWithCoords(Vec3(60.0f,5.0f,0.0f));
+    addNewBillBoardWithCoords(Vec3(100.0f,5.0f,0.0f));
+    addNewBillBoardWithCoords(Vec3(140.0f,5.0f,0.0f));
+    addNewBillBoardWithCoords(Vec3(180.0f,5.0f,0.0f));
     
-    addNewAniBillBoardWithCoords(Vec3(-20,0,0));
-    addNewAniBillBoardWithCoords(Vec3(-60,0,0));
-    addNewAniBillBoardWithCoords(Vec3(-100,0,0));
-    addNewAniBillBoardWithCoords(Vec3(-140,0,0));
-    addNewAniBillBoardWithCoords(Vec3(-180,0,0));
+    addNewAniBillBoardWithCoords(Vec3(-20.0f,0.0f,0.0f));
+    addNewAniBillBoardWithCoords(Vec3(-60.0f,0.0f,0.0f));
+    addNewAniBillBoardWithCoords(Vec3(-100.0f,0.0f,0.0f));
+    addNewAniBillBoardWithCoords(Vec3(-140.0f,0.0f,0.0f));
+    addNewAniBillBoardWithCoords(Vec3(-180.0f,0.0f,0.0f));
     
-    _camera->setPosition3D(Vec3(0, 100, 230));
-    _camera->lookAt(Vec3(0,0,0), Vec3(0,1,0));
+    _camera->setPosition3D(Vec3(0.0f, 100.0f, 230.0f));
+    _camera->lookAt(Vec3(0,0,0), Vec3(0.0f,1.0f,0.0f));
 
     TTFConfig ttfConfig("fonts/arial.ttf", 16);
     auto label1 = Label::createWithTTF(ttfConfig,"rotate+");
@@ -238,10 +238,10 @@ void BillBoardTest::addNewBillBoardWithCoords(Vec3 p)
     std::string imgs[3] = {"Images/Icon.png", "Images/r2.png"};
     for (unsigned int i = 0; i < 10; ++i)
     {
-        auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
+        auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5f)]);
         billboard->setScale(0.5f);
         billboard->setPosition3D(Vec3(p.x, p.y, -150.0f + 30 * i));
-        billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        billboard->setOpacity(static_cast<uint8_t>(CCRANDOM_0_1() * 128 + 128));
         
         _layerBillBoard->addChild(billboard);
         _billboards.push_back(billboard);
@@ -269,7 +269,7 @@ void BillBoardTest::addNewAniBillBoardWithCoords(Vec3 p)
 
         auto action = Animate::create(animation);
         billboardAni->runAction(RepeatForever::create(action));
-        billboardAni->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        billboardAni->setOpacity(static_cast<uint8_t>(CCRANDOM_0_1() * 128 + 128));
         _billboards.push_back(billboardAni);
     }
 }

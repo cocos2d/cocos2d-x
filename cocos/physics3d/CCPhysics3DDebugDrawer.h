@@ -46,7 +46,6 @@ NS_CC_BEGIN
  * @{
  */
 
-class GLProgram;
 class Renderer;
 
 /** @brief Physics3DDebugDrawer: debug draw the physics object, used by Physics3DWorld */

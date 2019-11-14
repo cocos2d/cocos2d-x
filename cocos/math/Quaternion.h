@@ -126,18 +126,6 @@ public:
     Quaternion(const Vec3& axis, float angle);
 
     /**
-     * Constructs a new quaternion that is a copy of the specified one.
-     *
-     * @param copy The quaternion to copy.
-     */
-    Quaternion(const Quaternion& copy);
-
-    /**
-     * Destructor.
-     */
-    ~Quaternion();
-
-    /**
      * Returns the identity quaternion.
      *
      * @return The identity quaternion.

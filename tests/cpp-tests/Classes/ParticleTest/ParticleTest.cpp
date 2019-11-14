@@ -71,7 +71,7 @@ void DemoFire::onEnter()
 
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_fire) );//.pvr");
     auto p = _emitter->getPosition();
-    _emitter->setPosition( Vec2(p.x, 100) );
+    _emitter->setPosition( Vec2(p.x, 100.0f) );
 
     setEmitterPosition();
 }
@@ -439,7 +439,7 @@ void DemoSmoke::onEnter()
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_fire) );
 
     auto p = _emitter->getPosition();
-    _emitter->setPosition( Vec2( p.x, 100) );
+    _emitter->setPosition( Vec2( p.x, 100.0f) );
 
     setEmitterPosition();
 }
@@ -468,7 +468,7 @@ void DemoSnow::onEnter()
     _emitter->setLifeVar(1);
 
     // gravity
-    _emitter->setGravity(Vec2(0,-10));
+    _emitter->setGravity(Vec2(0.0f,-10.0f));
 
     // speed of particles
     _emitter->setSpeed(130);
@@ -547,7 +547,7 @@ void DemoModernArt::onEnter()
     _emitter->setDuration(-1);
 
     // gravity
-    _emitter->setGravity(Vec2(0,0));
+    _emitter->setGravity(Vec2(0.0f,0.0f));
 
     // angle
     _emitter->setAngle(0);
@@ -656,8 +656,8 @@ void ParallaxParticle::onEnter()
     auto p1 = Sprite::create(s_back3);
     auto p2 = Sprite::create(s_back3);
 
-    p->addChild( p1, 1, Vec2(0.5f,1), Vec2(0,250) );
-    p->addChild(p2, 2, Vec2(1.5f,1), Vec2(0,50) );
+    p->addChild( p1, 1, Vec2(0.5f,1.0f), Vec2(0.0f,250.0f) );
+    p->addChild(p2, 2, Vec2(1.5f,1.0f), Vec2(0.0f,50.0f) );
 
     _emitter = ParticleFlower::create();
     _emitter->retain();
@@ -670,7 +670,7 @@ void ParallaxParticle::onEnter()
     p2->addChild(par, 10);
     par->setTexture( Director::getInstance()->getTextureCache()->addImage(s_fire) );
 
-    auto move = MoveBy::create(4, Vec2(300,0));
+    auto move = MoveBy::create(4, Vec2(300.0f,0.0f));
     auto move_back = move->reverse();
     auto seq = Sequence::create( move, move_back, nullptr);
     p->runAction(RepeatForever::create(seq));
@@ -1115,7 +1115,7 @@ void ParticleDemo::onEnter()
 
     auto labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 100, kTagParticleCount);
-    labelAtlas->setPosition(Vec2(s.width-66,50));
+    labelAtlas->setPosition(Vec2(s.width-66,50.0f));
 
     // moving background
     _background = Sprite::create(s_back3);
@@ -1406,7 +1406,7 @@ bool RainbowEffect::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(ParticleSystem::Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(0,0));
+        setGravity(Vec2(0.0f,0.0f));
 
         // Gravity mode: radial acceleration
         setRadialAccel(0);
@@ -1508,7 +1508,7 @@ void MultipleParticleSystems::onEnter()
     for (int i = 0; i<5; i++) {
         auto particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
-        particleSystem->setPosition(Vec2(i*50 ,i*50));
+        particleSystem->setPosition(Vec2(i*50.0f,i*50.0f));
 
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         addChild(particleSystem);
@@ -1566,7 +1566,7 @@ void MultipleParticleSystemsBatched::onEnter()
         auto particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
-        particleSystem->setPosition(Vec2(i*50 ,i*50));
+        particleSystem->setPosition(Vec2(i*50.0f,i*50.0f));
 
         batchNode->setTexture(particleSystem->getTexture());
         batchNode->addChild(particleSystem);
@@ -1628,7 +1628,7 @@ void AddAndDeleteParticleSystems::onEnter()
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setTotalParticles(200);
 
-        particleSystem->setPosition(Vec2(i*15 +100,i*15+100));
+        particleSystem->setPosition(Vec2(i*15 +100.0f,i*15+100.0f));
 
         unsigned int randZ = rand() % 100;
         _batchNode->addChild(particleSystem, randZ, -1);
@@ -1774,7 +1774,7 @@ void ReorderParticleSystems::onEnter()
 
         // additive
 
-        particleSystem->setPosition(Vec2(i*10+120 ,200));
+        particleSystem->setPosition(Vec2(i*10+120.0f,200.0f));
 
 
         _batchNode->addChild(particleSystem);

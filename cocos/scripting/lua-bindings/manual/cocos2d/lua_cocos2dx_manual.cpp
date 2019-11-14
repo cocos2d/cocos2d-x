@@ -48,6 +48,8 @@
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCTMXLayer.h"
 #include "2d/CCTMXTiledMap.h"
+#include "2d/CCFastTMXLayer.h"
+#include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCRenderTexture.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerKeyboard.h"
@@ -598,7 +600,7 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
             return 0;
         }
 
-        for (auto i = 0; i < argc; ++i)
+        for (int i = 0; i < argc; ++i)
         {
 #if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(tolua_S, i + 2,"cc.MenuItem",0,&tolua_err) )
@@ -2403,7 +2405,7 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
         if (!ok)
             return 0;
 
-        cobj->setAnchorPoint(cocos2d::Vec2(x,y));
+        cobj->setAnchorPoint(cocos2d::Vec2((float)x,(float)y));
         lua_settop(tolua_S, 1);
         return 1;
     }
@@ -3656,155 +3658,6 @@ tolua_lerror:
     return 0;
 }
 
-// setBlendFunc
-template<class T>
-static int tolua_cocos2dx_setBlendFunc(lua_State* tolua_S,const char* className)
-{
-    if (NULL == tolua_S || NULL == className || strlen(className) == 0)
-        return 0;
-
-    int argc = 0;
-    T* self = nullptr;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,className,0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    self = static_cast<T*>(tolua_tousertype(tolua_S,1,0));
-
-    argc = lua_gettop(tolua_S) - 1;
-    if (2 == argc)
-    {
-        CCLOG("setBlendFunc of %s will deprecate two int parameter form,please pass a table like {src = xx, dst = xx} as a parameter", className);
-
-//TODO minggo
-//        GLenum src, dst;
-//        if (!luaval_to_int32(tolua_S, 2, (int32_t*)&src, StringUtils::format("%s%s",className, ":setBlendFunc").c_str()))
-//            return 0;
-//
-//        if (!luaval_to_int32(tolua_S, 3, (int32_t*)&dst, StringUtils::format("%s%s",className, ":setBlendFunc").c_str()))
-//            return 0;
-//
-//        BlendFunc blendFunc = {src, dst};
-//        self->setBlendFunc(blendFunc);
-        return 0;
-    }
-
-
-    luaL_error(tolua_S, "'setBlendFunc' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_setBlendFunc'.",&tolua_err);
-    return 0;
-#endif
-}
-extern int lua_cocos2dx_Sprite_setBlendFunc(lua_State* tolua_S);
-
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2dx_Sprite_setBlendFunc01(lua_State* tolua_S)
-{
-    int argc = lua_gettop(tolua_S) - 1;
-    if (argc == 2)
-    {
-        return tolua_cocos2dx_setBlendFunc<Sprite>(tolua_S,"cc.Sprite");
-    }
-
-    return lua_cocos2dx_Sprite_setBlendFunc(tolua_S);
-}
-
-extern int lua_cocos2dx_SpriteBatchNode_setBlendFunc(lua_State* tolua_S);
-
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2dx_SpriteBatchNode_setBlendFunc01(lua_State* tolua_S)
-{
-    int argc = lua_gettop(tolua_S) - 1;
-    if (argc == 2)
-    {
-        return tolua_cocos2dx_setBlendFunc<SpriteBatchNode>(tolua_S,"cc.SpriteBatchNode");
-    }
-
-    return lua_cocos2dx_SpriteBatchNode_setBlendFunc(tolua_S);
-}
-
-extern int lua_cocos2dx_MotionStreak_setBlendFunc(lua_State* tolua_S);
-
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2dx_MotionStreak_setBlendFunc01(lua_State* tolua_S)
-{
-    int argc = lua_gettop(tolua_S) - 1;
-    if (argc == 2)
-    {
-        return tolua_cocos2dx_setBlendFunc<MotionStreak>(tolua_S,"cc.MotionStreak");
-    }
-
-    return lua_cocos2dx_MotionStreak_setBlendFunc(tolua_S);
-}
-
-extern int lua_cocos2dx_AtlasNode_setBlendFunc(lua_State* tolua_S);
-
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2dx_AtlasNode_setBlendFunc01(lua_State* tolua_S)
-{
-    int argc = lua_gettop(tolua_S) - 1;
-    if (argc == 2)
-    {
-        return tolua_cocos2dx_setBlendFunc<AtlasNode>(tolua_S,"cc.AtlasNode");
-    }
-
-    return lua_cocos2dx_AtlasNode_setBlendFunc(tolua_S);
-}
-
-extern int lua_cocos2dx_ParticleBatchNode_setBlendFunc(lua_State* tolua_S);
-
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2dx_ParticleBatchNode_setBlendFunc01(lua_State* tolua_S)
-{
-    int argc = lua_gettop(tolua_S) - 1;
-    if (argc == 2)
-    {
-        return tolua_cocos2dx_setBlendFunc<ParticleBatchNode>(tolua_S,"cc.ParticleBatchNode");
-    }
-
-    return lua_cocos2dx_ParticleBatchNode_setBlendFunc(tolua_S);
-}
-
-extern int lua_cocos2dx_LayerColor_setBlendFunc(lua_State* tolua_S);
-
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2dx_LayerColor_setBlendFunc01(lua_State* tolua_S)
-{
-    int argc = lua_gettop(tolua_S) - 1;
-    if (argc == 2)
-    {
-        return tolua_cocos2dx_setBlendFunc<LayerColor>(tolua_S,"cc.LayerColor");
-    }
-
-    return lua_cocos2dx_LayerColor_setBlendFunc(tolua_S);
-}
-
-extern int lua_cocos2dx_ParticleSystem_setBlendFunc(lua_State* tolua_S);
-
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2dx_ParticleSystem_setBlendFunc01(lua_State* tolua_S)
-{
-    int argc = lua_gettop(tolua_S) - 1;
-    if (argc == 2)
-    {
-        return tolua_cocos2dx_setBlendFunc<ParticleSystem>(tolua_S,"cc.ParticleSystem");
-    }
-
-    return lua_cocos2dx_ParticleSystem_setBlendFunc(tolua_S);
-}
-
-extern int lua_cocos2dx_DrawNode_setBlendFunc(lua_State* tolua_S);
-
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2dx_DrawNode_setBlendFunc01(lua_State* tolua_S)
-{
-    int argc = lua_gettop(tolua_S) - 1;
-    if (argc == 2)
-    {
-        return tolua_cocos2dx_setBlendFunc<DrawNode>(tolua_S,"cc.DrawNode");
-    }
-
-    return lua_cocos2dx_DrawNode_setBlendFunc(tolua_S);
-}
-
 static int tolua_cocos2dx_LayerMultiplex_create(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
@@ -4584,10 +4437,6 @@ static void extendDrawNode(lua_State* tolua_S)
         lua_pushstring(tolua_S,"drawPoints");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_DrawNode_drawPoints);
         lua_rawset(tolua_S,-3);
-
-        lua_pushstring(tolua_S,"setBlendFunc");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_DrawNode_setBlendFunc01);
-        lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
 }
@@ -4773,23 +4622,9 @@ static void extendSprite(lua_State* tolua_S)
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "setBlendFunc", tolua_cocos2dx_Sprite_setBlendFunc01);
         tolua_function(tolua_S, "initWithPolygon", lua_cocos2dx_Sprite_initWithPolygon);
         tolua_function(tolua_S, "setPolygonInfo", lua_cocos2dx_Sprite_setPolygonInfo);
         tolua_function(tolua_S, "create", lua_cocos2dx_Sprite_create);
-    }
-    lua_pop(tolua_S, 1);
-}
-
-static void extendLayerColor(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S,"cc.LayerColor");
-    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        lua_pushstring(tolua_S,"setBlendFunc");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_LayerColor_setBlendFunc01);
-        lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
 }
@@ -4802,19 +4637,6 @@ static void extendLayerMultiplex(lua_State* tolua_S)
     {
         lua_pushstring(tolua_S,"create");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_LayerMultiplex_create);
-        lua_rawset(tolua_S,-3);
-    }
-    lua_pop(tolua_S, 1);
-}
-
-static void extendParticleSystem(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S,"cc.ParticleSystem");
-    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        lua_pushstring(tolua_S,"setBlendFunc");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_ParticleSystem_setBlendFunc01);
         lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
@@ -4858,49 +4680,6 @@ static void extendSpriteBatchNode(lua_State* tolua_S)
     {
         lua_pushstring(tolua_S,"getDescendants");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_getDescendants );
-        lua_rawset(tolua_S,-3);
-
-        lua_pushstring(tolua_S,"setBlendFunc");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_setBlendFunc01);
-        lua_rawset(tolua_S,-3);
-    }
-    lua_pop(tolua_S, 1);
-}
-
-static void extendMotionStreak(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S, "cc.MotionStreak");
-    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        lua_pushstring(tolua_S,"setBlendFunc");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_MotionStreak_setBlendFunc01);
-        lua_rawset(tolua_S,-3);
-    }
-    lua_pop(tolua_S, 1);
-}
-
-static void extendAtlasNode(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S, "cc.AtlasNode");
-    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        lua_pushstring(tolua_S,"setBlendFunc");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_AtlasNode_setBlendFunc01);
-        lua_rawset(tolua_S,-3);
-    }
-    lua_pop(tolua_S, 1);
-}
-
-static void extendParticleBatchNode(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S, "cc.ParticleBatchNode");
-    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        lua_pushstring(tolua_S,"setBlendFunc");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_ParticleBatchNode_setBlendFunc01);
         lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
@@ -6676,6 +6455,82 @@ static void extendTMXLayer(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+static int lua_cocos2dx_FastTMXLayer_getTileGIDAt(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FastTMXLayer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FastTMXLayer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FastTMXLayer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FastTMXLayer_getTileGIDAt'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1)
+    {
+        cocos2d::Vec2 arg0;
+
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.FastTMXLayer:getTileGIDAt");
+        if(!ok)
+            return 0;
+        int ret = cobj->getTileGIDAt(arg0);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        tolua_pushnumber(tolua_S,(lua_Number)0);
+        return 2;
+    }
+    if (argc == 2)
+    {
+        cocos2d::Vec2 arg0;
+        int arg1 = 0;
+
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.FastTMXLayer:getTileGIDAt");
+        ok &= luaval_to_int32(tolua_S, 3, &arg1, "cc.FastTMXLayer:getTileGIDAt");
+
+        if(!ok)
+            return 0;
+
+        unsigned int ret = cobj->getTileGIDAt(arg0, (cocos2d::TMXTileFlags*)&arg1);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        tolua_pushnumber(tolua_S,(lua_Number)arg1);
+        return 2;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.FastTMXLayer:getTileGIDAt",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FastTMXLayer_getTileGIDAt'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static void extendFastTMXLayer(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.FastTMXLayer");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "getTileGIDAt", lua_cocos2dx_FastTMXLayer_getTileGIDAt);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 
 int lua_cocos2dx_Application_isIOS64bit(lua_State* tolua_S)
 {
@@ -7598,9 +7453,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendBezierTo(tolua_S);
     extendDrawNode(tolua_S);
     extendSprite(tolua_S);
-    extendLayerColor(tolua_S);
     extendLayerMultiplex(tolua_S);
-    extendParticleSystem(tolua_S);
     extendFileUtils(tolua_S);
     extendUserDefault(tolua_S);
     extendTexture2D(tolua_S);
@@ -7616,14 +7469,12 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendPipelineDescriptor(tolua_S);
     extendProgramState(tolua_S);
 
-    extendMotionStreak(tolua_S);
-    extendAtlasNode(tolua_S);
-    extendParticleBatchNode(tolua_S);
     extendLabel(tolua_S);
     extendTMXTiledMap(tolua_S);
     extendConsole(tolua_S);
     extendOrbitCamera(tolua_S);
     extendTMXLayer(tolua_S);
+    extendFastTMXLayer(tolua_S);
     extendApplication(tolua_S);
     extendTextureCache(tolua_S);
     extendGLView(tolua_S);
@@ -7830,10 +7681,10 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
             if (!ok)
                 return 0;
 
-            x = (float)tolua_tonumber(tolua_S, 2, 0);
-            y = (float)tolua_tonumber(tolua_S, 3, 0);
-            z = (float)tolua_tonumber(tolua_S, 4, 0);
-            w = (float)tolua_tonumber(tolua_S, 5, 0);
+            x = tolua_tonumber(tolua_S, 2, 0);
+            y = tolua_tonumber(tolua_S, 3, 0);
+            z = tolua_tonumber(tolua_S, 4, 0);
+            w = tolua_tonumber(tolua_S, 5, 0);
 
             mat.transformVector(x,y,z,w, &dst);
             vec3_to_luaval(tolua_S, dst);
@@ -8832,7 +8683,7 @@ static int tolua_cocos2d_bytearray_floatv(lua_State *L)
             }
             lua_pop(L, 1);
             lua_newtable(L);
-            for (size_t idx = 0; idx < arg.size(); idx++)
+            for (auto idx = 0; idx < arg.size(); idx++)
             {
                 lua_pushnumber(L, arg[idx]);
                 lua_rawseti(L, 1, idx + 1);

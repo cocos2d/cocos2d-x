@@ -123,7 +123,7 @@ function AudioControlTest.create()
     ------playItem
     local function playAudio(tag, sender)
         if AudioControlTest._audioID == cc.AUDIO_INVAILD_ID then
-            AudioControlTest._audioID = ccexp.AudioEngine:play2d("background.mp3", AudioControlTest._loopEnabled, AudioControlTest._volume)
+            AudioControlTest._audioID = cc.AudioEngine:play2d("background.mp3", AudioControlTest._loopEnabled, AudioControlTest._volume)
             
             if AudioControlTest._audioID ~= cc.AUDIO_INVAILD_ID then
                 AudioControlTest._playItem:setEnabled(false)
@@ -133,7 +133,7 @@ function AudioControlTest.create()
                     AudioControlTest._playItem:setEnabled(true)
                 end
                 
-                ccexp.AudioEngine:setFinishCallback(AudioControlTest._audioID,finishCallback)
+                cc.AudioEngine:setFinishCallback(AudioControlTest._audioID,finishCallback)
             end
         end
     end
@@ -145,7 +145,7 @@ function AudioControlTest.create()
     ------stopItem
     local function stopAudio(tag, sender)
         if AudioControlTest._audioID ~= cc.AUDIO_INVAILD_ID then
-            ccexp.AudioEngine:stop(AudioControlTest._audioID)
+            cc.AudioEngine:stop(AudioControlTest._audioID)
             AudioControlTest._audioID = cc.AUDIO_INVAILD_ID
             AudioControlTest._playItem:setEnabled(true)
         end
@@ -158,7 +158,7 @@ function AudioControlTest.create()
     ------pauseItem
     local function pauseAudio(tag, sender)
         if AudioControlTest._audioID ~= cc.AUDIO_INVAILD_ID then
-            ccexp.AudioEngine:pause(AudioControlTest._audioID)
+            cc.AudioEngine:pause(AudioControlTest._audioID)
         end
     end
     
@@ -169,7 +169,7 @@ function AudioControlTest.create()
     ------resumeItem
     local function resumeAudio(tag, sender)
         if AudioControlTest._audioID ~= cc.AUDIO_INVAILD_ID then
-            ccexp.AudioEngine:resume(AudioControlTest._audioID)
+            cc.AudioEngine:resume(AudioControlTest._audioID)
         end
     end
     
@@ -181,7 +181,7 @@ function AudioControlTest.create()
     local function switchLoop(tag, sender)
         AudioControlTest._loopEnabled = not AudioControlTest._loopEnabled
         if AudioControlTest._audioID ~= cc.AUDIO_INVAILD_ID then
-            ccexp.AudioEngine:setLoop(AudioControlTest._audioID, AudioControlTest._loopEnabled)
+            cc.AudioEngine:setLoop(AudioControlTest._audioID, AudioControlTest._loopEnabled)
         end
         if AudioControlTest._loopEnabled then
             AudioControlTest.loopItem:setString("disable-loop")
@@ -196,7 +196,7 @@ function AudioControlTest.create()
     
     ------uncacheItem
     local function uncache(tag, sender)
-        ccexp.AudioEngine:uncache("background.mp3")
+        cc.AudioEngine:uncache("background.mp3")
         AudioControlTest._audioID = cc.AUDIO_INVAILD_ID
         AudioControlTest._playItem:setEnabled(true)
     end
@@ -218,7 +218,7 @@ function AudioControlTest.create()
     local function volumeSliderChangedEvent(sender,eventType)
         AudioControlTest._volume = sender:getPercent() / 100.0
         if AudioControlTest._audioID ~= cc.AUDIO_INVAILD_ID then
-            ccexp.AudioEngine:setVolume(AudioControlTest._audioID, AudioControlTest._volume)
+            cc.AudioEngine:setVolume(AudioControlTest._audioID, AudioControlTest._volume)
         end
     end
     local volumeSlider = ccui.Slider:create()
@@ -247,7 +247,7 @@ function AudioControlTest.create()
             AudioControlTest._updateTimeSlider = false
         else
             if (AudioControlTest._audioID ~= cc.AUDIO_INVAILD_ID and AudioControlTest._duration ~= cc.AUDIO_TIME_UNKNOWN) then
-                ccexp.AudioEngine:setCurrentTime(AudioControlTest._audioID,AudioControlTest._duration * ratio)
+                cc.AudioEngine:setCurrentTime(AudioControlTest._audioID,AudioControlTest._duration * ratio)
             end
             AudioControlTest._updateTimeSlider = true
         end
@@ -261,10 +261,10 @@ function AudioControlTest.create()
     local function step(dt)
         if AudioControlTest._audioID ~= cc.AUDIO_INVAILD_ID then
             if AudioControlTest._duration == cc.AUDIO_TIME_UNKNOWN then
-                AudioControlTest._duration = ccexp.AudioEngine:getDuration(AudioControlTest._audioID)
+                AudioControlTest._duration = cc.AudioEngine:getDuration(AudioControlTest._audioID)
             end
             if AudioControlTest._duration ~= cc.AUDIO_TIME_UNKNOWN then
-                local time = ccexp.AudioEngine:getCurrentTime(AudioControlTest._audioID)
+                local time = cc.AudioEngine:getCurrentTime(AudioControlTest._audioID)
                 AudioControlTest._timeRatio = time / AudioControlTest._duration
                 if AudioControlTest._updateTimeSlider then
                     AudioControlTest._timeSlider:setRatio(AudioControlTest._timeRatio)
@@ -277,7 +277,7 @@ function AudioControlTest.create()
     
     function onNodeEvent(tag)
         if tag == "exit" then
-            ccexp.AudioEngine:stopAll()
+            cc.AudioEngine:stopAll()
         end
     end
     layer:registerScriptHandler(onNodeEvent)
@@ -302,7 +302,7 @@ function PlaySimultaneouslyTest.create()
         local audioID = cc.AUDIO_INVAILD_ID
         --for k, v in pairs(PlaySimultaneouslyTest.files) do
         for index=1,10 do
-            audioID = ccexp.AudioEngine:play2d(PlaySimultaneouslyTest.files[index])
+            audioID = cc.AudioEngine:play2d(PlaySimultaneouslyTest.files[index])
             
             if audioID ~= cc.AUDIO_INVAILD_ID then
                 PlaySimultaneouslyTest._playItem:setEnabled(false)
@@ -315,7 +315,7 @@ function PlaySimultaneouslyTest.create()
                     end
                 end
                 
-                ccexp.AudioEngine:setFinishCallback(audioID,finishCallback)
+                cc.AudioEngine:setFinishCallback(audioID,finishCallback)
             end   
         end
     end
@@ -330,7 +330,7 @@ function PlaySimultaneouslyTest.create()
     
     function onNodeEvent(tag)
         if tag == "exit" then
-            ccexp.AudioEngine:stopAll()
+            cc.AudioEngine:stopAll()
         end
     end
     layer:registerScriptHandler(onNodeEvent)
@@ -356,7 +356,7 @@ function AudioProfileTest.create()
         AudioProfileTest._files[2] = "background.ogg"
     end
     
-    AudioProfileTest._profile = ccexp.AudioProfile:new()
+    AudioProfileTest._profile = cc.AudioProfile:new()
     AudioProfileTest._profile.name = "AudioProfileTest"
     AudioProfileTest._profile.maxInstances = 3
     AudioProfileTest._profile.minDelay = 1.0
@@ -372,7 +372,7 @@ function AudioProfileTest.create()
     local heightRatio = 0.7
     for index=1,2 do
         local function itemClickCallback(tag, sender)
-            local audioID = ccexp.AudioEngine:play2d(AudioProfileTest._files[tag],false,1.0,AudioProfileTest._profile)
+            local audioID = cc.AudioEngine:play2d(AudioProfileTest._files[tag],false,1.0,AudioProfileTest._profile)
             if audioID ~= cc.AUDIO_INVAILD_ID then
                 AudioProfileTest._time = AudioProfileTest._minDelay
                 AudioProfileTest._audioCount = AudioProfileTest._audioCount + 1
@@ -383,7 +383,7 @@ function AudioProfileTest.create()
                     AudioProfileTest._showLabel:setString(string.format("audio count:%d",AudioProfileTest._audioCount))
                 end
                 
-                ccexp.AudioEngine:setFinishCallback(audioID,finishCallback)
+                cc.AudioEngine:setFinishCallback(audioID,finishCallback)
             end
         end
 
@@ -429,7 +429,7 @@ function AudioProfileTest.create()
     
     function onNodeEvent(tag)
         if tag == "exit" then
-            ccexp.AudioEngine:stopAll()
+            cc.AudioEngine:stopAll()
         end
     end
     layer:registerScriptHandler(onNodeEvent)
@@ -450,10 +450,10 @@ function InvalidAudioFileTest.create()
     local function playUnsupportedAudio(tag, sender)
         local targetPlatform = cc.Application:getInstance():getTargetPlatform()
         if (cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == targetPlatform or cc.PLATFORM_OS_IPAD == targetPlatform) then
-            ccexp.AudioEngine:play2d("background.ogg")
+            cc.AudioEngine:play2d("background.ogg")
         end
         if (cc.PLATFORM_OS_ANDROID == targetPlatform) then
-            ccexp.AudioEngine:play2d("background.caf")
+            cc.AudioEngine:play2d("background.caf")
         end
     end
     
@@ -463,7 +463,7 @@ function InvalidAudioFileTest.create()
     
     -- not-existent audio
     local function playNotExistentAudio(tag, sender)
-        ccexp.AudioEngine:play2d("not-existent file.mp3")
+        cc.AudioEngine:play2d("not-existent file.mp3")
     end
     
     local playItem2 = cc.MenuItemFont:create("play not-existent file")
@@ -488,7 +488,7 @@ function LargeAudioFileTest.create()
     local layerSize = layer:getContentSize()
     
     local function playAudio(tag, sender)
-        ccexp.AudioEngine:play2d("audio/LuckyDay.mp3")
+        cc.AudioEngine:play2d("audio/LuckyDay.mp3")
     end
     
     local playItem = cc.MenuItemFont:create("play large audio file")
@@ -501,7 +501,7 @@ function LargeAudioFileTest.create()
     
     function onNodeEvent(tag)
         if tag == "exit" then
-            ccexp.AudioEngine:stopAll()
+            cc.AudioEngine:stopAll()
         end
     end
     layer:registerScriptHandler(onNodeEvent)

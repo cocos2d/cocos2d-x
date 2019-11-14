@@ -58,7 +58,7 @@ bool UISliderTest::init()
         
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = TextBMFont::create("Move the slider thumb", "ccb/markerfelt24shadow.fnt");
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
@@ -85,7 +85,7 @@ bool UISliderTest::init()
         auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UISliderTest::printWidgetResources, this));
         item1->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + item1->getContentSize().height * 3));
         auto pMenu1 = Menu::create(item1, nullptr);
-        pMenu1->setPosition(Vec2(0, 0));
+        pMenu1->setPosition(Vec2(0.0f, 0.0f));
         this->addChild(pMenu1, 10);
         
         return true;
@@ -137,7 +137,7 @@ bool UISliderTest_Scale9::init()
         
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create("Move the slider thumb","fonts/Marker Felt.ttf",32);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
@@ -153,8 +153,8 @@ bool UISliderTest_Scale9::init()
         slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
         slider->loadProgressBarTexture("cocosui/slider_bar_active_9patch.png");
         slider->setScale9Enabled(true);
-        slider->setCapInsets(Rect(0, 0, 0, 0));
-        slider->setContentSize(Size(250.0f, 19));
+        slider->setCapInsets(Rect(0.0f, 0.0f, 0.0f, 0.0f));
+        slider->setContentSize(Size(250.0f, 19.0f));
         slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
         slider->addEventListener(CC_CALLBACK_2(UISliderTest_Scale9::sliderEvent, this));
         _uiLayer->addChild(slider);
@@ -195,7 +195,7 @@ bool UISliderTest_Scale9_State_Change::init()
 
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create("Click the slider thumb", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
 
@@ -212,8 +212,8 @@ bool UISliderTest_Scale9_State_Change::init()
         slider->loadProgressBarTexture("cocosui/slider_bar_active_9patch.png");
         slider->ignoreContentAdaptWithSize(false);
         slider->setScale9Enabled(true);
-        slider->setCapInsets(Rect(0, 0, 0, 0));
-        slider->setContentSize(Size(200.0f, 60));
+        slider->setCapInsets(Rect(0.0f, 0.0f, 0.0f, 0.0f));
+        slider->setContentSize(Size(200.0f, 60.0f));
         slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
         slider->addTouchEventListener([=](Ref* /*sender*/, Widget::TouchEventType type){
             if (type == Widget::TouchEventType::ENDED) {
@@ -263,7 +263,7 @@ bool UISliderNormalDefaultTest::init()
         
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create("","Arial",32);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 100));
         _uiLayer->addChild(_displayValueLabel);
         
@@ -284,9 +284,9 @@ bool UISliderNormalDefaultTest::init()
         
         Slider* sliderScale9 = (Slider*)slider->clone();
         sliderScale9->setScale9Enabled(true);
-        sliderScale9->setCapInsets(Rect(0, 0, 0, 0));
+        sliderScale9->setCapInsets(Rect(0.0f, 0.0f, 0.0f, 0.0f));
         sliderScale9->setZoomScale(1.0);
-        sliderScale9->setContentSize(Size(250.0f, 19));
+        sliderScale9->setContentSize(Size(250.0f, 19.0f));
         sliderScale9->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - 20));
         _uiLayer->addChild(sliderScale9);
         
@@ -316,7 +316,7 @@ bool UISliderDisabledDefaultTest::init()
         
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create("","Arial",32);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 100));
         _uiLayer->addChild(_displayValueLabel);
         
@@ -341,8 +341,8 @@ bool UISliderDisabledDefaultTest::init()
         sliderScale9->setScale9Enabled(true);
         sliderScale9->setEnabled(false);
         sliderScale9->setBright(false);
-        sliderScale9->setCapInsets(Rect(0, 0, 0, 0));
-        sliderScale9->setContentSize(Size(250.0f, 10));
+        sliderScale9->setCapInsets(Rect(0.0f, 0.0f, 0.0f, 0.0f));
+        sliderScale9->setContentSize(Size(250.0f, 10.0f));
         sliderScale9->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - 20));
         _uiLayer->addChild(sliderScale9);
         
@@ -374,7 +374,7 @@ bool UISliderNewEventCallbackTest::init()
 
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create("","Arial",32);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 100));
         _uiLayer->addChild(_displayValueLabel);
 
@@ -439,7 +439,7 @@ bool UISliderIssue12249Test::init()
         
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = TextBMFont::create("Move the slider thumb", "ccb/markerfelt24shadow.fnt");
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         

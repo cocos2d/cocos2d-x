@@ -312,7 +312,7 @@ void EffectAdvanceBaseTest::onEnter()
     TestCase::onEnter();
     
     _bgNode = NodeGrid::create();
-    _bgNode->setAnchorPoint(Vec2(0.5,0.5));
+    _bgNode->setAnchorPoint(Vec2(0.5f,0.5f));
     addChild(_bgNode);
     //_bgNode->setPosition( VisibleRect::center() );
     auto bg = Sprite::create("Images/background3.png");
@@ -322,7 +322,7 @@ void EffectAdvanceBaseTest::onEnter()
     _bgNode->addChild(bg);
 
     _target1 = NodeGrid::create();
-    _target1->setAnchorPoint(Vec2(0.5,0.5));
+    _target1->setAnchorPoint(Vec2(0.5f,0.5f));
     auto grossini = Sprite::create("Images/grossinis_sister2.png");
     _target1->addChild(grossini);
     _bgNode->addChild(_target1);
@@ -333,7 +333,7 @@ void EffectAdvanceBaseTest::onEnter()
 
 
     _target2 = NodeGrid::create();
-    _target2->setAnchorPoint(Vec2(0.5,0.5));
+    _target2->setAnchorPoint(Vec2(0.5f,0.5f));
     auto tamara = Sprite::create("Images/grossinis_sister1.png");
     _target2->addChild(tamara);
     _bgNode->addChild(_target2);

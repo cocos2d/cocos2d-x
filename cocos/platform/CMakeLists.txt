@@ -57,11 +57,9 @@ elseif(WINDOWS)
 elseif(APPLE)
     set(COCOS_PLATFORM_SPECIFIC_HEADER
         platform/apple/CCFileUtils-apple.h
-        platform/apple/CCLock-apple.h
         platform/apple/CCDevice-apple.h
         )
     set(COCOS_PLATFORM_SPECIFIC_SRC
-        platform/apple/CCLock-apple.cpp
         platform/apple/CCFileUtils-apple.mm
         platform/apple/CCDevice-apple.mm
         )
@@ -72,7 +70,6 @@ elseif(APPLE)
             platform/mac/CCGLViewImpl-mac.h
             platform/mac/CCPlatformDefine-mac.h
             platform/mac/CCApplication-mac.h
-            platform/mac/CCGL-mac.h
            # platform/desktop/CCGLViewImpl-desktop.h
             )
         set(COCOS_PLATFORM_SPECIFIC_SRC
@@ -89,11 +86,10 @@ elseif(APPLE)
             platform/ios/CCApplication-ios.h
             platform/ios/CCDirectorCaller-ios.h
             platform/ios/CCEAGLView-ios.h
-            platform/ios/CCGL-ios.h
             platform/ios/CCGLViewImpl-ios.h
             platform/ios/CCPlatformDefine-ios.h
             platform/ios/CCStdC-ios.h
-            platform/ios/OpenGL_Internal-ios.h
+            platform/ios/CCInputView-ios.h
             )
         set(COCOS_PLATFORM_SPECIFIC_SRC
             ${COCOS_PLATFORM_SPECIFIC_SRC}
@@ -104,6 +100,7 @@ elseif(APPLE)
             platform/ios/CCEAGLView-ios.mm
             platform/ios/CCGLViewImpl-ios.mm
             platform/ios/CCImage-ios.mm
+            platform/ios/CCInputView-ios.mm
             )
     endif()
 
@@ -126,7 +123,6 @@ elseif(LINUX)
         platform/desktop/CCGLViewImpl-desktop.h
         )
     set(COCOS_PLATFORM_SPECIFIC_SRC
-        platform/linux/CCStdC-linux.cpp
         platform/linux/CCFileUtils-linux.cpp
         platform/linux/CCCommon-linux.cpp
         platform/linux/CCApplication-linux.cpp

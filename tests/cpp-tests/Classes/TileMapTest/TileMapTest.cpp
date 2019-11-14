@@ -147,7 +147,7 @@ TileMapTest::TileMapTest()
     
     addChild(map, 0, kTagTileMap);
     
-    map->setAnchorPoint( Vec2(0, 0.5f) );
+    map->setAnchorPoint( Vec2(0.0f, 0.5f) );
 
     auto scale = ScaleBy::create(4, 0.8f);
     auto scaleBack = scale->reverse();
@@ -383,7 +383,7 @@ TMXOrthoTest4::TMXOrthoTest4()
         child->getTexture()->setAntiAliasTexParameters();
     }
     
-    map->setAnchorPoint(Vec2(0, 0));
+    map->setAnchorPoint(Vec2(0.0f, 0.0f));
 
     auto layer = map->getLayer("Layer 0");
     auto s = layer->getLayerSize();
@@ -391,11 +391,11 @@ TMXOrthoTest4::TMXOrthoTest4()
     layer->setOpacity(128);
     
     Sprite* sprite;
-    sprite = layer->getTileAt(Vec2(0,0));
+    sprite = layer->getTileAt(Vec2(0.0f,0.0f));
     sprite->setScale(2);
-    sprite = layer->getTileAt(Vec2(s.width-1,0));
+    sprite = layer->getTileAt(Vec2(s.width-1,0.0f));
     sprite->setScale(2);
-    sprite = layer->getTileAt(Vec2(0,s.height-1));
+    sprite = layer->getTileAt(Vec2(0.0f,s.height-1));
     sprite->setScale(2);
     sprite = layer->getTileAt(Vec2(s.width-1,s.height-1));
     sprite->setScale(2);
@@ -412,10 +412,10 @@ void TMXOrthoTest4::removeSprite(float dt)
     auto layer = map->getLayer("Layer 0");
     auto s = layer->getLayerSize();
 
-    auto sprite = layer->getTileAt( Vec2(s.width-1,0) );
+    auto sprite = layer->getTileAt( Vec2(s.width-1,0.0f) );
     auto sprite2 = layer->getTileAt(Vec2(s.width-1, s.height-1));
     layer->removeChild(sprite, true);
-    auto sprite3 = layer->getTileAt(Vec2(2, s.height-1));
+    auto sprite3 = layer->getTileAt(Vec2(2.0f, s.height-1));
     layer->removeChild(sprite3, true);
     layer->removeChild(sprite2, true);
 }
@@ -462,7 +462,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     tile2->setAnchorPoint( Vec2(0.5f, 0.5f) );
     tile3->setAnchorPoint( Vec2(0.5f, 0.5f) );
 
-    auto move = MoveBy::create(0.5f, Vec2(0,160));
+    auto move = MoveBy::create(0.5f, Vec2(0.0f,160.0f));
     auto rotate = RotateBy::create(2, 360);
     auto scale = ScaleBy::create(2, 5);
     auto opacity = FadeOut::create(2);
@@ -882,7 +882,7 @@ TMXResizeTest::TMXResizeTest()
     {
         for (unsigned int x = 0; x < ls.width; x++) 
         {
-            layer->setTileGID(1, Vec2( x, y ) );
+            layer->setTileGID(1, Vec2( (float)x, (float)y ) );
         }
     }        
 }
@@ -911,19 +911,19 @@ TMXIsoZorder::TMXIsoZorder()
 
     auto s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
-    map->setPosition(Vec2(-s.width/2,0));
+    map->setPosition(Vec2(-s.width/2,0.0f));
     
     _tamara = Sprite::create(s_pathSister1);
     map->addChild(_tamara, (int)map->getChildren().size() );
     
     _tamara->retain();
     int mapWidth = map->getMapSize().width * map->getTileSize().width;
-    _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Vec2( mapWidth/2,0)));
+    _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Vec2( mapWidth/2.0f,0.0f)));
     _tamara->setScale(0.5);
-    _tamara->setAnchorPoint(Vec2(0.5f,0));
+    _tamara->setAnchorPoint(Vec2(0.5f,0.0f));
 
     
-    auto move = MoveBy::create(10, Vec2(300,250));
+    auto move = MoveBy::create(10, Vec2(300.0f,250.0f));
     auto back = move->reverse();
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
@@ -986,10 +986,10 @@ TMXOrthoZorder::TMXOrthoZorder()
     _tamara = Sprite::create(s_pathSister1);
     map->addChild(_tamara,  (int)map->getChildren().size());
     _tamara->retain();
-    _tamara->setAnchorPoint(Vec2(0.5f,0));
+    _tamara->setAnchorPoint(Vec2(0.5f,0.0f));
 
     
-    auto move = MoveBy::create(10, Vec2(400,450));
+    auto move = MoveBy::create(10, Vec2(400.0f,450.0f));
     auto back = move->reverse();
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
@@ -1042,7 +1042,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
     addChild(map, 0, kTagTileMap);
     
     auto s = map->getContentSize();
-    map->setPosition( Vec2(-s.width/2,0) );
+    map->setPosition( Vec2(-s.width/2,0.0f) );
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
     // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
@@ -1190,7 +1190,7 @@ TMXIsoMoveLayer::TMXIsoMoveLayer()
     auto map = TMXTiledMap::create("TileMaps/iso-test-movelayer.tmx");
     addChild(map, 0, kTagTileMap);
     
-    map->setPosition(Vec2(-700,-50));
+    map->setPosition(Vec2(-700.0f,-50.0f));
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -1451,9 +1451,9 @@ TMXBug987::TMXBug987()
         node->getTexture()->setAntiAliasTexParameters();
     }
 
-    map->setAnchorPoint(Vec2(0, 0));
+    map->setAnchorPoint(Vec2(0.0f, 0.0f));
     auto layer = map->getLayer("Tile Layer 1");
-    layer->setTileGID(3, Vec2(2,2));
+    layer->setTileGID(3, Vec2(2.0f,2.0f));
 }
 
 std::string TMXBug987::title() const

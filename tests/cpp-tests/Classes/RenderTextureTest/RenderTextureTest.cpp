@@ -105,7 +105,7 @@ void RenderTextureSave::saveImageWithPremultipliedAlpha(cocos2d::Ref* sender)
         auto sprite = Sprite::create(path);
         addChild(sprite);
         sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
+        sprite->setPosition(Vec2(40.0f, 40.0f));
         sprite->setRotation(counter * 3);
         _target->release();
     };
@@ -131,7 +131,7 @@ void RenderTextureSave::saveImageWithNonPremultipliedAlpha(cocos2d::Ref *sender)
         auto sprite = Sprite::create(path);
         addChild(sprite);
         sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
+        sprite->setPosition(Vec2(40.0f, 40.0f));
         sprite->setRotation(counter * 3);
         rt->release();
     };
@@ -456,7 +456,7 @@ RenderTexturePartTest::RenderTexturePartTest()
     _rend->end();
     
     _spriteDraw = Sprite::createWithTexture(_rend->getSprite()->getTexture());
-    FiniteTimeAction* baseAction = MoveBy::create(1, Vec2(size.width,0));
+    FiniteTimeAction* baseAction = MoveBy::create(1, Vec2(size.width,0.0f));
     _spriteDraw->setPosition(0,size.height/2);
     _spriteDraw->setScaleY(-1);
     _spriteDraw->runAction(RepeatForever::create(Sequence::create
@@ -487,15 +487,15 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 
     _spriteDS = Sprite::create("Images/fire.png");
     _spriteDS->retain();
-    _spriteDS->setPosition(Vec2(s.width * 0.25f, 0));
+    _spriteDS->setPosition(Vec2(s.width * 0.25f, 0.0f));
     _spriteDS->setScale(10);
     
     _spriteDraw = Sprite::create("Images/fire.png");
     _spriteDraw->retain();
-    _spriteDraw->setPosition(Vec2(s.width * 0.25f, 0));
+    _spriteDraw->setPosition(Vec2(s.width * 0.25f, 0.0f));
     _spriteDraw->setScale(10);
     //! move sprite half width and height, and draw only where not marked
-    _spriteDraw->setPosition(_spriteDraw->getPosition() + Vec2(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
+    _spriteDraw->setPosition(_spriteDraw->getPosition() + Vec2(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5f, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5f));
     
     _rend = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA4444, PixelFormat::D24S8);
 
@@ -814,7 +814,7 @@ RenderTextureWithSprite3DIssue16894::RenderTextureWithSprite3DIssue16894()
          // Ship - Model is from cocos2d-x test project
          auto ship = Sprite3D::create("Sprite3DTest/boss.c3b");
          ship->setScale(6);
-         ship->setRotation3D(Vec3(180,45,0));
+         ship->setRotation3D(Vec3(180.0f,45.0f,0.0f));
          ship->setPosition(Vec2(visibleSize.width/4 + origin.x, visibleSize.height/2 + origin.y));
          ship->setForce2DQueue(true);
          ship->retain();
@@ -823,7 +823,7 @@ RenderTextureWithSprite3DIssue16894::RenderTextureWithSprite3DIssue16894()
          {
              addChild(ship, 1);
              //// Rotate Ship
-             auto spin = RotateBy::create(4, Vec3(0,180,0));
+             auto spin = RotateBy::create(4, Vec3(0.0f,180.0f,0.0f));
              auto repeatspin = RepeatForever::create(spin);
              ship->runAction(repeatspin);
          }
@@ -845,15 +845,15 @@ RenderTextureWithSprite3DIssue16894::RenderTextureWithSprite3DIssue16894()
      scheduleUpdate();
 
      auto label1 = Label::createWithTTF("Normal Sprite3D\n", "fonts/arial.ttf", 10);
-     label1->setPosition(Vec2(visibleSize.width/4 * 1, 60));
+     label1->setPosition(Vec2(visibleSize.width/4 * 1, 60.0f));
      this->addChild(label1, 1);
 
      auto label2 = Label::createWithTTF("RenderTexture\nDefault - No depth buffer", "fonts/arial.ttf", 10);
-     label2->setPosition(Vec2(visibleSize.width/4 * 2, 60));
+     label2->setPosition(Vec2(visibleSize.width/4 * 2, 60.0f));
      this->addChild(label2, 1);
 
      auto label3 = Label::createWithTTF("RenderTexture\nGL_DEPTH24_STENCIL8", "fonts/arial.ttf", 10);
-     label3->setPosition(Vec2(visibleSize.width/4 * 3, 60));
+     label3->setPosition(Vec2(visibleSize.width/4 * 3, 60.0f));
      this->addChild(label3, 1);
 }
 

@@ -41,7 +41,6 @@ end
 -- ui
 if nil ~= ccui then
     require "cocos.ui.GuiConstants"
-    require "cocos.ui.experimentalUIConstants"
 end
 
 -- extensions

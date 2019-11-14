@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 #include "2d/CCLabel.h"
-
 #include <algorithm>
-
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "2d/CCFont.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCFontAtlas.h"
@@ -688,7 +688,8 @@ void Label::updateShaderProgram()
     }
 
     CC_SAFE_RELEASE(_programState);
-    _programState = new backend::ProgramState(programType);
+    auto* program = backend::Program::getBuiltinProgram(programType);
+    _programState = new backend::ProgramState(program);
 
     updateUniformLocations();
 
@@ -1568,7 +1569,7 @@ void Label::updateContent()
                 // FIXME: system fonts don't report the height of the font correctly. only the size of the texture, which is POT
                 y += spriteSize.height / 2;
             // FIXME: Might not work with different vertical alignments
-            _underlineNode->drawLine(Vec2(0,y), Vec2(spriteSize.width,y), Color4F(_textSprite->getDisplayedColor()));
+            _underlineNode->drawLine(Vec2(0.0f,y), Vec2(spriteSize.width,y), Color4F(_textSprite->getDisplayedColor()));
         }
     }
 
@@ -1581,9 +1582,9 @@ void Label::updateContent()
     Vec2 vertices[4] =
     {
         Vec2::ZERO,
-        Vec2(_contentSize.width, 0),
+        Vec2(_contentSize.width, 0.0f),
         Vec2(_contentSize.width, _contentSize.height),
-        Vec2(0, _contentSize.height)
+        Vec2(0.0f, _contentSize.height)
     };
     _debugDrawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
 #endif

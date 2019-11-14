@@ -12,11 +12,6 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with Samsung
 ****************************************************************************/
-
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
 #include "platform/android/jni/JniHelper.h"
 #include "platform/android/CCEnhanceAPI-android.h"
 #include <android/log.h>
@@ -106,6 +101,3 @@ int EnhanceAPI::setLowPowerMode(bool enable)
     return ret;
 }
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-

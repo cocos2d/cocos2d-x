@@ -24,8 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #pragma once
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "platform/CCStdC.h"
 #include "platform/CCCommon.h"
@@ -33,8 +31,6 @@ THE SOFTWARE.
 #include <string>
 
 NS_CC_BEGIN
-
-class Rect;
 
 class CC_DLL Application : public ApplicationProtocol
 {
@@ -114,5 +110,3 @@ protected:
 };
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

@@ -23,6 +23,7 @@
  ****************************************************************************/
  
 #include "Program.h"
+#include "ProgramCache.h"
 
 CC_BACKEND_BEGIN
 
@@ -35,6 +36,11 @@ Program::Program(const std::string& vs, const std::string& fs)
 void Program::setProgramType(ProgramType type)
 {
     _programType = type;
+}
+
+Program* Program::getBuiltinProgram(ProgramType type)
+{
+    return ProgramCache::getInstance()->getBuiltinProgram(type);
 }
 
 CC_BACKEND_END

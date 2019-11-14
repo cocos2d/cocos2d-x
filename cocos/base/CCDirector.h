@@ -36,7 +36,6 @@ THE SOFTWARE.
 #include "base/CCVector.h"
 #include "2d/CCScene.h"
 #include "math/CCMath.h"
-#include "platform/CCGL.h"
 #include "platform/CCGLView.h"
 
 NS_CC_BEGIN

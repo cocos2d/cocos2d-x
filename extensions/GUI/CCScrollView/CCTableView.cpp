@@ -307,11 +307,11 @@ void TableView::_updateContentSize()
 	{
 		if (_direction == Direction::HORIZONTAL)
 		{
-			this->setContentOffset(Vec2(0,0));
+			this->setContentOffset(Vec2(0.0f,0.0f));
 		}
 		else
 		{
-			this->setContentOffset(Vec2(0,this->minContainerOffset().y));
+			this->setContentOffset(Vec2(0.0f,this->minContainerOffset().y));
 		}
 		_oldDirection = _direction;
 	}

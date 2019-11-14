@@ -166,7 +166,7 @@ void SchedulerPauseResumeAll::onEnter()
     auto sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(VisibleRect::center());
     this->addChild(sprite);
-    sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
+    sprite->runAction(RepeatForever::create(RotateBy::create(3.0f, 360.0f)));
     sprite->setTag(123);
     scheduleUpdate();
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::tick1), 0.5f);
@@ -258,7 +258,7 @@ void SchedulerPauseResumeAllUser::onEnter()
     sprite->setPosition(Vec2(s.width/2, s.height/2));
     sprite->setTag(123);
     this->addChild(sprite);
-    sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
+    sprite->runAction(RepeatForever::create(RotateBy::create(3.0f, 360.0f)));
 
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::tick1), 1.0f);
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::tick2), 1.0f);
@@ -379,7 +379,7 @@ void SchedulerUnscheduleAllHard::onEnter()
     auto sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(Vec2(s.width/2, s.height/2));
     this->addChild(sprite);
-    sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
+    sprite->runAction(RepeatForever::create(RotateBy::create(3.0f, 360.0f)));
 
     _actionManagerActive = true;
 
@@ -451,7 +451,7 @@ void SchedulerUnscheduleAllUserLevel::onEnter()
     auto sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(Vec2(s.width/2, s.height/2));
     this->addChild(sprite);
-    sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
+    sprite->runAction(RepeatForever::create(RotateBy::create(3.0f, 360.0f)));
 
     schedule(CC_SCHEDULE_SELECTOR(SchedulerUnscheduleAllUserLevel::tick1), 0.5f);
     schedule(CC_SCHEDULE_SELECTOR(SchedulerUnscheduleAllUserLevel::tick2), 1.0f);
@@ -810,7 +810,7 @@ void SchedulerTimeScale::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     // rotate and jump
-    auto jump1 = JumpBy::create(4, Vec2(-s.width+80,0), 100, 4);
+    auto jump1 = JumpBy::create(4, Vec2(-s.width+80,0.0f), 100, 4);
     auto jump2 = jump1->reverse();
     auto rot1 = RotateBy::create(4, 360*2);
     auto rot2 = rot1->reverse();
@@ -827,9 +827,9 @@ void SchedulerTimeScale::onEnter()
     auto tamara = Sprite::create("Images/grossinis_sister1.png");
     auto kathia = Sprite::create("Images/grossinis_sister2.png");
 
-    grossini->setPosition(Vec2(40,80));
-    tamara->setPosition(Vec2(40,80));
-    kathia->setPosition(Vec2(40,80));
+    grossini->setPosition(Vec2(40.0f,80.0f));
+    tamara->setPosition(Vec2(40.0f,80.0f));
+    kathia->setPosition(Vec2(40.0f,80.0f));
 
     addChild(grossini);
     addChild(tamara);
@@ -917,7 +917,7 @@ void TwoSchedulers::onEnter()
         //
     auto grossini = Sprite::create("Images/grossini.png");
     addChild(grossini);
-    grossini->setPosition(Vec2(s.width/2,100));
+    grossini->setPosition(Vec2(s.width/2,100.0f));
     grossini->runAction(action->clone());
 
     auto defaultScheduler = Director::getInstance()->getScheduler();
@@ -943,7 +943,7 @@ void TwoSchedulers::onEnter()
         sprite->setActionManager(actionManager1);
 
         addChild(sprite);
-        sprite->setPosition(Vec2(30+15*i,100));
+        sprite->setPosition(Vec2(30+15*i,100.0f));
 
         sprite->runAction(action->clone());
     }
@@ -968,7 +968,7 @@ void TwoSchedulers::onEnter()
         sprite->setActionManager(actionManager2);
 
         addChild(sprite);
-        sprite->setPosition(Vec2(s.width-30-15*i,100));
+        sprite->setPosition(Vec2(s.width-30-15*i,100.0f));
 
         sprite->runAction(action->clone());
     }
@@ -1091,7 +1091,7 @@ void SchedulerIssueWithReschedule::onEnter()
 	_scheduler->schedule([this, verified](float dt){
         log("SchedulerIssueWithReschedule - first timer");
         
-        _scheduler->schedule([this, verified](float dt){
+        _scheduler->schedule([verified](float dt){
             log("SchedulerIssueWithReschedule - second timer. OK");
             *verified = true;
         }, this, 0.1f, 0, 0, false, "test_timer");
@@ -1422,10 +1422,9 @@ void SchedulerRemoveEntryWhileUpdate::onExit()
 }
 
 SchedulerRemoveEntryWhileUpdate::TestClass::TestClass(int index, TestClass *nextObj, cocos2d::Scheduler* scheduler)
-: _index(index)
-, _nextObj(nextObj)
+: _nextObj(nextObj)
+, _index(index)
 , _scheduler(scheduler)
-, _cleanedUp(false)
 {
 }
 

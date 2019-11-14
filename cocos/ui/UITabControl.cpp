@@ -481,7 +481,7 @@ namespace ui
         if (tabcell != nullptr && tabcell->init())
         {
             tabcell->_frontCrossRenderer->setVisible(false); // _isSelected == false
-            tabcell->_anchorPoint = Vec2(.5f, 0);
+            tabcell->_anchorPoint = Vec2(.5f, 0.0f);
             tabcell->autorelease();
             return tabcell;
         }
@@ -503,7 +503,7 @@ namespace ui
         {
             tabcell->_frontCrossRenderer->setVisible(false);
             tabcell->_tabLabelRender->setString(titleStr);
-            tabcell->_anchorPoint = Vec2(.5f, 0);
+            tabcell->_anchorPoint = Vec2(.5f, 0.0f);
             tabcell->autorelease();
             return tabcell;
         }
@@ -529,7 +529,7 @@ namespace ui
         {
             tabcell->_frontCrossRenderer->setVisible(false);
             tabcell->_tabLabelRender->setString(titleStr);
-            tabcell->_anchorPoint = Vec2(.5f, 0);
+            tabcell->_anchorPoint = Vec2(.5f, 0.0f);
             tabcell->autorelease();
             return tabcell;
         }

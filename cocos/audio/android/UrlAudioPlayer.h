@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include <memory>
 #include <thread>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class ICallerThreadUtils;
 class AssetFd;
@@ -132,4 +132,4 @@ private:
     friend class AudioPlayerProvider;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

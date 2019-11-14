@@ -22,12 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "platform/CCPlatformConfig.h"
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
-#ifndef __AUDIO_ENGINE_INL_H_
-#define __AUDIO_ENGINE_INL_H_
+#pragma once
 
 #include <unordered_map>
 
@@ -39,7 +34,6 @@ NS_CC_BEGIN
 
 class Scheduler;
 
-namespace experimental {
 #define MAX_AUDIOINSTANCES 32
 
 class CC_DLL AudioEngineImpl : public cocos2d::Ref
@@ -86,8 +80,5 @@ private:
     int _currentAudioID;
     Scheduler* _scheduler;
 };
-}
-NS_CC_END
-#endif // __AUDIO_ENGINE_INL_H_
-#endif
 
+NS_CC_END

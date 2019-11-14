@@ -48,7 +48,7 @@ public:
     struct Attribute
     {
         Attribute() = default;
-        Attribute(const std::string& _name, unsigned int _index, VertexFormat _format, unsigned int _offset, bool needToBeNormallized)
+        Attribute(const std::string& _name, std::size_t _index, VertexFormat _format, std::size_t _offset, bool needToBeNormallized)
         : name(_name)
         , format(_format)
         , offset(_offset)
@@ -58,8 +58,8 @@ public:
         
         std::string name; ///< name is used in opengl
         VertexFormat format = VertexFormat::INT3; 
-        unsigned int offset = 0;
-        unsigned int index = 0; ///< index is used in metal
+        std::size_t offset = 0;
+        std::size_t index = 0; ///< index is used in metal
         bool needToBeNormallized = false;
     };
 
@@ -73,19 +73,19 @@ public:
      * @param offset Specifies the byte offset to the first component of the first generic vertex attribute.
      * @param needToBeNormallized Specifies whether fixed-point data values should be normalized (true) or converted directly as fixed-point values (false) when they are accessed.
      */
-    void setAttribute(const std::string& name, unsigned int index, VertexFormat format, unsigned int offset, bool needToBeNormallized);
+    void setAttribute(const std::string& name, std::size_t index, VertexFormat format, std::size_t offset, bool needToBeNormallized);
     
     /**
      * Set stride of vertices.
      * @param stride Specifies the distance between the data of two vertices, in bytes.
      */
-    void setLayout(unsigned int stride);
+    void setLayout(std::size_t stride);
     
     /**
      * Get the distance between the data of two vertices, in bytes.
      * @return The distance between the data of two vertices, in bytes.
      */
-    inline unsigned int getStride() const { return _stride; }
+    inline std::size_t getStride() const { return _stride; }
 
     /**
      * Get vertex step function. Default value is VERTEX.
@@ -107,7 +107,7 @@ public:
     
 private:
     std::unordered_map<std::string, Attribute> _attributes;
-    unsigned int _stride = 0;
+    std::size_t _stride = 0;
     VertexStepMode _stepMode = VertexStepMode::VERTEX;
 };
 

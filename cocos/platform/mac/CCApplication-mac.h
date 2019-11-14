@@ -23,9 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CC_APPLICATION_MAC_H__
-#define __CC_APPLICATION_MAC_H__
+#pragma once
 
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
@@ -107,5 +105,3 @@ protected:
 };
 
 NS_CC_END
-
-#endif  // end of __CC_APPLICATION_MAC_H__;

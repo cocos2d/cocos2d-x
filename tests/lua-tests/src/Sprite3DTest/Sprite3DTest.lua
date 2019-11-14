@@ -1125,9 +1125,10 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
 
     local vertexShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.vert")
     local fragmentShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.frag")
-
-    local programState = ccb.ProgramState:new(vertexShader, fragmentShader)
-
+    local program = ccb.Device:getInstance():newProgram(vertexShader, fragmentShader)
+    local programState = ccb.ProgramState:new(program)
+    program:release()
+    
     self._textureCube = cc.TextureCube:create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
         "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
         "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg")

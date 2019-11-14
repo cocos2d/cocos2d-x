@@ -49,6 +49,7 @@ public:
      * @param texture Specifies the texture to be setted to the color attachemnt.
      */
     static void updateDefaultColorAttachmentTexture(id<MTLTexture> texture);
+    static void resizeDefaultAttachmentTexture(std::size_t width, std::size_t height);
     
     /**
      * Get the default combined depth and stencil attachment pixel format.
@@ -88,7 +89,7 @@ public:
      * @param texture Specifies the texture to get the image.
      * @param callback Specifies a call back function to deal with the image.
      */
-    static void getTextureBytes(int origX, int origY, int rectWidth, int rectHeight, id<MTLTexture> texture, std::function<void(const unsigned char*, int, int)> callback);
+    static void getTextureBytes(std::size_t origX, std::size_t origY, std::size_t rectWidth, std::size_t rectHeight, id<MTLTexture> texture, std::function<void(const unsigned char*, std::size_t, std::size_t)> callback);
     
     /**
      * Swizzle the iamge form the given format to MTLPixelFormatRGBA8Unorm.
@@ -97,7 +98,7 @@ public:
      * @param heigth Specifies the height of the image.
      * @param format Specifies the format of the image.
      */
-    static void swizzleImage(unsigned char* image, int width, int height, MTLPixelFormat format);
+    static void swizzleImage(unsigned char* image, std::size_t width, std::size_t height, MTLPixelFormat format);
     
 private:
     static id<MTLTexture> createDepthStencilAttachmentTexture();

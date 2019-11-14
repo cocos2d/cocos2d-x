@@ -288,7 +288,8 @@ LayerColor::LayerColor()
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    _programState = new (std::nothrow) backend::ProgramState(positionColor_vert, positionColor_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     
     auto vertexLayout = _programState->getVertexLayout();
@@ -705,7 +706,8 @@ LayerRadialGradient* LayerRadialGradient::create()
 LayerRadialGradient::LayerRadialGradient()
 {
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    _programState = new (std::nothrow) backend::ProgramState(position_vert, layer_radialGradient_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::LAYER_RADIA_GRADIENT);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _startColorLocation = pipelineDescriptor.programState->getUniformLocation("u_startColor");

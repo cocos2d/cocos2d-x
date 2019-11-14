@@ -712,12 +712,9 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
         file = unzOpen(FileUtils::getInstance()->getSuitableFOpen(zipFilePath).c_str());
         CC_BREAK_IF(!file);
 
-        // FIXME: Other platforms should use upstream minizip like mingw-w64
-#ifdef MINIZIP_FROM_SYSTEM
-        int ret = unzLocateFile(file, filename.c_str(), NULL);
-#else
-        int ret = unzLocateFile(file, filename.c_str(), 1);
-#endif
+        // minizip 1.2.0 is same with other platforms
+        int ret = unzLocateFile(file, filename.c_str(), nullptr);
+
         CC_BREAK_IF(UNZ_OK != ret);
 
         char filePathA[260];

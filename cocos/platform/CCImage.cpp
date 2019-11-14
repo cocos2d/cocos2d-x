@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #include "base/CCData.h"
 #include "base/ccConfig.h" // CC_USE_JPEG, CC_USE_WEBP
+#include "platform/CCGL.h"
 
 extern "C"
 {

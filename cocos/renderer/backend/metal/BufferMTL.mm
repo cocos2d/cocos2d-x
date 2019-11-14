@@ -28,7 +28,7 @@
 
 CC_BACKEND_BEGIN
 
-BufferMTL::BufferMTL(id<MTLDevice> mtlDevice, unsigned int size, BufferType type, BufferUsage usage)
+BufferMTL::BufferMTL(id<MTLDevice> mtlDevice, std::size_t size, BufferType type, BufferUsage usage)
 : Buffer(size, type, usage)
 {
     if (BufferUsage::DYNAMIC == usage)
@@ -68,14 +68,14 @@ BufferMTL::~BufferMTL()
     }
 }
 
-void BufferMTL::updateData(void* data, unsigned int size)
+void BufferMTL::updateData(void* data, std::size_t size)
 {
     assert(size <= _size);
     updateIndex();
     memcpy((uint8_t*)_mtlBuffer.contents, data, size);
 }
 
-void BufferMTL::updateSubData(void* data, unsigned int offset, unsigned int size)
+void BufferMTL::updateSubData(void* data, std::size_t offset, std::size_t size)
 {
     assert(offset + size <= _size);
     updateIndex();

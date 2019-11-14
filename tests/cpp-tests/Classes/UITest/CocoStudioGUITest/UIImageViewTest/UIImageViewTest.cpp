@@ -66,7 +66,7 @@ bool UIImageViewTest::init()
         auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UIImageViewTest::printWidgetResources, this));
         item1->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + item1->getContentSize().height * 3));
         auto pMenu1 = Menu::create(item1, nullptr);
-        pMenu1->setPosition(Vec2(0, 0));
+        pMenu1->setPosition(Vec2(0.0f, 0.0f));
         this->addChild(pMenu1, 10);
         
         return true;
@@ -133,8 +133,8 @@ bool UIImageViewTest_Scale9_State_Change::init()
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
         imageView->ignoreContentAdaptWithSize(false);
         imageView->setScale9Enabled(true);
-        imageView->setContentSize(Size(100, 100));
-        imageView->setCapInsets(Rect(20,20,20,20));
+        imageView->setContentSize(Size(100.0f, 100.0f));
+        imageView->setCapInsets(Rect(20.0f,20.0f,20.0f,20.0f));
         imageView->setPosition(Vec2(widgetSize.width / 2.0f,
             widgetSize.height / 2.0f));
 
@@ -181,7 +181,7 @@ bool UIImageViewTest_ContentSize::init()
         // Create the imageview
         ImageView* imageView = ImageView::create("cocosui/buttonHighlighted.png");
         imageView->setScale9Enabled(true);
-        imageView->setContentSize(Size(200, 80));
+        imageView->setContentSize(Size(200.0f, 80.0f));
         imageView->setPosition(Vec2(widgetSize.width / 2.0f,
                                     widgetSize.height / 2.0f ));
        
@@ -257,7 +257,7 @@ bool UIImageViewFlipTest::init()
         
         auto toggleButton = Button::create();
         toggleButton->setTitleText("Toggle FlipX");
-        toggleButton->setPosition(imageView->getPosition() + Vec2(-50, - imageView->getContentSize().height/2 - 20));
+        toggleButton->setPosition(imageView->getPosition() + Vec2(-50.0f, - imageView->getContentSize().height/2 - 20));
         this->addChild(toggleButton);
         toggleButton->addClickEventListener([=](Ref*){
             imageView->setFlippedX(!imageView->isFlippedX());
@@ -265,7 +265,7 @@ bool UIImageViewFlipTest::init()
         
         auto toggleScale9 = Button::create();
         toggleScale9->setTitleText("Toggle Scale9");
-        toggleScale9->setPosition(imageView->getPosition() + Vec2(+50, - imageView->getContentSize().height/2- 20));
+        toggleScale9->setPosition(imageView->getPosition() + Vec2(+50.0f, - imageView->getContentSize().height/2- 20));
         this->addChild(toggleScale9);
         toggleScale9->addClickEventListener([=](Ref*){
             imageView->setScale9Enabled(!imageView->isScale9Enabled());

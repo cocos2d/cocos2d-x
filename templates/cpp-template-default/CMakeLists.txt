@@ -29,6 +29,12 @@ set(APP_NAME HelloCpp)
 
 project(${APP_NAME})
 
+if(XCODE)
+    if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
+        SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 8.0)
+    endif()
+endif()
+
 if(NOT DEFINED BUILD_ENGINE_DONE) # to test HelloCpp into root project
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
@@ -133,16 +139,16 @@ target_include_directories(${APP_NAME}
 setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
+
     if(MACOSX)
-        set_target_properties(${APP_NAME} PROPERTIES
-                              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
-                              )
+        set_xcode_property(${APP_NAME} INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist")
     elseif(IOS)
-        cocos_pak_xcode(${APP_NAME} INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/Info.plist")
+        set_xcode_property(${APP_NAME} INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/Info.plist")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
-        set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "")
-        set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "iPhone Developer")
     endif()
+
+    # For code-signing, set the DEVELOPMENT_TEAM:
+    #set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "GRLXXXX2K9")
 elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME})
 endif()

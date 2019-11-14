@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "audio/android/PcmData.h"
 #include "base/CCData.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class AudioDecoder
 {
@@ -61,4 +61,4 @@ protected:
     size_t _fileCurrPos;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

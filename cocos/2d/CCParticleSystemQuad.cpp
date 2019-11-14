@@ -26,12 +26,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-
 #include "2d/CCParticleSystemQuad.h"
-
 #include <algorithm>
-
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCParticleBatchNode.h"
 #include "renderer/CCTextureAtlas.h"
@@ -50,7 +48,8 @@ NS_CC_BEGIN
 ParticleSystemQuad::ParticleSystemQuad()
 {
     auto& pipelieDescriptor = _quadCommand.getPipelineDescriptor();
-    _programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     pipelieDescriptor.programState = _programState;
     _mvpMatrixLocaiton = pipelieDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelieDescriptor.programState->getUniformLocation("u_texture");

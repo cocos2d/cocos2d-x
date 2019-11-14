@@ -78,19 +78,10 @@ public:
     using UniformCallback = std::function<void(ProgramState*, const UniformLocation &)>;
 
     /**
-     * @param vertexShader Specifies the vertex shader.
-     * @param fragmentShader Specifies the fragment shader.
-     * @see `ProgramState(ProgramType type)`
+     * @param program Specifies the program.
      */
-    ProgramState(const std::string& vertexShader, const std::string& fragmentShader);
+    ProgramState(Program* program);
     
-    /**
-     * Create an program state object more efficient by engine built-in program type.
-     * @param type Specifies the built-in program type.
-     * @see `ProgramState(const std::string& vertexShader, const std::string& fragmentShader)`
-     */
-    ProgramState(ProgramType type);
-
     ///destructor
     virtual ~ProgramState();
     
@@ -110,7 +101,7 @@ public:
      * @param data Specifies the new values to be used for the specified uniform variable.
      * @param size Specifies the uniform data size.
      */
-    void setUniform(const backend::UniformLocation& uniformLocation, const void* data, uint32_t size);
+    void setUniform(const backend::UniformLocation& uniformLocation, const void* data, std::size_t size);
 
     /**
      * Get uniform location in given uniform name.
@@ -272,7 +263,7 @@ protected:
      * @param data Specifies the new values to be used for the specified uniform variable.
      * @param size Specifies the uniform data size.
      */
-    void setVertexUniform(int location, const void* data, uint32_t size, uint32_t offset);
+    void setVertexUniform(int location, const void* data, std::size_t size, std::size_t offset);
 
     /**
      * Set the fargment uniform data.
@@ -280,7 +271,7 @@ protected:
      * @param data Specifies the new values to be used for the specified uniform variable.
      * @param size Specifies the uniform data size.
      */
-    void setFragmentUniform(int location, const void* data, uint32_t size);
+    void setFragmentUniform(int location, const void* data, std::size_t size);
 
     /**
      * Set texture.
@@ -306,7 +297,7 @@ protected:
     void resetUniforms();
 
     ///Initialize.
-    void init();
+    bool init(Program* program);
     
 #ifdef CC_USE_METAL
     /**
@@ -316,7 +307,7 @@ protected:
      * @param srcSize Specifies the uniform data size.
      * @param uniformBuffer Specifies the uniform buffer to update.
      */
-    void convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, void* buffer);
+    void convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, std::size_t srcSize, void* buffer);
 #endif
     /**
     * Applies the specified custom auto-binding.
