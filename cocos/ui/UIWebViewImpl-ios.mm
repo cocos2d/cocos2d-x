@@ -88,7 +88,7 @@
 
 
 @interface UIWebViewWrapper () <WKUIDelegate, WKNavigationDelegate>
-@property(nonatomic, retain) WKWebView *wkWebView;
+@property(nonatomic) WKWebView *wkWebView;
 
 @property(nonatomic, copy) NSString *jsScheme;
 @end
