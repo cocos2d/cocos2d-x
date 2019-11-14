@@ -209,7 +209,7 @@ function run_pull_request()
     fi
 
     if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
-        source ../environment.sh
+        export PATH=$PATH:$COCOS2DX_ROOT/tools/cocos2d-console/bin
         genernate_binding_codes
         pushd $COCOS2DX_ROOT
         update_cocos_files
