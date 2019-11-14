@@ -78,7 +78,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @interface CCEAGLView ()
 @property (nonatomic) CCInputView* textInputView;
-@property(nonatomic) BOOL isKeyboardShown;
+@property(nonatomic, readwrite, assign) BOOL isKeyboardShown;
 @property(nonatomic, copy) NSNotification* keyboardShowNotification;
 @property(nonatomic, assign) CGRect originalRect;
 @end
@@ -470,11 +470,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
     [self.textInputView resignFirstResponder];
     [self.textInputView removeFromSuperview];
-}
-
--(BOOL) isKeyboardShown
-{
-    return self.isKeyboardShown;
 }
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis
