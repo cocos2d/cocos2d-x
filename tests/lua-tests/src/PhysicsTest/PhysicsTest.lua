@@ -1300,7 +1300,7 @@ local function PhysicsContactTest()
       local prevMenuPos = subtitleLabelPosY -  Helper.subtitleLabel:getContentSize().height;
       local menuStep = (subtitleLabelPosY  -restartTestItemPosY) * 0.25;
 
-      cc.MenuItemFont:setFontSize(65)
+      cc.MenuItemFont:setFontSize(30)
       local decrease1 = cc.MenuItemFont:create(" - ")
       decrease1:setColor(cc.c3b(0,200,20))
       local increase1 = cc.MenuItemFont:create(" + ")
