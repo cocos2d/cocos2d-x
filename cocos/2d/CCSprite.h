@@ -712,7 +712,7 @@ protected:
     PolygonInfo  _polyInfo;
 
     // opacity and RGB protocol
-    bool _opacityModifyRGB;
+    bool _opacityModifyRGB = false;
 
     // image is flipped
     bool _flippedX;                         /// Whether the sprite is flipped horizontally or not
