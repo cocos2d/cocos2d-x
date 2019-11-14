@@ -82,7 +82,7 @@
 
 
 @interface UIWebViewWrapper () <WKUIDelegate, WKNavigationDelegate>
-@property(nonatomic, retain) WKWebView *wkWebView;
+@property(nonatomic) WKWebView *wkWebView;
 
 @property(nonatomic, copy) NSString *jsScheme;
 @end
@@ -118,7 +118,7 @@
 
 - (void)setupWebView {
     if (!self.wkWebView) {
-        self.wkWebView = [[[WKWebView alloc] init] autorelease];
+        self.wkWebView = [[WKWebView alloc] init];
         self.wkWebView.UIDelegate = self;
         self.wkWebView.navigationDelegate = self;
     }
