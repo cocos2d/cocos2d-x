@@ -395,6 +395,12 @@
         return YES;
     }
     
+    if ( self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::DONE &&
+        [text isEqualToString: @"\n"] )
+    {
+        [self closeKeyboard];
+    }
+    
     // Prevent crashing undo bug http://stackoverflow.com/questions/433337/set-the-maximum-character-length-of-a-uitextfield
     if (range.length + range.location > textView.text.length) {
         return NO;
