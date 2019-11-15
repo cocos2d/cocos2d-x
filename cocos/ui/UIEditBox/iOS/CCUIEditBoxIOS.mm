@@ -389,16 +389,16 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    int maxLength = getEditBoxImplIOS()->getMaxLength();
-    if (maxLength < 0)
-    {
-        return YES;
-    }
-    
     if ( self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::DONE &&
         [text isEqualToString: @"\n"] )
     {
         [self closeKeyboard];
+    }
+    
+    int maxLength = getEditBoxImplIOS()->getMaxLength();
+    if (maxLength < 0)
+    {
+        return YES;
     }
     
     // Prevent crashing undo bug http://stackoverflow.com/questions/433337/set-the-maximum-character-length-of-a-uitextfield
