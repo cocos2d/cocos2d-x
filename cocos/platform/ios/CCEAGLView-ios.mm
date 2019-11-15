@@ -235,7 +235,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // Pass the touches to the superview
 #pragma mark CCEAGLView - Touch Delegate
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{    
+{
+    if (self.isKeyboardShown)
+        [self closeKeyboardOpenedByEditBox];
+    
     UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
@@ -543,6 +546,25 @@ namespace {
     {
         self.isKeyboardShown = NO;
         dispatcher->dispatchKeyboardDidHide(notiInfo);
+    }
+}
+
+// Close the keyboard opened by EditBox
+-(void) closeKeyboardOpenedByEditBox
+{
+    NSArray *subviews = self.subviews;
+    
+    for(UIView* view in subviews)
+    {
+        if([view isKindOfClass:NSClassFromString(@"UITextView")] ||
+           [view isKindOfClass:NSClassFromString(@"UITextField")])
+        {
+            if ([view isFirstResponder])
+            {
+                [view resignFirstResponder];
+                return;
+            }
+        }
     }
 }
 
