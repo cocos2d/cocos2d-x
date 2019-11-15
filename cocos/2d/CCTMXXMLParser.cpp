@@ -825,14 +825,14 @@ void TMXMapInfo::textHandler(void* /*ctx*/, const char *ch, size_t len)
 }
 
 TMXTileAnimFrame::TMXTileAnimFrame(uint32_t tileID, float duration)
+: _tileID(tileID)
+, _duration(duration)
 {
-    _tileID = tileID;
-    _duration = duration;
 }
 
 TMXTileAnimInfo::TMXTileAnimInfo(uint32_t tileID)
+: _tileID(tileID)
 {
-    _tileID = tileID;
 }
 
 TMXTileAnimInfo *TMXTileAnimInfo::create(uint32_t tileID)

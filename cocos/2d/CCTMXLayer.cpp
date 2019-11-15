@@ -854,7 +854,7 @@ std::string TMXLayer::getDescription() const
     return StringUtils::format("<TMXLayer | tag = %d, size = %d,%d>", _tag, (int)_mapTileSize.width, (int)_mapTileSize.height);
 }
 
-cocos2d::TMXTileAnimManager::TMXTileAnimManager(cocos2d::TMXLayer *layer)
+TMXTileAnimManager::TMXTileAnimManager(TMXLayer *layer)
 {
     _layer = layer;
     for(const auto &p : *_layer->getAnimTileCoord())
@@ -900,8 +900,8 @@ void TMXTileAnimManager::stopAll()
     }
 }
 
-TMXTileAnimTask::TMXTileAnimTask(cocos2d::TMXLayer *layer, cocos2d::TMXTileAnimInfo *animation,
-                                          cocos2d::Vec2 &tilePos)
+TMXTileAnimTask::TMXTileAnimTask(TMXLayer *layer, TMXTileAnimInfo *animation,
+                                          const Vec2 &tilePos)
 {
     _layer = layer;
     _animation = animation;

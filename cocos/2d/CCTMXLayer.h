@@ -39,8 +39,6 @@ class TMXTilesetInfo;
 class TMXTileAnimManager;
 struct _ccCArray;
 
-
-
 /**
  * @addtogroup _2d
  * @{
@@ -305,11 +303,11 @@ public:
         return &_animTileCoord;
     }
 
-    bool hasTileAnimation() {
+    bool hasTileAnimation() const {
         return !_animTileCoord.empty();
     }
 
-    TMXTileAnimManager* getTileAnimManager() {
+    TMXTileAnimManager* getTileAnimManager() const {
         return _tileAnimManager;
     }
 
@@ -382,15 +380,15 @@ protected:
 /** @brief TMXTileAnimTask represents the frame-tick task of an animated tile.
  * It is a assistant class for TMXTileAnimTicker.
  */
-class TMXTileAnimTask
+class CC_DLL TMXTileAnimTask
 {
 public:
-    TMXTileAnimTask(TMXLayer *layer, TMXTileAnimInfo *animation, Vec2 &tilePos);
+    TMXTileAnimTask(TMXLayer *layer, TMXTileAnimInfo *animation, const Vec2 &tilePos);
     /** start the animation task */
     void start();
     /** stop the animation task */
     void stop();
-    bool isRunning() {
+    bool isRunning() const {
         return _isRunning;
     }
 
@@ -400,22 +398,22 @@ protected:
     /** tick to next frame and schedule next tick */
     void tickAndScheduleNext(float dt);
 
-    bool _isRunning;
+    bool _isRunning = false;
     /** key of schedule task for specific animated tile */
     std::string _key;
     TMXLayer *_layer;
     /** position of the animated tile */
     Vec2 _tilePosition;
     /** AnimationInfo on this tile */
-    TMXTileAnimInfo *_animation;
+    TMXTileAnimInfo *_animation = nullptr;
     /** Index of the frame that should be drawn currently */
-    uint32_t _currentFrame;
-    uint32_t _frameCount;
+    uint32_t _currentFrame = 0;
+    uint32_t _frameCount = 0;
 };
 
 /** @brief TMXTileAnimManager controls all tile animation of a layer.
  */
-class TMXTileAnimManager : public Ref
+class CC_DLL TMXTileAnimManager : public Ref
 {
 public:
     static TMXTileAnimManager * create(TMXLayer *layer);
@@ -426,7 +424,12 @@ public:
     /** stop all tile animations */
     void stopAll();
 
+    /** get vector of tasks */
+    std::vector<TMXTileAnimTask>& getTasks(){
+        return _tasks;
+    }
 
+protected:
     bool _started = false;
     /** vector contains all tasks of this layer */
     std::vector<TMXTileAnimTask> _tasks;

@@ -127,13 +127,13 @@ public:
 
 This information is obtained from the TMX file.
 */
-struct TMXTileAnimFrame
+struct CC_DLL TMXTileAnimFrame
 {
     TMXTileAnimFrame(uint32_t tileID, float duration);
     /** gid of the frame */
-    uint32_t _tileID;
+    uint32_t _tileID = 0;
     /** duration of the frame */
-    float _duration;
+    float _duration = 0.0f;
 };
 
 /** @brief TMXTileAnimInfo contains the information about the animated tile like:
@@ -142,11 +142,11 @@ struct TMXTileAnimFrame
 
 This information is obtained from the TMX file.
 */
-struct TMXTileAnimInfo : public Ref
+struct CC_DLL TMXTileAnimInfo : public Ref
 {
     static TMXTileAnimInfo * create(uint32_t  tileID);
     explicit TMXTileAnimInfo(uint32_t  tileID);
-    uint32_t _tileID;
+    uint32_t _tileID = 0;
     std::vector<TMXTileAnimFrame> _frames;
 };
 
