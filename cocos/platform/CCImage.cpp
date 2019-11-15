@@ -99,6 +99,7 @@ extern "C"
 #include "base/TGAlib.h"
 
 #if CC_USE_WEBP
+#include "encode.h"
 #include "decode.h"
 #endif // CC_USE_WEBP
 
@@ -2194,7 +2195,7 @@ bool Image::initWithRawData(const unsigned char * data, ssize_t /*dataLen*/, int
 
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-bool Image::saveToFile(const std::string& filename, bool isToRGB)
+bool Image::saveToFile(const std::string& filename, bool isToRGB, float compressionQuality)
 {
     //only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data
     if (isCompressed() || (_renderFormat != Texture2D::PixelFormat::RGB888 && _renderFormat != Texture2D::PixelFormat::RGBA8888))
@@ -2207,11 +2208,11 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB)
 
     if (fileExtension == ".png")
     {
-        return saveImageToPNG(filename, isToRGB);
+        return saveImageToPNG(filename, isToRGB, compressionQuality);
     }
     else if (fileExtension == ".jpg")
     {
-        return saveImageToJPG(filename);
+        return saveImageToJPG(filename, compressionQuality);
     }
     else
     {
@@ -2221,7 +2222,7 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB)
 }
 #endif
 
-bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
+bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB, float compressionQuality)
 {
 #if CC_USE_WIC
     return encodeWithWIC(filePath, isToRGB, GUID_ContainerFormatPng);
@@ -2366,7 +2367,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 #endif // CC_USE_PNG
 }
 
-bool Image::saveImageToJPG(const std::string& filePath)
+bool Image::saveImageToJPG(const std::string& filePath, float compressionQuality)
 {
 #if CC_USE_WIC
     return encodeWithWIC(filePath, false, GUID_ContainerFormatJpeg);
@@ -2394,7 +2395,9 @@ bool Image::saveImageToJPG(const std::string& filePath)
         cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
 
         jpeg_set_defaults(&cinfo);
-        jpeg_set_quality(&cinfo, 90, TRUE);
+        
+        int compressionQualityInteger = int((compressionQuality*100) + 0.5);
+        jpeg_set_quality(&cinfo, compressionQualityInteger, TRUE);
         
         jpeg_start_compress(&cinfo, TRUE);
 

@@ -159,7 +159,7 @@ public:
      @param    filePath        the file's absolute path, including file suffix.
      @param    isToRGB        whether the image is saved as RGB format.
      */
-    bool saveToFile(const std::string &filename, bool isToRGB = true);
+    bool saveToFile(const std::string &filename, bool isToRGB = true, float compressionQuality = 1.0);
     void premultiplyAlpha();
     void reversePremultipliedAlpha();
 
@@ -181,8 +181,8 @@ protected:
     typedef struct sImageTGA tImageTGA;
     bool initWithTGAData(tImageTGA* tgaData);
 
-    bool saveImageToPNG(const std::string& filePath, bool isToRGB = true);
-    bool saveImageToJPG(const std::string& filePath);
+    bool saveImageToPNG(const std::string& filePath, bool isToRGB = true, float compressionQuality = 1.0);
+    bool saveImageToJPG(const std::string& filePath, float compressionQuality = 1.0);
     
 protected:
     /**

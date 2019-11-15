@@ -157,9 +157,10 @@ public:
      * @param filename The file name.
      * @param isRGBA The file is RGBA or not.
      * @param callback When the file is save finished,it will callback this function.
+     * @param compressionQuality Compression quality when saving file for JPEG and WEBP
      * @return Returns true if the operation is successful.
      */
-    bool saveToFileAsNonPMA(const std::string& filename, bool isRGBA = true, const std::function<void(RenderTexture*, const std::string&)>& callback = nullptr);
+    bool saveToFileAsNonPMA(const std::string& filename, bool isRGBA = true, const std::function<void(RenderTexture*, const std::string&)>& callback = nullptr, float compressionQuality = 1.0);
 
 
     /** Saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
@@ -168,9 +169,10 @@ public:
      * @param filename The file name.
      * @param isRGBA The file is RGBA or not.
      * @param callback When the file is save finished,it will callback this function.
+     * @param compressionQuality Compression quality when saving file for JPEG and WEBP
      * @return Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, bool isRGBA = true, const std::function<void (RenderTexture*, const std::string&)>& callback = nullptr);
+    bool saveToFile(const std::string& filename, bool isRGBA = true, const std::function<void (RenderTexture*, const std::string&)>& callback = nullptr, float compressionQuality = 1.0);
 
     /** saves the texture into a file in non-PMA. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
@@ -182,9 +184,10 @@ public:
      * @param format The image format.
      * @param isRGBA The file is RGBA or not.
      * @param callback When the file is save finished,it will callback this function.
+     * @param compressionQuality Compression quality when saving file for JPEG and WEBP
      * @return Returns true if the operation is successful.
      */
-    bool saveToFileAsNonPMA(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void(RenderTexture*, const std::string&)>& callback);
+    bool saveToFileAsNonPMA(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void(RenderTexture*, const std::string&)>& callback, float compressionQuality = 1.0);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
@@ -196,9 +199,10 @@ public:
      * @param format The image format.
      * @param isRGBA The file is RGBA or not.
      * @param callback When the file is save finished,it will callback this function.
+     * @param compressionQuality Compression quality when saving file for JPEG and WEBP
      * @return Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, const std::function<void (RenderTexture*, const std::string&)>& callback = nullptr);
+    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, const std::function<void (RenderTexture*, const std::string&)>& callback = nullptr, float compressionQuality = 1.0);
     
     /** Listen "come to background" message, and save render texture.
      * It only has effect on Android.
@@ -388,7 +392,7 @@ protected:
     void onClear();
     void onClearDepth();
 
-    void onSaveToFile(const std::string& fileName, bool isRGBA = true, bool forceNonPMA = false);
+    void onSaveToFile(const std::string& fileName, bool isRGBA = true, bool forceNonPMA = false, float compressionQuality = 1.0);
 
     void setupDepthAndStencil(int powW, int powH);
     

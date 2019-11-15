@@ -36,9 +36,14 @@ THE SOFTWARE.
 
 #include <math.h>
 
+#if CC_USE_WEBP
+#include "encode.h"
+#include "decode.h"
+#endif // CC_USE_WEBP
+
 NS_CC_BEGIN
 
-bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
+bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float compressionQuality)
 {
     //only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data
     if (isCompressed() || (_renderFormat != Texture2D::PixelFormat::RGB888 && _renderFormat != Texture2D::PixelFormat::RGBA8888))
@@ -47,6 +52,7 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
         return false;
     }
     bool saveToPNG = false;
+    bool saveToWEBP = false;
     bool needToCopyPixels = false;
 
     std::string basename(filename);
@@ -55,7 +61,11 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
     {
         saveToPNG = true;
     }
-        
+    else if (std::string::npos != basename.find(".webp"))
+    {
+        saveToWEBP = true;
+    }
+    
     int bitsPerComponent = 8;            
     int bitsPerPixel = hasAlpha() ? 32 : 24;
     if ((! saveToPNG) || isToRGB)
@@ -89,7 +99,7 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
         
     // make data provider with data.
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
-    if (saveToPNG && hasAlpha() && (! isToRGB))
+    if ((saveToPNG || saveToWEBP) && hasAlpha() && (! isToRGB))
     {
         if (_hasPremultipliedAlpha)
         {
@@ -101,8 +111,8 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
         }
     }
     CGDataProviderRef provider        = CGDataProviderCreateWithData(nullptr, pixels, myDataLength, nullptr);
-    CGColorSpaceRef colorSpaceRef    = CGColorSpaceCreateDeviceRGB();
-    CGImageRef iref                    = CGImageCreate(_width, _height,
+    CGColorSpaceRef colorSpaceRef     = CGColorSpaceCreateDeviceRGB();
+    CGImageRef iref                   = CGImageCreate(_width, _height,
                                                         bitsPerComponent, bitsPerPixel, bytesPerRow,
                                                         colorSpaceRef, bitmapInfo, provider,
                                                         nullptr, false,
@@ -119,8 +129,78 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
         NSData *data;
         if (saveToPNG) {
             data = UIImagePNGRepresentation(image);
+        } else if (saveToWEBP) {
+            NSData *dataPNG = UIImagePNGRepresentation(image);
+            UIImage* imagePNG = [[UIImage alloc] initWithData:dataPNG];
+                
+            WebPPreset preset = WEBP_PRESET_DEFAULT;
+                
+            NSError *error = nil;
+                
+            CGImageRef webPImageRef = imagePNG.CGImage;
+            size_t webPBytesPerRow = CGImageGetBytesPerRow(webPImageRef);
+                
+            size_t webPImageWidth = CGImageGetWidth(webPImageRef);
+            size_t webPImageHeight = CGImageGetHeight(webPImageRef);
+                
+            CGDataProviderRef webPDataProviderRef = CGImageGetDataProvider(webPImageRef);
+            CFDataRef webPImageDatRef = CGDataProviderCopyData(webPDataProviderRef);
+                
+            uint8_t *webPImageData = (uint8_t *)CFDataGetBytePtr(webPImageDatRef);
+                
+            WebPConfig config;
+            if (!WebPConfigPreset(&config, preset, compressionQuality)) {
+                NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                [errorDetail setValue:@"Configuration preset failed to initialize." forKey:NSLocalizedDescriptionKey];
+                if(error != NULL)
+                CCLOG("WebPConfigPreset Configuration preset failed to initialize.");
+                    
+                CFRelease(webPImageDatRef);
+                return nil;
+            }
+
+            if (!WebPValidateConfig(&config)) {
+                NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                [errorDetail setValue:@"One or more configuration parameters are beyond their valid ranges." forKey:NSLocalizedDescriptionKey];
+                if(error != NULL)
+                    CCLOG("One or more configuration parameters are beyond their valid ranges.");
+                    
+                CFRelease(webPImageDatRef);
+                return nil;
+            }
+
+            WebPPicture pic;
+            if (!WebPPictureInit(&pic)) {
+                NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                    [errorDetail setValue:@"Failed to initialize structure. Version mismatch." forKey:NSLocalizedDescriptionKey];
+                if(error != NULL)
+                    CCLOG("Failed to initialize structure. Version mismatch.");
+                    
+                CFRelease(webPImageDatRef);
+                return nil;
+            }
+            
+            pic.width = (int)webPImageWidth;
+            pic.height = (int)webPImageHeight;
+            pic.colorspace = WEBP_YUV420;
+                
+            WebPPictureImportRGBA(&pic, webPImageData, (int)webPBytesPerRow);
+            WebPPictureARGBToYUVA(&pic, WEBP_YUV420);
+            WebPCleanupTransparentArea(&pic);
+                
+            WebPMemoryWriter writer;
+            WebPMemoryWriterInit(&writer);
+            pic.writer = WebPMemoryWrite;
+            pic.custom_ptr = &writer;
+            WebPEncode(&config, &pic);
+                
+            data = [NSData dataWithBytes:writer.mem length:writer.size];
+                
+            free(writer.mem);
+            WebPPictureFree(&pic);
+            CFRelease(webPImageDatRef);
         } else {
-            data = UIImageJPEGRepresentation(image, 1.0f);
+            data = UIImageJPEGRepresentation(image, compressionQuality);
         }
         [data writeToFile:[NSString stringWithUTF8String:filename.c_str()] atomically:YES];
     }
