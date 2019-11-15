@@ -424,9 +424,11 @@ public:
     /** stop all tile animations */
     void stopAll();
 
-    /** get vector of tasks */
-    std::vector<TMXTileAnimTask>& getTasks(){
-        return _tasks;
+    /** get vector of tasks
+     * FIXME: any goode ideas about not returning a pointer and won't cause lua value conversion error?
+     */
+    std::vector<TMXTileAnimTask>* getTasks(){
+        return &_tasks;
     }
 
 protected:
