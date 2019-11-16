@@ -380,10 +380,11 @@ protected:
 /** @brief TMXTileAnimTask represents the frame-tick task of an animated tile.
  * It is a assistant class for TMXTileAnimTicker.
  */
-class CC_DLL TMXTileAnimTask
+class CC_DLL TMXTileAnimTask : public Ref
 {
 public:
     TMXTileAnimTask(TMXLayer *layer, TMXTileAnimInfo *animation, const Vec2 &tilePos);
+    static TMXTileAnimTask * create(TMXLayer *layer, TMXTileAnimInfo *animation, const Vec2 &tilePos);
     /** start the animation task */
     void start();
     /** stop the animation task */
@@ -427,14 +428,14 @@ public:
     /** get vector of tasks
      * FIXME: any goode ideas about not returning a pointer and won't cause lua value conversion error?
      */
-    std::vector<TMXTileAnimTask>* getTasks(){
-        return &_tasks;
+    Vector<TMXTileAnimTask*>& getTasks(){
+        return _tasks;
     }
 
 protected:
     bool _started = false;
     /** vector contains all tasks of this layer */
-    std::vector<TMXTileAnimTask> _tasks;
+    Vector<TMXTileAnimTask*> _tasks;
     TMXLayer* _layer;
 };
 

@@ -861,7 +861,7 @@ TMXTileAnimManager::TMXTileAnimManager(TMXLayer *layer)
     {
         for(auto tilePos : p.second)
         {
-            _tasks.emplace_back(TMXTileAnimTask(_layer, _layer->getTileSet()->_animationInfo.at(p.first), tilePos));
+            _tasks.pushBack(TMXTileAnimTask::create(_layer, _layer->getTileSet()->_animationInfo.at(p.first), tilePos));
         }
     }
 }
@@ -885,7 +885,7 @@ void TMXTileAnimManager::startAll()
     _started = true;
     for(auto &task : _tasks)
     {
-        task.start();
+        task->start();
     }
 }
 
@@ -896,7 +896,7 @@ void TMXTileAnimManager::stopAll()
     _started = false;
     for(auto &task : _tasks)
     {
-        task.stop();
+        task->stop();
     }
 }
 
@@ -938,6 +938,17 @@ void TMXTileAnimTask::setCurrFrame()
     _currentFrame = (_currentFrame + 1) % _frameCount;
 }
 
+TMXTileAnimTask *TMXTileAnimTask::create(TMXLayer *layer, TMXTileAnimInfo *animation, const Vec2 &tilePos)
+{
+    TMXTileAnimTask *ret = new (std::nothrow) TMXTileAnimTask(layer, animation, tilePos);
+    if (ret)
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
 
 
 NS_CC_END
