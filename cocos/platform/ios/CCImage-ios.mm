@@ -205,12 +205,25 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
             
             pic.width = (int)webPImageWidth;
             pic.height = (int)webPImageHeight;
+            
+            pic.use_argb = (compressionQuality == 1.f) ? 1 : 0;
             pic.colorspace = WEBP_YUV420;
-                
-            WebPPictureImportRGBA(&pic, webPImageData, (int)webPBytesPerRow);
-            WebPPictureARGBToYUVA(&pic, WEBP_YUV420);
-            WebPCleanupTransparentArea(&pic);
-                
+
+            if (hasAlpha())
+            {
+                WebPPictureImportRGBA(&pic, webPImageData, (int)webPBytesPerRow);
+            }
+            else
+            {
+                WebPPictureImportRGB(&pic, webPImageData, (int)webPBytesPerRow);
+            }
+            
+            if (compressionQuality < 1.0f)
+            {
+                WebPPictureARGBToYUVA(&pic, WEBP_YUV420);
+                WebPCleanupTransparentArea(&pic);
+            }
+            
             WebPMemoryWriter writer;
             WebPMemoryWriterInit(&writer);
             pic.writer = WebPMemoryWrite;
