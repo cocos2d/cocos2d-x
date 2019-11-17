@@ -533,7 +533,7 @@ bool RenderTexture::saveToFileAsNonPMA(const std::string& filename, bool isRGBA,
     }
     else
     {
-        CCLOG("Only PNG and JPG and WEBP(iOS only) format are supported now!");
+        CCLOG("Only PNG and JPG and WEBP format are supported now!");
     }
 
     return saveToFileAsNonPMA(filename, Image::Format::JPG, false, callback, compressionQuality);
@@ -559,7 +559,7 @@ bool RenderTexture::saveToFile(const std::string& filename, bool isRGBA, const s
     }
     else
     {
-        CCLOG("Only PNG and JPG and WEBP(iOS only) format are supported now!");
+        CCLOG("Only PNG and JPG and WEBP format are supported now!");
     }
     
     return saveToFile(filename, Image::Format::JPG, false, callback, compressionQuality);
@@ -568,7 +568,7 @@ bool RenderTexture::saveToFile(const std::string& filename, bool isRGBA, const s
 bool RenderTexture::saveToFileAsNonPMA(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void(RenderTexture*, const std::string&)>& callback, float compressionQuality)
 {
     CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG || format == Image::Format::WEBP,
-        "the image can only be saved as JPG or PNG or WEBP(iOS only) format");
+        "the image can only be saved as JPG or PNG or WEBP format");
     if (isRGBA && format == Image::Format::JPG) CCLOG("RGBA is not supported for JPG format");
 
     _saveFileCallback = callback;
@@ -584,7 +584,7 @@ bool RenderTexture::saveToFileAsNonPMA(const std::string& fileName, Image::Forma
 bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void (RenderTexture*, const std::string&)>& callback, float compressionQuality)
 {
     CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG || format == Image::Format::WEBP,
-             "the image can only be saved as JPG or PNG or WEBP(iOS only) format");
+             "the image can only be saved as JPG or PNG or WEBP format");
     if (isRGBA && format == Image::Format::JPG) CCLOG("RGBA is not supported for JPG format");
     
     _saveFileCallback = callback;

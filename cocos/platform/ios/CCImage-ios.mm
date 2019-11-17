@@ -149,6 +149,7 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
             uint8_t *webPImageData = (uint8_t *)CFDataGetBytePtr(webPImageDatRef);
                 
             WebPConfig config;
+            
             if (!WebPConfigPreset(&config, preset, compressionQuality)) {
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:@"Configuration preset failed to initialize." forKey:NSLocalizedDescriptionKey];
@@ -157,6 +158,28 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
                     
                 CFRelease(webPImageDatRef);
                 return nil;
+            }
+            
+            //if compressionQuality >= 1.0f will use lossless preset, compressionLevel can be set with compressionQuality
+            if(compressionQuality >= 1.0f) {
+                int compressionLevel = (int)(compressionQuality-1.0f);
+                
+                if(compressionLevel > 9) {
+                    compressionLevel = 9;
+                }
+                else if(compressionLevel < 0) {
+                    compressionLevel = 0;
+                }
+                
+                if (!WebPConfigLosslessPreset(&config, compressionLevel)) {
+                    NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                    [errorDetail setValue:@"Configuration preset failed to initialize." forKey:NSLocalizedDescriptionKey];
+                    if(error != NULL)
+                    CCLOG("WebPConfigLosslessPreset Configuration preset failed to initialize.");
+                        
+                    CFRelease(webPImageDatRef);
+                    return nil;
+                }
             }
 
             if (!WebPValidateConfig(&config)) {

@@ -183,7 +183,8 @@ protected:
 
     bool saveImageToPNG(const std::string& filePath, bool isToRGB = true, float compressionQuality = 1.0);
     bool saveImageToJPG(const std::string& filePath, float compressionQuality = 1.0);
-    
+    bool saveImageToWEBP(const std::string& filePath, float compressionQuality = 1.0);
+
 protected:
     /**
      @brief Determine how many mipmaps can we have.

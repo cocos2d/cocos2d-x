@@ -2214,9 +2214,13 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB, float compress
     {
         return saveImageToJPG(filename, compressionQuality);
     }
+    else if (fileExtension == ".webp")
+    {
+        return saveImageToWEBP(filename, compressionQuality);
+    }
     else
     {
-        CCLOG("cocos2d: Image: saveToFile no support file extension(only .png or .jpg) for file: %s", filename.c_str());
+        CCLOG("cocos2d: Image: saveToFile no support file extension(only .png or .jpg or .webp) for file: %s", filename.c_str());
         return false;
     }
 }
@@ -2455,6 +2459,96 @@ bool Image::saveImageToJPG(const std::string& filePath, float compressionQuality
     CCLOG("jpeg is not enabled, please enable it in ccConfig.h");
     return false;
 #endif // CC_USE_JPEG
+}
+
+bool Image::saveImageToWEBP(const std::string& filePath, float compressionQuality)
+{
+#if CC_USE_WEBP
+    bool ret = false;
+    do
+    {
+        FILE* fp = fopen(FileUtils::getInstance()->getSuitableFOpen(filePath).c_str(), "wb");
+        CC_BREAK_IF(nullptr == fp);
+
+        const auto stride = _width * (hasAlpha() ? 4 : 3);
+
+        WebPConfig config;
+
+        if (!WebPConfigPreset(&config, WEBP_PRESET_DEFAULT, compressionQuality * 100.f)) {
+        {
+            CCLOG("WebPConfigPreset Configuration preset failed to initialize.");
+            return false;
+        }
+            
+        //if compressionQuality >= 1.0f will use lossless preset, compressionLevel can be set with compressionQuality
+        if (compressionQuality >= 1.0f)
+        {
+            const auto compressionLevel = (int)(compressionQuality-1.0f);
+
+            if(compressionLevel > 9) {
+                compressionLevel = 9;
+            }
+            else if(compressionLevel < 0) {
+                compressionLevel = 0;
+            }
+            
+            if (!WebPConfigLosslessPreset(&config, compressionLevel)) {
+                CCLOG("WebPConfigLosslessPreset Lossless configuration failed.");
+                return false;
+            }
+        }
+
+        if (!WebPValidateConfig(&config)) {
+            CCLOG("One or more configuration parameters are beyond their valid ranges.");
+            return false;
+        }
+
+        WebPPicture pic;
+        if (!WebPPictureInit(&pic)) {
+            CCLOG("Failed to initialize structure. Version mismatch.");
+            return false;
+        }
+
+        pic.width = (int)_width;
+        pic.height = (int)_height;
+
+        pic.use_argb = (compressionQuality == 1.f) ? 1 : 0;
+        pic.colorspace = WEBP_YUV420;
+
+        if (hasAlpha())
+        {
+            WebPPictureImportRGBA(&pic, _data, (int)stride);
+        }
+        else
+        {
+            WebPPictureImportRGB(&pic, _data, (int)stride);
+        }
+
+        if (compressionQuality < 1.0f)
+        {
+            WebPPictureARGBToYUVA(&pic, WEBP_YUV420);
+            WebPCleanupTransparentArea(&pic);
+        }
+
+        WebPMemoryWriter writer;
+        WebPMemoryWriterInit(&writer);
+        pic.writer = WebPMemoryWrite;
+        pic.custom_ptr = &writer;
+        WebPEncode(&config, &pic);
+
+        fwrite(writer.mem, writer.size, 1, fp);
+        fclose(fp);
+
+        free(writer.mem);
+        WebPPictureFree(&pic);
+
+        ret = true;
+    } while (0);
+    return ret;
+#else
+    CCLOG("webp is not enabled, please enable it in ccConfig.h");
+    return false;
+#endif // CC_USE_WEBP
 }
 
 void Image::premultiplyAlpha()
