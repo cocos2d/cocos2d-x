@@ -150,7 +150,7 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
                 
             WebPConfig config;
             
-            if (!WebPConfigPreset(&config, preset, compressionQuality)) {
+            if (!WebPConfigPreset(&config, preset, compressionQuality * 100.f)) {
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:@"Configuration preset failed to initialize." forKey:NSLocalizedDescriptionKey];
                 if(error != NULL)
