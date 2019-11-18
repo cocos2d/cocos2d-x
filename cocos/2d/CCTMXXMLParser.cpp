@@ -848,6 +848,3 @@ TMXTileAnimInfo *TMXTileAnimInfo::create(uint32_t tileID)
 }
 
 NS_CC_END
-
-
-
