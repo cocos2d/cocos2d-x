@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
+  <image source="./tmw_desert_spacing.png" width="265" height="199"/>
+  <tile id="0">
+   <animation>
+    <frame tileid="37" duration="200"/>
+    <frame tileid="39" duration="200"/>
+   </animation>
+  </tile>
+  <tile id="1">
+   <animation>
+    <frame tileid="46" duration="200"/>
+    <frame tileid="47" duration="200"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJyTY2BgkBvFgwYDAEFHC7k=
+  </data>
+ </layer>
+ <layer id="2" name="Tile Layer 2" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAeMBLAtFI3kgAAHeAAGQ==
+  </data>
+ </layer>
+ <layer id="3" name="Tile Layer 3" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg+gIkAppU6agIAHDAAMQ==
+  </data>
+ </layer>
+</map>

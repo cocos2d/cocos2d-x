@@ -65634,6 +65634,28 @@ bool js_cocos2dx_TMXLayer_getTileGIDAt(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_TMXLayer_getTileGIDAt : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_TMXLayer_getAnimTileCoord(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXLayer* cobj = (cocos2d::TMXLayer *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXLayer_getAnimTileCoord : Invalid Native Object");
+    if (argc == 0) {
+        const std::map<unsigned int, std::vector<cocos2d::Vec2>>* ret = cobj->getAnimTileCoord();
+        JS::RootedValue jsret(cx);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<std::map<unsigned int, std::vector<cocos2d::Vec2>>>(cx, (std::map<unsigned int, std::vector<cocos2d::Vec2>>*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXLayer_getAnimTileCoord : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_TMXLayer_getPositionAt(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -65690,6 +65712,24 @@ bool js_cocos2dx_TMXLayer_releaseMap(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_TMXLayer_releaseMap : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_TMXLayer_hasTileAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXLayer* cobj = (cocos2d::TMXLayer *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXLayer_hasTileAnimation : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->hasTileAnimation();
+        JS::RootedValue jsret(cx);
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXLayer_hasTileAnimation : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_TMXLayer_setTiles(JSContext *cx, uint32_t argc, jsval *vp)
@@ -66128,6 +66168,28 @@ bool js_cocos2dx_TMXLayer_getTileAt(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_TMXLayer_getTileAt : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_TMXLayer_getTileAnimManager(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXLayer* cobj = (cocos2d::TMXLayer *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXLayer_getTileAnimManager : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::TMXTileAnimManager* ret = cobj->getTileAnimManager();
+        JS::RootedValue jsret(cx);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::TMXTileAnimManager>(cx, (cocos2d::TMXTileAnimManager*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXLayer_getTileAnimManager : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_TMXLayer_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -66226,9 +66288,11 @@ void js_register_cocos2dx_TMXLayer(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("getTileGIDAt", js_cocos2dx_TMXLayer_getTileGIDAt, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnimTileCoord", js_cocos2dx_TMXLayer_getAnimTileCoord, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPositionAt", js_cocos2dx_TMXLayer_getPositionAt, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setLayerOrientation", js_cocos2dx_TMXLayer_setLayerOrientation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("releaseMap", js_cocos2dx_TMXLayer_releaseMap, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("hasTileAnimation", js_cocos2dx_TMXLayer_hasTileAnimation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTiles", js_cocos2dx_TMXLayer_setTiles, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLayerSize", js_cocos2dx_TMXLayer_getLayerSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMapTileSize", js_cocos2dx_TMXLayer_setMapTileSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -66247,6 +66311,7 @@ void js_register_cocos2dx_TMXLayer(JSContext *cx, JS::HandleObject global) {
         JS_FN("getTileSet", js_cocos2dx_TMXLayer_getTileSet, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getProperties", js_cocos2dx_TMXLayer_getProperties, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTileAt", js_cocos2dx_TMXLayer_getTileAt, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTileAnimManager", js_cocos2dx_TMXLayer_getTileAnimManager, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_TMXLayer_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -66275,6 +66340,326 @@ void js_register_cocos2dx_TMXLayer(JSContext *cx, JS::HandleObject global) {
     // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::TMXLayer>(cx, jsb_cocos2d_TMXLayer_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.TMXLayer.extend = cc.Class.extend; })()");
+}
+
+JSClass  *jsb_cocos2d_TMXTileAnimTask_class;
+JSObject *jsb_cocos2d_TMXTileAnimTask_prototype;
+
+bool js_cocos2dx_TMXTileAnimTask_start(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXTileAnimTask* cobj = (cocos2d::TMXTileAnimTask *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXTileAnimTask_start : Invalid Native Object");
+    if (argc == 0) {
+        cobj->start();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXTileAnimTask_start : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_TMXTileAnimTask_stop(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXTileAnimTask* cobj = (cocos2d::TMXTileAnimTask *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXTileAnimTask_stop : Invalid Native Object");
+    if (argc == 0) {
+        cobj->stop();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXTileAnimTask_stop : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_TMXTileAnimTask_isRunning(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXTileAnimTask* cobj = (cocos2d::TMXTileAnimTask *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXTileAnimTask_isRunning : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isRunning();
+        JS::RootedValue jsret(cx);
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXTileAnimTask_isRunning : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_TMXTileAnimTask_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 3) {
+        cocos2d::TMXLayer* arg0 = nullptr;
+        cocos2d::TMXTileAnimInfo* arg1 = nullptr;
+        cocos2d::Vec2 arg2;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::TMXLayer*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        #pragma warning NO CONVERSION TO NATIVE FOR TMXTileAnimInfo*
+		ok = false;
+        ok &= jsval_to_vector2(cx, args.get(2), &arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXTileAnimTask_create : Error processing arguments");
+
+        auto ret = cocos2d::TMXTileAnimTask::create(arg0, arg1, arg2);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::TMXTileAnimTask>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::TMXTileAnimTask"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_TMXTileAnimTask_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_TMXTileAnimTask_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::TMXLayer* arg0 = nullptr;
+    cocos2d::TMXTileAnimInfo* arg1 = nullptr;
+    cocos2d::Vec2 arg2;
+    do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::TMXLayer*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+    #pragma warning NO CONVERSION TO NATIVE FOR TMXTileAnimInfo*
+		ok = false;
+    ok &= jsval_to_vector2(cx, args.get(2), &arg2);
+    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXTileAnimTask_constructor : Error processing arguments");
+    cocos2d::TMXTileAnimTask* cobj = new (std::nothrow) cocos2d::TMXTileAnimTask(arg0, arg1, arg2);
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::TMXTileAnimTask>(cobj);
+
+    // link the native object with the javascript object
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::TMXTileAnimTask"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
+    return true;
+}
+
+
+void js_register_cocos2dx_TMXTileAnimTask(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_TMXTileAnimTask_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_TMXTileAnimTask_class->name = "TMXTileAnimTask";
+    jsb_cocos2d_TMXTileAnimTask_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_TMXTileAnimTask_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_TMXTileAnimTask_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_TMXTileAnimTask_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_TMXTileAnimTask_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_TMXTileAnimTask_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_TMXTileAnimTask_class->convert = JS_ConvertStub;
+    jsb_cocos2d_TMXTileAnimTask_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("start", js_cocos2dx_TMXTileAnimTask_start, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stop", js_cocos2dx_TMXTileAnimTask_stop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isRunning", js_cocos2dx_TMXTileAnimTask_isRunning, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_TMXTileAnimTask_create, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_TMXTileAnimTask_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(),
+        jsb_cocos2d_TMXTileAnimTask_class,
+        js_cocos2dx_TMXTileAnimTask_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+
+    JS::RootedObject proto(cx, jsb_cocos2d_TMXTileAnimTask_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "TMXTileAnimTask"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
+    jsb_register_class<cocos2d::TMXTileAnimTask>(cx, jsb_cocos2d_TMXTileAnimTask_class, proto, JS::NullPtr());
+}
+
+JSClass  *jsb_cocos2d_TMXTileAnimManager_class;
+JSObject *jsb_cocos2d_TMXTileAnimManager_prototype;
+
+bool js_cocos2dx_TMXTileAnimManager_getTasks(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXTileAnimManager* cobj = (cocos2d::TMXTileAnimManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXTileAnimManager_getTasks : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Vector<cocos2d::TMXTileAnimTask *>& ret = cobj->getTasks();
+        JS::RootedValue jsret(cx);
+        jsret = ccvector_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXTileAnimManager_getTasks : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_TMXTileAnimManager_startAll(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXTileAnimManager* cobj = (cocos2d::TMXTileAnimManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXTileAnimManager_startAll : Invalid Native Object");
+    if (argc == 0) {
+        cobj->startAll();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXTileAnimManager_startAll : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_TMXTileAnimManager_stopAll(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXTileAnimManager* cobj = (cocos2d::TMXTileAnimManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXTileAnimManager_stopAll : Invalid Native Object");
+    if (argc == 0) {
+        cobj->stopAll();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXTileAnimManager_stopAll : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_TMXTileAnimManager_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        cocos2d::TMXLayer* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::TMXLayer*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXTileAnimManager_create : Error processing arguments");
+
+        auto ret = cocos2d::TMXTileAnimManager::create(arg0);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::TMXTileAnimManager>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::TMXTileAnimManager"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_TMXTileAnimManager_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_TMXTileAnimManager_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::TMXLayer* arg0 = nullptr;
+    do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::TMXLayer*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXTileAnimManager_constructor : Error processing arguments");
+    cocos2d::TMXTileAnimManager* cobj = new (std::nothrow) cocos2d::TMXTileAnimManager(arg0);
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::TMXTileAnimManager>(cobj);
+
+    // link the native object with the javascript object
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::TMXTileAnimManager"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
+    return true;
+}
+
+
+void js_register_cocos2dx_TMXTileAnimManager(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_TMXTileAnimManager_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_TMXTileAnimManager_class->name = "TMXTileAnimManager";
+    jsb_cocos2d_TMXTileAnimManager_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_TMXTileAnimManager_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_TMXTileAnimManager_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_TMXTileAnimManager_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_TMXTileAnimManager_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_TMXTileAnimManager_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_TMXTileAnimManager_class->convert = JS_ConvertStub;
+    jsb_cocos2d_TMXTileAnimManager_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getTasks", js_cocos2dx_TMXTileAnimManager_getTasks, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("startAll", js_cocos2dx_TMXTileAnimManager_startAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopAll", js_cocos2dx_TMXTileAnimManager_stopAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_TMXTileAnimManager_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_TMXTileAnimManager_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(),
+        jsb_cocos2d_TMXTileAnimManager_class,
+        js_cocos2dx_TMXTileAnimManager_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+
+    JS::RootedObject proto(cx, jsb_cocos2d_TMXTileAnimManager_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "TMXTileAnimManager"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
+    jsb_register_class<cocos2d::TMXTileAnimManager>(cx, jsb_cocos2d_TMXTileAnimManager_class, proto, JS::NullPtr());
 }
 
 JSClass  *jsb_cocos2d_TMXTiledMap_class;
@@ -66494,6 +66879,26 @@ bool js_cocos2dx_TMXTiledMap_getMapSize(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_TMXTiledMap_getMapSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_TMXTiledMap_setTileAnimEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXTiledMap* cobj = (cocos2d::TMXTiledMap *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXTiledMap_setTileAnimEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXTiledMap_setTileAnimEnabled : Error processing arguments");
+        cobj->setTileAnimEnabled(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXTiledMap_setTileAnimEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_TMXTiledMap_initWithXML(JSContext *cx, uint32_t argc, jsval *vp)
@@ -66793,6 +67198,7 @@ void js_register_cocos2dx_TMXTiledMap(JSContext *cx, JS::HandleObject global) {
         JS_FN("initWithTMXFile", js_cocos2dx_TMXTiledMap_initWithTMXFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTileSize", js_cocos2dx_TMXTiledMap_getTileSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMapSize", js_cocos2dx_TMXTiledMap_getMapSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTileAnimEnabled", js_cocos2dx_TMXTiledMap_setTileAnimEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithXML", js_cocos2dx_TMXTiledMap_initWithXML, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getProperties", js_cocos2dx_TMXTiledMap_getProperties, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPropertiesForGID", js_cocos2dx_TMXTiledMap_getPropertiesForGID, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -67807,6 +68213,7 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_TextureCache(cx, ns);
     js_register_cocos2dx_SpriteBatchNode(cx, ns);
     js_register_cocos2dx_TMXLayer(cx, ns);
+    js_register_cocos2dx_TMXTileAnimManager(cx, ns);
     js_register_cocos2dx_Configuration(cx, ns);
     js_register_cocos2dx_ActionTween(cx, ns);
     js_register_cocos2dx_TransitionFadeDown(cx, ns);
@@ -67925,6 +68332,7 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_OrbitCamera(cx, ns);
     js_register_cocos2dx_ParallaxNode(cx, ns);
     js_register_cocos2dx_TransitionFade(cx, ns);
+    js_register_cocos2dx_TMXTileAnimTask(cx, ns);
     js_register_cocos2dx_EaseCubicActionOut(cx, ns);
     js_register_cocos2dx_EventListenerTouchOneByOne(cx, ns);
     js_register_cocos2dx_TextFieldTTF(cx, ns);
