@@ -61,13 +61,19 @@ RenderTextureSave::RenderTextureSave()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // Save Image menu
-    MenuItemFont::setFontSize(16);
+    MenuItemFont::setFontSize(10);
     auto item1 = MenuItemFont::create("Save Image PMA", CC_CALLBACK_1(RenderTextureSave::saveImageWithPremultipliedAlpha, this));
     auto item2 = MenuItemFont::create("Save Image Non-PMA", CC_CALLBACK_1(RenderTextureSave::saveImageWithNonPremultipliedAlpha, this));
-    auto item3 = MenuItemFont::create("Add Image", CC_CALLBACK_1(RenderTextureSave::addImage, this));
-    auto item4 = MenuItemFont::create("Clear to Random", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
-    auto item5 = MenuItemFont::create("Clear to Transparent", CC_CALLBACK_1(RenderTextureSave::clearImageTransparent, this));
-    auto menu = Menu::create(item1, item2, item3, item4, item5, nullptr);
+    auto item3 = MenuItemFont::create("Save JPG 100%", CC_CALLBACK_1(RenderTextureSave::saveImageJPG100, this));
+    auto item4 = MenuItemFont::create("Save JPG 50%", CC_CALLBACK_1(RenderTextureSave::saveImageJPG50, this));
+    auto item5 = MenuItemFont::create("Save WEBP 100% lv6", CC_CALLBACK_1(RenderTextureSave::saveImageWEBP600, this));
+    auto item6 = MenuItemFont::create("Save WEBP 100% lv0", CC_CALLBACK_1(RenderTextureSave::saveImageWEBP100, this));
+    auto item7 = MenuItemFont::create("Save WEBP 50%", CC_CALLBACK_1(RenderTextureSave::saveImageWEBP50, this));
+    
+    auto item8 = MenuItemFont::create("Add Image", CC_CALLBACK_1(RenderTextureSave::addImage, this));
+    auto item9 = MenuItemFont::create("Clear to Random", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
+    auto item10 = MenuItemFont::create("Clear to Transparent", CC_CALLBACK_1(RenderTextureSave::clearImageTransparent, this));
+    auto menu = Menu::create(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, nullptr);
     this->addChild(menu);
     menu->alignItemsVertically();
     menu->setPosition(Vec2(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 100));
@@ -137,6 +143,131 @@ void RenderTextureSave::saveImageWithNonPremultipliedAlpha(cocos2d::Ref *sender)
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
     CCLOG("Image saved %s", png);
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageJPG100(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    char image[20];
+    sprintf(image, "image-%d.jpg", counter);
+
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        CCLOG("Image path %s", path.c_str());
+        auto sprite = Sprite::create(path);
+        addChild(sprite);
+        sprite->setScale(0.3f);
+        sprite->setPosition(Vec2(40, 40));
+        sprite->setRotation(counter * 3);
+    };
+
+    _target->saveToFile(image, Image::Format::JPG, false, callback, 1.0f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", image);
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageJPG50(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    char image[20];
+    sprintf(image, "image-%d.jpg", counter);
+
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        CCLOG("Image path %s", path.c_str());
+        auto sprite = Sprite::create(path);
+        addChild(sprite);
+        sprite->setScale(0.3f);
+        sprite->setPosition(Vec2(40, 40));
+        sprite->setRotation(counter * 3);
+    };
+
+    _target->saveToFile(image, Image::Format::JPG, false, callback, 0.5f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", image);
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageWEBP600(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    char image[20];
+    sprintf(image, "image-%d.webp", counter);
+
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        CCLOG("Image path %s", path.c_str());
+        auto sprite = Sprite::create(path);
+        addChild(sprite);
+        sprite->setScale(0.3f);
+        sprite->setPosition(Vec2(40, 40));
+        sprite->setRotation(counter * 3);
+    };
+
+    _target->saveToFile(image, Image::Format::WEBP, false, callback, 7.0f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", image);
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageWEBP100(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    char image[20];
+    sprintf(image, "image-%d.webp", counter);
+
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        CCLOG("Image path %s", path.c_str());
+        auto sprite = Sprite::create(path);
+        addChild(sprite);
+        sprite->setScale(0.3f);
+        sprite->setPosition(Vec2(40, 40));
+        sprite->setRotation(counter * 3);
+    };
+
+    _target->saveToFile(image, Image::Format::WEBP, false, callback, 1.0f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", image);
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageWEBP50(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    char image[20];
+    sprintf(image, "image-%d.webp", counter);
+
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        CCLOG("Image path %s", path.c_str());
+        auto sprite = Sprite::create(path);
+        addChild(sprite);
+        sprite->setScale(0.3f);
+        sprite->setPosition(Vec2(40, 40));
+        sprite->setRotation(counter * 3);
+    };
+
+    _target->saveToFile(image, Image::Format::WEBP, false, callback, 0.5f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", image);
 
     counter++;
 }

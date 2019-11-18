@@ -602,10 +602,10 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA, bool 
     Image *image = newImage(true);
     if (image)
     {
-        if (forceNonPMA && image->hasPremultipliedAlpha())
-        {
+        if (forceNonPMA && image->hasPremultipliedAlpha()) {
             image->reversePremultipliedAlpha();
         }
+        
         image->saveToFile(filename, !isRGBA, compressionQuality);
     }
     if(_saveFileCallback)

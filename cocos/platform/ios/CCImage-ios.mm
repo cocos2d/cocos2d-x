@@ -68,16 +68,16 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
     
     int bitsPerComponent = 8;            
     int bitsPerPixel = hasAlpha() ? 32 : 24;
-    if ((! saveToPNG) || isToRGB)
+    if (((! saveToPNG) && (! saveToWEBP)) || isToRGB)
     {
         bitsPerPixel = 24;
-    }            
+    }
     
     int bytesPerRow    = (bitsPerPixel/8) * _width;
     int myDataLength = bytesPerRow * _height;
     
     unsigned char *pixels    = _data;
-    
+
     // The data has alpha channel, and want to save it with an RGB png file,
     // or want to save as jpg,  remove the alpha channel.
     if (hasAlpha() && bitsPerPixel == 24)
@@ -96,10 +96,10 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
         
         needToCopyPixels = true;
     }
-        
+    
     // make data provider with data.
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
-    if ((saveToPNG || saveToWEBP) && hasAlpha() && (! isToRGB))
+    if (saveToPNG && hasAlpha() && (! isToRGB))
     {
         if (_hasPremultipliedAlpha)
         {
@@ -110,6 +110,11 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
             bitmapInfo |= kCGImageAlphaLast;
         }
     }
+    else if (saveToWEBP && hasAlpha() && (! isToRGB))
+    {
+        bitmapInfo |= kCGImageAlphaPremultipliedLast;
+    }
+    
     CGDataProviderRef provider        = CGDataProviderCreateWithData(nullptr, pixels, myDataLength, nullptr);
     CGColorSpaceRef colorSpaceRef     = CGColorSpaceCreateDeviceRGB();
     CGImageRef iref                   = CGImageCreate(_width, _height,
@@ -161,7 +166,8 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
             }
             
             //if compressionQuality >= 1.0f will use lossless preset, compressionLevel can be set with compressionQuality
-            if(compressionQuality >= 1.0f) {
+            if(compressionQuality >= 1.0f)
+            {
                 int compressionLevel = (int)(compressionQuality-1.0f);
                 
                 if(compressionLevel > 9) {

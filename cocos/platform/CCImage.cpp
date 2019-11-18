@@ -2473,22 +2473,18 @@ bool Image::saveImageToWEBP(const std::string& filePath, float compressionQualit
         const auto stride = _width * (hasAlpha() ? 4 : 3);
 
         WebPConfig config;
-
         if (!WebPConfigPreset(&config, WEBP_PRESET_DEFAULT, compressionQuality * 100.f)) {
-        {
             CCLOG("WebPConfigPreset Configuration preset failed to initialize.");
             return false;
         }
-            
-        //if compressionQuality >= 1.0f will use lossless preset, compressionLevel can be set with compressionQuality
+
         if (compressionQuality >= 1.0f)
         {
-            const auto compressionLevel = (int)(compressionQuality-1.0f);
-
+            int compressionLevel = (int)(compressionQuality-1.0f);
+            
             if(compressionLevel > 9) {
                 compressionLevel = 9;
-            }
-            else if(compressionLevel < 0) {
+            } else if(compressionLevel < 0) {
                 compressionLevel = 0;
             }
             
