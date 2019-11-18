@@ -102579,6 +102579,47 @@ int lua_cocos2dx_TMXTileAnimTask_isRunning(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_TMXTileAnimTask_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.TMXTileAnimTask",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 3)
+    {
+        cocos2d::TMXLayer* arg0;
+        cocos2d::TMXTileAnimInfo* arg1;
+        cocos2d::Vec2 arg2;
+        ok &= luaval_to_object<cocos2d::TMXLayer>(tolua_S, 2, "cc.TMXLayer",&arg0, "cc.TMXTileAnimTask:create");
+        #pragma warning NO CONVERSION TO NATIVE FOR TMXTileAnimInfo*
+		ok = false;
+        ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.TMXTileAnimTask:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TMXTileAnimTask_create'", nullptr);
+            return 0;
+        }
+        cocos2d::TMXTileAnimTask* ret = cocos2d::TMXTileAnimTask::create(arg0, arg1, arg2);
+        object_to_luaval<cocos2d::TMXTileAnimTask>(tolua_S, "cc.TMXTileAnimTask",(cocos2d::TMXTileAnimTask*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.TMXTileAnimTask:create",argc, 3);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TMXTileAnimTask_create'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_TMXTileAnimTask_constructor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -102610,8 +102651,10 @@ int lua_cocos2dx_TMXTileAnimTask_constructor(lua_State* tolua_S)
             return 0;
         }
         cobj = new cocos2d::TMXTileAnimTask(arg0, arg1, arg2);
-        tolua_pushusertype(tolua_S,(void*)cobj,"cc.TMXTileAnimTask");
-        tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.TMXTileAnimTask");
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TMXTileAnimTask:TMXTileAnimTask",argc, 3);
@@ -102633,13 +102676,14 @@ static int lua_cocos2dx_TMXTileAnimTask_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TMXTileAnimTask(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TMXTileAnimTask");
-    tolua_cclass(tolua_S,"TMXTileAnimTask","cc.TMXTileAnimTask","",nullptr);
+    tolua_cclass(tolua_S,"TMXTileAnimTask","cc.TMXTileAnimTask","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"TMXTileAnimTask");
         tolua_function(tolua_S,"new",lua_cocos2dx_TMXTileAnimTask_constructor);
         tolua_function(tolua_S,"start",lua_cocos2dx_TMXTileAnimTask_start);
         tolua_function(tolua_S,"stop",lua_cocos2dx_TMXTileAnimTask_stop);
         tolua_function(tolua_S,"isRunning",lua_cocos2dx_TMXTileAnimTask_isRunning);
+        tolua_function(tolua_S,"create", lua_cocos2dx_TMXTileAnimTask_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::TMXTileAnimTask).name();
     g_luaType[typeName] = "cc.TMXTileAnimTask";
@@ -102647,6 +102691,53 @@ int lua_register_cocos2dx_TMXTileAnimTask(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_TMXTileAnimManager_getTasks(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TMXTileAnimManager* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TMXTileAnimManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TMXTileAnimManager*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTileAnimManager_getTasks'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TMXTileAnimManager_getTasks'", nullptr);
+            return 0;
+        }
+        const cocos2d::Vector<cocos2d::TMXTileAnimTask *>& ret = cobj->getTasks();
+        ccvector_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TMXTileAnimManager:getTasks",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TMXTileAnimManager_getTasks'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_TMXTileAnimManager_startAll(lua_State* tolua_S)
 {
     int argc = 0;
@@ -102830,6 +102921,7 @@ int lua_register_cocos2dx_TMXTileAnimManager(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"TMXTileAnimManager");
         tolua_function(tolua_S,"new",lua_cocos2dx_TMXTileAnimManager_constructor);
+        tolua_function(tolua_S,"getTasks",lua_cocos2dx_TMXTileAnimManager_getTasks);
         tolua_function(tolua_S,"startAll",lua_cocos2dx_TMXTileAnimManager_startAll);
         tolua_function(tolua_S,"stopAll",lua_cocos2dx_TMXTileAnimManager_stopAll);
         tolua_function(tolua_S,"create", lua_cocos2dx_TMXTileAnimManager_create);

@@ -402,7 +402,7 @@ protected:
     bool _isRunning = false;
     /** key of schedule task for specific animated tile */
     std::string _key;
-    TMXLayer *_layer;
+    TMXLayer *_layer = nullptr;
     /** position of the animated tile */
     Vec2 _tilePosition;
     /** AnimationInfo on this tile */
@@ -425,9 +425,8 @@ public:
     /** stop all tile animations */
     void stopAll();
 
-    /** get vector of tasks
-     */
-    Vector<TMXTileAnimTask*>& getTasks(){
+    /** get vector of tasks */
+    const Vector<TMXTileAnimTask*>& getTasks() const {
         return _tasks;
     }
 
@@ -435,7 +434,7 @@ protected:
     bool _started = false;
     /** vector contains all tasks of this layer */
     Vector<TMXTileAnimTask*> _tasks;
-    TMXLayer* _layer;
+    TMXLayer* _layer = nullptr;
 };
 
 // end of tilemap_parallax_nodes group
@@ -444,4 +443,3 @@ protected:
 NS_CC_END
 
 #endif //__CCTMX_LAYER_H__
-

@@ -900,15 +900,12 @@ void TMXTileAnimManager::stopAll()
     }
 }
 
-TMXTileAnimTask::TMXTileAnimTask(TMXLayer *layer, TMXTileAnimInfo *animation,
-                                          const Vec2 &tilePos)
+TMXTileAnimTask::TMXTileAnimTask(TMXLayer *layer, TMXTileAnimInfo *animation, const Vec2 &tilePos)
 {
     _layer = layer;
     _animation = animation;
-    _currentFrame = 0;
     _frameCount = static_cast<uint32_t>(_animation->_frames.size());
     _tilePosition = tilePos;
-    _isRunning = false;
     std::stringstream ss;
     ss << "TickAnimOnTilePos(" << _tilePosition.x << "," << _tilePosition.y << ")";
     _key = ss.str();
@@ -950,9 +947,4 @@ TMXTileAnimTask *TMXTileAnimTask::create(TMXLayer *layer, TMXTileAnimInfo *anima
     return nullptr;
 }
 
-
 NS_CC_END
-
-
-
-
