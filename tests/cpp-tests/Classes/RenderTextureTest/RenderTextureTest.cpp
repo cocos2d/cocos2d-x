@@ -115,18 +115,16 @@ void RenderTextureSave::saveImageWithPremultipliedAlpha(cocos2d::Ref* sender)
 {
     static int counter = 0;
 
-    char png[20];
-    sprintf(png, "image-pma-%d.png", counter);
-
+    auto imagePath = "image-pma-" + StringUtils::toString(counter) + ".png";
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
         RenderTextureSave::createSprite(rt, path, counter);
     };
 
-    _target->saveToFile(png, Image::Format::PNG, true, callback);
+    _target->saveToFile(imagePath, Image::Format::PNG, true, callback);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
-    CCLOG("Image saved %s", png);
+    CCLOG("Image saved %s", imagePath.c_str());
 
     counter++;
 }
@@ -135,18 +133,16 @@ void RenderTextureSave::saveImageWithNonPremultipliedAlpha(cocos2d::Ref *sender)
 {
     static int counter = 0;
 
-    char png[20];
-    sprintf(png, "image-no-pma-%d.png", counter);
-    
+    auto imagePath = "image-no-pma-" + StringUtils::toString(counter) + ".png";
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
         RenderTextureSave::createSprite(rt, path, counter);
     };
     
-    _target->saveToFileAsNonPMA(png, Image::Format::PNG, true, callback);
+    _target->saveToFileAsNonPMA(imagePath, Image::Format::PNG, true, callback);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
-    CCLOG("Image saved %s", png);
+    CCLOG("Image saved %s", imagePath.c_str());
 
     counter++;
 }
@@ -155,18 +151,16 @@ void RenderTextureSave::saveImageJPG100(cocos2d::Ref* sender)
 {
     static int counter = 0;
 
-    char image[20];
-    sprintf(image, "image-100jpg-%d.jpg", counter);
-
+    auto imagePath = "image-100jpg-" + StringUtils::toString(counter) + ".jpg";
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
         RenderTextureSave::createSprite(rt, path, counter);
     };
 
-    _target->saveToFile(image, Image::Format::JPG, false, callback, 1.0f);
+    _target->saveToFile(imagePath, Image::Format::JPG, false, callback, 1.0f);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
-    CCLOG("Image saved %s", image);
+    CCLOG("Image saved %s", imagePath.c_str());
 
     counter++;
 }
@@ -175,18 +169,16 @@ void RenderTextureSave::saveImageJPG50(cocos2d::Ref* sender)
 {
     static int counter = 0;
 
-    char image[20];
-    sprintf(image, "image-50jpg-%d.jpg", counter);
-
+    auto imagePath = "image-50jpg-" + StringUtils::toString(counter) + ".jpg";
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
         RenderTextureSave::createSprite(rt, path, counter);
     };
 
-    _target->saveToFile(image, Image::Format::JPG, false, callback, 0.5f);
+    _target->saveToFile(imagePath, Image::Format::JPG, false, callback, 0.5f);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
-    CCLOG("Image saved %s", image);
+    CCLOG("Image saved %s", imagePath.c_str());
 
     counter++;
 }
@@ -195,18 +187,16 @@ void RenderTextureSave::saveImageWEBP600(cocos2d::Ref* sender)
 {
     static int counter = 0;
 
-    char image[20];
-    sprintf(image, "image-600webp-%d.webp", counter);
-
+    auto imagePath = "image-600webp-" + StringUtils::toString(counter) + ".webp";
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
         RenderTextureSave::createSprite(rt, path, counter);
     };
 
-    _target->saveToFile(image, Image::Format::WEBP, true, callback, 7.0f);
+    _target->saveToFile(imagePath, Image::Format::WEBP, true, callback, 7.0f);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
-    CCLOG("Image saved %s", image);
+    CCLOG("Image saved %s", imagePath.c_str());
 
     counter++;
 }
@@ -215,18 +205,16 @@ void RenderTextureSave::saveImageWEBP100(cocos2d::Ref* sender)
 {
     static int counter = 0;
 
-    char image[20];
-    sprintf(image, "image-100webp-%d.webp", counter);
-
+    auto imagePath = "image-100webp-" + StringUtils::toString(counter) + ".webp";
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
         RenderTextureSave::createSprite(rt, path, counter);
     };
 
-    _target->saveToFile(image, Image::Format::WEBP, true, callback, 1.0f);
+    _target->saveToFile(imagePath, Image::Format::WEBP, true, callback, 1.0f);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
-    CCLOG("Image saved %s", image);
+    CCLOG("Image saved %s", imagePath.c_str());
 
     counter++;
 }
@@ -235,18 +223,16 @@ void RenderTextureSave::saveImageWEBP50(cocos2d::Ref* sender)
 {
     static int counter = 0;
 
-    char image[20];
-    sprintf(image, "image-50webp-%d.webp", counter);
-
+    auto imagePath = "image-50webp-" + StringUtils::toString(counter) + ".webp";
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
         RenderTextureSave::createSprite(rt, path, counter);
     };
     
-    _target->saveToFile(image, Image::Format::WEBP, true, callback, 0.5f);
+    _target->saveToFile(imagePath, Image::Format::WEBP, true, callback, 0.5f);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
-    CCLOG("Image saved %s", image);
+    CCLOG("Image saved %s", imagePath.c_str());
 
     counter++;
 }
