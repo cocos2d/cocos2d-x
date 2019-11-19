@@ -2193,7 +2193,6 @@ bool Image::initWithRawData(const unsigned char * data, ssize_t /*dataLen*/, int
     return ret;
 }
 
-
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 bool Image::saveToFile(const std::string& filename, bool isToRGB, float compressionQuality)
 {
@@ -2206,13 +2205,13 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB, float compress
 
     std::string fileExtension = FileUtils::getInstance()->getFileExtension(filename);
 
-    if (fileExtension == ".png")
-    {
-        return saveImageToPNG(filename, isToRGB, compressionQuality);
-    }
-    else if (fileExtension == ".jpg")
+    if (fileExtension == ".jpg")
     {
         return saveImageToJPG(filename, compressionQuality);
+    }
+    else if (fileExtension == ".png")
+    {
+        return saveImageToPNG(filename, isToRGB);
     }
     else if (fileExtension == ".webp")
     {
@@ -2220,13 +2219,103 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB, float compress
     }
     else
     {
-        CCLOG("cocos2d: Image: saveToFile no support file extension(only .png or .jpg or .webp) for file: %s", filename.c_str());
+        CCLOG("cocos2d: Image: saveToFile no support file extension(only .jpg or .png or .webp) for file: %s", filename.c_str());
         return false;
     }
 }
 #endif
 
-bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB, float compressionQuality)
+bool Image::saveImageToJPG(const std::string& filePath, float compressionQuality)
+{
+#if CC_USE_WIC
+    return encodeWithWIC(filePath, false, GUID_ContainerFormatJpeg);
+#elif CC_USE_JPEG
+    bool ret = false;
+    do
+    {
+        struct jpeg_compress_struct cinfo;
+        struct jpeg_error_mgr jerr;
+        FILE * outfile;                 /* target file */
+        JSAMPROW row_pointer[1];        /* pointer to JSAMPLE row[s] */
+        int     row_stride;          /* physical row width in image buffer */
+
+        cinfo.err = jpeg_std_error(&jerr);
+        /* Now we can initialize the JPEG compression object. */
+        jpeg_create_compress(&cinfo);
+
+        CC_BREAK_IF((outfile = fopen(FileUtils::getInstance()->getSuitableFOpen(filePath).c_str(), "wb")) == nullptr);
+        
+        jpeg_stdio_dest(&cinfo, outfile);
+
+        cinfo.image_width = _width;    /* image width and height, in pixels */
+        cinfo.image_height = _height;
+        cinfo.input_components = 3;       /* # of color components per pixel */
+        cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
+
+        jpeg_set_defaults(&cinfo);
+        
+        int compressionQualityInteger = int((compressionQuality*100) + 0.5);
+        jpeg_set_quality(&cinfo, compressionQualityInteger, TRUE);
+        
+        jpeg_start_compress(&cinfo, TRUE);
+
+        row_stride = _width * 3; /* JSAMPLEs per row in image_buffer */
+
+        if (hasAlpha())
+        {
+            unsigned char *tempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char)));
+            if (nullptr == tempData)
+            {
+                jpeg_finish_compress(&cinfo);
+                jpeg_destroy_compress(&cinfo);
+                fclose(outfile);
+                break;
+            }
+
+            for (int i = 0; i < _height; ++i)
+            {
+                for (int j = 0; j < _width; ++j)
+
+                {
+                    tempData[(i * _width + j) * 3] = _data[(i * _width + j) * 4];
+                    tempData[(i * _width + j) * 3 + 1] = _data[(i * _width + j) * 4 + 1];
+                    tempData[(i * _width + j) * 3 + 2] = _data[(i * _width + j) * 4 + 2];
+                }
+            }
+
+            while (cinfo.next_scanline < cinfo.image_height)
+            {
+                row_pointer[0] = & tempData[cinfo.next_scanline * row_stride];
+                (void)jpeg_write_scanlines(&cinfo, row_pointer, 1);
+            }
+
+            if (tempData != nullptr)
+            {
+                free(tempData);
+            }
+        }
+        else
+        {
+            while (cinfo.next_scanline < cinfo.image_height) {
+                row_pointer[0] = & _data[cinfo.next_scanline * row_stride];
+                (void)jpeg_write_scanlines(&cinfo, row_pointer, 1);
+            }
+        }
+
+        jpeg_finish_compress(&cinfo);
+        fclose(outfile);
+        jpeg_destroy_compress(&cinfo);
+        
+        ret = true;
+    } while (0);
+    return ret;
+#else
+    CCLOG("jpeg is not enabled, please enable it in ccConfig.h");
+    return false;
+#endif // CC_USE_JPEG
+}
+
+bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 {
 #if CC_USE_WIC
     return encodeWithWIC(filePath, isToRGB, GUID_ContainerFormatPng);
@@ -2371,96 +2460,6 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB, float comp
 #endif // CC_USE_PNG
 }
 
-bool Image::saveImageToJPG(const std::string& filePath, float compressionQuality)
-{
-#if CC_USE_WIC
-    return encodeWithWIC(filePath, false, GUID_ContainerFormatJpeg);
-#elif CC_USE_JPEG
-    bool ret = false;
-    do 
-    {
-        struct jpeg_compress_struct cinfo;
-        struct jpeg_error_mgr jerr;
-        FILE * outfile;                 /* target file */
-        JSAMPROW row_pointer[1];        /* pointer to JSAMPLE row[s] */
-        int     row_stride;          /* physical row width in image buffer */
-
-        cinfo.err = jpeg_std_error(&jerr);
-        /* Now we can initialize the JPEG compression object. */
-        jpeg_create_compress(&cinfo);
-
-        CC_BREAK_IF((outfile = fopen(FileUtils::getInstance()->getSuitableFOpen(filePath).c_str(), "wb")) == nullptr);
-        
-        jpeg_stdio_dest(&cinfo, outfile);
-
-        cinfo.image_width = _width;    /* image width and height, in pixels */
-        cinfo.image_height = _height;
-        cinfo.input_components = 3;       /* # of color components per pixel */
-        cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
-
-        jpeg_set_defaults(&cinfo);
-        
-        int compressionQualityInteger = int((compressionQuality*100) + 0.5);
-        jpeg_set_quality(&cinfo, compressionQualityInteger, TRUE);
-        
-        jpeg_start_compress(&cinfo, TRUE);
-
-        row_stride = _width * 3; /* JSAMPLEs per row in image_buffer */
-
-        if (hasAlpha())
-        {
-            unsigned char *tempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char)));
-            if (nullptr == tempData)
-            {
-                jpeg_finish_compress(&cinfo);
-                jpeg_destroy_compress(&cinfo);
-                fclose(outfile);
-                break;
-            }
-
-            for (int i = 0; i < _height; ++i)
-            {
-                for (int j = 0; j < _width; ++j)
-
-                {
-                    tempData[(i * _width + j) * 3] = _data[(i * _width + j) * 4];
-                    tempData[(i * _width + j) * 3 + 1] = _data[(i * _width + j) * 4 + 1];
-                    tempData[(i * _width + j) * 3 + 2] = _data[(i * _width + j) * 4 + 2];
-                }
-            }
-
-            while (cinfo.next_scanline < cinfo.image_height)
-            {
-                row_pointer[0] = & tempData[cinfo.next_scanline * row_stride];
-                (void)jpeg_write_scanlines(&cinfo, row_pointer, 1);
-            }
-
-            if (tempData != nullptr)
-            {
-                free(tempData);
-            }
-        } 
-        else
-        {
-            while (cinfo.next_scanline < cinfo.image_height) {
-                row_pointer[0] = & _data[cinfo.next_scanline * row_stride];
-                (void)jpeg_write_scanlines(&cinfo, row_pointer, 1);
-            }
-        }
-
-        jpeg_finish_compress(&cinfo);
-        fclose(outfile);
-        jpeg_destroy_compress(&cinfo);
-        
-        ret = true;
-    } while (0);
-    return ret;
-#else
-    CCLOG("jpeg is not enabled, please enable it in ccConfig.h");
-    return false;
-#endif // CC_USE_JPEG
-}
-
 bool Image::saveImageToWEBP(const std::string& filePath, float compressionQuality)
 {
 #if CC_USE_WEBP
@@ -2473,19 +2472,24 @@ bool Image::saveImageToWEBP(const std::string& filePath, float compressionQualit
         const auto stride = _width * (hasAlpha() ? 4 : 3);
 
         WebPConfig config;
-        if (!WebPConfigPreset(&config, WEBP_PRESET_DEFAULT, compressionQuality * 100.f)) {
+        
+        int compressionLevel = (int)(compressionQuality-1.0f);
+        float newCompressionQuality = compressionQuality * 100.0f;
+        if(compressionLevel >= 0)
+        {
+            newCompressionQuality = 100.0f;
+        }
+        
+        if (!WebPConfigPreset(&config, WEBP_PRESET_DEFAULT, newCompressionQuality)) {
             CCLOG("WebPConfigPreset Configuration preset failed to initialize.");
             return false;
         }
 
-        if (compressionQuality >= 1.0f)
+        /* if compressionQuality >= 1.0f will use lossless preset, compressionLevel can be set with compressionQuality */
+        if(compressionLevel >= 0)
         {
-            int compressionLevel = (int)(compressionQuality-1.0f);
-            
             if(compressionLevel > 9) {
                 compressionLevel = 9;
-            } else if(compressionLevel < 0) {
-                compressionLevel = 0;
             }
             
             if (!WebPConfigLosslessPreset(&config, compressionLevel)) {
@@ -2508,7 +2512,7 @@ bool Image::saveImageToWEBP(const std::string& filePath, float compressionQualit
         pic.width = (int)_width;
         pic.height = (int)_height;
 
-        pic.use_argb = (compressionQuality == 1.f) ? 1 : 0;
+        pic.use_argb = (compressionLevel >= 0) ? 1 : 0;
         pic.colorspace = WEBP_YUV420;
 
         if (hasAlpha())
@@ -2520,7 +2524,7 @@ bool Image::saveImageToWEBP(const std::string& filePath, float compressionQualit
             WebPPictureImportRGB(&pic, _data, (int)stride);
         }
 
-        if (compressionQuality < 1.0f)
+        if(compressionLevel < 0)
         {
             WebPPictureARGBToYUVA(&pic, WEBP_YUV420);
             WebPCleanupTransparentArea(&pic);

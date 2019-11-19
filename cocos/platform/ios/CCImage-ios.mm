@@ -51,13 +51,20 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
         CCLOG("cocos2d: Image: saveToFile is only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data for now");
         return false;
     }
+
+    bool saveToJPG = false;
     bool saveToPNG = false;
     bool saveToWEBP = false;
     bool needToCopyPixels = false;
 
     std::string basename(filename);
     std::transform(basename.begin(), basename.end(), basename.begin(), ::tolower);
-    if (std::string::npos != basename.find(".png"))
+    
+    if (std::string::npos != basename.find(".jpg"))
+    {
+        saveToJPG = true;
+    }
+    else if (std::string::npos != basename.find(".png"))
     {
         saveToPNG = true;
     }
@@ -155,7 +162,15 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
                 
             WebPConfig config;
             
-            if (!WebPConfigPreset(&config, preset, compressionQuality * 100.f)) {
+            int compressionLevel = (int)(compressionQuality-1.0f);
+            float newCompressionQuality = compressionQuality * 100.0f;
+            
+            if(compressionLevel >= 0)
+            {
+                newCompressionQuality = 100.0f;
+            }
+
+            if (!WebPConfigPreset(&config, preset, newCompressionQuality)) {
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:@"Configuration preset failed to initialize." forKey:NSLocalizedDescriptionKey];
                 if(error != NULL)
@@ -166,17 +181,12 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
             }
             
             //if compressionQuality >= 1.0f will use lossless preset, compressionLevel can be set with compressionQuality
-            if(compressionQuality >= 1.0f)
+            if(compressionLevel >= 0)
             {
-                int compressionLevel = (int)(compressionQuality-1.0f);
-                
                 if(compressionLevel > 9) {
                     compressionLevel = 9;
                 }
-                else if(compressionLevel < 0) {
-                    compressionLevel = 0;
-                }
-                
+
                 if (!WebPConfigLosslessPreset(&config, compressionLevel)) {
                     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                     [errorDetail setValue:@"Configuration preset failed to initialize." forKey:NSLocalizedDescriptionKey];
@@ -212,7 +222,7 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
             pic.width = (int)webPImageWidth;
             pic.height = (int)webPImageHeight;
             
-            pic.use_argb = (compressionQuality == 1.f) ? 1 : 0;
+            pic.use_argb = (compressionLevel >= 0) ? 1 : 0;
             pic.colorspace = WEBP_YUV420;
 
             if (hasAlpha())
@@ -224,7 +234,7 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB, float
                 WebPPictureImportRGB(&pic, webPImageData, (int)webPBytesPerRow);
             }
             
-            if (compressionQuality < 1.0f)
+            if(compressionLevel < 0)
             {
                 WebPPictureARGBToYUVA(&pic, WEBP_YUV420);
                 WebPCleanupTransparentArea(&pic);

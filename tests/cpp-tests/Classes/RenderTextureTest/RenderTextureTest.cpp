@@ -54,7 +54,7 @@ RenderTextureSave::RenderTextureSave()
 
     // note that the render texture is a Node, and contains a sprite of its texture for convenience,
     // so we can just parent it to the scene like any other Node
-    this->addChild(_target, -1);
+    this->addChild(_target, 1);
     
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
@@ -74,19 +74,19 @@ RenderTextureSave::RenderTextureSave()
     auto item9 = MenuItemFont::create("Clear to Random", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
     auto item10 = MenuItemFont::create("Clear to Transparent", CC_CALLBACK_1(RenderTextureSave::clearImageTransparent, this));
     auto menu = Menu::create(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, nullptr);
-    this->addChild(menu);
+    this->addChild(menu, 10);
     menu->alignItemsVertically();
-    menu->setPosition(Vec2(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 100));
+    menu->setPosition(Vec2(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 90));
 }
 
 std::string RenderTextureSave::title() const
 {
-    return "Touch the screen";
+    return "Draw and Save";
 }
 
 std::string RenderTextureSave::subtitle() const
 {
-    return "Press 'Save Image' to create an snapshot of the render texture";
+    return " ";
 }
 
 void RenderTextureSave::clearImage(cocos2d::Ref* sender)
@@ -99,6 +99,18 @@ void RenderTextureSave::clearImageTransparent(cocos2d::Ref* sender)
     _target->clear(0, 0, 0, 0);
 }
 
+void RenderTextureSave::createSprite(cocos2d::RenderTexture* rt, const std::string& path, int counter)
+{
+    bool fileExist = FileUtils::getInstance()->isFileExist(path);
+    CCLOG("fileExist at path %s : %d", path.c_str(), fileExist);
+
+    auto sprite = Sprite::create(path);
+    addChild(sprite);
+    sprite->setScale(0.3f);
+    sprite->setPosition(Vec2(sprite->getBoundingBox().size.width*0.5, sprite->getBoundingBox().size.height));
+    sprite->setRotation(counter * 3);
+}
+
 void RenderTextureSave::saveImageWithPremultipliedAlpha(cocos2d::Ref* sender)
 {
     static int counter = 0;
@@ -108,11 +120,7 @@ void RenderTextureSave::saveImageWithPremultipliedAlpha(cocos2d::Ref* sender)
 
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        auto sprite = Sprite::create(path);
-        addChild(sprite);
-        sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        RenderTextureSave::createSprite(rt, path, counter);
     };
 
     _target->saveToFile(png, Image::Format::PNG, true, callback);
@@ -132,11 +140,7 @@ void RenderTextureSave::saveImageWithNonPremultipliedAlpha(cocos2d::Ref *sender)
     
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        auto sprite = Sprite::create(path);
-        addChild(sprite);
-        sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        RenderTextureSave::createSprite(rt, path, counter);
     };
     
     _target->saveToFileAsNonPMA(png, Image::Format::PNG, true, callback);
@@ -152,16 +156,11 @@ void RenderTextureSave::saveImageJPG100(cocos2d::Ref* sender)
     static int counter = 0;
 
     char image[20];
-    sprintf(image, "image-%d.jpg", counter);
+    sprintf(image, "image-100jpg-%d.jpg", counter);
 
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        CCLOG("Image path %s", path.c_str());
-        auto sprite = Sprite::create(path);
-        addChild(sprite);
-        sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        RenderTextureSave::createSprite(rt, path, counter);
     };
 
     _target->saveToFile(image, Image::Format::JPG, false, callback, 1.0f);
@@ -177,16 +176,11 @@ void RenderTextureSave::saveImageJPG50(cocos2d::Ref* sender)
     static int counter = 0;
 
     char image[20];
-    sprintf(image, "image-%d.jpg", counter);
+    sprintf(image, "image-50jpg-%d.jpg", counter);
 
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        CCLOG("Image path %s", path.c_str());
-        auto sprite = Sprite::create(path);
-        addChild(sprite);
-        sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        RenderTextureSave::createSprite(rt, path, counter);
     };
 
     _target->saveToFile(image, Image::Format::JPG, false, callback, 0.5f);
@@ -202,19 +196,14 @@ void RenderTextureSave::saveImageWEBP600(cocos2d::Ref* sender)
     static int counter = 0;
 
     char image[20];
-    sprintf(image, "image-%d.webp", counter);
+    sprintf(image, "image-600webp-%d.webp", counter);
 
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        CCLOG("Image path %s", path.c_str());
-        auto sprite = Sprite::create(path);
-        addChild(sprite);
-        sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        RenderTextureSave::createSprite(rt, path, counter);
     };
 
-    _target->saveToFile(image, Image::Format::WEBP, false, callback, 7.0f);
+    _target->saveToFile(image, Image::Format::WEBP, true, callback, 7.0f);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
     CCLOG("Image saved %s", image);
@@ -227,19 +216,14 @@ void RenderTextureSave::saveImageWEBP100(cocos2d::Ref* sender)
     static int counter = 0;
 
     char image[20];
-    sprintf(image, "image-%d.webp", counter);
+    sprintf(image, "image-100webp-%d.webp", counter);
 
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        CCLOG("Image path %s", path.c_str());
-        auto sprite = Sprite::create(path);
-        addChild(sprite);
-        sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        RenderTextureSave::createSprite(rt, path, counter);
     };
 
-    _target->saveToFile(image, Image::Format::WEBP, false, callback, 1.0f);
+    _target->saveToFile(image, Image::Format::WEBP, true, callback, 1.0f);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
     CCLOG("Image saved %s", image);
@@ -252,19 +236,14 @@ void RenderTextureSave::saveImageWEBP50(cocos2d::Ref* sender)
     static int counter = 0;
 
     char image[20];
-    sprintf(image, "image-%d.webp", counter);
+    sprintf(image, "image-50webp-%d.webp", counter);
 
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        CCLOG("Image path %s", path.c_str());
-        auto sprite = Sprite::create(path);
-        addChild(sprite);
-        sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        RenderTextureSave::createSprite(rt, path, counter);
     };
-
-    _target->saveToFile(image, Image::Format::WEBP, false, callback, 0.5f);
+    
+    _target->saveToFile(image, Image::Format::WEBP, true, callback, 0.5f);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
     CCLOG("Image saved %s", image);

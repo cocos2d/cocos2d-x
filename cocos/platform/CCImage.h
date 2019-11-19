@@ -181,8 +181,8 @@ protected:
     typedef struct sImageTGA tImageTGA;
     bool initWithTGAData(tImageTGA* tgaData);
 
-    bool saveImageToPNG(const std::string& filePath, bool isToRGB = true, float compressionQuality = 1.0);
     bool saveImageToJPG(const std::string& filePath, float compressionQuality = 1.0);
+    bool saveImageToPNG(const std::string& filePath, bool isToRGB = true);
     bool saveImageToWEBP(const std::string& filePath, float compressionQuality = 1.0);
 
 protected:
