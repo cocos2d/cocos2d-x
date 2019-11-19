@@ -30,6 +30,7 @@
         "cmake/README.md", 
         "cmake/images/Xcode_Find_Setting_Name.png", 
         "cmake/images/Xcode_General_Page.png", 
+        "cmake/scripts/sync_folder.py", 
         "cocos/2d/CCAction.cpp", 
         "cocos/2d/CCAction.h", 
         "cocos/2d/CCActionCamera.cpp", 
