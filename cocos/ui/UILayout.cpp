@@ -484,7 +484,7 @@ const Rect& Layout::getClippingRect()
         
         if (_clippingParent)
         {
-            const Rect parentClippingRect = _clippingParent->getClippingRect();
+            const Rect& parentClippingRect = _clippingParent->getClippingRect();
             float finalX = worldPos.x;
             float finalY = worldPos.y;
             float finalWidth = scissorWidth;
