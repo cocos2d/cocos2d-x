@@ -210,6 +210,11 @@ public:
 	* @js NA
 	*/
     virtual std::string getDescription() const override;
+    
+    /**
+    * Set ProgramState
+    */
+    virtual void setProgramState(backend::ProgramState *programState) override;
 
     /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      * This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.
@@ -259,7 +264,9 @@ protected:
     void updateAtlasIndex(Sprite* sprite, ssize_t* curIndex);
     void swap(ssize_t oldIndex, ssize_t newIndex);
     void updateBlendFunc();
-
+    void setVertexLayout();
+    void setUniformLocation();
+    
     void setProgramState(backend::ProgramState* programState) override;
 
     TextureAtlas *_textureAtlas = nullptr;
