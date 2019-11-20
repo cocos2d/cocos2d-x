@@ -4136,9 +4136,11 @@ void js_cocos2dx_TMXLayer_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_TMXLayer(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_TMXLayer_getTileGIDAt(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXLayer_getAnimTileCoord(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getPositionAt(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setLayerOrientation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_releaseMap(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXLayer_hasTileAnimation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setTiles(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getLayerSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setMapTileSize(JSContext *cx, uint32_t argc, jsval *vp);
@@ -4157,8 +4159,35 @@ bool js_cocos2dx_TMXLayer_setTileSet(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getTileSet(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getProperties(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getTileAt(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXLayer_getTileAnimManager(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_TMXLayer(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_TMXTileAnimTask_class;
+extern JSObject *jsb_cocos2d_TMXTileAnimTask_prototype;
+
+bool js_cocos2dx_TMXTileAnimTask_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_TMXTileAnimTask_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_TMXTileAnimTask(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_TMXTileAnimTask_start(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTileAnimTask_stop(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTileAnimTask_isRunning(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTileAnimTask_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTileAnimTask_TMXTileAnimTask(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_TMXTileAnimManager_class;
+extern JSObject *jsb_cocos2d_TMXTileAnimManager_prototype;
+
+bool js_cocos2dx_TMXTileAnimManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_TMXTileAnimManager_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_TMXTileAnimManager(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_TMXTileAnimManager_getTasks(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTileAnimManager_startAll(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTileAnimManager_stopAll(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTileAnimManager_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTileAnimManager_TMXTileAnimManager(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_TMXTiledMap_class;
 extern JSObject *jsb_cocos2d_TMXTiledMap_prototype;
@@ -4177,6 +4206,7 @@ bool js_cocos2dx_TMXTiledMap_getResourceFile(JSContext *cx, uint32_t argc, jsval
 bool js_cocos2dx_TMXTiledMap_initWithTMXFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getTileSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getMapSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTiledMap_setTileAnimEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_initWithXML(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getProperties(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getPropertiesForGID(JSContext *cx, uint32_t argc, jsval *vp);

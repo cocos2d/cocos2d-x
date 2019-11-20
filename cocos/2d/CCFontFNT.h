@@ -79,15 +79,19 @@ public://@public
 
     //! FNTConfig: Common Height Should be signed (issue #1343)
     int _commonHeight;
+
     //! Padding
     BMFontPadding    _padding;
+
     //! atlas name
     std::string _atlasName;
+
     //! values for kerning
     std::unordered_map<uint64_t /* key */, int /* amount */> _kerningDictionary;
 
     // Character Set defines the letters that actually exist in the font
     std::set<unsigned int>* _characterSet;
+
     //! Font Size
     int _fontSize;
 public:
@@ -136,7 +140,12 @@ class CC_DLL FontFNT : public Font
     
 public:
     
-    static FontFNT * create(const std::string& fntFilePath, const Vec2& imageOffset = Vec2::ZERO);
+    static FontFNT* create(const std::string& fntFilePath, const Rect& imageRect, bool imageRotated);
+    static FontFNT* create(const std::string& fntFilePath, const std::string& subTextureKey);
+    static FontFNT* create(const std::string& fntFilePath);
+
+    CC_DEPRECATED_ATTRIBUTE static FontFNT* create(const std::string& fntFilePath, const Vec2& imageOffset = Vec2::ZERO);
+
     /** Purges the cached data.
     Removes from memory the cached configurations and the atlas name dictionary.
     */
@@ -153,7 +162,9 @@ public:
 
 protected:
     
-    FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset = Vec2::ZERO);
+    FontFNT(BMFontConfiguration* theContfig, const Rect& imageRect, bool imageRotated);
+    FontFNT(BMFontConfiguration* theContfig);
+
     /**
      * @js NA
      * @lua NA
@@ -161,9 +172,12 @@ protected:
     virtual ~FontFNT();
 
     BMFontConfiguration* _configuration;
+
     int  getHorizontalKerningForChars(char32_t firstChar, char32_t secondChar) const;
-    
-    Vec2                   _imageOffset;
+
+    Rect _imageRectInPoints;
+    bool _imageRotated;
+
     //User defined font size
     float  _fontSize;
 };

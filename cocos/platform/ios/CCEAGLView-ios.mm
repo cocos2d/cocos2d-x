@@ -78,7 +78,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @interface CCEAGLView ()
 @property (nonatomic) CCInputView* textInputView;
-@property(nonatomic) BOOL isKeyboardShown;
+@property(nonatomic, readwrite, assign) BOOL isKeyboardShown;
 @property(nonatomic, copy) NSNotification* keyboardShowNotification;
 @property(nonatomic, assign) CGRect originalRect;
 @end
@@ -360,7 +360,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // Pass the touches to the superview
 #pragma mark CCEAGLView - Touch Delegate
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{    
+{
+    if (self.isKeyboardShown)
+        [self closeKeyboardOpenedByEditBox];
+    
     UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
@@ -470,11 +473,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
     [self.textInputView resignFirstResponder];
     [self.textInputView removeFromSuperview];
-}
-
--(BOOL) isKeyboardShown
-{
-    return self.isKeyboardShown;
 }
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis
@@ -673,6 +671,25 @@ namespace {
     {
         self.isKeyboardShown = NO;
         dispatcher->dispatchKeyboardDidHide(notiInfo);
+    }
+}
+
+// Close the keyboard opened by EditBox
+-(void) closeKeyboardOpenedByEditBox
+{
+    NSArray *subviews = self.subviews;
+    
+    for(UIView* view in subviews)
+    {
+        if([view isKindOfClass:NSClassFromString(@"UITextView")] ||
+           [view isKindOfClass:NSClassFromString(@"UITextField")])
+        {
+            if ([view isFirstResponder])
+            {
+                [view resignFirstResponder];
+                return;
+            }
+        }
     }
 }
 

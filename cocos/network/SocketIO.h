@@ -181,10 +181,11 @@ private:
 
     static SocketIO *_inst;
 
-    cocos2d::Map<std::string, SIOClientImpl*> _sockets;
+    std::unordered_map<std::string, std::weak_ptr<SIOClientImpl
+    >> _sockets;
 
-    SIOClientImpl* getSocket(const std::string& uri);
-    void addSocket(const std::string& uri, SIOClientImpl* socket);
+    std::shared_ptr<SIOClientImpl> getSocket(const std::string& uri);
+    void addSocket(const std::string& uri, std::shared_ptr<SIOClientImpl>& socket);
     void removeSocket(const std::string& uri);
 
     friend class SIOClientImpl;
@@ -210,9 +211,9 @@ private:
 
     std::string _path, _tag;
     bool _connected;
-    SIOClientImpl* _socket;
-
-    SocketIO::SIODelegate* _delegate;
+    std::shared_ptr<SIOClientImpl> _socket;
+    
+    SocketIO::SIODelegate* _delegate = nullptr;
 
     EventRegistry _eventRegistry;
 
@@ -236,7 +237,7 @@ private:
      * @param impl the SIOClientImpl object.
      * @param delegate the SIODelegate object.
      */
-    SIOClient(const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
+    SIOClient(const std::string& path, std::shared_ptr<SIOClientImpl>& impl, SocketIO::SIODelegate& delegate);
     /**
      * Destructor of SIOClient class.
      */

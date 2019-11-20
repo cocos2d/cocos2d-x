@@ -468,11 +468,11 @@ public:
             return false;
         }
 
-        _data.reserve(LWS_PRE + len);
-        _data.resize(LWS_PRE, 0x00);
+        _data.resize(LWS_PRE + len);
+        
         if (len > 0)
         {
-            _data.insert(_data.end(), buf, buf + len);
+            std::copy(buf, buf + len, _data.begin() + LWS_PRE);
         }
 
         _payload = _data.data() + LWS_PRE;
@@ -545,7 +545,7 @@ WebSocket::WebSocket()
 WebSocket::~WebSocket()
 {
     LOGD("In the destructor of WebSocket (%p)\n", this);
-
+    
     std::lock_guard<std::mutex> lk(__instanceMutex);
 
     if (__websocketInstances != nullptr)

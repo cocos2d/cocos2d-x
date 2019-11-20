@@ -47,7 +47,7 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
     PlayerbackStateCompleted
 };
 
-@property (strong, nonatomic) AVPlayerViewController * playerController;
+@property (assign, nonatomic) AVPlayerViewController * playerController;
 
 - (void) setFrame:(int) left :(int) top :(int) width :(int) height;
 - (void) setURL:(int) videoSource :(std::string&) videoUrl;
@@ -87,7 +87,7 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
 -(id)init:(void*)videoPlayer
 {
     if (self = [super init]) {
-        self.playerController = [[AVPlayerViewController new] autorelease];
+        self.playerController = [AVPlayerViewController new];
 
         [self setRepeatEnabled:FALSE];
         [self showPlaybackControls:TRUE];
@@ -110,6 +110,7 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
 
 -(void) clean
 {
+    _videoPlayer = nullptr;
     [self stop];
     [self removePlayerEventListener];
     [self.playerController.view removeFromSuperview];
@@ -243,7 +244,11 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
         [self seekTo:0];
         [self.playerController.player pause];
         _state = PlayerbackStopped;
-        _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
+        
+        // stop() will be invoked in dealloc, which is invoked by _videoPlayer's destructor,
+        // so do't send the message when _videoPlayer is being deleted.
+        if (_videoPlayer)
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
     }
 }
 

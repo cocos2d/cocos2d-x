@@ -27,6 +27,7 @@
 #import "RootViewController.h"
 #import "cocos2d.h"
 #import "platform/ios/CCEAGLView-ios.h"
+#import "platform/ios/CCDirectorCaller-ios.h"
 
 
 @implementation RootViewController
@@ -66,6 +67,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+}
+
+//In iOS 12.0+, Screen Time's bug cause UIApplicationDidBecomeActiveNotification and UIApplicationWillResignActiveNotification do not fired
+//so we need to active CCDirectorCaller manually
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[CCDirectorCaller sharedDirectorCaller] setActive:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

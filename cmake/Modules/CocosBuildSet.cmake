@@ -22,8 +22,7 @@ message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
 message(STATUS "PROJECT_BINARY_DIR:" ${PROJECT_BINARY_DIR})
 message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 
-# the default behavior of build module
-option(DEBUG_MODE "Debug or Release?" ON)
+
 option(BUILD_LUA_LIBS "Build lua libraries" OFF)
 option(BUILD_JS_LIBS "Build js libraries" OFF)
 
