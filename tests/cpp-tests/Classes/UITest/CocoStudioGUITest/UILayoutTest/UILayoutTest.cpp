@@ -42,6 +42,7 @@ UILayoutTests::UILayoutTests()
     ADD_TEST_CASE(UILayoutComponentTest);
     ADD_TEST_CASE(UILayoutComponent_Berth_Test);
     ADD_TEST_CASE(UILayoutComponent_Berth_Stretch_Test);
+    ADD_TEST_CASE(UILayoutTest_Issue19890);
 }
 
 // UILayoutTest
@@ -955,4 +956,63 @@ bool UILayoutComponent_Berth_Stretch_Test::init()
         return true;
     }
     return false;
+}
+
+bool UILayoutTest_Issue19890::init()
+{
+    if (!UIScene::init())
+    {
+        return false;
+    }
+
+    const Size widgetSize = _widget->getContentSize();
+
+    auto label = Text::create("Issue 19890", "fonts/Marker Felt.ttf", 32);
+    label->setAnchorPoint(Vec2(0.5f, -1.0f));
+    label->setPosition(Vec2(widgetSize.width / 2.0f,
+        widgetSize.height / 2.0f + label->getContentSize().height * 1.5f));
+    _uiLayer->addChild(label);
+
+    Text* alert = Text::create("3 panels should be completely visible", "fonts/Marker Felt.ttf", 20);
+    alert->setColor(Color3B(159, 168, 176));
+    alert->setPosition(Vec2(widgetSize.width / 2.0f,
+        widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+    _uiLayer->addChild(alert);
+
+    Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+
+    Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+    const Size backgroundSize = background->getContentSize();
+
+    auto panel = ui::Layout::create();
+    panel->setBackGroundColor(Color3B::RED);
+    panel->setBackGroundColorType(ui::Layout::BackGroundColorType::SOLID);
+    panel->setClippingType(ui::Layout::ClippingType::SCISSOR);
+    panel->setPosition(backgroundSize / 2);
+    panel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    panel->setClippingEnabled(true);
+    panel->setContentSize(backgroundSize); // from the left to the screen end
+    background->addChild(panel);
+
+    auto panel2 = ui::Layout::create();
+    panel2->setBackGroundColor(Color3B::BLUE);
+    panel2->setBackGroundColorType(ui::Layout::BackGroundColorType::SOLID);
+    panel2->setClippingType(ui::Layout::ClippingType::SCISSOR);
+    panel2->setPosition(panel->getContentSize() / 2);
+    panel2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    panel2->setClippingEnabled(true);
+    panel2->setContentSize(panel->getContentSize() / 2); // from the left to the screen end
+    panel->addChild(panel2);
+
+    auto panel3 = ui::Layout::create();
+    panel3->setBackGroundColor(Color3B::GREEN);
+    panel3->setBackGroundColorType(ui::Layout::BackGroundColorType::SOLID);
+    panel3->setClippingType(ui::Layout::ClippingType::SCISSOR);
+    panel3->setPosition(panel2->getContentSize() / 2);
+    panel3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    panel3->setClippingEnabled(true);
+    panel3->setContentSize(panel2->getContentSize() / 2); // from the left to the screen end
+    panel2->addChild(panel3);
+
+    return true;
 }
