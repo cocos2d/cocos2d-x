@@ -266,8 +266,6 @@ protected:
     void updateBlendFunc();
     void setVertexLayout();
     void setUniformLocation();
-    
-    void setProgramState(backend::ProgramState* programState) override;
 
     TextureAtlas *_textureAtlas = nullptr;
     BlendFunc _blendFunc;

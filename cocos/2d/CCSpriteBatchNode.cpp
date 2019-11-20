@@ -114,23 +114,6 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
     return true;
 }
 
-void SpriteBatchNode::setProgramState(backend::ProgramState* programState)
-{
-    auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
-    if (_programState != programState)
-    {
-        CC_SAFE_RELEASE(_programState);
-        _programState = programState;
-        CC_SAFE_RETAIN(programState);
-    }
-    pipelineDescriptor.programState = _programState;
-    
-    CC_SAFE_RELEASE(program);
-    
-    setVertexLayout();
-    setUniformLocation();
-}
-
 void SpriteBatchNode::setUniformLocation()
 {
     CCASSERT(_programState, "programState should not be nullptr");
@@ -717,7 +700,7 @@ Texture2D* SpriteBatchNode::getTexture() const
 void SpriteBatchNode::setTexture(Texture2D *texture)
 {
     _textureAtlas->setTexture(texture);
-
+    setProgramStateWithRegistry(backend::ProgramType::POSITION_TEXTURE_COLOR, texture);
     updateProgramStateTexture(texture);
     updateBlendFunc();
 }
