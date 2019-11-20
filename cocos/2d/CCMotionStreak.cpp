@@ -412,7 +412,6 @@ void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flag
     renderer->addCommand(&_customCommand);
 
     auto programState = _customCommand.getPipelineDescriptor().programState;
-    // programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
 
     const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     Mat4 finalMat = projectionMat * transform;

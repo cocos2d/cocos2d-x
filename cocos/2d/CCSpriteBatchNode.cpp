@@ -440,8 +440,6 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
     const auto& matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto programState = _quadCommand.getPipelineDescriptor().programState;
     programState->setUniform(_mvpMatrixLocaiton, matrixProjection.m, sizeof(matrixProjection.m));
-    // programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
-
     _quadCommand.init(_globalZOrder, _textureAtlas->getTexture(), _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads(), transform, flags);
     renderer->addCommand(&_quadCommand);
 }

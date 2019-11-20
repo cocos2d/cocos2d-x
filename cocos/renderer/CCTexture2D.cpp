@@ -460,6 +460,8 @@ bool Texture2D::updateWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::
         _hasPremultipliedAlpha = preMultipliedAlpha;
         _hasMipmaps = mipmapsNum > 1;
     }
+
+    return true;
 }
 
 bool Texture2D::updateWithSubData(void *data,int offsetX,int offsetY,int width,int height, int index)

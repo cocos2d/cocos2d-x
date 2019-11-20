@@ -441,7 +441,6 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_
     Mat4 finalMat = projectionMat * transform;
     auto programState = _customCommand.getPipelineDescriptor().programState;
     programState->setUniform(_mvpMatrixLocaiton, finalMat.m, sizeof(finalMat.m));
-    // programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
 
     if (_textureAtlas->isDirty())
     {
