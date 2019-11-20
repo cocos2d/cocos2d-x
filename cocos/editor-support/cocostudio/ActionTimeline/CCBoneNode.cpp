@@ -404,7 +404,6 @@ void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform,
 
 BoneNode::~BoneNode()
 {
-    CC_SAFE_RELEASE(_programState);
 }
 
 bool BoneNode::init()

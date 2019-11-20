@@ -56,7 +56,6 @@ MotionStreak3D::MotionStreak3D()
 MotionStreak3D::~MotionStreak3D()
 {
     CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_programState);
 }
 
 MotionStreak3D* MotionStreak3D::create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)

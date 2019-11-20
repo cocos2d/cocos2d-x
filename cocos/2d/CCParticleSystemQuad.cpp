@@ -81,7 +81,6 @@ ParticleSystemQuad::~ParticleSystemQuad()
         CC_SAFE_FREE(_quads);
         CC_SAFE_FREE(_indices);
     }
-    CC_SAFE_RELEASE(_programState);
 }
 
 // implementation ParticleSystemQuad

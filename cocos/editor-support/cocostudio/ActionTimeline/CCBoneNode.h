@@ -208,7 +208,6 @@ protected:
     void setRootSkeleton(BoneNode* bone, SkeletonNode* skeleton) const;
 protected:
     cocos2d::CustomCommand _customCommand;
-    cocos2d::backend::ProgramState* _programState = nullptr;
     cocos2d::backend::UniformLocation _mvpLocation;
 
     cocos2d::BlendFunc _blendFunc = cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED;
