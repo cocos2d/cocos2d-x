@@ -41,7 +41,6 @@ Skybox::Skybox():
 
 Skybox::~Skybox()
 {
-    CC_SAFE_RELEASE_NULL(_programState);
     _texture->release();
 }
 

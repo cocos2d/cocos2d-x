@@ -190,7 +190,6 @@ protected:
     cocos2d::CallbackCommand _disableStencilCallback;
     cocos2d::Vector<cocos2d::Sprite*> _sprites;
     cocos2d::Vector<cocos2d::Sprite*> _spritesStencil;
-    cocos2d::backend::ProgramState* _programState = nullptr;
     cocos2d::backend::UniformLocation _locColor;
     cocos2d::backend::UniformLocation _locMVPMatrix;
 };

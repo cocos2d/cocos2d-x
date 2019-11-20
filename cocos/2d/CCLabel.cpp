@@ -491,8 +491,6 @@ Label::~Label()
 
     CC_SAFE_RELEASE_NULL(_textSprite);
     CC_SAFE_RELEASE_NULL(_shadowNode);
-    
-    CC_SAFE_RELEASE(_programState);
 }
 
 void Label::reset()
