@@ -191,7 +191,6 @@ protected:
     CustomCommand _customCommand;
     CustomCommand _customCommand2;
     
-    backend::ProgramState* _programState = nullptr;
     backend::ProgramState* _programState2 = nullptr;
 
     backend::UniformLocation _locMVP1;

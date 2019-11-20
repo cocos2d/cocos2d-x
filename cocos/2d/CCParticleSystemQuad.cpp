@@ -230,6 +230,9 @@ void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect
     if( !_texture || texture->getBackendTexture() != _texture->getBackendTexture() )
     {
         ParticleSystem::setTexture(texture);
+
+        auto programState = _quadCommand.getPipelineDescriptor().programState;
+        programState->setTexture(_texture->getBackendTexture());
     }
 
     this->initTexCoordsWithRect(rect);
@@ -446,7 +449,7 @@ void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_
     if(_particleCount > 0)
     {
         auto programState = _quadCommand.getPipelineDescriptor().programState;
-        programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
+        // programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
         
         cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         programState->setUniform(_mvpMatrixLocaiton, projectionMat.m, sizeof(projectionMat.m));

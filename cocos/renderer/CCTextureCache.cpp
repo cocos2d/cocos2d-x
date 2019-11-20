@@ -348,11 +348,7 @@ void TextureCache::addImageAsyncCallBack(float /*dt*/)
                 texture->autorelease();
                 // ETC1 ALPHA supports.
                 if (asyncStruct->imageAlpha.getFileType() == Image::Format::ETC) {
-                    auto alphaTexture = new(std::nothrow) Texture2D();
-                    if(alphaTexture != nullptr && alphaTexture->initWithImage(&asyncStruct->imageAlpha, asyncStruct->pixelFormat)) {
-                        texture->setAlphaTexture(alphaTexture);
-                    }
-                    CC_SAFE_RELEASE(alphaTexture);
+                    texture->updateWithImage(&asyncStruct->imageAlpha, Texture2D::getDefaultAlphaPixelFormat(), 1);
                 }
             }
             else {
@@ -421,14 +417,10 @@ Texture2D * TextureCache::addImage(const std::string &path)
                 std::string alphaFullPath = path + s_etc1AlphaFileSuffix;
                 if (image->getFileType() == Image::Format::ETC && !s_etc1AlphaFileSuffix.empty() && FileUtils::getInstance()->isFileExist(alphaFullPath))
                 {
-                    Image alphaImage;
-                    if (alphaImage.initWithImageFile(alphaFullPath))
+                    Image imageAlpha;
+                    if (imageAlpha.initWithImageFile(alphaFullPath))
                     {
-                        Texture2D *pAlphaTexture = new(std::nothrow) Texture2D;
-                        if(pAlphaTexture != nullptr && pAlphaTexture->initWithImage(&alphaImage)) {
-                            texture->setAlphaTexture(pAlphaTexture);
-                        }
-                        CC_SAFE_RELEASE(pAlphaTexture);
+                        texture->updateWithImage(&imageAlpha, Texture2D::getDefaultAlphaPixelFormat(), 1);
                     }
                 }
 

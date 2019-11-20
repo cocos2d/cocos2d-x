@@ -147,6 +147,8 @@ public:
         _startingPositionInitialized = bStartingPositionInitialized; 
     }
     
+    void setProgramState(backend::ProgramState* programState) override;
+
 CC_CONSTRUCTOR_ACCESS:
     MotionStreak();
     virtual ~MotionStreak();
@@ -187,7 +189,6 @@ protected:
     
     backend::UniformLocation _mvpMatrixLocaiton;
     backend::UniformLocation _textureLocation;
-    backend::ProgramState* _programState = nullptr;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MotionStreak);

@@ -249,9 +249,11 @@ void TMXLayer::parseInternalProperties()
             auto alphaFuncVal = getProperty("cc_alpha_func");
             float alphaFuncValue = alphaFuncVal.asFloat();
 
+            setProgramStateWithRegistry(backend::ProgramType::POSITION_TEXTURE_COLOR_ALPHA_TEST, nullptr);
+
             auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
             auto& vertexShader = pipelineDescriptor.programState->getProgram()->getVertexShader();
-            updateShaders(vertexShader, positionTextureColorAlphaTest_frag);
+
             auto alphaValueLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha_value");
             pipelineDescriptor.programState->setUniform(alphaValueLocation, &alphaFuncValue, sizeof(alphaFuncValue));
         }

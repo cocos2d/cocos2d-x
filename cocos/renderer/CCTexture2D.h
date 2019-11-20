@@ -170,6 +170,18 @@ public:
      */
     bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha = false);
     
+    /** Update with image.
+
+    @param data Specifies a pointer to the image data in memory.
+    @param offsetX Specifies a texel offset in the x direction within the texture array.
+    @param offsetY Specifies a texel offset in the y direction within the texture array.
+    @param width Specifies the width of the texture subimage.
+    @param height Specifies the height of the texture subimage.
+    */
+    bool updateWithImage(Image* image, backend::PixelFormat format, int index = 0);
+    bool updateWithData(const void* data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/, bool preMultipliedAlpha, int index = 0);
+    bool updateWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha = false, int index = 0);
+
     /** Update with texture data.
      
      @param data Specifies a pointer to the image data in memory.
@@ -178,7 +190,7 @@ public:
      @param width Specifies the width of the texture subimage.
      @param height Specifies the height of the texture subimage.
      */
-    bool updateWithData(void *data,int offsetX,int offsetY,int width,int height);
+    bool updateWithSubData(void *data,int offsetX,int offsetY,int width,int height, int index = 0);
     /**
     Drawing extensions to make it easy to draw basic quads using a Texture2D object.
     These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
@@ -313,11 +325,6 @@ public:
     Size getContentSize() const;
 
     std::string getPath()const { return _filePath; }
-
-    void setAlphaTexture(Texture2D* alphaTexture);
-    Texture2D* getAlphaTexture() const;
-
-    bool getAlphaTextureName() const;
     
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
@@ -409,7 +416,6 @@ protected:
     bool _valid;
     std::string _filePath;
 
-    Texture2D* _alphaTexture;
     backend::ProgramState* _programState = nullptr;
     backend::UniformLocation _mvpMatrixLocation;
     backend::UniformLocation _textureLocation;

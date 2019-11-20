@@ -624,7 +624,9 @@ CC_CONSTRUCTOR_ACCESS :
 
     virtual void setVertexLayout();
     virtual void updateShaders(const char* vert, const char* frag);
-    
+
+    void setProgramState(backend::ProgramType type);
+
 protected:
     virtual void updateColor() override;
     virtual void setTextureCoords(const Rect& rect);
@@ -635,13 +637,11 @@ protected:
     virtual void setDirtyRecursively(bool value);
     virtual void flipX();
     virtual void flipY();
-    virtual void updateProgramStateTexture();
 
     void updatePoly();
     void updateStretchFactor();
     void populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad);
     void setMVPMatrixUniform();
-    void setProgramState(backend::ProgramType type);
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -664,8 +664,6 @@ protected:
     
     backend::UniformLocation _mvpMatrixLocation;
     backend::UniformLocation _textureLocation;
-    backend::UniformLocation _alphaTextureLocation;
-        
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode = nullptr;
 #endif //CC_SPRITE_DEBUG_DRAW

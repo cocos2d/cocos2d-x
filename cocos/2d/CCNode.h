@@ -1768,6 +1768,10 @@ public:
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
     
     virtual void setProgramState(backend::ProgramState* programState);
+
+    void setProgramStateWithRegistry(backend::ProgramType programType, Texture2D* texture);
+    void updateProgramStateTexture(Texture2D* texture);
+
     virtual backend::ProgramState* getProgramState() const;
 
 CC_CONSTRUCTOR_ACCESS:

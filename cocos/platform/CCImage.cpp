@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include <string>
 #include <ctype.h>
 
-#include "base/CCData.h"
 #include "base/ccConfig.h" // CC_USE_JPEG, CC_USE_WEBP
 #include "platform/CCGL.h"
 
@@ -481,6 +480,7 @@ bool Image::PNG_PREMULTIPLIED_ALPHA_ENABLED = true;
 Image::Image()
 : _data(nullptr)
 , _dataLen(0)
+, _offset(0)
 , _width(0)
 , _height(0)
 , _unpack(false)
@@ -512,7 +512,9 @@ bool Image::initWithImageFile(const std::string& path)
 
     if (!data.isNull())
     {
-        ret = initWithImageData(data.getBytes(), data.getSize());
+        ssize_t n = 0;
+        auto buf = data.takeBuffer(&n);
+        ret = initWithImageData(buf, n, true);
     }
 
     return ret;
@@ -527,19 +529,21 @@ bool Image::initWithImageFileThreadSafe(const std::string& fullpath)
 
     if (!data.isNull())
     {
-        ret = initWithImageData(data.getBytes(), data.getSize());
+        ssize_t n = 0;
+        auto buf = data.takeBuffer(&n);
+        ret = initWithImageData(buf, n, true);
     }
 
     return ret;
 }
 
-bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
+bool Image::initWithImageData(const unsigned char* data, ssize_t dataLen, bool ownData)
 {
     bool ret = false;
     
     do
     {
-        CC_BREAK_IF(! data || dataLen <= 0);
+        CC_BREAK_IF(!data || dataLen == 0);
         
         unsigned char* unpackedData = nullptr;
         ssize_t unpackedLen = 0;
@@ -576,7 +580,7 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
             ret = initWithPVRData(unpackedData, unpackedLen);
             break;
         case Format::ETC:
-            ret = initWithETCData(unpackedData, unpackedLen);
+            ret = initWithETCData(unpackedData, unpackedLen, ownData);
             break;
         case Format::S3TC:
             ret = initWithS3TCData(unpackedData, unpackedLen);
@@ -1421,7 +1425,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     return true;
 }
 
-bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
+bool Image::initWithETCData(const unsigned char* data, ssize_t dataLen, bool ownData)
 {
     const etc1_byte* header = static_cast<const etc1_byte*>(data);
     
@@ -1439,23 +1443,26 @@ bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
         return false;
     }
 
+    // pitfall: because we do merge etc1 alpha at shader, so must mark as _hasPremultipliedAlpha=true to makesure alpha blend works well.
+    //   the Premultiply operation can only do at shader.
+    _hasPremultipliedAlpha = true;
+
     if (Configuration::getInstance()->supportsETC())
     {
         //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
 #if defined(GL_ETC1_RGB8_OES) || defined(CC_USE_METAL)
         _pixelFormat = backend::PixelFormat::ETC;
-        _dataLen = dataLen - ETC_PKM_HEADER_SIZE;
-        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
-        memcpy(_data, static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, _dataLen);
+        _data = data;
+        _dataLen = dataLen;
+        _offset = ETC_PKM_HEADER_SIZE;
         return true;
-#else
-        CC_UNUSED_PARAM(dataLen);
 #endif
     }
     else
     {
         CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
 
+        bool ret = true;
          //if it is not gles or device do not support ETC, decode texture by software
         int bytePerPixel = 3;
         unsigned int stride = _width * bytePerPixel;
@@ -1470,12 +1477,16 @@ bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
             if (_data != nullptr)
             {
                 free(_data);
+                _data = nullptr;
             }
-            return false;
+            ret = false;
         }
-        
-        return true;
+
+        if (ownData) free((void*)data);
+        return ret;
     }
+
+    if (ownData) free((void*)data);
     return false;
 }
 

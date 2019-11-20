@@ -77,14 +77,14 @@ void TextureInfoGL::applySamplerDescriptor(const SamplerDescriptor& descriptor, 
 
 Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2DBackend(descriptor)
 {
-    glGenTextures(1, &_textureInfo.texture);
+    glGenTextures(1, &_textureInfo.textures[0]);
 
     updateTextureDescriptor(descriptor);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to restored texture id after coming to foreground on Android.
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
-        glGenTextures(1, &(this->_textureInfo.texture));
+        glGenTextures(1, &(this->_textureInfo.textures[0]));
         this->initWithZeros();
     });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
@@ -100,9 +100,9 @@ void Texture2DGL::initWithZeros()
     free(data);
 }
 
-void Texture2DGL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+void Texture2DGL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor, int index)
 {
-    TextureBackend::updateTextureDescriptor(descriptor);
+    TextureBackend::updateTextureDescriptor(descriptor, index);
     UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
 
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
@@ -112,7 +112,7 @@ void Texture2DGL::updateTextureDescriptor(const cocos2d::backend::TextureDescrip
     _textureInfo.sAddressModeGL = UtilsGL::toGLAddressMode(descriptor.samplerDescriptor.sAddressMode, isPow2);
     _textureInfo.tAddressModeGL = UtilsGL::toGLAddressMode(descriptor.samplerDescriptor.tAddressMode, isPow2);
 
-    updateSamplerDescriptor(descriptor.samplerDescriptor);
+    updateSamplerDescriptor(descriptor.samplerDescriptor, index);
 
     // Update data here because `updateData()` may not be invoked later.
     // For example, a texture used as depth buffer will not invoke updateData().
@@ -121,20 +121,18 @@ void Texture2DGL::updateTextureDescriptor(const cocos2d::backend::TextureDescrip
 
 Texture2DGL::~Texture2DGL()
 {
-    if (_textureInfo.texture)
-        glDeleteTextures(1, &_textureInfo.texture);
-    _textureInfo.texture = 0;
+    _textureInfo.foreach([=](GLuint texID, int) { glDeleteTextures(1, &texID); });
+    _textureInfo.textures.fill(0);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 
-void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
+void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler, int index) {
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
     _textureInfo.applySamplerDescriptor(sampler, isPow2, _hasMipmaps);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+    ensure(index);
 
     if (sampler.magFilter != SamplerFilter::DONT_CARE)
     {
@@ -157,7 +155,7 @@ void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     }
 }
 
-void Texture2DGL::updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level)
+void Texture2DGL::updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level, int index)
 {
     //Set the row align only when mipmapsNum == 1 and the data is uncompressed
     auto mipmapEnalbed = isMipmapEnabled(_textureInfo.minFilterGL) || isMipmapEnabled(_textureInfo.magFilterGL);
@@ -187,8 +185,8 @@ void Texture2DGL::updateData(uint8_t* data, std::size_t width , std::size_t heig
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+    auto texID = ensure(index);
+    if (!texID) return;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
@@ -204,6 +202,9 @@ void Texture2DGL::updateData(uint8_t* data, std::size_t width , std::size_t heig
                 _textureInfo.format,
                 _textureInfo.type,
                 data);
+
+    cocos2d::log("---> Texture2DGL::updateData:%u", texID);
+
     CHECK_GL_ERROR_DEBUG();
 
     if(!_hasMipmaps && level > 0)
@@ -216,7 +217,7 @@ void Texture2DGL::updateCompressedData(uint8_t *data, std::size_t width, std::si
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+    glBindTexture(GL_TEXTURE_2D, _textureInfo.textures[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
@@ -237,10 +238,9 @@ void Texture2DGL::updateCompressedData(uint8_t *data, std::size_t width, std::si
         _hasMipmaps = true;
 }
 
-void Texture2DGL::updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data)
+void Texture2DGL::updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data, int index)
 {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+    if (!ensure(index)) return;
 
     glTexSubImage2D(GL_TEXTURE_2D,
                     level,
@@ -262,7 +262,7 @@ void Texture2DGL::updateCompressedSubData(std::size_t xoffset, std::size_t yoffs
                                           uint8_t *data)
 {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+    glBindTexture(GL_TEXTURE_2D, _textureInfo.textures[0]);
 
     glCompressedTexSubImage2D(GL_TEXTURE_2D,
                               level,
@@ -282,7 +282,21 @@ void Texture2DGL::updateCompressedSubData(std::size_t xoffset, std::size_t yoffs
 void Texture2DGL::apply(int index) const
 {
     glActiveTexture(GL_TEXTURE0 + index);
-    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+    glBindTexture(GL_TEXTURE_2D, index < CC_META_TEXTURES ? _textureInfo.textures[index] : 0);
+}
+
+GLuint Texture2DGL::ensure(int index)
+{
+    if (index >= CC_META_TEXTURES) return 0;
+    glActiveTexture(GL_TEXTURE0 + index);
+    auto& texID = _textureInfo.textures[index];
+    if (!texID)
+        glGenTextures(1, &texID);
+    glBindTexture(GL_TEXTURE_2D, texID);
+
+    if (_maxTextureIndex < index) _maxTextureIndex = index;
+
+    return texID;
 }
 
 void Texture2DGL::generateMipmaps()
@@ -293,7 +307,7 @@ void Texture2DGL::generateMipmaps()
     if(!_hasMipmaps)
     {
         _hasMipmaps = true;
-        glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+        glBindTexture(GL_TEXTURE_2D, _textureInfo.textures[0]);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
 }
@@ -306,7 +320,7 @@ void Texture2DGL::getBytes(std::size_t x, std::size_t y, std::size_t width, std:
     GLuint frameBuffer = 0;
     glGenFramebuffers(1, &frameBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureInfo.texture, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureInfo.textures[0], 0);
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
     auto bytePerRow = width * _bitsPerElement / 8;
@@ -340,7 +354,7 @@ TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
     assert(_width == _height);
     _textureType = TextureType::TEXTURE_CUBE;
     UtilsGL::toGLTypes(_textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
-    glGenTextures(1, &_textureInfo.texture);
+    glGenTextures(1, &_textureInfo.textures[0]);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -357,7 +371,7 @@ TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
 void TextureCubeGL::setTexParameters()
 {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.textures[0]);
 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
@@ -367,41 +381,40 @@ void TextureCubeGL::setTexParameters()
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
-void TextureCubeGL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+void TextureCubeGL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor, int index)
 {
     UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
     _textureFormat = descriptor.textureFormat;
-    updateSamplerDescriptor(descriptor.samplerDescriptor);
+    updateSamplerDescriptor(descriptor.samplerDescriptor, index);
 }
 
 TextureCubeGL::~TextureCubeGL()
 {
-    if(_textureInfo.texture)
-        glDeleteTextures(1, &_textureInfo.texture);
-    _textureInfo.texture = 0;
+    _textureInfo.foreach([=](GLuint texID, int) { glDeleteTextures(1, &texID); });
+    _textureInfo.textures.fill(0);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 
-void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
+void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler, int /*index*/)
 {
     _textureInfo.applySamplerDescriptor(sampler, true, _hasMipmaps);
     setTexParameters();
 }
 
-void TextureCubeGL::apply(int index) const
+void TextureCubeGL::apply(int location) const
 {
-    glActiveTexture(GL_TEXTURE0+ index);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.textures[0]);
     CHECK_GL_ERROR_DEBUG();
 }
 
 void TextureCubeGL::updateFaceData(TextureCubeFace side, void *data)
 {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.textures[0]);
     CHECK_GL_ERROR_DEBUG();
     int i = static_cast<int>(side);
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
@@ -425,7 +438,7 @@ void TextureCubeGL::getBytes(std::size_t x, std::size_t y, std::size_t width, st
     GLuint frameBuffer = 0;
     glGenFramebuffers(1, &frameBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP, _textureInfo.texture, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP, _textureInfo.textures[0], 0);
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
     auto bytePerRow = width * _bitsPerElement / 8;
@@ -461,7 +474,7 @@ void TextureCubeGL::generateMipmaps()
     if(!_hasMipmaps)
     {
         _hasMipmaps = true;
-        glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.textures[0]);
         glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
     }
 }

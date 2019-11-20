@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "2d/CCComponent.h"
 #include "renderer/CCMaterial.h"
 #include "math/TransformUtils.h"
+#include "renderer/backend/ProgramStateRegistry.h"
 
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -2179,6 +2180,20 @@ void Node::setCameraMask(unsigned short mask, bool applyChildren)
 int Node::getAttachedNodeCount()
 {
     return __attachedNodeCount;
+}
+
+void Node::setProgramStateWithRegistry(backend::ProgramType programType, Texture2D* texture)
+{
+    auto n = texture ? texture->getBackendTexture()->getCount() : 1;
+    setProgramState(backend::ProgramStateRegistry::getInstance()->getProgramState(programType, n));
+}
+
+void Node::updateProgramStateTexture(Texture2D* texture)
+{
+    if (texture == nullptr || texture->getBackendTexture() == nullptr || _programState == nullptr)
+        return;
+
+    _programState->setTexture(texture->getBackendTexture());
 }
 
 void Node::setProgramState(backend::ProgramState* programState)

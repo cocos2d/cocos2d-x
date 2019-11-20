@@ -102,42 +102,45 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
     
     _textureAtlas->initWithTexture(tex, capacity);
 
+    setProgramStateWithRegistry(backend::ProgramType::POSITION_TEXTURE_COLOR, tex);
+    updateProgramStateTexture(_textureAtlas->getTexture());
+
     updateBlendFunc();
 
     _children.reserve(capacity);
 
     _descendants.reserve(capacity);
-    
-    updateShaders(positionTextureColor_vert, positionTextureColor_frag);
-    
+
     return true;
 }
 
-void SpriteBatchNode::updateShaders(const std::string &vertexShader, const std::string &fragmentShader)
+void SpriteBatchNode::setProgramState(backend::ProgramState* programState)
 {
     auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
-    auto* program = backend::Device::getInstance()->newProgram(vertexShader, fragmentShader);
-    CC_SAFE_RELEASE(_programState);
-    _programState = new (std::nothrow) backend::ProgramState(program);
+    if (_programState != programState)
+    {
+        CC_SAFE_RELEASE(_programState);
+        _programState = programState;
+        CC_SAFE_RETAIN(programState);
+    }
     pipelineDescriptor.programState = _programState;
     _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
-    CC_SAFE_RELEASE(program);
-    
+
     auto vertexLayout = _programState->getVertexLayout();
     const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");
-    if(iter != attributeInfo.end())
+    if (iter != attributeInfo.end())
     {
         vertexLayout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_texCoord");
-    if(iter != attributeInfo.end())
+    if (iter != attributeInfo.end())
     {
         vertexLayout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
     }
     iter = attributeInfo.find("a_color");
-    if(iter != attributeInfo.end())
+    if (iter != attributeInfo.end())
     {
         vertexLayout->setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
     }
@@ -421,7 +424,7 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
     const auto& matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto programState = _quadCommand.getPipelineDescriptor().programState;
     programState->setUniform(_mvpMatrixLocaiton, matrixProjection.m, sizeof(matrixProjection.m));
-    programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
+    // programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
 
     _quadCommand.init(_globalZOrder, _textureAtlas->getTexture(), _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads(), transform, flags);
     renderer->addCommand(&_quadCommand);
@@ -681,6 +684,8 @@ Texture2D* SpriteBatchNode::getTexture() const
 void SpriteBatchNode::setTexture(Texture2D *texture)
 {
     _textureAtlas->setTexture(texture);
+
+    updateProgramStateTexture(texture);
     updateBlendFunc();
 }
 

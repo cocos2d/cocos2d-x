@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 #include "renderer/CCTexture2D.h"
+#include "base/CCData.h"
 
 // premultiply alpha, or the effect will be wrong when using other pixel formats in Texture2D,
 // such as RGB888, RGB5A1
@@ -125,14 +126,14 @@ public:
     * @js NA
     * @lua NA
     */
-    bool initWithImageData(const unsigned char * data, ssize_t dataLen);
+    bool initWithImageData(const unsigned char * data, ssize_t dataLen, bool ownData = false);
 
     // @warning kFmtRawData only support RGBA8888
     bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
     // Getters
-    unsigned char *   getData()               { return _data; }
-    ssize_t           getDataLen()            { return _dataLen; }
+    unsigned char *   getData()               { return _data + _offset; }
+    ssize_t           getDataLen()            { return _dataLen - _offset; }
     Format            getFileType()           { return _fileType; }
     backend::PixelFormat getPixelFormat()  { return _pixelFormat; }
     int               getWidth()              { return _width; }
@@ -163,7 +164,7 @@ protected:
     bool initWithPVRData(const unsigned char * data, ssize_t dataLen);
     bool initWithPVRv2Data(const unsigned char * data, ssize_t dataLen);
     bool initWithPVRv3Data(const unsigned char * data, ssize_t dataLen);
-    bool initWithETCData(const unsigned char * data, ssize_t dataLen);
+    bool initWithETCData(const unsigned char* data, ssize_t dataLen, bool ownData);
     bool initWithS3TCData(const unsigned char * data, ssize_t dataLen);
     bool initWithATITCData(const unsigned char *data, ssize_t dataLen);
     typedef struct sImageTGA tImageTGA;
@@ -186,6 +187,7 @@ protected:
     static bool PNG_PREMULTIPLIED_ALPHA_ENABLED;
     unsigned char *_data;
     ssize_t _dataLen;
+    ssize_t _offset;
     int _width;
     int _height;
     bool _unpack;

@@ -114,8 +114,6 @@ protected:
     /**Model view matrix when rendering the triangles.*/
     Mat4 _mv;
 
-    uint8_t _alphaTextureID = 0; // ANDROID ETC1 ALPHA supports.
-
     // Cached value to determine to generate material id or not.
     BlendFunc _blendType = BlendFunc::DISABLE;
     backend::Program* _program = nullptr;

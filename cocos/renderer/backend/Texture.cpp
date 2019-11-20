@@ -107,7 +107,7 @@ TextureBackend::TextureBackend(const TextureDescriptor& descriptor)
 TextureBackend::~TextureBackend()
 {}
 
-void TextureBackend::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+void TextureBackend::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor, int /*index*/)
 {
     _bitsPerElement = computeBitsPerElement(descriptor.textureFormat);
     _textureType = descriptor.textureType;

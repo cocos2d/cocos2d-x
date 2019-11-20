@@ -137,7 +137,6 @@ Texture2D::Texture2D()
 , _antialiasEnabled(true)
 , _ninePatchInfo(nullptr)
 , _valid(true)
-, _alphaTexture(nullptr)
 {
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.textureFormat = PixelFormat::NONE;
@@ -149,8 +148,6 @@ Texture2D::~Texture2D()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTextureMgr::removeTexture(this);
 #endif
-    CC_SAFE_RELEASE_NULL(_alphaTexture); // ETC1 ALPHA support.
-
     CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
 
     CC_SAFE_DELETE(_ninePatchInfo);
@@ -177,11 +174,6 @@ int Texture2D::getPixelsHigh() const
 backend::TextureBackend* Texture2D::getBackendTexture() const
 {
     return _texture;
-}
-
-bool Texture2D::getAlphaTextureName() const
-{
-    return _alphaTexture == nullptr ? 0 : _alphaTexture->getBackendTexture();
 }
 
 Size Texture2D::getContentSize() const
@@ -237,6 +229,128 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, backend::PixelFo
 bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha)
 {
     //the pixelFormat must be a certain value 
+    updateWithMipmaps(mipmaps, mipmapsNum, pixelFormat, renderFormat, pixelsWide, pixelsHigh, preMultipliedAlpha);
+    
+    return true;
+}
+
+bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int index)
+{
+    if (image == nullptr)
+    {
+        CCLOG("cocos2d: Texture2D. Can't create Texture. UIImage is nil");
+        return false;
+    }
+
+    if(this->_filePath.empty()) this->_filePath = image->getFilePath();
+
+    int imageWidth = image->getWidth();
+    int imageHeight = image->getHeight();
+
+    Configuration* conf = Configuration::getInstance();
+
+    int maxTextureSize = conf->getMaxTextureSize();
+    if (imageWidth > maxTextureSize || imageHeight > maxTextureSize)
+    {
+        CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
+        return false;
+    }
+
+    unsigned char* tempData = image->getData();
+    Size             imageSize = Size((float)imageWidth, (float)imageHeight);
+    backend::PixelFormat      renderFormat = ((PixelFormat::NONE == format) || (PixelFormat::AUTO == format)) ? image->getPixelFormat() : format;
+    backend::PixelFormat      imagePixelFormat = image->getPixelFormat();
+    size_t           tempDataLen = image->getDataLen();
+
+
+#ifdef CC_USE_METAL
+    //compressed format does not need conversion
+    switch (imagePixelFormat) {
+    case PixelFormat::PVRTC4A:
+    case PixelFormat::PVRTC4:
+    case PixelFormat::PVRTC2A:
+    case PixelFormat::PVRTC2:
+    case PixelFormat::A8:
+        renderFormat = imagePixelFormat;
+    default:
+        break;
+    }
+    //override renderFormat, since some render format is not supported by metal
+    switch (renderFormat)
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS && !TARGET_OS_SIMULATOR)
+        //packed 16 bits pixels only available on iOS
+    case PixelFormat::RGB565:
+        renderFormat = PixelFormat::MTL_B5G6R5;
+        break;
+    case PixelFormat::RGBA4444:
+        renderFormat = PixelFormat::MTL_ABGR4;
+        break;
+    case PixelFormat::RGB5A1:
+        renderFormat = PixelFormat::MTL_BGR5A1;
+        break;
+#else
+    case PixelFormat::RGB565:
+    case PixelFormat::RGB5A1:
+    case PixelFormat::RGBA4444:
+#endif
+    case PixelFormat::I8:
+    case PixelFormat::AI88:
+        //TODO: conversion RGBA8888 -> I8(AI88) -> RGBA8888 may happends
+        renderFormat = PixelFormat::RGBA8888;
+        break;
+    default:
+        break;
+    }
+#endif
+
+    if (image->getNumberOfMipmaps() > 1)
+    {
+        if (renderFormat != image->getPixelFormat())
+        {
+            CCLOG("cocos2d: WARNING: This image has more than 1 mipmaps and we will not convert the data format");
+        }
+
+        //pixel format of data is not converted, renderFormat can be different from pixelFormat
+        //it will be done later
+        updateWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getPixelFormat(), renderFormat, imageWidth, imageHeight, image->hasPremultipliedAlpha(), index);
+
+        return true;
+    }
+    else if (image->isCompressed())
+    {
+        if (renderFormat != image->getPixelFormat())
+        {
+            CCLOG("cocos2d: WARNING: This image is compressed and we can't convert it for now");
+        }
+
+        updateWithData(tempData, tempDataLen, image->getPixelFormat(), image->getPixelFormat(), imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha(), index);
+
+        return true;
+    }
+    else
+    {
+        //after conversion, renderFormat == pixelFormat of data
+        updateWithData(tempData, tempDataLen, imagePixelFormat, renderFormat, imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha(), index);
+
+        return true;
+    }
+}
+
+bool Texture2D::updateWithData(const void* data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/, bool preMultipliedAlpha, int index)
+{
+    CCASSERT(dataLen > 0 && pixelsWide > 0 && pixelsHigh > 0, "Invalid size");
+
+    //if data has no mipmaps, we will consider it has only one mipmap
+    MipmapInfo mipmap;
+    mipmap.address = (unsigned char*)data;
+    mipmap.len = static_cast<int>(dataLen);
+    return updateWithMipmaps(&mipmap, 1, pixelFormat, renderFormat, pixelsWide, pixelsHigh, preMultipliedAlpha, index);
+}
+
+bool Texture2D::updateWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha, int index)
+{
+    //the pixelFormat must be a certain value 
     CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
     CCASSERT(pixelsWide > 0 && pixelsHigh > 0, "Invalid size");
 
@@ -271,7 +385,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::Pi
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTextureMgr::findVolotileTexture(this);
 #endif
-    
+
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.width = pixelsWide;
     textureDescriptor.height = pixelsHigh;
@@ -290,70 +404,70 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::Pi
     backend::PixelFormat oriPixelFormat = pixelFormat;
     for (int i = 0; i < mipmapsNum; ++i)
     {
-        unsigned char *data = mipmaps[i].address;
+        unsigned char* data = mipmaps[i].address;
         size_t dataLen = mipmaps[i].len;
-        unsigned char *outData = data;
+        unsigned char* outData = data;
         size_t outDataLen = dataLen;
 
-        if(renderFormat != oriPixelFormat && !info.compressed) //need conversion
+        if (renderFormat != oriPixelFormat && !info.compressed) //need conversion
         {
             auto convertedFormat = backend::PixelFormatUtils::convertDataToFormat(data, dataLen, oriPixelFormat, renderFormat, &outData, &outDataLen);
 #ifdef CC_USE_METAL
             CCASSERT(convertedFormat == renderFormat, "PixelFormat convert failed!");
 #endif
-            if(convertedFormat == renderFormat) pixelFormat = renderFormat;
+            if (convertedFormat == renderFormat) pixelFormat = renderFormat;
         }
-       
+
         textureDescriptor.textureFormat = pixelFormat;
         CCASSERT(textureDescriptor.textureFormat != backend::PixelFormat::NONE, "PixelFormat should not be NONE");
 
-        if(_texture->getTextureFormat() != textureDescriptor.textureFormat)
-            _texture->updateTextureDescriptor(textureDescriptor);
+        if (_texture->getTextureFormat() != textureDescriptor.textureFormat)
+            _texture->updateTextureDescriptor(textureDescriptor, index);
 
-        if(info.compressed)
+        if (info.compressed)
         {
             _texture->updateCompressedData(data, width, height, dataLen, i);
         }
         else
         {
-            _texture->updateData(outData, width, height, i);
+            _texture->updateData(outData, width, height, i, index);
         }
 
-        if(outData && outData != data && outDataLen > 0)
+        if (outData && outData != data && outDataLen > 0)
         {
             free(outData);
             outData = nullptr;
             outDataLen = 0;
         }
-        
-        if (i > 0 && (width != height || ccNextPOT(width) != width ))
+
+        if (i > 0 && (width != height || ccNextPOT(width) != width))
         {
             CCLOG("cocos2d: Texture2D. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%d != height=%d", i, width, height);
         }
-        
+
         width = MAX(width >> 1, 1);
         height = MAX(height >> 1, 1);
     }
-    
-    _contentSize = Size((float)pixelsWide, (float)pixelsHigh);
-    _pixelsWide = pixelsWide;
-    _pixelsHigh = pixelsHigh;
-    _pixelFormat = pixelFormat;
-    _maxS = 1;
-    _maxT = 1;
 
-    _hasPremultipliedAlpha = preMultipliedAlpha;
-    _hasMipmaps = mipmapsNum > 1;
+    if (index == 0) {
+        _contentSize = Size((float)pixelsWide, (float)pixelsHigh);
+        _pixelsWide = pixelsWide;
+        _pixelsHigh = pixelsHigh;
+        _pixelFormat = pixelFormat;
+        _maxS = 1;
+        _maxT = 1;
 
-    return true;
+        _hasPremultipliedAlpha = preMultipliedAlpha;
+        _hasMipmaps = mipmapsNum > 1;
+    }
 }
 
-bool Texture2D::updateWithData(void *data,int offsetX,int offsetY,int width,int height)
+bool Texture2D::updateWithSubData(void *data,int offsetX,int offsetY,int width,int height, int index)
 {
     if (_texture && width > 0 && height > 0)
     {
         uint8_t* textureData = static_cast<uint8_t*>(data);
-        _texture->updateSubData(offsetX, offsetY, width, height, 0, textureData);
+        _texture->updateSubData(offsetX, offsetY, width, height, 0, textureData, index);
         return true;
     }
     return false;
@@ -373,97 +487,9 @@ bool Texture2D::initWithImage(Image *image, backend::PixelFormat format)
         return false;
     }
 
-    int imageWidth = image->getWidth();
-    int imageHeight = image->getHeight();
     this->_filePath = image->getFilePath();
-    Configuration *conf = Configuration::getInstance();
 
-    int maxTextureSize = conf->getMaxTextureSize();
-    if (imageWidth > maxTextureSize || imageHeight > maxTextureSize)
-    {
-        CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
-        return false;
-    }
-
-    unsigned char*   tempData = image->getData();
-    Size             imageSize = Size((float)imageWidth, (float)imageHeight);
-    backend::PixelFormat      renderFormat = ((PixelFormat::NONE == format) || (PixelFormat::AUTO == format)) ? image->getPixelFormat() : format;
-    backend::PixelFormat      imagePixelFormat = image->getPixelFormat();
-    size_t           tempDataLen = image->getDataLen();
-
-    
-#ifdef CC_USE_METAL
-    //compressed format does not need conversion
-    switch (imagePixelFormat) {
-        case PixelFormat::PVRTC4A:
-        case PixelFormat::PVRTC4:
-        case PixelFormat::PVRTC2A:
-        case PixelFormat::PVRTC2:
-        case PixelFormat::A8:
-            renderFormat = imagePixelFormat;
-        default:
-            break;
-    }
-    //override renderFormat, since some render format is not supported by metal
-    switch (renderFormat)
-    {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS && !TARGET_OS_SIMULATOR)
-        //packed 16 bits pixels only available on iOS
-        case PixelFormat::RGB565:
-            renderFormat = PixelFormat::MTL_B5G6R5;
-            break;
-        case PixelFormat::RGBA4444:
-            renderFormat = PixelFormat::MTL_ABGR4;
-            break;
-        case PixelFormat::RGB5A1:
-            renderFormat = PixelFormat::MTL_BGR5A1;
-            break;
-#else
-        case PixelFormat::RGB565:
-        case PixelFormat::RGB5A1:
-        case PixelFormat::RGBA4444:
-#endif
-        case PixelFormat::I8:
-        case PixelFormat::AI88:
-            //TODO: conversion RGBA8888 -> I8(AI88) -> RGBA8888 may happends
-            renderFormat = PixelFormat::RGBA8888;
-            break;
-        default:
-            break;
-    }
-#endif
-
-    if (image->getNumberOfMipmaps() > 1)
-    {
-        if (renderFormat != image->getPixelFormat())
-        {
-            CCLOG("cocos2d: WARNING: This image has more than 1 mipmaps and we will not convert the data format");
-        }
-
-        //pixel format of data is not converted, renderFormat can be different from pixelFormat
-        //it will be done later
-        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getPixelFormat(), renderFormat, imageWidth, imageHeight, image->hasPremultipliedAlpha());
-
-        return true;
-    }
-    else if (image->isCompressed())
-    {
-        if (renderFormat != image->getPixelFormat())
-        {
-            CCLOG("cocos2d: WARNING: This image is compressed and we can't convert it for now");
-        }
-        
-        initWithData(tempData, tempDataLen, image->getPixelFormat(), imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha());
-        
-        return true;
-    }
-    else
-    {
-        //after conversion, renderFormat == pixelFormat of data
-        initWithData(tempData, tempDataLen, imagePixelFormat, renderFormat, imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha());
-        
-        return true;
-    }
+    return updateWithImage(image, format);
 }
 
 // implementation Texture2D (Text)
@@ -790,22 +816,6 @@ void Texture2D::removeSpriteFrameCapInset(SpriteFrame* spriteFrame)
             capInsetMap.erase(spriteFrame);
         }
     }
-}
-
-/// halx99 spec, ANDROID ETC1 ALPHA supports.
-void Texture2D::setAlphaTexture(Texture2D* alphaTexture)
-{
-    if (alphaTexture != nullptr) {
-        alphaTexture->retain();
-        CC_SAFE_RELEASE(_alphaTexture);
-        _alphaTexture = alphaTexture;
-        _hasPremultipliedAlpha = true; // PremultipliedAlpha should be true.
-    }
-}
-
-Texture2D* Texture2D::getAlphaTexture() const
-{
-    return _alphaTexture;
 }
 
 void Texture2D::setTexParameters(const Texture2D::TexParams &desc)

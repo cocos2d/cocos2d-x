@@ -357,3 +357,7 @@ THE SOFTWARE.
 #ifndef CC_STRIP_FPS
 #define CC_STRIP_FPS 0
 #endif
+
+#ifndef CC_META_TEXTURES
+#define CC_META_TEXTURES 2
+#endif

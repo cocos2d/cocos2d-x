@@ -384,14 +384,15 @@ void Sprite::updateShaders(const char* vert, const char* frag)
 
 void Sprite::setProgramState(backend::ProgramType type)
 {
-    if(_programState != nullptr &&
+    setProgramStateWithRegistry(type, _texture);
+    /*if(_programState != nullptr &&
        _programState->getProgram()->getProgramType() == type)
         return;
     
     auto* program = backend::Program::getBuiltinProgram(type);
     auto programState = new (std::nothrow) backend::ProgramState(program);
     setProgramState(programState);
-    CC_SAFE_RELEASE_NULL(programState);
+    CC_SAFE_RELEASE_NULL(programState);*/
 }
 
 void Sprite::setProgramState(backend::ProgramState *programState)
@@ -408,17 +409,16 @@ void Sprite::setProgramState(backend::ProgramState *programState)
 
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::MVP_MATRIX);
     _textureLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::TEXTURE);
-    _alphaTextureLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::TEXTURE1);
 
     setVertexLayout();
-    updateProgramStateTexture();
+    updateProgramStateTexture(_texture);
     setMVPMatrixUniform();
 }
 
 void Sprite::setTexture(Texture2D *texture)
 {
-    auto isETC1 = texture && texture->getAlphaTextureName();
-    setProgramState((isETC1) ? backend::ProgramType::ETC1 : backend::ProgramType::POSITION_TEXTURE_COLOR);
+    setProgramStateWithRegistry(backend::ProgramType::POSITION_TEXTURE_COLOR, texture);
+
     CCASSERT(! _batchNode || (texture &&  texture == _batchNode->getTexture()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
@@ -450,21 +450,7 @@ void Sprite::setTexture(Texture2D *texture)
         }
         updateBlendFunc();
     }
-    updateProgramStateTexture();
-}
-
-void Sprite::updateProgramStateTexture()
-{
-    if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
-        return;
-
-    auto programState = _trianglesCommand.getPipelineDescriptor().programState;
-    programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
-    auto alphaTexture = _texture->getAlphaTexture();
-    if(alphaTexture && alphaTexture->getBackendTexture())
-    {
-        programState->setTexture(_alphaTextureLocation, 1, alphaTexture->getBackendTexture());
-    }
+    updateProgramStateTexture(_texture);
 }
 
 Texture2D* Sprite::getTexture() const

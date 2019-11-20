@@ -278,7 +278,6 @@ protected:
     V3F_C4F _vertexData[4];
     
     backend::UniformLocation _mvpMatrixLocation;
-    backend::ProgramState* _programState = nullptr;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 

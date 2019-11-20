@@ -24,6 +24,7 @@
  
 #pragma once
 
+#include <array>
 #include "../Texture.h"
 #include "platform/CCGL.h"
 #include "base/CCEventListenerCustom.h"
@@ -36,6 +37,17 @@ CC_BACKEND_BEGIN
 struct TextureInfoGL
 {
     void applySamplerDescriptor(const SamplerDescriptor &desc, bool isPow2, bool hasMipmaps);
+    TextureInfoGL() {
+        textures.fill(0);
+    }
+
+    template<typename _Fty>
+    void foreach(const _Fty& cb) const {
+        GLuint texID;
+        int idx = 0;
+        while (texID = textures[idx])
+            cb(texID, idx++);
+    }
 
     GLint magFilterGL = GL_LINEAR;
     GLint minFilterGL = GL_LINEAR;
@@ -47,7 +59,7 @@ struct TextureInfoGL
     GLenum format = GL_RGBA;
     GLenum type = GL_UNSIGNED_BYTE;
 
-    GLuint texture = 0;
+    std::array<GLuint, CC_META_TEXTURES + 1> textures;
 };
 
 /**
@@ -74,7 +86,7 @@ public:
      * @param height Specifies the height of the texture image.
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      */
-    virtual void updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level) override;
+    virtual void updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level, int index = 0) override;
     
     /**
      * Update a two-dimensional texture image in a compressed format
@@ -95,7 +107,7 @@ public:
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      * @param data Specifies a pointer to the image data in memory.
      */
-    virtual void updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data) override;
+    virtual void updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data, int index = 0) override;
     
     /**
      * Update a two-dimensional texture subimage in a compressed format
@@ -113,7 +125,7 @@ public:
      * Update sampler
      * @param sampler Specifies the sampler descriptor.
      */
-    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
+    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler, int index = 0)  override;
     
     /**
      * Read a block of pixels from the drawable texture
@@ -133,13 +145,13 @@ public:
      * Update texture description.
      * @param descriptor Specifies texture and sampler descriptor.
      */
-    virtual void updateTextureDescriptor(const TextureDescriptor& descriptor) override;
+    virtual void updateTextureDescriptor(const TextureDescriptor& descriptor, int index = 0) override;
 
     /**
      * Get texture object.
      * @return Texture object.
      */
-    inline GLuint getHandler() const { return _textureInfo.texture; }
+    inline GLuint getHandler() const { return _textureInfo.textures[0]; }
 
     /**
      * Set texture to pipeline
@@ -147,10 +159,15 @@ public:
      */
     void apply(int index) const;
 
+    GLuint ensure(int index);
+
+    int getCount() const override { return _maxTextureIndex + 1; }
+
 private:
     void initWithZeros();
 
     TextureInfoGL _textureInfo;
+    int _maxTextureIndex = 0;
     EventListener* _backToForegroundListener = nullptr;
 };
 
@@ -170,7 +187,7 @@ public:
      * Update sampler
      * @param sampler Specifies the sampler descriptor.
      */
-    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
+    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler, int index = 0) override;
     
     /**
      * Update texutre cube data in give slice side.
@@ -195,19 +212,21 @@ public:
      * Update texture description.
      * @param descriptor Specifies texture and sampler descriptor.
      */
-    virtual void updateTextureDescriptor(const TextureDescriptor& descriptor) override ;
+    virtual void updateTextureDescriptor(const TextureDescriptor& descriptor, int index = 0) override ;
 
     /**
      * Get texture object.
      * @return Texture object.
      */
-    inline GLuint getHandler() const { return _textureInfo.texture; }
+    inline GLuint getHandler() const { return _textureInfo.textures[0]; }
 
     /**
      * Set texture to pipeline
      * @param index Specifies the texture image unit selector.
      */
-    void apply(int index) const;
+    void apply(int location) const;
+
+    int getCount() const { return 1; }
 
 private:
     void setTexParameters();

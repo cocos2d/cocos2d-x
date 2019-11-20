@@ -118,7 +118,8 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
     }
     
     _textureAtlas->initWithTexture(texture, itemsToRender);
-
+    
+    updateProgramStateTexture(texture);
     this->updateBlendFunc();
     this->updateOpacityModifyRGB();
 
@@ -157,8 +158,7 @@ void AtlasNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         return;
     
     auto programState = _quadCommand.getPipelineDescriptor().programState;
-    programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
-    
+
     const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     programState->setUniform(_mvpMatrixLocation, projectionMat.m, sizeof(projectionMat.m));
     
@@ -251,6 +251,8 @@ void AtlasNode::updateBlendFunc()
 void AtlasNode::setTexture(Texture2D *texture)
 {
     _textureAtlas->setTexture(texture);
+    updateProgramStateTexture(texture);
+
     this->updateBlendFunc();
     this->updateOpacityModifyRGB();
 }

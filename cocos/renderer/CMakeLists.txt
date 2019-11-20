@@ -36,6 +36,7 @@ set(COCOS_RENDERER_HEADER
     renderer/backend/Types.h
     renderer/backend/VertexLayout.h
     renderer/backend/ProgramState.h
+    renderer/backend/ProgramStateRegistry.h
     renderer/backend/ShaderCache.h
     renderer/backend/DeviceInfo.h
     )
@@ -70,6 +71,7 @@ set(COCOS_RENDERER_SRC
     renderer/backend/ProgramCache.cpp
     renderer/backend/Program.cpp
     renderer/backend/ProgramState.cpp
+    renderer/backend/ProgramStateRegistry.cpp
     renderer/backend/ShaderCache.cpp
     renderer/backend/RenderPassDescriptor.cpp
     )

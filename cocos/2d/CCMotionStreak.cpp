@@ -40,32 +40,6 @@ MotionStreak::MotionStreak()
 {
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
-
-    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
-    _programState = new (std::nothrow) backend::ProgramState(program);
-    pipelineDescriptor.programState = _programState;
-    _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
-    _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
-    
-    auto vertexLayout = _programState->getVertexLayout();
-    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
-    auto iter = attributeInfo.find("a_position");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
-    }
-    iter = attributeInfo.find("a_texCoord");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, 2 * sizeof(float), false);
-    }
-    iter = attributeInfo.find("a_color");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout->setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, 4 * sizeof(float), true);
-    }
-    vertexLayout->setLayout(4 * sizeof(float) + 4 * sizeof(uint8_t));
 }
 
 MotionStreak::~MotionStreak()
@@ -236,7 +210,47 @@ void MotionStreak::setTexture(Texture2D *texture)
         CC_SAFE_RETAIN(texture);
         CC_SAFE_RELEASE(_texture);
         _texture = texture;
+
+        setProgramStateWithRegistry(backend::ProgramType::POSITION_TEXTURE_COLOR, _texture);
+
+        if (_texture)
+            _programState->setTexture(_texture->getBackendTexture());
     }
+}
+
+void MotionStreak::setProgramState(backend::ProgramState* programState)
+{
+    CCASSERT(programState, "argument should not be nullptr");
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    if (_programState != programState)
+    {
+        CC_SAFE_RELEASE(_programState);
+        _programState = programState;
+        CC_SAFE_RETAIN(programState);
+    }
+    pipelineDescriptor.programState = _programState;
+
+    _mvpMatrixLocaiton = _programState->getUniformLocation("u_MVPMatrix");
+    _textureLocation = _programState->getUniformLocation("u_texture");
+
+    auto vertexLayout = _programState->getVertexLayout();
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if (iter != attributeInfo.end())
+    {
+        vertexLayout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+    }
+    iter = attributeInfo.find("a_texCoord");
+    if (iter != attributeInfo.end())
+    {
+        vertexLayout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, 2 * sizeof(float), false);
+    }
+    iter = attributeInfo.find("a_color");
+    if (iter != attributeInfo.end())
+    {
+        vertexLayout->setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, 4 * sizeof(float), true);
+    }
+    vertexLayout->setLayout(4 * sizeof(float) + 4 * sizeof(uint8_t));
 }
 
 void MotionStreak::setBlendFunc(const BlendFunc &blendFunc)
@@ -398,7 +412,7 @@ void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flag
     renderer->addCommand(&_customCommand);
 
     auto programState = _customCommand.getPipelineDescriptor().programState;
-    programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
+    // programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
 
     const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     Mat4 finalMat = projectionMat * transform;

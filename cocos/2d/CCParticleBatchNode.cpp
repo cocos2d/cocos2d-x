@@ -441,7 +441,7 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_
     Mat4 finalMat = projectionMat * transform;
     auto programState = _customCommand.getPipelineDescriptor().programState;
     programState->setUniform(_mvpMatrixLocaiton, finalMat.m, sizeof(finalMat.m));
-    programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
+    // programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
 
     if (_textureAtlas->isDirty())
     {
@@ -531,11 +531,14 @@ void ParticleBatchNode::updateBlendFunc()
 void ParticleBatchNode::setTexture(Texture2D* texture)
 {
     _textureAtlas->setTexture(texture);
-
-    // If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-    if( texture && ! texture->hasPremultipliedAlpha() && ( _blendFunc.src == CC_BLEND_SRC && _blendFunc.dst == CC_BLEND_DST ) )
-    {
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    if (texture) {
+        auto programState = _customCommand.getPipelineDescriptor().programState;
+        programState->setTexture(_textureAtlas->getTexture()->getBackendTexture());
+        // If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
+        if (!texture->hasPremultipliedAlpha() && (_blendFunc.src == CC_BLEND_SRC && _blendFunc.dst == CC_BLEND_DST))
+        {
+            _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        }
     }
 }
 

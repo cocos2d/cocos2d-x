@@ -148,6 +148,14 @@ public:
      * @param slot Specifies texture slot selector.
      * @param texture Specifies a pointer to backend texture.
      */
+    void setTexture(backend::TextureBackend* texture);
+
+    /**
+     * Set texture.
+     * @param uniformLocation Specifies texture location.
+     * @param slot Specifies texture slot selector.
+     * @param texture Specifies a pointer to backend texture.
+     */
     void setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::TextureBackend* texture);
 
     /**

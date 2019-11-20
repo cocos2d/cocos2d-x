@@ -381,6 +381,14 @@ void ProgramState::setFragmentUniform(int location, const void* data, std::size_
 #endif
 }
 
+void ProgramState::setTexture(backend::TextureBackend* texture)
+{
+    for (int index = 0; index < texture->getCount() && index < CC_META_TEXTURES; ++index) {
+        auto location = getUniformLocation((backend::Uniform)(backend::Uniform::TEXTURE + index));
+        setTexture(location, index, texture);
+    }
+}
+
 void ProgramState::setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::TextureBackend* texture)
 {
     switch (uniformLocation.shaderStage)

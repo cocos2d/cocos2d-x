@@ -336,7 +336,6 @@ protected:
 
     BlendFunc   _blendFunc;
     
-    backend::ProgramState* _programState = nullptr;
     backend::ProgramState* _programStatePoint = nullptr;
     backend::ProgramState* _programStateLine = nullptr;
     

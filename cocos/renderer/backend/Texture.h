@@ -60,7 +60,7 @@ public:
      * Update sampler
      * @param sampler Specifies the sampler descriptor.
      */
-    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
+    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler, int index = 0) = 0;
     
     /**
      * Read a block of pixels from the drawable texture
@@ -78,7 +78,7 @@ public:
      * Update texture description.
      * @param descriptor Specifies texture and sampler descriptor.
      */
-    virtual void updateTextureDescriptor(const TextureDescriptor& descriptor);
+    virtual void updateTextureDescriptor(const TextureDescriptor& descriptor, int index = 0);
 
     /**
      * Get texture format.
@@ -103,6 +103,8 @@ public:
      * @return true if the mipmap has always generated before, otherwise false.
      */
     inline bool hasMipmaps() const { return _hasMipmaps; }
+
+    virtual int getCount() const = 0;
 
 protected:
     /**
@@ -136,7 +138,7 @@ public:
      * @param height Specifies the height of the texture image.
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      */
-    virtual void updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level) = 0;
+    virtual void updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level, int index = 0) = 0;
     
     /**
      * Update a two-dimensional texture image in a compressed format
@@ -157,7 +159,7 @@ public:
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      * @param data Specifies a pointer to the image data in memory.
      */
-    virtual void updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data) = 0;
+    virtual void updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data, int index = 0) = 0;
     
     /**
      * Update a two-dimensional texture subimage in a compressed format

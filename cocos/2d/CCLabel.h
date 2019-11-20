@@ -811,12 +811,9 @@ protected:
     
     backend::UniformLocation _mvpMatrixLocation;
     backend::UniformLocation _textureLocation;
-    backend::UniformLocation _alphaTextureLocation;
     backend::UniformLocation _textColorLocation;
     backend::UniformLocation _effectColorLocation;
     backend::UniformLocation _effectTypeLocation;
-    
-    backend::ProgramState* _programState = nullptr;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);

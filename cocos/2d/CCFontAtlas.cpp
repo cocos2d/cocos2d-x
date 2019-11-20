@@ -485,12 +485,12 @@ void FontAtlas::updateTextureContent(backend::PixelFormat format, int startY)
             _currentPageDataRGBA[i*4] = data[i*2];
             _currentPageDataRGBA[i*4+3] = data[i*2+1];
         }
-        _atlasTextures[_currentPage]->updateWithData(_currentPageDataRGBA, 0, startY, CacheTextureWidth, (int)_currentPageOrigY - startY + _currLineHeight);
+        _atlasTextures[_currentPage]->updateWithSubData(_currentPageDataRGBA, 0, startY, CacheTextureWidth, (int)_currentPageOrigY - startY + _currLineHeight);
     }
     else
     {
         data = _currentPageData + CacheTextureWidth * (int)startY;
-       _atlasTextures[_currentPage]->updateWithData(data, 0, startY, CacheTextureWidth, (int)_currentPageOrigY - startY + _currLineHeight);
+       _atlasTextures[_currentPage]->updateWithSubData(data, 0, startY, CacheTextureWidth, (int)_currentPageOrigY - startY + _currLineHeight);
     }
 }
 

@@ -32,6 +32,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "ProgramStateRegistry.h"
+
 CC_BACKEND_BEGIN
 /**
  * @addtogroup _backend

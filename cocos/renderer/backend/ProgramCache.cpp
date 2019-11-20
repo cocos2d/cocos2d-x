@@ -29,20 +29,6 @@
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
 
-namespace std
-{
-    template <>
-    struct hash<cocos2d::backend::ProgramType>
-    {
-        typedef cocos2d::backend::ProgramType argument_type;
-        typedef std::size_t result_type;
-        result_type operator()(argument_type const& v) const
-        {
-            return hash<int>()(static_cast<int>(v));
-        }
-    };
-}
-
 CC_BACKEND_BEGIN
 
 namespace
@@ -126,6 +112,16 @@ bool ProgramCache::init()
     addProgram(ProgramType::TERRAIN_3D);
     addProgram(ProgramType::PARTICLE_TEXTURE_3D);
     addProgram(ProgramType::PARTICLE_COLOR_3D);
+
+    /* FIXME: Naming style
+    ** ETC1: POSITION_TEXTURE_COLOR_ETC1
+    ** GRAY_SCALE maybe: POSITION_TEXTURE_COLOR_GRAY
+    ** ETC1_GRAY maybe: POSITION_TEXTURE_COLOR_GRAY_ETC1
+    */
+    ProgramStateRegistry::getInstance()->registerProgram(ProgramType::POSITION_TEXTURE_COLOR, 2,
+        getBuiltinProgram(ProgramType::ETC1));
+    ProgramStateRegistry::getInstance()->registerProgram(ProgramType::GRAY_SCALE, 2,
+        getBuiltinProgram(ProgramType::ETC1_GRAY));
     return true;
 }
 
@@ -298,6 +294,7 @@ void ProgramCache::removeUnusedProgram()
 
 void ProgramCache::removeAllPrograms()
 {
+    ProgramStateRegistry::getInstance()->clearPrograms();
     for (auto& program : _cachedPrograms)
     {
         program.second->release();

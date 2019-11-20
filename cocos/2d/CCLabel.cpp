@@ -48,6 +48,7 @@
 #include "2d/CCFontFNT.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
+#include "renderer/backend/ProgramStateRegistry.h"
 
 NS_CC_BEGIN
 
@@ -644,9 +645,9 @@ void Label::updateShaderProgram()
     if (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP)
     {
         auto texture = _getTexture(this);
-        if(texture && texture->getAlphaTextureName())
+        if(texture)
         {
-            programType = backend::ProgramType::ETC1;
+            programType = backend::ProgramStateRegistry::getInstance()->getProgramType(programType, texture->getBackendTexture());
         }
     }
     else
@@ -665,9 +666,9 @@ void Label::updateShaderProgram()
                 else
                 {
                     auto texture = _getTexture(this);
-                    if(texture && texture->getAlphaTextureName())
+                    if(texture)
                     {
-                        programType = backend::ProgramType::ETC1;
+                        programType = backend::ProgramStateRegistry::getInstance()->getProgramType(programType, texture->getBackendTexture());
                     }
                 }
                 break;
@@ -728,7 +729,6 @@ void Label::updateUniformLocations()
 {
     _mvpMatrixLocation      = _programState->getUniformLocation(backend::Uniform::MVP_MATRIX);
     _textureLocation        = _programState->getUniformLocation(backend::Uniform::TEXTURE);
-    _alphaTextureLocation   = _programState->getUniformLocation(backend::Uniform::TEXTURE1);
     _textColorLocation      = _programState->getUniformLocation(backend::Uniform::TEXT_COLOR);
     _effectColorLocation    = _programState->getUniformLocation(backend::Uniform::EFFECT_COLOR);
     _effectTypeLocation     = _programState->getUniformLocation(backend::Uniform::EFFECT_TYPE);
@@ -1756,12 +1756,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             auto texture = textureAtlas->getTexture();
             auto& pipelineQuad = _quadCommand.getPipelineDescriptor();
             pipelineQuad.programState->setUniform(_mvpMatrixLocation, matrixProjection.m, sizeof(matrixProjection.m));
-            pipelineQuad.programState->setTexture(_textureLocation, 0, texture->getBackendTexture());
-            auto alphaTexture = textureAtlas->getTexture()->getAlphaTexture();
-            if(alphaTexture && alphaTexture->getBackendTexture())
-            {
-                pipelineQuad.programState->setTexture(_alphaTextureLocation, 1, alphaTexture->getBackendTexture());
-            }
+            pipelineQuad.programState->setTexture(texture->getBackendTexture());
             _quadCommand.init(_globalZOrder, texture, _blendFunc, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags);
             renderer->addCommand(&_quadCommand);
         }
@@ -1796,12 +1791,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                     auto *programState = command->getPipelineDescriptor().programState;
                     Vec4 textColor(_textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
                     programState->setUniform(_textColorLocation, &textColor, sizeof(Vec4));
-                    programState->setTexture(_textureLocation, 0, textureAtlas->getTexture()->getBackendTexture());
-                    auto alphaTexture = textureAtlas->getTexture()->getAlphaTexture();
-                    if (alphaTexture && alphaTexture->getBackendTexture())
-                    {
-                        programState->setTexture(_alphaTextureLocation, 1, alphaTexture->getBackendTexture());
-                    }
+                    programState->setTexture(textureAtlas->getTexture()->getBackendTexture());
                 }
                 batch.textCommand.getPipelineDescriptor().programState->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));
                 batch.outLineCommand.getPipelineDescriptor().programState->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));

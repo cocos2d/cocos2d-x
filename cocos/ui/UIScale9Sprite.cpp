@@ -35,6 +35,7 @@
 #include "2d/CCDrawNode.h"
 #include "2d/CCCamera.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/backend/ProgramStateRegistry.h"
 
 using namespace cocos2d;
 using namespace cocos2d::ui;
@@ -304,14 +305,13 @@ void Scale9Sprite::setState(Scale9Sprite::State state)
 {
     if (_brightState != state) {
         _brightState = state;
-        auto isETC1 = getTexture() && getTexture()->getAlphaTextureName();
         switch (state)
         {
             case State::NORMAL:
-                Sprite::updateShaders(positionTextureColor_vert, (isETC1)?etc1_frag:positionTextureColor_frag);
+                Sprite::setProgramState(backend::ProgramType::POSITION_TEXTURE_COLOR);
                 break;
             case State::GRAY:
-                Sprite::updateShaders(positionTextureColor_vert, (isETC1)?etc1Gray_frag:grayScale_frag);
+                Sprite::setProgramState(backend::ProgramType::GRAY_SCALE);
             default:
                 break;
         }
