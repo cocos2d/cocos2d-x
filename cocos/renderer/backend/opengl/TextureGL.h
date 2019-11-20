@@ -224,7 +224,7 @@ public:
      * Set texture to pipeline
      * @param index Specifies the texture image unit selector.
      */
-    void apply(int location) const;
+    void apply(int index) const;
 
     int getCount() const { return 1; }
 

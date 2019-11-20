@@ -404,10 +404,10 @@ void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler, in
     setTexParameters();
 }
 
-void TextureCubeGL::apply(int location) const
+void TextureCubeGL::apply(int index) const
 {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.textures[0]);
+    glActiveTexture(GL_TEXTURE0 + index);
+    glBindTexture(GL_TEXTURE_2D, index < CC_META_TEXTURES ? _textureInfo.textures[index] : 0);
     CHECK_GL_ERROR_DEBUG();
 }
 
