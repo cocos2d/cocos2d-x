@@ -132,9 +132,7 @@ Texture2D::Texture2D()
 , _pixelsHigh(0)
 , _maxS(0.0)
 , _maxT(0.0)
-, _hasPremultipliedAlpha(false)
-, _hasMipmaps(false)
-, _antialiasEnabled(true)
+, _flagsAndFormatEXT(TextureFlag::ANTIALIAS_ENABLED)
 , _ninePatchInfo(nullptr)
 , _valid(true)
 {
@@ -212,7 +210,13 @@ void Texture2D::setMaxT(float maxT)
 
 bool Texture2D::hasPremultipliedAlpha() const
 {
-    return _hasPremultipliedAlpha;
+    return _flagsAndFormatEXT & TextureFlag::PREMULTIPLIEDALPHA;
+}
+
+void Texture2D::setPremultipliedAlpha(bool premultipliedAlpha)
+{
+    if (premultipliedAlpha) _flagsAndFormatEXT |= TextureFlag::PREMULTIPLIEDALPHA;
+    else _flagsAndFormatEXT &= ~TextureFlag::PREMULTIPLIEDALPHA;
 }
 
 bool Texture2D::initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/, bool preMultipliedAlpha)
@@ -234,7 +238,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::Pi
     return true;
 }
 
-bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int index, bool preMultipliedAlpha)
+bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int index, int formatEXT)
 {
     if (image == nullptr)
     {
@@ -330,8 +334,9 @@ bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int i
         updateWithData(tempData, tempDataLen, imagePixelFormat, renderFormat, imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha(), index);
     }
 
-    if (index > 0)
-        this->_hasPremultipliedAlpha = preMultipliedAlpha;
+    _flagsAndFormatEXT |= formatEXT;
+    if (formatEXT == TextureFormatEXT::ETC1_ALPHA)
+        setPremultipliedAlpha(true);
 
     return true;
 }
@@ -388,14 +393,15 @@ bool Texture2D::updateWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.width = pixelsWide;
     textureDescriptor.height = pixelsHigh;
-    textureDescriptor.samplerDescriptor.magFilter = (_antialiasEnabled) ? backend::SamplerFilter::LINEAR : backend::SamplerFilter::NEAREST;
+    
+    textureDescriptor.samplerDescriptor.magFilter = (_flagsAndFormatEXT & TextureFlag::ANTIALIAS_ENABLED) ? backend::SamplerFilter::LINEAR : backend::SamplerFilter::NEAREST;
     if (mipmapsNum == 1)
     {
-        textureDescriptor.samplerDescriptor.minFilter = (_antialiasEnabled) ? backend::SamplerFilter::LINEAR : backend::SamplerFilter::NEAREST;
+        textureDescriptor.samplerDescriptor.minFilter = (_flagsAndFormatEXT & TextureFlag::ANTIALIAS_ENABLED) ? backend::SamplerFilter::LINEAR : backend::SamplerFilter::NEAREST;
     }
     else
     {
-        textureDescriptor.samplerDescriptor.minFilter = (_antialiasEnabled) ? backend::SamplerFilter::LINEAR_MIPMAP_NEAREST : backend::SamplerFilter::NEAREST_MIPMAP_NEAREST;
+        textureDescriptor.samplerDescriptor.minFilter = (_flagsAndFormatEXT & TextureFlag::ANTIALIAS_ENABLED) ? backend::SamplerFilter::LINEAR_MIPMAP_NEAREST : backend::SamplerFilter::NEAREST_MIPMAP_NEAREST;
     }
 
     int width = pixelsWide;
@@ -456,8 +462,7 @@ bool Texture2D::updateWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::
         _maxS = 1;
         _maxT = 1;
 
-        _hasPremultipliedAlpha = preMultipliedAlpha;
-        _hasMipmaps = mipmapsNum > 1;
+        setPremultipliedAlpha(preMultipliedAlpha);
     }
 
     return true;
@@ -584,7 +589,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     {
         free(outTempData);
     }
-    _hasPremultipliedAlpha = hasPremultipliedAlpha;
+    setPremultipliedAlpha(hasPremultipliedAlpha);
 
     return ret;
 }
@@ -597,14 +602,15 @@ bool Texture2D::initWithBackendTexture(backend::TextureBackend *texture, bool pr
     CC_ASSERT(_texture);
     _pixelsWide = _contentSize.width = _texture->getWidth();
     _pixelsHigh = _contentSize.height = _texture->getHeight();
-    _hasPremultipliedAlpha = preMultipliedAlpha;
+    setPremultipliedAlpha(preMultipliedAlpha);
 
     return true;
 }
 
 void Texture2D::setRenderTarget(bool renderTarget)
 {
-    _isRenderTarget = renderTarget;
+    if (renderTarget) _flagsAndFormatEXT |= TextureFlag::RENDERTARGET;
+    else _flagsAndFormatEXT &= TextureFlag::RENDERTARGET;
 }
 
 bool Texture2D::hasMipmaps() const
@@ -615,12 +621,12 @@ bool Texture2D::hasMipmaps() const
 void Texture2D::setAliasTexParameters()
 {
 
-    if (! _antialiasEnabled)
+    if ((_flagsAndFormatEXT & TextureFlag::ANTIALIAS_ENABLED) == 0)
     {
         return;
     }
 
-    _antialiasEnabled = false;
+    _flagsAndFormatEXT &= ~TextureFlag::ANTIALIAS_ENABLED;
 
     backend::SamplerDescriptor descriptor(
         backend::SamplerFilter::NEAREST, //magFilter
@@ -634,11 +640,11 @@ void Texture2D::setAliasTexParameters()
 void Texture2D::setAntiAliasTexParameters()
 {
 
-    if ( _antialiasEnabled )
+    if (_flagsAndFormatEXT & TextureFlag::ANTIALIAS_ENABLED)
     {
         return;
     }
-    _antialiasEnabled = true;
+    _flagsAndFormatEXT |= TextureFlag::ANTIALIAS_ENABLED;
 
     backend::SamplerDescriptor descriptor(
         backend::SamplerFilter::LINEAR, //magFilter

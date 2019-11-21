@@ -178,7 +178,7 @@ public:
     @param width Specifies the width of the texture subimage.
     @param height Specifies the height of the texture subimage.
     */
-    bool updateWithImage(Image* image, backend::PixelFormat format, int index = 0, bool preMultipliedAlpha = false);
+    bool updateWithImage(Image* image, backend::PixelFormat format, int index = 0, int formatEXT = 0);
     bool updateWithData(const void* data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/, bool preMultipliedAlpha, int index = 0);
     bool updateWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha = false, int index = 0);
 
@@ -245,7 +245,7 @@ public:
     //TODO: minggo: is it resaonable?
     bool initWithBackendTexture(backend::TextureBackend* texture, bool preMultipliedAlpha = false);
     void setRenderTarget(bool renderTarget);
-    inline bool isRenderTarget() const { return _isRenderTarget; }
+    inline bool isRenderTarget() const { return _flagsAndFormatEXT & TextureFlag::RENDERTARGET; }
 
 
     void setTexParameters(const TexParams &params);
@@ -296,12 +296,14 @@ public:
 
     /** Whether or not the texture has their Alpha premultiplied. */
     bool hasPremultipliedAlpha() const;
+    void setPremultipliedAlpha(bool premultipliedAlpha);
 
     /** Whether or not the texture has mip maps.*/
     bool hasMipmaps() const;
 
     /** Gets the pixel format of the texture. */
     backend::PixelFormat getPixelFormat() const;
+    int getTextureFormatEXT() const { return _flagsAndFormatEXT & 0xff; }
     
     /** Gets the width of the texture in pixels. */
     int getPixelsWide() const;
@@ -375,7 +377,7 @@ private:
     void addSpriteFrameCapInset(SpriteFrame* spritframe, const Rect& capInsets);
     
     void initProgram();
-   
+
 protected:
     /** pixel format of the texture */
     backend::PixelFormat _pixelFormat;
@@ -399,15 +401,10 @@ protected:
     /** content size */
     Size _contentSize;
 
-    /** whether or not the texture has their Alpha premultiplied */
-    bool _hasPremultipliedAlpha;
-    
-    /** whether or not the texture has mip maps*/
-    bool _hasMipmaps;
+    int _flagsAndFormatEXT;
 
     static const PixelFormatInfoMap _pixelFormatInfoTables;
 
-    bool _antialiasEnabled;
     NinePatchInfo* _ninePatchInfo;
     friend class SpriteFrameCache;
     friend class TextureCache;
@@ -420,8 +417,6 @@ protected:
     backend::UniformLocation _mvpMatrixLocation;
     backend::UniformLocation _textureLocation;
     CustomCommand _customCommand;
-    
-    bool _isRenderTarget = false;
 };
 
 

@@ -348,7 +348,7 @@ void TextureCache::addImageAsyncCallBack(float /*dt*/)
                 texture->autorelease();
                 // ETC1 ALPHA supports.
                 if (asyncStruct->imageAlpha.getFileType() == Image::Format::ETC) {
-                    texture->updateWithImage(&asyncStruct->imageAlpha, Texture2D::getDefaultAlphaPixelFormat(), 1, true);
+                    texture->updateWithImage(&asyncStruct->imageAlpha, Texture2D::getDefaultAlphaPixelFormat(), 1, TextureFormatEXT::ETC1_ALPHA);
                 }
             }
             else {
@@ -421,7 +421,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
                     if (imageAlpha.initWithImageFile(alphaFullPath))
                     {   // pitfall: because we do merge etc1 alpha at shader, so must mark as _hasPremultipliedAlpha=true to makesure alpha blend works well.
                         //   the Premultiply operation can only do at shader.
-                        texture->updateWithImage(&imageAlpha, Texture2D::getDefaultAlphaPixelFormat(), 1, true);
+                        texture->updateWithImage(&imageAlpha, Texture2D::getDefaultAlphaPixelFormat(), 1, TextureFormatEXT::ETC1_ALPHA);
                     }
                 }
 

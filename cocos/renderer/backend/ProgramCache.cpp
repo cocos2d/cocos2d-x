@@ -118,9 +118,9 @@ bool ProgramCache::init()
     ** GRAY_SCALE maybe: POSITION_TEXTURE_COLOR_GRAY
     ** ETC1_GRAY maybe: POSITION_TEXTURE_COLOR_GRAY_ETC1
     */
-    ProgramStateRegistry::getInstance()->registerProgram(ProgramType::POSITION_TEXTURE_COLOR, 2,
+    ProgramStateRegistry::getInstance()->registerProgram(ProgramType::POSITION_TEXTURE_COLOR, TextureFormatEXT::ETC1_ALPHA,
         getBuiltinProgram(ProgramType::ETC1));
-    ProgramStateRegistry::getInstance()->registerProgram(ProgramType::GRAY_SCALE, 2,
+    ProgramStateRegistry::getInstance()->registerProgram(ProgramType::GRAY_SCALE, TextureFormatEXT::ETC1_ALPHA,
         getBuiltinProgram(ProgramType::ETC1_GRAY));
     return true;
 }

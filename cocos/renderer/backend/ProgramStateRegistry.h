@@ -28,13 +28,6 @@ CC_BACKEND_BEGIN
  * @{
  * #todo: Rename to ProgramStateRegistry
  */
-/*
-  Group by programType and texIndex
-  default, we register:
-    programType = positionTextureColor, texIndex = 0 ---> positionTextureColorDefault
-    programType = positionTextureColor, texIndex = 1 ---> positionTextureColorDualETC1
-
-*/
 class ProgramStateRegistry : public Ref {
 public:
     /** returns the shared instance */
@@ -44,17 +37,16 @@ public:
     static void destroyInstance();
 
     bool init();
-
-    void registerProgram(ProgramType programType, int maxCount, Program*);
     void clearPrograms();
-    ProgramState* getProgramState(ProgramType programType, int maxCount);
 
-    ProgramType getProgramType(ProgramType programType, TextureBackend* texture2d);
-    ProgramType getProgramType(ProgramType programType, int maxCount);
+    void registerProgram(ProgramType programType, int textureFormatEXT, Program*);
+
+    ProgramState* getProgramState(ProgramType programType, int textureFormatEXT);
+    ProgramType getProgramType(ProgramType programType, int textureFormatEXT);
 
 protected:
 
-    std::unordered_map<ProgramType, std::vector<Program*>> _registry;
+    std::unordered_map<uint32_t, Program*> _registry;
 };
 
 //end of _backend group

@@ -647,7 +647,7 @@ void Label::updateShaderProgram()
         auto texture = _getTexture(this);
         if(texture)
         {
-            programType = backend::ProgramStateRegistry::getInstance()->getProgramType(programType, texture->getBackendTexture());
+            programType = backend::ProgramStateRegistry::getInstance()->getProgramType(programType, texture->getTextureFormatEXT());
         }
     }
     else
@@ -668,7 +668,7 @@ void Label::updateShaderProgram()
                     auto texture = _getTexture(this);
                     if(texture)
                     {
-                        programType = backend::ProgramStateRegistry::getInstance()->getProgramType(programType, texture->getBackendTexture());
+                        programType = backend::ProgramStateRegistry::getInstance()->getProgramType(programType, texture->getTextureFormatEXT());
                     }
                 }
                 break;

@@ -31,28 +31,26 @@ bool ProgramStateRegistry::init()
     return true;
 }
 
-void ProgramStateRegistry::registerProgram(ProgramType programType, int maxCount, Program* program)
+void ProgramStateRegistry::registerProgram(ProgramType programType, int textureFormatEXT, Program* program)
 {
-    auto maxIndex = maxCount - 1;
-    auto it = this->_registry.find(programType);
-    if (it == this->_registry.end()) {
-        it = this->_registry.emplace(programType, std::vector<Program*>{}).first;
-        it->second.resize(CC_META_TEXTURES);
-    }
-    if (maxIndex < it->second.size())
-        it->second[maxIndex] = program;
+    uint32_t key = (static_cast<uint32_t>(programType) << 16) | textureFormatEXT;
+    auto it = this->_registry.find(key);
+    if (it == this->_registry.end())
+        this->_registry.emplace(key, program).first;
+    else
+        it->second = program;
 }
 
 void ProgramStateRegistry::clearPrograms() {
     this->_registry.clear();
 }
 
-ProgramState* ProgramStateRegistry::getProgramState(ProgramType programType, int maxCount)
+ProgramState* ProgramStateRegistry::getProgramState(ProgramType programType, int textureFormatEXT)
 {
-    auto maxIndex = maxCount - 1;
-    auto it = this->_registry.find(programType);
-    if (it != this->_registry.end() && it->second.size() > maxIndex) {
-        auto fallback = it->second[maxIndex];
+    uint32_t key = (static_cast<uint32_t>(programType) << 16) | textureFormatEXT;
+    auto it = this->_registry.find(key);
+    if (it != this->_registry.end()) {
+        auto fallback = it->second;
         if (fallback)
             return new(std::nothrow) ProgramState(fallback);
     }
@@ -60,17 +58,12 @@ ProgramState* ProgramStateRegistry::getProgramState(ProgramType programType, int
     return new(std::nothrow) ProgramState(Program::getBuiltinProgram((ProgramType)programType));
 }
 
-ProgramType ProgramStateRegistry::getProgramType(ProgramType programType, TextureBackend* texture2d)
+ProgramType ProgramStateRegistry::getProgramType(ProgramType programType, int textureFormatEXT)
 {
-    return this->getProgramType(programType, texture2d->getCount());
-}
-
-ProgramType ProgramStateRegistry::getProgramType(ProgramType programType, int maxCount)
-{
-    auto maxIndex = maxCount - 1;
-    auto it = this->_registry.find(programType);
-    if (it != this->_registry.end() && it->second.size() > maxIndex) {
-        auto fallback = it->second[maxIndex];
+    uint32_t key = (static_cast<uint32_t>(programType) << 16) | textureFormatEXT;
+    auto it = this->_registry.find(key);
+    if (it != this->_registry.end()) {
+        auto fallback = it->second;
         if (fallback)
             return fallback->getProgramType();
     }

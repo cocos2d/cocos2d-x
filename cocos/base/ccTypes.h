@@ -634,6 +634,24 @@ struct CC_DLL ScissorRect
     float height = 0;
 };
 
+struct TextureFormatEXT
+{
+    enum {
+        NONE = 0,
+        ETC1_ALPHA = 1,
+    };
+};
+
+struct TextureFlag
+{
+    enum {
+        NONE = 0,
+        ANTIALIAS_ENABLED = 1 << 16,
+        PREMULTIPLIEDALPHA = 1 << 17,
+        RENDERTARGET = 1 << 18,
+    };
+};
+
 enum class ClearFlag : uint8_t
 {
     NONE = 0,
