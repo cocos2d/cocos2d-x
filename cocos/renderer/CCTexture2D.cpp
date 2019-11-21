@@ -234,7 +234,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::Pi
     return true;
 }
 
-bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int index)
+bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int index, bool preMultipliedAlpha)
 {
     if (image == nullptr)
     {
@@ -314,8 +314,6 @@ bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int i
         //pixel format of data is not converted, renderFormat can be different from pixelFormat
         //it will be done later
         updateWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getPixelFormat(), renderFormat, imageWidth, imageHeight, image->hasPremultipliedAlpha(), index);
-
-        return true;
     }
     else if (image->isCompressed())
     {
@@ -325,16 +323,17 @@ bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int i
         }
 
         updateWithData(tempData, tempDataLen, image->getPixelFormat(), image->getPixelFormat(), imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha(), index);
-
-        return true;
     }
     else
     {
         //after conversion, renderFormat == pixelFormat of data
         updateWithData(tempData, tempDataLen, imagePixelFormat, renderFormat, imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha(), index);
-
-        return true;
     }
+
+    if (index > 0)
+        this->_hasPremultipliedAlpha = preMultipliedAlpha;
+
+    return true;
 }
 
 bool Texture2D::updateWithData(const void* data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/, bool preMultipliedAlpha, int index)

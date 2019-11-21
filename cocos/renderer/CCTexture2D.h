@@ -178,7 +178,7 @@ public:
     @param width Specifies the width of the texture subimage.
     @param height Specifies the height of the texture subimage.
     */
-    bool updateWithImage(Image* image, backend::PixelFormat format, int index = 0);
+    bool updateWithImage(Image* image, backend::PixelFormat format, int index = 0, bool preMultipliedAlpha = false);
     bool updateWithData(const void* data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/, bool preMultipliedAlpha, int index = 0);
     bool updateWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha = false, int index = 0);
 
@@ -296,7 +296,7 @@ public:
 
     /** Whether or not the texture has their Alpha premultiplied. */
     bool hasPremultipliedAlpha() const;
-    
+
     /** Whether or not the texture has mip maps.*/
     bool hasMipmaps() const;
 

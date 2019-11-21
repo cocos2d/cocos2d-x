@@ -1443,10 +1443,6 @@ bool Image::initWithETCData(const unsigned char* data, ssize_t dataLen, bool own
         return false;
     }
 
-    // pitfall: because we do merge etc1 alpha at shader, so must mark as _hasPremultipliedAlpha=true to makesure alpha blend works well.
-    //   the Premultiply operation can only do at shader.
-    _hasPremultipliedAlpha = true;
-
     if (Configuration::getInstance()->supportsETC())
     {
         //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
