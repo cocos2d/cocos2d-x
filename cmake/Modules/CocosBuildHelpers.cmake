@@ -1,7 +1,7 @@
 include(CMakeParseArguments)
 
 # copy resource `FILES` and `FOLDERS` to TARGET_FILE_DIR/Resources
-function(cocos_link_target_res cocos_target)
+function(cocos_copy_target_res cocos_target)
     set(oneValueArgs LINK_TO)
     set(multiValueArgs FOLDERS)
     cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
@@ -13,11 +13,12 @@ function(cocos_link_target_res cocos_target)
 
     # linking folders
     foreach(cc_folder ${opt_FOLDERS})
-        get_filename_component(link_folder ${opt_LINK_TO} DIRECTORY)
-        get_filename_component(link_folder_abs ${link_folder} ABSOLUTE)
+        #get_filename_component(link_folder ${opt_LINK_TO} DIRECTORY)
+        get_filename_component(link_folder_abs ${opt_LINK_TO} ABSOLUTE)
         add_custom_command(TARGET SYNC_RESOURCE-${cocos_target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory ${link_folder_abs}
-            COMMAND ${CMAKE_COMMAND} -E create_symlink ${cc_folder} ${opt_LINK_TO}
+            COMMAND ${CMAKE_COMMAND} -E echo "    copying to ${link_folder_abs}"
+            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                -s ${cc_folder} -d ${link_folder_abs}
         )
     endforeach()
 endfunction()
@@ -26,7 +27,7 @@ endfunction()
 ## Update resource files in Resources/ folder everytime when `Run/Debug` target.
 function(cocos_def_copy_resource_target cocos_target)
     add_custom_target(SYNC_RESOURCE-${cocos_target} ALL
-        COMMAND ${CMAKE_COMMAND} -E echo "Linking resources for ${cocos_target} ..."
+        COMMAND ${CMAKE_COMMAND} -E echo "Copying resources for ${cocos_target} ..."
     )
     add_dependencies(${cocos_target} SYNC_RESOURCE-${cocos_target})
     set_target_properties(SYNC_RESOURCE-${cocos_target} PROPERTIES
@@ -72,7 +73,7 @@ endfunction()
 
 function(cocos_get_resource_path output cocos_target)
     get_target_property(rt_output ${cocos_target} RUNTIME_OUTPUT_DIRECTORY)
-    set(${output} ${rt_output}/${CMAKE_CFG_INTDIR}/Resources PARENT_SCOPE)
+    set(${output} "${rt_output}/${CMAKE_CFG_INTDIR}/Resources" PARENT_SCOPE)
 endfunction()
 
 
