@@ -445,7 +445,6 @@ void LayerColor::updateColor()
         _vertexData[i].colors.b = _displayedColor.b / 255.0f;
         _vertexData[i].colors.a = _displayedOpacity / 255.0f;
     }
-    updateVertexBuffer();
 }
 
 void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
