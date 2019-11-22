@@ -220,34 +220,16 @@ function TerrainWalkThru:init()
                 local dir = cc.vec3sub(farP, nearP)
                 dir = cc.vec3normalize(dir)
 
-                local rayStep = cc.vec3mul(dir, 15)
-                local rayPos =  nearP
-                local rayStartPosition = nearP
-                local lastRayPosition  = rayPos
-                rayPos = cc.vec3add(rayPos, rayStep)
-                -- Linear search - Loop until find a point inside and outside the terrain Vector3 
-                local height = self._terrain:getHeight(rayPos.x, rayPos.z)
+                local collisionPoint = cc.vec3(-999,-999,-999)
+                local ray =  cc.Ray:new(nearP, dir)
+                local isInTerrain = true
+                isInTerrain, collisionPoint = self._terrain:getIntersectionPoint(ray, collisionPoint)
 
-                while rayPos.y > height do
-                    lastRayPosition = rayPos 
-                    rayPos = cc.vec3add(rayPos, rayStep)
-                    height = self._terrain:getHeight(rayPos.x,rayPos.z) 
+                if( not isInTerrain) then  
+                    self._player._playerState = PLAER_STATE.IDLE
+                    return
                 end
 
-                local startPosition = lastRayPosition
-                local endPosition   = rayPos
-
-                for i = 1, 32 do
-                    -- Binary search pass 
-                    local middlePoint = cc.vec3mul(cc.vec3add(startPosition, endPosition), 0.5)
-                    if (middlePoint.y < height) then
-                        endPosition = middlePoint 
-                    else 
-                        startPosition = middlePoint
-                    end
-                end
-
-                local collisionPoint = cc.vec3mul(cc.vec3add(startPosition, endPosition), 0.5)
                 local playerPos = self._player:getPosition3D()
                 dir = cc.vec3sub(collisionPoint, playerPos)
                 dir.y = 0
