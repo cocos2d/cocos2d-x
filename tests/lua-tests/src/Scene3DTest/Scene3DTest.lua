@@ -183,11 +183,11 @@ function TerrainWalkThru:init()
 
                 local collisionPoint = cc.vec3(-999,-999,-999)
                 local ray =  cc.Ray:new(nearP, dir)
-                local isInTerrain = true;
+                local isInTerrain = true
                 isInTerrain, collisionPoint = self._terrain:getIntersectionPoint(ray, collisionPoint)
 
                 if( not isInTerrain) then  
-                    self._player:idle()
+                    self._player._playerState = PLAER_STATE.IDLE
                     return
                 end
 
