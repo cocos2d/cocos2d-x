@@ -142,15 +142,18 @@ std::string getUrlStringByFileName(const std::string &fileName) {
     // LOGD("error: %s,%d",__func__,__LINE__);
     const std::string basePath("file:///android_asset/");
     std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fileName);
-    const std::string assetsPath("assets/");
-
     std::string urlString;
-    if (fullPath.find(assetsPath) != std::string::npos) {
-        urlString = fullPath.replace(fullPath.find_first_of(assetsPath), assetsPath.length(), basePath);
+    if (fullPath.c_str()[0] == '/') {
+        urlString = "file://" + fullPath;
     } else {
-        urlString = fullPath;
+        if(fullPath.find("assets/") == 0) {
+            urlString = basePath + fullPath.substr(7);
+        }
+        else {
+            urlString = basePath + fullPath;
+        }
     }
-
+    
     return urlString;
 }
 } // namespace
