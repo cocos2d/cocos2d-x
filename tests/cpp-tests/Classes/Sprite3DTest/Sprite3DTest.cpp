@@ -2212,7 +2212,6 @@ Issue9767::Issue9767()
 
 Issue9767::~Issue9767()
 {
-    CC_SAFE_RELEASE_NULL(_programState);
 }
 
 void Issue9767::menuCallback_SwitchShader(cocos2d::Ref* sender)

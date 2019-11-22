@@ -533,7 +533,6 @@ static const float _planeColor[][4] = {
 
 RawStencilBufferTest::~RawStencilBufferTest()
 {
-    delete _programState;
 }
 
 std::string RawStencilBufferTest::title() const

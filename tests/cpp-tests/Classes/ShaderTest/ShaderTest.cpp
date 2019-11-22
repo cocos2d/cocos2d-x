@@ -80,7 +80,6 @@ ShaderNode::ShaderNode()
 
 ShaderNode::~ShaderNode()
 {
-    CC_SAFE_RELEASE(_programState);
 }
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std::string& frag)

@@ -176,7 +176,7 @@ protected:
     
     backend::UniformLocation _mvpMatrixLocaiton;
     backend::UniformLocation _textureLocation;
-    
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);
 };

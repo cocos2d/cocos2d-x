@@ -474,7 +474,6 @@ Terrain::~Terrain()
     CC_SAFE_RELEASE(_lightMap);
     CC_SAFE_RELEASE(_heightMapImage);
     CC_SAFE_RELEASE(_dummyTexture);
-    CC_SAFE_RELEASE_NULL(_programState);
     delete _quadRoot;
     for (int i = 0; i < 4; ++i)
     {

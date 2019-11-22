@@ -101,7 +101,6 @@ protected:
     */
     void initBuffers();
     
-    backend::ProgramState *_programState = nullptr;
     CustomCommand _customCommand;
     TextureCube*  _texture;
 private:

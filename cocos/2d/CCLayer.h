@@ -512,7 +512,6 @@ private:
     backend::UniformLocation _centerLocation;
     backend::UniformLocation _radiusLocation;
     backend::UniformLocation _expandLocation;
-    backend::ProgramState* _programState = nullptr;
 };
 
 
