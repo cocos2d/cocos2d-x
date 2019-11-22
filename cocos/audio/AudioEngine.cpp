@@ -77,6 +77,7 @@ AudioEngine::AudioInfo::AudioInfo()
 
 AudioEngine::AudioInfo::~AudioInfo()
 {
+    delete filePath;
 }
 
 class AudioEngine::AudioEngineThreadPool
@@ -241,7 +242,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             auto& audioRef = _audioIDInfoMap[ret];
             audioRef.volume = volume;
             audioRef.loop = loop;
-            audioRef.filePath = &it->first;
+            audioRef.filePath = new std::string(it->first.c_str());
 
             if (profileHelper) {
                 profileHelper->lastPlayTime = utils::gettime();
