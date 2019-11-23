@@ -193,25 +193,31 @@ TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descrip
 : backend::Texture2DBackend(descriptor)
 {
     _mtlDevice = mtlDevice;
+    _mtlTextures.fill(nil);
     updateTextureDescriptor(descriptor);
 }
 
 TextureMTL::~TextureMTL()
 {
-    [_mtlTexture release];
+    id<MTLTexture> texture;
+    int i = 0;
+    while((texture = _mtlTextures[i++]))
+        [texture release];
+
     [_mtlSamplerState release];
 }
 
-void TextureMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
+void TextureMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler, int index)
 {
     createSampler(_mtlDevice, sampler);
 }
 
-void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor, int index)
 {
-    TextureBackend::updateTextureDescriptor(descriptor);
-    createTexture(_mtlDevice, descriptor);
-    updateSamplerDescriptor(descriptor.samplerDescriptor);
+    _textureDescriptor = descriptor;
+    TextureBackend::updateTextureDescriptor(descriptor, index);
+    createTexture(_mtlDevice, descriptor, index);
+    updateSamplerDescriptor(descriptor.samplerDescriptor, index);
     if (PixelFormat::RGB888 == _textureFormat)
     {
         _bitsPerElement = 4 * 8;
@@ -220,13 +226,16 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
     _bytesPerRow = descriptor.width * _bitsPerElement / 8 ;
 }
 
-void TextureMTL::updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level)
+void TextureMTL::updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level, int index)
 {
-    updateSubData(0, 0, width, height, level, data);
+    updateSubData(0, 0, width, height, level, data, index);
 }
 
-void TextureMTL::updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data)
+void TextureMTL::updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data, int index)
 {
+    auto mtlTexture = ensure(index);
+    if(!mtlTexture) return;
+    
     MTLRegion region =
     {
         {xoffset, yoffset, 0},  // MTLOrigin
@@ -240,7 +249,7 @@ void TextureMTL::updateSubData(std::size_t xoffset, std::size_t yoffset, std::si
     
     std::size_t bytesPerRow = getBytesPerRow(_textureFormat, width, _bitsPerElement);
     
-    [_mtlTexture replaceRegion:region
+    [mtlTexture replaceRegion:region
                    mipmapLevel:level
                      withBytes:convertedData
                    bytesPerRow:bytesPerRow];
@@ -262,7 +271,7 @@ void TextureMTL::updateCompressedSubData(std::size_t xoffset, std::size_t yoffse
     updateSubData(xoffset, yoffset, width, height, level, data);
 }
 
-void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
+void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor, int index)
 {
     MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(descriptor.textureFormat);
     if(pixelFormat == MTLPixelFormatInvalid)
@@ -282,9 +291,10 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
         textureDescriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
     }
     
-    if(_mtlTexture)
-        [_mtlTexture release];
-    _mtlTexture = [mtlDevice newTextureWithDescriptor:textureDescriptor];
+    id<MTLTexture>& mtlTexture = _mtlTextures[index];
+    if(mtlTexture)
+        [mtlTexture release];
+    mtlTexture = [mtlDevice newTextureWithDescriptor:textureDescriptor];
 }
 
 void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor &descriptor)
@@ -339,7 +349,7 @@ void TextureMTL::getBytes(std::size_t x, std::size_t y, std::size_t width, std::
         }
     };
     auto flipImageCallback = std::bind(flipImageFunc, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    Utils::getTextureBytes(x, y, width, height, _mtlTexture, flipImageCallback);
+    Utils::getTextureBytes(x, y, width, height, _mtlTextures[0], flipImageCallback);
 }
 
 void TextureMTL::generateMipmaps()
@@ -350,9 +360,20 @@ void TextureMTL::generateMipmaps()
     if(!_hasMipmaps)
     {
         _hasMipmaps = true;
-        Utils::generateMipmaps(_mtlTexture);
-        
+        Utils::generateMipmaps(_mtlTextures[0]);
     }
+}
+
+id<MTLTexture> TextureMTL::ensure(int index)
+{
+    if(index < CC_META_TEXTURES) {
+        id<MTLTexture>& mtlTexture = _mtlTextures[index];
+        if(mtlTexture) return mtlTexture;
+        createTexture(_mtlDevice, _textureDescriptor, index);
+        if(_mtlMaxTexIdx < index) _mtlMaxTexIdx = index;
+        return mtlTexture;
+    }
+    return nil;
 }
 
 TextureCubeMTL::TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
@@ -368,7 +389,7 @@ TextureCubeMTL::~TextureCubeMTL()
     [_mtlSamplerState release];
 }
 
-void TextureCubeMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+void TextureCubeMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor, int index)
 {
     TextureBackend::updateTextureDescriptor(descriptor);
     createTexture(_mtlDevice, descriptor);
@@ -431,7 +452,7 @@ void TextureCubeMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescrip
     [mtlDescriptor release];
 }
 
-void TextureCubeMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
+void TextureCubeMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler, int /*index*/)
 {
     createSampler(_mtlDevice, sampler);
 }

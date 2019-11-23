@@ -104,7 +104,7 @@ public:
      */
     inline bool hasMipmaps() const { return _hasMipmaps; }
 
-    virtual int getCount() const = 0;
+    virtual int getCount() const { return 1; };
 
 protected:
     /**

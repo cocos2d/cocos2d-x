@@ -1448,7 +1448,11 @@ bool Image::initWithETCData(const unsigned char* data, ssize_t dataLen, bool own
         //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
 #if defined(GL_ETC1_RGB8_OES) || defined(CC_USE_METAL)
         _pixelFormat = backend::PixelFormat::ETC;
-        _data = data;
+        if(ownData) _data = (unsigned char*)data;
+        else {
+            _data = (unsigned char*)malloc(dataLen);
+            if(_data) memcpy(_data, data, dataLen);
+        }
         _dataLen = dataLen;
         _offset = ETC_PKM_HEADER_SIZE;
         return true;

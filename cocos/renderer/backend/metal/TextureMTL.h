@@ -27,6 +27,7 @@
 #include "../Texture.h"
 #include "DeviceMTL.h"
 #import <Metal/Metal.h>
+#include <array>
 
 CC_BACKEND_BEGIN
 /**
@@ -54,7 +55,7 @@ public:
      * @param height Specifies the height of the texture image.
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      */
-    virtual void updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level) override;
+    virtual void updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level, int index = 0) override;
     
     /**
      * Update a two-dimensional texture image in a compressed format
@@ -75,7 +76,7 @@ public:
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      * @param data Specifies a pointer to the image data in memory.
      */
-    virtual void updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data) override;
+    virtual void updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data, int index = 0) override;
     
     /**
      * Update a two-dimensional texture subimage in a compressed format
@@ -93,7 +94,7 @@ public:
      * Update sampler
      * @param sampler Specifies the sampler descriptor.
      */
-    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
+    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler, int index = 0) override;
     
     /**
      * Read a block of pixels from the drawable texture
@@ -113,13 +114,17 @@ public:
      * Update texture description.
      * @param descriptor Specifies texture and sampler descriptor.
      */
-    virtual void updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor) override;
+    virtual void updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor, int index = 0) override;
+    
+    int getCount() const override { return _mtlMaxTexIdx + 1; };
+    
+    id<MTLTexture> ensure(int index);
     
     /**
      * Get MTLTexture object.
      * @return A MTLTexture object.
      */
-    inline id<MTLTexture> getMTLTexture() const { return _mtlTexture; }
+    inline id<MTLTexture> getMTLTexture() const { return _mtlTextures[0]; }
     
     /**
      * Get MTLSamplerState object
@@ -128,7 +133,7 @@ public:
     inline id<MTLSamplerState> getMTLSamplerState() const { return _mtlSamplerState; }
     
 private:
-    void createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);
+    void createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor, int index);
     void createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor& descriptor);
     
     MTLSamplerAddressMode _sAddressMode;
@@ -137,8 +142,11 @@ private:
     MTLSamplerMinMagFilter _magFilter;
     MTLSamplerMipFilter _mipFilter;
     
+    TextureDescriptor _textureDescriptor;
+    
     id<MTLDevice> _mtlDevice = nil;
-    id<MTLTexture> _mtlTexture = nil;
+    std::array<id<MTLTexture>, CC_META_TEXTURES + 1> _mtlTextures;
+    int _mtlMaxTexIdx = 0;
     id<MTLSamplerState> _mtlSamplerState = nil;
     unsigned int _bytesPerRow = 0;
 };
@@ -160,7 +168,7 @@ public:
      * Update sampler
      * @param sampler Specifies the sampler descriptor.
      */
-    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
+    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler, int index = 0) override;
     
     /**
      * Update texutre cube data in give slice side.
@@ -187,7 +195,7 @@ public:
      * Update texture description.
      * @param descriptor Specifies texture and sampler descriptor.
      */
-    virtual void updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor) override;
+    virtual void updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor, int index = 0) override;
     
     /**
      * Get MTLTexture object.
