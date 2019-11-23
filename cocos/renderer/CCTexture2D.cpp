@@ -335,6 +335,8 @@ bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int i
     }
 
     _flagsAndFormatEXT |= formatEXT;
+
+    // pitfall: because we do merge etc1 alpha at shader, so must mark as _hasPremultipliedAlpha = true to makesure alpha blend works well.
     if (formatEXT == TextureFormatEXT::ETC1_ALPHA)
         setPremultipliedAlpha(true);
 

@@ -419,8 +419,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
                 {
                     Image imageAlpha;
                     if (imageAlpha.initWithImageFile(alphaFullPath))
-                    {   // pitfall: because we do merge etc1 alpha at shader, so must mark as _hasPremultipliedAlpha=true to makesure alpha blend works well.
-                        //   the Premultiply operation can only do at shader.
+                    {
                         texture->updateWithImage(&imageAlpha, Texture2D::getDefaultAlphaPixelFormat(), 1, TextureFormatEXT::ETC1_ALPHA);
                     }
                 }
@@ -830,8 +829,11 @@ void VolatileTextureMgr::reloadAllTextures()
             reloadTexture(vt->_texture, vt->_fileName, vt->_pixelFormat);
 
             // etc1 support check whether alpha texture exists & load it
-            auto alphaFile = vt->_fileName + TextureCache::getETC1AlphaFileSuffix();
-            reloadTexture(vt->_texture->getAlphaTexture(), alphaFile, vt->_pixelFormat);
+            Image image;
+            if (image.initWithImageFile(vt->_fileName + TextureCache::getETC1AlphaFileSuffix()))
+            {
+                vt->_texture->updateWithImage(&image, vt->_pixelFormat, 1, TextureFormatEXT::ETC1_ALPHA);
+            }
         }
         break;
         case VolatileTexture::kImageData:

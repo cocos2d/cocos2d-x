@@ -226,7 +226,7 @@ public:
      */
     void apply(int index) const;
 
-    int getCount() const { return 1; }
+    int getCount() const override { return 1; }
 
 private:
     void setTexParameters();
