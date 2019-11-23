@@ -196,10 +196,10 @@ void EditBoxImplMac::setNativeVisible(bool visible)
 void EditBoxImplMac::updateNativeFrame(const cocos2d::Rect &rect)
 {
     GLView* eglView = Director::getInstance()->getOpenGLView();
-    auto viewPortRect = eglView->getViewPortRect();
+    auto frameSize = eglView->getFrameSize();
     // Coordinate System on OSX has its origin at the lower left corner.
 //    https://developer.apple.com/library/ios/documentation/General/Conceptual/Devpedia-CocoaApp/CoordinateSystem.html
-    auto screenPosY = viewPortRect.size.height - rect.origin.y - rect.size.height;
+    auto screenPosY = frameSize.height - rect.origin.y - rect.size.height;
     [_sysEdit updateFrame:CGRectMake(rect.origin.x,
                                      screenPosY,
                                      rect.size.width, rect.size.height)];
