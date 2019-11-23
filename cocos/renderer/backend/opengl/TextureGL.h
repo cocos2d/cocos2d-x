@@ -45,7 +45,7 @@ struct TextureInfoGL
     void foreach(const _Fty& cb) const {
         GLuint texID;
         int idx = 0;
-        while (texID = textures[idx])
+        while ((texID = textures[idx]))
             cb(texID, idx++);
     }
 

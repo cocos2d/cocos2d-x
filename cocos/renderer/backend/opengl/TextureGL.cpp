@@ -360,7 +360,7 @@ TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to restored texture id after coming to foreground on Android.
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*){
-        glGenTextures(1, &(this->_textureInfo.texture));
+        glGenTextures(1, &(this->_textureInfo.textures[0]));
         this->setTexParameters();
     });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
