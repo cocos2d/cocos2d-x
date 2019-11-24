@@ -141,16 +141,22 @@ int createWebViewJNI() {
 std::string getUrlStringByFileName(const std::string &fileName) {
     // LOGD("error: %s,%d",__func__,__LINE__);
     const std::string basePath("file:///android_asset/");
-    std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fileName);
     const std::string assetsPath("assets/");
-
+    std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fileName);
     std::string urlString;
-    if (fullPath.find(assetsPath) != std::string::npos) {
-        urlString = fullPath.replace(fullPath.find_first_of(assetsPath), assetsPath.length(), basePath);
-    } else {
-        urlString = fullPath;
+    if (fullPath.empty()) {
+        return urlString;
     }
-
+    else if (fullPath[0] == '/') {
+        urlString.append("file://").append(fullPath);
+    }
+    else if (fullPath.find(assetsPath) == 0) {
+        urlString = fullPath.replace(fullPath.find_first_of(assetsPath), assetsPath.length(), assetsPath);
+    }
+    else {
+        urlString.append(basePath).append(fullPath);
+    }
+    
     return urlString;
 }
 } // namespace
