@@ -130,6 +130,18 @@ Rect Grid3DAction::getGridRect() const
 }
 
 // implementation of TiledGrid3DAction
+TiledGrid3DAction* TiledGrid3DAction::create(float duration, const Size &gridSize)
+{
+    TiledGrid3DAction *ret = new (std::nothrow) TiledGrid3DAction();
+    if (ret && ret->initWithDuration(duration, gridSize))
+    {
+        ret->autorelease();
+        return ret;
+    }
+
+    delete ret;
+    return nullptr;
+}
 
 GridBase* TiledGrid3DAction::getGrid()
 {
