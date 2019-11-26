@@ -203,8 +203,6 @@ void Texture2DGL::updateData(uint8_t* data, std::size_t width , std::size_t heig
                 _textureInfo.type,
                 data);
 
-    cocos2d::log("---> Texture2DGL::updateData:%u", texID);
-
     CHECK_GL_ERROR_DEBUG();
 
     if(!_hasMipmaps && level > 0)
