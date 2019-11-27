@@ -35,8 +35,8 @@ function build_linux()
     cd $COCOS2DX_ROOT
     mkdir -p linux-build
     cd linux-build
-    cmake ..
-    cmake --build .
+    cmake .. -G"Unix Makefiles"
+    cmake --build . -- -j `nproc`
 }
 
 function build_mac_cmake()
@@ -220,8 +220,43 @@ function run_pull_request()
         cd $COCOS2DX_ROOT/cocos_new_test
         mkdir -p linux-build
         cd linux-build
-        cmake ..
+        cmake .. -G"Unix Makefiles"
+        cmake --build . -- -j `nproc`
+        exit 0
+    fi
+
+    if [ "$BUILD_TARGET" == "ios_cocos_new_lua_test" ]; then
+        export PATH=$PATH:$COCOS2DX_ROOT/tools/cocos2d-console/bin
+        #NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
+        genernate_binding_codes
+        pushd $COCOS2DX_ROOT
+        echo "Creating tests ..."
+
+        cocos --agreement n new -l lua ios_new_lua_proj
+        cd ios_new_lua_proj
+        mkdir build
+        cd build
+        cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
         cmake --build .
+        popd
+        exit 0
+    fi
+
+    if [ "$BUILD_TARGET" == "ios_cocos_new_cpp_test" ]; then
+        export PATH=$PATH:$COCOS2DX_ROOT/tools/cocos2d-console/bin
+        #NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
+        genernate_binding_codes
+        pushd $COCOS2DX_ROOT
+        echo "Creating tests ..."
+
+        cocos --agreement n new -l cpp ios_new_cpp_proj
+        cd ios_new_cpp_proj
+        mkdir build
+        cd build
+        echo "Building tests ..."
+        cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
+        cmake --build .
+        popd
         exit 0
     fi
     
