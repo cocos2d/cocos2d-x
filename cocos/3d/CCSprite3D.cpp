@@ -556,7 +556,6 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 texParams.magFilter = GL_LINEAR;
                                 texParams.wrapS = textureData->wrapS;
                                 texParams.wrapT = textureData->wrapT;
-                                tex->setTexParameters(texParams);
                                 mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                                 CC_SAFE_RETAIN(this);
                                 Director::getInstance()->getTextureCache()->addImageAsync(textureData->filename, [=](Texture2D* texN) {
@@ -577,7 +576,6 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 texParams.magFilter = GL_LINEAR;
                                 texParams.wrapS = textureData->wrapS;
                                 texParams.wrapT = textureData->wrapT;
-                                tex->setTexParameters(texParams); 
                                 CC_SAFE_RETAIN(this);
                                 Director::getInstance()->getTextureCache()->addImageAsync(textureData->filename, [=](Texture2D* texN) {
                                     if (texN != nullptr)
