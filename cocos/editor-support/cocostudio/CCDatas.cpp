@@ -266,7 +266,7 @@ FrameData::FrameData()
 
 FrameData::~FrameData()
 {
-    CC_SAFE_DELETE(easingParams);
+    CC_SAFE_DELETE_ARRAY(easingParams);
 }
 
 void FrameData::copy(const BaseData *baseData)
@@ -281,7 +281,7 @@ void FrameData::copy(const BaseData *baseData)
         tweenEasing = frameData->tweenEasing;
         easingParamNumber = frameData->easingParamNumber;
         
-        CC_SAFE_DELETE(easingParams);
+        CC_SAFE_DELETE_ARRAY(easingParams);
         if (easingParamNumber != 0)
         {
             easingParams = new (std::nothrow) float[easingParamNumber];
