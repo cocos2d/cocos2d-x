@@ -71,12 +71,12 @@ public:
      */
     ShaderStage getShaderStage() const;
 
-    virtual std::size_t getHashValue() const { return _hash; }
+    std::size_t getHashValue() const { return _hash; }
     
 protected:
     ShaderModule(ShaderStage stage);
     virtual ~ShaderModule();
-    virtual void setHashValue(std::size_t hash) { _hash = hash; }
+    void setHashValue(std::size_t hash) { _hash = hash; }
     
     friend class ShaderCache;
     ShaderStage _stage = ShaderStage::VERTEX;
