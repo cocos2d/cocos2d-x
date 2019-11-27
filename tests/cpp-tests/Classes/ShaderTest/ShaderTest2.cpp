@@ -180,10 +180,6 @@ bool Effect::initProgramState(const std::string &fragmentFilename)
     _fragSource = fragSource;
 #endif
     auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
-    auto vsHash = std::hash < std::string>{}(positionTextureColor_vert);
-    auto fsHash = std::hash < std::string>{}(fragSource);
-    auto hash =  vsHash ^ (fsHash << 1);
-    program->setProgramType(static_cast<backend::ProgramType>(hash));
     auto programState = new backend::ProgramState(program);
     CC_SAFE_RELEASE(_programState);
     CC_SAFE_RELEASE(program);

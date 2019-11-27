@@ -167,7 +167,8 @@ void RenderPipelineMTL::update(const PipelineDescriptor & pipelineDescirptor,
 {
     struct
     {
-        backend::ProgramType programType;
+        size_t vertexShaderHash;
+        size_t fragmentShaderHash;
         unsigned int vertexLayoutInfo[32];
         backend::PixelFormat colorAttachment;
         backend::PixelFormat depthAttachment;
@@ -185,8 +186,9 @@ void RenderPipelineMTL::update(const PipelineDescriptor & pipelineDescirptor,
     memset(&hashMe, 0, sizeof(hashMe));
     const auto& blendDescriptor = pipelineDescirptor.blendDescriptor;
     getAttachmentFormat(renderPassDescriptor, _colorAttachmentsFormat[0], _depthAttachmentFormat, _stencilAttachmentFormat);
-    auto program = pipelineDescirptor.programState->getProgram();
-    hashMe.programType = program->getProgramType();
+    auto program = static_cast<ProgramMTL*>(pipelineDescirptor.programState->getProgram());
+    hashMe.vertexShaderHash = program->getVertexShader()->getHashValue();
+    hashMe.fragmentShaderHash = program->getFragmentShader()->getHashValue();
     hashMe.colorAttachment = _colorAttachmentsFormat[0];
     hashMe.depthAttachment = _depthAttachmentFormat;
     hashMe.stencilAttachment =_stencilAttachmentFormat;
