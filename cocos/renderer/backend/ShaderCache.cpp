@@ -82,6 +82,7 @@ backend::ShaderModule* ShaderCache::newShaderModule(backend::ShaderStage stage, 
         return iter->second;
     
     auto shader = backend::Device::getInstance()->newShaderModule(stage, shaderSource);
+    shader->setHashValue(key);
     _cachedShaders.emplace(key, shader);
     
     return shader;
