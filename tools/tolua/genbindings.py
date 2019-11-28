@@ -10,8 +10,6 @@ import shutil
 import ConfigParser
 import subprocess
 import re
-import concurrent.futures
-import multiprocessing
 from contextlib import contextmanager
 
 
@@ -219,20 +217,13 @@ def main():
                     }
         target = 'lua'
         generator_py = '%s/generator.py' % cxx_generator_root
-        executor = concurrent.futures.ThreadPoolExecutor(max_workers = multiprocessing.cpu_count())
-        results = []
         for key in cmd_args.keys():
             args = cmd_args[key]
             cfg = '%s/%s' % (tolua_root, key)
             print 'Generating bindings for %s...' % (key[:-4])
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
             print command
-            ret = executor.submit(_run_cmd, command)
-            results.append(ret)
-            #_run_cmd(command)
-            
-        for r in results:
-            print r.result()
+            _run_cmd(command)
 
         print '---------------------------------'
         print 'Generating lua bindings succeeds.'
