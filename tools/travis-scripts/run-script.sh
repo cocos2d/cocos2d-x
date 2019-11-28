@@ -215,8 +215,9 @@ function run_pull_request()
         update_cocos_files
         python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l lua -p my.pack.qqqq cocos_new_test
         popd
-
         echo "Building tests ..."
+
+        set -x
         cd $COCOS2DX_ROOT/cocos_new_test
         mkdir -p linux-build
         cd linux-build
@@ -232,6 +233,7 @@ function run_pull_request()
         pushd $COCOS2DX_ROOT
         echo "Creating tests ..."
 
+        set -x
         cocos --agreement n new -l lua ios_new_lua_proj
         cd ios_new_lua_proj
         mkdir build
@@ -249,6 +251,7 @@ function run_pull_request()
         pushd $COCOS2DX_ROOT
         echo "Creating tests ..."
 
+        set -x
         cocos --agreement n new -l cpp ios_new_cpp_proj
         cd ios_new_cpp_proj
         mkdir build
@@ -262,12 +265,14 @@ function run_pull_request()
     
     if [ $BUILD_TARGET == 'mac_cmake' ]; then
         genernate_binding_codes
+        set -x
         build_mac_cmake
         exit 0
     fi
 
     if [ $BUILD_TARGET == 'ios_cmake' ]; then
         genernate_binding_codes
+        set -x
         build_ios_cmake
         exit 0
     fi
