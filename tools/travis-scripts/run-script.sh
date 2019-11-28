@@ -36,8 +36,6 @@ function build_linux()
     set -x
     cmake . -G "Unix Makefiles" -Blinux-build-release -DCMAKE_BUILD_TYPE=Release
     cmake --build linux-build-release -- -j `nproc`
-    cmake . -G "Unix Makefiles" -Blinux-build-debug -DCMAKE_BUILD_TYPE=Debug
-    cmake --build linux-build-debug -- -j `nproc`
     set +x
 }
 
