@@ -34,9 +34,9 @@ function build_linux()
     source ../environment.sh
     cd $COCOS2DX_ROOT
     set -x
-    cmake . -G "Unix Makefiles" -B linux-build-release -DCMAKE_BUILD_TYPE=Release
+    cmake . -G "Unix Makefiles" -Blinux-build-release -DCMAKE_BUILD_TYPE=Release
     cmake --build linux-build-release -- -j `nproc`
-    cmake . -G "Unix Makefiles" -B linux-build-debug -DCMAKE_BUILD_TYPE=Debug
+    cmake . -G "Unix Makefiles" -Blinux-build-debug -DCMAKE_BUILD_TYPE=Debug
     cmake --build linux-build-debug -- -j `nproc`
     set +x
 }
