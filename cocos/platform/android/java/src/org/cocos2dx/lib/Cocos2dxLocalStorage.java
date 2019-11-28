@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -70,7 +71,28 @@ public class Cocos2dxLocalStorage {
             e.printStackTrace();
         }
     }
-    
+
+    public static void setItemAsync(String key, String value) {
+
+        final String key_final = key;
+
+        final String value_final = value;
+
+        Activity activity = (Activity) Cocos2dxActivity.getContext();
+
+
+        activity.runOnUiThread(new Runnable() {
+
+            public void run() {
+
+                Cocos2dxLocalStorage.setItem(key_final, value_final);
+
+            }
+
+        });
+
+    }
+
     public static String getItem(String key) {
         String ret = null;
         try {

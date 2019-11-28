@@ -124,6 +124,15 @@ void localStorageSetItem( const std::string& key, const std::string& value)
 		printf("Error in localStorage.setItem()\n");
 }
 
+void localStorageSetItemAsync( const std::string& key, const std::string& value)
+{
+
+    // TODO :: to be made asynchronous
+
+    localStorageSetItem(key, value);
+
+}
+
 /** gets an item from the LS */
 bool localStorageGetItem( const std::string& key, std::string *outItem )
 {

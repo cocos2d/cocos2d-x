@@ -54,6 +54,44 @@ bool JSB_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: char*, char*
 // Ret value: void
+bool JSB_localStorageSetItemAsync(JSContext *cx, uint32_t argc, jsval *vp) {
+
+    JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+    bool ok = true;
+
+    std::string arg0; std::string arg1; 
+
+
+    ok &= jsval_to_std_string( cx, args.get(0), &arg0 );
+
+    ok &= jsval_to_std_string( cx, args.get(1), &arg1 );
+
+    if( ok ) {
+
+        localStorageSetItemAsync(arg0 , arg1);
+
+    }
+
+    else {
+
+        log("JSB_localStorageSetItemAsync:Error processing arguments");
+
+    }
+
+
+    args.rval().setUndefined();
+
+    return true;
+
+}
+
+
+// Arguments: char*, char*
+
+// Ret value: void
 bool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
