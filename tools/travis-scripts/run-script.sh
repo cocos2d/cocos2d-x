@@ -71,7 +71,7 @@ function build_ios_cmake()
     cd ios_cmake_build
     cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
     # too much logs on console when "cmake --build ."
-    cmake --build .  -- -quiet -alltargets -jobs $NUM_OF_CORES -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" 
+    cmake --build .  -- -quiet -jobs $NUM_OF_CORES -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" 
     #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build  | xcpretty
     ##the following commands must not be removed
     #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
