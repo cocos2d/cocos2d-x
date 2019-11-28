@@ -53,7 +53,6 @@ function build_mac_cmake()
     mkdir -p mac_cmake_build
     cd mac_cmake_build
     cmake .. -GXcode
-    cmake --build . --config Debug -- -quiet
     cmake --build . --config Release -- -quiet
     #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES build  | xcpretty
     ##the following commands must not be removed
@@ -74,7 +73,6 @@ function build_ios_cmake()
     cd ios_cmake_build
     cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
     # too much logs on console when "cmake --build ."
-    cmake --build . --config Debug -- -quiet -jobs $NUM_OF_CORES -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" 
     cmake --build . --config Release -- -quiet -jobs $NUM_OF_CORES -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" 
 
     #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build  | xcpretty
@@ -244,7 +242,7 @@ function run_pull_request()
         mkdir build
         cd build
         cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
-        cmake --build . -- -quiet
+        cmake --build . --config Release -- -quiet
         popd
         exit 0
     fi
@@ -263,7 +261,7 @@ function run_pull_request()
         cd build
         echo "Building tests ..."
         cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
-        cmake --build . -- -quiet 
+        cmake --build . --config Release -- -quiet 
         popd
         exit 0
     fi
