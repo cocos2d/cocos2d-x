@@ -33,10 +33,12 @@ function build_linux()
     echo "Building tests ..."
     source ../environment.sh
     cd $COCOS2DX_ROOT
-    mkdir -p linux-build
-    cd linux-build
-    cmake .. -G"Unix Makefiles"
-    cmake --build . -- -j `nproc`
+    set -x
+    cmake .. -G"Unix Makefiles" -B linux-build-release -DCMAKE_BUILD_TYPE=Release
+    cmake --build linux-build-release -- -j `nproc`
+    cmake .. -G"Unix Makefiles" -B linux-build-debug -DCMAKE_BUILD_TYPE=Debug
+    cmake --build linux-build-debug -- -j `nproc`
+    set +x
 }
 
 function build_mac_cmake()
@@ -51,7 +53,8 @@ function build_mac_cmake()
     mkdir -p mac_cmake_build
     cd mac_cmake_build
     cmake .. -GXcode
-    cmake --build . -- -quiet
+    cmake --build . --config Debug -- -quiet
+    cmake --build . --config Release -- -quiet
     #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES build  | xcpretty
     ##the following commands must not be removed
     #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES build
@@ -71,7 +74,9 @@ function build_ios_cmake()
     cd ios_cmake_build
     cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
     # too much logs on console when "cmake --build ."
-    cmake --build .  -- -quiet -jobs $NUM_OF_CORES -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" 
+    cmake --build . --config Debug -- -quiet -jobs $NUM_OF_CORES -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" 
+    cmake --build . --config Release -- -quiet -jobs $NUM_OF_CORES -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" 
+
     #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build  | xcpretty
     ##the following commands must not be removed
     #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
