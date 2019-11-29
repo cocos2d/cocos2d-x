@@ -130,15 +130,8 @@ FastTMXLayer::~FastTMXLayer()
 void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
     updateTotalQuads();
-
-    bool isViewProjectionUpdated = true;
-    auto visitingCamera = Camera::getVisitingCamera();
-    auto defaultCamera = Camera::getDefaultCamera();
-    if (visitingCamera == defaultCamera) {
-        isViewProjectionUpdated = visitingCamera->isViewProjectionUpdated();
-    }
     
-    if( flags != 0 || _dirty || _quadsDirty || isViewProjectionUpdated)
+    if( flags != 0 || _dirty || _quadsDirty)
     {
         Size s = Director::getInstance()->getVisibleSize();
         const Vec2 &anchor = getAnchorPoint();
@@ -284,7 +277,7 @@ void FastTMXLayer::updateIndexBuffer()
     if (!_indexBuffer)
     {
         auto device = backend::Device::getInstance();
-        _indexBuffer = device->newBuffer(indexBufferSize, backend::BufferType::INDEX, backend::BufferUsage::STATIC);
+        _indexBuffer = device->newBuffer(indexBufferSize, backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
     }
     _indexBuffer->updateData(&_indices[0], indexBufferSize);
 }
