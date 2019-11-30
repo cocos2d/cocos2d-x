@@ -34,7 +34,7 @@ Update-SubModule
 
 Download-Deps
 & cmake --version
-& choco install --yes cmake.portable
+& choco install --yes cmake.install
 & cmake --version
 & python -m pip install retry
 
