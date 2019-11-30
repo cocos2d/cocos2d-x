@@ -36,6 +36,8 @@ Download-Deps
 & cmake --version
 & choco install --yes cmake.install
 & cmake --version
+& choco install --yes cmake.portable
+& cmake --version
 & python -m pip install retry
 
 If ($env:build_type -eq "windows32_cmake_test" ) {
