@@ -326,9 +326,8 @@ enum class TextureCubeFace : uint32_t
     NEGATIVE_Z = 5
 };
 
-enum class ProgramType : int
+enum class ProgramType : size_t
 {
-    INVALID_PROGRAM = -1,
     POSITION_COLOR_LENGTH_TEXTURE,          //positionColorLengthTexture_vert, positionColorLengthTexture_frag
     POSITION_COLOR_TEXTURE_AS_POINTSIZE,    //positionColorTextureAsPointsize_vert, positionColor_frag
     POSITION_COLOR,                         //positionColor_vert,           positionColor_frag
@@ -362,6 +361,8 @@ enum class ProgramType : int
     SKINPOSITION_BUMPEDNORMAL_TEXTURE_3D,   //CC3D_skinPositionNormalTexture_vert,  CC3D_colorNormalTexture_frag
     PARTICLE_TEXTURE_3D,                    //CC3D_particle_vert,                   CC3D_particleTexture_frag
     PARTICLE_COLOR_3D,                      //CC3D_particle_vert,                   CC3D_particleColor_frag
+
+    CUSTOM_PROGRAM,                         //user-define program
 };
 
 ///built-in uniform name
