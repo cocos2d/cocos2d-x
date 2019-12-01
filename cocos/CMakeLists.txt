@@ -144,14 +144,21 @@ if(XCODE OR VS)
     cocos_mark_code_files("cocos2d")
 endif()
 
+# compile c as c++. needed for precompiled header
+set_source_files_properties(${COCOS_SPINE_SRC} base/ccFPSImages.c PROPERTIES LANGUAGE CXX)
+if(ANDROID)
+    set_source_files_properties(
+        audio/android/audio_utils/format.c
+        audio/android/audio_utils/primitives.c
+        PROPERTIES LANGUAGE CXX)
+endif()
+
+# precompiled header. Compilation time speedup, windows ~4x, others 1-2x
 if(${CMAKE_VERSION} VERSION_LESS "3.16.0")
 if(WINDOWS)
-    # precompiled header. Compilation time speedup ~4x.
     target_sources(cocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
     set_target_properties(cocos2d PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
-    # compile c as c++. needed for precompiled header
-    set_source_files_properties(${COCOS_SPINE_SRC} base/ccFPSImages.c PROPERTIES LANGUAGE CXX)
 endif()
 else()
     target_precompile_headers(cocos2d PRIVATE precheader.h)
