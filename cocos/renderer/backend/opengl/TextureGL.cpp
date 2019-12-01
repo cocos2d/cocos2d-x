@@ -210,12 +210,12 @@ void Texture2DGL::updateData(uint8_t* data, std::size_t width , std::size_t heig
 }
 
 void Texture2DGL::updateCompressedData(uint8_t *data, std::size_t width, std::size_t height,
-                                       std::size_t dataLen, std::size_t level)
+                                       std::size_t dataLen, std::size_t level, int index)
 {
+    if (!ensure(index)) return;
+
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureInfo.textures[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
@@ -257,10 +257,9 @@ void Texture2DGL::updateSubData(std::size_t xoffset, std::size_t yoffset, std::s
 
 void Texture2DGL::updateCompressedSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width,
                                           std::size_t height, std::size_t dataLen, std::size_t level,
-                                          uint8_t *data)
+                                          uint8_t *data, int index)
 {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureInfo.textures[0]);
+    if (!ensure(index)) return;
 
     glCompressedTexSubImage2D(GL_TEXTURE_2D,
                               level,

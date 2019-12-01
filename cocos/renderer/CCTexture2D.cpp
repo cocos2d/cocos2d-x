@@ -275,6 +275,7 @@ bool Texture2D::updateWithImage(Image* image, backend::PixelFormat format, int i
     case PixelFormat::PVRTC2A:
     case PixelFormat::PVRTC2:
     case PixelFormat::A8:
+    case PixelFormat::ETC:
         renderFormat = imagePixelFormat;
     default:
         break;
@@ -433,7 +434,7 @@ bool Texture2D::updateWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::
 
         if (info.compressed)
         {
-            _texture->updateCompressedData(data, width, height, dataLen, i);
+            _texture->updateCompressedData(data, width, height, dataLen, i, index);
         }
         else
         {

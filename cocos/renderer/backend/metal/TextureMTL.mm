@@ -261,14 +261,14 @@ void TextureMTL::updateSubData(std::size_t xoffset, std::size_t yoffset, std::si
         _hasMipmaps = true;
 }
 
-void TextureMTL::updateCompressedData(uint8_t *data, std::size_t width, std::size_t height, std::size_t dataLen, std::size_t level)
+void TextureMTL::updateCompressedData(uint8_t *data, std::size_t width, std::size_t height, std::size_t dataLen, std::size_t level, int index)
 {
-    updateCompressedSubData(0, 0, width, height, dataLen, level, data);
+    updateCompressedSubData(0, 0, width, height, dataLen, level, data, index);
 }
 
-void TextureMTL::updateCompressedSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t dataLen, std::size_t level, uint8_t *data)
+void TextureMTL::updateCompressedSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t dataLen, std::size_t level, uint8_t *data, int index)
 {
-    updateSubData(xoffset, yoffset, width, height, level, data);
+    updateSubData(xoffset, yoffset, width, height, level, data, index);
 }
 
 void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor, int index)

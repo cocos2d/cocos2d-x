@@ -96,7 +96,7 @@ public:
      * @param dataLen Specifies the totoal size of compressed image in bytes.
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      */
-    virtual void updateCompressedData(uint8_t* data, std::size_t width , std::size_t height, std::size_t dataLen, std::size_t level) override;
+    virtual void updateCompressedData(uint8_t* data, std::size_t width , std::size_t height, std::size_t dataLen, std::size_t level, int index = 0) override;
     
     /**
      * Update a two-dimensional texture subimage
@@ -119,7 +119,7 @@ public:
      * @param level Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
      * @param data Specifies a pointer to the compressed image data in memory.
      */
-    virtual void updateCompressedSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t dataLen, std::size_t level, uint8_t* data) override;
+    virtual void updateCompressedSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t dataLen, std::size_t level, uint8_t* data, int index = 0) override;
     
     /**
      * Update sampler
