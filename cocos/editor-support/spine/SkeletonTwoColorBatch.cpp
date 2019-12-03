@@ -124,7 +124,7 @@ namespace {
 
 namespace spine {
 
-TwoColorTrianglesCommand::TwoColorTrianglesCommand() :_materialID(0), _texture(nullptr), _blendType(BlendFunc::DISABLE), _alphaTextureID(0) {
+TwoColorTrianglesCommand::TwoColorTrianglesCommand() :_materialID(0), _texture(nullptr), _blendType(BlendFunc::DISABLE) {
 	_type = RenderCommand::Type::CUSTOM_COMMAND;
 }
 
