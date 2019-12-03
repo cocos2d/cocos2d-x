@@ -146,7 +146,7 @@ namespace spine {
 		
 		
 		// VBO handles & attribute locations
-		GLuint _vertexBufferHandle;
+		//GLuint _vertexBufferHandle;
 		V3F_C4B_C4B_T2F* _vertexBuffer;
 		uint32_t _numVerticesBuffer;
         uint32_t _numIndicesBuffer;
