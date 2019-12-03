@@ -37,6 +37,7 @@ using std::max;
 #define INITIAL_SIZE (10000)
 
 #include "renderer/ccShaders.h"
+#include "renderer/backend/Device.h"
 
 namespace spine {
 
@@ -56,7 +57,9 @@ void SkeletonBatch::destroyInstance () {
 
 SkeletonBatch::SkeletonBatch () {
     
-    _programState = new backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+    auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, positionTextureColor_frag);
+    _programState = std::make_shared<backend::ProgramState>(program);
+    program->autorelease();
 
     auto vertexLayout = _programState->getVertexLayout();
 
@@ -88,7 +91,6 @@ SkeletonBatch::~SkeletonBatch () {
 		delete _commandsPool[i];
 		_commandsPool[i] = nullptr;
 	}
-    CC_SAFE_RELEASE(_programState);
 }
 
 void SkeletonBatch::update (float delta) {

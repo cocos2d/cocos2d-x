@@ -35,6 +35,7 @@
 
 #include "xxhash.h"
 #include "renderer/ccShaders.h"
+#include "renderer/backend/Device.h"
 
 USING_NS_CC;
 #define EVENT_AFTER_DRAW_RESET_POSITION "director_after_draw"
@@ -101,7 +102,9 @@ namespace {
         {
             return;
         }
-        auto *programState = new backend::ProgramState(TWO_COLOR_TINT_VERTEX_SHADER, TWO_COLOR_TINT_FRAGMENT_SHADER);
+        auto program = backend::Device::getInstance()->newProgram(TWO_COLOR_TINT_VERTEX_SHADER, TWO_COLOR_TINT_FRAGMENT_SHADER);
+        auto *programState = new backend::ProgramState(program);
+        program->autorelease();
 
         __locPMatrix = programState->getUniformLocation("u_PMatrix");
         __locTexture = programState->getUniformLocation("u_texture");

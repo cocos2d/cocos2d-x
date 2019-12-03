@@ -59,20 +59,20 @@ namespace spine {
 		cocos2d::TrianglesCommand* nextFreeCommand ();
 
         cocos2d::TrianglesCommand* createNewTrianglesCommand();
-        cocos2d::backend::ProgramState      *   _programState = nullptr;
-        cocos2d::backend::UniformLocation       _locMVP;
-        cocos2d::backend::UniformLocation       _locTexture;
+        std::shared_ptr<cocos2d::backend::ProgramState>     _programState = nullptr;
+        cocos2d::backend::UniformLocation                   _locMVP;
+        cocos2d::backend::UniformLocation                   _locTexture;
 		
 		// pool of commands
-		std::vector<cocos2d::TrianglesCommand*> _commandsPool;
-		uint32_t                                _nextFreeCommand;
+		std::vector<cocos2d::TrianglesCommand*>             _commandsPool;
+		uint32_t                                            _nextFreeCommand;
 		
 		// pool of vertices
-		std::vector<cocos2d::V3F_C4B_T2F>       _vertices;
-		uint32_t                                _numVertices;
+		std::vector<cocos2d::V3F_C4B_T2F>                   _vertices;
+		uint32_t                                            _numVertices;
 		
 		// pool of indices
-		Vector<unsigned short>                  _indices;
+		Vector<unsigned short>                              _indices;
     };
 	
 }
