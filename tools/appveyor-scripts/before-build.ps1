@@ -35,6 +35,7 @@ Update-SubModule
 Download-Deps
 & cmake --version
 & choco install --yes cmake --installargs 'ADD_CMAKE_TO_PATH=User'
+& refreshenv
 & cmake --version
 & python -m pip install retry
 
