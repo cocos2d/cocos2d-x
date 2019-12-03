@@ -156,7 +156,7 @@ list(APPEND GAME_HEADER
      Classes/SceneTest/SceneTest.h
      Classes/ReleasePoolTest/ReleasePoolTest.h
      Classes/InputTest/MouseTest.h
-#     Classes/SpineTest/SpineTest.h
+     Classes/SpineTest/SpineTest.h
 #     Classes/Scene3DTest/Scene3DTest.h
      Classes/ParticleTest/ParticleTest.h
      Classes/EffectsTest/EffectsTest.h
@@ -284,7 +284,7 @@ list(APPEND GAME_SOURCE
      Classes/SchedulerTest/SchedulerTest.cpp
      Classes/ShaderTest/ShaderTest.cpp
      Classes/ShaderTest/ShaderTest2.cpp
-     #Classes/SpineTest/SpineTest.cpp
+     Classes/SpineTest/SpineTest.cpp
 #     Classes/Scene3DTest/Scene3DTest.cpp
      Classes/Sprite3DTest/DrawNode3D.cpp
      Classes/Sprite3DTest/Sprite3DTest.cpp

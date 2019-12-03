@@ -234,7 +234,6 @@ ProgramState *ProgramState::clone() const
     memcpy(cp->_fragmentUniformBuffer, _fragmentUniformBuffer, _fragmentUniformBufferSize);
 #endif
     CC_SAFE_RETAIN(cp->_program);
-
     return cp;
 }
 
