@@ -30,14 +30,15 @@ function Update-SubModule
     Pop-Location
 }
 
-Update-SubModule
-
-Download-Deps
 & cmake --version
-& choco install --yes cmake --installargs 'ADD_CMAKE_TO_PATH=User'
+& choco install --yes cmake --installargs 'ADD_CMAKE_TO_PATH=System'
 & refreshenv
 & cmake --version
 & python -m pip install retry
+
+Update-SubModule
+
+Download-Deps
 
 If ($env:build_type -eq "windows32_cmake_test" ) {
     & $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only
