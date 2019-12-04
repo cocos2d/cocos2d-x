@@ -195,7 +195,7 @@ bool UserDefault::getBoolForKey(const char* pKey, bool defaultValue)
         ret = (! strcmp(value, "true"));
     }
 
-    if (doc) delete doc;
+    delete doc;
 
     return ret;
 }
@@ -225,10 +225,7 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
         ret = atoi(value);
     }
 
-    if(doc)
-    {
-        delete doc;
-    }
+    delete doc;
 
 
     return ret;
@@ -271,7 +268,7 @@ double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
         ret = utils::atof(value);
     }
 
-    if (doc) delete doc;
+    delete doc;
 
     return ret;
 }
@@ -301,7 +298,7 @@ string UserDefault::getStringForKey(const char* pKey, const std::string & defaul
         ret = string(value);
     }
 
-    if (doc) delete doc;
+    delete doc;
 
     return ret;
 }
@@ -324,7 +321,7 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
         encodedData = (const char*)(node->FirstChild()->Value());
     }
     
-    Data ret = defaultValue;
+    Data ret;
     
     if (encodedData)
     {
@@ -335,8 +332,12 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
             ret.fastSet(decodedData, decodedDataLen);
         }
     }
+    else
+    {
+        ret = defaultValue;
+    }
     
-    if (doc) delete doc;
+    delete doc;
     
     return ret;    
 }
@@ -447,8 +448,7 @@ void UserDefault::destroyInstance()
 
 void UserDefault::setDelegate(UserDefault *delegate)
 {
-    if (_userDefault)
-        delete _userDefault;
+    delete _userDefault;
 
     _userDefault = delegate;
 }

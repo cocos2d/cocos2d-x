@@ -67,13 +67,13 @@ public:
     cocos2d::Node* getNodeByTag(int nTag);
     inline AttachComponentType getAttachComponentType(){return _attachComponent;}
 CC_CONSTRUCTOR_ACCESS:
-    SceneReader(void);
-    virtual ~SceneReader(void);
+    SceneReader();
+    virtual ~SceneReader();
     
 private:
     std::string getComponentClassName(const std::string& name);
 
-    cocos2d::Component* createComponent(const std::string classname);
+    cocos2d::Component* createComponent(const std::string& classname);
 
     
     cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent, AttachComponentType attachComponent);

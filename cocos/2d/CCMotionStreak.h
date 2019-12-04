@@ -119,8 +119,8 @@ public:
     virtual void getPosition(float* x, float* y) const override;
     virtual void setPositionX(float x) override;
     virtual void setPositionY(float y) override;
-    virtual float getPositionX(void) const override;
-    virtual float getPositionY(void) const override;
+    virtual float getPositionX() const override;
+    virtual float getPositionY() const override;
     virtual Vec3 getPosition3D() const override;
     /**
     * @js NA

@@ -79,34 +79,34 @@ NS_CC_BEGIN
 //
 //	/** 
 //	*/
-//	void _setDefaults(void);
+//	void _setDefaults();
 //
 //	/** 
 //	*/
-//	void _loadMesh (void);
+//	void _loadMesh ();
 //
 //	/** Generate spawn points from a mesh. The points will not be generated all at once, but
 //		gradually. In each call, the points on an edge are generated, until all vertices
 //		have been processed. In that case, mAllVerticesProcessed is set to true and this 
 //		function stops further processing.
 //	*/
-//	void _generatePoints (void);
+//	void _generatePoints ();
 //				
 //	/** 
 //	*/
-//	void _generatePointsFromMesh (void);
+//	void _generatePointsFromMesh ();
 //
 //	/** 
 //	*/
-//	void _generatePointsFromSubMesh (void);
+//	void _generatePointsFromSubMesh ();
 //
 //	/** 
 //	*/
-//	void _fillVertexBuffer(void);
+//	void _fillVertexBuffer();
 //
 //	/** 
 //	*/
-//	void _generatePointsFromVertexBuffer(void);
+//	void _generatePointsFromVertexBuffer();
 //
 //	/** 
 //	*/
@@ -120,12 +120,12 @@ NS_CC_BEGIN
 //	static const unsigned short DEFAULT_SEGMENTS;
 //	static const unsigned short DEFAULT_ITERATIONS;
 //
-//	Particle3DVertexEmitter(void);
-//	virtual ~Particle3DVertexEmitter(void) {};
+//	Particle3DVertexEmitter();
+//	virtual ~Particle3DVertexEmitter() {};
 //
 //	/** 
 //	*/
-//	unsigned short getIterations(void) const;
+//	unsigned short getIterations() const;
 //
 //	/** 
 //	*/
@@ -133,7 +133,7 @@ NS_CC_BEGIN
 //			
 //	/** 
 //	*/
-//	unsigned short getSegments(void) const;
+//	unsigned short getSegments() const;
 //
 //	/** 
 //	*/
@@ -141,7 +141,7 @@ NS_CC_BEGIN
 //
 //	/** 
 //	*/
-//	unsigned short getStep(void) const;
+//	unsigned short getStep() const;
 //
 //	/** 
 //	*/
@@ -149,11 +149,11 @@ NS_CC_BEGIN
 //
 //	/** 
 //	*/
-//	const std::string& getMeshName(void) const;
+//	const std::string& getMeshName() const;
 //
 //	/** 
 //	*/
-//	virtual void _notifyStart (void);
+//	virtual void _notifyStart ();
 //			
 //	/** 
 //	*/

@@ -10,7 +10,7 @@ cocos2d-x
 
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
-It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
+It is based on cocos2d-iphone, but instead of using Objective-C, it uses C++.
 It works on iOS, Android, OS X, Windows, Linux and Web platforms.
 
 **Cocos2d-x Framework Architecture**:
@@ -44,12 +44,11 @@ Download stable versions
 -----------------------
 
 * [Cocos2d-x stable versions](http://www.cocos2d-x.org/download)
-* [Cocos2d-JS Lite version](http://www.cocos2d-x.org/filecenter/jsbuilder)
 
 How to start a new game
 -----------------------
 
-1. Download the code from [cocos2d download site][4] or clone this repo (instructions above)
+1. Download the code from [cocos2d download site](http://www.cocos2d-x.org/download) or clone this repo (instructions above)
 2. Run `setup.py`
 3. Run the `cocos` script
 
@@ -65,7 +64,7 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
 ### Build and run a new project for Android ###
 
-Cocos2d-x supports Android Studio. Simple open the `proj.android` directory from within the Android Studio environment. More information can be found in our [documentation](http://www.cocos2d-x.org/docs/cocos2d-x/en/installation/Android-Studio.html).
+Cocos2d-x supports Android Studio. Simple open the `proj.android` directory from within the Android Studio environment. More information can be found in our [documentation](https://docs.cocos2d-x.org/cocos2d-x/v3/en/installation/Android-Studio.html).
    
 ### Build and run a new project for iOS ###
 
@@ -125,7 +124,7 @@ Documentations and samples
 -------------
 * [All Docs in a single place!](http://cocos2d-x.org/docs/)
 * [Online API Reference](http://cocos2d-x.org/docs/api-ref/index.html) _Note that Cocos2d-x, Cocos2d-JS and Cocos Creator have different API set_
-* [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
+* [Programmers Guide](https://docs.cocos2d-x.org/cocos2d-x/v3/en/basic_concepts/)
 * [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
 * [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
@@ -167,7 +166,7 @@ Build Requirements
 * Mac OS X 10.7+, Xcode 8+
 * or Ubuntu 14.04+, CMake 3.1+
 * or Windows 7+, VS 2015
-* Python 2.7.5+(NOT Python 3)
+* Python 2.7.5+ (NOT Python 3)
 * NDK r16+ is required to build Android games
 * Android Studio 3.0.0+ to build Android games(tested with 3.0.0)
 * JRE or JDK 1.6+ is required for web publishing
@@ -246,8 +245,7 @@ Or you can import the project located at `tests/cpp-empty-test/proj.android` usi
 Learning Resources
 --------------------------------
 
-* [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
-* [Sonar Systems Videos](https://www.youtube.com/user/sonarsystemslimited/search?query=cocos2d-x)
+* [Programmers Guide](https://docs.cocos2d-x.org/cocos2d-x/v3/en/basic_concepts/)
 * [Android Fundamentals](https://developer.android.com/guide/components/fundamentals.html)
 * [Make School Tutorials](https://www.makeschool.com/tutorials/)
 * [Games From Scratch](http://www.gamefromscratch.com/page/Cocos2d-x-CPP-Game-Programming-Tutorial-Series.aspx)
@@ -260,13 +258,6 @@ You can help us spread the word about cocos2d-x! We would surely appreciate it!
 * Talk about us on Facebook! Our [Facebook Page](https://www.facebook.com/cocos2dx/)
 * Tweet, Tweet! Our [Twitter](https://twitter.com/cocos2dx)
 * Read our [Blog](http://blog.cocos2d-x.org/) and promote it on your social media.
-* Become a [Regional Coordinator](http://discuss.cocos2d-x.org/t/we-need-regional-coordinators/24104)
-
-See what we are planning!
---------------------------------
-You can see exactly what we are planning to do with the Cocos family of products.
-
-* [Cocos2d-x roadmap](https://trello.com/b/Np6obnuE/cocos2d-x-roadmap)
 
 Where to get help
 --------------------------------
@@ -299,9 +290,6 @@ Contact us
    * Weibo: [http://t.sina.com.cn/cocos2dx][11]
 
 [1]: http://www.cocos2d-x.org "cocos2d-x"
-[2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
-[3]: http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Download
-[4]: http://www.cocos2d-x.org/download/version#Cocos2d-x
 [5]: http://www.box2d.org "Box2D"
 [6]: http://www.chipmunk-physics.net "Chipmunk2D"
 [7]: http://esotericsoftware.com/ "http://esotericsoftware.com/"

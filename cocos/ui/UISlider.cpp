@@ -467,7 +467,15 @@ void Slider::setPercent(int percent)
 
 void Slider::updateVisualSlider()
 {
-    float res = 1.0 * _percent / _maxPercent;
+    float res;
+    if (_maxPercent > 0)
+    {
+        res = 1.0f * _percent / _maxPercent;
+    }
+    else
+    {
+        res = 0.f;
+    }
     float dis = _barLength * res;
     _slidBallRenderer->setPosition(dis, _contentSize.height / 2.0f);
     if (_scale9Enabled)

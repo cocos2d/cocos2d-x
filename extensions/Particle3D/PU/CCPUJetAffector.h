@@ -46,14 +46,14 @@ public:
 
     /** 
     */
-    PUDynamicAttribute* getDynAcceleration(void) const {return _dynAcceleration;};
+    PUDynamicAttribute* getDynAcceleration() const {return _dynAcceleration;};
     void setDynAcceleration(PUDynamicAttribute* dynAcceleration);
 
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUJetAffector(void);
-    virtual ~PUJetAffector(void);
+    PUJetAffector();
+    virtual ~PUJetAffector();
 
 protected:
 

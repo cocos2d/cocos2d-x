@@ -33,7 +33,7 @@ NS_CC_BEGIN
 const float PUSphereSurfaceEmitter::DEFAULT_RADIUS = 10.0f;
 
 //-----------------------------------------------------------------------
-PUSphereSurfaceEmitter::PUSphereSurfaceEmitter(void) : 
+PUSphereSurfaceEmitter::PUSphereSurfaceEmitter() : 
     PUEmitter(),
     _radius(DEFAULT_RADIUS)
 {

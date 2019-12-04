@@ -30,7 +30,7 @@ using namespace cocos2d;
 
 namespace cocostudio {
 
-ProcessBase::ProcessBase(void)
+ProcessBase::ProcessBase()
     : _processScale(1)
     , _isPause(true)
     , _isComplete(true)
@@ -48,7 +48,7 @@ ProcessBase::ProcessBase(void)
 }
 
 
-ProcessBase::~ProcessBase(void)
+ProcessBase::~ProcessBase()
 {
 }
 

@@ -69,7 +69,7 @@ Tween::Tween()
 }
 
 
-Tween::~Tween(void)
+Tween::~Tween()
 {
     CC_SAFE_DELETE( _from );
     CC_SAFE_DELETE( _between );

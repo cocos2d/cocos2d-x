@@ -180,7 +180,7 @@ namespace
         return (LOGO_IMAGE[(x >> 3) + y * LOGO_RAW_LENGTH] >> (~x & 0x7)) & 1;
     }
     
-    float frand(void)
+    float frand()
     {
         return rand() / RAND_MAX;
     }
@@ -1593,8 +1593,6 @@ void PhysicsPositionRotationTest::onEnter()
     body->setRotationOffset(45);
     body->setTag(DRAG_BODYS_TAG);
     addChild(offsetPosNode);
-    
-    return;
 }
 
 std::string PhysicsPositionRotationTest::title() const

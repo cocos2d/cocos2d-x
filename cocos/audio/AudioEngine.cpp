@@ -90,9 +90,10 @@ public:
     AudioEngineThreadPool(int threads = 4)
         : _stop(false)
     {
+        _workers.reserve(threads);
         for (int index = 0; index < threads; ++index)
         {
-            _workers.emplace_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this)));
+            _workers.emplace_back(std::bind(&AudioEngineThreadPool::threadFunc, this));
         }
     }
 
@@ -138,7 +139,9 @@ private:
                 }
             }
 
-            task();
+            if (task) {
+                task();
+            }
         }
     }
 
@@ -152,11 +155,8 @@ private:
 
 void AudioEngine::end()
 {
-    if (s_threadPool)
-    {
-        delete s_threadPool;
-        s_threadPool = nullptr;
-    }
+    delete s_threadPool;
+    s_threadPool = nullptr;
 
     delete _audioEngineImpl;
     _audioEngineImpl = nullptr;
@@ -349,7 +349,7 @@ void AudioEngine::remove(int audioID)
             it->second.profileHelper->audioIDs.remove(audioID);
         }
         _audioPathIDMap[*it->second.filePath].remove(audioID);
-        _audioIDInfoMap.erase(audioID);
+        _audioIDInfoMap.erase(it);
     }
 }
 
@@ -394,16 +394,13 @@ void AudioEngine::uncache(const std::string &filePath)
                 {
                     itInfo->second.profileHelper->audioIDs.remove(audioID);
                 }
-                _audioIDInfoMap.erase(audioID);
+                _audioIDInfoMap.erase(itInfo);
             }
         }
         _audioPathIDMap.erase(filePath);
     }
 
-    if (_audioEngineImpl)
-    {
-        _audioEngineImpl->uncache(filePath);
-    }
+    _audioEngineImpl->uncache(filePath);
 }
 
 void AudioEngine::uncacheAll()
@@ -533,7 +530,7 @@ AudioProfile* AudioEngine::getProfile(const std::string &name)
     }
 }
 
-void AudioEngine::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback)
+void AudioEngine::preload(const std::string& filePath, const std::function<void(bool isSuccess)>& callback)
 {
     if (!isEnabled())
     {

@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "LabelTest.h"
+#include <cmath>
 #include "../testResource.h"
 #include "cocos2d.h"
 
@@ -1234,7 +1235,7 @@ void BitmapFontMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& tou
     this->_arrowsShouldRetain->setPosition(Vec2(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
         this->_arrowsShouldRetain->getPosition().y));
 
-    float labelWidth = fabs(this->_arrowsShouldRetain->getPosition().x - this->_labelShouldRetain->getPosition().x) * 2;
+    float labelWidth = std::fabs(this->_arrowsShouldRetain->getPosition().x - this->_labelShouldRetain->getPosition().x) * 2;
 
     _labelShouldRetain->setWidth(labelWidth);
 }

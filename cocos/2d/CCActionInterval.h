@@ -253,12 +253,12 @@ public:
     virtual Repeat* clone() const override;
     virtual Repeat* reverse() const override;
     virtual void startWithTarget(Node *target) override;
-    virtual void stop(void) override;
+    virtual void stop() override;
     /**
      * @param dt In seconds.
      */
     virtual void update(float dt) override;
-    virtual bool isDone(void) const override;
+    virtual bool isDone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     Repeat() {}
@@ -321,13 +321,13 @@ public:
     // Overrides
     //
     virtual RepeatForever* clone() const override;
-    virtual RepeatForever* reverse(void) const override;
+    virtual RepeatForever* reverse() const override;
     virtual void startWithTarget(Node* target) override;
     /**
      * @param dt In seconds.
      */
     virtual void step(float dt) override;
-    virtual bool isDone(void) const override;
+    virtual bool isDone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     RepeatForever()
@@ -1650,7 +1650,7 @@ public:
      *
      * @return An autoreleased ActionFloat object
      */
-    static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
+    static ActionFloat* create(float duration, float from, float to, const ActionFloatCallback& callback);
 
     /**
      * Overridden ActionInterval methods
@@ -1664,7 +1664,7 @@ CC_CONSTRUCTOR_ACCESS:
     ActionFloat() {};
     virtual ~ActionFloat() {};
 
-    bool initWithDuration(float duration, float from, float to, ActionFloatCallback callback);
+    bool initWithDuration(float duration, float from, float to, const ActionFloatCallback& callback);
 
 protected:
     /* From value */

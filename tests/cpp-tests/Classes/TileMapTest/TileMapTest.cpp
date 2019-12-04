@@ -80,6 +80,7 @@ TileMapTests::TileMapTests()
     ADD_TEST_CASE(TMXHexAxisXTest);
     ADD_TEST_CASE(Issue16105Test);
     ADD_TEST_CASE(Issue16512Test);
+    ADD_TEST_CASE(TileAnimTest);
 }
 
 TileDemo::TileDemo()
@@ -94,7 +95,7 @@ TileDemo::TileDemo()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-TileDemo::~TileDemo(void)
+TileDemo::~TileDemo()
 {
 }
 
@@ -1362,10 +1363,10 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     std::string resources = "TileMaps";        // partial paths are OK as resource paths.
     std::string file = resources + "/orthogonal-test1.tmx";
 
-    auto str = __String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
+    auto str = __String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file));
     CCASSERT(str != nullptr, "Unable to open file");
 
-    auto map = TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
+    auto map = TMXTiledMap::createWithXML(str->getCString() ,resources);
     addChild(map, 0, kTagTileMap);
 
     auto s = map->getContentSize();
@@ -1721,4 +1722,36 @@ Issue16512Test::Issue16512Test()
 std::string Issue16512Test::title() const
 {
     return "Github Issue #16512. Should not crash";
+}
+
+//------------------------------------------------------------------
+//
+// TileAnimationTest
+//
+//------------------------------------------------------------------
+TileAnimTest::TileAnimTest()
+{
+
+    map = TMXTiledMap::create("TileMaps/tile_animation_test.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan= CC_CALLBACK_2(TileAnimTest::onTouchBegan, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    map->setTileAnimEnabled(_animStarted);
+}
+
+std::string TileAnimTest::title() const
+{
+    return "Tile animation test. Click to toggle the animation";
+}
+
+void TileAnimTest::onTouchBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    _animStarted = !_animStarted;
+    map->setTileAnimEnabled(_animStarted);
 }

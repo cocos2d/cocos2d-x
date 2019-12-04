@@ -554,7 +554,7 @@ bool Texture2D::hasPremultipliedAlpha() const
     return _hasPremultipliedAlpha;
 }
 
-bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/)
+bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/, bool preMultipliedAlpha)
 {
     CCASSERT(dataLen>0 && pixelsWide>0 && pixelsHigh>0, "Invalid size");
 
@@ -562,13 +562,11 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
     MipmapInfo mipmap;
     mipmap.address = (unsigned char*)data;
     mipmap.len = static_cast<int>(dataLen);
-    return initWithMipmaps(&mipmap, 1, pixelFormat, pixelsWide, pixelsHigh);
+    return initWithMipmaps(&mipmap, 1, pixelFormat, pixelsWide, pixelsHigh, preMultipliedAlpha);
 }
 
-bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
+bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha)
 {
-
-
     //the pixelFormat must be a certain value 
     CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
     CCASSERT(pixelsWide>0 && pixelsHigh>0, "Invalid size");
@@ -579,7 +577,6 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         return false;
     }
     
-
     auto formatItr = _pixelFormatInfoTables.find(pixelFormat);
     if(formatItr == _pixelFormatInfoTables.end())
     {
@@ -706,7 +703,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _maxS = 1;
     _maxT = 1;
 
-    _hasPremultipliedAlpha = false;
+    _hasPremultipliedAlpha = preMultipliedAlpha;
     _hasMipmaps = mipmapsNum > 1;
 
     // shader
@@ -764,7 +761,6 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     PixelFormat      renderFormat = image->getRenderFormat();
     size_t           tempDataLen = image->getDataLen();
 
-
     if (image->getNumberOfMipmaps() > 1)
     {
         if (pixelFormat != image->getRenderFormat())
@@ -772,10 +768,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             CCLOG("cocos2d: WARNING: This image has more than 1 mipmaps and we will not convert the data format");
         }
 
-        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight);
-        
-        // set the premultiplied tag
-        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight, image->hasPremultipliedAlpha());
         
         return true;
     }
@@ -786,10 +779,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             CCLOG("cocos2d: WARNING: This image is compressed and we can't convert it for now");
         }
 
-        initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize);
-        
-        // set the premultiplied tag
-        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha());
         
         return true;
     }
@@ -800,18 +790,13 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
         pixelFormat = convertDataToFormat(tempData, tempDataLen, renderFormat, pixelFormat, &outTempData, &outTempDataLen);
 
-        initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize);
-
+        initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha());
 
         if (outTempData != nullptr && outTempData != tempData)
         {
-
             free(outTempData);
         }
 
-        // set the premultiplied tag
-        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
-        
         return true;
     }
 }

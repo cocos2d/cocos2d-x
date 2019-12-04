@@ -79,6 +79,15 @@ public:
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
+
+class ParseIntegerListTest : public UnitTestDemo
+{
+public:
+    CREATE_FUNC(ParseIntegerListTest);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class ParseUriTest : public UnitTestDemo
 {
 public:

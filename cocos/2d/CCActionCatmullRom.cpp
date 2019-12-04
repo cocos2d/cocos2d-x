@@ -38,7 +38,7 @@
 
 using namespace std;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 /*
  *  Implementation of PointArray
@@ -526,4 +526,4 @@ CatmullRomBy* CatmullRomBy::reverse() const
     return CatmullRomBy::create(_duration, reverse);
 }
 
-NS_CC_END;
+NS_CC_END

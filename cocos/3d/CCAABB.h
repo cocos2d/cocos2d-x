@@ -56,11 +56,6 @@ public:
     AABB(const Vec3& min, const Vec3& max);
     
     /**
-     * Constructor.
-     */
-    AABB(const AABB& box);
-    
-    /**
      * Gets the center point of the bounding box.
      */
     Vec3 getCenter();

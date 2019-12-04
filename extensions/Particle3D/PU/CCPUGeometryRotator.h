@@ -50,7 +50,7 @@ public:
     /** Returns the rotation speed. This is the speed controlled by the affector. Besides
         the default rotation speed, it is also possible to use the particles own rotation speed.
     */
-    PUDynamicAttribute* getRotationSpeed(void) const;
+    PUDynamicAttribute* getRotationSpeed() const;
 
     /** 
     */
@@ -59,7 +59,7 @@ public:
     /** Returns an indication whether the rotation speed is the same for all particles in this 
         particle technique, or whether the rotation speed of the particle itself is used.
     */
-    bool useOwnRotationSpeed (void) const;
+    bool useOwnRotationSpeed () const;
 
     /** Set the indication whether rotation speed of the particle itself is used.
     */
@@ -67,7 +67,7 @@ public:
 
     /** 
     */
-    const Vec3& getRotationAxis(void) const;
+    const Vec3& getRotationAxis() const;
 
     /** 
     */
@@ -75,7 +75,7 @@ public:
 
     /** 
     */
-    void resetRotationAxis(void);
+    void resetRotationAxis();
 
     virtual void copyAttributesTo (PUAffector* affector) override;
 

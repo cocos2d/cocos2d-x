@@ -23,7 +23,9 @@
  */
 
 #include "scripting/js-bindings/manual/network/jsb_socketio.h"
+
 #include "scripting/js-bindings/manual/jsb_helper.h"
+#include <utility>
 
 #include "network/WebSocket.h"
 #include "network/SocketIO.h"
@@ -87,7 +89,7 @@ public:
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
 
         jsval args;
-        if(data == "")
+        if(data.empty())
         {
             args = JSVAL_NULL;
         } else
@@ -116,7 +118,7 @@ public:
 
     void addEvent(const std::string& eventName, std::shared_ptr<JSFunctionWrapper> callback)
     {
-        _eventRegistry[eventName] = callback;
+        _eventRegistry[eventName] = std::move(callback);
     }
 
 private:

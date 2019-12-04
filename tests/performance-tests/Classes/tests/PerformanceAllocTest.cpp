@@ -403,7 +403,7 @@ std::string SpriteCreateEmptyTest::subtitle() const
 
 const char*  SpriteCreateEmptyTest::testName()
 {
-    return "Sprite::create(void)";
+    return "Sprite::create()";
 }
 
 ////////////////////////////////////////////////////////

@@ -76,6 +76,8 @@ static id s_sharedDirectorCaller;
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(appDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
         [nc addObserver:self selector:@selector(appDidBecomeInactive) name:UIApplicationWillResignActiveNotification object:nil];
+        [nc addObserver:self selector:@selector(appDidBecomeActive) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [nc addObserver:self selector:@selector(appDidBecomeInactive) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
         self.interval = 1;
     }
@@ -156,6 +158,12 @@ static id s_sharedDirectorCaller;
     clockFrequency *= 1000000000.0;
     // convert absolute time to seconds and should minus one frame time interval
     lastDisplayTime = (mach_absolute_time() / clockFrequency) - ((1.0 / 60) * self.interval);
+}
+
+//
+-(void)setActive:(BOOL)isActive
+{
+    isAppActive = isActive;
 }
 
 @end

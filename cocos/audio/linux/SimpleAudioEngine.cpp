@@ -84,7 +84,7 @@ void SimpleAudioEngine::stopBackgroundMusic(bool releaseData)
 {
     AudioEngine::stop(g_SimpleAudioEngineLinux->musicid);
     if (releaseData) {
-        AudioEngine::uncache(g_SimpleAudioEngineLinux->musicpath.c_str());
+        AudioEngine::uncache(g_SimpleAudioEngineLinux->musicpath);
     }
 }
 

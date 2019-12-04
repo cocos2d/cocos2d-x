@@ -108,7 +108,7 @@ PUBillboardChain::~PUBillboardChain()
     CC_SAFE_RELEASE(_indexBuffer);
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::setupChainContainers(void)
+void PUBillboardChain::setupChainContainers()
 {
     // Allocate enough space for everything
     _chainElementList.resize(_chainCount * _maxElementsPerChain);
@@ -124,7 +124,7 @@ void PUBillboardChain::setupChainContainers(void)
     }
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::setupVertexDeclaration(void)
+void PUBillboardChain::setupVertexDeclaration()
 {
     //if (_vertexDeclDirty)
     //{
@@ -159,7 +159,7 @@ void PUBillboardChain::setupVertexDeclaration(void)
     //}
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::setupBuffers(void)
+void PUBillboardChain::setupBuffers()
 {
     //setupVertexDeclaration();
     if (_buffersNeedRecreating)
@@ -345,7 +345,7 @@ void PUBillboardChain::clearChain(size_t chainIndex)
 
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::clearAllChains(void)
+void PUBillboardChain::clearAllChains()
 {
     for (size_t i = 0; i < _chainCount; ++i)
     {
@@ -587,7 +587,7 @@ void PUBillboardChain::updateVertexBuffer(const Mat4 &camMat)
 
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::updateIndexBuffer(void)
+void PUBillboardChain::updateIndexBuffer()
 {
 
     setupBuffers();

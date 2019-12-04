@@ -69,7 +69,6 @@ elseif(APPLE)
         set(APP_UI_RES
             proj.mac/Icon.icns
             proj.mac/Info.plist
-            proj.mac/en.lproj/MainMenu.xib
             proj.mac/en.lproj/InfoPlist.strings
             )
         list(APPEND GAME_SOURCE
@@ -103,6 +102,7 @@ if(APPLE)
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
                               MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist"
+                              LINK_FLAGS "-pagezero_size 10000 -image_base 100000000"
                               )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")

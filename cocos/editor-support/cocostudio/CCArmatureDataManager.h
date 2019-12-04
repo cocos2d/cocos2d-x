@@ -59,12 +59,12 @@ private:
     /**
      * @js ctor
      */
-    ArmatureDataManager(void);
+    ArmatureDataManager();
     /**
      * @js NA
      * @lua NA
      */
-    ~ArmatureDataManager(void);
+    ~ArmatureDataManager();
 
 public:
 

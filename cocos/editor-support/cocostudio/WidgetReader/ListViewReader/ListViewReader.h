@@ -51,7 +51,7 @@ namespace cocostudio
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* listViewOptions);
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* listViewOptions);
         
-        int getResourceType(std::string key);
+        int getResourceType(const std::string& key);
         
     };
 }

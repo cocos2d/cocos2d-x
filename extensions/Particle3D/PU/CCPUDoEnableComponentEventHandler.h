@@ -48,7 +48,7 @@ public:
 
     /** Get the name of the component that must be enabled or disabled.
     */
-    const std::string& getComponentName(void) const {return _componentName;};
+    const std::string& getComponentName() const {return _componentName;};
 
     /** Set the name of the component that must be enabled or disables.
     */
@@ -56,7 +56,7 @@ public:
 
     /** Get the value that identifies whether the component must be enabled or disabled.
     */
-    bool isComponentEnabled(void) const {return _componentEnabled;};
+    bool isComponentEnabled() const {return _componentEnabled;};
 
     /** Set the value that identifies whether the component must be enabled or disabled.
     */
@@ -64,7 +64,7 @@ public:
 
     /** Get the value that identifies whether the component must be enabled or disabled.
     */
-    PUComponentType getComponentType(void) const {return _componentType;};
+    PUComponentType getComponentType() const {return _componentType;};
 
     /** Set the value that identifies whether the component must be enabled or disabled.
     */
@@ -81,8 +81,8 @@ public:
     virtual void copyAttributesTo (PUEventHandler* eventHandler) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUDoEnableComponentEventHandler(void);
-    virtual ~PUDoEnableComponentEventHandler(void) {};
+    PUDoEnableComponentEventHandler();
+    virtual ~PUDoEnableComponentEventHandler() {};
 
 protected:
     // Identifies the name of component

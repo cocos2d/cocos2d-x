@@ -55,14 +55,14 @@ public:
 
     /** 
     */
-    unsigned int getEventFlag(void) const {return _eventFlag;};
+    unsigned int getEventFlag() const {return _eventFlag;};
     void setEventFlag(unsigned int eventFlag){_eventFlag = eventFlag;};
 
     virtual void copyAttributesTo (PUObserver* observer) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUOnEventFlagObserver(void);
-    virtual ~PUOnEventFlagObserver(void) {};
+    PUOnEventFlagObserver();
+    virtual ~PUOnEventFlagObserver() {};
 };
 
 NS_CC_END

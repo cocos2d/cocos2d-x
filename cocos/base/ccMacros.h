@@ -276,7 +276,7 @@ CC_ASSERT(__gl_error_code == GL_NO_ERROR, "Error"); \
  /*********************************/
  /** 64bits Program Sense Macros **/
  /*********************************/
-#if defined(_M_X64) || defined(_WIN64) || defined(__LP64__) || defined(_LP64) || defined(__x86_64)
+#if defined(_M_X64) || defined(_WIN64) || defined(__LP64__) || defined(_LP64) || defined(__x86_64) || defined(__arm64__) || defined(__aarch64__)
 #define CC_64BITS 1
 #else
 #define CC_64BITS 0

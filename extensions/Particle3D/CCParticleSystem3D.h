@@ -259,7 +259,7 @@ public:
      */
     State getState() const { return _state; }
 
-    bool isKeepLocal(void) const { return _keepLocal; }
+    bool isKeepLocal() const { return _keepLocal; }
     void setKeepLocal(bool keepLocal);
 
      /** 
@@ -270,7 +270,7 @@ public:
     /**
      * is enabled
      */
-    bool isEnabled(void) const { return _isEnabled; }
+    bool isEnabled() const { return _isEnabled; }
 
 CC_CONSTRUCTOR_ACCESS:
     ParticleSystem3D();

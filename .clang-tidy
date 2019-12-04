@@ -1,0 +1,33 @@
+---
+Checks: >
+  -*,
+  performance-faster-string-find,
+  performance-for-range-copy,
+  performance-implicit-conversion-in-loop,
+  performance-inefficient-algorithm,
+  performance-inefficient-vector-operation,
+  performance-move-const-arg,
+  performance-move-constructor-init,
+  performance-type-promotion-in-math-fn,
+  performance-unnecessary-copy-initialization,
+  performance-unnecessary-value-param,
+  readability-container-size-empty,
+  readability-delete-null-pointer,
+  readability-redundant-control-flow,
+  readability-redundant-string-cstr,
+  readability-string-compare,
+  bugprone-argument-comment,
+  bugprone-bool-pointer-implicit-conversion,
+  bugprone-dangling-handle,
+  bugprone-fold-init-type,
+  bugprone-forward-declaration-namespace,
+  bugprone-forwarding-reference-overload,
+  bugprone-inaccurate-erase,
+  bugprone-incorrect-roundings,
+  modernize-redundant-void-arg,
+  modernize-use-emplace,
+
+WarningsAsErrors: '*'
+HeaderFilterRegex: '/(?!external)/.*'
+AnalyzeTemporaryDtors: false
+FormatStyle:     none

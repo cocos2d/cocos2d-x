@@ -84,7 +84,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~ArmatureAnimation(void);
+    virtual ~ArmatureAnimation();
 
     /**
      * Init with a Armature
@@ -194,8 +194,8 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Ref *target, SEL_FrameEventCallFunc callFunc);
     
-    void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener);
-    void setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener);
+    void setMovementEventCallFunc(const std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)>& listener);
+    void setFrameEventCallFunc(const std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)>& listener);
 
     virtual void setAnimationData(AnimationData *data) 
     {

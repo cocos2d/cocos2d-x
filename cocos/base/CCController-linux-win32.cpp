@@ -4740,7 +4740,7 @@ class CC_DLL ControllerImpl
 			// Check if we already have an available input controller profile. If so, attach it it to the controller.
 			for (const auto & it : s_controllerProfiles)
 			{
-				if ( deviceName.compare(it.first) == 0 )
+				if ( deviceName == it.first )
 				{
 					// Found controller profile. Attach it to the controller:
 					CCLOG("ControllerImpl: Found input profile for controller: %s", deviceName.c_str());

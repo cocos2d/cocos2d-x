@@ -59,7 +59,7 @@ PolygonInfo::PolygonInfo()
     triangles.indices = nullptr;
     triangles.vertCount = 0;
     triangles.indexCount = 0;
-};
+}
 
 PolygonInfo::PolygonInfo(const PolygonInfo& other)
 : triangles()
@@ -76,7 +76,7 @@ PolygonInfo::PolygonInfo(const PolygonInfo& other)
     triangles.indexCount = other.triangles.indexCount;
     memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount * sizeof(other.triangles.verts[0]));
     memcpy(triangles.indices, other.triangles.indices, other.triangles.indexCount * sizeof(other.triangles.indices[0]));
-};
+}
 
 PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
 {
@@ -416,7 +416,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
         }
         else
         {
-            _points.push_back(Vec2((float)(curx - rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
+            _points.emplace_back((float)(curx - rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor);
         }
 
         count++;
@@ -569,7 +569,7 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     }
     for(const auto& pt : p2->Contour)
     {
-        outPoints.push_back(Vec2(pt.X/PRECISION, pt.Y/PRECISION));
+        outPoints.emplace_back(pt.X/PRECISION, pt.Y/PRECISION);
     }
     return outPoints;
 }

@@ -462,7 +462,7 @@ namespace cocostudio
         auto imageFileNameDic = options->backGroundImageData();
         int imageFileNameType = imageFileNameDic->resourceType();
         std::string imageFileName = imageFileNameDic->path()->c_str();
-        if (imageFileName != "")
+        if (!imageFileName.empty())
         {
             switch (imageFileNameType)
             {
@@ -539,11 +539,11 @@ namespace cocostudio
         //         listView->setGravity(gravity);
         
         std::string directionType = options->directionType()->c_str();
-        if (directionType == "")
+        if (directionType.empty())
         {
             listView->setDirection(ListView::Direction::HORIZONTAL);
             std::string verticalType = options->verticalType()->c_str();
-            if (verticalType == "")
+            if (verticalType.empty())
             {
                 listView->setGravity(ListView::Gravity::TOP);
             }
@@ -560,7 +560,7 @@ namespace cocostudio
         {
             listView->setDirection(ListView::Direction::VERTICAL);
             std::string horizontalType = options->horizontalType()->c_str();
-            if (horizontalType == "")
+            if (horizontalType.empty())
             {
                 listView->setGravity(ListView::Gravity::LEFT);
             }
@@ -609,7 +609,7 @@ namespace cocostudio
         return listView;
     }
     
-    int ListViewReader::getResourceType(std::string key)
+    int ListViewReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

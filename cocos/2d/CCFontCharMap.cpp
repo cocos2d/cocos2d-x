@@ -35,7 +35,7 @@ NS_CC_BEGIN
 FontCharMap * FontCharMap::create(const std::string& plistFile)
 {
     std::string pathStr = FileUtils::getInstance()->fullPathForFilename(plistFile);
-    std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
+    std::string relPathStr = pathStr.substr(0, pathStr.find_last_of('/'))+"/";
 
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr);
 
@@ -126,6 +126,7 @@ FontAtlas * FontCharMap::createFontAtlas()
     tempDefinition.width = _itemWidth / contentScaleFactor;
     tempDefinition.height = _itemHeight / contentScaleFactor;
     tempDefinition.xAdvance = _itemWidth;
+    tempDefinition.rotated = false;
 
     int charId = _mapStartChar;
     for (int row = 0; row < itemsPerColumn; ++row)

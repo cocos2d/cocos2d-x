@@ -154,7 +154,7 @@ void PUBeamRender::particleExpired( PUParticleSystem3D* /*particleSystem*/, PUPa
 }
 
 //-----------------------------------------------------------------------
-bool PUBeamRender::isUseVertexColours(void) const
+bool PUBeamRender::isUseVertexColours() const
 {
     return _useVertexColours;
 } 
@@ -169,7 +169,7 @@ void PUBeamRender::setUseVertexColours(bool useVertexColours)
     _billboardChain->setUseTextureCoords(!_useVertexColours);
 } 
 //-----------------------------------------------------------------------
-size_t PUBeamRender::getMaxChainElements(void) const
+size_t PUBeamRender::getMaxChainElements() const
 {
     return _maxChainElements;
 } 
@@ -179,7 +179,7 @@ void PUBeamRender::setMaxChainElements(size_t maxChainElements)
     _maxChainElements = maxChainElements;
 } 
 //-----------------------------------------------------------------------
-float PUBeamRender::getUpdateInterval(void) const
+float PUBeamRender::getUpdateInterval() const
 {
     return _updateInterval;
 }
@@ -189,7 +189,7 @@ void PUBeamRender::setUpdateInterval(float updateInterval)
     _updateInterval = updateInterval;
 }
 //-----------------------------------------------------------------------
-float PUBeamRender::getDeviation(void) const
+float PUBeamRender::getDeviation() const
 {
     return _deviation;
 }
@@ -199,7 +199,7 @@ void PUBeamRender::setDeviation(float deviation)
     _deviation = deviation;
 }
 //-----------------------------------------------------------------------
-size_t PUBeamRender::getNumberOfSegments(void) const
+size_t PUBeamRender::getNumberOfSegments() const
 {
     return _numberOfSegments;
 }
@@ -209,7 +209,7 @@ void PUBeamRender::setNumberOfSegments(size_t numberOfSegments)
     _numberOfSegments = numberOfSegments;
 }
 //-----------------------------------------------------------------------
-bool PUBeamRender::isJump(void) const
+bool PUBeamRender::isJump() const
 {
     return _jump;
 }
@@ -219,7 +219,7 @@ void PUBeamRender::setJump(bool jump)
     _jump = jump;
 }
 //-----------------------------------------------------------------------
-PUBillboardChain::TexCoordDirection PUBeamRender::getTexCoordDirection(void) const
+PUBillboardChain::TexCoordDirection PUBeamRender::getTexCoordDirection() const
 {
     return _texCoordDirection;
 }
@@ -328,7 +328,7 @@ void PUBeamRender::updateRender( PUParticle3D *particle, float deltaTime, bool /
 }
 
 //-----------------------------------------------------------------------
-void PUBeamRender::destroyAll(void)
+void PUBeamRender::destroyAll()
 {
     if (!_particleSystem || !_billboardChain)
         return;

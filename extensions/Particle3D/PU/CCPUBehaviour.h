@@ -45,7 +45,7 @@ public:
 
     /** Todo
     */
-    const std::string& getBehaviourType(void) const {return _behaviourType;};
+    const std::string& getBehaviourType() const {return _behaviourType;};
     void setBehaviourType(const std::string& behaviourType) {_behaviourType = behaviourType;};
 
     /** Notify that the Behaviour is rescaled.
@@ -70,8 +70,8 @@ public:
     virtual void copyAttributesTo (PUBehaviour* behaviour);
 
 CC_CONSTRUCTOR_ACCESS:
-    PUBehaviour(void);
-    virtual ~PUBehaviour(void);
+    PUBehaviour();
+    virtual ~PUBehaviour();
 
 protected:
     PUParticleSystem3D* _particleSystem;

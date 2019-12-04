@@ -43,6 +43,7 @@ DrawPrimitivesTests::DrawPrimitivesTests()
     ADD_TEST_CASE(DrawNodeTest);
     ADD_TEST_CASE(PrimitivesCommandTest);
     ADD_TEST_CASE(Issue11942Test);
+    ADD_TEST_CASE(Issue19641Test);
 }
 
 string DrawPrimitivesBaseTest::title() const
@@ -434,6 +435,30 @@ string Issue11942Test::title() const
 string Issue11942Test::subtitle() const
 {
     return "drawCircle() with width";
+}
+
+//
+// Issue19641Tes
+// Test draw a concave polygon
+//
+Issue19641Test::Issue19641Test()
+{
+    auto draw = DrawNode::create();
+    addChild(draw, 10);
+    
+    auto s = Director::getInstance()->getWinSize();
+    Vec2 concavePoints[] = { Vec2(s.width/2-70,130), Vec2(s.width/2+70,130), Vec2(s.width/2+70,160), Vec2(s.width/2+50,145), Vec2(s.width/2-40,145), Vec2(s.width/2-70,160) };
+    draw->drawPolygon(concavePoints, sizeof(concavePoints)/sizeof(concavePoints[0]), Color4F(1,0,0,0.5), 4, Color4F(0,1,0,0.5));
+}
+
+string Issue19641Test::title() const
+{
+    return "GitHub Issue #19641";
+}
+
+string Issue19641Test::subtitle() const
+{
+    return "draw a concave polygon";
 }
 
 

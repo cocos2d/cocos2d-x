@@ -56,8 +56,8 @@ public:
     virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUSphereSurfaceEmitter(void);
-    virtual ~PUSphereSurfaceEmitter(void) {};
+    PUSphereSurfaceEmitter();
+    virtual ~PUSphereSurfaceEmitter() {};
 
 protected:
     float _radius;

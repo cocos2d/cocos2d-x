@@ -84,7 +84,7 @@ bool UIListViewTest_Vertical::init()
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
         
         Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
-        Size backgroundSize = background->getContentSize();
+        const Size& backgroundSize = background->getContentSize();
         
         
         // create list view ex data

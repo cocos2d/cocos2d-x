@@ -53,7 +53,7 @@ static bool isValidUniform(const char* name);
 Material* Material::createWithFilename(const std::string& filepath)
 {
     auto validfilename = FileUtils::getInstance()->fullPathForFilename(filepath);
-    if (validfilename.size() > 0) {
+    if (!validfilename.empty()) {
         auto mat = new (std::nothrow) Material();
         if (mat && mat->initWithFile(validfilename))
         {
@@ -172,7 +172,7 @@ bool Material::parseTechnique(Properties* techniqueProperties)
         }
         else if (strcmp(name, "renderState") == 0)
         {
-            parseRenderState(this, space);
+            parseRenderState(technique, space);
         }
 
         space = techniqueProperties->getNextNamespace();
@@ -465,7 +465,7 @@ const Vector<Technique*>& Material::getTechniques() const
 Technique* Material::getTechniqueByName(const std::string& name)
 {
     for(const auto& technique : _techniques) {
-        if (technique->getName().compare(name)==0)
+        if (technique->getName() == name)
             return technique;
     }
     return nullptr;

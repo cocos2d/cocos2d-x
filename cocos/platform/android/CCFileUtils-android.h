@@ -76,6 +76,8 @@ public:
     
     virtual long getFileSize(const std::string& filepath) const override;
     virtual std::vector<std::string> listFiles(const std::string& dirPath) const override;
+
+    virtual bool removeDirectory(const std::string& dirPath) const override;
 private:
     virtual bool isFileExistInternal(const std::string& strFilePath) const override;
     virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;

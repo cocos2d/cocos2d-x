@@ -304,7 +304,7 @@ void UIRadioButtonTwoGroupsTest::addLog(const std::string& log)
     
     if(_numberOfLogLines > 10)
     {
-        size_t pos = existingLog.find("\n") + 1;
+        size_t pos = existingLog.find('\n') + 1;
         std::string newLog = existingLog.substr(pos);
         existingLog = newLog;
         --_numberOfLogLines;

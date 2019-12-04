@@ -47,19 +47,19 @@ public:
 
     /** 
     */
-    float getMaxDistance(void) const;
+    float getMaxDistance() const;
     void setMaxDistance(float maxDistance);
 
     /** 
     */
-    float getMinDistance(void) const;
+    float getMinDistance() const;
     void setMinDistance(float minDistance);
 
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUParticleFollower(void);
-    virtual ~PUParticleFollower(void);
+    PUParticleFollower();
+    virtual ~PUParticleFollower();
 
 protected:
     float _minDistance;

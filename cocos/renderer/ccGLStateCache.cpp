@@ -61,7 +61,7 @@ namespace
 
 namespace GL {
 
-void invalidateStateCache( void )
+void invalidateStateCache()
 {
     Director::getInstance()->resetMatrixStack();
     s_currentProjectionMatrix = -1;
@@ -138,7 +138,7 @@ void blendFunc(GLenum sfactor, GLenum dfactor)
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
-void blendResetToCache(void)
+void blendResetToCache()
 {
 	glBlendEquation(GL_FUNC_ADD);
 #if CC_ENABLE_GL_STATE_CACHE
@@ -270,7 +270,7 @@ void enableVertexAttribs(uint32_t flags)
 
 // GL Uniforms functions
 
-void setProjectionMatrixDirty( void )
+void setProjectionMatrixDirty()
 {
     s_currentProjectionMatrix = -1;
 }

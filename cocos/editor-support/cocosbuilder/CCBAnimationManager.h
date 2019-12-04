@@ -76,11 +76,11 @@ public:
     
 
     void addDocumentCallbackNode(cocos2d::Node *node);
-    void addDocumentCallbackName(std::string name);
+    void addDocumentCallbackName(const std::string& name);
     void addDocumentCallbackControlEvents(cocos2d::extension::Control::EventType eventType);
     
     void addDocumentOutletNode(cocos2d::Node *node);
-    void addDocumentOutletName(std::string name);
+    void addDocumentOutletName(const std::string& name);
 
     void setDocumentControllerName(const std::string &name);
     

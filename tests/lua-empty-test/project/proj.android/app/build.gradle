@@ -50,6 +50,7 @@ android {
         java.srcDir "src"
         res.srcDir "res"
         manifest.srcFile "AndroidManifest.xml"
+        assets.srcDir "assets"
     }
 
     externalNativeBuild {
@@ -114,11 +115,19 @@ def getCocosCommandPath() {
         return 'cocos.bat'
     }
     else {
+
+        def env_console_path = System.getenv("COCOS_CONSOLE_ROOT")
+
+        if (env_console_path != null && !env_console_path.trim().isEmpty()) {
+            return new File(env_console_path.trim() + '/cocos').absolutePath
+        }
+
         // on unix like system, can not get environments variables easily
         // so run a shell script to get environment variable sets by cocos2d-x setup.py
         new ByteArrayOutputStream().withStream { os ->
             def result = exec {
-                executable = project.file('get_environment.sh')
+                executable = "/bin/bash"
+                args = [ "-i", project.file('get_environment.sh')]
                 standardOutput = os
             }
             ext.console_path = os.toString().trim()
@@ -160,23 +169,24 @@ def compileLua(srcDir, dstDir, doCompile, is64bit, doEncrypt) {
 }
 
 android.applicationVariants.all { variant ->
-    // delete previous files first
-    delete "${buildDir}/intermediates/assets/${variant.dirName}"
-
-    variant.mergeAssets.doLast {
+    delete "${projectDir}/assets"
+    def targetName = variant.name.capitalize()
+    def copyTaskName = "copy${targetName}ResourcesToAssets"
+    
+    tasks.register(copyTaskName) {
         copy {
-           from "${buildDir}/../../../../res"
-           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+           from "${projectDir}/../../../res"
+           into "${projectDir}/assets/res"
         }
 
         copy {
-            from "${buildDir}/../../../../src"
-            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+            from "${projectDir}/../../../src"
+            into "${projectDir}/assets/src"
         }
 
         copy {
-            from "${buildDir}/../../../../../../cocos/scripting/lua-bindings/script"
-            into  "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+            from "${projectDir}/../../../../../cocos/scripting/lua-bindings/script"
+            into  "${projectDir}/assets/src/cocos"
         }
 
         // compile & encrypt the scripts if necessary
@@ -220,37 +230,38 @@ android.applicationVariants.all { variant ->
             // invoke cocos command to compile & encrypt the lua files
             switch (buildType) {
                 case -1:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                    compileLua("${projectDir}/assets/src",
+                               "${projectDir}/assets/src",
                                false, false, encryptLua)
                     break
                 case 0:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                    compileLua("${projectDir}/assets/src",
+                               "${projectDir}/assets/src",
                                true, false, encryptLua)
                     break
                 case 1:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
+                    compileLua("${projectDir}/assets/src",
+                               "${projectDir}/assets/src/64bit",
                                true, true, encryptLua)
 
                     // remove the lua files in src dir
-                    delete fileTree("${buildDir}/intermediates/assets/${variant.dirName}/src") {
+                    delete fileTree("${projectDir}/assets/src") {
                         include '**/*.lua'
                     }
-                    delete "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+                    delete "${projectDir}/assets/src/cocos"
                     break
                 case 2:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
+                    compileLua("${projectDir}/assets/src",
+                               "${projectDir}/assets/src/64bit",
                                true, true, encryptLua)
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                    compileLua("${projectDir}/assets/src",
+                               "${projectDir}/assets/src",
                                true, false, encryptLua)
                     break
             }
         }
     }
+    tasks.getByName("pre${targetName}Build").dependsOn copyTaskName
 }
 
 dependencies {

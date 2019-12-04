@@ -46,7 +46,7 @@ NavMeshTests::NavMeshTests()
     ADD_TEST_CASE(NavMeshBasicTestDemo);
     ADD_TEST_CASE(NavMeshAdvanceTestDemo);
 #endif
-};
+}
 
 #if ( CC_USE_NAVMESH == 0 ) || ( CC_USE_PHYSICS == 0 )
 void NavMeshDisabled::onEnter()
@@ -63,14 +63,14 @@ void NavMeshDisabled::onEnter()
 }
 #else
 
-NavMeshBaseTestDemo::NavMeshBaseTestDemo(void)
+NavMeshBaseTestDemo::NavMeshBaseTestDemo()
     : _camera(nullptr)
     , _needMoveAgents(false)
 {
 
 }
 
-NavMeshBaseTestDemo::~NavMeshBaseTestDemo(void)
+NavMeshBaseTestDemo::~NavMeshBaseTestDemo()
 {
     for (auto iter : _agents){
         AgentUserData *data = static_cast<AgentUserData *>(iter.first->getUserData());
@@ -115,7 +115,7 @@ void NavMeshBaseTestDemo::onTouchesBegan(const std::vector<cocos2d::Touch*>& tou
 
 void NavMeshBaseTestDemo::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
-    if (touches.size() && _camera)
+    if (!touches.empty() && _camera)
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();
@@ -198,7 +198,7 @@ void NavMeshBaseTestDemo::createAgent(const Vec3 &pos)
         animate->setSpeed(0);
     }
 
-    _agents.push_back(std::make_pair(agent, animate));
+    _agents.emplace_back(agent, animate);
 }
 
 void NavMeshBaseTestDemo::createObstacle(const Vec3 &pos)
@@ -263,12 +263,12 @@ void NavMeshBaseTestDemo::update(float delta)
     }
 }
 
-NavMeshBasicTestDemo::NavMeshBasicTestDemo(void)
+NavMeshBasicTestDemo::NavMeshBasicTestDemo()
 {
 
 }
 
-NavMeshBasicTestDemo::~NavMeshBasicTestDemo(void)
+NavMeshBasicTestDemo::~NavMeshBasicTestDemo()
 {
 }
 
@@ -335,12 +335,12 @@ void NavMeshBasicTestDemo::onEnter()
     createAgent(result.hitPosition);
 }
 
-NavMeshAdvanceTestDemo::NavMeshAdvanceTestDemo(void)
+NavMeshAdvanceTestDemo::NavMeshAdvanceTestDemo()
 {
 
 }
 
-NavMeshAdvanceTestDemo::~NavMeshAdvanceTestDemo(void)
+NavMeshAdvanceTestDemo::~NavMeshAdvanceTestDemo()
 {
 
 }

@@ -88,14 +88,14 @@ Properties::Properties(Data* data, ssize_t* dataIdx, const std::string& name, co
 
 Properties* Properties::createNonRefCounted(const std::string& url)
 {
-    if (url.size() == 0)
+    if (url.empty())
     {
         CCLOGERROR("Attempting to create a Properties object from an empty URL!");
         return nullptr;
     }
 
     // Calculate the file and full namespace path from the specified url.
-    std::string urlString = url;
+    const std::string& urlString = url;
     std::string fileString;
     std::vector<std::string> namespacePath;
     calculateNamespacePath(urlString, fileString, namespacePath);
@@ -139,8 +139,8 @@ static bool isVariable(const char* str, char* outName, size_t outSize)
         size_t size = len - 3;
         if (size > (outSize - 1))
             size = outSize - 1;
-        strncpy(outName, str + 2, len - 3);
-        outName[len - 3] = 0;
+        strncpy(outName, str + 2, size);
+        outName[size] = 0;
         return true;
     }
 
@@ -235,7 +235,7 @@ void Properties::readProperties()
                 else
                 {
                     // Normal name/value pair
-                    _properties.push_back(Property(name, value));
+                    _properties.emplace_back(name, value);
                 }
             }
             else
@@ -383,11 +383,11 @@ void Properties::readProperties()
                             // Store "name value" as a name/value pair, or even just "name".
                             if (value != NULL)
                             {
-                                _properties.push_back(Property(name, value));
+                                _properties.emplace_back(name, value);
                             }
                             else
                             {
-                                _properties.push_back(Property(name, ""));
+                                _properties.emplace_back(name, "");
                             }
                         }
                     }
@@ -832,7 +832,7 @@ bool Properties::setString(const char* name, const char* value)
         }
 
         // There is no property with this name, so add one
-        _properties.push_back(Property(name, value ? value : ""));
+        _properties.emplace_back(name, value ? value : "");
     }
     else
     {
@@ -1117,12 +1117,12 @@ void calculateNamespacePath(const std::string& urlString, std::string& fileStrin
 {
     // If the url references a specific namespace within the file,
     // calculate the full namespace path to the final namespace.
-    size_t loc = urlString.rfind("#");
+    size_t loc = urlString.rfind('#');
     if (loc != std::string::npos)
     {
         fileString = urlString.substr(0, loc);
         std::string namespacePathString = urlString.substr(loc + 1);
-        while ((loc = namespacePathString.find("/")) != std::string::npos)
+        while ((loc = namespacePathString.find('/')) != std::string::npos)
         {
             namespacePath.push_back(namespacePathString.substr(0, loc));
             namespacePathString = namespacePathString.substr(loc + 1);
@@ -1139,7 +1139,7 @@ Properties* getPropertiesFromNamespacePath(Properties* properties, const std::ve
 {
     // If the url references a specific namespace within the file,
     // return the specified namespace or notify the user if it cannot be found.
-    if (namespacePath.size() > 0)
+    if (!namespacePath.empty())
     {
         size_t size = namespacePath.size();
         properties->rewind();

@@ -533,7 +533,7 @@ public:
      * @param isFontElement use attributes of text tag
      * @param handleVisitEnter callback
      */
-    static void setTagDescription(const std::string& tag, bool isFontElement, VisitEnterHandler handleVisitEnter);
+    static void setTagDescription(const std::string& tag, bool isFontElement, const VisitEnterHandler& handleVisitEnter);
 
     /**
      * @brief remove a callback to own tag.

@@ -140,7 +140,7 @@ void CCBAnimationManager::addDocumentCallbackNode(Node *node)
     _documentCallbackNodes.pushBack(node);
 }
 
-void CCBAnimationManager::addDocumentCallbackName(std::string name)
+void CCBAnimationManager::addDocumentCallbackName(const std::string& name)
 {
     _documentCallbackNames.push_back(Value(name));
 }
@@ -170,7 +170,7 @@ void CCBAnimationManager::addDocumentOutletNode(Node *node)
     _documentOutletNodes.pushBack(node);
 }
 
-void CCBAnimationManager::addDocumentOutletName(std::string name)
+void CCBAnimationManager::addDocumentOutletName(const std::string& name)
 {
     _documentOutletNames.push_back(Value(name));
 }
@@ -284,7 +284,7 @@ int CCBAnimationManager::getSequenceId(const char* pSequenceName)
     string seqName(pSequenceName);
     for (auto& seq : _sequences)
     {
-        if (seqName.compare(seq->getName()) == 0)
+        if (seqName == seq->getName())
         {
             return seq->getSequenceId();
         }
@@ -722,7 +722,7 @@ Sequence*  CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* ch
             }
         }
     }
-    if(actions.size() < 1) return nullptr;
+    if(actions.empty()) return nullptr;
     
     return Sequence::create(actions);
 }
@@ -764,7 +764,7 @@ Sequence*  CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* chann
         actions.pushBack(CCBSoundEffect::actionWithSoundFile(soundFile, pitch, pan, gain));
     }
 
-    if(actions.size() < 1) return nullptr;
+    if(actions.empty()) return nullptr;
     
     return Sequence::create(actions);
 }

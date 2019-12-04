@@ -90,7 +90,7 @@ inline double random(double min, double max) {
  */
 inline int random() {
     return cocos2d::random(0, RAND_MAX);
-};
+}
 
 /**
  * Returns a random float between -1 and 1.
@@ -104,7 +104,7 @@ inline float rand_minus1_1() {
     return ((std::rand() / (float)RAND_MAX) * 2) -1;
 
 //    return cocos2d::random(-1.f, 1.f);
-};
+}
 
 /**
  * Returns a random float between 0 and 1.
@@ -118,7 +118,7 @@ inline float rand_0_1() {
     return std::rand() / (float)RAND_MAX;
 
 //    return cocos2d::random(0.f, 1.f);
-};
+}
 
 
 NS_CC_END

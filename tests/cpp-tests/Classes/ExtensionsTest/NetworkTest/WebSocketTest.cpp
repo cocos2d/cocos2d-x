@@ -135,8 +135,8 @@ void WebSocketTest::startTestCallback(Ref* sender)
     _wsiError = new network::WebSocket();
 
     std::vector<std::string> protocols;
-    protocols.push_back("myprotocol_1");
-    protocols.push_back("myprotocol_2");
+    protocols.emplace_back("myprotocol_1");
+    protocols.emplace_back("myprotocol_2");
     if (!_wsiSendText->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
     {
         CC_SAFE_DELETE(_wsiSendText);
@@ -197,7 +197,7 @@ void WebSocketTest::onMessage(network::WebSocket* ws, const network::WebSocket::
         std::string textStr = std::string("response text msg: ")+data.bytes+", "+times;
         log("%s", textStr.c_str());
         
-        _sendTextStatus->setString(textStr.c_str());
+        _sendTextStatus->setString(textStr);
     }
     else
     {
@@ -220,7 +220,7 @@ void WebSocketTest::onMessage(network::WebSocket* ws, const network::WebSocket::
         
         binaryStr += std::string(", ")+times;
         log("%s", binaryStr.c_str());
-        _sendBinaryStatus->setString(binaryStr.c_str());
+        _sendBinaryStatus->setString(binaryStr);
     }
 }
 
@@ -285,7 +285,7 @@ void WebSocketTest::onMenuSendTextClicked(cocos2d::Ref *sender)
     {
         std::string warningStr = "send text websocket instance wasn't ready...";
         log("%s", warningStr.c_str());
-        _sendTextStatus->setString(warningStr.c_str());
+        _sendTextStatus->setString(warningStr);
     }
 }
 
@@ -307,7 +307,7 @@ void WebSocketTest::onMenuSendMultipleTextClicked(cocos2d::Ref *sender)
     {
         std::string warningStr = "send text websocket instance wasn't ready...";
         log("%s", warningStr.c_str());
-        _sendTextStatus->setString(warningStr.c_str());
+        _sendTextStatus->setString(warningStr);
     }
 }
 
@@ -327,7 +327,7 @@ void WebSocketTest::onMenuSendBinaryClicked(cocos2d::Ref *sender)
     {
         std::string warningStr = "send binary websocket instance wasn't ready...";
         log("%s", warningStr.c_str());
-        _sendBinaryStatus->setString(warningStr.c_str());
+        _sendBinaryStatus->setString(warningStr);
     }
 }
 

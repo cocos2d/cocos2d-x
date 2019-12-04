@@ -369,4 +369,4 @@ DownloaderTests::DownloaderTests()
 {
     ADD_TEST_CASE(DownloaderTest);
     ADD_TEST_CASE(DownloaderMultiTask);
-};
+}

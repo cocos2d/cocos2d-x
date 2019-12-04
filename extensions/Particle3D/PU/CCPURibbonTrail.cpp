@@ -245,7 +245,7 @@ float PURibbonTrail::getWidthChange(size_t chainIndex) const
 
 }
 //-----------------------------------------------------------------------
-void PURibbonTrail::manageController(void)
+void PURibbonTrail::manageController()
 {
     _needTimeUpdate = false;
     for (size_t i = 0; i < _chainCount; ++i)
@@ -404,7 +404,7 @@ void PURibbonTrail::resetTrail(size_t index, const Node* node)
     addChainElement(index, e);
 }
 //-----------------------------------------------------------------------
-void PURibbonTrail::resetAllTrails(void)
+void PURibbonTrail::resetAllTrails()
 {
     for (size_t i = 0; i < _nodeList.size(); ++i)
     {

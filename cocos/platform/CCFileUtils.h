@@ -896,6 +896,9 @@ protected:
      */
     virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const;
 
+    virtual std::string getPathForDirectory(const std::string &dir, const std::string &resolutionDiretory, const std::string &searchPath) const;
+    
+    
     /**
      *  Gets full path for the directory and the filename.
      *
@@ -907,8 +910,8 @@ protected:
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
     virtual std::string getFullPathForFilenameWithinDirectory(const std::string& directory, const std::string& filename) const;
-
-
+    
+ 
     /**
      * Returns the fullpath for a given dirname.
      * @since 3.17.1

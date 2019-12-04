@@ -33,12 +33,12 @@ BundleReader::BundleReader()
     _buffer = nullptr;
     _position = 0;
     _length = 0;
-};
+}
 
 BundleReader::~BundleReader()
 {
     
-};
+}
 
 void BundleReader::init(char* buffer, ssize_t length)
 {

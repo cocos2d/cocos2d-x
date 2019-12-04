@@ -63,6 +63,7 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchBegan, this);
     listener->onTouchEnded = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchEnded, this);
+    listener->onTouchCancelled = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchCancelled, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
@@ -137,6 +138,11 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
     auto clicked = isScreenPointInRect(endPos, Camera::getVisitingCamera(), _trackNode->getWorldToNodeTransform(), rect, nullptr);
     this->onClickTrackNode(clicked, endPos);
     CCLOG("----------------------------------");
+}
+
+void KeyboardNotificationLayer::onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* event)
+{
+    onTouchEnded(touch, event);
 }
 
 //////////////////////////////////////////////////////////////////////////

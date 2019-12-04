@@ -91,7 +91,14 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
     if (saveToPNG && hasAlpha() && (! isToRGB))
     {
-        bitmapInfo |= kCGImageAlphaPremultipliedLast;
+        if (_hasPremultipliedAlpha)
+        {
+            bitmapInfo |= kCGImageAlphaPremultipliedLast;
+        }
+        else
+        {
+            bitmapInfo |= kCGImageAlphaLast;
+        }
     }
     CGDataProviderRef provider        = CGDataProviderCreateWithData(nullptr, pixels, myDataLength, nullptr);
     CGColorSpaceRef colorSpaceRef    = CGColorSpaceCreateDeviceRGB();

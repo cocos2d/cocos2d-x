@@ -436,11 +436,11 @@ namespace tinyobj {
             std::string linebuf(&buf[0]);
             
             // Trim newline '\r\n' or '\n'
-            if (linebuf.size() > 0) {
+            if (!linebuf.empty()) {
                 if (linebuf[linebuf.size() - 1] == '\n')
                     linebuf.erase(linebuf.size() - 1);
             }
-            if (linebuf.size() > 0) {
+            if (!linebuf.empty()) {
                 if (linebuf[linebuf.size() - 1] == '\r')
                     linebuf.erase(linebuf.size() - 1);
             }
@@ -700,11 +700,11 @@ namespace tinyobj {
             std::string linebuf(&buf[0]);
             
             // Trim newline '\r\n' or '\n'
-            if (linebuf.size() > 0) {
+            if (!linebuf.empty()) {
                 if (linebuf[linebuf.size() - 1] == '\n')
                     linebuf.erase(linebuf.size() - 1);
             }
-            if (linebuf.size() > 0) {
+            if (!linebuf.empty()) {
                 if (linebuf[linebuf.size() - 1] == '\r')
                     linebuf.erase(linebuf.size() - 1);
             }
@@ -850,7 +850,7 @@ namespace tinyobj {
                     token += strspn(token, " \t\r"); // skip tag
                 }
                 
-                assert(names.size() > 0);
+                assert(!names.empty());
                 
                 // names[0] must be 'g', so skip the 0th element.
                 if (names.size() > 1) {

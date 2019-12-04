@@ -389,6 +389,12 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if ( self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::DONE &&
+        [text isEqualToString: @"\n"] )
+    {
+        [self closeKeyboard];
+    }
+    
     int maxLength = getEditBoxImplIOS()->getMaxLength();
     if (maxLength < 0)
     {

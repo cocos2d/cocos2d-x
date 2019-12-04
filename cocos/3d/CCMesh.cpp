@@ -182,19 +182,19 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     att.type = GL_FLOAT;
     att.attribSizeBytes = att.size * sizeof(float);
     
-    if (positions.size())
+    if (!positions.empty())
     {
         perVertexSizeInFloat += 3;
         att.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
         attribs.push_back(att);
     }
-    if (normals.size())
+    if (!normals.empty())
     {
         perVertexSizeInFloat += 3;
         att.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
         attribs.push_back(att);
     }
-    if (texs.size())
+    if (!texs.empty())
     {
         perVertexSizeInFloat += 2;
         att.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
@@ -203,8 +203,8 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
         attribs.push_back(att);
     }
     
-    bool hasNormal = (normals.size() != 0);
-    bool hasTexCoord = (texs.size() != 0);
+    bool hasNormal = (!normals.empty());
+    bool hasTexCoord = (!texs.empty());
     //position, normal, texCoordinate into _vertexs
     size_t vertexNum = positions.size() / 3;
     for(size_t i = 0; i < vertexNum; i++)
@@ -235,7 +235,7 @@ Mesh* Mesh::create(const std::vector<float>& vertices, int /*perVertexSizeInFloa
     meshdata.attribs = attribs;
     meshdata.vertex = vertices;
     meshdata.subMeshIndices.push_back(indices);
-    meshdata.subMeshIds.push_back("");
+    meshdata.subMeshIds.emplace_back("");
     auto meshvertexdata = MeshVertexData::create(meshdata);
     auto indexData = meshvertexdata->getMeshIndexDataByIndex(0);
     
@@ -416,7 +416,7 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
         if (_skin)
             programState->setUniformVec4v("u_matrixPalette", (GLsizei)_skin->getMatrixPaletteSize(), _skin->getMatrixPalette());
 
-        if (scene && scene->getLights().size() > 0)
+        if (scene && !scene->getLights().empty())
             setLightUniforms(pass, scene, color, lightMask);
     }
 
@@ -472,7 +472,7 @@ void Mesh::calculateAABB()
             //get skin root
             Bone3D* root = nullptr;
             Mat4 invBindPose;
-            if (_skin->_skinBones.size())
+            if (!_skin->_skinBones.empty())
             {
                 root = _skin->_skinBones.at(0);
                 while (root) {

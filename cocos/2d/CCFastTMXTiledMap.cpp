@@ -60,7 +60,7 @@ TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std:
 
 bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
 {
-    CCASSERT(tmxFile.size()>0, "FastTMXTiledMap: tmx file should not be empty");
+    CCASSERT(!tmxFile.empty(), "FastTMXTiledMap: tmx file should not be empty");
     
     setContentSize(Size::ZERO);
 
@@ -198,14 +198,14 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 // public
 TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
 {
-    CCASSERT(layerName.size() > 0, "Invalid layer name!");
+    CCASSERT(!layerName.empty(), "Invalid layer name!");
     
     for (auto& child : _children)
     {
         TMXLayer* layer = dynamic_cast<TMXLayer*>(child);
         if(layer)
         {
-            if(layerName.compare( layer->getLayerName()) == 0)
+            if(layerName == layer->getLayerName())
             {
                 return layer;
             }
@@ -218,9 +218,9 @@ TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
 
 TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
 {
-    CCASSERT(groupName.size() > 0, "Invalid group name!");
+    CCASSERT(!groupName.empty(), "Invalid group name!");
 
-    if (_objectGroups.size()>0)
+    if (!_objectGroups.empty())
     {
         for (const auto& objectGroup : _objectGroups)
         {

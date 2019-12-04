@@ -622,11 +622,11 @@ const std::string token[1000] =
     // VortexExtern: Defined in VortexAffector
 };
 
-PUScriptTranslator::PUScriptTranslator(void)
+PUScriptTranslator::PUScriptTranslator()
 {
 }
 
-PUScriptTranslator::~PUScriptTranslator(void)
+PUScriptTranslator::~PUScriptTranslator()
 {
 }
 //-------------------------------------------------------------------------

@@ -85,7 +85,7 @@ public:
     ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
     
     ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
-    ActionTimeline* createActionWithDataBuffer(cocos2d::Data data, const std::string &fileName);
+    ActionTimeline* createActionWithDataBuffer(const cocos2d::Data& data, const std::string &fileName);
 
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
     ActionTimeline* loadAnimationWithDataBuffer(const cocos2d::Data& data, const std::string& fileName);

@@ -42,15 +42,6 @@ inline Vec2::Vec2(const Vec2& p1, const Vec2& p2)
     set(p1, p2);
 }
 
-inline Vec2::Vec2(const Vec2& copy)
-{
-    set(copy);
-}
-
-inline Vec2::~Vec2()
-{
-}
-
 inline bool Vec2::isZero() const
 {
     return x == 0.0f && y == 0.0f;

@@ -269,10 +269,6 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _recursiveDirty = false;
         setDirty(false);
 
-        _opacityModifyRGB = true;
-
-        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-
         _flippedX = _flippedY = false;
 
         // default transform anchor: center
@@ -399,11 +395,14 @@ void Sprite::setTexture(Texture2D *texture)
         }
     }
 
-    if ((_renderMode != RenderMode::QUAD_BATCHNODE) && (_texture != texture))
+    if (_renderMode != RenderMode::QUAD_BATCHNODE)
     {
-        CC_SAFE_RETAIN(texture);
-        CC_SAFE_RELEASE(_texture);
-        _texture = texture;
+        if (_texture != texture)
+        {
+            CC_SAFE_RETAIN(texture);
+            CC_SAFE_RELEASE(_texture);
+            _texture = texture;
+        }
         updateBlendFunc();
     }
 }
@@ -953,7 +952,7 @@ void Sprite::populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad)
 
 // MARK: visit, draw, transform
 
-void Sprite::updateTransform(void)
+void Sprite::updateTransform()
 {
     CCASSERT(_renderMode == RenderMode::QUAD_BATCHNODE, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
 
@@ -1220,7 +1219,7 @@ void Sprite::sortAllChildren()
 // used only when parent is SpriteBatchNode
 //
 
-void Sprite::setReorderChildDirtyRecursively(void)
+void Sprite::setReorderChildDirtyRecursively()
 {
     //only set parents flag the first time
     if ( ! _reorderChildDirty )
@@ -1438,7 +1437,7 @@ void Sprite::setFlippedX(bool flippedX)
     }
 }
 
-bool Sprite::isFlippedX(void) const
+bool Sprite::isFlippedX() const
 {
     return _flippedX;
 }
@@ -1452,7 +1451,7 @@ void Sprite::setFlippedY(bool flippedY)
     }
 }
 
-bool Sprite::isFlippedY(void) const
+bool Sprite::isFlippedY() const
 {
     return _flippedY;
 }
@@ -1499,7 +1498,7 @@ void Sprite::flipY() {
 // MARK: RGBA protocol
 //
 
-void Sprite::updateColor(void)
+void Sprite::updateColor()
 {
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
 
@@ -1548,7 +1547,7 @@ void Sprite::setOpacityModifyRGB(bool modify)
     }
 }
 
-bool Sprite::isOpacityModifyRGB(void) const
+bool Sprite::isOpacityModifyRGB() const
 {
     return _opacityModifyRGB;
 }
@@ -1691,7 +1690,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 
 // MARK: Texture protocol
 
-void Sprite::updateBlendFunc(void)
+void Sprite::updateBlendFunc()
 {
     CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
 

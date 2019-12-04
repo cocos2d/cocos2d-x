@@ -60,7 +60,7 @@ Timeline::~Timeline()
 
 void Timeline::gotoFrame(int frameIndex)
 {
-    if(_frames.size() == 0)
+    if(_frames.empty())
         return;
 
     binarySearchKeyFrame(frameIndex);
@@ -69,7 +69,7 @@ void Timeline::gotoFrame(int frameIndex)
 
 void Timeline::stepToFrame(int frameIndex)
 {
-    if(_frames.size() == 0)
+    if(_frames.empty())
         return;
 
     updateCurrentKeyFrame(frameIndex);

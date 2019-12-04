@@ -82,7 +82,7 @@ Manifest::Manifest(const std::string& manifestUrl/* = ""*/)
 {
     // Init variables
     _fileUtils = FileUtils::getInstance();
-    if (manifestUrl.size() > 0)
+    if (!manifestUrl.empty())
         parse(manifestUrl);
 }
 
@@ -95,7 +95,7 @@ void Manifest::loadJson(const std::string& url)
         // Load file content
         content = _fileUtils->getStringFromFile(url);
         
-        if (content.size() == 0)
+        if (content.empty())
         {
             CCLOG("Fail to retrieve local file content: %s\n", url.c_str());
         }
@@ -183,7 +183,7 @@ bool Manifest::versionEquals(const Manifest *b) const
 bool Manifest::versionGreater(const Manifest *b, const std::function<int(const std::string& versionA, const std::string& versionB)>& handle) const
 {
     std::string localVersion = getVersion();
-    std::string bVersion = b->getVersion();
+    const std::string& bVersion = b->getVersion();
     bool greater;
     if (handle)
     {
@@ -275,7 +275,7 @@ std::vector<std::string> Manifest::getSearchPaths() const
     for (int i = (int)_searchPaths.size()-1; i >= 0; i--)
     {
         std::string path = _searchPaths[i];
-        if (path.size() > 0 && path[path.size() - 1] != '/')
+        if (!path.empty() && path[path.size() - 1] != '/')
             path.append("/");
         path = _manifestRoot + path;
         searchPaths.push_back(path);
@@ -297,7 +297,7 @@ void Manifest::prependSearchPaths()
     for (int i = (int)_searchPaths.size()-1; i >= 0; i--)
     {
         std::string path = _searchPaths[i];
-        if (path.size() > 0 && path[path.size() - 1] != '/')
+        if (!path.empty() && path[path.size() - 1] != '/')
             path.append("/");
         path = _manifestRoot + path;
         iter = searchPaths.begin();
@@ -502,7 +502,7 @@ void Manifest::loadManifest(const rapidjson::Document &json)
     {
         _packageUrl = json[KEY_PACKAGE_URL].GetString();
         // Append automatically "/"
-        if (_packageUrl.size() > 0 && _packageUrl[_packageUrl.size() - 1] != '/')
+        if (!_packageUrl.empty() && _packageUrl[_packageUrl.size() - 1] != '/')
         {
             _packageUrl.append("/");
         }
@@ -532,7 +532,7 @@ void Manifest::loadManifest(const rapidjson::Document &json)
             for (rapidjson::SizeType i = 0; i < paths.Size(); ++i)
             {
                 if (paths[i].IsString()) {
-                    _searchPaths.push_back(paths[i].GetString());
+                    _searchPaths.emplace_back(paths[i].GetString());
                 }
             }
         }

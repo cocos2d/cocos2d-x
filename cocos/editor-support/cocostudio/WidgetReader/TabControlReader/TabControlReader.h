@@ -72,7 +72,7 @@ public:
     cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* nodeOptions) override;
 private:
     static TabHeaderReader* _tabheaderReaderInstance;
-    int    getResourceType(std::string key);
+    int    getResourceType(const std::string& key);
 };
 
 class TabItemReader : public cocos2d::Ref, public cocostudio::NodeReaderProtocol

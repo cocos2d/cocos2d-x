@@ -35,7 +35,7 @@ NS_CC_BEGIN
 
 // implementation of Size
 
-Size::Size(void) : width(0), height(0)
+Size::Size() : Size(0.0f, 0.0f)
 {
 }
 
@@ -43,18 +43,8 @@ Size::Size(float w, float h) : width(w), height(h)
 {
 }
 
-Size::Size(const Size& other) : width(other.width), height(other.height)
-{
-}
-
 Size::Size(const Vec2& point) : width(point.x), height(point.y)
 {
-}
-
-Size& Size::operator= (const Size& other)
-{
-    setSize(other.width, other.height);
-    return *this;
 }
 
 Size& Size::operator= (const Vec2& point)
@@ -100,29 +90,19 @@ const Size Size::ZERO = Size(0, 0);
 
 // implementation of Rect
 
-Rect::Rect(void)
+Rect::Rect()
+: Rect(0.0f, 0.0f, 0.0f, 0.0f)
 {
-    setRect(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 Rect::Rect(float x, float y, float width, float height)
+: origin(x, y), size(width, height)
 {
-    setRect(x, y, width, height);
 }
+
 Rect::Rect(const Vec2& pos, const Size& dimension)
+: origin(pos), size(dimension)
 {
-    setRect(pos.x, pos.y, dimension.width, dimension.height);
-}
-
-Rect::Rect(const Rect& other)
-{
-    setRect(other.origin.x, other.origin.y, other.size.width, other.size.height);
-}
-
-Rect& Rect::operator= (const Rect& other)
-{
-    setRect(other.origin.x, other.origin.y, other.size.width, other.size.height);
-    return *this;
 }
 
 void Rect::setRect(float x, float y, float width, float height)

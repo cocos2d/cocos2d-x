@@ -208,15 +208,15 @@ namespace cocostudio
             {
                 bounceEnabled = FLATSTR_TO_BOOL(value);
             }
-            else if (name.compare("BarEnabled") == 0)
+            else if (name == "BarEnabled")
             {
                 scrollbarEnabled = FLATSTR_TO_BOOL(value);
             }
-            else if (name.compare("BarAutoHide") == 0)
+            else if (name == "BarAutoHide")
             {
                 scrollbarAutoHide = FLATSTR_TO_BOOL(value);
             }
-            else if (name.compare("BarAutoHideTime") == 0)
+            else if (name == "BarAutoHideTime")
             {
                 scrollbarAutoHideTime = atof(value.c_str());
             }
@@ -476,7 +476,7 @@ namespace cocostudio
         auto imageFileNameDic = options->backGroundImageData();
         int imageFileNameType = imageFileNameDic->resourceType();
         std::string imageFileName = imageFileNameDic->path()->c_str();
-        if (imageFileName != "")
+        if (!imageFileName.empty())
         {
             switch (imageFileNameType)
             {
@@ -591,7 +591,7 @@ namespace cocostudio
         return scrollView;
     }
 
-    int ScrollViewReader::getResourceType(std::string key)
+    int ScrollViewReader::getResourceType(const std::string& key)
     {
         if (key == "Normal" || key == "Default")
         {

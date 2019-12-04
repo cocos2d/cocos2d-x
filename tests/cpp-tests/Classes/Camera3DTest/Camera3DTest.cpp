@@ -25,6 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "Camera3DTest.h"
+#include <cmath>
 #include "testResource.h"
 #include "ui/UISlider.h"
 
@@ -175,7 +176,7 @@ void CameraRotationTest::update(float dt)
 // Camera3DTestDemo
 //
 //------------------------------------------------------------------
-Camera3DTestDemo::Camera3DTestDemo(void)
+Camera3DTestDemo::Camera3DTestDemo()
 : _cameraType(CameraType::Free)
 , _incRot(nullptr)
 , _decRot(nullptr)
@@ -186,7 +187,7 @@ Camera3DTestDemo::Camera3DTestDemo(void)
 , _bRotateRight(false)
 {
 }
-Camera3DTestDemo::~Camera3DTestDemo(void)
+Camera3DTestDemo::~Camera3DTestDemo()
 {
 }
 void Camera3DTestDemo::reachEndCallBack()
@@ -378,7 +379,7 @@ void Camera3DTestDemo::onExit()
     }
 }
 
-void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool playAnimation,float scale,bool bindCamera)
+void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,const std::string& fileName,bool playAnimation,float scale,bool bindCamera)
 {
     auto sprite = Sprite3D::create(fileName);
     _layer3D->addChild(sprite);
@@ -700,7 +701,7 @@ void Camera3DTestDemo::onTouchesRotateRightEnd(Touch* touch, Event* event)
 
 ////////////////////////////////////////////////////////////
 // CameraCullingDemo
-CameraCullingDemo::CameraCullingDemo(void)
+CameraCullingDemo::CameraCullingDemo()
 : _layer3D(nullptr)
 , _cameraType(CameraType::FirstPerson)
 , _cameraFirst(nullptr)
@@ -711,7 +712,7 @@ CameraCullingDemo::CameraCullingDemo(void)
 , _row(3)
 {
 }
-CameraCullingDemo::~CameraCullingDemo(void)
+CameraCullingDemo::~CameraCullingDemo()
 {
 }
 
@@ -981,7 +982,7 @@ void CameraCullingDemo::drawCameraFrustum()
 
 ////////////////////////////////////////////////////////////
 // CameraArcBallDemo
-CameraArcBallDemo::CameraArcBallDemo(void)
+CameraArcBallDemo::CameraArcBallDemo()
 : CameraBaseTest()
 , _layer3D(nullptr)
 , _cameraType(CameraType::Free)
@@ -996,7 +997,7 @@ CameraArcBallDemo::CameraArcBallDemo(void)
 , _sprite3D2(nullptr)
 {
 }
-CameraArcBallDemo::~CameraArcBallDemo(void)
+CameraArcBallDemo::~CameraArcBallDemo()
 {
 }
 
@@ -1137,7 +1138,7 @@ void CameraArcBallDemo::calculateArcBall( cocos2d::Vec3 & axis, float & angle, f
     //clamp -1 to 1
     if (t > 1.0) t = 1.0;
     if (t < -1.0) t = -1.0;
-    angle = asin(t);           //rotation angle
+    angle = std::asin(t);           //rotation angle
 }
 
 /* project an x,y pair onto a sphere of radius r or a
@@ -1145,10 +1146,10 @@ hyperbolic sheet if we are away from the center of the sphere. */
 float CameraArcBallDemo::projectToSphere( float r, float x, float y )
 {
     float d, t, z;
-    d = sqrt(x*x + y*y);
+    d = std::sqrt(x*x + y*y);
     if (d < r * 0.70710678118654752440)//inside sphere
     {
-        z = sqrt(r*r - d*d);
+        z = std::sqrt(r*r - d*d);
     }                         
     else                               //on hyperbola
     {
@@ -1203,7 +1204,7 @@ void CameraArcBallDemo::update(float dt)
 
 ////////////////////////////////////////////////////////////
 // FogTestDemo
-FogTestDemo::FogTestDemo(void)
+FogTestDemo::FogTestDemo()
 : CameraBaseTest()
 , _layer3D(nullptr)
 , _cameraType(CameraType::Free)
@@ -1212,7 +1213,7 @@ FogTestDemo::FogTestDemo(void)
 , _state(nullptr)
 {
 }
-FogTestDemo::~FogTestDemo(void)
+FogTestDemo::~FogTestDemo()
 {
 }
 

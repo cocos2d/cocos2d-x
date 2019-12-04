@@ -410,7 +410,7 @@ public:
      *
      * @return The x coordinate of the node.
      */
-    virtual float getPositionX(void) const;
+    virtual float getPositionX() const;
     /** Sets the y coordinate of the node in its parent's coordinate system.
      *
      * @param y The y coordinate of the node.
@@ -420,7 +420,7 @@ public:
      *
      * @return The y coordinate of the node.
      */
-    virtual float getPositionY(void) const;
+    virtual float getPositionY() const;
 
     /**
      * Sets the position (X, Y, and Z) in its parent's coordinate system.
@@ -812,7 +812,7 @@ public:
      * @param name The name to search for, supports c++11 regular expression.
      * Search syntax options:
      * `//`: Can only be placed at the begin of the search string. This indicates that it will search recursively.
-     * `..`: The search should move up to the node's parent. Can only be placed at the end of string.
+     * `/..`: The search should move up to the node's parent. Can only be placed at the end of string.
      * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children.
      *
      * @code
@@ -834,7 +834,7 @@ public:
      *
      * @since v3.2
      */
-    virtual void enumerateChildren(const std::string &name, std::function<bool(Node* node)> callback) const;
+    virtual void enumerateChildren(const std::string &name, const std::function<bool(Node* node)>& callback) const;
     /**
      * Returns the array of the node's children.
      *
@@ -967,7 +967,7 @@ public:
      *
      * @return An integer that identifies the node.
      *
-     * Please use `getTag()` instead.
+     * Please use `getName()` instead.
      */
      virtual int getTag() const;
     /**
@@ -1363,7 +1363,7 @@ public:
      * Only one "update" method could be scheduled per node.
      * @lua NA
      */
-    void scheduleUpdate(void);
+    void scheduleUpdate();
 
     /**
      * Schedules the "update" method with a custom priority.
@@ -1381,7 +1381,7 @@ public:
      * Unschedules the "update" method.
      * @see scheduleUpdate();
      */
-    void unscheduleUpdate(void);
+    void unscheduleUpdate();
 
     /**
      * Schedules a custom selector.
@@ -1502,12 +1502,12 @@ public:
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter.
      */
-    virtual void resume(void);
+    virtual void resume();
     /**
      * Pauses all scheduled selectors, actions and event listeners.
      * This method is called internally by onExit.
      */
-    virtual void pause(void);
+    virtual void pause();
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.
@@ -1866,7 +1866,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     /// lazy allocs
-    void childrenAlloc(void);
+    void childrenAlloc();
     
     /// helper that reorder a child
     void insertChild(Node* child, int z);
@@ -1886,8 +1886,8 @@ protected:
     virtual void disableCascadeColor();
     virtual void updateColor() {}
     
-    bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
-    bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
+    bool doEnumerate(std::string name, const std::function<bool (Node *)>& callback) const;
+    bool doEnumerateRecursive(const Node* node, const std::string &name, const std::function<bool (Node *)>& callback) const;
     
     //check whether this camera mask is visible by the current visiting camera
     bool isVisitableByVisitingCamera() const;
@@ -2081,7 +2081,7 @@ public:
     virtual bool isCascadeOpacityEnabled() const  override { return Node::isCascadeOpacityEnabled(); }
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Node::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
 
-    virtual const Color3B& getColor(void) const override { return Node::getColor(); }
+    virtual const Color3B& getColor() const override { return Node::getColor(); }
     virtual const Color3B& getDisplayedColor() const override { return Node::getDisplayedColor(); }
     virtual void setColor(const Color3B& color) override { return Node::setColor(color); }
     virtual void updateDisplayedColor(const Color3B& parentColor) override { return Node::updateDisplayedColor(parentColor); }

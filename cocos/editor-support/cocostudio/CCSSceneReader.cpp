@@ -211,7 +211,7 @@ Node* SceneReader::nodeByTag(Node *parent, int tag)
     return _retNode;
 }
     
-cocos2d::Component* SceneReader::createComponent(const std::string classname)
+cocos2d::Component* SceneReader::createComponent(const std::string& classname)
 {
     std::string name = this->getComponentClassName(classname);
     Ref *object = ObjectFactory::getInstance()->createObject(name);

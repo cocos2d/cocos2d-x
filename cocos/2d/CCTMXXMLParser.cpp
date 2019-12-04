@@ -28,13 +28,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTMXXMLParser.h"
-#include <unordered_map>
-#include <sstream>
 #include "2d/CCTMXTiledMap.h"
+#include "base/CCDirector.h"
 #include "base/ZipUtils.h"
 #include "base/base64.h"
-#include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
+#include <sstream>
+#include <unordered_map>
+#include <utility>
 
 using namespace std;
 
@@ -63,7 +64,7 @@ ValueMap& TMXLayerInfo::getProperties()
     return _properties;
 }
 
-void TMXLayerInfo::setProperties(ValueMap var)
+void TMXLayerInfo::setProperties(const ValueMap& var)
 {
     _properties = var;
 }
@@ -293,14 +294,14 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
     {
         // If this is an external tileset then start parsing that
         std::string externalTilesetFilename = attributeDict["source"].asString();
-        if (externalTilesetFilename != "")
+        if (!externalTilesetFilename.empty())
         {
             _externalTilesetFilename = externalTilesetFilename;
 
             // Tileset file will be relative to the map file. So we need to convert it to an absolute path
-            if (_TMXFileName.find_last_of("/") != string::npos)
+            if (_TMXFileName.find_last_of('/') != string::npos)
             {
-                string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
+                string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of('/') + 1);
                 externalTilesetFilename = dir + externalTilesetFilename;
             }
             else 
@@ -434,17 +435,17 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
 
         if (!_externalTilesetFullPath.empty())
         {
-            string dir = _externalTilesetFullPath.substr(0, _externalTilesetFullPath.find_last_of("/") + 1);
+            string dir = _externalTilesetFullPath.substr(0, _externalTilesetFullPath.find_last_of('/') + 1);
             tileset->_sourceImage = dir + imagename;
         }
-        else if (_TMXFileName.find_last_of("/") != string::npos)
+        else if (_TMXFileName.find_last_of('/') != string::npos)
         {
-            string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
+            string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of('/') + 1);
             tileset->_sourceImage = dir + imagename;
         }
         else 
         {
-            tileset->_sourceImage = _resources + (_resources.size() ? "/" : "") + imagename;
+            tileset->_sourceImage = _resources + (!_resources.empty() ? "/" : "") + imagename;
         }
     } 
     else if (elementName == "data")
@@ -452,7 +453,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         std::string encoding = attributeDict["encoding"].asString();
         std::string compression = attributeDict["compression"].asString();
 
-        if (encoding == "")
+        if (encoding.empty())
         {
             tmxMapInfo->setLayerAttribs(tmxMapInfo->getLayerAttribs() | TMXLayerAttribNone);
             
@@ -482,7 +483,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
                 layerAttribs = tmxMapInfo->getLayerAttribs();
                 tmxMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribZlib);
             }
-            CCASSERT( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
+            CCASSERT( compression.empty() || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
         }
         else if (encoding == "csv")
         {
@@ -671,6 +672,19 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
             dict["polylinePoints"] = Value(pointsArray);
         }
     }
+    else if(elementName == "animation")
+    {
+        TMXTilesetInfo* info = tmxMapInfo->getTilesets().back();
+        info->_animationInfo.insert(tmxMapInfo->getParentGID(), TMXTileAnimInfo::create(tmxMapInfo->getParentGID()));
+        tmxMapInfo->setParentElement(TMXPropertyAnimation);
+    }
+    else if(elementName == "frame")
+    {
+        TMXTilesetInfo* info = tmxMapInfo->getTilesets().back();
+        auto animInfo = info->_animationInfo.at(tmxMapInfo->getParentGID());
+        // calculate gid of frame
+        animInfo->_frames.emplace_back(TMXTileAnimFrame(info->_firstGid + attributeDict["tileid"].asInt(), attributeDict["duration"].asFloat()));
+    }
 }
 
 void TMXMapInfo::endElement(void* /*ctx*/, const char *name)
@@ -752,7 +766,7 @@ void TMXMapInfo::endElement(void* /*ctx*/, const char *name)
             }
 
             uint32_t* bufferPtr = reinterpret_cast<uint32_t*>(buffer);
-            for(auto gidToken : gidTokens) {
+            for(const auto& gidToken : gidTokens) {
                 auto tileGid = (uint32_t)strtoul(gidToken.c_str(), nullptr, 10);
                 *bufferPtr = tileGid;
                 bufferPtr++;
@@ -791,6 +805,10 @@ void TMXMapInfo::endElement(void* /*ctx*/, const char *name)
     {
         _recordFirstGID = true;
     }
+    else if (elementName == "animation")
+    {
+        tmxMapInfo->setParentElement(TMXPropertyNone);
+    }
 }
 
 void TMXMapInfo::textHandler(void* /*ctx*/, const char *ch, size_t len)
@@ -804,6 +822,29 @@ void TMXMapInfo::textHandler(void* /*ctx*/, const char *ch, size_t len)
         currentString += text;
         tmxMapInfo->setCurrentString(currentString);
     }
+}
+
+TMXTileAnimFrame::TMXTileAnimFrame(uint32_t tileID, float duration)
+: _tileID(tileID)
+, _duration(duration)
+{
+}
+
+TMXTileAnimInfo::TMXTileAnimInfo(uint32_t tileID)
+: _tileID(tileID)
+{
+}
+
+TMXTileAnimInfo *TMXTileAnimInfo::create(uint32_t tileID)
+{
+    TMXTileAnimInfo *ret = new (std::nothrow) TMXTileAnimInfo(tileID);
+    if (ret)
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 NS_CC_END

@@ -111,7 +111,7 @@ LuaValue& LuaValue::operator=(const LuaValue& rhs)
     return *this;
 }
 
-LuaValue::~LuaValue(void)
+LuaValue::~LuaValue()
 {
     if (_type == LuaValueTypeString)
     {

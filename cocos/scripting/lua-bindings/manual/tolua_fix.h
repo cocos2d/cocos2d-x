@@ -27,7 +27,15 @@
 #define __TOLUA_FIX_H_
 
 #include "tolua++.h"
-    
+
+#if LUA_VERSION_NUM > 501
+#define lua_setfenv lua_setuservalue
+#define lua_open luaL_newstate
+#if !defined(LUA_COMPAT_5_1) && !defined(LUA_COMPAT_ALL)
+#define lua_objlen(L,i)		lua_rawlen(L, (i))
+#endif
+#endif
+
 #define TOLUA_REFID_PTR_MAPPING "toluafix_refid_ptr_mapping"
 #define TOLUA_REFID_TYPE_MAPPING "toluafix_refid_type_mapping"
 #define TOLUA_REFID_FUNCTION_MAPPING "toluafix_refid_function_mapping"

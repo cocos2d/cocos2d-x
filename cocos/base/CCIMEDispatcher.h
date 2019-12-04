@@ -138,7 +138,7 @@ protected:
 private:
     IMEDispatcher();
     
-    class Impl;
+    struct Impl;
     Impl * _impl;
 };
 

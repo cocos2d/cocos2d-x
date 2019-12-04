@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-
+#import "platform/ios/CCDirectorCaller-ios.h"
 
 @implementation RootViewController
 
@@ -32,8 +32,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
- 
 */
+
+//In iOS 12.0+, Screen Time's bug cause UIApplicationDidBecomeActiveNotification and UIApplicationWillResignActiveNotification do not fired
+//so we need to active CCDirectorCaller manually
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[CCDirectorCaller sharedDirectorCaller] setActive:YES];
+}
+
 // Override to allow orientations other than the default portrait orientation.
 // This method is deprecated on ios6
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

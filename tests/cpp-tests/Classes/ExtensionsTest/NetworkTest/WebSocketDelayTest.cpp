@@ -98,8 +98,8 @@ void WebSocketDelayTest::startTestCallback(Ref* sender)
     _wsiSendText = new network::WebSocket();
     
     std::vector<std::string> protocols;
-    protocols.push_back("myprotocol_1");
-    protocols.push_back("myprotocol_2");
+    protocols.emplace_back("myprotocol_1");
+    protocols.emplace_back("myprotocol_2");
     if (!_wsiSendText->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
     {
         CC_SAFE_DELETE(_wsiSendText);
@@ -213,6 +213,6 @@ void WebSocketDelayTest::onMenuSendTextClicked(cocos2d::Ref *sender)
     {
         std::string warningStr = "send text websocket instance wasn't ready...";
         log("%s", warningStr.c_str());
-        _sendTextStatus->setString(warningStr.c_str());
+        _sendTextStatus->setString(warningStr);
     }
 }

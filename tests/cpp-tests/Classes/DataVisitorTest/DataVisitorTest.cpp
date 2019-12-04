@@ -69,14 +69,14 @@ void PrettyPrinterDemo::onEnter()
     TestCase::onEnter();
     auto s = Director::getInstance()->getWinSize();
     
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 28);
+    auto label = Label::createWithTTF(title(), "fonts/arial.ttf", 28);
     label->setPosition(s.width/2, s.height * 4/5);
     this->addChild(label, 1);
     
     std::string strSubtitle = subtitle();
     if(strSubtitle.empty() == false)
     {
-        auto subLabel = Label::createWithTTF(strSubtitle.c_str(), "fonts/Thonburi.ttf", 16);
+        auto subLabel = Label::createWithTTF(strSubtitle, "fonts/Thonburi.ttf", 16);
         subLabel->setPosition(s.width/2, s.height * 3/5);
         this->addChild(subLabel, 1);
     }

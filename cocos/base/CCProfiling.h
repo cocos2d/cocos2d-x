@@ -57,30 +57,30 @@ public:
      * @js NA
      * @lua NA
      */
-    ~Profiler(void);
+    ~Profiler();
     /** display the timers
      * @js NA
      * @lua NA
      */
-    void displayTimers(void);
+    void displayTimers();
     /**
      * @js NA
      * @lua NA
      */
-    bool init(void);
+    bool init();
 
 public:
     /** returns the singleton 
      * @js NA
      * @lua NA
      */
-    static Profiler* getInstance(void);
+    static Profiler* getInstance();
 
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static Profiler* sharedProfiler(void);
+    CC_DEPRECATED_ATTRIBUTE static Profiler* sharedProfiler();
 
     /** Creates and adds a new timer 
      * @js NA
@@ -113,7 +113,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~ProfilingTimer(void);
+    ~ProfilingTimer();
     /**
      * @js NA
      * @lua NA

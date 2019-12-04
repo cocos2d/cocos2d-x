@@ -45,11 +45,11 @@ ActionsProgressTests::ActionsProgressTests()
 // SpriteDemo
 //
 //------------------------------------------------------------------
-SpriteDemo::SpriteDemo(void)
+SpriteDemo::SpriteDemo()
 {
 }
 
-SpriteDemo::~SpriteDemo(void)
+SpriteDemo::~SpriteDemo()
 {
 }
 

@@ -210,7 +210,7 @@ bool __String::isEqual(const Ref* pObject)
     const __String* pStr = dynamic_cast<const __String*>(pObject);
     if (pStr != nullptr)
     {
-        if (0 == _string.compare(pStr->_string))
+        if (pStr->_string == _string)
         {
             bRet = true;
         }
@@ -260,7 +260,7 @@ __String* __String::createWithFormat(const char* format, ...)
 __String* __String::createWithContentsOfFile(const std::string &filename)
 {
     std::string str = FileUtils::getInstance()->getStringFromFile(filename);
-    return __String::create(std::move(str));
+    return __String::create(str);
 }
 
 void __String::acceptVisitor(DataVisitor &visitor)

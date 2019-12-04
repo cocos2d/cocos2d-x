@@ -545,10 +545,15 @@ void ParticleSystemQuad::setTotalParticles(int tp)
 
 void ParticleSystemQuad::setupVBOandVAO()
 {
-    // clean VAO
     glDeleteBuffers(2, &_buffersVBO[0]);
-    glDeleteVertexArrays(1, &_VAOname);
-    GL::bindVAO(0);
+
+    // clean VAO
+    if (_VAOname)
+    {
+        glDeleteVertexArrays(1, &_VAOname);
+        GL::bindVAO(0);
+        _VAOname = 0;
+    }
     
     glGenVertexArrays(1, &_VAOname);
     GL::bindVAO(_VAOname);

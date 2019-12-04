@@ -92,7 +92,7 @@ bool Box2dTestBed::initWithEntryID(int entryId)
     view->setScale(15);
     view->setAnchorPoint( Vec2(0,0) );
     view->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3);
-    auto label = Label::createWithTTF(view->title().c_str(), "fonts/arial.ttf", 28);
+    auto label = Label::createWithTTF(view->title(), "fonts/arial.ttf", 28);
     addChild(label, 1);
     label->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50);
     
@@ -128,7 +128,7 @@ void Box2dTestBed::onTouchMoved(Touch* touch, Event* event)
 // Box2DView
 //
 //------------------------------------------------------------------
-Box2DView::Box2DView(void)
+Box2DView::Box2DView()
 {
 }
 

@@ -49,6 +49,7 @@ android {
         res.srcDir "res"
         jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
+        assets.srcDir "assets"
     }
 
     externalNativeBuild {
@@ -113,11 +114,19 @@ def getCocosCommandPath() {
         return 'cocos.bat'
     }
     else {
+
+        def env_console_path = System.getenv("COCOS_CONSOLE_ROOT")
+
+        if (env_console_path != null && !env_console_path.trim().isEmpty()) {
+            return new File(env_console_path.trim() + '/cocos').absolutePath
+        }
+
         // on unix like system, can not get environments variables easily
         // so run a shell script to get environment variable sets by cocos2d-x setup.py
         new ByteArrayOutputStream().withStream { os ->
             def result = exec {
-                executable = project.file('get_environment.sh')
+                executable = "/bin/bash"
+                args = [ "-i", project.file('get_environment.sh')]
                 standardOutput = os
             }
             ext.console_path = os.toString().trim()
@@ -145,29 +154,34 @@ def compileJS(srcDir, dstDir) {
 }
 
 android.applicationVariants.all { variant ->
+    def project_root_folder = "${projectDir}/../../../.."
+    def dest_assets_folder = "${projectDir}/assets"
+
     // delete previous files first
-    delete "${buildDir}/intermediates/assets/${variant.dirName}"
-
-    variant.mergeAssets.doLast {
+    delete dest_assets_folder
+    def targetName = variant.name.capitalize()
+    def copyTaskName = "copy${targetName}ResourcesToAssets"
+    
+    tasks.register(copyTaskName) {
         copy {
-           from "${buildDir}/../../../../../res"
-           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+           from project_root_folder + "/res"
+           into dest_assets_folder + "/res"
         }
 
         copy {
-            from "${buildDir}/../../../../../src"
-            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+            from project_root_folder + "/src"
+            into dest_assets_folder + "/src"
         }
 
         copy {
-            from "${buildDir}/../../../../cocos2d-x/cocos/scripting/js-bindings/script"
-            into  "${buildDir}/intermediates/assets/${variant.dirName}/script"
+            from project_root_folder + "/frameworks/cocos2d-x/cocos/scripting/js-bindings/script"
+            into dest_assets_folder + "/script"
         }
 
         copy {
-            from "${buildDir}/../../../../../main.js"
-            from "${buildDir}/../../../../../project.json"
-            into "${buildDir}/intermediates/assets/${variant.dirName}"
+            from project_root_folder + "/main.js"
+            from project_root_folder + "/project.json"
+            into dest_assets_folder
         }
 
         // compile the scripts if necessary
@@ -177,10 +191,10 @@ android.applicationVariants.all { variant ->
         }
 
         if (compileScript) {
-            compileJS("${buildDir}/intermediates/assets/${variant.dirName}",
-                      "${buildDir}/intermediates/assets/${variant.dirName}")
+            compileJS(dest_assets_folder, dest_assets_folder)
         }
     }
+    tasks.getByName("pre${targetName}Build").dependsOn copyTaskName
 }
 
 dependencies {

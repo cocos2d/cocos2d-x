@@ -26,46 +26,41 @@ THE SOFTWARE.
 #ifndef __TRIGGERFACTORY_H__
 #define __TRIGGERFACTORY_H__
 
-#include <string>
-#include <unordered_map>
-#include <functional>
 #include "base/CCRef.h"
 #include "platform/CCPlatformMacros.h"
+#include <functional>
+#include <string>
+#include <unordered_map>
 
 NS_CC_BEGIN
 
 class CC_DLL ObjectFactory
 {
 public:
-    typedef cocos2d::Ref* (*Instance)(void);
-    typedef std::function<cocos2d::Ref* (void)> InstanceFunc;
+    typedef cocos2d::Ref* (*Instance)();
+    typedef std::function<cocos2d::Ref* ()> InstanceFunc;
     struct CC_DLL TInfo
     {
-        TInfo(void);
-        TInfo(const std::string& type, Instance ins = nullptr);
-        TInfo(const std::string& type, InstanceFunc ins = nullptr);
-        TInfo(const TInfo &t);
-        ~TInfo(void);
-        TInfo& operator= (const TInfo &t);
+        TInfo() = default;
+        TInfo(const std::string& type, Instance ins);
+        TInfo(const std::string& type, const InstanceFunc& ins);
         std::string _class;
-        Instance _fun;
+        Instance _fun = nullptr;
         InstanceFunc _func;
     };
-    typedef std::unordered_map<std::string, TInfo>  FactoryMap;
 
     static ObjectFactory* getInstance();
     static void destroyInstance();
-    cocos2d::Ref* createObject(const std::string &name);
 
+    cocos2d::Ref* createObject(const std::string &name);
     void registerType(const TInfo &t);
-    void removeAll();
 
 protected:
-    ObjectFactory(void);
-    virtual ~ObjectFactory(void);
+    ObjectFactory() = default;
+    virtual ~ObjectFactory() = default;
 private:
     static ObjectFactory *_sharedFactory;
-    FactoryMap _typeMap;
+    std::unordered_map<std::string, TInfo> _typeMap;
 };
 
 NS_CC_END

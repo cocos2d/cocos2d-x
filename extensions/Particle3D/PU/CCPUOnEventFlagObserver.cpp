@@ -33,9 +33,9 @@ NS_CC_BEGIN
 const unsigned int PUOnEventFlagObserver::DEFAULT_EVENT_FLAG = 0;
 
 //-----------------------------------------------------------------------
-PUOnEventFlagObserver::PUOnEventFlagObserver(void) : 
-    PUObserver(),
-    _eventFlag(DEFAULT_EVENT_FLAG)
+PUOnEventFlagObserver::PUOnEventFlagObserver()
+: PUObserver()
+, _eventFlag(DEFAULT_EVENT_FLAG)
 {
 }
 //-----------------------------------------------------------------------

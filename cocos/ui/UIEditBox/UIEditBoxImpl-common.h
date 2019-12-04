@@ -69,8 +69,8 @@ public:
     virtual void setTextHorizontalAlignment(TextHAlignment alignment) override;
 
     virtual int  getMaxLength() override { return _maxLength; }
-    virtual const char* getText(void) override { return _text.c_str(); }
-    virtual const char* getPlaceHolder(void) override { return _placeHolder.c_str(); }
+    virtual const char* getText() override { return _text.c_str(); }
+    virtual const char* getPlaceHolder() override { return _placeHolder.c_str(); }
 
     virtual const char* getFontName() override { return _fontName.c_str(); }
     virtual int getFontSize() override { return _fontSize; }
@@ -101,7 +101,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onEnter(void) override;
+    virtual void onEnter() override;
     virtual void openKeyboard() override;
     virtual void closeKeyboard() override;
 

@@ -1779,7 +1779,7 @@ cc._DrawNode.prototype.drawPoly = function (verts, fillColor, borderWidth, borde
     cc._DrawNode.prototype.drawPolygon.call(this, verts, verts.length, fillColor, borderWidth, borderColor);
 }
 cc.DrawNode = cc._DrawNode.extend({
-    _drawColor: cc.color(255, 255, 255, 255),
+    _drawColor: null,
     _lineWidth: 1,
 
     release: function () {},
@@ -1895,7 +1895,9 @@ cc.DrawNode = cc._DrawNode.extend({
         cc._DrawNode.prototype.drawDot.call(this, pos, radius, color);
     },
 
-    drawSegment:function (from, to, lineWidth = this._lineWidth, color = this._drawColor) {
+    drawSegment:function (from, to, lineWidth, color) {
+        lineWidth = lineWidth || this._lineWidth;
+        color = color || this._drawColor;
         cc._DrawNode.prototype.drawSegment.call(this, from, to, lineWidth, color);
     },
 

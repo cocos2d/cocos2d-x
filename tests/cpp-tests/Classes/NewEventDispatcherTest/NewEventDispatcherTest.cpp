@@ -392,7 +392,7 @@ void CustomEventTest::onEnter()
         char* buf = static_cast<char*>(event->getUserData());
         str += buf;
         str += " times";
-        statusLabel->setString(str.c_str());
+        statusLabel->setString(str);
     });
     
     _eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
@@ -418,7 +418,7 @@ void CustomEventTest::onEnter()
         char* buf = static_cast<char*>(event->getUserData());
         str += buf;
         str += " times";
-        statusLabel2->setString(str.c_str());
+        statusLabel2->setString(str);
     });
     
     _eventDispatcher->addEventListenerWithFixedPriority(_listener2, 1);

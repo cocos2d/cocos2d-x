@@ -94,7 +94,7 @@ void shutDownApp()
     ::SendMessage(hWnd, WM_CLOSE, NULL, NULL);
 }
 
-std::string getCurAppPath(void)
+std::string getCurAppPath()
 {
     TCHAR szAppDir[MAX_PATH] = { 0 };
     if (!GetModuleFileName(NULL, szAppDir, MAX_PATH))

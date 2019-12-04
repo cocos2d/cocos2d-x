@@ -187,7 +187,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~Control();
 
-    virtual bool init(void) override;
+    virtual bool init() override;
 
 protected:
     /**

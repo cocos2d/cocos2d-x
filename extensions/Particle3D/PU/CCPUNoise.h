@@ -36,8 +36,8 @@ class PUNoise3D
 {
 public:
     /* Constructor / Destructor */
-    PUNoise3D(void);
-    virtual ~PUNoise3D(void);
+    PUNoise3D();
+    virtual ~PUNoise3D();
 
     /* Inititialises the noise function */
     void initialise(unsigned short octaves, double frequency = 1.0, double amplitude = 1.0, double persistence = 1.0);

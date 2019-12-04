@@ -55,7 +55,7 @@ JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalSt
 }
 #endif
 
-JavascriptJavaBridge::CallInfo::~CallInfo(void)
+JavascriptJavaBridge::CallInfo::~CallInfo()
 {
     if (m_returnType == TypeString && m_ret.stringValue)
     {
@@ -66,7 +66,7 @@ JavascriptJavaBridge::CallInfo::~CallInfo(void)
         m_env->DeleteLocalRef(m_classID);
 }
 
-bool JavascriptJavaBridge::CallInfo::execute(void)
+bool JavascriptJavaBridge::CallInfo::execute()
 {
     switch (m_returnType)
     {
@@ -234,7 +234,7 @@ JavascriptJavaBridge::ValueType JavascriptJavaBridge::CallInfo::checkType(const 
 }
 
 
-bool JavascriptJavaBridge::CallInfo::getMethodInfo(void)
+bool JavascriptJavaBridge::CallInfo::getMethodInfo()
 {
     m_methodID = 0;
     m_env = 0;

@@ -563,7 +563,7 @@ void TextWritePlist::onEnter()
     else
         log("write plist file failed");
 
-    auto label = Label::createWithTTF(fullPath.c_str(), "fonts/Thonburi.ttf", 6);
+    auto label = Label::createWithTTF(fullPath, "fonts/Thonburi.ttf", 6);
     this->addChild(label);
     auto winSize = Director::getInstance()->getWinSize();
     label->setPosition(winSize.width/2, winSize.height/3);
@@ -593,7 +593,7 @@ std::string TextWritePlist::title() const
 
 std::string TextWritePlist::subtitle() const
 {
-    std::string writablePath = FileUtils::getInstance()->getWritablePath().c_str();
+    std::string writablePath = FileUtils::getInstance()->getWritablePath();
     return ("See plist file at your writablePath");
 }
 
@@ -617,7 +617,7 @@ void TestWriteString::onEnter()
     // writeTest
     std::string writeDataStr = "the string data will be write into a file";
     std::string fullPath = writablePath + fileName;
-    if (FileUtils::getInstance()->writeStringToFile(writeDataStr, fullPath.c_str()))
+    if (FileUtils::getInstance()->writeStringToFile(writeDataStr, fullPath))
     {
         log("see the plist file at %s", fullPath.c_str());
         writeResult->setString("write success:" + writeDataStr);
@@ -717,7 +717,7 @@ void TestGetContents::onEnter()
 
         // Text read string in text mode
         std::string ts = fs->getStringFromFile(_generatedFile);
-        if (ts != "\r\n\r\n")
+        if (strcmp(ts.c_str(), "\r\n\r\n")!=0)
             return std::string("failed: read as zero terminated string");
 
 
@@ -793,7 +793,7 @@ void TestWriteData::onEnter()
     Data writeData;
     writeData.copy((unsigned char *)writeDataStr.c_str(), writeDataStr.size());
     std::string fullPath = writablePath + fileName;
-    if (FileUtils::getInstance()->writeDataToFile(writeData, fullPath.c_str()))
+    if (FileUtils::getInstance()->writeDataToFile(writeData, fullPath))
     {
         log("see the plist file at %s", fullPath.c_str());
         writeResult->setString("write success:" + writeDataStr);
@@ -881,7 +881,7 @@ void TestWriteValueMap::onEnter()
     // end with /
     std::string writablePath = FileUtils::getInstance()->getWritablePath();
     std::string fullPath = writablePath + "testWriteValueMap.plist";
-    if (FileUtils::getInstance()->writeValueMapToFile(valueMap, fullPath.c_str()))
+    if (FileUtils::getInstance()->writeValueMapToFile(valueMap, fullPath))
     {
         log("see the plist file at %s", fullPath.c_str());
         writeResult->setString("write success");
@@ -892,7 +892,7 @@ void TestWriteValueMap::onEnter()
         writeResult->setString("write failed");
     }
 
-    ValueMap readValueMap = FileUtils::getInstance()->getValueMapFromFile(fullPath.c_str());
+    ValueMap readValueMap = FileUtils::getInstance()->getValueMapFromFile(fullPath);
     std::string readDataStr = "read data:\n";
     // read value map data
     ValueMap readMapInMap = readValueMap["data0"].asValueMap();
@@ -984,7 +984,7 @@ void TestWriteValueVector::onEnter()
     // end with /
     std::string writablePath = FileUtils::getInstance()->getWritablePath();
     std::string fullPath = writablePath + "testWriteValueVector.plist";
-    if (FileUtils::getInstance()->writeValueVectorToFile(array, fullPath.c_str()))
+    if (FileUtils::getInstance()->writeValueVectorToFile(array, fullPath))
     {
         log("see the plist file at %s", fullPath.c_str());
         writeResult->setString("write success");
@@ -995,7 +995,7 @@ void TestWriteValueVector::onEnter()
         writeResult->setString("write failed");
     }
 
-    ValueVector readArray = FileUtils::getInstance()->getValueVectorFromFile(fullPath.c_str());
+    ValueVector readArray = FileUtils::getInstance()->getValueVectorFromFile(fullPath);
     std::string readDataStr = "read data:\n";
     // read value map data
     ValueMap readMapInArray = readArray.at(0).asValueMap();
@@ -1413,7 +1413,7 @@ void TestListFiles::onEnter()
     std::vector<std::string> list = FileUtils::getInstance()->listFiles (defaultPath);
 
     char cntBuffer[200] = { 0 };
-    snprintf(cntBuffer, 200, "'fonts/' %d, $defaultResourceRootPath %d",listFonts.size(), list.size());
+    snprintf(cntBuffer, 200, "'fonts/' %zu, $defaultResourceRootPath %zu",listFonts.size(), list.size());
 
     for(int i=0;i<listFonts.size();i++)
     {
@@ -1465,7 +1465,7 @@ void TestIsFileExistRejectFolder::onEnter()
     auto isDirectory = FileUtils::getInstance()->isDirectoryExist("NavMesh/maps");
 
     char cntBuffer[200] = { 0 };
-    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s,  %s", isDirectory ? "true": "false" , exists ? "true" : "false", exists ? "failure!" : "ok!" );
+    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s", isDirectory ? "true": "false" , exists ? "true" : "false");
     cntLabel->setString(cntBuffer);
 
 }
