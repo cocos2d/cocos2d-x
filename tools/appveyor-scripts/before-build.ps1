@@ -29,11 +29,12 @@ function Update-SubModule
     & $git_retry submodule update --recursive --depth=1
     Pop-Location
 }
-
+& where cmake
 & cmake --version
 & choco install --yes cmake --installargs 'ADD_CMAKE_TO_PATH=System'
 & refreshenv
 & cmake --version
+& where cmake
 & python -m pip install retry
 
 Update-SubModule
