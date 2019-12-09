@@ -63,6 +63,7 @@ AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
 AudioEngine::AudioEngineThreadPool* AudioEngine::s_threadPool = nullptr;
 bool AudioEngine::_isEnabled = true;
+float AudioEngine::_globalVolume = 1.0f;
 
 AudioEngine::AudioInfo::AudioInfo()
 : profileHelper(nullptr)
@@ -231,7 +232,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             volume = 1.0f;
         }
         
-        ret = _audioEngineImpl->play2d(filePath, loop, volume);
+        ret = _audioEngineImpl->play2d(filePath, loop, volume * _globalVolume);
         if (ret != INVALID_AUDIO_ID)
         {
             _audioPathIDMap[filePath].push_back(ret);
@@ -274,8 +275,28 @@ void AudioEngine::setVolume(int audioID, float volume)
         }
 
         if (it->second.volume != volume){
-            _audioEngineImpl->setVolume(audioID, volume);
+            _audioEngineImpl->setVolume(audioID, volume * _globalVolume);
             it->second.volume = volume;
+        }
+    }
+}
+
+void AudioEngine::setGlobalVolume(float volume)
+{
+    if (volume < 0.0f) {
+        volume = 0.0f;
+    }
+    else if (volume > 1.0f) {
+        volume = 1.0f;
+    }
+
+    if (_globalVolume != volume) {
+        _globalVolume = volume;
+
+        auto itEnd = _audioIDInfoMap.end();
+        for (auto it = _audioIDInfoMap.begin(); it != itEnd; ++it)
+        {
+            _audioEngineImpl->setVolume(it->first, it->second.volume * _globalVolume);
         }
     }
 }
@@ -479,6 +500,11 @@ float AudioEngine::getVolume(int audioID)
 
     log("AudioEngine::getVolume-->The audio instance %d is non-existent", audioID);
     return 0.0f;
+}
+
+float AudioEngine::getGlobalVolume()
+{
+    return _globalVolume;
 }
 
 AudioEngine::AudioState AudioEngine::getState(int audioID)
