@@ -31,4 +31,4 @@
 
 编写了一些文档方便开发者升级到 v4:
 - [如何运行测试例子，如何新建工程并运行](https://docs.cocos2d-x.org/cocos2d-x/v4/zn/installation)
-- [v4 升级指南](https://docs.cocos2d-x.org/cocos2d-x/v4/en/upgradeGuide/)
+- [v4 升级指南](https://docs.cocos2d-x.org/cocos2d-x/v4/zh/installation/)
