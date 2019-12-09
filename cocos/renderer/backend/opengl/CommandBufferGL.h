@@ -190,6 +190,7 @@ private:
     bool _generatedFBOBindColor = false;
     bool _generatedFBOBindDepth = false;
     bool _generatedFBOBindStencil = false;
+    bool _framebufferReadWriteDisabled = false;
 
     GLint _defaultFBO = 0;  // The value gets from glGetIntegerv, so need to use GLint
     GLuint _currentFBO = 0;
