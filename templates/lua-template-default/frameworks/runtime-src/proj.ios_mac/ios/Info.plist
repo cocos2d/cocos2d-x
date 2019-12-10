@@ -11,7 +11,7 @@
     <key>CFBundleIconFile</key>
     <string>Icon-57.png</string>
     <key>CFBundleIdentifier</key>
-    <string>org.cocos2dx.${PRODUCT_NAME}</string>
+    <string>org.cocos2dx.hellolua</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleVersion</key>
