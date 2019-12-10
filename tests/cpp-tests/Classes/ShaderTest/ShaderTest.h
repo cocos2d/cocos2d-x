@@ -166,15 +166,12 @@ protected:
 
     void updateUniforms();
 
-    //cocos2d::backend::ProgramState * getProgramState() const { return _programState; }
-
     cocos2d::Vec2                   _center;
     cocos2d::Vec2                   _resolution;
     float                           _time;
     std::string                     _vertFileName;
     std::string                     _fragFileName;
     cocos2d::CustomCommand          _customCommand;
-    cocos2d::backend::ProgramState  *_programState = nullptr;
 
     cocos2d::backend::UniformLocation   _locResolution;
     cocos2d::backend::UniformLocation   _locCenter;

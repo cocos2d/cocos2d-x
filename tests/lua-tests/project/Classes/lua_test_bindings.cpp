@@ -151,8 +151,8 @@ bool DrawNode3D::init()
 {
 
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-
-    _programState = new backend::ProgramState(lineColor3D_vert, lineColor3D_frag);
+    auto program = backend::Program::getBuiltinProgram(backend::ProgramType::LINE_COLOR_3D);
+    _programState = new backend::ProgramState(program);
 
     _locMVPMatrix = _programState->getUniformLocation("u_MVPMatrix");
 

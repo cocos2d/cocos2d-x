@@ -24,8 +24,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #include "3d/CCMotionStreak3D.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "math/CCVertex.h"
 #include "base/CCDirector.h"
 #include "base/ccUtils.h"
@@ -55,7 +56,6 @@ MotionStreak3D::MotionStreak3D()
 MotionStreak3D::~MotionStreak3D()
 {
     CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_programState);
 }
 
 MotionStreak3D* MotionStreak3D::create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)
@@ -118,7 +118,8 @@ bool MotionStreak3D::initWithFade(float fade, float minSeg, float stroke, const 
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader state
-    _programState = new backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+    _programState = new backend::ProgramState(program);
 
     _customCommand.getPipelineDescriptor().programState = _programState;
 

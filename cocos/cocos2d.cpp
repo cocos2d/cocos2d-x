@@ -32,7 +32,7 @@ NS_CC_BEGIN
 
 CC_DLL const char* cocos2dVersion()
 {
-    return "cocos2d-x-4.0rc0";
+    return "cocos2d-x-4.0";
 }
 
 NS_CC_END

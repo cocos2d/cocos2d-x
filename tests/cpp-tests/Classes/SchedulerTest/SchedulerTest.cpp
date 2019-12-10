@@ -1091,7 +1091,7 @@ void SchedulerIssueWithReschedule::onEnter()
 	_scheduler->schedule([this, verified](float dt){
         log("SchedulerIssueWithReschedule - first timer");
         
-        _scheduler->schedule([this, verified](float dt){
+        _scheduler->schedule([verified](float dt){
             log("SchedulerIssueWithReschedule - second timer. OK");
             *verified = true;
         }, this, 0.1f, 0, 0, false, "test_timer");
@@ -1422,10 +1422,9 @@ void SchedulerRemoveEntryWhileUpdate::onExit()
 }
 
 SchedulerRemoveEntryWhileUpdate::TestClass::TestClass(int index, TestClass *nextObj, cocos2d::Scheduler* scheduler)
-: _index(index)
-, _nextObj(nextObj)
+: _nextObj(nextObj)
+, _index(index)
 , _scheduler(scheduler)
-, _cleanedUp(false)
 {
 }
 

@@ -23,36 +23,37 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-
 #include "platform/CCCommon.h"
 
 #include <stdarg.h>
 #include <stdio.h>
 
-#import <UIKit/UIAlert.h>
+#import <UIKit/UIAlertController.h>
+#import <UIKit/UIWindow.h>
 #include "base/CCDirector.h"
 #include "base/CCConsole.h"
 
 NS_CC_BEGIN
 
 // ios no MessageBox, use log instead
-void MessageBox(const char * msg, const char * title)
+void ccMessageBox(const char * msg, const char * title)
 {
     // only enable it on iOS.
     // FIXME: Implement it for tvOS
 #if !defined(CC_TARGET_OS_TVOS)
     NSString * tmpTitle = (title) ? [NSString stringWithUTF8String : title] : nil;
     NSString * tmpMsg = (msg) ? [NSString stringWithUTF8String : msg] : nil;
-    UIAlertView * messageBox = [[UIAlertView alloc] initWithTitle: tmpTitle
-                                                          message: tmpMsg
-                                                         delegate: nil
-                                                cancelButtonTitle: @"OK"
-                                                otherButtonTitles: nil];
-    [messageBox autorelease];
-    [messageBox show];
+
+    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:tmpTitle
+                               message:tmpMsg
+                               preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {}];
+
+    [alertController addAction:defaultAction];
+    auto rootViewController = [UIApplication sharedApplication].windows[0].rootViewController;
+    [rootViewController presentViewController:alertController animated:YES completion:nil];
 #endif
 
 }
@@ -63,5 +64,3 @@ void LuaLog(const char * format)
 }
 
 NS_CC_END
-
-#endif // CC_PLATFORM_IOS

@@ -205,6 +205,10 @@ namespace
                 return nil;
         }
     }
+
+    inline int clamp(int value, int min, int max) {
+        return std::min(max, std::max(min, value));
+    }
 }
 
 CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
@@ -318,7 +322,7 @@ void CommandBufferMTL::setIndexBuffer(Buffer* buffer)
     [_mtlIndexBuffer retain];
 }
 
-void CommandBufferMTL::drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count)
+void CommandBufferMTL::drawArrays(PrimitiveType primitiveType, std::size_t start,  std::size_t count)
 {
     prepareDrawing();
     [_mtlRenderEncoder drawPrimitives:toMTLPrimitive(primitiveType)
@@ -326,7 +330,7 @@ void CommandBufferMTL::drawArrays(PrimitiveType primitiveType, unsigned int star
                           vertexCount:count];
 }
 
-void CommandBufferMTL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset)
+void CommandBufferMTL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, std::size_t count, std::size_t offset)
 {
     prepareDrawing();
     [_mtlRenderEncoder drawIndexedPrimitives:toMTLPrimitive(primitiveType)
@@ -484,10 +488,19 @@ void CommandBufferMTL::setScissorRect(bool isEnabled, float x, float y, float wi
     MTLScissorRect scissorRect;
     if(isEnabled)
     {
-        scissorRect.x = x;
-        scissorRect.y = _renderTargetHeight - height - y;
-        scissorRect.width = width;
-        scissorRect.height = height;
+        y = _renderTargetHeight - height - y;
+        int minX = clamp((int)x, 0, (int)_renderTargetWidth);
+        int minY = clamp((int)y, 0, (int)_renderTargetHeight);
+        int maxX = clamp((int)(x + width), 0, (int)_renderTargetWidth);
+        int maxY = clamp((int)(y + height), 0, (int)_renderTargetHeight);
+        scissorRect.x = minX;
+        scissorRect.y = minY;
+        scissorRect.width = maxX - minX;
+        scissorRect.height = maxY - minY;
+        if (scissorRect.width == 0 || scissorRect.height == 0) {
+            scissorRect.width = 0;
+            scissorRect.height = 0;
+        }
     }
     else
     {

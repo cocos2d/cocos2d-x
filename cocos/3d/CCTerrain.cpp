@@ -29,12 +29,14 @@ USING_NS_CC;
 #include <stdlib.h>
 #include <float.h>
 #include <set>
+#include <stddef.h> // offsetof
 #include "renderer/CCRenderer.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/Device.h"
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Buffer.h"
 #include "base/CCDirector.h"
+#include "base/ccTypes.h"
 #include "base/CCEventType.h"
 #include "2d/CCCamera.h"
 #include "platform/CCImage.h"
@@ -115,7 +117,8 @@ void cocos2d::Terrain::setLightDir(const Vec3& lightDir)
 
 bool Terrain::initProperties()
 {
-    _programState = new backend::ProgramState(CC3D_terrain_vert, CC3D_terrain_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::TERRAIN_3D);
+    _programState = new backend::ProgramState(program);
 
     _stateBlock.depthWrite = true;
     _stateBlock.depthTest = true;
@@ -471,7 +474,6 @@ Terrain::~Terrain()
     CC_SAFE_RELEASE(_lightMap);
     CC_SAFE_RELEASE(_heightMapImage);
     CC_SAFE_RELEASE(_dummyTexture);
-    CC_SAFE_RELEASE_NULL(_programState);
     delete _quadRoot;
     for (int i = 0; i < 4; ++i)
     {
@@ -1402,8 +1404,6 @@ void Terrain::Chunk::updateVerticesForLOD()
             }
     }
 
-    //TODO coulsonwang
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(TerrainVertexData)*_currentVertices.size(), &_currentVertices[0], GL_STREAM_DRAW);
     _oldLod = _currentLod;
 }
 

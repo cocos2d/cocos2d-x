@@ -22,8 +22,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "physics3d/CCPhysics3D.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "base/CCConfiguration.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
@@ -127,7 +128,8 @@ Physics3DDebugDrawer::~Physics3DDebugDrawer()
 void Physics3DDebugDrawer::init()
 {
     CC_SAFE_RELEASE_NULL(_programState);
-    _programState = new backend::ProgramState(positionColor_vert, positionColor_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR);
+    _programState = new backend::ProgramState(program);
     _locMVP = _programState->getUniformLocation("u_MVPMatrix");
     
     auto attributes = _programState->getProgram()->getActiveAttributes();

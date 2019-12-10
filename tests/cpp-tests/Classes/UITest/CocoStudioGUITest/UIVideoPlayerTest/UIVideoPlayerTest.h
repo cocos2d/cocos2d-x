@@ -51,20 +51,16 @@ public:
     
     void sliderCallback(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType eventType);
 
-    void videoEventCallback(cocos2d::Ref* sender, cocos2d::experimental::ui::VideoPlayer::EventType eventType);
+    void videoEventCallback(cocos2d::Ref* sender, cocos2d::ui::VideoPlayer::EventType eventType);
 
 private:
     void createVideo();
     void createSlider();
 
-    cocos2d::MenuItemFont* _hintItem;
-    cocos2d::experimental::ui::VideoPlayer* _videoPlayer;
+    cocos2d::ui::VideoPlayer* _videoPlayer;
     cocos2d::Label* _videoStateLabel;
     cocos2d::Label* _loopStatusLabel;
     cocos2d::Rect _visibleRect;
-
-    cocos2d::Layer* _rootLayer;
-
 };
 
 
@@ -85,14 +81,14 @@ private:
     void createVideo();
     
     cocos2d::Rect _visibleRect;
-    cocos2d::experimental::ui::VideoPlayer* _videoPlayer;
+    cocos2d::ui::VideoPlayer* _videoPlayer;
     
     cocos2d::MenuItemFont*   _switchUserInputEnabled;
     cocos2d::MenuItemFont*   _switchStyle;
     
     
     bool _userInputEnabled;
-    cocos2d::experimental::ui::VideoPlayer::StyleType _style;
+    cocos2d::ui::VideoPlayer::StyleType _style;
     
     void updateButtonsTexts();
 };

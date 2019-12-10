@@ -176,10 +176,6 @@ public:
     Issue16113Test();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-
-private:
-    cocos2d::RenderTexture* _rend;
-    cocos2d::Sprite* _spriteDraw;
 };
 
 class RenderTextureWithSprite3DIssue16894 : public RenderTextureTest

@@ -2,36 +2,80 @@ include(CMakeParseArguments)
 
 # copy resource `FILES` and `FOLDERS` to TARGET_FILE_DIR/Resources
 function(cocos_copy_target_res cocos_target)
-    set(oneValueArgs COPY_TO)
-    set(multiValueArgs FILES FOLDERS)
+    set(oneValueArgs LINK_TO)
+    set(multiValueArgs FOLDERS)
     cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-    # copy files
-    foreach(cc_file ${opt_FILES})
-        get_filename_component(file_name ${cc_file} NAME)
-        add_custom_command(TARGET ${cocos_target} POST_BUILD
-            #COMMAND ${CMAKE_COMMAND} -E echo "copy-file into Resources: ${file_name} ..."
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_file} "${opt_COPY_TO}/${file_name}"
+
+    if(NOT TARGET SYNC_RESOURCE-${cocos_target})
+        message(WARNING "SyncResource targe for ${cocos_target} is not defined")
+        return()
+    endif()
+
+    # linking folders
+    foreach(cc_folder ${opt_FOLDERS})
+        #get_filename_component(link_folder ${opt_LINK_TO} DIRECTORY)
+        get_filename_component(link_folder_abs ${opt_LINK_TO} ABSOLUTE)
+        add_custom_command(TARGET SYNC_RESOURCE-${cocos_target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E echo "    copying to ${link_folder_abs}"
+            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                -s ${cc_folder} -d ${link_folder_abs}
         )
     endforeach()
-    # copy folders files
-    foreach(cc_folder ${opt_FOLDERS})
-        # file(GLOB_RECURSE folder_files "${cc_folder}/*")
-        # get_filename_component(folder_abs_path ${cc_folder} ABSOLUTE)
-        # foreach(res_file ${folder_files})
-        #     get_filename_component(res_file_abs_path ${res_file} ABSOLUTE)
-        #     file(RELATIVE_PATH res_file_relat_path ${folder_abs_path} ${res_file_abs_path})
-        #     add_custom_command(TARGET ${cocos_target} POST_BUILD
-        #         COMMAND ${CMAKE_COMMAND} -E echo "copy file into Resources: ${res_file_relat_path} ..."
-        #         COMMAND ${CMAKE_COMMAND} -E copy_if_different ${res_file} "${opt_COPY_TO}/${res_file_relat_path}"
-        #     )
-        # endforeach()
-        ### copy file by file is too slow on windows, the copy_directory improves a lot. 
-        add_custom_command(TARGET ${cocos_target} POST_BUILD
-                #COMMAND ${CMAKE_COMMAND} -E echo "copy-dir into Resources: ${opt_COPY_TO} ..."
-                COMMAND ${CMAKE_COMMAND} -E copy_directory ${cc_folder} "${opt_COPY_TO}"
-            )
-    endforeach()
 endfunction()
+
+## create a virtual target SYNC_RESOURCE-${cocos_target}
+## Update resource files in Resources/ folder everytime when `Run/Debug` target.
+function(cocos_def_copy_resource_target cocos_target)
+    add_custom_target(SYNC_RESOURCE-${cocos_target} ALL
+        COMMAND ${CMAKE_COMMAND} -E echo "Copying resources for ${cocos_target} ..."
+    )
+    add_dependencies(${cocos_target} SYNC_RESOURCE-${cocos_target})
+    set_target_properties(SYNC_RESOURCE-${cocos_target} PROPERTIES
+        FOLDER Utils
+    )
+endfunction()
+
+
+function(cocos_copy_lua_scripts cocos_target src_dir dst_dir)
+    set(luacompile_target COPY_LUA-${cocos_target})
+    if(NOT TARGET ${luacompile_target})
+        add_custom_target(${luacompile_target} ALL
+            COMMAND ${CMAKE_COMMAND} -E echo "Copying lua scripts ..."
+        )
+        add_dependencies(${cocos_target} ${luacompile_target})
+        set_target_properties(${luacompile_target} PROPERTIES
+            FOLDER Utils
+        )
+    endif()
+    if(MSVC)
+        add_custom_command(TARGET ${luacompile_target} POST_BUILD
+            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m $<CONFIG>
+        )
+    else()
+        if("${CMAKE_BUILD_TYPE}" STREQUAL "")
+            add_custom_command(TARGET ${luacompile_target} POST_BUILD
+                COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                -s ${src_dir} -d ${dst_dir}
+            )
+        else()
+            add_custom_command(TARGET ${luacompile_target} POST_BUILD
+                COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                    -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m ${CMAKE_BUILD_TYPE}
+                COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
+                    -s ${src_dir} -d ${dst_dir}/64bit -l ${LUAJIT64_COMMAND} -m ${CMAKE_BUILD_TYPE}
+            )
+        endif()
+    endif()
+
+endfunction()
+
+
+function(cocos_get_resource_path output cocos_target)
+    get_target_property(rt_output ${cocos_target} RUNTIME_OUTPUT_DIRECTORY)
+    set(${output} "${rt_output}/${CMAKE_CFG_INTDIR}/Resources" PARENT_SCOPE)
+endfunction()
+
 
 # mark `FILES` and files in `FOLDERS` as resource files, the destination is `RES_TO` folder
 # save all marked files in `res_out`
@@ -202,6 +246,15 @@ function(setup_cocos_app_config app_name)
     if(XCODE OR VS)
         cocos_mark_code_files(${app_name})
     endif()
+
+    if (XCODE)
+        cocos_config_app_xcode_property(${app_name})
+    endif()
+
+    if(LINUX OR WINDOWS)
+        cocos_def_copy_resource_target(${app_name})
+    endif()
+
 endfunction()
 
 # if cc_variable not set, then set it cc_value
@@ -210,52 +263,6 @@ macro(cocos_set_default_value cc_variable cc_value)
         set(${cc_variable} ${cc_value})
     endif()
 endmacro()
-
-# generate macOS app package infomations, need improve for example, the using of info.plist
-function(cocos_pak_xcode cocos_target)
-    set(oneValueArgs
-        INFO_PLIST
-        BUNDLE_NAME
-        BUNDLE_VERSION
-        COPYRIGHT
-        GUI_IDENTIFIER
-        ICON_FILE
-        INFO_STRING
-        LONG_VERSION_STRING
-        SHORT_VERSION_STRING
-        )
-    set(multiValueArgs)
-    cmake_parse_arguments(ARGS "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-
-    string(TIMESTAMP ARGS_COPYRIGHT_YEAR "%Y")
-    # set default value
-    cocos_set_default_value(ARGS_INFO_PLIST "MacOSXBundleInfo.plist.in")
-    cocos_set_default_value(ARGS_BUNDLE_NAME "\${PRODUCT_NAME}")
-    cocos_set_default_value(ARGS_BUNDLE_VERSION "1")
-    cocos_set_default_value(ARGS_COPYRIGHT "Copyright © ${ARGS_COPYRIGHT_YEAR}. All rights reserved.")
-    cocos_set_default_value(ARGS_GUI_IDENTIFIER "org.cocos2dx.${APP_NAME}")
-    cocos_set_default_value(ARGS_ICON_FILE "Icon")
-    cocos_set_default_value(ARGS_INFO_STRING "cocos2d-x app")
-    cocos_set_default_value(ARGS_LONG_VERSION_STRING "1.0.0")
-    cocos_set_default_value(ARGS_SHORT_VERSION_STRING "1.0")
-    # set default values for Info.plist template
-    set_target_properties(${cocos_target}
-                          PROPERTIES
-                          MACOSX_BUNDLE_INFO_PLIST ${ARGS_INFO_PLIST}
-                          )
-    set(MACOSX_BUNDLE_BUNDLE_NAME ${ARGS_BUNDLE_NAME} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_BUNDLE_VERSION ${ARGS_BUNDLE_VERSION} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_COPYRIGHT ${ARGS_COPYRIGHT} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_GUI_IDENTIFIER ${ARGS_GUI_IDENTIFIER} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_ICON_FILE ${ARGS_ICON_FILE} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_INFO_STRING ${ARGS_INFO_STRING} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_LONG_VERSION_STRING ${ARGS_LONG_VERSION_STRING} PARENT_SCOPE)
-    set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${ARGS_SHORT_VERSION_STRING} PARENT_SCOPE)
-
-    message(STATUS "cocos package: ${cocos_target}, plist file: ${ARGS_INFO_PLIST}")
-
-   cocos_config_app_xcode_property(${cocos_target})
-endfunction()
 
 # set Xcode property for application, include all depend target
 macro(cocos_config_app_xcode_property cocos_app)
@@ -271,7 +278,6 @@ endmacro()
 # custom Xcode property for iOS target
 macro(cocos_config_target_xcode_property cocos_target)
     if(IOS)
-        set_xcode_property(${cocos_target} IPHONEOS_DEPLOYMENT_TARGET "8.0")
         set_xcode_property(${cocos_target} ENABLE_BITCODE "NO")
         set_xcode_property(${cocos_target} ONLY_ACTIVE_ARCH "YES")
     endif()
@@ -368,4 +374,3 @@ function(cocos_use_pkg target pkg)
     endif()
 
 endfunction()
-

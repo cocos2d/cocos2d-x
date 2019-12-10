@@ -45,8 +45,6 @@ namespace backend
     class Buffer;
 }
 
-namespace experimental{
-
 /**
  * @addtogroup _2d
  * @{
@@ -78,7 +76,7 @@ namespace experimental{
  * @js NA
  */
 
-class CC_DLL TMXLayer : public Node
+class CC_DLL FastTMXLayer : public Node
 {
 public:
     /** Possible orientations of the TMX map */
@@ -93,16 +91,16 @@ public:
      * @param mapInfo A map info.
      * @return Return an autorelease object.
      */
-    static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+    static FastTMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     /**
      * @js ctor
      */
-    TMXLayer();
+    FastTMXLayer();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~TMXLayer();
+    virtual ~FastTMXLayer();
 
     /** Returns the tile gid at a given tile coordinate. It also returns the tile flags.
      * 
@@ -278,7 +276,7 @@ public:
     void removeChild(Node* child, bool cleanup = true) override;
 
 protected:
-    virtual void setOpacity(GLubyte opacity) override;
+    virtual void setOpacity(uint8_t opacity) override;
 
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void updateTiles(const Rect& culledRect);
@@ -356,10 +354,8 @@ protected:
     backend::UniformLocation _mvpMatrixLocaiton;
     backend::UniformLocation _textureLocation;
     backend::UniformLocation _alphaValueLocation;
-    backend::ProgramState* _programState = nullptr;
 };
 
 // end of tilemap_parallax_nodes group
 /// @}
-} //end of namespace experimental
 NS_CC_END

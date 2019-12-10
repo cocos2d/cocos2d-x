@@ -52,7 +52,7 @@ public:
      * @param usage Specifies the expected usage pattern of the data store. The symbolic constant must be BufferUsage::STATIC, BufferUsage::DYNAMIC.
      * @return A Buffer object.
      */
-    virtual Buffer* newBuffer(unsigned int size, BufferType type, BufferUsage usage) override;
+    virtual Buffer* newBuffer(std::size_t size, BufferType type, BufferUsage usage) override;
 
     /**
      * New a TextureBackend object, not auto released.
@@ -80,6 +80,14 @@ public:
      */
     virtual void setFrameBufferOnly(bool frameBufferOnly) override {}
 
+    /**
+     * New a Program, not auto released.
+     * @param vertexShader Specifes this is a vertex shader source.
+     * @param fragmentShader Specifes this is a fragment shader source.
+     * @return A Program instance.
+     */
+    virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) override;
+
 protected:
     /**
      * New a shaderModule, not auto released.
@@ -88,14 +96,6 @@ protected:
      * @return A ShaderModule object.
      */
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) override;
-
-    /**
-     * New a Program, not auto released.
-     * @param vertexShader Specifes this is a vertex shader source.
-     * @param fragmentShader Specifes this is a fragment shader source.
-     * @return A Program object.
-     */
-    virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) override;
 
 };
 //end of _opengl group

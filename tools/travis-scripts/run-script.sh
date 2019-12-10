@@ -31,17 +31,18 @@ function do_retry()
 function build_linux()
 {
     echo "Building tests ..."
+    source ../environment.sh
     cd $COCOS2DX_ROOT
-    mkdir -p linux-build
-    cd linux-build
-    cmake ..
-    cmake --build .
+    set -x
+    cmake . -G "Unix Makefiles" -Blinux-build-release -DCMAKE_BUILD_TYPE=Release
+    cmake --build linux-build-release -- -j `nproc`
+    set +x
 }
 
 function build_mac_cmake()
 {
     NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
-    
+
     # pushd $COCOS2DX_ROOT
     # python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
     # popd
@@ -50,10 +51,10 @@ function build_mac_cmake()
     mkdir -p mac_cmake_build
     cd mac_cmake_build
     cmake .. -GXcode
-    # cmake --build .
-    xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES build  | xcpretty
-    #the following commands must not be removed
-    xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES build
+    cmake --build . --config Release -- -quiet
+    #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES build  | xcpretty
+    ##the following commands must not be removed
+    #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES build
     exit 0
 }
 
@@ -70,10 +71,11 @@ function build_ios_cmake()
     cd ios_cmake_build
     cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
     # too much logs on console when "cmake --build ."
-    # cmake --build .
-    xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build  | xcpretty
-    #the following commands must not be removed
-    xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
+    cmake --build . --config Release -- -quiet -jobs $NUM_OF_CORES -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" 
+
+    #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build  | xcpretty
+    ##the following commands must not be removed
+    #xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
     exit 0
 }
 
@@ -208,29 +210,70 @@ function run_pull_request()
     fi
 
     if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+        export PATH=$PATH:$COCOS2DX_ROOT/tools/cocos2d-console/bin
         genernate_binding_codes
         pushd $COCOS2DX_ROOT
         update_cocos_files
         python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l lua -p my.pack.qqqq cocos_new_test
         popd
-
         echo "Building tests ..."
+
+        set -x
         cd $COCOS2DX_ROOT/cocos_new_test
         mkdir -p linux-build
         cd linux-build
-        cmake ..
-        cmake --build .
+        cmake .. -G"Unix Makefiles"
+        cmake --build . -- -j `nproc`
+        exit 0
+    fi
+
+    if [ "$BUILD_TARGET" == "ios_cocos_new_lua_test" ]; then
+        export PATH=$PATH:$COCOS2DX_ROOT/tools/cocos2d-console/bin
+        #NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
+        genernate_binding_codes
+        pushd $COCOS2DX_ROOT
+        echo "Creating tests ..."
+
+        set -x
+        cocos --agreement n new -l lua ios_new_lua_proj
+        cd ios_new_lua_proj
+        mkdir build
+        cd build
+        cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
+        cmake --build . --config Release -- -quiet
+        popd
+        exit 0
+    fi
+
+    if [ "$BUILD_TARGET" == "ios_cocos_new_cpp_test" ]; then
+        export PATH=$PATH:$COCOS2DX_ROOT/tools/cocos2d-console/bin
+        #NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
+        genernate_binding_codes
+        pushd $COCOS2DX_ROOT
+        echo "Creating tests ..."
+
+        set -x
+        cocos --agreement n new -l cpp ios_new_cpp_proj
+        cd ios_new_cpp_proj
+        mkdir build
+        cd build
+        echo "Building tests ..."
+        cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
+        cmake --build . --config Release -- -quiet 
+        popd
         exit 0
     fi
     
     if [ $BUILD_TARGET == 'mac_cmake' ]; then
         genernate_binding_codes
+        set -x
         build_mac_cmake
         exit 0
     fi
 
     if [ $BUILD_TARGET == 'ios_cmake' ]; then
         genernate_binding_codes
+        set -x
         build_ios_cmake
         exit 0
     fi

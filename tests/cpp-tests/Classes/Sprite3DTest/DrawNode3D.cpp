@@ -58,7 +58,7 @@ void DrawNode3D::ensureCapacity(int count)
 {
     CCASSERT(count>=0, "capacity must be >= 0");
     
-    const int EXTENDED_SIZE = _bufferLines.size() + count;
+    auto EXTENDED_SIZE = _bufferLines.size() + count;
 
     _bufferLines.reserve(EXTENDED_SIZE);
 
@@ -73,7 +73,8 @@ bool DrawNode3D::init()
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     auto &pd = _customCommand.getPipelineDescriptor();
-    _programStateLine = new backend::ProgramState(lineColor3D_vert, lineColor3D_frag);
+    auto program = backend::Program::getBuiltinProgram(backend::ProgramType::LINE_COLOR_3D);
+    _programStateLine = new backend::ProgramState(program);
     pd.programState = _programStateLine;
     
     _locMVPMatrix = _programStateLine->getUniformLocation("u_MVPMatrix");

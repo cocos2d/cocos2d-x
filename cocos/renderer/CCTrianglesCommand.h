@@ -98,6 +98,9 @@ public:
     const unsigned short* getIndices() const { return _triangles.indices; }
     /**Get the model view matrix.*/
     const Mat4& getModelView() const { return _mv; }
+    
+    /** update material ID */
+    void updateMaterialID();
   
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
@@ -115,7 +118,7 @@ protected:
 
     // Cached value to determine to generate material id or not.
     BlendFunc _blendType = BlendFunc::DISABLE;
-    backend::Program* _program = nullptr;
+    backend::ProgramType _programType = backend::ProgramType::CUSTOM_PROGRAM;
     backend::TextureBackend* _texture = nullptr;
 };
 

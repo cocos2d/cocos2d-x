@@ -26,9 +26,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCSprite.h"
-
 #include <algorithm>
-
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCSpriteFrame.h"
@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -374,9 +375,11 @@ void Sprite::setVertexLayout()
 
 void Sprite::updateShaders(const char* vert, const char* frag)
 {
-    auto programState = new (std::nothrow) backend::ProgramState(vert, frag);
+    auto* program = backend::Device::getInstance()->newProgram(vert, frag);
+    auto programState = new (std::nothrow) backend::ProgramState(program);
     setProgramState(programState);
-    CC_SAFE_RELEASE_NULL(programState);
+    CC_SAFE_RELEASE(programState);
+    CC_SAFE_RELEASE(program);
 }
 
 void Sprite::setProgramState(backend::ProgramType type)
@@ -385,7 +388,8 @@ void Sprite::setProgramState(backend::ProgramType type)
        _programState->getProgram()->getProgramType() == type)
         return;
     
-    auto programState = new (std::nothrow) backend::ProgramState(type);
+    auto* program = backend::Program::getBuiltinProgram(type);
+    auto programState = new (std::nothrow) backend::ProgramState(program);
     setProgramState(programState);
     CC_SAFE_RELEASE_NULL(programState);
 }
@@ -407,7 +411,7 @@ void Sprite::setProgramState(backend::ProgramState *programState)
     _alphaTextureLocation = pipelineDescriptor.programState->getUniformLocation(backend::Uniform::TEXTURE1);
 
     setVertexLayout();
-    updateProgramState();
+    updateProgramStateTexture();
     setMVPMatrixUniform();
 }
 
@@ -415,7 +419,6 @@ void Sprite::setTexture(Texture2D *texture)
 {
     auto isETC1 = texture && texture->getAlphaTextureName();
     setProgramState((isETC1) ? backend::ProgramType::ETC1 : backend::ProgramType::POSITION_TEXTURE_COLOR);
-
     CCASSERT(! _batchNode || (texture &&  texture == _batchNode->getTexture()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
@@ -447,11 +450,10 @@ void Sprite::setTexture(Texture2D *texture)
         }
         updateBlendFunc();
     }
-
-    updateProgramState();
+    updateProgramStateTexture();
 }
 
-void Sprite::updateProgramState()
+void Sprite::updateProgramStateTexture()
 {
     if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
         return;

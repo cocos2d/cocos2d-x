@@ -26,8 +26,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #include "2d/CCSpriteBatchNode.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "2d/CCSprite.h"
 #include "base/CCDirector.h"
 #include "base/CCProfiling.h"
@@ -37,7 +38,7 @@ THE SOFTWARE.
 #include "renderer/CCQuadCommand.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
-
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -115,30 +116,65 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
 void SpriteBatchNode::updateShaders(const std::string &vertexShader, const std::string &fragmentShader)
 {
     auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
+    auto* program = backend::Device::getInstance()->newProgram(vertexShader, fragmentShader);
     CC_SAFE_RELEASE(_programState);
-    _programState = new (std::nothrow) backend::ProgramState(vertexShader, fragmentShader);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
-    _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
-    _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
+    
+    CC_SAFE_RELEASE(program);
+    
+    setVertexLayout();
+    setUniformLocation();
+}
 
+void SpriteBatchNode::setUniformLocation()
+{
+    CCASSERT(_programState, "programState should not be nullptr");
+    _mvpMatrixLocaiton = _programState->getUniformLocation("u_MVPMatrix");
+    _textureLocation = _programState->getUniformLocation("u_texture");
+}
+
+void SpriteBatchNode::setVertexLayout()
+{
+    CCASSERT(_programState, "programState should not be nullptr");
+    //set vertexLayout according to V3F_C4B_T2F structure
     auto vertexLayout = _programState->getVertexLayout();
-    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
-    auto iter = attributeInfo.find("a_position");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
-    }
-    iter = attributeInfo.find("a_texCoord");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
-    }
-    iter = attributeInfo.find("a_color");
-    if(iter != attributeInfo.end())
-    {
-        vertexLayout->setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
-    }
+    ///a_position
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_POSITION,
+                              _programState->getAttributeLocation(backend::Attribute::POSITION),
+                              backend::VertexFormat::FLOAT3,
+                              0,
+                              false);
+    ///a_texCoord
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_TEXCOORD,
+                              _programState->getAttributeLocation(backend::Attribute::TEXCOORD),
+                              backend::VertexFormat::FLOAT2,
+                              offsetof(V3F_C4B_T2F, texCoords),
+                              false);
+    
+    ///a_color
+    vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_COLOR,
+                              _programState->getAttributeLocation(backend::Attribute::COLOR),
+                              backend::VertexFormat::UBYTE4,
+                              offsetof(V3F_C4B_T2F, colors),
+                              true);
     vertexLayout->setLayout(sizeof(V3F_C4B_T2F));
+}
+
+void SpriteBatchNode::setProgramState(backend::ProgramState *programState)
+{
+    CCASSERT(programState, "programState should not be nullptr");
+    auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
+    if (_programState != programState)
+    {
+        CC_SAFE_RELEASE(_programState);
+        _programState = programState;
+        CC_SAFE_RETAIN(programState);
+    }
+    pipelineDescriptor.programState = _programState;
+    
+    setVertexLayout();
+    setUniformLocation();
 }
 
 bool SpriteBatchNode::init()
@@ -164,7 +200,6 @@ SpriteBatchNode::SpriteBatchNode()
 SpriteBatchNode::~SpriteBatchNode()
 {
     CC_SAFE_RELEASE(_textureAtlas);
-    CC_SAFE_RELEASE(_programState);
 }
 
 // override visit

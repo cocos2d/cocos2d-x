@@ -34,6 +34,7 @@ THE SOFTWARE.
 
 #include "renderer/CCTexture2D.h"
 #include "platform/CCImage.h"
+#include "platform/CCGL.h"
 #include "base/ccUtils.h"
 #include "platform/CCDevice.h"
 #include "base/ccConfig.h"
@@ -406,7 +407,7 @@ bool Texture2D::initWithImage(Image *image, backend::PixelFormat format)
     //override renderFormat, since some render format is not supported by metal
     switch (renderFormat)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS && !TARGET_OS_SIMULATOR)
         //packed 16 bits pixels only available on iOS
         case PixelFormat::RGB565:
             renderFormat = PixelFormat::MTL_B5G6R5;
@@ -826,8 +827,8 @@ void Texture2D::initProgram()
     
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     //create program state
-    _programState = new (std::nothrow) cocos2d::backend::ProgramState(
-                                                                      positionTexture_vert, positionTexture_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE);
+    _programState = new (std::nothrow) cocos2d::backend::ProgramState(program);
     _mvpMatrixLocation = _programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = _programState->getUniformLocation("u_texture");
     

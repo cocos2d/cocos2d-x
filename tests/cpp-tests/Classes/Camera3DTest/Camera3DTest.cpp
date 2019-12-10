@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "testResource.h"
 #include "ui/UISlider.h"
 #include  "platform/CCFileUtils.h"
+#include "renderer/backend/Device.h"
 
 USING_NS_CC;
 
@@ -127,7 +128,7 @@ CameraRotationTest::CameraRotationTest()
 
     //Listener
     _lis = EventListenerTouchOneByOne::create();
-    _lis->onTouchBegan = [this](Touch* t, Event* e) {
+    _lis->onTouchBegan = [](Touch* t, Event* e) {
         return true;
     };
 
@@ -410,11 +411,6 @@ void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool p
 }
 void Camera3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    for ( auto &item: touches )
-    {
-        auto touch = item;
-        auto location = touch->getLocation();
-    }
 }
 void Camera3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
@@ -1213,11 +1209,6 @@ void CameraArcBallDemo::update(float dt)
 // FogTestDemo
 FogTestDemo::FogTestDemo()
 : CameraBaseTest()
-, _layer3D(nullptr)
-, _cameraType(CameraType::Free)
-, _camera(nullptr)
-, _programState1(nullptr)
-, _programState2(nullptr)
 {
 }
 FogTestDemo::~FogTestDemo()
@@ -1270,9 +1261,10 @@ void FogTestDemo::onEnter()
 
     auto vertexSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.vert");
     auto fragSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.frag");
-
-    _programState1 = new backend::ProgramState(vertexSource, fragSource);
-    _programState2 = new backend::ProgramState(vertexSource, fragSource);
+    auto program = backend::Device::getInstance()->newProgram(vertexSource, fragSource);
+    _programState1 = new backend::ProgramState(program);
+    _programState2 = new backend::ProgramState(program);
+    CC_SAFE_RELEASE(program);
     
     _sprite3D1 = Sprite3D::create("Sprite3DTest/teapot.c3b");
     _sprite3D2 = Sprite3D::create("Sprite3DTest/teapot.c3b");
@@ -1322,12 +1314,13 @@ void FogTestDemo::onEnter()
 
                                                                 auto vertexSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.vert");
                                                                 auto fragSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.frag");
-
-                                                                _programState1 = new backend::ProgramState(vertexSource, fragSource);
-                                                                _programState2 = new backend::ProgramState(vertexSource, fragSource);
+                                                                auto program = backend::Device::getInstance()->newProgram(vertexSource, fragSource);
+                                                                _programState1 = new backend::ProgramState(program);
+                                                                _programState2 = new backend::ProgramState(program);
 
                                                                 _sprite3D1->setProgramState(_programState1);
                                                                 _sprite3D2->setProgramState(_programState2);
+                                                                CC_SAFE_RELEASE(program);
                                                                 
                                                                 auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
                                                                 float   fogStart    = 10;

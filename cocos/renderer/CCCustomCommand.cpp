@@ -61,7 +61,7 @@ void CustomCommand::init(float globalZOrder, const BlendFunc& blendFunc)
     blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = blendFunc.dst;
 }
 
-void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int capacity, BufferUsage usage)
+void CustomCommand::createVertexBuffer(std::size_t vertexSize, std::size_t capacity, BufferUsage usage)
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     
@@ -72,7 +72,7 @@ void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int cap
     _vertexBuffer = device->newBuffer(vertexSize * capacity, backend::BufferType::VERTEX, usage);
 }
 
-void CustomCommand::createIndexBuffer(IndexFormat format, unsigned int capacity, BufferUsage usage)
+void CustomCommand::createIndexBuffer(IndexFormat format, std::size_t capacity, BufferUsage usage)
 {
     CC_SAFE_RELEASE(_indexBuffer);
     
@@ -85,13 +85,13 @@ void CustomCommand::createIndexBuffer(IndexFormat format, unsigned int capacity,
     _indexBuffer = device->newBuffer(_indexSize * capacity, backend::BufferType::INDEX, usage);
 }
 
-void CustomCommand::updateVertexBuffer(void* data, unsigned int offset, unsigned int length)
+void CustomCommand::updateVertexBuffer(void* data, std::size_t offset, std::size_t length)
 {   
     assert(_vertexBuffer);
     _vertexBuffer->updateSubData(data, offset, length);
 }
 
-void CustomCommand::updateIndexBuffer(void* data, unsigned int offset, unsigned int length)
+void CustomCommand::updateIndexBuffer(void* data, std::size_t offset, std::size_t length)
 {
     assert(_indexBuffer);
     _indexBuffer->updateSubData(data, offset, length);
@@ -118,24 +118,24 @@ void CustomCommand::setIndexBuffer(backend::Buffer *indexBuffer, IndexFormat for
     _indexSize = computeIndexSize();
 }
 
-void CustomCommand::updateVertexBuffer(void* data, unsigned int length)
+void CustomCommand::updateVertexBuffer(void* data, std::size_t length)
 {
     assert(_vertexBuffer);
     _vertexBuffer->updateData(data, length);
 }
 
-void CustomCommand::updateIndexBuffer(void* data, unsigned int length)
+void CustomCommand::updateIndexBuffer(void* data, std::size_t length)
 {
     assert(_indexBuffer);
     _indexBuffer->updateData(data, length);
 }
 
-unsigned int CustomCommand::computeIndexSize() const
+std::size_t CustomCommand::computeIndexSize() const
 {
 if (IndexFormat::U_SHORT == _indexFormat)
-    return (unsigned int)sizeof(unsigned short);
+    return sizeof(unsigned short);
 else
-    return (unsigned int)sizeof(unsigned int);
+    return sizeof(unsigned int);
 }
 
 NS_CC_END

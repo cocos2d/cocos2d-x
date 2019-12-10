@@ -166,7 +166,7 @@ float PolygonInfo::getArea() const
     float area = 0;
     V3F_C4B_T2F *verts = triangles.verts;
     unsigned short *indices = triangles.indices;
-    for(int i = 0; i < triangles.indexCount; i+=3)
+    for(unsigned int i = 0; i < triangles.indexCount; i+=3)
     {
         auto A = verts[indices[i]].vertices;
         auto B = verts[indices[i+1]].vertices;
@@ -249,13 +249,13 @@ unsigned int AutoPolygon::getSquareValue(unsigned int x, unsigned int y, const R
     //NOTE: due to the way we pick points from texture, rect needs to be smaller, otherwise it goes outside 1 pixel
     auto fixedRect = Rect(rect.origin, rect.size-Size(2,2));
     
-    Vec2 tl((float)x-1, (float)y-1);
+    Vec2 tl = Vec2(x-1.0f, y-1.0f);
     sv += (fixedRect.containsPoint(tl) && getAlphaByPos(tl) > threshold)? 1 : 0;
-    Vec2 tr((float)x, (float)y-1);
+    Vec2 tr = Vec2(x-0.0f, y-1.0f);
     sv += (fixedRect.containsPoint(tr) && getAlphaByPos(tr) > threshold)? 2 : 0;
-    Vec2 bl((float)x-1, (float)y);
+    Vec2 bl = Vec2(x-1.0f, y-0.0f);
     sv += (fixedRect.containsPoint(bl) && getAlphaByPos(bl) > threshold)? 4 : 0;
-    Vec2 br((float)x, (float)y);
+    Vec2 br = Vec2(x-0.0f, y-0.0f);
     sv += (fixedRect.containsPoint(br) && getAlphaByPos(br) > threshold)? 8 : 0;
     CCASSERT(sv != 0 && sv != 15, "square value should not be 0, or 15");
     return sv;
@@ -267,8 +267,8 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
     int stepy = 0;
     int prevx = 0;
     int prevy = 0;
-    int startx = start.x;
-    int starty = start.y;
+    int startx = (int)start.x;
+    int starty = (int)start.y;
     int curx = startx;
     int cury = starty;
     unsigned int count = 0;
@@ -526,7 +526,7 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     ClipperLib::PolyTree out;
     for(const auto& pt : points)
     {
-        subj << ClipperLib::IntPoint(pt.x* PRECISION, pt.y * PRECISION);
+        subj << ClipperLib::IntPoint(static_cast<ClipperLib::cInt>(pt.x* PRECISION), static_cast<ClipperLib::cInt>(pt.y * PRECISION));
     }
     ClipperLib::ClipperOffset co;
     co.AddPath(subj, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
@@ -551,9 +551,10 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     //create the clipping rect
     ClipperLib::Path clamp;
     clamp.push_back(ClipperLib::IntPoint(0, 0));
-    clamp.push_back(ClipperLib::IntPoint(rect.size.width/_scaleFactor * PRECISION, 0));
-    clamp.push_back(ClipperLib::IntPoint(rect.size.width/_scaleFactor * PRECISION, rect.size.height/_scaleFactor * PRECISION));
-    clamp.push_back(ClipperLib::IntPoint(0, rect.size.height/_scaleFactor * PRECISION));
+    clamp.push_back(ClipperLib::IntPoint(static_cast<ClipperLib::cInt>(rect.size.width/_scaleFactor * PRECISION), 0));
+    clamp.push_back(ClipperLib::IntPoint(static_cast<ClipperLib::cInt>(rect.size.width/_scaleFactor * PRECISION), 
+                                         static_cast<ClipperLib::cInt>(rect.size.height/_scaleFactor * PRECISION)));
+    clamp.push_back(ClipperLib::IntPoint(0, static_cast<ClipperLib::cInt>(rect.size.height/_scaleFactor * PRECISION)));
     cl.AddPath(clamp, ClipperLib::ptClip, true);
     cl.Execute(ClipperLib::ctIntersection, out);
     
@@ -599,10 +600,10 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
         for(int i = 0; i < 3; ++i)
         {
             auto p = ite->GetPoint(i);
-            auto v3 = Vec3(p->x, p->y, 0);
+            auto v3 = Vec3((float)p->x, (float)p->y, 0);
             bool found = false;
-            size_t j;
-            size_t length = vdx;
+            unsigned short j;
+            auto length = vdx;
             for(j = 0; j < length; j++)
             {
                 if(verts[j].vertices == v3)
@@ -668,8 +669,8 @@ void AutoPolygon::calculateUV(const Rect& rect, V3F_C4B_T2F* verts, ssize_t coun
      */
     
     CCASSERT(_width && _height, "please specify width and height for this AutoPolygon instance");
-    float texWidth  = _width;
-    float texHeight = _height;
+    auto texWidth  = _width;
+    auto texHeight = _height;
 
     auto end = &verts[count];
     for(auto i = verts; i != end; ++i)
@@ -690,7 +691,7 @@ Rect AutoPolygon::getRealRect(const Rect& rect)
     {
         //if the instance doesn't have width and height, then the whole operation is kaput
         CCASSERT(_height && _width, "Please specify a width and height for this instance before using its functions");
-        realRect = Rect(0,0, _width, _height);
+        realRect = Rect(0,0, (float)_width, (float)_height);
     }
     else{
         //rect is specified, so convert to real rect

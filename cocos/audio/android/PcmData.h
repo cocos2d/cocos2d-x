@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <vector>
 #include <memory>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 struct PcmData
 {
@@ -63,4 +63,4 @@ struct PcmData
     std::string toString() const;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

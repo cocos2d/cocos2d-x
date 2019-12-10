@@ -133,7 +133,7 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
         }
         else
         {
-            nextLocation = _uniformBufferSize;
+            nextLocation = static_cast<int>(_uniformBufferSize);
         }
         
         glslopt_shader_get_uniform_desc(shader, i, &parName, &parType, &parPrec, &parVecSize, &parMatSize, &parArrSize, &location);

@@ -23,10 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
 #include "platform/CCApplication.h"
 #include "base/CCDirector.h"
 #include <algorithm>
@@ -119,7 +115,7 @@ int Application::run()
             // Sleep(3) may make a sleep of 2ms or 4ms. Therefore, we subtract 1ms here to make Sleep time shorter.
             // If 'waitMS' is equal or less than 1ms, don't sleep and run into next loop to
             // boost CPU to next frame accurately.
-            waitMS = (_animationInterval.QuadPart - interval) * 1000LL / freq.QuadPart - 1L;
+            waitMS = static_cast<LONG>((_animationInterval.QuadPart - interval) * 1000LL / freq.QuadPart - 1L);
             if (waitMS > 1L)
                 Sleep(waitMS);
         }
@@ -362,5 +358,3 @@ static void PVRFrameEnableControlWindow(bool bEnable)
 
     RegCloseKey(hKey);
 }
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

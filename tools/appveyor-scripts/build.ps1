@@ -102,6 +102,8 @@ If ($env:build_type -eq "android_cpp_tests") {
 } elseif ($env:build_type -eq "windows32_cmake_test") {
     Write-Host "Build tests project by cmake"
 
+    $ENV:PATH="$env:APPVEYOR_BUILD_FOLDER\tools\cocos2d-console\bin;$ENV:PATH"
+
     & mkdir $env:APPVEYOR_BUILD_FOLDER\win32-build
     # if ($lastexitcode -ne 0) {throw} # mkdir return no-zero
 

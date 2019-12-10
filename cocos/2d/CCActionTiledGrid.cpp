@@ -243,11 +243,11 @@ void ShuffleTiles::shuffle(unsigned int *array, unsigned int len)
 Size ShuffleTiles::getDelta(const Size& pos) const
 {
     unsigned int idx = static_cast<unsigned int>(pos.width * _gridSize.height + pos.height);
+    Vec2    pos2;
+    pos2.x = (float)(_tilesOrder[idx] / (int)_gridSize.height);
+    pos2.y = (float)(_tilesOrder[idx] % (int)_gridSize.height);
 
-    float x = _tilesOrder[idx] / (_gridSize.height - pos.width);
-    float y = (float)(_tilesOrder[idx] % (int)(_gridSize.height - pos.height));
-
-    return Size(x, y);
+    return Size((int)(pos2.x - pos.width), (int)(pos2.y - pos.height));
 }
 
 void ShuffleTiles::placeTile(const Vec2& pos, Tile *t)
@@ -624,7 +624,9 @@ void TurnOffTiles::update(float time)
     for (unsigned int i = 0; i < _tilesCount; i++ )
     {
         t = _tilesOrder[i];
-        Vec2 tilePos(t / _gridSize.height, (float)(t % (unsigned int)_gridSize.height));
+        //needs integer value
+        unsigned int x = (unsigned int)(t / _gridSize.height);
+        Vec2 tilePos((float)x, (float)(t % (unsigned int)_gridSize.height));
 
         if ( i < l )
         {

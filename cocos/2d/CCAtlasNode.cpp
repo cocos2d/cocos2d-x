@@ -25,8 +25,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #include "2d/CCAtlasNode.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "renderer/CCTextureAtlas.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
@@ -44,7 +45,8 @@ NS_CC_BEGIN
 AtlasNode::AtlasNode()
 {
     auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
-    _programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
@@ -75,7 +77,6 @@ AtlasNode::AtlasNode()
 AtlasNode::~AtlasNode()
 {
     CC_SAFE_RELEASE(_textureAtlas);
-    CC_SAFE_RELEASE(_programState);
 }
 
 AtlasNode * AtlasNode::create(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)

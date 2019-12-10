@@ -157,7 +157,7 @@ void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     }
 }
 
-void Texture2DGL::updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level)
+void Texture2DGL::updateData(uint8_t* data, std::size_t width , std::size_t height, std::size_t level)
 {
     //Set the row align only when mipmapsNum == 1 and the data is uncompressed
     auto mipmapEnalbed = isMipmapEnabled(_textureInfo.minFilterGL) || isMipmapEnabled(_textureInfo.magFilterGL);
@@ -210,8 +210,8 @@ void Texture2DGL::updateData(uint8_t* data, uint32_t width , uint32_t height, ui
         _hasMipmaps = true;
 }
 
-void Texture2DGL::updateCompressedData(uint8_t *data, uint32_t width, uint32_t height,
-                                       uint32_t dataLen, uint32_t level)
+void Texture2DGL::updateCompressedData(uint8_t *data, std::size_t width, std::size_t height,
+                                       std::size_t dataLen, std::size_t level)
 {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -237,7 +237,7 @@ void Texture2DGL::updateCompressedData(uint8_t *data, uint32_t width, uint32_t h
         _hasMipmaps = true;
 }
 
-void Texture2DGL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint8_t* data)
+void Texture2DGL::updateSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width, std::size_t height, std::size_t level, uint8_t* data)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
@@ -257,8 +257,8 @@ void Texture2DGL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t wid
         _hasMipmaps = true;
 }
 
-void Texture2DGL::updateCompressedSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width,
-                                          uint32_t height, uint32_t dataLen, uint32_t level,
+void Texture2DGL::updateCompressedSubData(std::size_t xoffset, std::size_t yoffset, std::size_t width,
+                                          std::size_t height, std::size_t dataLen, std::size_t level,
                                           uint8_t *data)
 {
     glActiveTexture(GL_TEXTURE0);
@@ -298,7 +298,7 @@ void Texture2DGL::generateMipmaps()
     }
 }
 
-void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
+void Texture2DGL::getBytes(std::size_t x, std::size_t y, std::size_t width, std::size_t height, bool flipImage, std::function<void(const unsigned char*, std::size_t, std::size_t)> callback)
 {
     GLint defaultFBO = 0;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFBO);
@@ -418,7 +418,7 @@ void TextureCubeGL::updateFaceData(TextureCubeFace side, void *data)
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
-void TextureCubeGL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
+void TextureCubeGL::getBytes(std::size_t x, std::size_t y, std::size_t width, std::size_t height, bool flipImage, std::function<void(const unsigned char*, std::size_t, std::size_t)> callback)
 {
     GLint defaultFBO = 0;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFBO);

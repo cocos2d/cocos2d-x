@@ -28,7 +28,6 @@
 
 using namespace CocosDenshion;
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 struct SimpleAudioEngineDelegate {
     SimpleAudioEngine * engine = nullptr;

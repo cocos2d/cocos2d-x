@@ -194,6 +194,8 @@ function CreateTestMenu()
     CloseMenu:addChild(CloseItem)
     menuLayer:addChild(CloseMenu)
 
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform() 
+
     -- add menu items for tests
     local MainMenu = cc.Menu:create()
     local index = 0

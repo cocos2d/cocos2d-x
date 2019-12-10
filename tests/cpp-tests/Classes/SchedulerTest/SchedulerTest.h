@@ -431,10 +431,10 @@ private:
         TestClass(int index, TestClass *nextObj, cocos2d::Scheduler* scheduler);
         void update(float dt);
     private:
-        TestClass *_nextObj;
-        int _index;
-        cocos2d::Scheduler *_scheduler;
-        bool _cleanedUp;
+        TestClass *_nextObj = nullptr;
+        int _index = 0;
+        cocos2d::Scheduler *_scheduler = nullptr;
+        bool _cleanedUp = false;
     };
     std::vector<TestClass *> _testvector;
 };

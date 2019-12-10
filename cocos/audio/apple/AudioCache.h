@@ -25,9 +25,6 @@
 
 #pragma once
 
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
 #import <OpenAL/al.h>
 
 #include <string>
@@ -38,7 +35,6 @@
 #include "audio/apple/AudioMacros.h"
 
 NS_CC_BEGIN
-namespace experimental{
 
 class AudioEngineImpl;
 class AudioPlayer;
@@ -111,6 +107,3 @@ protected:
 };
 
 }
-NS_CC_END
-
-#endif

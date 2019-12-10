@@ -47,7 +47,7 @@ public:
      * @param type Specifies the target buffer object. The symbolic constant must be BufferType::VERTEX or BufferType::INDEX.
      * @param usage Specifies the expected usage pattern of the data store. The symbolic constant must be BufferUsage::STATIC, BufferUsage::DYNAMIC.
      */
-    BufferGL(unsigned int size, BufferType type, BufferUsage usage);
+    BufferGL(std::size_t size, BufferType type, BufferUsage usage);
     ~BufferGL();
     
     /**
@@ -56,7 +56,7 @@ public:
      * @param size Specifies the size in bytes of the data store region being replaced.
      * @see `updateSubData(void* data, unsigned int offset, unsigned int size)`
      */
-    virtual void updateData(void* data, unsigned int size) override;
+    virtual void updateData(void* data, std::size_t size) override;
 
     /**
      * @brief Update buffer sub-region data
@@ -65,7 +65,7 @@ public:
      * @param size Specifies the size in bytes of the data store region being replaced.
      * @see `updateData(void* data, unsigned int size)`
      */
-    virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
+    virtual void updateSubData(void* data, std::size_t offset, std::size_t size) override;
 
     /**
      * Static buffer data will automatically stored when it comes to foreground.
@@ -83,14 +83,14 @@ public:
 private:
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     void reloadBuffer();
-    void fillBuffer(void* data, unsigned int offset, unsigned int size);
+    void fillBuffer(void* data, std::size_t offset, std::size_t size);
 
     bool _bufferAlreadyFilled = false;
     EventListenerCustom* _backToForegroundListener = nullptr;
 #endif
 
     GLuint _buffer = 0;
-    unsigned int _bufferAllocated = 0;
+    std::size_t _bufferAllocated = 0;
     char* _data = nullptr;
     bool _needDefaultStoredData = true;
 };

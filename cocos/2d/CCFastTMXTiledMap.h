@@ -25,8 +25,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_FAST_TMX_TILEMAP_H__
-#define __CC_FAST_TMX_TILEMAP_H__
+#pragma once
 
 #include "2d/CCNode.h"
 #include "2d/CCTMXObjectGroup.h"
@@ -36,10 +35,7 @@ NS_CC_BEGIN
 class TMXLayerInfo;
 class TMXTilesetInfo;
 class TMXMapInfo;
-
-namespace experimental {
-    
-class TMXLayer;
+class FastTMXLayer;
 /**
  * @addtogroup _2d
  * @{
@@ -97,14 +93,14 @@ class TMXLayer;
  * @since v3.2
  * @js NA
  */
-class CC_DLL TMXTiledMap : public Node
+class CC_DLL FastTMXTiledMap : public Node
 {
 public:
     /** Creates a TMX Tiled Map with a TMX file.
      *
      * @return An autorelease object.
      */
-    static TMXTiledMap* create(const std::string& tmxFile);
+    static FastTMXTiledMap* create(const std::string& tmxFile);
 
     /** Initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources. 
      *
@@ -112,13 +108,13 @@ public:
      * @param resourcePath A path to TMX resources.
      * @return An autorelease object.
      */
-    static TMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
+    static FastTMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
 
     /** Return the FastTMXLayer for the specific layer. 
      * 
      * @return Return the FastTMXLayer for the specific layer.
      */
-    TMXLayer* getLayer(const std::string& layerName) const;
+    FastTMXLayer* getLayer(const std::string& layerName) const;
 
     /** Return the TMXObjectGroup for the specific group. 
      * 
@@ -209,12 +205,12 @@ protected:
     /**
      * @js ctor
      */
-    TMXTiledMap();
+    FastTMXTiledMap();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~TMXTiledMap();
+    virtual ~FastTMXTiledMap();
 
     /** initializes a TMX Tiled Map with a TMX file */
     bool initWithTMXFile(const std::string& tmxFile);
@@ -222,7 +218,7 @@ protected:
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
     bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
     
-    TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+    FastTMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void buildWithMapInfo(TMXMapInfo* mapInfo);
 
@@ -241,17 +237,12 @@ protected:
     ValueMapIntKey _tileProperties;
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);
+    CC_DISALLOW_COPY_AND_ASSIGN(FastTMXTiledMap);
 
 };
 
 // end of tilemap_parallax_nodes group
 /** @} */
     
-} //end of namespace experimental
 
 NS_CC_END
-
-#endif //__CCTMX_TILE_MAP2_H__
-
-

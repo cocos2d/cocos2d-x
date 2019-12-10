@@ -123,8 +123,7 @@ void AssetsManagerExLoaderScene::startDownloadCallback(Ref* sender)
     }
     else
     {
-        int testIndex = _testIndex;
-        _amListener = cocos2d::extension::EventListenerAssetsManagerEx::create(_am, [testIndex, this](EventAssetsManagerEx* event){
+        _amListener = cocos2d::extension::EventListenerAssetsManagerEx::create(_am, [this](EventAssetsManagerEx* event){
             static int failCount = 0;
             switch (event->getEventCode())
             {

@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 #include "2d/CCLabel.h"
-
 #include <algorithm>
-
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "2d/CCFont.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCFontAtlas.h"
@@ -491,8 +491,6 @@ Label::~Label()
 
     CC_SAFE_RELEASE_NULL(_textSprite);
     CC_SAFE_RELEASE_NULL(_shadowNode);
-    
-    CC_SAFE_RELEASE(_programState);
 }
 
 void Label::reset()
@@ -688,7 +686,8 @@ void Label::updateShaderProgram()
     }
 
     CC_SAFE_RELEASE(_programState);
-    _programState = new backend::ProgramState(programType);
+    auto* program = backend::Program::getBuiltinProgram(programType);
+    _programState = new backend::ProgramState(program);
 
     updateUniformLocations();
 

@@ -6,12 +6,12 @@ cocos2d-x
 
 |Win32|Others|
 | ----|------|
-[![Build status](https://ci.appveyor.com/api/projects/status/nlgirox464j6ldg5/branch/v3?svg=true)](https://ci.appveyor.com/project/minggo/cocos2d-x/branch/v3)|[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.svg?branch=v3)](https://travis-ci.org/cocos2d/cocos2d-x)
+[![Build status](https://ci.appveyor.com/api/projects/status/nlgirox464j6ldg5/branch/v4?svg=true)](https://ci.appveyor.com/project/minggo/cocos2d-x/branch/v4)|[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.svg?branch=v4)](https://travis-ci.org/cocos2d/cocos2d-x)
 
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
-It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, OS X, Windows and Linux.
+It is based on __cocos2d-iphone__, but instead of using Objective-C, it uses C++.
+It works on iOS, Android, macOS, Windows and Linux.
 
 **Cocos2d-x Framework Architecture**:
 
@@ -47,11 +47,11 @@ Download stable versions
 
 Documentations and samples
 -------------
-* [All Docs in a single place!](http://cocos2d-x.org/docs/)
-* [Online API Reference](http://cocos2d-x.org/docs/api-ref/index.html) _Note that Cocos2d-x and Cocos Creator have different API set_
-* [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
-* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
-* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
+* [All Docs in a single place!](http://docs.cocos2d-x.org/)
+* [Online API Reference](http://docs.cocos2d-x.org/api-ref/index.html) _Note that Cocos2d-x and Cocos Creator have different API set_
+* [Programmers Guide](https://docs.cocos2d-x.org/cocos2d-x/v4/en/basic_concepts/)
+* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v4/docs/RELEASE_NOTES.md)
+* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v4/CHANGELOG)
 
 Main features
 -------------
@@ -156,12 +156,10 @@ For Android, the Android Studio project file lies in `PROJECT_DIR/proj.android`.
 Learning Resources
 --------------------------------
 
-* [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
-* [Sonar Systems Videos](https://www.youtube.com/user/sonarsystemslimited/search?query=cocos2d-x)
+* [Programmers Guide](https://docs.cocos2d-x.org/cocos2d-x/v4/en/basic_concepts/)
 * [Android Fundamentals](https://developer.android.com/guide/components/fundamentals.html)
-* [Make School Tutorials](https://www.makeschool.com/tutorials/)
 * [Games From Scratch](http://www.gamefromscratch.com/page/Cocos2d-x-CPP-Game-Programming-Tutorial-Series.aspx)
-* [Cocos2d sample games](https://github.com/cocos2d/cocos2d-x-samples)
+* [Make School Tutorials](https://github.com/MakeSchool?utf8=✓&q=cocos2d&type=&language=)
 
 Spreading the word!
 --------------------------------
@@ -170,13 +168,6 @@ You can help us spread the word about cocos2d-x! We would surely appreciate it!
 * Talk about us on Facebook! Our [Facebook Page](https://www.facebook.com/cocos2dx/)
 * Tweet, Tweet! Our [Twitter](https://twitter.com/cocos2dx)
 * Read our [Blog](http://blog.cocos2d-x.org/) and promote it on your social media.
-* Become a [Regional Coordinator](http://discuss.cocos2d-x.org/t/we-need-regional-coordinators/24104)
-
-See what we are planning!
---------------------------------
-You can see exactly what we are planning to do with the Cocos family of products.
-
-* [Cocos2d-x roadmap](https://trello.com/b/Np6obnuE/cocos2d-x-roadmap)
 
 Where to get help
 --------------------------------
@@ -184,10 +175,10 @@ Where to get help
 * [English Forums](http://discuss.cocos2d-x.org)
 * [中文社区](http://forum.cocos.com/c/cocos2d-x)
 * [Bug Tracker](https://github.com/cocos2d/cocos2d-x/issues)
-* [API Reference](http://cocos2d-x.org/docs/api-ref/index.html).
-* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
-* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
-* IRC. We are in [Freenode](https://webchat.freenode.net/) in the _#cocos2d_ channel
+* [API Reference](http://docs.cocos2d-x.org/api-ref/index.html).
+* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v4/docs/RELEASE_NOTES.md)
+* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v4/CHANGELOG)
+* [Discord Channel](https://discord.gg/pVqab4K)
 * `cpp-tests` project. This project is our basis for testing. Use this project to
 learn how we implement the functionality of the engine. This project is located in
 __cocos2d-x_root/build.__
@@ -209,8 +200,6 @@ Contact us
    * Weibo: [http://t.sina.com.cn/cocos2dx][11]
 
 [1]: http://www.cocos2d-x.org "cocos2d-x"
-[2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
-[3]: http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Download
 [4]: http://www.cocos2d-x.org/download/version#Cocos2d-x
 [5]: http://www.box2d.org "Box2D"
 [6]: http://www.chipmunk-physics.net "Chipmunk2D"

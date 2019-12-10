@@ -135,6 +135,8 @@ namespace
                 return MTLBlendFactorSourceAlphaSaturated;
             case BlendFactor::BLEND_CLOLOR:
                 return MTLBlendFactorBlendColor;
+            default:
+                return MTLBlendFactorZero;
         }
     }
     
@@ -147,6 +149,8 @@ namespace
                 return MTLBlendOperationSubtract;
             case BlendOperation::RESERVE_SUBTRACT:
                 return MTLBlendOperationReverseSubtract;
+            default:
+                return MTLBlendOperationAdd;
         }
     }
 }
@@ -163,7 +167,8 @@ void RenderPipelineMTL::update(const PipelineDescriptor & pipelineDescirptor,
 {
     struct
     {
-        void* program;
+        size_t vertexShaderHash;
+        size_t fragmentShaderHash;
         unsigned int vertexLayoutInfo[32];
         backend::PixelFormat colorAttachment;
         backend::PixelFormat depthAttachment;
@@ -181,7 +186,9 @@ void RenderPipelineMTL::update(const PipelineDescriptor & pipelineDescirptor,
     memset(&hashMe, 0, sizeof(hashMe));
     const auto& blendDescriptor = pipelineDescirptor.blendDescriptor;
     getAttachmentFormat(renderPassDescriptor, _colorAttachmentsFormat[0], _depthAttachmentFormat, _stencilAttachmentFormat);
-    hashMe.program = pipelineDescirptor.programState->getProgram();
+    auto program = static_cast<ProgramMTL*>(pipelineDescirptor.programState->getProgram());
+    hashMe.vertexShaderHash = program->getVertexShader()->getHashValue();
+    hashMe.fragmentShaderHash = program->getFragmentShader()->getHashValue();
     hashMe.colorAttachment = _colorAttachmentsFormat[0];
     hashMe.depthAttachment = _depthAttachmentFormat;
     hashMe.stencilAttachment =_stencilAttachmentFormat;
@@ -211,8 +218,8 @@ void RenderPipelineMTL::update(const PipelineDescriptor & pipelineDescirptor,
         ((unsigned int)attribute.needToBeNormallized & 0x1);
     }
     
-    NSUInteger hash = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
-    NSNumber* key = [[NSNumber numberWithUnsignedInteger:hash] autorelease];
+    unsigned int hash = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
+    NSNumber* key = @(hash);
     id obj = [_mtlRenderPipelineStateCache objectForKey:key];
     if (obj != nil)
     {

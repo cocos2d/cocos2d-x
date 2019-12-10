@@ -43,8 +43,6 @@
  */
 
 NS_CC_BEGIN
-namespace experimental {
-
 /**
  * @class AudioProfile
  *
@@ -328,7 +326,7 @@ protected:
     
     struct AudioInfo
     {
-        const std::string* filePath;
+        std::string filePath;
         ProfileHelper* profileHelper;
         
         float volume;
@@ -368,7 +366,6 @@ protected:
     friend class AudioEngineImpl;
 };
 
-} // namespace experimental {
 NS_CC_END
 
 // end group

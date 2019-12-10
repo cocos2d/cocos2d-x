@@ -635,7 +635,7 @@ protected:
     virtual void setDirtyRecursively(bool value);
     virtual void flipX();
     virtual void flipY();
-    virtual void updateProgramState();
+    virtual void updateProgramStateTexture();
 
     void updatePoly();
     void updateStretchFactor();
@@ -694,7 +694,7 @@ protected:
     PolygonInfo  _polyInfo;
 
     // opacity and RGB protocol
-    bool _opacityModifyRGB;
+    bool _opacityModifyRGB = false;
 
     // image is flipped
     bool _flippedX = false;                 /// Whether the sprite is flipped horizontally or not

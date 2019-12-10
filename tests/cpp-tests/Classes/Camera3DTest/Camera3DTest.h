@@ -246,7 +246,7 @@ public:
     void switchTypeCallback(cocos2d::Ref* sender,int type);
     
 protected:
-    CameraType                      _cameraType;
+    CameraType                      _cameraType     = CameraType::Free;
     cocos2d::Layer*                 _layer3D        = nullptr;
     cocos2d::Camera*                _camera         = nullptr;
     cocos2d::Sprite3D*              _sprite3D1      = nullptr;

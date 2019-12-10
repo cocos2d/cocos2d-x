@@ -12,12 +12,7 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with Samsung
 ****************************************************************************/
-
-#ifndef __CC_ENHANCEAPI_ANDROID_H__
-#define __CC_ENHANCEAPI_ANDROID_H__
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#pragma once
 
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
@@ -98,7 +93,3 @@ public:
 };
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
-#endif // __CC_ENHANCEAPI_ANDROID_H__

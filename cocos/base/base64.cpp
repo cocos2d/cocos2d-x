@@ -35,17 +35,18 @@ unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 int _base64Decode(const unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
 {
     static char inalphabet[256], decoder[256];
-    int i, bits, c = 0, char_count, errors = 0;
+    int c = 0, char_count, errors = 0;
     unsigned int input_idx = 0;
     unsigned int output_idx = 0;
 
-    for (i = (sizeof alphabet) - 1; i >= 0 ; i--) {
+    auto alphabetSize = sizeof(alphabet);
+    for (size_t i = 0; i < alphabetSize; i++){
         inalphabet[alphabet[i]] = 1;
         decoder[alphabet[i]] = i;
     }
 
     char_count = 0;
-    bits = 0;
+    int bits = 0;
     for( input_idx=0; input_idx < input_len ; input_idx++ ) {
         c = input[ input_idx ];
         if (c == '=')

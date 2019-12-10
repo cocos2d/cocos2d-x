@@ -49,10 +49,6 @@ public:
         addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });
         addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
         addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
-#if CC_ENABLE_BOX2D_INTEGRATION
-       addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
-       addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
-#endif
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
        addTest("Chipmunk", []() { return new ChipmunkTests(); });
 #endif
@@ -120,6 +116,7 @@ public:
         addTest("Touches", [](){return new TouchesTests(); });
         addTest("Transitions", [](){return new TransitionsTests(); });
         addTest("Unit Test", []() { return new UnitTests(); });
+        addTest("Unzip Test", []() {return new ZipTests();});
         addTest("URL Open Test", []() { return new OpenURLTests(); });
         addTest("UserDefault", []() { return new UserDefaultTests(); });
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

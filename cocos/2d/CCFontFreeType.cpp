@@ -257,13 +257,13 @@ int * FontFreeType::getHorizontalKerningForTextUTF32(const std::u32string& text,
 int  FontFreeType::getHorizontalKerningForChars(uint64_t firstChar, uint64_t secondChar) const
 {
     // get the ID to the char we need
-    int glyphIndex1 = FT_Get_Char_Index(_fontRef, firstChar);
+    int glyphIndex1 = FT_Get_Char_Index(_fontRef, static_cast<FT_ULong>(firstChar));
     
     if (!glyphIndex1)
         return 0;
     
     // get the ID to the char we need
-    int glyphIndex2 = FT_Get_Char_Index(_fontRef, secondChar);
+    int glyphIndex2 = FT_Get_Char_Index(_fontRef, static_cast<FT_ULong>(secondChar));
     
     if (!glyphIndex2)
         return 0;
@@ -301,20 +301,20 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
 
         if (_distanceFieldEnabled)
         {
-            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, static_cast<FT_ULong>(theChar), FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
                 break;
         }
         else
         {
-            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, static_cast<FT_ULong>(theChar), FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
                 break;
         }
 
         auto& metrics = _fontRef->glyph->metrics;
-        outRect.origin.x = metrics.horiBearingX >> 6;
-        outRect.origin.y = -(metrics.horiBearingY >> 6);
-        outRect.size.width = (metrics.width >> 6);
-        outRect.size.height = (metrics.height >> 6);
+        outRect.origin.x = static_cast<float>(metrics.horiBearingX >> 6);
+        outRect.origin.y = static_cast<float>(-(metrics.horiBearingY >> 6));
+        outRect.size.width = static_cast<float>((metrics.width >> 6));
+        outRect.size.height = static_cast<float>((metrics.height >> 6));
 
         xAdvance = (static_cast<int>(_fontRef->glyph->metrics.horiAdvance >> 6));
 
@@ -336,10 +336,10 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
                 break;
             }
 
-            long glyphMinX = outRect.origin.x;
-            long glyphMaxX = outRect.origin.x + outWidth;
-            long glyphMinY = -outHeight - outRect.origin.y;
-            long glyphMaxY = -outRect.origin.y;
+            int glyphMinX = (int)outRect.origin.x;
+            int glyphMaxX = (int)(outRect.origin.x + outWidth);
+            int glyphMinY = (int)(-outHeight - outRect.origin.y);
+            int glyphMaxY = (int)-outRect.origin.y;
 
             auto outlineMinX = bbox.xMin >> 6;
             auto outlineMaxX = bbox.xMax >> 6;
@@ -353,15 +353,16 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
             auto blendWidth = MAX(outlineMaxX, glyphMaxX) - blendImageMinX;
             auto blendHeight = blendImageMaxY - MIN(outlineMinY, glyphMinY);
 
-            outRect.origin.x = blendImageMinX;
+            outRect.origin.x = (float)blendImageMinX;
             outRect.origin.y = -blendImageMaxY + _outlineSize;
 
             unsigned char *blendImage = nullptr;
             if (blendWidth > 0 && blendHeight > 0)
             {
-                long index, index2;
-                blendImage = new (std::nothrow) unsigned char[blendWidth * blendHeight * 2];
-                memset(blendImage, 0, blendWidth * blendHeight * 2);
+                FT_Pos index, index2;
+                auto imageSize = blendWidth * blendHeight * 2;
+                blendImage = new (std::nothrow) unsigned char[imageSize];
+                memset(blendImage, 0, imageSize);
 
                 auto px = outlineMinX - blendImageMinX;
                 auto py = blendImageMaxY - outlineMaxY;
@@ -388,8 +389,8 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
                 }
             }
 
-            outRect.size.width  =  blendWidth;
-            outRect.size.height =  blendHeight;
+            outRect.size.width  = (float)blendWidth;
+            outRect.size.height = (float)blendHeight;
             outWidth  = blendWidth;
             outHeight = blendHeight;
 
@@ -418,7 +419,7 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
 unsigned char * FontFreeType::getGlyphBitmapWithOutline(uint64_t theChar, FT_BBox &bbox)
 {   
     unsigned char* ret = nullptr;
-    if (FT_Load_Char(_fontRef, theChar, FT_LOAD_NO_BITMAP) == 0)
+    if (FT_Load_Char(_fontRef, static_cast<FT_ULong>(theChar), FT_LOAD_NO_BITMAP) == 0)
     {
         if (_fontRef->glyph->format == FT_GLYPH_FORMAT_OUTLINE)
         {

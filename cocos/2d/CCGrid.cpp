@@ -32,9 +32,10 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccShaders.h"
+#include "renderer/backend/ProgramState.h"
 #include "renderer/backend/Device.h"
 #include "2d/CCCamera.h"
-#include "renderer/backend/ProgramState.h"
+
 
 NS_CC_BEGIN
 // implementation of GridBase
@@ -108,7 +109,8 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
 
     auto& pipelineDescriptor = _drawCommand.getPipelineDescriptor();
     CC_SAFE_RELEASE(_programState);
-    _programState = new (std::nothrow) backend::ProgramState(positionTexture_vert, positionTexture_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
@@ -212,7 +214,7 @@ void GridBase::beforeDraw()
         _directorProjection = director->getProjection();
         set2DProjection();
         Size    size = director->getWinSizeInPixels();
-        renderer->setViewPort(0, 0, size.width, size.height);
+        renderer->setViewPort(0, 0, (unsigned int)size.width, (unsigned int)size.height);
 
         RenderTargetFlag flags = RenderTargetFlag::COLOR;
         _oldColorAttachment = renderer->getColorAttachment();
@@ -407,20 +409,20 @@ void Grid3D::calculateVertexPoints()
     float height = (float)_texture->getPixelsHigh();
     float imageH = _texture->getContentSizeInPixels().height;
 
-    size_t x = 0, y = 0, i = 0;
+    int x = 0, y = 0, i = 0;
     CC_SAFE_FREE(_vertices);
     CC_SAFE_FREE(_originalVertices);
     CC_SAFE_FREE(_texCoordinates);
     CC_SAFE_FREE(_vertexBuffer);
     CC_SAFE_FREE(_indices);
 
-    size_t numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
+    size_t numOfPoints = static_cast<size_t>((_gridSize.width+1) * (_gridSize.height+1));
 
     _vertices = malloc(numOfPoints * sizeof(Vec3));
     _originalVertices = malloc(numOfPoints * sizeof(Vec3));
     _texCoordinates = malloc(numOfPoints * sizeof(Vec2));
     _vertexBuffer = malloc(numOfPoints * (sizeof(Vec3) + sizeof(Vec2)));
-    _indices = (unsigned short*)malloc(_gridSize.width * _gridSize.height * sizeof(unsigned short) * 6);
+    _indices = (unsigned short*)malloc(static_cast<size_t>(_gridSize.width * _gridSize.height * sizeof(unsigned short) * 6));
 
     float *vertArray = (float*)_vertices;
     float *texArray = (float*)_texCoordinates;
@@ -430,7 +432,7 @@ void Grid3D::calculateVertexPoints()
     {
         for (y = 0; y < _gridSize.height; ++y)
         {
-            int idx = (y * _gridSize.width) + x;
+            int idx = (int)(y * _gridSize.width) + x;
 
             float x1 = x * _step.x + _gridRect.origin.x;
             float x2 = x1 + _step.x;
@@ -479,14 +481,14 @@ void Grid3D::calculateVertexPoints()
 
     updateVertexAndTexCoordinate();
 
-    memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3));
+    memcpy(_originalVertices, _vertices, static_cast<size_t>((_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3)));
 }
 
 Vec3 Grid3D::getVertex(const Vec2& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
-    int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
+    int index = (int)(pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_vertices;
 
     Vec3 vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
@@ -498,7 +500,7 @@ Vec3 Grid3D::getOriginalVertex(const Vec2& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
-    int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
+    int index = (int)(pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_originalVertices;
 
     Vec3 vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
@@ -509,7 +511,7 @@ Vec3 Grid3D::getOriginalVertex(const Vec2& pos) const
 void Grid3D::setVertex(const Vec2& pos, const Vec3& vertex)
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
-    int index = (pos.x * (_gridSize.height + 1) + pos.y) * 3;
+    int index = (int)(pos.x * (_gridSize.height + 1) + pos.y) * 3;
     float *vertArray = (float*)_vertices;
     vertArray[index] = vertex.x;
     vertArray[index+1] = vertex.y;
@@ -520,14 +522,14 @@ void Grid3D::reuse()
 {
     if (_reuseGrid > 0)
     {
-        memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3));
+        memcpy(_originalVertices, _vertices, static_cast<size_t>((_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3)));
         --_reuseGrid;
     }
 }
 
 void Grid3D::updateVertexBuffer()
 {
-    size_t numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
+    size_t numOfPoints = static_cast<size_t>((_gridSize.width+1) * (_gridSize.height+1));
     auto tempVecPointer = (Vec3*)_vertices;
     for (size_t i = 0; i < numOfPoints; ++i)
     {
@@ -536,15 +538,15 @@ void Grid3D::updateVertexBuffer()
     }
     _drawCommand.updateVertexBuffer(_vertexBuffer, (unsigned int)(numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2)) );
 
-    _drawCommand.updateIndexBuffer(_indices, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
+    _drawCommand.updateIndexBuffer(_indices, static_cast<unsigned int>(_gridSize.width * _gridSize.height * 6 * sizeof(unsigned short)));
 }
 
 void Grid3D::updateVertexAndTexCoordinate()
 {
-    unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
+    unsigned int numOfPoints = static_cast<unsigned int>((_gridSize.width+1) * (_gridSize.height+1));
     auto tempVecPointer = (Vec3*)_vertices;
     auto tempTexPointer = (Vec2*)_texCoordinates;
-    for (size_t i = 0; i < numOfPoints; ++i)
+    for (unsigned int i = 0; i < numOfPoints; ++i)
     {
         auto offset = i * (sizeof(Vec3) + sizeof(Vec2));
         memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
@@ -553,8 +555,9 @@ void Grid3D::updateVertexAndTexCoordinate()
     _drawCommand.createVertexBuffer((unsigned int)(sizeof(Vec3) + sizeof(Vec2)), numOfPoints, CustomCommand::BufferUsage::DYNAMIC);
     _drawCommand.updateVertexBuffer(_vertexBuffer, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
 
-    _drawCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, _gridSize.width * _gridSize.height * 6, CustomCommand::BufferUsage::DYNAMIC);
-    _drawCommand.updateIndexBuffer(_indices, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
+    unsigned int capacity = (unsigned int)(_gridSize.width * _gridSize.height) * 6;
+    _drawCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, capacity, CustomCommand::BufferUsage::DYNAMIC);
+    _drawCommand.updateIndexBuffer(_indices, capacity * sizeof(unsigned short));
 }
 
 // implementation of TiledGrid3D
@@ -663,7 +666,7 @@ void TiledGrid3D::calculateVertexPoints()
     float height = (float)_texture->getPixelsHigh();
     float imageH = _texture->getContentSizeInPixels().height;
     
-    int numQuads = _gridSize.width * _gridSize.height;
+    int numQuads = (int)(_gridSize.width * _gridSize.height);
     CC_SAFE_FREE(_vertices);
     CC_SAFE_FREE(_originalVertices);
     CC_SAFE_FREE(_texCoordinates);
@@ -741,7 +744,7 @@ void TiledGrid3D::calculateVertexPoints()
 void TiledGrid3D::setTile(const Vec2& pos, const Quad3& coords)
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
-    int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
+    int idx = (int)(_gridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)_vertices;
     memcpy(&vertArray[idx], &coords, sizeof(Quad3));
 }
@@ -749,7 +752,7 @@ void TiledGrid3D::setTile(const Vec2& pos, const Quad3& coords)
 Quad3 TiledGrid3D::getOriginalTile(const Vec2& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
-    int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
+    int idx = (int)(_gridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)_originalVertices;
 
     Quad3 ret;
@@ -761,7 +764,7 @@ Quad3 TiledGrid3D::getOriginalTile(const Vec2& pos) const
 Quad3 TiledGrid3D::getTile(const Vec2& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
-    int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
+    int idx = (int)(_gridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)_vertices;
 
     Quad3 ret;
@@ -774,7 +777,7 @@ void TiledGrid3D::reuse()
 {
     if (_reuseGrid > 0)
     {
-        int numQuads = _gridSize.width * _gridSize.height;
+        int numQuads = (int)(_gridSize.width * _gridSize.height);
 
         memcpy(_originalVertices, _vertices, numQuads * 12 * sizeof(float));
         --_reuseGrid;
@@ -783,7 +786,8 @@ void TiledGrid3D::reuse()
 
 void TiledGrid3D::updateVertexBuffer()
 {
-    size_t numOfPoints = _gridSize.width * _gridSize.height * 4;
+    size_t gradSize = static_cast<size_t>(_gridSize.width * _gridSize.height);
+    size_t numOfPoints = gradSize * 4;
     auto tempVecPointer = (Vec3*)_vertices;
     for (size_t i = 0; i < numOfPoints; ++i)
     {
@@ -792,12 +796,13 @@ void TiledGrid3D::updateVertexBuffer()
     }
     _drawCommand.updateVertexBuffer(_vertexBuffer, (unsigned int)(numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2)) );
 
-    _drawCommand.updateIndexBuffer(_indices, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
+    _drawCommand.updateIndexBuffer(_indices, gradSize * 6 * sizeof(unsigned short));
 }
 
 void TiledGrid3D::updateVertexAndTexCoordinate()
 {
-    unsigned int numOfPoints = _gridSize.width * _gridSize.height * 4;
+    size_t gradSize = static_cast<size_t>(_gridSize.width * _gridSize.height);
+    auto numOfPoints = gradSize * 4;
     auto tempVecPointer = (Vec3*)_vertices;
     auto tempTexPointer = (Vec2*)_texCoordinates;
     for (size_t i = 0; i < numOfPoints; ++i)
@@ -806,11 +811,11 @@ void TiledGrid3D::updateVertexAndTexCoordinate()
         memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
         memcpy((char*)_vertexBuffer + offset + sizeof(Vec3), &tempTexPointer[i], sizeof(Vec2));
     }
-    _drawCommand.createVertexBuffer((unsigned int)(sizeof(Vec3) + sizeof(Vec2) ), numOfPoints, CustomCommand::BufferUsage::DYNAMIC);
+    _drawCommand.createVertexBuffer((sizeof(Vec3) + sizeof(Vec2) ), numOfPoints, CustomCommand::BufferUsage::DYNAMIC);
     _drawCommand.updateVertexBuffer(_vertexBuffer, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
 
-    _drawCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, _gridSize.width * _gridSize.height * 6, CustomCommand::BufferUsage::DYNAMIC);
-    _drawCommand.updateIndexBuffer(_indices, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
+    _drawCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, gradSize * 6, CustomCommand::BufferUsage::DYNAMIC);
+    _drawCommand.updateIndexBuffer(_indices, gradSize * 6 * sizeof(unsigned short));
 }
 
 NS_CC_END

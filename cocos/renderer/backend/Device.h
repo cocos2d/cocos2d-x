@@ -80,7 +80,7 @@ public:
      * @param usage Specifies the expected usage pattern of the data store. The symbolic constant must be BufferUsage::STATIC, BufferUsage::DYNAMIC.
      * @return A Buffer object.
      */
-    virtual Buffer* newBuffer(uint32_t size, BufferType type, BufferUsage usage) = 0;
+    virtual Buffer* newBuffer(size_t size, BufferType type, BufferUsage usage) = 0;
 
     /**
      * New a TextureBackend object, not auto released.
@@ -114,10 +114,19 @@ public:
     virtual void setFrameBufferOnly(bool frameBufferOnly) = 0;
 
     /**
+     * Create an auto released Program.
+     * @param vertexShader Specifes this is a vertex shader source.
+     * @param fragmentShader Specifes this is a fragment shader source.
+     * @return A Program instance.
+     */
+    virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) = 0;
+
+    /**
      * Get a DeviceInfo object.
      * @return A DeviceInfo object.
      */
     inline DeviceInfo* getDeviceInfo() const { return _deviceInfo; }
+
 protected:
     /**
      * New a shaderModule, not auto released.
@@ -126,17 +135,9 @@ protected:
      * @return A ShaderModule object.
      */
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) = 0;
-    
-    /**
-     * New a Program, not auto released.
-     * @param vertexShader Specifes this is a vertex shader source.
-     * @param fragmentShader Specifes this is a fragment shader source.
-     * @return A Program object.
-     */
-    virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) = 0;
-    
+        
     DeviceInfo* _deviceInfo = nullptr; ///< Device information.
-    
+
 private:
     static Device* _instance;
 };

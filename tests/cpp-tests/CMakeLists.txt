@@ -4,6 +4,12 @@ set(APP_NAME cpp-tests)
 
 project(${APP_NAME})
 
+if(XCODE)
+    if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
+        SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 8.0)
+    endif()
+endif()
+
 if(NOT DEFINED BUILD_ENGINE_DONE)
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
@@ -204,6 +210,7 @@ list(APPEND GAME_HEADER
      Classes/OpenURLTest/OpenURLTest.h
      Classes/ConsoleTest/ConsoleTest.h
      Classes/MenuTest/MenuTest.h
+     Classes/ZipTest/ZipTests.h
      )
 
 list(APPEND GAME_SOURCE
@@ -325,6 +332,7 @@ list(APPEND GAME_SOURCE
      Classes/ZwoptexTest/ZwoptexTest.cpp
      Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
      Classes/controller.cpp
+     Classes/ZipTest/ZipTests.cpp
      )
 
 if(ANDROID OR IOS)
@@ -348,70 +356,6 @@ if(WINDOWS OR MACOSX OR LINUX)
          Classes/BugsTest/Bug-14327.cpp
          )
 endif()
-
-list(APPEND GAME_HEADER
-     Classes/Box2DTest/Box2dTest.cpp
-     Classes/Box2DTestBed/Test.h
-     Classes/Box2DTestBed/Tests/Chain.h
-     Classes/Box2DTestBed/Tests/Confined.h
-     Classes/Box2DTestBed/Tests/PolyCollision.h
-     Classes/Box2DTestBed/Tests/EdgeTest.h
-     Classes/Box2DTestBed/Tests/ApplyForce.h
-     Classes/Box2DTestBed/Tests/Gears.h
-     Classes/Box2DTestBed/Tests/SliderCrank.h
-     Classes/Box2DTestBed/Tests/ContinuousTest.h
-     Classes/Box2DTestBed/Tests/Revolute.h
-     Classes/Box2DTestBed/Tests/TheoJansen.h
-     Classes/Box2DTestBed/Tests/Bridge.h
-     Classes/Box2DTestBed/Tests/CollisionProcessing.h
-     Classes/Box2DTestBed/Tests/DistanceTest.h
-     Classes/Box2DTestBed/Tests/PolyShapes.h
-     Classes/Box2DTestBed/Tests/TimeOfImpact.h
-     Classes/Box2DTestBed/Tests/ConveyorBelt.h
-     Classes/Box2DTestBed/Tests/Tiles.h
-     Classes/Box2DTestBed/Tests/BulletTest.h
-     Classes/Box2DTestBed/Tests/MotorJoint.h
-     Classes/Box2DTestBed/Tests/Car.h
-     Classes/Box2DTestBed/Tests/Mobile.h
-     Classes/Box2DTestBed/Tests/VaryingFriction.h
-     Classes/Box2DTestBed/Tests/Rope.h
-     Classes/Box2DTestBed/Tests/SensorTest.h
-     Classes/Box2DTestBed/Tests/Pyramid.h
-     Classes/Box2DTestBed/Tests/VaryingRestitution.h
-     Classes/Box2DTestBed/Tests/RopeJoint.h
-     Classes/Box2DTestBed/Tests/VerticalStack.h
-     Classes/Box2DTestBed/Tests/MobileBalanced.h
-     Classes/Box2DTestBed/Tests/CompoundShapes.h
-     Classes/Box2DTestBed/Tests/CollisionFiltering.h
-     Classes/Box2DTestBed/Tests/Pulleys.h
-     Classes/Box2DTestBed/Tests/Breakable.h
-     Classes/Box2DTestBed/Tests/BodyTypes.h
-     Classes/Box2DTestBed/Tests/DumpShell.h
-     Classes/Box2DTestBed/Tests/ShapeEditing.h
-     Classes/Box2DTestBed/Tests/SphereStack.h
-     Classes/Box2DTestBed/Tests/OneSidedPlatform.h
-     Classes/Box2DTestBed/Tests/AddPair.h
-     Classes/Box2DTestBed/Tests/Pinball.h
-     Classes/Box2DTestBed/Tests/Tumbler.h
-     Classes/Box2DTestBed/Tests/RayCast.h
-     Classes/Box2DTestBed/Tests/ConvexHull.h
-     Classes/Box2DTestBed/Tests/EdgeShapes.h
-     Classes/Box2DTestBed/Tests/Prismatic.h
-     Classes/Box2DTestBed/Tests/Dominos.h
-     Classes/Box2DTestBed/Tests/Web.h
-     Classes/Box2DTestBed/Tests/CharacterCollision.h
-     Classes/Box2DTestBed/Tests/DynamicTreeTest.h
-     Classes/Box2DTestBed/Tests/Cantilever.h
-     Classes/Box2DTestBed/Box2dView.h
-     Classes/Box2DTestBed/GLES-Render.h
-     )
-list(APPEND GAME_SOURCE
-     Classes/Box2DTest/Box2dTest.cpp
-     Classes/Box2DTestBed/Box2dView.cpp
-     Classes/Box2DTestBed/GLES-Render.cpp
-     Classes/Box2DTestBed/Test.cpp
-     Classes/Box2DTestBed/TestEntries.cpp
-     )
 
 list(APPEND GAME_HEADER
      Classes/Physics3DTest/Physics3DTest.h
@@ -459,17 +403,16 @@ target_include_directories(${APP_NAME}
 setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
+
     if(MACOSX)
-        set_target_properties(${APP_NAME} PROPERTIES
-                              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist"
-                              )
+        set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist")
     elseif(IOS)
-        # set custom fonts
-        cocos_pak_xcode(${APP_NAME} INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/Info.plist")
+        set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/Info.plist")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
-        set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "")
-        set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "iPhone Developer")
     endif()
+
+    # For code-signing, set the DEVELOPMENT_TEAM:
+    #set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "GRLXXXX2K9")
 elseif(WINDOWS)
     # "too large PDB" error often occurs in cpp-tests when using default "/Zi"
     target_compile_options(${APP_NAME} PRIVATE /Z7)
@@ -477,8 +420,8 @@ elseif(WINDOWS)
 endif()
 
 if(LINUX OR WINDOWS)
-    set(APP_RES_DIR "$<TARGET_FILE_DIR:${APP_NAME}>/Resources")
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
+    cocos_get_resource_path(APP_RES_DIR ${APP_NAME})
+    cocos_copy_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
 
 if(WINDOWS)

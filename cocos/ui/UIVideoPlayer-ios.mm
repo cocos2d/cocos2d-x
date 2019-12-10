@@ -28,7 +28,7 @@
 // No Available on tvOS
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS && !defined(CC_TARGET_OS_TVOS)
 
-using namespace cocos2d::experimental::ui;
+using namespace cocos2d::ui;
 //-------------------------------------------------------------------------------------
 
 #include "platform/ios/CCEAGLView-ios.h"
@@ -47,7 +47,7 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
     PlayerbackStateCompleted
 };
 
-@property (strong, nonatomic) AVPlayerViewController * playerController;
+@property (assign, nonatomic) AVPlayerViewController * playerController;
 
 - (void) setFrame:(int) left :(int) top :(int) width :(int) height;
 - (void) setURL:(int) videoSource :(std::string&) videoUrl;
@@ -103,6 +103,7 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
 
 -(void) dealloc
 {
+    _videoPlayer = nullptr;
     [self clean];
     [self.playerController release];
     [super dealloc];
@@ -243,7 +244,11 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
         [self seekTo:0];
         [self.playerController.player pause];
         _state = PlayerbackStopped;
-        _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
+        
+        // stop() will be invoked in dealloc, which is invoked by _videoPlayer's destructor,
+        // so do't send the message when _videoPlayer is being deleted.
+        if (_videoPlayer)
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
     }
 }
 
@@ -268,15 +273,6 @@ typedef NS_ENUM(NSInteger, PlayerbackState) {
 //------------------------------------------------------------------------------------------------------------
 
 VideoPlayer::VideoPlayer()
-: _isPlaying(false)
-, _fullScreenDirty(false)
-, _fullScreenEnabled(false)
-, _keepAspectRatioEnabled(false)
-, _videoPlayerIndex(-1)
-, _eventCallback(nullptr)
-, _isLooping(false)
-, _isUserInputEnabled(true)
-, _styleType(StyleType::DEFAULT)
 {
     _videoView = [[UIVideoViewWrapperIos alloc] init:this];
 

@@ -55,7 +55,6 @@
 #include "audio/android/UrlAudioPlayer.h"
 
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 // Audio focus values synchronized with which in cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java
 static const int AUDIOFOCUS_GAIN = 0;

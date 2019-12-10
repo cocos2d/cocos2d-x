@@ -29,6 +29,8 @@
  *
  */
 #include "2d/CCParticleBatchNode.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
 #include "2d/CCGrid.h"
 #include "2d/CCParticleSystem.h"
 #include "renderer/CCTextureCache.h"
@@ -46,7 +48,8 @@ NS_CC_BEGIN
 ParticleBatchNode::ParticleBatchNode()
 {
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    _programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR);
+    _programState = new (std::nothrow) backend::ProgramState(program);
     pipelineDescriptor.programState = _programState;
     _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
@@ -77,7 +80,6 @@ ParticleBatchNode::ParticleBatchNode()
 ParticleBatchNode::~ParticleBatchNode()
 {
     CC_SAFE_RELEASE(_textureAtlas);
-    CC_SAFE_RELEASE(_programState);
 }
 /*
  * creation with Texture2D

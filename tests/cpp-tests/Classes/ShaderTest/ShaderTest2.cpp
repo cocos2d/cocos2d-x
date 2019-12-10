@@ -27,6 +27,7 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "renderer/backend/Device.h"
 #include <tuple>
 
 USING_NS_CC;
@@ -178,10 +179,10 @@ bool Effect::initProgramState(const std::string &fragmentFilename)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     _fragSource = fragSource;
 #endif
-    
-    auto programState = new backend::ProgramState(positionTextureColor_vert, fragSource.c_str());
-    
+    auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
+    auto programState = new backend::ProgramState(program);
     CC_SAFE_RELEASE(_programState);
+    CC_SAFE_RELEASE(program);
     _programState = programState;
 
     return _programState != nullptr;

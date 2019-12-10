@@ -25,9 +25,6 @@
 
 #define LOG_TAG "AudioEngine-inl.mm"
 
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
 #include "audio/apple/AudioEngine-inl.h"
 
 #import <OpenAL/alc.h>
@@ -44,7 +41,6 @@
 #endif
 
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 static ALCdevice* s_ALDevice = nullptr;
 static ALCcontext* s_ALContext = nullptr;
@@ -676,7 +672,7 @@ void AudioEngineImpl::update(float dt)
             std::string filePath;
             if (player->_finishCallbak) {
                 auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
-                filePath = *audioInfo.filePath;
+                filePath = audioInfo.filePath;
             }
 
             AudioEngine::remove(audioID);
@@ -711,5 +707,3 @@ void AudioEngineImpl::uncacheAll()
 {
     _audioCaches.clear();
 }
-
-#endif

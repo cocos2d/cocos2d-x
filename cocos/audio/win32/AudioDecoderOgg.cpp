@@ -29,7 +29,7 @@
 
 #define LOG_TAG "AudioDecoderOgg"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
     AudioDecoderOgg::AudioDecoderOgg()
     {
@@ -84,4 +84,4 @@ namespace cocos2d { namespace experimental {
         return static_cast<uint32_t>(ov_pcm_tell(const_cast<OggVorbis_File*>(&_vf)));
     }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {
