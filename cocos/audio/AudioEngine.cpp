@@ -63,7 +63,7 @@ AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
 AudioEngine::AudioEngineThreadPool* AudioEngine::s_threadPool = nullptr;
 bool AudioEngine::_isEnabled = true;
-float AudioEngine::_globalVolume = 1.0f;
+float AudioEngine::_volumeGlobal = 1.0f;
 
 AudioEngine::AudioInfo::AudioInfo()
 : profileHelper(nullptr)
@@ -232,7 +232,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             volume = 1.0f;
         }
         
-        ret = _audioEngineImpl->play2d(filePath, loop, volume * _globalVolume);
+        ret = _audioEngineImpl->play2d(filePath, loop, volume * _volumeGlobal);
         if (ret != INVALID_AUDIO_ID)
         {
             _audioPathIDMap[filePath].push_back(ret);
@@ -275,13 +275,13 @@ void AudioEngine::setVolume(int audioID, float volume)
         }
 
         if (it->second.volume != volume){
-            _audioEngineImpl->setVolume(audioID, volume * _globalVolume);
+            _audioEngineImpl->setVolume(audioID, volume * _volumeGlobal);
             it->second.volume = volume;
         }
     }
 }
 
-void AudioEngine::setGlobalVolume(float volume)
+void AudioEngine::setVolumeGlobal(float volume)
 {
     if (volume < 0.0f) {
         volume = 0.0f;
@@ -290,13 +290,13 @@ void AudioEngine::setGlobalVolume(float volume)
         volume = 1.0f;
     }
 
-    if (_globalVolume != volume) {
-        _globalVolume = volume;
+    if (_volumeGlobal != volume) {
+        _volumeGlobal = volume;
 
         auto itEnd = _audioIDInfoMap.end();
         for (auto it = _audioIDInfoMap.begin(); it != itEnd; ++it)
         {
-            _audioEngineImpl->setVolume(it->first, it->second.volume * _globalVolume);
+            _audioEngineImpl->setVolume(it->first, it->second.volume * _volumeGlobal);
         }
     }
 }
@@ -502,9 +502,9 @@ float AudioEngine::getVolume(int audioID)
     return 0.0f;
 }
 
-float AudioEngine::getGlobalVolume()
+float AudioEngine::getVolumeGlobal()
 {
-    return _globalVolume;
+    return _volumeGlobal;
 }
 
 AudioEngine::AudioState AudioEngine::getState(int audioID)
