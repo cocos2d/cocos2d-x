@@ -323,6 +323,7 @@ void Texture2DGL::getBytes(std::size_t x, std::size_t y, std::size_t width, std:
                    bytePerRow);
         }
         callback(flippedImage, width, height);
+        CC_SAFE_DELETE_ARRAY(image);
         CC_SAFE_DELETE_ARRAY(flippedImage);
     } else
     {
