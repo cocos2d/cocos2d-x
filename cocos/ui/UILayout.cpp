@@ -221,7 +221,7 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t par
     }
     
     if (FLAGS_TRANSFORM_DIRTY & parentFlags || _transformUpdated || _contentSizeDirty)
-    _clippingRectDirty = true;
+        _clippingRectDirty = true;
 
     
     adaptRenderers();
