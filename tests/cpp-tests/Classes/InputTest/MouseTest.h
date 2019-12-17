@@ -86,4 +86,67 @@ private:
     cocos2d::EventListenerMouse* _lis;
 };
 
+
+class CursorPositionTest : public BaseMouseTest
+{
+public:
+	CREATE_FUNC(CursorPositionTest);
+	CursorPositionTest();
+	~CursorPositionTest();
+
+	void switchScreenSize();
+	void usingFrameSize();
+
+	void onMouseMove(cocos2d::Event * event);
+
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+private:
+	int _mode;
+	cocos2d::EventListenerMouse* _lis;
+	cocos2d::Label* _lblMousePos;
+};
+
+class FirstPersonShooter : public BaseMouseTest
+{
+public:
+	CREATE_FUNC(FirstPersonShooter);
+	FirstPersonShooter();
+	~FirstPersonShooter();
+
+	virtual void update(float dt) override;
+
+	void switchScreenSize();
+	void setCursorMiddle();
+
+	void onMouseMove(cocos2d::Event * evnt);
+	void onMouseDown(cocos2d::Event * evnt);
+	void onMouseUp(cocos2d::Event * evnt);
+
+	void onFocused();
+	void onUnFocused();
+
+	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode);
+	void keyReleased(cocos2d::EventKeyboard::KeyCode keyCode);
+
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+private:
+	void processInput();
+	void updateCamera(float dt);
+
+	int _mode;
+	cocos2d::EventListenerMouse* _lis;
+	cocos2d::EventListenerKeyboard* _kbLis;
+	bool _keyStates[256];
+	cocos2d::Label* _lblMousePos;
+	cocos2d::Camera* _camera;
+
+	float _sensibility, _vel;
+	int _forward, _sideward, _upward;
+
+	bool _cursorFree;
+	bool _focused;
+};
+
 #endif

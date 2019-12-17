@@ -545,6 +545,11 @@ void GLViewImpl::setCursorVisible( bool isVisible )
         glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 }
 
+void GLViewImpl::setCursorPosition(double xpos, double ypos)
+{
+	glfwSetCursorPos(_mainWindow, xpos, ypos);
+}
+
 void GLViewImpl::setFrameZoomFactor(float zoomFactor)
 {
     CCASSERT(zoomFactor > 0.0f, "zoomFactor must be larger than 0");

@@ -117,6 +117,11 @@ public:
      */
     virtual void setCursorVisible(bool isVisible) override;
 
+	/**
+	 * Sets the cursor position in window coordinates
+	 */
+	virtual void setCursorPosition(double xpos, double ypos) override;
+
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */

@@ -215,6 +215,11 @@ public:
      */
     virtual void setCursorVisible(bool /*isVisible*/) {}
 
+	/**
+	 * Sets the cursor position in window coordinates
+	 */
+	virtual void setCursorPosition(double xPos, double yPos) {}
+
     /** Get retina factor.
      *
      * @return The retina factor.

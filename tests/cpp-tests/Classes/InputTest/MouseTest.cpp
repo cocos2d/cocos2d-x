@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "MouseTest.h"
+#include "Sprite3DTest/DrawNode3D.h"
 
 USING_NS_CC;
 
@@ -33,6 +34,8 @@ MouseTests::MouseTests()
     ADD_TEST_CASE(MouseEventTest);
     ADD_TEST_CASE(HideMouseTest);
     ADD_TEST_CASE(CursorTest);
+	ADD_TEST_CASE(CursorPositionTest);
+	ADD_TEST_CASE(FirstPersonShooter);
 }
 
 //------------------------------------------------------------------
@@ -190,3 +193,368 @@ std::string CursorTest::subtitle() const
     return "Click to change cursor";
 }
 
+
+//------------------------------------------------------------------
+//
+// CursorPositionTest
+//
+//------------------------------------------------------------------
+CursorPositionTest::CursorPositionTest()
+{
+	_mode = 1;
+
+	_lis = EventListenerMouse::create();
+	_lis->onMouseMove = CC_CALLBACK_1(CursorPositionTest::onMouseMove, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(_lis, this);
+
+	TTFConfig ttfConfig("fonts/arial.ttf", 10);
+
+	auto lbl1 = Label::createWithTTF(ttfConfig, "Switch Screen Size");
+	auto menuItem1 = MenuItemLabel::create(lbl1, CC_CALLBACK_0(CursorPositionTest::switchScreenSize, this));
+
+	auto lbl2 = Label::createWithTTF(ttfConfig, "Set cursor to middle using getFrameSize()");
+	auto menuItem2 = MenuItemLabel::create(lbl2, CC_CALLBACK_0(CursorPositionTest::usingFrameSize, this));
+
+	auto menu = Menu::create(menuItem1, menuItem2, nullptr);
+	menu->setPosition(Vec2::ZERO);
+	menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+	menuItem1->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 100));
+	menuItem2->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+	menuItem2->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 120));
+	addChild(menu);
+
+	_lblMousePos = Label::createWithTTF(ttfConfig, "MousePosition (move the mouse)");
+	_lblMousePos->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+	_lblMousePos->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 160));
+	addChild(_lblMousePos);
+}
+
+CursorPositionTest::~CursorPositionTest()
+{
+	_eventDispatcher->removeEventListener(_lis);
+}
+
+void CursorPositionTest::switchScreenSize()
+{
+	GLViewImpl* view = dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView());
+
+	switch (_mode)
+	{
+	case 1:
+		view->setWindowed(480, 320);
+		break;
+	case 2:
+		view->setWindowed(960, 640);
+		break;
+	case 3:
+		view->setFullscreen();
+		break;
+	case 4:
+		view->setFullscreen(1);
+		_mode = 0;
+		break;
+	}
+	_mode++;
+}
+
+void CursorPositionTest::usingFrameSize()
+{
+	GLView* view = Director::getInstance()->getOpenGLView();
+
+	float x = view->getFrameSize().width / 2;
+	float y = view->getFrameSize().height / 2;
+
+	view->setCursorPosition(x, y);
+}
+
+void CursorPositionTest::onMouseMove(Event *event)
+{
+	EventMouse* e = (EventMouse*)event;
+	std::string str = "MousePosition X:";
+	str = str + tostr(e->getCursorX()) + " Y:" + tostr(e->getCursorY());
+	_lblMousePos->setString(str);
+}
+
+std::string CursorPositionTest::title() const
+{
+	return "Set Mouse Position";
+}
+
+std::string CursorPositionTest::subtitle() const
+{
+	return "Mouse Should spawn at middle of screen";
+}
+
+
+//------------------------------------------------------------------
+//
+// FirstPersonShooter
+//
+//------------------------------------------------------------------
+FirstPersonShooter::FirstPersonShooter()
+{
+	auto layer3D = Layer::create();
+
+	DrawNode3D* line = DrawNode3D::create();
+	//draw x
+	for (int j = -20; j <= 20; j++)
+	{
+		line->drawLine(Vec3(-100, 0, 5 * j), Vec3(100, 0, 5 * j), Color4F(1, 0, 0, 1));
+	}
+	//draw z
+	for (int j = -20; j <= 20; j++)
+	{
+		line->drawLine(Vec3(5 * j, 0, -100), Vec3(5 * j, 0, 100), Color4F(0, 0, 1, 1));
+	}
+	//draw y
+	line->drawLine(Vec3(0, -50, 0), Vec3(0, 0, 0), Color4F(0, 0.5, 0, 1));
+	line->drawLine(Vec3(0, 0, 0), Vec3(0, 50, 0), Color4F(0, 1, 0, 1));
+	line->setAnchorPoint(Vec2::ZERO);
+	line->setPosition3D(Vec3::ZERO);
+	layer3D->addChild(line);
+
+	_mode = 1;
+
+	_lis = EventListenerMouse::create();
+	_lis->onMouseMove = CC_CALLBACK_1(FirstPersonShooter::onMouseMove, this);
+	_lis->onMouseDown = CC_CALLBACK_1(FirstPersonShooter::onMouseDown, this);
+	_lis->onMouseUp = CC_CALLBACK_1(FirstPersonShooter::onMouseUp, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(_lis, this);
+
+	for (int i = 0; i < 256; i++)
+		_keyStates[i] = false;
+
+	_kbLis = EventListenerKeyboard::create();
+
+	Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
+	_kbLis->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* ccevnt)
+	{
+		_keyStates[static_cast<int>(keyCode)] = true;
+		keyPressed(keyCode);
+	};
+	_kbLis->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* ccevnt)
+	{
+		_keyStates[static_cast<int>(keyCode)] = false;
+		keyReleased(keyCode);
+	};
+	getEventDispatcher()->addEventListenerWithFixedPriority(_kbLis, 1);
+
+	TTFConfig ttfConfig("fonts/arial.ttf", 10);
+
+	auto lbl1 = Label::createWithTTF(ttfConfig, "Switch Screen Size");
+	auto menuItem1 = MenuItemLabel::create(lbl1, CC_CALLBACK_0(FirstPersonShooter::switchScreenSize, this));
+
+	auto menu = Menu::create(menuItem1, nullptr);
+	menu->setPosition(Vec2::ZERO);
+	menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+	menuItem1->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 100));
+	addChild(menu);
+
+	_lblMousePos = Label::createWithTTF(ttfConfig, "MousePosition (move the mouse)");
+	_lblMousePos->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+	_lblMousePos->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 160));
+	addChild(_lblMousePos);
+
+	Size winSize = Director::getInstance()->getWinSize();
+	_camera = Camera::createPerspective(60, (GLfloat)winSize.width / winSize.height, 0.1f, 800.0f);
+	_camera->setDepth(-1);
+	_camera->setCameraFlag(CameraFlag::USER1);
+	_camera->setPosition3D(Vec3(0.0f, 5.0f, 20.0f));
+	_camera->lookAt(Vec3::ZERO);
+	_camera->setRotation3D(Vec3::ZERO);
+	layer3D->addChild(_camera);
+
+	_sensibility = 0.08f;
+	_vel = 5.0f;
+	_forward = 0;
+	_sideward = 0;
+	_upward = 0;
+
+	layer3D->setCameraMask(static_cast<int>(CameraFlag::USER1));
+	addChild(layer3D);
+
+	_cursorFree = false;
+	_focused = true;
+
+	_eventDispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_FOCUSED, CC_CALLBACK_0(FirstPersonShooter::onFocused, this));
+	_eventDispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_UNFOCUSED, CC_CALLBACK_0(FirstPersonShooter::onUnFocused, this));
+
+	scheduleUpdate();
+}
+
+FirstPersonShooter::~FirstPersonShooter()
+{
+	_eventDispatcher->removeEventListener(_lis);
+	_eventDispatcher->removeEventListener(_kbLis);
+	_eventDispatcher->removeCustomEventListeners(GLViewImpl::EVENT_WINDOW_FOCUSED);
+	_eventDispatcher->removeCustomEventListeners(GLViewImpl::EVENT_WINDOW_UNFOCUSED);
+}
+
+void FirstPersonShooter::update(float dt)
+{
+	processInput();
+	updateCamera(dt);
+}
+
+void FirstPersonShooter::switchScreenSize()
+{
+	GLViewImpl* view = dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView());
+
+	switch (_mode)
+	{
+	case 1:
+		view->setWindowed(480, 320);
+		break;
+	case 2:
+		view->setWindowed(960, 640);
+		break;
+	case 3:
+		view->setFullscreen();
+		break;
+	case 4:
+		view->setFullscreen(1);
+		_mode = 0;
+		break;
+	}
+	_mode++;
+}
+
+void FirstPersonShooter::setCursorMiddle()
+{
+	GLView* view = Director::getInstance()->getOpenGLView();
+
+	float x = view->getFrameSize().width / 2;
+	float y = view->getFrameSize().height / 2;
+
+	view->setCursorPosition(x, y);
+}
+
+void FirstPersonShooter::onMouseMove(Event *evnt)
+{
+	EventMouse* e = dynamic_cast<EventMouse*>(evnt);
+	std::string str = "MousePosition X:";
+	str = str + tostr(e->getCursorX()) + " Y:" + tostr(e->getCursorY());
+	_lblMousePos->setString(str);
+
+	if (_cursorFree || !_focused)
+		return;
+
+	Size winSize = Director::getInstance()->getWinSize();
+
+	int dx = 0;
+	int dy = 0;
+
+	setCursorMiddle();
+
+	dx = winSize.width / 2 - e->getCursorX();
+	dy = winSize.height / 2 - e->getCursorY();
+
+	Vec3 camRot = _camera->getRotation3D();
+
+	camRot.x -= dy * _sensibility;
+	camRot.y += dx * _sensibility;
+
+	_camera->setRotation3D(camRot);
+}
+
+void FirstPersonShooter::onMouseDown(Event * evnt)
+{
+	EventMouse* e = dynamic_cast<EventMouse*>(evnt);
+	if (e->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT)
+	{
+		Director::getInstance()->getOpenGLView()->setCursorVisible(false);
+	}
+}
+
+void FirstPersonShooter::onMouseUp(Event * evnt)
+{
+	EventMouse* e = dynamic_cast<EventMouse*>(evnt);
+	if (e->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT)
+	{
+		Director::getInstance()->getOpenGLView()->setCursorVisible(true);
+	}
+}
+
+void FirstPersonShooter::onFocused()
+{
+	_focused = true;
+}
+
+void FirstPersonShooter::onUnFocused()
+{
+	_focused = false;
+}
+
+void FirstPersonShooter::keyPressed(EventKeyboard::KeyCode keyCode)
+{
+	switch (keyCode)
+	{
+	case EventKeyboard::KeyCode::KEY_LEFT_CTRL:
+		_cursorFree = true;
+		break;
+	}
+}
+
+void FirstPersonShooter::keyReleased(EventKeyboard::KeyCode keyCode)
+{
+	switch (keyCode)
+	{
+	case EventKeyboard::KeyCode::KEY_LEFT_CTRL:
+		_cursorFree = false;
+		break;
+	}
+}
+
+std::string FirstPersonShooter::title() const
+{
+	return "First Person Shooter";
+}
+
+std::string FirstPersonShooter::subtitle() const
+{
+	return "Move the Camera with mouse / Hold Left_Ctrl to release cursor / Right click to hide cursor";
+}
+
+void FirstPersonShooter::processInput()
+{
+	_forward = 0;
+	_sideward = 0;
+	_upward = 0;
+
+	if (_keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_W)])
+		_forward = 1;
+	else if (_keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_S)])
+		_forward = -1;
+	if (_keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_D)])
+		_sideward = 1;
+	else if (_keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_A)])
+		_sideward = -1;
+	if (_keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_SPACE)])
+		_upward = 1;
+	else if (_keyStates[static_cast<int>(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)])
+		_upward = -1;
+}
+
+void FirstPersonShooter::updateCamera(float dt)
+{
+	Vec3 cameraDir;
+	_camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
+	cameraDir.normalize();
+
+	Vec3 cameraRightDir;
+	_camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
+	cameraRightDir.normalize();
+
+	Vec3 upDir;
+	_camera->getNodeToWorldTransform().getUpVector(&upDir);
+	upDir.normalize();
+
+	Vec3 cameraPos = _camera->getPosition3D();
+
+	cameraPos += cameraDir * _forward * (_vel * dt);
+	cameraPos += cameraRightDir * _sideward * (_vel * dt);
+	//cameraPos += upDir * _upward * (vel * dt);
+	cameraPos.y += _upward * (_vel * dt);
+
+	_camera->setPosition3D(cameraPos);
+}
