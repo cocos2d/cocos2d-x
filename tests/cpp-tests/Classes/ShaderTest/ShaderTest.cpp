@@ -108,7 +108,8 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
     
     // init custom command
     auto layout = _programState->getVertexLayout();
-    layout->setAttribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
+    auto attrPosLoc = _programState->getAttributeLocation("a_position");
+    layout->setAttribute("a_position", attrPosLoc, backend::VertexFormat::FLOAT2, 0, false);
 
     float w = SIZE_X, h = SIZE_Y;
     Vec2 vertices[6] = { Vec2(0.0f,0.0f), Vec2(w,0.0f), Vec2(w,h), Vec2(0.0f,0.0f), Vec2(0.0f,h), Vec2(w,h) };
