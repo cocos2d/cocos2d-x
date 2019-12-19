@@ -547,7 +547,26 @@ void GLViewImpl::setCursorVisible( bool isVisible )
 
 void GLViewImpl::setCursorPosition(double xpos, double ypos)
 {
-	glfwSetCursorPos(_mainWindow, xpos, ypos);
+    if (_mainWindow && isOpenGLReady())
+    {
+        glfwSetCursorPos(_mainWindow, xpos, ypos);
+        
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        onGLFWMouseMoveCallBack(_mainWindow, xpos, ypos);
+#endif
+    }
+}
+
+void GLViewImpl::setInputModeCursorDisabled()
+{
+    if (_mainWindow && isOpenGLReady())
+        glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+void GLViewImpl::setInputModeCursorNormal()
+{
+    if (_mainWindow && isOpenGLReady())
+        glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
 void GLViewImpl::setFrameZoomFactor(float zoomFactor)

@@ -117,10 +117,22 @@ public:
      */
     virtual void setCursorVisible(bool isVisible) override;
 
-	/**
-	 * Sets the cursor position in window coordinates
-	 */
-	virtual void setCursorPosition(double xpos, double ypos) override;
+    /**
+     * Sets the cursor to a fixed position in screen coordinates
+	 * (Do not use this function to implement things like camera controls
+	 * use setInputModeCursorDisabled() instead).
+     */
+    virtual void setCursorPosition(double xpos, double ypos) override;
+    
+    /**
+     * Sets the input mode to handle mouse movement and rotate the camera with mouse input
+     */
+    virtual void setInputModeCursorDisabled() override;
+    
+    /**
+     * Sets the input mode to Normal Cursor
+     */
+    virtual void setInputModeCursorNormal() override;
 
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.

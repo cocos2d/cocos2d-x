@@ -215,11 +215,23 @@ public:
      */
     virtual void setCursorVisible(bool /*isVisible*/) {}
 
+    /**
+     * Sets the cursor to a fixed position in screen coordinates
+     * (Do not use this function to implement things like camera controls
+     * use setInputModeCursorDisabled() instead).
+     */
+    virtual void setCursorPosition(double xpos, double ypos) {}
+    
 	/**
-	 * Sets the cursor position in window coordinates
+	 * Sets the input mode to handle mouse movement and rotate the camera with mouse input
 	 */
-	virtual void setCursorPosition(double xPos, double yPos) {}
-
+    virtual void setInputModeCursorDisabled() {}
+    
+    /**
+     * Sets the input mode to Normal Cursor
+     */
+    virtual void setInputModeCursorNormal() {}
+    
     /** Get retina factor.
      *
      * @return The retina factor.
