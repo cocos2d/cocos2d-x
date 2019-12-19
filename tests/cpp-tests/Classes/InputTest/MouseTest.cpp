@@ -466,11 +466,13 @@ void FirstPersonShooter::onMouseMove(Event *evnt)
 void FirstPersonShooter::onFocused()
 {
 	_focused = true;
+	Director::getInstance()->getOpenGLView()->setInputModeCursorDisabled();
 }
 
 void FirstPersonShooter::onUnFocused()
 {
 	_focused = false;
+	Director::getInstance()->getOpenGLView()->setInputModeCursorNormal();
 }
 
 void FirstPersonShooter::keyPressed(EventKeyboard::KeyCode keyCode)

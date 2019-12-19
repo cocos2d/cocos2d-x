@@ -119,7 +119,6 @@ public:
 	virtual void update(float dt) override;
 
 	void switchScreenSize();
-	void setCursorMiddle();
 
 	void onMouseMove(cocos2d::Event * evnt);
 
