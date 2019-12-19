@@ -3,30 +3,41 @@ set(COCOS_AUDIO_SRC
     audio/AudioEngine.cpp
     )
 
-if(WINDOWS)
+if(WINDOWS OR LINUX)
 
     set(COCOS_AUDIO_PLATFORM_HEADER
-        audio/win32/AudioDecoderManager.h
-        audio/win32/AudioDecoder.h
-        audio/win32/MciPlayer.h
-        audio/win32/AudioPlayer.h
-        audio/win32/AudioDecoderOgg.h
-        audio/win32/AudioMacros.h
-        audio/win32/AudioEngine-win32.h
-        audio/win32/AudioDecoderMp3.h
-        audio/win32/AudioCache.h
+        audio/desktop/AudioDecoderManager.h
+        audio/desktop/AudioDecoder.h
+        audio/desktop/AudioPlayer.h
+        audio/desktop/AudioDecoderOgg.h
+        audio/desktop/AudioMacros.h
+        audio/desktop/AudioEngine-desktop.h
+        audio/desktop/AudioDecoderMp3.h
+        audio/desktop/AudioCache.h
         )
 
     set(COCOS_AUDIO_PLATFORM_SRC
-        audio/win32/MciPlayer.cpp
+        audio/desktop/AudioEngine-desktop.cpp
+        audio/desktop/AudioCache.cpp
+        audio/desktop/AudioPlayer.cpp
+        audio/desktop/AudioDecoder.cpp
+        audio/desktop/AudioDecoderManager.cpp
+        audio/desktop/AudioDecoderMp3.cpp
+        audio/desktop/AudioDecoderOgg.cpp
+        )
+
+endif()
+
+if(WINDOWS)
+
+    set(COCOS_AUDIO_PLATFORM_HEADER
+        ${COCOS_AUDIO_PLATFORM_HEADER}
         audio/win32/MciPlayer.h
-        audio/win32/AudioEngine-win32.cpp
-        audio/win32/AudioCache.cpp
-        audio/win32/AudioPlayer.cpp
-        audio/win32/AudioDecoder.cpp
-        audio/win32/AudioDecoderManager.cpp
-        audio/win32/AudioDecoderMp3.cpp
-        audio/win32/AudioDecoderOgg.cpp
+        )
+
+    set(COCOS_AUDIO_PLATFORM_SRC
+        ${COCOS_AUDIO_PLATFORM_SRC}
+        audio/win32/MciPlayer.cpp
         )
 
 elseif(ANDROID)
@@ -103,16 +114,6 @@ elseif(ANDROID)
         audio/android/utils/Utils.cpp
         audio/android/mp3reader.cpp
         audio/android/tinysndfile.cpp
-        )
-
-elseif(LINUX)
-    set(COCOS_AUDIO_PLATFORM_HEADER
-        audio/linux/AudioEngine-linux.h
-        )
-
-    set(COCOS_AUDIO_PLATFORM_SRC
-        audio/linux/AudioEngine-linux.h
-        audio/linux/AudioEngine-linux.cpp
         )
 
 elseif(APPLE)

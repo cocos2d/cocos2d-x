@@ -22,7 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "audio/win32/AudioEngine-win32.h"
+#include "audio/desktop/AudioEngine-desktop.h"
 
 #ifdef OPENAL_PLAIN_INCLUDES
 #include "alc.h"
@@ -35,18 +35,20 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "platform/CCFileUtils.h"
-#include "audio/win32/AudioDecoderManager.h"
+#include "audio/desktop/AudioDecoderManager.h"
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include <windows.h>
+#endif
 
-#define LOG_TAG "AudioEngine-Win32"
+#define LOG_TAG "AudioEngine-Desktop"
 
 // log, CCLOG aren't threadsafe, since we uses sub threads for parsing pcm data, threadsafe log output
 // is needed. Define the following macros (ALOGV, ALOGD, ALOGI, ALOGW, ALOGE) for threadsafe log output.
 
-//FIXME: Move _winLog, winLog to a separated file
-static void _winLog(const char *format, va_list args)
+static void _desktopLog(const char *format, va_list args)
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
     static const int MAX_LOG_LENGTH = 16 * 1024;
     int bufferSize = MAX_LOG_LENGTH;
     char* buf = nullptr;
@@ -90,13 +92,17 @@ static void _winLog(const char *format, va_list args)
     } while (pos < len);
 
     delete[] buf;
+
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+    // TODO: Implement log output
+#endif
 }
 
 void audioLog(const char * format, ...)
 {
     va_list args;
     va_start(args, format);
-    _winLog(format, args);
+    _desktopLog(format, args);
     va_end(args);
 }
 

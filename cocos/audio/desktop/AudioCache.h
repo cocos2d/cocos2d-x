@@ -27,7 +27,7 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #include <functional>
 #include <memory>
@@ -40,7 +40,7 @@
 #include <AL/al.h>
 #endif
 #include "platform/CCPlatformMacros.h"
-#include "audio/win32/AudioMacros.h"
+#include "audio/desktop/AudioMacros.h"
 
 NS_CC_BEGIN
 
