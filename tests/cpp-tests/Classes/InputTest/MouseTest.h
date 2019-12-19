@@ -25,6 +25,8 @@
 #ifndef __MOUSE_TEST_H_
 #define __MOUSE_TEST_H_
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+
 #include "cocos2d.h"
 #include "../BaseTest.h"
 
@@ -120,8 +122,6 @@ public:
 	void setCursorMiddle();
 
 	void onMouseMove(cocos2d::Event * evnt);
-	void onMouseDown(cocos2d::Event * evnt);
-	void onMouseUp(cocos2d::Event * evnt);
 
 	void onFocused();
 	void onUnFocused();
@@ -142,11 +142,15 @@ private:
 	cocos2d::Label* _lblMousePos;
 	cocos2d::Camera* _camera;
 
-	float _sensibility, _vel;
+	float _sensitivity, _vel;
+    float _pitch, _yaw;
+    cocos2d::Vec2 _prevMousePos;
 	int _forward, _sideward, _upward;
 
 	bool _cursorFree;
 	bool _focused;
+    bool _firstMove;
 };
+#endif // !CC_TARGET_PLATFORM
 
-#endif
+#endif // !__MOUSE_TEST_H_
