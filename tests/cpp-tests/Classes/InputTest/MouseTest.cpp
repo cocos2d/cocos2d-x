@@ -23,6 +23,8 @@
  ****************************************************************************/
 
 #include "MouseTest.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #include "Sprite3DTest/DrawNode3D.h"
 
 USING_NS_CC;
@@ -317,8 +319,6 @@ FirstPersonShooter::FirstPersonShooter()
 
 	_lis = EventListenerMouse::create();
 	_lis->onMouseMove = CC_CALLBACK_1(FirstPersonShooter::onMouseMove, this);
-	_lis->onMouseDown = CC_CALLBACK_1(FirstPersonShooter::onMouseDown, this);
-	_lis->onMouseUp = CC_CALLBACK_1(FirstPersonShooter::onMouseUp, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_lis, this);
 
 	for (int i = 0; i < 256; i++)
@@ -364,21 +364,26 @@ FirstPersonShooter::FirstPersonShooter()
 	_camera->setRotation3D(Vec3::ZERO);
 	layer3D->addChild(_camera);
 
-	_sensibility = 0.08f;
+	_sensitivity = 0.1f;
 	_vel = 5.0f;
 	_forward = 0;
 	_sideward = 0;
 	_upward = 0;
+    _pitch = 0;
+    _yaw = 0;
 
 	layer3D->setCameraMask(static_cast<int>(CameraFlag::USER1));
 	addChild(layer3D);
 
 	_cursorFree = false;
 	_focused = true;
+    _firstMove = true;
 
 	_eventDispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_FOCUSED, CC_CALLBACK_0(FirstPersonShooter::onFocused, this));
 	_eventDispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_UNFOCUSED, CC_CALLBACK_0(FirstPersonShooter::onUnFocused, this));
 
+    Director::getInstance()->getOpenGLView()->setInputModeCursorDisabled();
+    
 	scheduleUpdate();
 }
 
@@ -388,6 +393,8 @@ FirstPersonShooter::~FirstPersonShooter()
 	_eventDispatcher->removeEventListener(_kbLis);
 	_eventDispatcher->removeCustomEventListeners(GLViewImpl::EVENT_WINDOW_FOCUSED);
 	_eventDispatcher->removeCustomEventListeners(GLViewImpl::EVENT_WINDOW_UNFOCUSED);
+    
+    Director::getInstance()->getOpenGLView()->setInputModeCursorNormal();
 }
 
 void FirstPersonShooter::update(float dt)
@@ -419,60 +426,41 @@ void FirstPersonShooter::switchScreenSize()
 	_mode++;
 }
 
-void FirstPersonShooter::setCursorMiddle()
-{
-	GLView* view = Director::getInstance()->getOpenGLView();
-
-	float x = view->getFrameSize().width / 2;
-	float y = view->getFrameSize().height / 2;
-
-	view->setCursorPosition(x, y);
-}
-
 void FirstPersonShooter::onMouseMove(Event *evnt)
 {
 	EventMouse* e = dynamic_cast<EventMouse*>(evnt);
 	std::string str = "MousePosition X:";
 	str = str + tostr(e->getCursorX()) + " Y:" + tostr(e->getCursorY());
 	_lblMousePos->setString(str);
-
+    
 	if (_cursorFree || !_focused)
 		return;
-
-	Size winSize = Director::getInstance()->getWinSize();
-
-	int dx = 0;
-	int dy = 0;
-
-	setCursorMiddle();
-
-	dx = winSize.width / 2 - e->getCursorX();
-	dy = winSize.height / 2 - e->getCursorY();
-
-	Vec3 camRot = _camera->getRotation3D();
-
-	camRot.x -= dy * _sensibility;
-	camRot.y += dx * _sensibility;
-
-	_camera->setRotation3D(camRot);
-}
-
-void FirstPersonShooter::onMouseDown(Event * evnt)
-{
-	EventMouse* e = dynamic_cast<EventMouse*>(evnt);
-	if (e->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT)
-	{
-		Director::getInstance()->getOpenGLView()->setCursorVisible(false);
-	}
-}
-
-void FirstPersonShooter::onMouseUp(Event * evnt)
-{
-	EventMouse* e = dynamic_cast<EventMouse*>(evnt);
-	if (e->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT)
-	{
-		Director::getInstance()->getOpenGLView()->setCursorVisible(true);
-	}
+    
+    if (_firstMove)
+    {
+        _prevMousePos.x = e->getCursorX();
+        _prevMousePos.y = e->getCursorY();
+        _firstMove = false;
+    }
+    
+    float xoffset = e->getCursorX() - _prevMousePos.x;
+    float yoffset = _prevMousePos.y - e->getCursorY();
+    
+    _prevMousePos.x = e->getCursorX();
+    _prevMousePos.y = e->getCursorY();
+    
+    xoffset *= _sensitivity;
+    yoffset *= _sensitivity;
+    
+    _yaw   -= xoffset;
+    _pitch -= yoffset;
+    
+    if (_pitch > 89.0f)
+        _pitch = 89.0f;
+    if (_pitch < -89.0f)
+        _pitch = -89.0f;
+    
+    _camera->setRotation3D(Vec3(_pitch, _yaw, 0.0f));
 }
 
 void FirstPersonShooter::onFocused()
@@ -489,9 +477,12 @@ void FirstPersonShooter::keyPressed(EventKeyboard::KeyCode keyCode)
 {
 	switch (keyCode)
 	{
-	case EventKeyboard::KeyCode::KEY_LEFT_CTRL:
+	case EventKeyboard::KeyCode::KEY_R:
 		_cursorFree = true;
+        Director::getInstance()->getOpenGLView()->setInputModeCursorNormal();
 		break;
+    default:
+        break;
 	}
 }
 
@@ -499,9 +490,13 @@ void FirstPersonShooter::keyReleased(EventKeyboard::KeyCode keyCode)
 {
 	switch (keyCode)
 	{
-	case EventKeyboard::KeyCode::KEY_LEFT_CTRL:
+	case EventKeyboard::KeyCode::KEY_R:
 		_cursorFree = false;
+        _firstMove = true;
+        Director::getInstance()->getOpenGLView()->setInputModeCursorDisabled();
 		break;
+    default:
+        break;
 	}
 }
 
@@ -512,7 +507,7 @@ std::string FirstPersonShooter::title() const
 
 std::string FirstPersonShooter::subtitle() const
 {
-	return "Move the Camera with mouse / Hold Left_Ctrl to release cursor / Right click to hide cursor";
+    return "Move the Camera with mouse / Hold R to release cursor";
 }
 
 void FirstPersonShooter::processInput()
@@ -558,3 +553,5 @@ void FirstPersonShooter::updateCamera(float dt)
 
 	_camera->setPosition3D(cameraPos);
 }
+
+#endif // !CC_TARGET_PLATFORM
