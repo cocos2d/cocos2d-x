@@ -1,72 +1,86 @@
 /******************************************************************************
- * Spine Runtimes Software License v2.5
+ * Spine Runtimes License Agreement
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2016, Esoteric Software
- * All rights reserved.
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
- * You are granted a perpetual, non-exclusive, non-sublicensable, and
- * non-transferable license to use, install, execute, and perform the Spine
- * Runtimes software and derivative works solely for personal or internal
- * use. Without the written permission of Esoteric Software (see Section 2 of
- * the Spine Software License Agreement), you may not (a) modify, translate,
- * adapt, or develop new applications using the Spine Runtimes or otherwise
- * create derivative works or improvements of the Spine Runtimes or (b) remove,
- * delete, alter, or obscure any trademarks or any copyright, trademark, patent,
- * or other intellectual property or proprietary rights notices on or in the
- * Software, including any copy thereof. Redistributions in binary or source
- * form must include this license and terms.
+ * Integration of the Spine Runtimes into software or otherwise creating
+ * derivative works of the Spine Runtimes is permitted under the terms and
+ * conditions of Section 2 of the Spine Editor License Agreement:
+ * http://esotericsoftware.com/spine-editor-license
  *
- * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
- * USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
- * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
+ * "Products"), provided that each user of the Products must obtain their own
+ * Spine Editor license and redistribution of the Products in any form must
+ * include this license and copyright notice.
+ *
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_EVENT_H_
-#define SPINE_EVENT_H_
+#ifndef Spine_Event_h
+#define Spine_Event_h
 
-#include <spine/dll.h>
-#include <spine/EventData.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+class EventData;
 
-typedef struct spEvent {
-	spEventData* const data;
-	float const time;
-	int intValue;
-	float floatValue;
-	const char* stringValue;
+/// Stores the current pose values for an Event.
+class SP_API Event : public SpineObject {
+	friend class SkeletonBinary;
 
-#ifdef __cplusplus
-	spEvent() :
-		data(0),
-		time(0),
-		intValue(0),
-		floatValue(0),
-		stringValue(0) {
-	}
-#endif
-} spEvent;
+	friend class SkeletonJson;
 
-SP_API spEvent* spEvent_create (float time, spEventData* data);
-SP_API void spEvent_dispose (spEvent* self);
+	friend class AnimationState;
 
-#ifdef SPINE_SHORT_NAMES
-typedef spEvent Event;
-#define Event_create(...) spEvent_create(__VA_ARGS__)
-#define Event_dispose(...) spEvent_dispose(__VA_ARGS__)
-#endif
+public:
+	Event(float time, const EventData &data);
 
-#ifdef __cplusplus
+	const EventData &getData();
+
+	/// The animation time this event was keyed.
+	float getTime();
+
+	int getIntValue();
+
+	void setIntValue(int inValue);
+
+	float getFloatValue();
+
+	void setFloatValue(float inValue);
+
+	const String &getStringValue();
+
+	void setStringValue(const String &inValue);
+
+	float getVolume();
+
+	void setVolume(float inValue);
+
+	float getBalance();
+
+	void setBalance(float inValue);
+
+private:
+	const EventData &_data;
+	const float _time;
+	int _intValue;
+	float _floatValue;
+	String _stringValue;
+	float _volume;
+	float _balance;
+};
 }
-#endif
 
-#endif /* SPINE_EVENT_H_ */
+#endif /* Spine_Event_h */

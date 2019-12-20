@@ -1,113 +1,115 @@
 /******************************************************************************
- * Spine Runtimes Software License v2.5
+ * Spine Runtimes License Agreement
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2016, Esoteric Software
- * All rights reserved.
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
- * You are granted a perpetual, non-exclusive, non-sublicensable, and
- * non-transferable license to use, install, execute, and perform the Spine
- * Runtimes software and derivative works solely for personal or internal
- * use. Without the written permission of Esoteric Software (see Section 2 of
- * the Spine Software License Agreement), you may not (a) modify, translate,
- * adapt, or develop new applications using the Spine Runtimes or otherwise
- * create derivative works or improvements of the Spine Runtimes or (b) remove,
- * delete, alter, or obscure any trademarks or any copyright, trademark, patent,
- * or other intellectual property or proprietary rights notices on or in the
- * Software, including any copy thereof. Redistributions in binary or source
- * form must include this license and terms.
+ * Integration of the Spine Runtimes into software or otherwise creating
+ * derivative works of the Spine Runtimes is permitted under the terms and
+ * conditions of Section 2 of the Spine Editor License Agreement:
+ * http://esotericsoftware.com/spine-editor-license
  *
- * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
- * USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
- * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
+ * "Products"), provided that each user of the Products must obtain their own
+ * Spine Editor license and redistribution of the Products in any form must
+ * include this license and copyright notice.
+ *
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_PATHCONSTRAINT_H_
-#define SPINE_PATHCONSTRAINT_H_
+#ifndef Spine_PathConstraint_h
+#define Spine_PathConstraint_h
 
-#include <spine/dll.h>
-#include <spine/PathConstraintData.h>
-#include <spine/Bone.h>
-#include <spine/Slot.h>
-#include "PathAttachment.h"
+#include <spine/ConstraintData.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <spine/Vector.h>
 
-struct spSkeleton;
+namespace spine {
+	class PathConstraintData;
+	class Skeleton;
+	class PathAttachment;
+	class Bone;
+	class Slot;
 
-typedef struct spPathConstraint {
-	spPathConstraintData* const data;
-	int bonesCount;
-	spBone** const bones;
-	spSlot* target;
-	float position, spacing, rotateMix, translateMix;
+	class SP_API PathConstraint : public Updatable {
+		friend class Skeleton;
+		friend class PathConstraintMixTimeline;
+		friend class PathConstraintPositionTimeline;
+		friend class PathConstraintSpacingTimeline;
 
-	int spacesCount;
-	float* spaces;
+		RTTI_DECL
 
-	int positionsCount;
-	float* positions;
+	public:
+		PathConstraint(PathConstraintData& data, Skeleton& skeleton);
 
-	int worldCount;
-	float* world;
+		/// Applies the constraint to the constrained bones.
+		void apply();
 
-	int curvesCount;
-	float* curves;
+		virtual void update();
 
-	int lengthsCount;
-	float* lengths;
+		virtual int getOrder();
 
-	float segments[10];
+		float getPosition();
+		void setPosition(float inValue);
 
-#ifdef __cplusplus
-	spPathConstraint() :
-		data(0),
-		bonesCount(0),
-		bones(0),
-		target(0),
-		position(0),
-		spacing(0),
-		rotateMix(0),
-		translateMix(0),
-		spacesCount(0),
-		spaces(0),
-		positionsCount(0),
-		positions(0),
-		worldCount(0),
-		world(0),
-		curvesCount(0),
-		curves(0),
-		lengthsCount(0),
-		lengths(0) {
-	}
-#endif
-} spPathConstraint;
+		float getSpacing();
+		void setSpacing(float inValue);
 
-#define SP_PATHCONSTRAINT_
+		float getRotateMix();
+		void setRotateMix(float inValue);
 
-SP_API spPathConstraint* spPathConstraint_create (spPathConstraintData* data, const struct spSkeleton* skeleton);
-SP_API void spPathConstraint_dispose (spPathConstraint* self);
+		float getTranslateMix();
+		void setTranslateMix(float inValue);
 
-SP_API void spPathConstraint_apply (spPathConstraint* self);
-SP_API float* spPathConstraint_computeWorldPositions(spPathConstraint* self, spPathAttachment* path, int spacesCount, int/*bool*/ tangents, int/*bool*/percentPosition, int/**/percentSpacing);
+		Vector<Bone*>& getBones();
 
-#ifdef SPINE_SHORT_NAMES
-typedef spPathConstraint PathConstraint;
-#define PathConstraint_create(...) spPathConstraint_create(__VA_ARGS__)
-#define PathConstraint_dispose(...) spPathConstraint_dispose(__VA_ARGS__)
-#define PathConstraint_apply(...) spPathConstraint_apply(__VA_ARGS__)
-#endif
+		Slot* getTarget();
+		void setTarget(Slot* inValue);
 
-#ifdef __cplusplus
+		PathConstraintData& getData();
+
+		bool isActive();
+
+		void setActive(bool inValue);
+
+	private:
+		static const float EPSILON;
+		static const int NONE;
+		static const int BEFORE;
+		static const int AFTER;
+
+		PathConstraintData& _data;
+		Vector<Bone*> _bones;
+		Slot* _target;
+		float _position, _spacing, _rotateMix, _translateMix;
+
+		Vector<float> _spaces;
+		Vector<float> _positions;
+		Vector<float> _world;
+		Vector<float> _curves;
+		Vector<float> _lengths;
+		Vector<float> _segments;
+
+		bool _active;
+
+		Vector<float>& computeWorldPositions(PathAttachment& path, int spacesCount, bool tangents, bool percentPosition, bool percentSpacing);
+
+		static void addBeforePosition(float p, Vector<float>& temp, int i, Vector<float>& output, int o);
+
+		static void addAfterPosition(float p, Vector<float>& temp, int i, Vector<float>& output, int o);
+
+		static void addCurvePosition(float p, float x1, float y1, float cx1, float cy1, float cx2, float cy2, float x2, float y2, Vector<float>& output, int o, bool tangents);
+	};
 }
-#endif
 
-#endif /* SPINE_PATHCONSTRAINT_H_ */
+#endif /* Spine_PathConstraint_h */
