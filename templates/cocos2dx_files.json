@@ -2307,9 +2307,6 @@
         "external/edtaa3func/edtaa3func.cpp", 
         "external/edtaa3func/edtaa3func.h", 
         "external/empty.cpp", 
-        "external/fbx-conv/README.md", 
-        "external/fbx-conv/mac/fbx-conv", 
-        "external/fbx-conv/mac/libfbxsdk.dylib", 
         "external/flatbuffers/Android.mk", 
         "external/flatbuffers/CMakeLists.txt", 
         "external/flatbuffers/flatbuffers.h", 
@@ -3840,13 +3837,15 @@
         "licenses/LICENSE_tremolo.txt", 
         "licenses/LICENSE_unicode.txt", 
         "licenses/LICENSE_zlib.txt", 
-        "replacement-files.zip", 
         "tools/appveyor-scripts/before-build.ps1", 
         "tools/appveyor-scripts/build.ps1", 
         "tools/appveyor-scripts/git_retry.py", 
         "tools/appveyor-scripts/setup_android.py", 
         "tools/coding-style/include-linter.py", 
         "tools/coding-style/tailing-spaces.py", 
+        "tools/fbx-conv/README.md", 
+        "tools/fbx-conv/mac/fbx-conv", 
+        "tools/fbx-conv/mac/libfbxsdk.dylib", 
         "tools/missing-tools.txt", 
         "tools/particle/convert_YCoordFlipped.py", 
         "tools/performance-analyze/README.md", 
@@ -4171,6 +4170,7 @@
         "tools/tolua/cocos2dx_ui.ini", 
         "tools/tolua/cocos2dx_video.ini", 
         "tools/tolua/cocos2dx_webview.ini", 
-        "tools/tolua/genbindings.py"
+        "tools/tolua/genbindings.py", 
+        "tools/tolua/userconf.ini"
     ]
 }
