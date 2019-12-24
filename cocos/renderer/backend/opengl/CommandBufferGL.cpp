@@ -198,6 +198,23 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
 
         if (useGeneratedFBO)
             _generatedFBOBindColor = true;
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+        if (_framebufferReadWriteDisabled)
+        {
+            if (useGeneratedFBO) //user-defined framebuffer
+            {
+                glDrawBuffer(GL_COLOR_ATTACHMENT0);
+                glReadBuffer(GL_COLOR_ATTACHMENT0);
+            } 
+            else //default framebuffer
+            {
+                glDrawBuffer(GL_BACK);
+                glReadBuffer(GL_BACK);
+            }
+            _framebufferReadWriteDisabled = false;
+        }
+#endif
     }
     else
     {
@@ -219,6 +236,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
         glDrawBuffer(GL_NONE);
         glReadBuffer(GL_NONE);
+        _framebufferReadWriteDisabled = true;
 #endif
     }
     CHECK_GL_ERROR_DEBUG();
