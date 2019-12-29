@@ -30,83 +30,138 @@
 #include "../BaseTest.h"
 #include <spine/spine-cocos2dx.h>
 
-DEFINE_TEST_SUITE(SpineTests);
+#ifdef COCOS2D_DEBUG
+#include <spine/Debug.h>
+#endif
+
+//DEFINE_TEST_SUITE(SpineTests);
+
+class SpineTests : public TestSuite
+{
+public:
+    SpineTests();
+
+    virtual ~SpineTests();
+private:
+    std::vector<std::string> _searchPaths;
+#ifdef COCOS2D_DEBUG
+    spine::DebugExtension* debugExtension = nullptr;
+#endif
+};
 
 class SpineTestLayer : public TestCase
 {
 public:
     SpineTestLayer();
-    
-    virtual std::string title() const;
+    virtual ~SpineTestLayer();
+
+    virtual bool init();
+    virtual std::string title() const override;
 protected:
     std::string    _title;
+    spine::SkeletonAnimation* skeletonNode = nullptr;
+    int _touchIndex = 0;
 };
 
-class BatchingExample: public SpineTestLayer {
+
+class BatchingExample : public SpineTestLayer {
 public:
+
     CREATE_FUNC(BatchingExample);
-    ~BatchingExample ();
-    
-    virtual bool init ();
-    
-protected:
-    spAtlas* _atlas;
-    spAttachmentLoader* _attachmentLoader;
-    spSkeletonData* _skeletonData;
-    spAnimationStateData* _stateData;
-};
+    ~BatchingExample();
 
-class CoinExample: public SpineTestLayer
-{
-public:
-    CREATE_FUNC(CoinExample);
-    
     virtual bool init();
-    
-private:
-    spine::SkeletonAnimation* skeletonNode;
+
+protected:
+    spine::Atlas* _atlas;
+    spine::AttachmentLoader* _attachmentLoader;
+    spine::SkeletonData* _skeletonData;
+    spine::AnimationStateData* _stateData;
 };
 
+
+class CoinExample : public SpineTestLayer {
+public:
+
+    CREATE_FUNC(CoinExample);
+
+    virtual bool init();
+
+};
 class GoblinsExample : public SpineTestLayer {
 public:
     CREATE_FUNC(GoblinsExample);
     
     virtual bool init ();
     
+};
+
+class IKExample : public SpineTestLayer {
+public:
+
+    CREATE_FUNC(IKExample);
+
+    virtual bool init();
+
 private:
-    spine::SkeletonAnimation* skeletonNode;
+    cocos2d::Vec2 position;
+};
+
+class MixAndMatchExample : public SpineTestLayer {
+public:
+    
+    CREATE_FUNC(MixAndMatchExample);
+
+    virtual bool init();
+
+    virtual ~MixAndMatchExample();
+
+private:
+    spine::Skin* skin;
 };
 
 class RaptorExample : public SpineTestLayer {
 public:
     CREATE_FUNC(RaptorExample);
-    
-    virtual bool init ();
-    
+
+    virtual bool init();
+
+    virtual void update(float fDelta);
+
 private:
-    spine::SkeletonAnimation* skeletonNode;
+    float swirlTime;
+};
+
+class SkeletonRendererSeparatorExample : public SpineTestLayer {
+public:
+    CREATE_FUNC(SkeletonRendererSeparatorExample);
+
+    virtual bool init();
+
+    virtual void update(float deltaTime);
+
+private:
+    spine::SkeletonRenderer* frontNode;
+    cocos2d::DrawNode* betweenNode;
+
 };
 
 class SpineboyExample : public SpineTestLayer {
 public:
-    CREATE_FUNC (SpineboyExample);
-    
-    virtual bool init ();
-    
-    virtual void update (float deltaTime);
-    
-private:
-    spine::SkeletonAnimation* skeletonNode;
+    CREATE_FUNC(SpineboyExample);
+
+    virtual bool init();
+
+    virtual void update(float deltaTime);
+
 };
 
 class TankExample : public SpineTestLayer {
 public:
     CREATE_FUNC(TankExample);
-    
-    virtual bool init ();
-    
-private:
-    spine::SkeletonAnimation* skeletonNode;
+
+    virtual bool init();
+
 };
 
 #endif // _EXAMPLELAYER_H_
