@@ -911,6 +911,15 @@ void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& /*info*/)
 
 }
 
+void EditBox::setGlobalZOrder(float globalZOrder)
+{
+    Widget::setGlobalZOrder(globalZOrder);
+    if (_editBoxImpl)
+    {
+        _editBoxImpl->setGlobalZOrder(globalZOrder);
+    }
+}
+
 #if CC_ENABLE_SCRIPT_BINDING
 void EditBox::registerScriptEditBoxHandler(int handler)
 {
