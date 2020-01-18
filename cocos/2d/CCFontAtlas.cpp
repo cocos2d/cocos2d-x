@@ -445,6 +445,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
             tempDef.height = tempDef.height / scaleFactor;
             tempDef.U = tempDef.U / scaleFactor;
             tempDef.V = tempDef.V / scaleFactor;
+            tempDef.rotated = false;
         }
         else{
             if(bitmap)
@@ -461,6 +462,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
             tempDef.offsetX = 0;
             tempDef.offsetY = 0;
             tempDef.textureID = 0;
+            tempDef.rotated = false;
             _currentPageOrigX += 1;
         }
 

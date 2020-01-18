@@ -47,6 +47,7 @@ static inline Tex2F v2ToTex2F(const Vec2 &v)
 
 DrawNode::DrawNode(float lineWidth)
 : _lineWidth(lineWidth)
+, _defaultLineWidth(lineWidth)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -732,7 +733,7 @@ void DrawNode::clear()
     _dirtyGLLine = true;
     _bufferCountGLPoint = 0;
     _dirtyGLPoint = true;
-    _lineWidth = 0;
+    _lineWidth = _defaultLineWidth;
 }
 
 const BlendFunc& DrawNode::getBlendFunc() const
