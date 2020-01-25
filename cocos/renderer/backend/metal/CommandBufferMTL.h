@@ -172,6 +172,12 @@ public:
      */
     virtual void captureScreen(std::function<void(const unsigned char*, int, int)> callback) override;
     
+    /** get internal command buffer */
+    id<MTLCommandBuffer> getMTLCommandBuffer() { return _mtlCommandBuffer; }
+
+    /** get internal command buffer */
+    id<MTLRenderCommandEncoder> getRenderCommandEncoder() { return _mtlRenderEncoder; }
+
 private:
     void prepareDrawing() const;
     void setTextures() const;
