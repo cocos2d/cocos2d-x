@@ -406,7 +406,7 @@ public:
     bool checkVisibility(const Mat4& transform, const Size& size);
     
     /** get internal RenderPassDescriptr */
-    backend::RenderPassDescriptor getRenderPassDescriptor() { return _renderPassDescriptor; }
+    const backend::RenderPassDescriptor& getRenderPassDescriptor() { return _renderPassDescriptor; }
 
 protected:
     friend class Director;
