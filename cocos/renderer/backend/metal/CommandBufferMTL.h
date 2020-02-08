@@ -172,6 +172,11 @@ public:
      */
     virtual void captureScreen(std::function<void(const unsigned char*, int, int)> callback) override;
     
+    /**
+     * Helper function to end current render command encoder
+    */
+    void endEncoding();
+
     /** get internal command buffer */
     id<MTLCommandBuffer> getMTLCommandBuffer() { return _mtlCommandBuffer; }
 
