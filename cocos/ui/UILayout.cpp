@@ -40,7 +40,7 @@ THE SOFTWARE.
 #include "base/CCEventFocus.h"
 #include "base/CCStencilStateManager.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
-
+#include <algorithm>
 
 NS_CC_BEGIN
 
@@ -472,8 +472,8 @@ const Rect& Layout::getClippingRect()
 
         //Node can be flipped
         const auto worldPos = Vec2(std::min(worldPos1.x, worldPos2.x), std::min(worldPos1.y, worldPos2.y));
-        const auto scissorWidth = fabs(worldPos2.x - worldPos1.x);
-        const auto scissorHeight = fabs(worldPos2.y - worldPos1.y);
+        const auto scissorWidth = std::fabs(worldPos2.x - worldPos1.x);
+        const auto scissorHeight = std::fabs(worldPos2.y - worldPos1.y);
         Layout* parent = this;
 
         while (parent)
