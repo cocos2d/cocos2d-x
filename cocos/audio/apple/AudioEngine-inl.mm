@@ -681,7 +681,12 @@ void AudioEngineImpl::update(float dt)
             _threadMutex.unlock();
 
             if (player->_finishCallbak) {
-                player->_finishCallbak(audioID, filePath); //FIXME: callback will delay 50ms
+                auto callback = std::move(player->_finishCallbak);
+                player->_finishCallbak = nullptr;
+                _postCallbacks.emplace_back([callback, audioID, filePath](){
+                    callback(audioID, filePath); //FIXME: callback will delay 50ms
+                });
+
             }
 
             delete player;
@@ -691,6 +696,12 @@ void AudioEngineImpl::update(float dt)
             ++it;
         }
     }
+
+    for(auto&& callback : _postCallbacks)
+    {
+        callback();
+    }
+    _postCallbacks.clear();
 
     if(_audioPlayers.empty()){
         _lazyInitLoop = true;
