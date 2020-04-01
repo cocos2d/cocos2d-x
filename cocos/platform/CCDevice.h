@@ -60,6 +60,22 @@ public:
         LEFT          = 0x31, /** Horizontal left and vertical center. */
         TOP_LEFT      = 0x11, /** Horizontal left and vertical top. */
     };
+    
+    /** Defines the impact haptic feedback style. */
+    enum ImpactFeedbackStyle
+    {
+        ImpactFeedbackStyleLight = 0,
+        ImpactFeedbackStyleMedium,
+        ImpactFeedbackStyleHeavy
+    };
+    
+    /** Defines the notification haptic feedback style. */
+    enum NotificationFeedbackType
+    {
+        NotificationFeedbackTypeError = 0,
+        NotificationFeedbackTypeSuccess,
+        NotificationFeedbackTypeWarning
+    };
 
     /**
      *  Gets the DPI of device
@@ -92,6 +108,45 @@ public:
      * @param duration The duration in seconds.
      */
     static void vibrate(float duration);
+    
+    /**
+     * Prepare haptic feedback impact with selected style
+     * If haptic feedback is not supported, then invoking this method has no effect.
+     * @param style The style of the feedback.
+     */
+    static void prepareImpactFeedbackGenerator(ImpactFeedbackStyle style);
+    
+    /**
+     * Generate haptic feedback impact with selected style
+     * If haptic feedback is not supported, then invoking this method has no effect.
+     */
+    static void impactOccured(ImpactFeedbackStyle style);
+    
+    /**
+     * Prepare haptic feedback notification
+     * If haptic feedback is not supported, then invoking this method has no effect.
+     * @param style The style of the feedback.
+     */
+    static void prepareNotificationFeedbackGenerator();
+    
+    /**
+     * Generate haptic feedback notification with selected type
+     * If haptic feedback is not supported, then invoking this method has no effect.
+     */
+    static void notificationOccured(NotificationFeedbackType type);
+    
+    /**
+     * Prepare haptic feedback selection
+     * If haptic feedback is not supported, then invoking this method has no effect.
+     * @param style The style of the feedback.
+     */
+    static void prepareSelectionFeedbackGenerator();
+    
+    /**
+     * Generate haptic feedback selection changed
+     * If haptic feedback is not supported, then invoking this method has no effect.
+     */
+    static void selectionChanged();
 
     /**
      * Gets texture data for text.
