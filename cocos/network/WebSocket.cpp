@@ -563,11 +563,13 @@ WebSocket::~WebSocket()
 
     if (__websocketInstances == nullptr || __websocketInstances->empty())
     {
-        __wsHelper->quitWebSocketThread();
-        LOGD("before join ws thread\n");
-        __wsHelper->joinWebSocketThread();
-        LOGD("after join ws thread\n");
-
+    	if (__wsHelper)
+    	{
+	        __wsHelper->quitWebSocketThread();
+	        LOGD("before join ws thread\n");
+	        __wsHelper->joinWebSocketThread();
+	        LOGD("after join ws thread\n");
+	    }
         CC_SAFE_DELETE(__wsHelper);
     }
 
