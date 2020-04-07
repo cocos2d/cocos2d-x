@@ -129,7 +129,7 @@ Running Tests
 $ cd cocos2d-x
 $ mkdir build
 $ cd build
-$ cocos run --proj-dir .. -p [mac|windows|android|linux|ios]
+$ cocos run --proj-dir .. -p [mac|win32|android|linux|ios]
 ```
 
 How to start a new game
@@ -142,7 +142,7 @@ How to start a new game
     $ cd NEW_PROJECTS_DIR/MyGame
     $ mkdir build
     $ cd build
-    $ cocos run --proj-dir .. -p [mac|windows|android|linux|ios]
+    $ cocos run --proj-dir .. -p [mac|win32|android|linux|ios]
 
 You can also create a Lua project with `-l lua`.
 
