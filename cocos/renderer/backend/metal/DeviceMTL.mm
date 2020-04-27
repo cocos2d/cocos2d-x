@@ -32,6 +32,7 @@
 #include "Utils.h"
 #include "ProgramMTL.h"
 #include "DeviceInfoMTL.h"
+#include "xxhash.h"
 
 #include "base/ccMacros.h"
 
@@ -116,10 +117,18 @@ ShaderModule* DeviceMTL::newShaderModule(ShaderStage stage, const std::string& s
 
 DepthStencilState* DeviceMTL::createDepthStencilState(const DepthStencilDescriptor& descriptor)
 {
+    unsigned int hash = XXH32((const void*)&descriptor, sizeof(descriptor), 0);
+
+    auto it = _depthStencilStateCache.find(hash);
+    if(it != _depthStencilStateCache.end())
+        return it->second;
+
     auto ret = new (std::nothrow) DepthStencilStateMTL(_mtlDevice, descriptor);
     if (ret)
         ret->autorelease();
-    
+
+    _depthStencilStateCache.insert(hash, ret);
+
     return ret;
 }
 

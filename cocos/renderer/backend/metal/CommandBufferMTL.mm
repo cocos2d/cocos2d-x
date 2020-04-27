@@ -31,6 +31,9 @@
 #include "../Macros.h"
 #include "BufferManager.h"
 #include "DepthStencilStateMTL.h"
+#include "platform/CCGLView.h"
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 CC_BACKEND_BEGIN
 
@@ -93,6 +96,58 @@ namespace
     MTLRenderPassDescriptor* toMTLRenderPassDescriptor(const RenderPassDescriptor& descriptor)
     {
         MTLRenderPassDescriptor* mtlDescritpor = [MTLRenderPassDescriptor renderPassDescriptor];
+
+        if(descriptor.encodeUnifiedMsaa){
+
+            {// Set color attachments.
+                TextureMTL* texture = static_cast<TextureMTL*>(descriptor.colorAttachmentsTexture[0]);
+                TextureMTL* textureResolve = static_cast<TextureMTL*>(descriptor.msaaResolveTexture);
+                    
+                mtlDescritpor.colorAttachments[0].texture = texture->getMTLTexture();
+                mtlDescritpor.colorAttachments[0].resolveTexture = textureResolve->getMTLTexture();
+                mtlDescritpor.colorAttachments[0].loadAction = MTLLoadActionClear;
+                mtlDescritpor.colorAttachments[0].clearColor = MTLClearColorMake(descriptor.clearColorValue[0],
+                                                                                 descriptor.clearColorValue[1],
+                                                                                 descriptor.clearColorValue[2],
+                                                                                 descriptor.clearColorValue[3]);
+                mtlDescritpor.colorAttachments[0].storeAction = MTLStoreActionMultisampleResolve;
+            }
+
+            {// Set depth attachment
+                mtlDescritpor.depthAttachment.texture = static_cast<TextureMTL*>(descriptor.depthAttachmentTexture)->getMTLTexture();
+                mtlDescritpor.depthAttachment.loadAction = MTLLoadActionClear;
+                mtlDescritpor.depthAttachment.clearDepth = descriptor.clearDepthValue;
+                mtlDescritpor.depthAttachment.storeAction = MTLStoreActionDontCare;
+            }
+
+            {// Set stencil attachment
+                
+                mtlDescritpor.stencilAttachment.texture = static_cast<TextureMTL*>(descriptor.stencilAttachmentTexture)->getMTLTexture();
+                mtlDescritpor.stencilAttachment.loadAction = MTLLoadActionClear;
+                mtlDescritpor.stencilAttachment.clearStencil = descriptor.clearStencilValue;
+                mtlDescritpor.stencilAttachment.storeAction = MTLStoreActionDontCare;
+            }
+
+            return mtlDescritpor;
+        }
+        if(descriptor.encodeMsaaResolve){
+            /// When msaa rendering command is executed, all rendering is performed on the multisample texture as usual.
+            /// Now, the contents of the multisample texture are resolved and written into the resolve texture
+            if(descriptor.msaaResolveTexture){
+                TextureMTL* texture = static_cast<TextureMTL*>(descriptor.colorAttachmentsTexture[0]);
+                TextureMTL* textureResolve = static_cast<TextureMTL*>(descriptor.msaaResolveTexture);
+            
+                mtlDescritpor.colorAttachments[0].texture = texture->getMTLTexture();
+                mtlDescritpor.colorAttachments[0].resolveTexture = textureResolve->getMTLTexture();
+            }
+            else{
+                mtlDescritpor.colorAttachments[0].texture = Utils::getDefaultMsaaColorTarget();
+                mtlDescritpor.colorAttachments[0].resolveTexture = DeviceMTL::getCurrentDrawable().texture;
+            }
+            mtlDescritpor.colorAttachments[0].storeAction = MTLStoreActionMultisampleResolve;
+            mtlDescritpor.colorAttachments[0].loadAction = MTLLoadActionLoad;
+            return mtlDescritpor;
+        }
         
         // Set color attachments.
         if (descriptor.needColorAttachment)
@@ -120,7 +175,11 @@ namespace
             
             if (!hasCustomColorAttachment)
             {
-                mtlDescritpor.colorAttachments[0].texture = DeviceMTL::getCurrentDrawable().texture;
+                if(descriptor.msaaEnabled)
+                    mtlDescritpor.colorAttachments[0].texture = Utils::getDefaultMsaaColorTarget();
+                else
+                    mtlDescritpor.colorAttachments[0].texture = DeviceMTL::getCurrentDrawable().texture;
+                
                 if (descriptor.needClearColor)
                 {
                     mtlDescritpor.colorAttachments[0].loadAction = MTLLoadActionClear;
@@ -143,7 +202,7 @@ namespace
                 if (descriptor.depthAttachmentTexture)
                     mtlDescritpor.depthAttachment.texture = static_cast<TextureMTL*>(descriptor.depthAttachmentTexture)->getMTLTexture();
                 else
-                    mtlDescritpor.depthAttachment.texture = Utils::getDefaultDepthStencilTexture();
+                    mtlDescritpor.depthAttachment.texture = Utils::getDefaultDepthTarget(descriptor.msaaEnabled);
                 
                 if (descriptor.needClearDepth)
                 {
@@ -161,7 +220,7 @@ namespace
                 if (descriptor.stencilAttachmentTexture)
                     mtlDescritpor.stencilAttachment.texture = static_cast<TextureMTL*>(descriptor.stencilAttachmentTexture)->getMTLTexture();
                 else
-                    mtlDescritpor.stencilAttachment.texture = Utils::getDefaultDepthStencilTexture();
+                    mtlDescritpor.stencilAttachment.texture = Utils::getDefaultDepthTarget(descriptor.msaaEnabled);
                 
                 if (descriptor.needClearStencil)
                 {
@@ -219,6 +278,24 @@ CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
 
 CommandBufferMTL::~CommandBufferMTL()
 {
+    {
+        // если текущий CommandBuffer еще выполняется GPU
+        // мы должны дождаться его завершения, синхронным вызовом waitUntilCompleted
+        // иначе хэндлер комплита GPU сработает в деалоцированной памяти
+        // (v.proskurin)
+        
+        if (_mtlCommandBuffer != nil) {
+            if ([_mtlCommandBuffer status] == MTLCommandBufferStatus::MTLCommandBufferStatusScheduled) {
+                [_mtlCommandBuffer waitUntilCompleted];
+            }
+
+            [_mtlCommandBuffer release];
+            _mtlCommandBuffer = nil;
+            return;
+        }
+    }
+    
+    
     dispatch_semaphore_signal(_frameBoundarySemaphore);
 }
 
@@ -227,6 +304,10 @@ void CommandBufferMTL::beginFrame()
     _autoReleasePool = [[NSAutoreleasePool alloc] init];
     dispatch_semaphore_wait(_frameBoundarySemaphore, DISPATCH_TIME_FOREVER);
 
+    if (_mtlCommandBuffer != nil) {
+        [_mtlCommandBuffer release];
+    }
+    
     _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
     [_mtlCommandBuffer enqueue];
     [_mtlCommandBuffer retain];
@@ -236,6 +317,22 @@ void CommandBufferMTL::beginFrame()
 
 id<MTLRenderCommandEncoder> CommandBufferMTL::getRenderCommandEncoder(const RenderPassDescriptor& renderPassDescriptor)
 {
+    if(_isMtlEncoderLocked)
+    {
+        CCASSERT( _lockedEncoderColorId == renderPassDescriptor.colorAttachmentsTexture[0]->_ID, "has to be the same" );
+        if(renderPassDescriptor.depthAttachmentTexture)
+            CCASSERT( _lockedEncoderDepthId == renderPassDescriptor.depthAttachmentTexture->_ID, "has to be the same" );
+        return _mtlRenderEncoder;
+    }
+    
+    if(renderPassDescriptor.encodeUnifiedMsaa)
+    {
+        CCASSERT(not _isMtlEncoderLocked, "unexpected");
+        _isMtlEncoderLocked = true;
+        _lockedEncoderColorId = renderPassDescriptor.colorAttachmentsTexture[0]->_ID;
+        _lockedEncoderDepthId = renderPassDescriptor.depthAttachmentTexture->_ID;
+    }
+    
     if(_mtlRenderEncoder != nil && _prevRenderPassDescriptor == renderPassDescriptor)
     {
         return _mtlRenderEncoder;
@@ -257,6 +354,8 @@ id<MTLRenderCommandEncoder> CommandBufferMTL::getRenderCommandEncoder(const Rend
     _renderTargetHeight = (unsigned int)mtlDescriptor.colorAttachments[0].texture.height;
     id<MTLRenderCommandEncoder> mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:mtlDescriptor];
     [mtlRenderEncoder retain];
+    
+    Director::getInstance()->getRenderer()->addMetalEncoderUse(1);
     
     return mtlRenderEncoder;
 }
@@ -369,7 +468,7 @@ void CommandBufferMTL::endFrame()
     }];
 
     [_mtlCommandBuffer commit];
-    [_mtlCommandBuffer release];
+    // [_mtlCommandBuffer release];
     DeviceMTL::resetCurrentDrawable();
     [_autoReleasePool drain];
 }
@@ -510,6 +609,14 @@ void CommandBufferMTL::setScissorRect(bool isEnabled, float x, float y, float wi
         scissorRect.height = _renderTargetHeight;
     }
     [_mtlRenderEncoder setScissorRect:scissorRect];
+}
+
+void CommandBufferMTL::unlockMtlEncoder()
+{
+    CCASSERT(_isMtlEncoderLocked, "unexpected");
+    _isMtlEncoderLocked = false;
+    _lockedEncoderColorId = 0;
+    _lockedEncoderDepthId = 0;
 }
 
 
