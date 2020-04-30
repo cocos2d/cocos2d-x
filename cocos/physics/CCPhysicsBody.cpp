@@ -425,6 +425,13 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/*
         }
         
         _shapes.pushBack(shape);
+
+        // Update scale as well, otherwise if a PhysicsShape is added, it will not be scaled properly.
+        // What is updated here are those that are not updated in .
+        // Since adding a physics body does not affect _recordScaleX, and _recordScaleY,
+        // the setScale() will not be called in beforeSimulation().
+        // However, we need to update it so that the new PhysicsShape is updated.
+        setScale(_recordScaleX, _recordScaleY);
     }
     
     return shape;
