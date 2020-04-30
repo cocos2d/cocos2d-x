@@ -1,7 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
-Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -101,10 +100,6 @@ public class Cocos2dxSound {
         this.mRightVolume = 0.5f;
     }
 
-    /*
-     * @brief Preload a compressed audio file.
-     * @param path The path of the effect file.
-     */
     public int preloadEffect(final String path) {
         Integer soundID = this.mPathSoundIDMap.get(path);
 
@@ -119,11 +114,6 @@ public class Cocos2dxSound {
         return soundID;
     }
 
-    
-    /*
-     * @brief Unload the preloaded effect from internal buffer.
-     * @param path The path of the effect file.
-     */
     public void unloadEffect(final String path) {
         synchronized (mLockPathStreamIDsMap) {
             // stop effects
@@ -146,15 +136,6 @@ public class Cocos2dxSound {
 
     private static final int LOAD_TIME_OUT = 500;
 
-    /*
-     * @brief Play sound effect with a path, pitch, pan, and gain.
-     * @param path The path of the effect file.
-     * @param loop Determines whether to loop the effect playing or not.
-     * @param pitch Fequency, normal value is 1.0. will also change effect play time.
-     * @param pan Stereo effect, in the range of [-1..1] where -1 enables only left channel.
-     * @param gain Volume, in the range of [0..1]. The normal value is 1.
-     * @return Value of streamID from Java int method if it can preload effect; otherwise -1.
-     */
     public int playEffect(final String path, final boolean loop, float pitch, float pan, float gain){
         Integer soundID = this.mPathSoundIDMap.get(path);
         int streamID = Cocos2dxSound.INVALID_STREAM_ID;
@@ -190,10 +171,6 @@ public class Cocos2dxSound {
         return streamID;
     }
 
-    /*
-     * @brief Stop playing sound effect.
-     * @param streamID The return value of function playEffect.
-     */
     public void stopEffect(final int steamID) {
         this.mSoundPool.stop(steamID);
 
@@ -208,25 +185,14 @@ public class Cocos2dxSound {
         }
     }
 
-    /*
-     * @brief Pause playing sound effect.
-     * @param streamID The return value of function playEffect.
-     */
     public void pauseEffect(final int steamID) {
         this.mSoundPool.pause(steamID);
     }
 
-    /*
-     * @brief Resume playing sound effect.
-     * @param streamID The return value of function playEffect.
-     */
     public void resumeEffect(final int steamID) {
         this.mSoundPool.resume(steamID);
     }
 
-    /*
-     * @brief Pause all playing sound effect.
-     */
     public void pauseAllEffects() {
         synchronized (mLockPathStreamIDsMap) {
             if (!this.mPathStreamIDsMap.isEmpty()) {
@@ -241,9 +207,6 @@ public class Cocos2dxSound {
         }
     }
 
-    /*
-     * @brief Resume all playing sound effects.
-     */
     public void resumeAllEffects() {
         synchronized (mLockPathStreamIDsMap) {
             // can not only invoke SoundPool.autoResume() here, because
@@ -260,9 +223,6 @@ public class Cocos2dxSound {
         }
     }
 
-    /*
-     * @brief Stop all playing sound effects.
-     */
     public void stopAllEffects() {
         synchronized (mLockPathStreamIDsMap) {
             // stop effects
@@ -281,18 +241,10 @@ public class Cocos2dxSound {
         }
     }
 
-    /*
-     * @brief Get the volume of the effects.
-     * @return the range of 0.0 as the minimum and 1.0 as the maximum.
-     */
     public float getEffectsVolume() {
         return (this.mLeftVolume + this.mRightVolume) / 2;
     }
 
-    /*
-     * @brief Set the volume of sound effects.
-     * @param volume must be range of 0.0 as the minimum and 1.0 as the maximum.
-     */
     public void setEffectsVolume(float volume) {
         // volume should be in [0, 1.0]
         if (volume < 0) {
@@ -310,11 +262,6 @@ public class Cocos2dxSound {
         setEffectsVolumeInternal(mLeftVolume, mRightVolume);
     }
 
-    /*
-     * @brief Set the volume of sound effects internal.
-     * @param left Left volume that must be range of 0.0 as the minimum and 1.0 as the maximum.
-     * @param right Right volume that must be range of 0.0 as the minimum and 1.0 as the maximum.
-     */
     private void setEffectsVolumeInternal(float left, float right) {
         synchronized (mLockPathStreamIDsMap) {
             // change the volume of playing sounds
@@ -354,7 +301,9 @@ public class Cocos2dxSound {
                 if (Cocos2dxHelper.getObbFile() != null) {
                     final AssetFileDescriptor assetFileDescriptor = Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path);
                     soundID = mSoundPool.load(assetFileDescriptor, 0);
-                } else {
+                }
+
+                if (soundID <= 0) {
                     soundID = this.mSoundPool.load(this.mContext.getAssets().openFd(path), 0);
                 }
             }
@@ -407,10 +356,6 @@ public class Cocos2dxSound {
         this.mSoundPool.autoResume();
     }
 
-    /*
-     * @brief Set audio focus.
-     * @param isAudioFocus Determines whether to set audio focused or not.
-     */
     void setAudioFocus(boolean isFocus) {
         mIsAudioFocus = isFocus;
         float leftVolume = mIsAudioFocus ? mLeftVolume : 0.0f;
