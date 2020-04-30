@@ -561,11 +561,7 @@ public class Cocos2dxHelper {
                         Method getRealMetrics = d.getClass().getMethod("getRealMetrics", metrics.getClass());
                         getRealMetrics.invoke(d, metrics);
                         return (int)((metrics.xdpi + metrics.ydpi) / 2.0 );
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     d.getMetrics(metrics);
