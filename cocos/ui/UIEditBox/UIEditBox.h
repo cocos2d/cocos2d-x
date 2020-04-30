@@ -655,6 +655,8 @@ namespace ui {
          */
         virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info) override;
 
+        void setGlobalZOrder(float globalZOrder) override;
+
         /**
          * @js NA
          * @lua NA
