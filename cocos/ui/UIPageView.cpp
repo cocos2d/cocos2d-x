@@ -158,6 +158,8 @@ ssize_t PageView::getCurrentPageIndex()
 void PageView::setCurrentPageIndex(ssize_t index)
 {
     jumpToItem(index, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+    if (getItem(index)) // PageView::EventType::TURNING triggered only if index is valid
+        pageTurningEvent();
 }
 
 void PageView::scrollToPage(ssize_t idx)
