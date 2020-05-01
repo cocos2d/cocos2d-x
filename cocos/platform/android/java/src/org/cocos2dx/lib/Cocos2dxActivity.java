@@ -227,6 +227,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         if(gainAudioFocus)
             Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
         super.onDestroy();
+
+        if (mGLSurfaceView != null) {
+            Cocos2dxHelper.terminateProcess();
+        }
     }
 
     @Override
