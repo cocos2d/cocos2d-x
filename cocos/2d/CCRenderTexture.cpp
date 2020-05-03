@@ -627,7 +627,8 @@ void RenderTexture::onBegin()
     _oldStencilAttachment = renderer->getStencilAttachment();
     _oldRenderTargetFlag = renderer->getRenderTargetFlag();
 
-    renderer->setRenderTarget(_renderTargetFlags, _textureMsaaTarget ?: _texture2D, _depthStencilTexture, _depthStencilTexture);
+    auto* texTarget = _textureMsaaTarget ? _textureMsaaTarget : _texture2D;
+    renderer->setRenderTarget(_renderTargetFlags, texTarget, _depthStencilTexture, _depthStencilTexture);
 }
 
 void RenderTexture::onEnd()
