@@ -247,6 +247,15 @@ public:
 
     /** Returns the size of the OpenGL view in pixels. */
     Size getWinSizeInPixels() const;
+	
+    /**
+     * Returns design size of the OpenGL view in points.
+     * The value has to be set via `GLView::setDesignResolutionSize()` before.
+     */
+    Size getDesignSize() const;
+    
+    /** Returns design origin coordinate of the OpenGL view in points. */
+    Vec2 getDesignOrigin() const;   
     
     /** 
      * Returns visible size of the OpenGL view in points.
