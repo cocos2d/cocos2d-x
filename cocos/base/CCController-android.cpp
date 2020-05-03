@@ -115,7 +115,7 @@ private:
     Controller* _controller;
 };
 
-void Controller::startDiscoveryController()
+void Controller::startDiscoveryController(bool isRawInputPreferred)
 {
     // Empty implementation on Android
 }
