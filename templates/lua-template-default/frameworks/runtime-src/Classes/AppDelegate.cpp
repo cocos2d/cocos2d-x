@@ -52,7 +52,8 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 #if USE_AUDIO_ENGINE
-    AudioEngine::end();
+    // cause iOS/macOS crash when force exit app
+    // AudioEngine::end();
 #elif USE_SIMPLE_AUDIO_ENGINE
     SimpleAudioEngine::end();
 #endif

@@ -31,6 +31,21 @@
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "extensions/cocos-ext.h"
 
+#define USE_AUDIO_ENGINE 1
+#define USE_SIMPLE_AUDIO_ENGINE 0
+
+#if USE_AUDIO_ENGINE && USE_SIMPLE_AUDIO_ENGINE
+#error "Don't use AudioEngine and SimpleAudioEngine at the same time. Please just select one in your game!"
+#endif
+
+#if USE_AUDIO_ENGINE
+#include "audio/include/AudioEngine.h"
+using namespace cocos2d::experimental;
+#elif USE_SIMPLE_AUDIO_ENGINE
+#include "audio/include/SimpleAudioEngine.h"
+using namespace CocosDenshion;
+#endif
+
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
@@ -40,7 +55,12 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    //SimpleAudioEngine::end();
+#if USE_AUDIO_ENGINE
+    // cause iOS/macOS crash when force exit app
+    AudioEngine::end();
+#elif USE_SIMPLE_AUDIO_ENGINE
+    SimpleAudioEngine::end();
+#endif
     cocostudio::ArmatureDataManager::destroyInstance();
 }
 
@@ -127,6 +147,13 @@ void AppDelegate::applicationDidEnterBackground()
     }
     
     Director::getInstance()->stopAnimation();
+
+#if USE_AUDIO_ENGINE
+    AudioEngine::pauseAll();
+#elif USE_SIMPLE_AUDIO_ENGINE
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
+#endif
 }
 
 // this function will be called when the app is active again
@@ -138,4 +165,11 @@ void AppDelegate::applicationWillEnterForeground()
     }
     
     Director::getInstance()->startAnimation();
+
+#if USE_AUDIO_ENGINE
+    AudioEngine::resumeAll();
+#elif USE_SIMPLE_AUDIO_ENGINE
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
+#endif
 }
