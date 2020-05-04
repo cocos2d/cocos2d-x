@@ -682,6 +682,15 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua NA
      */
     virtual ~Label();
+    
+#if CC_LABEL_DEBUG_DRAW
+    /// @name DebugDraw
+    /// @{
+    static void enableDebugDraw(const bool value);
+    static bool getDebugDrawEnabled() { return _debugDrawEnabled; }
+    static void setDebugDrawColor(Color4F& color);
+    /// @}
+#endif
 
     bool initWithTTF(const std::string& text, const std::string& fontFilePath, float fontSize,
                      const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -836,6 +845,8 @@ protected:
 
 #if CC_LABEL_DEBUG_DRAW
     DrawNode* _debugDrawNode;
+    static bool _debugDrawEnabled;
+    static Color4F _debugDrawColor;
 #endif
 
     bool _enableWrap;

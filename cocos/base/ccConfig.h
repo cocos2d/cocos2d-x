@@ -180,24 +180,21 @@ THE SOFTWARE.
 /** @def CC_SPRITE_DEBUG_DRAW
  * If enabled, all subclasses of Sprite will draw a bounding box.
  * Useful for debugging purposes only. It is recommended to leave it disabled.
- * To enable set it to a value different than 0. Disabled by default:
- * 0 -- disabled
- * 1 -- draw bounding box
- * 2 -- draw texture box
+ * To enable set it to a value different than 0. Disabled by default.
+ * To toggle bounding boxes in runtime, use Sprite::enableDebugDraw(true)
  */
 #ifndef CC_SPRITE_DEBUG_DRAW
-#define CC_SPRITE_DEBUG_DRAW 0
+    #define CC_SPRITE_DEBUG_DRAW 0
 #endif
 
 /** @def CC_LABEL_DEBUG_DRAW
- * If enabled, all subclasses of Label will draw a bounding box.
+ * If enabled, all subclasses of Label will be able to draw a bounding box.
  * Useful for debugging purposes only. It is recommended to leave it disabled.
- * To enable set it to a value different than 0. Disabled by default:
- * 0 -- disabled
- * 1 -- draw bounding box
+ * To enable set it to a value different than 0. Disabled by default.
+ * To toggle bounding boxes in runtime, use Label::enableDebugDraw(true);
  */
 #ifndef CC_LABEL_DEBUG_DRAW
-#define CC_LABEL_DEBUG_DRAW 0
+    #define CC_LABEL_DEBUG_DRAW 0
 #endif
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
