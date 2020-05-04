@@ -54,33 +54,39 @@ RenderTextureSave::RenderTextureSave()
 
     // note that the render texture is a Node, and contains a sprite of its texture for convenience,
     // so we can just parent it to the scene like any other Node
-    this->addChild(_target, -1);
+    this->addChild(_target, 1);
     
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // Save Image menu
-    MenuItemFont::setFontSize(16);
+    MenuItemFont::setFontSize(10);
     auto item1 = MenuItemFont::create("Save Image PMA", CC_CALLBACK_1(RenderTextureSave::saveImageWithPremultipliedAlpha, this));
     auto item2 = MenuItemFont::create("Save Image Non-PMA", CC_CALLBACK_1(RenderTextureSave::saveImageWithNonPremultipliedAlpha, this));
-    auto item3 = MenuItemFont::create("Add Image", CC_CALLBACK_1(RenderTextureSave::addImage, this));
-    auto item4 = MenuItemFont::create("Clear to Random", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
-    auto item5 = MenuItemFont::create("Clear to Transparent", CC_CALLBACK_1(RenderTextureSave::clearImageTransparent, this));
-    auto menu = Menu::create(item1, item2, item3, item4, item5, nullptr);
-    this->addChild(menu);
+    auto item3 = MenuItemFont::create("Save JPG 100%", CC_CALLBACK_1(RenderTextureSave::saveImageJPG100, this));
+    auto item4 = MenuItemFont::create("Save JPG 50%", CC_CALLBACK_1(RenderTextureSave::saveImageJPG50, this));
+    auto item5 = MenuItemFont::create("Save WEBP 100% lv6", CC_CALLBACK_1(RenderTextureSave::saveImageWEBP600, this));
+    auto item6 = MenuItemFont::create("Save WEBP 100% lv0", CC_CALLBACK_1(RenderTextureSave::saveImageWEBP100, this));
+    auto item7 = MenuItemFont::create("Save WEBP 50%", CC_CALLBACK_1(RenderTextureSave::saveImageWEBP50, this));
+    
+    auto item8 = MenuItemFont::create("Add Image", CC_CALLBACK_1(RenderTextureSave::addImage, this));
+    auto item9 = MenuItemFont::create("Clear to Random", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
+    auto item10 = MenuItemFont::create("Clear to Transparent", CC_CALLBACK_1(RenderTextureSave::clearImageTransparent, this));
+    auto menu = Menu::create(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, nullptr);
+    this->addChild(menu, 10);
     menu->alignItemsVertically();
-    menu->setPosition(Vec2(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 100));
+    menu->setPosition(Vec2(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 90));
 }
 
 std::string RenderTextureSave::title() const
 {
-    return "Touch the screen";
+    return "Draw and Save";
 }
 
 std::string RenderTextureSave::subtitle() const
 {
-    return "Press 'Save Image' to create an snapshot of the render texture";
+    return " ";
 }
 
 void RenderTextureSave::clearImage(cocos2d::Ref* sender)
@@ -93,26 +99,32 @@ void RenderTextureSave::clearImageTransparent(cocos2d::Ref* sender)
     _target->clear(0, 0, 0, 0);
 }
 
+void RenderTextureSave::createSprite(cocos2d::RenderTexture* rt, const std::string& path, int counter)
+{
+    bool fileExist = FileUtils::getInstance()->isFileExist(path);
+    CCLOG("fileExist at path %s : %d", path.c_str(), fileExist);
+
+    auto sprite = Sprite::create(path);
+    addChild(sprite);
+    sprite->setScale(0.3f);
+    sprite->setPosition(Vec2(sprite->getBoundingBox().size.width*0.5, sprite->getBoundingBox().size.height));
+    sprite->setRotation(counter * 3);
+}
+
 void RenderTextureSave::saveImageWithPremultipliedAlpha(cocos2d::Ref* sender)
 {
     static int counter = 0;
 
-    char png[20];
-    sprintf(png, "image-pma-%d.png", counter);
-
+    auto imagePath = "image-pma-" + StringUtils::toString(counter) + ".png";
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        auto sprite = Sprite::create(path);
-        addChild(sprite);
-        sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        RenderTextureSave::createSprite(rt, path, counter);
     };
 
-    _target->saveToFile(png, Image::Format::PNG, true, callback);
+    _target->saveToFile(imagePath, Image::Format::PNG, true, callback);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
-    CCLOG("Image saved %s", png);
+    CCLOG("Image saved %s", imagePath.c_str());
 
     counter++;
 }
@@ -121,22 +133,106 @@ void RenderTextureSave::saveImageWithNonPremultipliedAlpha(cocos2d::Ref *sender)
 {
     static int counter = 0;
 
-    char png[20];
-    sprintf(png, "image-no-pma-%d.png", counter);
-    
+    auto imagePath = "image-no-pma-" + StringUtils::toString(counter) + ".png";
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        auto sprite = Sprite::create(path);
-        addChild(sprite);
-        sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
-        sprite->setRotation(counter * 3);
+        RenderTextureSave::createSprite(rt, path, counter);
     };
     
-    _target->saveToFileAsNonPMA(png, Image::Format::PNG, true, callback);
+    _target->saveToFileAsNonPMA(imagePath, Image::Format::PNG, true, callback);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
-    CCLOG("Image saved %s", png);
+    CCLOG("Image saved %s", imagePath.c_str());
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageJPG100(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    auto imagePath = "image-100jpg-" + StringUtils::toString(counter) + ".jpg";
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        RenderTextureSave::createSprite(rt, path, counter);
+    };
+
+    _target->saveToFile(imagePath, Image::Format::JPG, false, callback, 1.0f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", imagePath.c_str());
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageJPG50(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    auto imagePath = "image-50jpg-" + StringUtils::toString(counter) + ".jpg";
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        RenderTextureSave::createSprite(rt, path, counter);
+    };
+
+    _target->saveToFile(imagePath, Image::Format::JPG, false, callback, 0.5f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", imagePath.c_str());
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageWEBP600(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    auto imagePath = "image-600webp-" + StringUtils::toString(counter) + ".webp";
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        RenderTextureSave::createSprite(rt, path, counter);
+    };
+
+    _target->saveToFile(imagePath, Image::Format::WEBP, true, callback, 7.0f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", imagePath.c_str());
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageWEBP100(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    auto imagePath = "image-100webp-" + StringUtils::toString(counter) + ".webp";
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        RenderTextureSave::createSprite(rt, path, counter);
+    };
+
+    _target->saveToFile(imagePath, Image::Format::WEBP, true, callback, 1.0f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", imagePath.c_str());
+
+    counter++;
+}
+
+void RenderTextureSave::saveImageWEBP50(cocos2d::Ref* sender)
+{
+    static int counter = 0;
+
+    auto imagePath = "image-50webp-" + StringUtils::toString(counter) + ".webp";
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        RenderTextureSave::createSprite(rt, path, counter);
+    };
+    
+    _target->saveToFile(imagePath, Image::Format::WEBP, true, callback, 0.5f);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", imagePath.c_str());
 
     counter++;
 }

@@ -45,8 +45,14 @@ public:
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void clearImage(cocos2d::Ref* pSender);
     void clearImageTransparent(cocos2d::Ref* sender);
+    void createSprite(cocos2d::RenderTexture* rt, const std::string& path, int counter);
     void saveImageWithPremultipliedAlpha(cocos2d::Ref* pSender);
     void saveImageWithNonPremultipliedAlpha(cocos2d::Ref* pSender);
+    void saveImageJPG100(cocos2d::Ref* pSender);
+    void saveImageJPG50(cocos2d::Ref* pSender);
+    void saveImageWEBP600(cocos2d::Ref* pSender);
+    void saveImageWEBP100(cocos2d::Ref* pSender);
+    void saveImageWEBP50(cocos2d::Ref* pSender);
 
     void addImage(cocos2d::Ref* sender);
 

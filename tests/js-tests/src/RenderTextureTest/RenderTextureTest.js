@@ -104,13 +104,29 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
 
         this._brushs = [];
 
-        var save = new cc.MenuItemFont("Save", this.saveCB, this);
-        var clear = new cc.MenuItemFont("Clear", this.clearCB.bind(this)); // another way to pass 'this'
-        var menu = new cc.Menu(save, clear);
+        var item1 = new cc.MenuItemFont("Save Image PMA", this.saveImageWithPremultipliedAlpha, this);
+        var item2 = new cc.MenuItemFont("Save Image Non-PMA", this.saveImageWithNonPremultipliedAlpha, this);
+        
+        var item3 = new cc.MenuItemFont("Save JPEG 100%", this.saveJPEG, this);
+        item3.setUserData(1.0);
+        var item4 = new cc.MenuItemFont("Save JPEG 50%", this.saveJPEG, this);
+        item4.setUserData(0.5);
+        
+        var item5 = new cc.MenuItemFont("Save WEBP 100% lv6", this.saveWEBP, this);
+        item5.setUserData(7.0);
+        var item6 = new cc.MenuItemFont("Save WEBP 100% lv0", this.saveWEBP, this);
+        item6.setUserData(1.0);
+        var item7 = new cc.MenuItemFont("Save WEBP 50%", this.saveWEBP, this);
+        item7.setUserData(0.5);
+                     
+        var item8 = new cc.MenuItemFont("Add Image", this.addImage, this);
+        var item9 = new cc.MenuItemFont("Clear to Random", this.clearImage, this);
+        var item10 = new cc.MenuItemFont("Clear to Transparent", this.clearImageTransparent.bind(this)); // another way to pass 'this'
+        var menu = new cc.Menu(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10);
         // var menu = cc.Menu.create(clear);
         menu.alignItemsVertically();
-        menu.x = winSize.width - 70;
-        menu.y = winSize.height - 80;
+        menu.x = winSize.width - 200;
+        menu.y = winSize.height - 200;
         this.addChild(menu, 10);
 
         // create a render texture
@@ -130,25 +146,105 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         }
         this._super();
     },
+                    
+    clearImage:function () {
+	    this._target.clear(Math.random() * 255, Math.random() * 255, Math.random() * 255, 255);
+    },
 
-    saveCB:function (sender) {
+    clearImageTransparent:function () {
+	    this._target.clear(0, 0, 0, 0);
+    },
+
+    callback:function(rt, path) {
+        var fileExist = jsb.fileUtils.isFileExist(path);
+        cc.log("fileExist at path " + path + " : " +fileExist);
+	    var sprite = new cc.Sprite(path);
+	    rt.getParent().addChild(sprite, 3);
+	    sprite.setScale(0.3);
+	    sprite.setPosition((sprite.getBoundingBox().width*0.5), (sprite.getBoundingBox().height*0.5));
+    },
+                                     
+    saveImageWithPremultipliedAlpha:function (sender) {
         if(!cc.sys.isNative){
             cc.log("RenderTexture's saveToFile doesn't support on HTML5");
             return;
         }
-        var namePNG = "image-" + this._counter + ".png";
-        var nameJPG = "image-" + this._counter + ".jpg";
+        var imageName = "image-pma-" + this._counter + ".png";
+        cc.log("imageName : " + imageName);
 
         // You can only save one file at a time (in one frame)
-        this._target.saveToFile(nameJPG, cc.IMAGE_FORMAT_JPEG, false);
-        //this._target.saveToFile(namePNG, cc.IMAGE_FORMAT_PNG);
+        this._target.saveToFile(imageName, cc.IMAGE_FORMAT_PNG, true, this.callback, 1.0);
 
         cc.log("images saved!");
         this._counter++;
     },
 
-    clearCB:function (sender) {
-        this._target.clear(Math.random() * 255, Math.random() * 255, Math.random() * 255, 255);
+    saveImageWithNonPremultipliedAlpha:function (sender) {
+        if(!cc.sys.isNative){
+            cc.log("RenderTexture's saveToFile doesn't support on HTML5");
+            return;
+        }
+
+        var imageName = "image-no-pma-" + this._counter + ".png";
+        cc.log("imageName : " + imageName);
+
+        // You can only save one file at a time (in one frame)
+        this._target.saveToFileAsNonPMA(imageName, cc.IMAGE_FORMAT_PNG, true, this.callback, 1.0);
+
+        cc.log("images saved!");
+        this._counter++;
+    },
+
+    saveJPEG:function (sender) {
+        if(!cc.sys.isNative){
+            cc.log("RenderTexture's saveToFile doesn't support on HTML5");
+            return;
+        }
+        
+        var compressionQuality = sender.getUserData();
+	    var compressionQualityInt = Math.round((compressionQuality*100));
+	    var imageName = "image-" + compressionQualityInt + "jpg-" + this._counter + ".jpg";
+
+        cc.log("imageName:"+imageName);
+        cc.log("compressionQuality:"+compressionQuality);
+        // You can only save one file at a time (in one frame)
+        this._target.saveToFile(imageName, cc.IMAGE_FORMAT_JPEG, false, this.callback, compressionQuality);
+
+        cc.log("images saved!");
+        this._counter++;
+    },
+
+    saveWEBP:function (sender) {
+        if(!cc.sys.isNative){
+            cc.log("RenderTexture's saveToFile doesn't support on HTML5");
+            return;
+        }
+
+        var compressionQuality = sender.getUserData();
+	    var compressionQualityInt = Math.round((compressionQuality*100));
+	    var imageName = "image-" + compressionQualityInt + "webp-" + this._counter + ".webp";
+
+        cc.log("imageName:"+imageName);
+        cc.log("compressionQuality:"+compressionQuality);
+        // You can only save one file at a time (in one frame)
+        this._target.saveToFile(imageName, cc.IMAGE_FORMAT_WEBP, true, this.callback, compressionQuality);
+
+        cc.log("images saved!");
+        this._counter++;
+    },
+
+    addImage:function (sender) {
+    	var s = cc.view.getVisibleSize();
+
+    	// begin drawing to the render texture
+    	this._target.begin();
+
+    	var sprite = new cc.Sprite("Images/test-rgba1.png");
+    	sprite.setPosition(sprite.getContentSize().width + Math.random() * (s.width - sprite.getContentSize().width), sprite.getContentSize().height + Math.random() * (s.height - sprite.getContentSize().height));
+    	sprite.visit();
+
+    	// finish drawing and return context back to the screen
+    	this._target.end();
     },
 
     drawInLocation:function (location) {

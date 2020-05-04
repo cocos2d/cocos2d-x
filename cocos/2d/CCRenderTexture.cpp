@@ -513,92 +513,100 @@ void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, uint3
     // setOrderOfArrival(0);
 }
 
-bool RenderTexture::saveToFileAsNonPMA(const std::string& filename, bool isRGBA, const std::function<void(RenderTexture*, const std::string&)>& callback)
+bool RenderTexture::saveToFileAsNonPMA(const std::string& filename, bool isRGBA, const std::function<void(RenderTexture*, const std::string&)>& callback, float compressionQuality)
 {
     std::string basename(filename);
     std::transform(basename.begin(), basename.end(), basename.begin(), ::tolower);
 
     if (basename.find(".png") != std::string::npos)
     {
-        return saveToFileAsNonPMA(filename, Image::Format::PNG, isRGBA, callback);
+        return saveToFileAsNonPMA(filename, Image::Format::PNG, isRGBA, callback, compressionQuality);
+    }
+    else if (basename.find(".webp") != std::string::npos)
+    {
+        return saveToFileAsNonPMA(filename, Image::Format::WEBP, isRGBA, callback, compressionQuality);
     }
     else if (basename.find(".jpg") != std::string::npos)
     {
         if (isRGBA) CCLOG("RGBA is not supported for JPG format.");
-        return saveToFileAsNonPMA(filename, Image::Format::JPG, false, callback);
+        return saveToFileAsNonPMA(filename, Image::Format::JPG, false, callback, compressionQuality);
     }
     else
     {
-        CCLOG("Only PNG and JPG format are supported now!");
+        CCLOG("Only JPG and PNG and WEBP format are supported now!");
     }
 
-    return saveToFileAsNonPMA(filename, Image::Format::JPG, false, callback);
+    return saveToFileAsNonPMA(filename, Image::Format::JPG, false, callback, compressionQuality);
 }
 
-bool RenderTexture::saveToFile(const std::string& filename, bool isRGBA, const std::function<void (RenderTexture*, const std::string&)>& callback)
+bool RenderTexture::saveToFile(const std::string& filename, bool isRGBA, const std::function<void (RenderTexture*, const std::string&)>& callback, float compressionQuality)
 {
     std::string basename(filename);
     std::transform(basename.begin(), basename.end(), basename.begin(), ::tolower);
     
     if (basename.find(".png") != std::string::npos)
     {
-        return saveToFile(filename, Image::Format::PNG, isRGBA, callback);
+        return saveToFile(filename, Image::Format::PNG, isRGBA, callback, compressionQuality);
+    }
+    else if (basename.find(".webp") != std::string::npos)
+    {
+        return saveToFile(filename, Image::Format::WEBP, isRGBA, callback, compressionQuality);
     }
     else if (basename.find(".jpg") != std::string::npos)
     {
         if (isRGBA) CCLOG("RGBA is not supported for JPG format.");
-        return saveToFile(filename, Image::Format::JPG, false, callback);
+        return saveToFile(filename, Image::Format::JPG, false, callback, compressionQuality);
     }
     else
     {
-        CCLOG("Only PNG and JPG format are supported now!");
+        CCLOG("Only JPG and PNG and WEBP format are supported now!");
     }
     
-    return saveToFile(filename, Image::Format::JPG, false, callback);
+    return saveToFile(filename, Image::Format::JPG, false, callback, compressionQuality);
 }
 
-bool RenderTexture::saveToFileAsNonPMA(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void(RenderTexture*, const std::string&)>& callback)
+bool RenderTexture::saveToFileAsNonPMA(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void(RenderTexture*, const std::string&)>& callback, float compressionQuality)
 {
-    CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
-        "the image can only be saved as JPG or PNG format");
+    CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG || format == Image::Format::WEBP,
+        "the image can only be saved as JPG or PNG or WEBP format");
     if (isRGBA && format == Image::Format::JPG) CCLOG("RGBA is not supported for JPG format");
 
     _saveFileCallback = callback;
 
     std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
     _saveToFileCommand.init(_globalZOrder);
-    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA, true);
+    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA, true, compressionQuality);
 
     Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
     return true;
 }
 
-bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void (RenderTexture*, const std::string&)>& callback)
+bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void (RenderTexture*, const std::string&)>& callback, float compressionQuality)
 {
-    CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
-             "the image can only be saved as JPG or PNG format");
+    CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG || format == Image::Format::WEBP,
+             "the image can only be saved as JPG or PNG or WEBP format");
     if (isRGBA && format == Image::Format::JPG) CCLOG("RGBA is not supported for JPG format");
     
     _saveFileCallback = callback;
-    
+
     std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
     _saveToFileCommand.init(_globalZOrder);
-    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA, false);
+    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA, false, compressionQuality);
     
     Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
     return true;
 }
 
-void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA, bool forceNonPMA)
+void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA, bool forceNonPMA, float compressionQuality)
 {
     Image *image = newImage(true);
     if (image)
     {
-        if (forceNonPMA && image->hasPremultipliedAlpha())
-        {
+        if (forceNonPMA && image->hasPremultipliedAlpha()) {
             image->reversePremultipliedAlpha();
         }
-        image->saveToFile(filename, !isRGBA);
+        
+        image->saveToFile(filename, !isRGBA, compressionQuality);
     }
     if(_saveFileCallback)
     {
