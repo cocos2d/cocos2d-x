@@ -158,6 +158,11 @@ namespace ui {
         //not implemented yet
     }
 
+    void EditBoxImplWin::setNativeInsertionPointColor(const Color4B& color)
+    {
+        //not implemented yet
+    }
+
     void EditBoxImplWin::setNativePlaceholderFont(const char* pFontName, int fontSize)
     {
         //not implemented yet

@@ -485,7 +485,14 @@ namespace ui {
         /**
          * Get the font color of the widget's text.
          */
-        const Color4B& getFontColor() const;
+        const Color4B& getFontColor() const;  
+
+        /**
+         * Set the insertion point color.
+         */
+        void setInsertionPointColor(const Color3B& color);
+        void setInsertionPointColor(const Color4B& color);
+
 
         /**
          * Set the placeholder's font. Only system font is allowed.

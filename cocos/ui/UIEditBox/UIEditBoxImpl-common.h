@@ -56,6 +56,7 @@ public:
 
     virtual void setFont(const char* pFontName, int fontSize) override;
     virtual void setFontColor(const Color4B& color) override;
+    virtual void setInsertionPointColor(const Color4B& color) override;
     virtual void setPlaceholderFont(const char* pFontName, int fontSize) override;
     virtual void setPlaceholderFontColor(const Color4B& color) override;
     virtual void setInputMode(EditBox::InputMode inputMode) override;
@@ -115,6 +116,7 @@ public:
     virtual void createNativeControl(const Rect& frame) = 0;
     virtual void setNativeFont(const char* pFontName, int fontSize) = 0;
     virtual void setNativeFontColor(const Color4B& color) = 0;
+    virtual void setNativeInsertionPointColor(const Color4B& color) = 0;
     virtual void setNativePlaceholderFont(const char* pFontName, int fontSize) = 0;
     virtual void setNativePlaceholderFontColor(const Color4B& color) = 0;
     virtual void setNativeInputMode(EditBox::InputMode inputMode) = 0;
