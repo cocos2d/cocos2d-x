@@ -166,7 +166,101 @@ bool isUnicodeNonBreaking(char32_t ch)
     || ch == 0x2007       // Figure Space
     || ch == 0x2060;      // Word Joiner
 }
+
+bool isCJKLineStartingForbiddenSymbol(char32_t ch)
+{
+    return ch == 0x2010
+        || ch == 0x2013
+        || ch == 0x2014
+        || ch == 0x2020
+        || ch == 0x2021
+        || ch == 0x2022
+        || ch == 0x203A
+        || ch == 0x203C
+        || ch == 0x2047
+        || ch == 0x2048
+        || ch == 0x2049
+        || ch == 0x3001
+        || ch == 0x3002
+        || ch == 0x3003
+        || ch == 0x3005
+        || ch == 0x3006
+        || ch == 0x3009
+        || ch == 0x300B
+        || ch == 0x300D
+        || ch == 0x300F
+        || ch == 0x3011
+        || ch == 0x3015
+        || ch == 0x3017
+        || ch == 0x3019
+        || ch == 0x301B
+        || ch == 0x301C
+        || ch == 0x301E
+        || ch == 0x301F
+        || ch == 0x303B
+        || ch == 0xFE30
+        || ch == 0xFE31
+        || ch == 0xFE32
+        || ch == 0xFE33
+        || ch == 0xFE36
+        || ch == 0xFE38
+        || ch == 0xFE3A
+        || ch == 0xFE3C
+        || ch == 0xFE3E
+        || ch == 0xFE40
+        || ch == 0xFE42
+        || ch == 0xFE5A
+        || ch == 0xFE5C
+        || ch == 0xFF01
+        || ch == 0xFF02
+        || ch == 0xFF05
+        || ch == 0xFF07
+        || ch == 0xFF09
+        || ch == 0xFF0C
+        || ch == 0xFF0E
+        || ch == 0xFF1A
+        || ch == 0xFF1B
+        || ch == 0xFF1F
+        || ch == 0xFF3D
+        || ch == 0xFF5C
+        || ch == 0xFF5D
+        || ch == 0xFF5E
+        || ch == 0xFF5F
+        || ch == 0xFF64;
+}
     
+bool isCJKLineEndingForbiddenSymbol(char32_t ch)
+{
+    return ch == 0x3007
+        || ch == 0x3008
+        || ch == 0x300A
+        || ch == 0x300C
+        || ch == 0x300E
+        || ch == 0x3010
+        || ch == 0x3014
+        || ch == 0x3016
+        || ch == 0x3018
+        || ch == 0x301A
+        || ch == 0x301D
+        || ch == 0xFE34
+        || ch == 0xFE35
+        || ch == 0xFE37
+        || ch == 0xFE39
+        || ch == 0xFE3B
+        || ch == 0xFE3D
+        || ch == 0xFE3F
+        || ch == 0xFE41
+        || ch == 0xFE43
+        || ch == 0xFE4F
+        || ch == 0xFE59
+        || ch == 0xFE5B
+        || ch == 0xFF04
+        || ch == 0xFF08
+        || ch == 0xFF3B
+        || ch == 0xFF5B
+        || ch == 0xFF5F;
+}
+
 void trimUTF16Vector(std::vector<char16_t>& str)
 {
     int len = static_cast<int>(str.size());
