@@ -22,11 +22,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "audio/win32/AudioPlayer.h"
-#include "audio/win32/AudioCache.h"
+#include "audio/desktop/AudioPlayer.h"
+#include "audio/desktop/AudioCache.h"
 #include "platform/CCFileUtils.h"
-#include "audio/win32/AudioDecoderManager.h"
-#include "audio/win32/Audiodecoder.h"
+#include "audio/desktop/AudioDecoderManager.h"
+#include "audio/desktop/AudioDecoder.h"
 
 #define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING

@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "audio/win32/AudioDecoderMp3.h"
-#include "audio/win32/AudioMacros.h"
+#include "audio/desktop/AudioDecoderMp3.h"
+#include "audio/desktop/AudioMacros.h"
 #include "platform/CCFileUtils.h"
 
 #include "base/CCConsole.h"

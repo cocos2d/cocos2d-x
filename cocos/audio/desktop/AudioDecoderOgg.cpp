@@ -23,70 +23,65 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "audio/win32/AudioDecoder.h"
-#include "audio/win32/AudioMacros.h"
+#include "audio/desktop/AudioDecoderOgg.h"
+#include "audio/desktop/AudioMacros.h"
 #include "platform/CCFileUtils.h"
 
-#define LOG_TAG "AudioDecoder"
+#define LOG_TAG "AudioDecoderOgg"
 
 namespace cocos2d {
 
-AudioDecoder::AudioDecoder()
-    : _isOpened(false)
-    , _totalFrames(0)
-    , _bytesPerFrame(0)
-    , _sampleRate(0)
-    , _channelCount(0)
-    {
-
-    }
-
-    AudioDecoder::~AudioDecoder()
+    AudioDecoderOgg::AudioDecoderOgg()
     {
     }
 
-
-    bool AudioDecoder::isOpened() const
+    AudioDecoderOgg::~AudioDecoderOgg()
     {
-        return _isOpened;
+        close();
     }
 
-    uint32_t AudioDecoder::readFixedFrames(uint32_t framesToRead, char* pcmBuf)
+    bool AudioDecoderOgg::open(const char* path)
     {
-        uint32_t framesRead = 0;
-        uint32_t framesReadOnce = 0;
-        do
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+        if (0 == ov_fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), &_vf))
         {
-            framesReadOnce = read(framesToRead - framesRead, pcmBuf + framesRead * _bytesPerFrame);
-            framesRead += framesReadOnce;
-        } while (framesReadOnce != 0 && framesRead < framesToRead);
-
-        if (framesRead < framesToRead)
-        {
-            memset(pcmBuf + framesRead * _bytesPerFrame, 0x00, (framesToRead - framesRead) * _bytesPerFrame);
+            // header
+            vorbis_info* vi = ov_info(&_vf, -1);
+            _sampleRate = static_cast<uint32_t>(vi->rate);
+            _channelCount = vi->channels;
+            _bytesPerFrame = vi->channels * sizeof(short);
+            _totalFrames = static_cast<uint32_t>(ov_pcm_total(&_vf, -1));
+            _isOpened = true;
+            return true;
         }
-
-        return framesRead;
+        return false;
     }
 
-    uint32_t AudioDecoder::getTotalFrames() const
+    void AudioDecoderOgg::close()
     {
-        return _totalFrames;
+        if (isOpened())
+        {
+            ov_clear(&_vf);
+            _isOpened = false;
+        }
     }
 
-    uint32_t AudioDecoder::getBytesPerFrame() const
+    uint32_t AudioDecoderOgg::read(uint32_t framesToRead, char* pcmBuf)
     {
-        return _bytesPerFrame;
+        int currentSection = 0;
+        int bytesToRead = framesToRead * _bytesPerFrame;
+        long bytesRead = ov_read(&_vf, pcmBuf, bytesToRead, 0, 2, 1, &currentSection);
+        return static_cast<uint32_t>(bytesRead / _bytesPerFrame);
     }
 
-    uint32_t AudioDecoder::getSampleRate() const
+    bool AudioDecoderOgg::seek(uint32_t frameOffset)
     {
-        return _sampleRate;
+        return 0 == ov_pcm_seek(&_vf, frameOffset);
     }
 
-    uint32_t AudioDecoder::getChannelCount() const
+    uint32_t AudioDecoderOgg::tell() const
     {
-        return _channelCount;
+        return static_cast<uint32_t>(ov_pcm_tell(const_cast<OggVorbis_File*>(&_vf)));
     }
 
 } // namespace cocos2d {

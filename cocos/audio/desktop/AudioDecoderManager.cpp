@@ -25,10 +25,10 @@ THE SOFTWARE.
 
 #define LOG_TAG "AudioDecoderManager"
 
-#include "audio/win32/AudioDecoderManager.h"
-#include "audio/win32/AudioDecoderOgg.h"
-#include "audio/win32/AudioDecoderMp3.h"
-#include "audio/win32/AudioMacros.h"
+#include "audio/desktop/AudioDecoderManager.h"
+#include "audio/desktop/AudioDecoderOgg.h"
+#include "audio/desktop/AudioDecoderMp3.h"
+#include "audio/desktop/AudioMacros.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCConsole.h"
 #include "mpg123.h"
