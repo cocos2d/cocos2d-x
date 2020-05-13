@@ -1020,6 +1020,20 @@ bool Widget::isClippingParentContainsPoint(const Vec2 &pt)
 
 void Widget::interceptTouchEvent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, Touch *touch)
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (!scriptEngine->isCalledFromScript()) {
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            WidgetInterceptData data((int)event, sender, touch, this);
+            ScriptEvent scriptEvent(kWidgetEvent, &data);
+            if (ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent))
+                return;
+        }
+    }
+#endif
+
+
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
