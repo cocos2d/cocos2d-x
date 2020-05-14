@@ -403,6 +403,7 @@ target_include_directories(${APP_NAME}
 setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
+    set_xcode_property(${APP_NAME} INSTALL_PATH "\$(LOCAL_APPS_DIR)")
 
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist")
@@ -424,9 +425,8 @@ if(LINUX OR WINDOWS)
     cocos_copy_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
 
-if(WINDOWS)
-    # precompiled header. Compilation time speedup ~4x.
-    target_sources(${APP_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Classes/precheader.cpp")
-    set_target_properties(${APP_NAME} PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
-    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/Classes/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16.0")
+    message("CMake 3.16 target_precompile_headers")
+    target_precompile_headers(${APP_NAME} PRIVATE 
+       "$<$<COMPILE_LANGUAGE:CXX>:precheader.h>")
 endif()

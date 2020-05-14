@@ -102,6 +102,7 @@ void CustomCommand::setVertexBuffer(backend::Buffer *vertexBuffer)
     if (_vertexBuffer == vertexBuffer)
         return;
 
+    CC_SAFE_RELEASE(_vertexBuffer);
     _vertexBuffer = vertexBuffer;
     CC_SAFE_RETAIN(_vertexBuffer);
 }
@@ -111,6 +112,7 @@ void CustomCommand::setIndexBuffer(backend::Buffer *indexBuffer, IndexFormat for
     if (_indexBuffer == indexBuffer && _indexFormat == format)
         return;
 
+    CC_SAFE_RELEASE(_indexBuffer);
     _indexBuffer = indexBuffer;
     CC_SAFE_RETAIN(_indexBuffer);
 
