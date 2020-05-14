@@ -489,11 +489,25 @@ void ActionManager::update(float dt)
         if (_currentTargetSalvaged && _currentTarget->actions->num == 0)
         {
             deleteHashElement(_currentTarget);
+            
+            // check elt invalidated
+            if (elt) {
+                tHashElement *element = nullptr;
+                HASH_FIND_PTR(_targets, &elt->target, element);
+                if (element != elt) break;
+            }
         }
         //if some node reference 'target', it's reference count >= 2 (issues #14050)
         else if (_currentTarget->target->getReferenceCount() == 1)
         {
             deleteHashElement(_currentTarget);
+            
+            // check elt invalidated
+            if (elt) {
+                tHashElement *element = nullptr;
+                HASH_FIND_PTR(_targets, &elt->target, element);
+                if (element != elt) break;
+            }
         }
     }
 

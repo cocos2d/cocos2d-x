@@ -45,6 +45,7 @@ ActionManagerTests::ActionManagerTests()
     ADD_TEST_CASE(StopActionsByFlagsTest);
     ADD_TEST_CASE(ResumeTest);
     ADD_TEST_CASE(Issue14050Test);
+    ADD_TEST_CASE(Issue18907Test);
 }
 
 //------------------------------------------------------------------
@@ -401,4 +402,85 @@ void Issue14050Test::onEnter()
 std::string Issue14050Test::subtitle() const
 {
     return "Issue14050. Sprite should not leak.";
+}
+
+
+//------------------------------------------------------------------
+//
+// Issue18907Test
+//
+//------------------------------------------------------------------
+
+class Issue18907Scene {
+public:
+    Issue18907Scene() {
+        scene = Scene::create();
+        scene->retain();
+        
+        sprite = Sprite::create(s_pathGrossini);
+        scene->addChild(sprite);
+    }
+    
+    virtual ~Issue18907Scene() {
+        scene->release();
+    }
+    
+    void runActions() {
+        sprite->runAction(RepeatForever::create(RotateBy::create(1, 180)));
+    }
+    
+    void stopActions() {
+        sprite->stopAllActions();
+    }
+    
+protected:
+    Scene* scene { nullptr };
+    Sprite* sprite { nullptr };
+};
+
+class Issue18907SceneHandler: public Node {
+public:
+    static Issue18907SceneHandler* create(Issue18907Scene* scene) {
+        Issue18907SceneHandler * ret = new Issue18907SceneHandler(scene);
+        ret->autorelease();
+        return ret;
+    }
+    
+    virtual ~Issue18907SceneHandler() {
+        scene->stopActions();
+        delete scene;
+    }
+    
+    void runActions() {
+        runAction(Sequence::create(DelayTime::create(1.0f), RemoveSelf::create(), nullptr));
+        scene->runActions();
+    }
+    
+protected:
+    Issue18907SceneHandler(Issue18907Scene* scene):
+    scene(scene) {
+        
+    }
+    
+protected:
+    Issue18907Scene* scene {nullptr};
+};
+
+
+void Issue18907Test::onEnter()
+{
+    Issue18907Scene* scene = new Issue18907Scene();
+    
+    Issue18907SceneHandler* handler = Issue18907SceneHandler::create(scene);
+    addChild(handler);
+    
+    handler->runActions();
+    
+    ActionManagerTest::onEnter();
+    
+}
+
+std::string Issue18907Test::subtitle() const
+{
+    return "Issue18907. Should not crash. Wait a second";
 }
