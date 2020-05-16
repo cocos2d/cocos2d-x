@@ -35,6 +35,8 @@
 /// @cond
 @interface HttpAsynConnection : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
+    NSDate *requestStartTime;
+    double latency;
 }
 
 // The original URL to download.  Due to redirects the actual content may come from another URL
@@ -59,6 +61,9 @@
 @property bool finish;
 
 @property (strong) NSRunLoop *runLoop;
+
+@property  double latency;
+@property (strong) NSDate* requestStartTime;
 
 // instructs the class to start the request.
 -(void) startRequest:(NSURLRequest*)request;

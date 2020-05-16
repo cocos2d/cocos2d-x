@@ -55,6 +55,7 @@ public:
         : _pHttpRequest(request)
         , _succeed(false)
         , _responseDataString("")
+        , _latency ( 0 )
     {
         if (_pHttpRequest)
         {
@@ -220,6 +221,24 @@ public:
         return _responseDataString.c_str();
     }
 
+    /**
+     * Get the calculated latency
+     * @return double real number representing the latency in seconds.
+     */
+    double getLatency() const
+    {
+        return _latency;
+    }
+    
+    /**
+     * Sets the latency value
+     * @param value with the latency to be recorded
+     */
+    void setLatency(double _latencyValue)
+    {
+        _latency = _latencyValue;
+    }
+    
 protected:
     bool initWithRequest(HttpRequest* request);
 
@@ -231,6 +250,7 @@ protected:
     long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
     std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason
     std::string         _responseDataString; // the returned raw data. You can also dump it as a string
+    double              _latency;       /// Total Latency time in seconds
 
 };
 

@@ -78,6 +78,7 @@ private:
     int _totalProcessedRequests;
     cocos2d::Label* _labelTrakingData;
     cocos2d::Label* _labelStatusCode;
+    cocos2d::Label* _labelLatency;
 };
 
 #endif //__HTTPREQUESTHTTP_H
