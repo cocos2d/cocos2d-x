@@ -435,7 +435,7 @@ static BOOL configured = FALSE;
         
         //Add handler for bad al context messages, these are posted by the sound engine.
         [[NSNotificationCenter defaultCenter] addObserver:self    selector:@selector(badAlContextHandler) name:kCDN_BadAlContext object:nil];
-
+        [self setResignBehavior:kAMRBDoNothing autoHandle:TRUE];
     }    
     return self;        
 }    
@@ -660,6 +660,7 @@ static BOOL configured = FALSE;
 - (void) applicationWillResignActive:(NSNotification *) notification
 {
     [self applicationWillResignActive];
+    [self audioSessionInterrupted];
 }    
 
 - (void) applicationDidBecomeActive {
@@ -697,6 +698,7 @@ static BOOL configured = FALSE;
 //Called when application becomes active only if setResignBehavior has been called
 - (void) applicationDidBecomeActive:(NSNotification *) notification
 {
+    [self audioSessionResumed];
     [self applicationDidBecomeActive];
 }
 
