@@ -654,6 +654,67 @@ var Issue1464 = RenderTextureBaseLayer.extend({
     }
 });
 
+var RenderTextureWithScrollView = RenderTextureBaseLayer.extend({
+    _scroll: null,
+
+    ctor:function() {
+        this._super();
+
+        var backSprite = new cc.Sprite(s_back1);
+
+        backSprite.x = winSize.width/2;
+        backSprite.y = winSize.height/2;
+
+        this.addChild(backSprite, 1);
+
+        this._scroll = new ccui.ListView();
+        this._scroll.setDirection(ccui.ScrollView.DIR_HORIZONTAL);
+        this._scroll.setContentSize(winSize.width, winSize.height);
+        this._scroll.setPosition(winSize.width/4, winSize.height/4);
+        this._scroll.setBounceEnabled(true);
+
+        this.addChild(this._scroll, 2);
+
+        var callfunc = cc.callFunc(this._addRenderTextureNode, this);
+
+        this.runAction(cc.sequence(cc.delayTime(0.1), callfunc));
+    },
+
+    _addRenderTextureNode: function()
+    {
+        var sprite = new cc.Sprite(s_grossini);
+
+        // create a render texture
+        var rend = new cc.RenderTexture( winSize.width/2, winSize.height/2 );
+
+        sprite.x = winSize.width/2;
+        sprite.y = 3*winSize.height/4;
+
+        rend.begin();
+        sprite.visit();
+        rend.end();
+
+        var texture = rend.getSprite().getTexture();
+        var spr = new cc.Sprite(texture);
+        spr.setScaleY(-1);
+        spr.setAnchorPoint(0, 0);
+
+        var layout = new ccui.Layout();
+        layout.addChild(spr);
+        layout.setContentSize(spr.getContentSize());
+
+        this._scroll.pushBackCustomItem(layout);
+    },
+
+    title:function () {
+        return "Render Texture and ScrollView";
+    },
+
+    subtitle:function () {
+        return "Background and rendered sprites must be visible, not a black screen";
+    }
+});
+
 
 var RenderTextureTestScene = TestScene.extend({
     runThisTest:function (num) {
@@ -670,7 +731,8 @@ var RenderTextureTestScene = TestScene.extend({
 //
 var arrayOfRenderTextureTest = [
     RenderTextureSave,
-    Issue1464
+    Issue1464,
+    RenderTextureWithScrollView
 ];
 
 if(('opengl' in cc.sys.capabilities) && cc._renderType === cc.game.RENDER_TYPE_WEBGL && (!cc.sys.isNative) ){
