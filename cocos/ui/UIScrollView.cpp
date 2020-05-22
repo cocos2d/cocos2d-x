@@ -492,6 +492,7 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float timeInSec, bool at
         Vec2 afterOutOfBoundary = getHowMuchOutOfBoundary(adjustedDeltaMove);
         if(currentOutOfBoundary.x * afterOutOfBoundary.x > 0 || currentOutOfBoundary.y * afterOutOfBoundary.y > 0)
         {
+            _autoScrollBrakingStartPosition = getInnerContainerPosition();
             _autoScrollBraking = true;
         }
     }
