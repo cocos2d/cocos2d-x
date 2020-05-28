@@ -550,33 +550,41 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                             const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
                             if(textureData)
                             {
-                                mesh->setTexture(textureData->filename);
-                                auto tex = mesh->getTexture();
-                                if(tex)
-                                {
-                                    Texture2D::TexParams texParams;
-                                    texParams.minFilter = GL_LINEAR;
-                                    texParams.magFilter = GL_LINEAR;
-                                    texParams.wrapS = textureData->wrapS;
-                                    texParams.wrapT = textureData->wrapT;
-                                    tex->setTexParameters(texParams);
-                                    mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
-                                }
+                                mesh->setTexture(nullptr, NTextureData::Usage::Diffuse, false);
+                                Texture2D::TexParams texParams;
+                                texParams.minFilter = GL_LINEAR;
+                                texParams.magFilter = GL_LINEAR;
+                                texParams.wrapS = textureData->wrapS;
+                                texParams.wrapT = textureData->wrapT;
+                                mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
+                                CC_SAFE_RETAIN(this);
+                                Director::getInstance()->getTextureCache()->addImageAsync(textureData->filename, [=](Texture2D* texN) {
+                                    if (texN!=nullptr)
+                                    {
+                                        mesh->setTexture(texN, NTextureData::Usage::Diffuse);
+                                        texN->setTexParameters(texParams);
+                                    }
+                                    CC_SAFE_RELEASE(this);
+                                });
                             }
                             textureData = materialData->getTextureData(NTextureData::Usage::Normal);
                             if (textureData)
                             {
-                                auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
-                                if (tex)
-                                {
-                                    Texture2D::TexParams texParams;
-                                    texParams.minFilter = GL_LINEAR;
-                                    texParams.magFilter = GL_LINEAR;
-                                    texParams.wrapS = textureData->wrapS;
-                                    texParams.wrapT = textureData->wrapT;
-                                    tex->setTexParameters(texParams);
-                                }
-                                mesh->setTexture(tex, NTextureData::Usage::Normal);
+                                mesh->setTexture(nullptr, NTextureData::Usage::Normal, false);
+                                Texture2D::TexParams texParams;
+                                texParams.minFilter = GL_LINEAR;
+                                texParams.magFilter = GL_LINEAR;
+                                texParams.wrapS = textureData->wrapS;
+                                texParams.wrapT = textureData->wrapT;
+                                CC_SAFE_RETAIN(this);
+                                Director::getInstance()->getTextureCache()->addImageAsync(textureData->filename, [=](Texture2D* texN) {
+                                    if (texN != nullptr)
+                                    {
+                                        mesh->setTexture(texN, NTextureData::Usage::Normal);
+                                        texN->setTexParameters(texParams);
+                                    }
+                                    CC_SAFE_RELEASE(this);
+                                });
                             }
                         }
                     }
