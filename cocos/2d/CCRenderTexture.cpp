@@ -201,7 +201,10 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, backend::PixelFormat fo
             texture->release();
         }
         else
+        {
+            texture->release();
             break;
+        }
 
         _renderTargetFlags = RenderTargetFlag::COLOR;
 
@@ -475,10 +478,11 @@ void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool fli
     int savedBufferWidth = (int)s.width;
     int savedBufferHeight = (int)s.height;
     
+    bool hasPremultipliedAlpha = _texture2D->hasPremultipliedAlpha();
     Image *image = new (std::nothrow) Image();
-    
-    auto initCallback = [&, savedBufferWidth, savedBufferHeight, imageCallback](Image* image, const unsigned char* tempData){
-        image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8, _texture2D->hasPremultipliedAlpha());
+
+    auto initCallback = [savedBufferWidth, savedBufferHeight, hasPremultipliedAlpha, imageCallback](Image* image, const unsigned char* tempData){
+        image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8, hasPremultipliedAlpha);
         imageCallback(image);
     };
     auto callback = std::bind(initCallback, image, std::placeholders::_1);
