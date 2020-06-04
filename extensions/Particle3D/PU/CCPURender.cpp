@@ -559,7 +559,7 @@ PUParticle3DEntityRender::~PUParticle3DEntityRender()
 {
     CC_SAFE_DELETE(_meshCommand);
     CC_SAFE_RELEASE(_stateBlock);
-    //CC_SAFE_RELEASE(_texture);
+    CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_glProgramState);
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
@@ -573,6 +573,7 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
         auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
         if (tex)
         {
+            CC_SAFE_RETAIN(tex);
             _texture = tex;
             glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
         }
