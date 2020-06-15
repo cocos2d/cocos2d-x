@@ -86,6 +86,8 @@ public:
     virtual bool onTextFieldDeleteBackward(TextFieldTTF * pSender,
                                            const char * delText,
                                            size_t nLen) override;
+    virtual bool onTextFieldControlKey(TextFieldTTF * pSender, 
+                                       EventKeyboard::KeyCode keyCode) override;
     void insertText(const char* text, size_t len) override;
     
     /**
@@ -213,6 +215,33 @@ public:
      * @return True if delete backward is enabled, false otherwise.
      */
     bool getDeleteBackward()const;
+
+    /**
+     * @brief Toggle enable control key pressed.
+     *
+     * @param keyCode pressed control key code if control key pressed, EventKeyboard::KeyCode::KEY_NONE otherwise.
+     */
+    void setControlKeyPressed(EventKeyboard::KeyCode keyCode);
+
+    /**
+     * @brief Toggle disable control key pressed, by dropping pressed key code to EventKeyboard::KeyCode::KEY_NONE value.
+     */
+    void resetControlKeyPressed();
+
+    /**
+    * @brief Query what control key was pressed.
+    *
+     * @return Pressed control key code.
+     */
+    EventKeyboard::KeyCode getControlKeyPressed()const;
+
+    /**
+    * @brief Query whether control key was pressed or not.
+    *
+     * @return True if control key was pressed, false otherwise.
+     */
+    bool isControlKeyPressed() const;
+
 protected:
     bool _maxLengthEnabled;
     int _maxLength;
@@ -220,6 +249,7 @@ protected:
     bool _detachWithIME;
     bool _insertText;
     bool _deleteBackward;
+    EventKeyboard::KeyCode _controlKeyPressedCode;
 };
 
 /**
@@ -232,6 +262,8 @@ typedef enum
     TEXTFIELD_EVENT_DETACH_WITH_IME,
     TEXTFIELD_EVENT_INSERT_TEXT,
     TEXTFIELD_EVENT_DELETE_BACKWARD,
+    TEXTFIELD_EVENT_DELETE,
+    TEXTFIELD_EVENT_CURSOR_POSITION_CHANGED,
 }TextFiledEventType;
 
 /**
@@ -263,6 +295,8 @@ public:
         DETACH_WITH_IME,
         INSERT_TEXT,
         DELETE_BACKWARD,
+        DELETE,
+        CURSOR_POSITION_CHANGED
     };
     /**
      * A callback which would be called when a TextField event happens.
@@ -557,6 +591,32 @@ public:
      * @param deleteBackward True is delete backward is enabled, false otherwise.
      */
     void setDeleteBackward(bool deleteBackward);
+
+    /**
+    * @brief Toggle enable control key pressed.
+    *
+    * @param keyCode pressed control key code if control key pressed, EventKeyboard::KeyCode::KEY_NONE otherwise.
+    */
+    void setControlKeyPressed(EventKeyboard::KeyCode keyCode);
+
+    /**
+     * @brief Toggle disable control key pressed, by dropping pressed key code to EventKeyboard::KeyCode::KEY_NONE value.
+     */
+    void resetControlKeyPressed();
+
+    /**
+    * @brief Query what control key was pressed.
+    *
+     * @return Pressed control key code.
+     */
+    EventKeyboard::KeyCode getControlKeyPressed()const;
+
+    /**
+    * @brief Query whether control key was pressed or not.
+    *
+     * @return True if control key was pressed, false otherwise.
+     */
+    bool isControlKeyPressed() const;
     
     /**
      * Add a event listener to TextField, when some predefined event happens, the callback will be called.
@@ -645,6 +705,12 @@ public:
      * @js NA
      */
     void setCursorPosition(std::size_t cursorPosition);
+
+    /**
+     * Get cursor position
+     * @js NA
+     */
+    std::size_t getCursorPosition() const;
     
     /**
      * Set cursor position to hit letter, if enabled
@@ -661,6 +727,7 @@ protected:
     void detachWithIMEEvent();
     void insertTextEvent();
     void deleteBackwardEvent();
+    void controlKeyEvent(EventKeyboard::KeyCode keyCode);
     virtual void onSizeChanged() override;
   
     void textfieldRendererScaleChangedWithSize();

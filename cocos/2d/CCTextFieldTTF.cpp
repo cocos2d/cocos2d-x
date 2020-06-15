@@ -73,6 +73,11 @@ bool TextFieldDelegate::onTextFieldDeleteBackward(TextFieldTTF* /*sender*/, cons
     return false;
 }
 
+bool cocos2d::TextFieldDelegate::onTextFieldControlKey(TextFieldTTF* /*sender*/, EventKeyboard::KeyCode /*keyCode*/)
+{
+    return false;
+}
+
 bool TextFieldDelegate::onVisit(TextFieldTTF* /*sender*/, Renderer* /*renderer*/, const Mat4& /*transform*/, uint32_t /*flags*/)
 {
     return false;
@@ -83,7 +88,7 @@ bool TextFieldDelegate::onVisit(TextFieldTTF* /*sender*/, Renderer* /*renderer*/
 //////////////////////////////////////////////////////////////////////////
 
 TextFieldTTF::TextFieldTTF()
-: _delegate(0)
+: _delegate(nullptr)
 , _charCount(0)
 , _inputText("")
 , _placeHolder("")   // prevent Label initWithString assertion
@@ -366,6 +371,11 @@ void TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
     }
 }
 
+std::size_t cocos2d::TextFieldTTF::getCursorPosition() const
+{
+    return _cursorPosition;
+}
+
 void TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* camera)
 {
     if (_cursorEnabled)
@@ -612,10 +622,21 @@ void TextFieldTTF::setCursorChar(char cursor)
     }
 }
 
+char cocos2d::TextFieldTTF::getCursorChar() const
+{
+    return _cursorChar;
+}
+
 void TextFieldTTF::controlKey(EventKeyboard::KeyCode keyCode)
 {
     if (_cursorEnabled)
     {
+        if (_delegate && _delegate->onTextFieldControlKey(this, keyCode))
+        {
+            // delegate doesn't want to make anything by control key pressing
+            return;
+        }
+
         switch (keyCode)
         {
         case EventKeyboard::KeyCode::KEY_HOME:
@@ -705,6 +726,11 @@ void TextFieldTTF::setCursorEnabled(bool enabled)
     if (_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::BMFONT) {
         unscheduleUpdate();
     }
+}
+
+bool cocos2d::TextFieldTTF::isCursorEnabled() const
+{
+    return _cursorEnabled;
 }
 
 // secureTextEntry
