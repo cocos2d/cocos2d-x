@@ -690,6 +690,17 @@ Image* RenderTexture::newImage(bool flipImage)
     return image;
 }
 
+Rect& RenderTexture::getVirtualViewport() {
+    Rect viewport;
+    viewport.size.width = _fullviewPort.size.width;
+    viewport.size.height = _fullviewPort.size.height;
+    float viewPortRectWidthRatio = float(viewport.size.width)/_fullRect.size.width;
+    float viewPortRectHeightRatio = float(viewport.size.height)/_fullRect.size.height;
+    viewport.origin.x = (_fullRect.origin.x - _rtTextureRect.origin.x) * viewPortRectWidthRatio;
+    viewport.origin.y = (_fullRect.origin.y - _rtTextureRect.origin.y) * viewPortRectHeightRatio;
+    return viewport;
+}
+
 void RenderTexture::onBegin()
 {
     g_current = this;
