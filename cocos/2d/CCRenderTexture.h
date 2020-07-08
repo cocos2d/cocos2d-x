@@ -303,6 +303,12 @@ public:
      * @param fullViewport The total viewportSize.
      */
     void setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
+    /** Get the RenderTexture object visit now.
+     */
+    static RenderTexture * current();
+    /** Get RenderTexture viewport.
+     */	
+    Rect& getVirtualViewport();
 
 public:
     /** FIXME: should be protected.

@@ -30,6 +30,8 @@
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionTween.h"
+#include "2d/CCRenderTexture.h"
+#include "2d/CCCamera.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "renderer/CCRenderer.h"
@@ -901,7 +903,17 @@ Rect ScrollView::getViewRect()
         screenPos.y += _viewSize.height*scaleY;
         scaleY = -scaleY;
     }
-
+    
+    auto rt = RenderTexture::current();
+    if (rt != nullptr) {
+        auto cam = Camera::getDefaultCamera();
+        auto viewport = cam->getDefaultViewport();
+        auto rect2 = rt->getVirtualViewport();
+        
+        screenPos.x = screenPos.x + (rect2.origin.x - viewport._left);
+        screenPos.y = screenPos.y + (rect2.origin.y - viewport._bottom);
+    }
+    
     return Rect(screenPos.x, screenPos.y, _viewSize.width*scaleX, _viewSize.height*scaleY);
 }
 NS_CC_EXT_END
