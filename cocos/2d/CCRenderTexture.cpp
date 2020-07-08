@@ -42,6 +42,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+static RenderTexture* g_current = nullptr;
+
 // implementation RenderTexture
 RenderTexture::RenderTexture()
 : _keepMatrix(false)
@@ -204,6 +206,10 @@ RenderTexture * RenderTexture::create(int w, int h)
     }
     CC_SAFE_DELETE(ret);
     return nullptr;
+}
+
+RenderTexture * RenderTexture::current() {
+    return g_current;
 }
 
 bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat)
@@ -686,6 +692,8 @@ Image* RenderTexture::newImage(bool flipImage)
 
 void RenderTexture::onBegin()
 {
+    g_current = this;
+    
     //
     Director *director = Director::getInstance();
     
@@ -755,6 +763,7 @@ void RenderTexture::onEnd()
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _oldProjMatrix);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _oldTransMatrix);
 
+    g_current = nullptr;
 }
 
 void RenderTexture::onClear()
