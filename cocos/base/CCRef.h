@@ -77,6 +77,9 @@ public:
 class CC_DLL Ref
 {
 public:
+    Ref(const Ref&) = delete;
+    Ref const& operator=(const Ref&) = delete;
+
     /**
      * Retains the ownership.
      *
