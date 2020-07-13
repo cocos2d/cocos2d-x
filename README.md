@@ -129,7 +129,7 @@ Running Tests
 $ cd cocos2d-x
 $ mkdir build
 $ cd build
-$ cocos run --proj-dir .. -p [mac|windows|android|linux|ios]
+$ cocos run --proj-dir .. -p [mac|win32|android|linux|ios]
 ```
 
 How to start a new game
@@ -142,7 +142,7 @@ How to start a new game
     $ cd NEW_PROJECTS_DIR/MyGame
     $ mkdir build
     $ cd build
-    $ cocos run --proj-dir .. -p [mac|windows|android|linux|ios]
+    $ cocos run --proj-dir .. -p [mac|win32|android|linux|ios]
 
 You can also create a Lua project with `-l lua`.
 
@@ -199,6 +199,10 @@ Contact us
    * Twitter: [http://www.twitter.com/cocos2dx][10]
    * Weibo: [http://t.sina.com.cn/cocos2dx][11]
 
+Want an awesome editor?
+--------------------------------
+[Cocos Creator][12] is the new generation of Cocos game engine with a full featured editor and content creation friendly workflow. It supports all major platforms allowing games to be quickly released for the web, iOS, Android, Windows, Mac, and various mini-game platforms. A pure JavaScript-developed engine runtime is available on the web and mini-game platforms for better performance and smaller packages. On other native platforms, C++ is used to implement the underlying framework, providing greater operational efficiency. The engine is completely [open source][13], and retains the advantages of Cocos2d-x which includes high performance, customizability, ease for debugging, easy to learn, and small package size.
+
 [1]: http://www.cocos2d-x.org "cocos2d-x"
 [4]: http://www.cocos2d-x.org/download/version#Cocos2d-x
 [5]: http://www.box2d.org "Box2D"
@@ -208,3 +212,5 @@ Contact us
 [9]: http://discuss.cocos2d-x.org "http://discuss.cocos2d-x.org"
 [10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
+[12]: https://www.cocos.com/en/products#CocosCreator
+[13]: https://github.com/cocos-creator/engine
