@@ -64,70 +64,6 @@
 #include "platform/CCGLView.h"
 #include "renderer/CCTextureCache.h"
 
-struct LuaCustomEventListener {
-    LuaCustomEventListener(lua_State* state, int index): L(state), ref(LUA_NOREF)
-    {
-        luaL_checktype(L, index, LUA_TFUNCTION);
-        lua_pushvalue(L, index);
-        ref = luaL_ref(L, LUA_REGISTRYINDEX);
-    }
-    ~LuaCustomEventListener()
-    {
-        unref();
-    }
-
-    void operator()(cocos2d::EventCustom* e)
-    {
-        lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
-
-        object_to_luaval<cocos2d::EventCustom>(L, "cc.EventCustom", e);
-        lua_call(L, 1, 0);
-    }
-
-    LuaCustomEventListener(const LuaCustomEventListener& other): L(nullptr), ref(LUA_NOREF)
-    {
-        *this = other;
-    }
-    LuaCustomEventListener& operator=(const LuaCustomEventListener& rhs)
-    {
-        if (this != &rhs)
-        {
-            unref();
-            L = rhs.L;
-            lua_rawgeti(L, LUA_REGISTRYINDEX, rhs.ref);
-            ref = luaL_ref(L, LUA_REGISTRYINDEX);
-        }
-        return *this;
-    }
-
-    LuaCustomEventListener(LuaCustomEventListener&& other): L(nullptr), ref(LUA_NOREF)
-    {
-        *this = std::move(other);
-    }
-
-    LuaCustomEventListener& operator=(LuaCustomEventListener&& rhs)
-    {
-        if (this != &rhs)
-        {
-            unref();
-
-            L = rhs.L;
-            ref = rhs.ref;
-
-            rhs.L = nullptr;
-            rhs.ref = LUA_NOREF;
-        }
-        return *this;
-    }
-private:
-    inline void unref() {
-        if (L && ref != LUA_NOREF && ref != LUA_REFNIL)
-            luaL_unref(L, LUA_REGISTRYINDEX, ref);
-    }
-
-    lua_State* L;
-    int ref;
-};
 int lua_cocos2dx_EventDispatcher_addCustomEventListener(lua_State* tolua_S)
 {
     int argc = 0;
@@ -159,14 +95,26 @@ int lua_cocos2dx_EventDispatcher_addCustomEventListener(lua_State* tolua_S)
         std::string arg0;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.EventDispatcher:addCustomEventListener");
-        auto callback = LuaCustomEventListener(tolua_S, 3);
+
+        LUA_FUNCTION handler;
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err)) {
+            goto tolua_lerror;
+        }
+#endif
+        handler = toluafix_ref_function(tolua_S, 3, 0);
 
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventDispatcher_addCustomEventListener'", nullptr);
             return 0;
         }
-        cocos2d::EventListenerCustom* ret = cobj->addCustomEventListener(arg0, std::function<void (cocos2d::EventCustom *)>(std::move(callback)));
+
+        cocos2d::EventListenerCustom* ret = cobj->addCustomEventListener(arg0, [=](cocos2d::EventCustom *e) {
+            object_to_luaval<cocos2d::EventCustom>(tolua_S, "cc.EventCustom", e);
+            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
+        });
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)ret, handler);
         object_to_luaval<cocos2d::EventListenerCustom>(tolua_S, "cc.EventListenerCustom",(cocos2d::EventListenerCustom*)ret);
         return 1;
     }
