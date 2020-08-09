@@ -97,6 +97,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     protected void initView() {
         this.setEGLContextClientVersion(2);
         this.setFocusableInTouchMode(true);
+        this.setPreserveEGLContextOnPause(true);
 
         Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView = this;
         Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper = new Cocos2dxTextInputWrapper(this);
@@ -199,7 +200,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
             }
         });
         this.setRenderMode(RENDERMODE_WHEN_DIRTY);
-        // super.onPause();
+        super.onPause();
     }
 
     @Override
