@@ -7,3 +7,6 @@
 [submodule "tests/cpp-tests/Resources/ccs-res"]
         path = tests/cpp-tests/Resources/ccs-res
         url = git://github.com/dumganhar/ccs-res.git
+[submodule "cocos/editor-support/spine-runtimes"]
+	path = cocos/editor-support/spine-runtimes
+	url = https://github.com/EsotericSoftware/spine-runtimes

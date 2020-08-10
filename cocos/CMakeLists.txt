@@ -58,11 +58,14 @@ if(BUILD_EDITOR_COCOSTUDIO)
 endif(BUILD_EDITOR_COCOSTUDIO)
 
 if(BUILD_EDITOR_SPINE)
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/editor-support/spine/CMakeLists.txt")
-        include(editor-support/spine/CMakeLists.txt)
-    else()
-        message(WARNING "${CMAKE_CURRENT_SOURCE_DIR}/editor-support/spine/CMakeLists.txt not found!")
-    endif()
+    file(GLOB_RECURSE COCOS_SPINE_SRC
+        ${COCOS2DX_ROOT_PATH}/cocos/editor-support/spine-runtimes/spine-cpp/spine-cpp/src/*.cpp
+        ${COCOS2DX_ROOT_PATH}/cocos/editor-support/spine-runtimes/spine-cocos2dx/src/spine/*.cpp
+    )
+    file(GLOB_RECURSE COCOS_SPINE_HEADER
+        ${COCOS2DX_ROOT_PATH}/cocos/editor-support/spine-runtimes/spine-cpp/spine-cpp/src/*.h
+        ${COCOS2DX_ROOT_PATH}/cocos/editor-support/spine-runtimes/spine-cocos2dx/src/spine/*.h
+    )
     set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC} ${COCOS_SPINE_HEADER})
 endif(BUILD_EDITOR_SPINE)
 
@@ -130,6 +133,13 @@ target_include_directories(cocos2d
     INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/audio/include
     INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/platform/${PLATFORM_FOLDER}
 )
+
+if(BUILD_EDITOR_SPINE)
+    target_include_directories(cocos2d
+        PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/editor-support/spine-runtimes/spine-cpp/spine-cpp/include
+        PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/editor-support/spine-runtimes/spine-cocos2dx/src
+    )
+endif()
 
 set_target_properties(cocos2d
                       PROPERTIES
