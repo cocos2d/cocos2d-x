@@ -278,24 +278,6 @@ CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
 
 CommandBufferMTL::~CommandBufferMTL()
 {
-    {
-        // если текущий CommandBuffer еще выполняется GPU
-        // мы должны дождаться его завершения, синхронным вызовом waitUntilCompleted
-        // иначе хэндлер комплита GPU сработает в деалоцированной памяти
-        // (v.proskurin)
-        
-        if (_mtlCommandBuffer != nil) {
-            if ([_mtlCommandBuffer status] == MTLCommandBufferStatus::MTLCommandBufferStatusScheduled) {
-                [_mtlCommandBuffer waitUntilCompleted];
-            }
-
-            [_mtlCommandBuffer release];
-            _mtlCommandBuffer = nil;
-            return;
-        }
-    }
-    
-    
     dispatch_semaphore_signal(_frameBoundarySemaphore);
 }
 
@@ -303,10 +285,6 @@ void CommandBufferMTL::beginFrame()
 {
     _autoReleasePool = [[NSAutoreleasePool alloc] init];
     dispatch_semaphore_wait(_frameBoundarySemaphore, DISPATCH_TIME_FOREVER);
-
-    if (_mtlCommandBuffer != nil) {
-        [_mtlCommandBuffer release];
-    }
     
     _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
     [_mtlCommandBuffer enqueue];
@@ -468,7 +446,7 @@ void CommandBufferMTL::endFrame()
     }];
 
     [_mtlCommandBuffer commit];
-    // [_mtlCommandBuffer release];
+    [_mtlCommandBuffer release];
     DeviceMTL::resetCurrentDrawable();
     [_autoReleasePool drain];
 }
