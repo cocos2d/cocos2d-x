@@ -111,18 +111,21 @@ void UserDefaultTest::doTest()
 
     UserDefault::getInstance()->setStringForKey("string", "value1");
     UserDefault::getInstance()->setIntegerForKey("integer", 10);
+    UserDefault::getInstance()->setLongForKey("long", 200l);
     UserDefault::getInstance()->setFloatForKey("float", 2.3f);
     UserDefault::getInstance()->setDoubleForKey("double", 2.4);
     UserDefault::getInstance()->setBoolForKey("bool", true);
 
     // test saving of Data buffers
     setData<int>("int_data");
+    setData<long>("long_data");
     setData<float>("float_data");
     setData<double>("double_data");
 
     printValue();
 
     logData<int>("int_data");
+    logData<long>("long_data");
     logData<float>("float_data");
     logData<double>("double_data");
 
@@ -134,11 +137,13 @@ void UserDefaultTest::doTest()
 
     UserDefault::getInstance()->setStringForKey("string", "value2");
     UserDefault::getInstance()->setIntegerForKey("integer", 11);
+    UserDefault::getInstance()->setLongForKey("long", 200l);
     UserDefault::getInstance()->setFloatForKey("float", 2.5f);
     UserDefault::getInstance()->setDoubleForKey("double", 2.6);
     UserDefault::getInstance()->setBoolForKey("bool", false);
 
     setData2<int>("int_data");
+    setData2<long>("long_data");
     setData2<float>("float_data");
     setData2<double>("double_data");
 
@@ -148,6 +153,7 @@ void UserDefaultTest::doTest()
     printValue();
 
     logData<int>("int_data");
+    logData<long>("long_data");
     logData<float>("float_data");
     logData<double>("double_data");
 
@@ -155,6 +161,7 @@ void UserDefaultTest::doTest()
 
     UserDefault::getInstance()->deleteValueForKey("string");
     UserDefault::getInstance()->deleteValueForKey("integer");
+    UserDefault::getInstance()->deleteValueForKey("long");
     UserDefault::getInstance()->deleteValueForKey("float");
     UserDefault::getInstance()->deleteValueForKey("double");
     UserDefault::getInstance()->deleteValueForKey("bool");
@@ -177,6 +184,10 @@ void UserDefaultTest::printValue()
 
     int i = UserDefault::getInstance()->getIntegerForKey("integer");
     sprintf(strTemp, "integer is %d", i);
+    this->_label->setString(this->_label->getString() + "\n" + strTemp);
+
+    long l = UserDefault::getInstance()->getLongForKey("long");
+    sprintf(strTemp, "long is %ld", l);
     this->_label->setString(this->_label->getString() + "\n" + strTemp);
 
     float f = UserDefault::getInstance()->getFloatForKey("float");
