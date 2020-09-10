@@ -236,6 +236,50 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
     return ret;
 }
 
+long UserDefault::getLongForKey(const char* pKey)
+{
+    return getLongForKey(pKey, 0);
+}
+
+long UserDefault::getLongForKey(const char* pKey, long defaultValue)
+{
+#ifdef KEEP_COMPATABILITY
+    tinyxml2::XMLDocument* doc = nullptr;
+    tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
+    if (node)
+    {
+        if (node->FirstChild())
+        {
+            long ret = atol((const char*)node->FirstChild()->Value());
+
+            // set value in NSUserDefaults
+            setLongForKey(pKey, ret);
+            flush();
+
+            // delete xmle node
+            deleteNode(doc, node);
+
+            return ret;
+        }
+        else
+        {
+            // delete xmle node
+            deleteNode(doc, node);
+        }
+    }
+#endif
+
+    long ret = defaultValue;
+
+    NSNumber *value = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithUTF8String:pKey]];
+    if (value)
+    {
+        ret = [value longValue];
+    }
+
+    return ret;
+}
+
 float UserDefault::getFloatForKey(const char* pKey)
 {
     return getFloatForKey(pKey, 0);
@@ -438,6 +482,15 @@ void UserDefault::setIntegerForKey(const char* pKey, int value)
 #endif
 
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:value] forKey:[NSString stringWithUTF8String:pKey]];
+}
+
+void UserDefault::setLongForKey(const char* pKey, long value)
+{
+#ifdef KEEP_COMPATABILITY
+    deleteNodeByKey(pKey);
+#endif
+
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithLong:value] forKey:[NSString stringWithUTF8String:pKey]];
 }
 
 void UserDefault::setFloatForKey(const char* pKey, float value)

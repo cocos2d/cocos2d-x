@@ -228,6 +228,42 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
 	return JniHelper::callStaticIntMethod(helperClassName, "getIntegerForKey", pKey, defaultValue);
 }
 
+long UserDefault::getLongForKey(const char* pKey)
+{
+    return getLongForKey(pKey, 0);
+}
+
+long UserDefault::getLongForKey(const char* pKey, long defaultValue)
+{
+#ifdef KEEP_COMPATABILITY
+    tinyxml2::XMLDocument* doc = nullptr;
+    tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
+    if (node)
+    {
+        if (node->FirstChild())
+        {
+            long ret = atol((const char*)node->FirstChild()->Value());
+
+            // set value in NSUserDefaults
+            setLongForKey(pKey, ret);
+            flush();
+
+            // delete xmle node
+            deleteNode(doc, node);
+
+            return ret;
+        }
+        else
+        {
+            // delete xmle node
+            deleteNode(doc, node);
+        }
+    }
+#endif
+
+	return JniHelper::callStaticLongMethod(helperClassName, "getLongForKey", pKey, defaultValue);
+}
+
 float UserDefault::getFloatForKey(const char* pKey)
 {
     return getFloatForKey(pKey, 0.0f);
@@ -419,6 +455,15 @@ void UserDefault::setIntegerForKey(const char* pKey, int value)
 #endif
 
     JniHelper::callStaticVoidMethod(helperClassName, "setIntegerForKey", pKey, value);
+}
+
+void UserDefault::setLongForKey(const char* pKey, long value)
+{
+#ifdef KEEP_COMPATABILITY
+    deleteNodeByKey(pKey);
+#endif
+
+    JniHelper::callStaticVoidMethod(helperClassName, "setLongForKey", pKey, value);
 }
 
 void UserDefault::setFloatForKey(const char* pKey, float value)

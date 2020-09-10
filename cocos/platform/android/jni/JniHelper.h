@@ -136,6 +136,28 @@ public:
     }
 
     /**
+    @brief Call of Java static long method
+    @return value from Java static long method if there are proper JniMethodInfo; otherwise 0.
+    */
+    template <typename... Ts>
+    static long callStaticLongMethod(const std::string& className, 
+                                   const std::string& methodName, 
+                                   Ts... xs) {
+        jlong ret = 0;
+        cocos2d::JniMethodInfo t;
+        std::string signature = "(" + std::string(getJNISignature(xs...)) + ")J";
+        if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), methodName.c_str(), signature.c_str())) {
+            LocalRefMapType localRefs;
+            ret = t.env->CallStaticLongMethod(t.classID, t.methodID, convert(localRefs, t, xs)...);
+            t.env->DeleteLocalRef(t.classID);
+            deleteLocalRefs(t.env, localRefs);
+        } else {
+            reportError(className, methodName, signature);
+        }
+        return ret;
+    }
+
+    /**
     @brief Call of Java static float method
     @return value from Java static float method if there are proper JniMethodInfo; otherwise 0.
     */

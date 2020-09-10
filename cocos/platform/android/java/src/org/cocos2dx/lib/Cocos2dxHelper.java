@@ -485,6 +485,34 @@ public class Cocos2dxHelper {
         return defaultValue;
     }
     
+    public static long getLongForKey(String key, long defaultValue) {
+        SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+        try {
+            return settings.getLong(key, defaultValue);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+
+            Map allValues = settings.getAll();
+            Object value = allValues.get(key);
+            if ( value instanceof String) {
+                return  Long.parseLong(value.toString());
+            }
+            else if (value instanceof Float)
+            {
+                return ((Float) value).longValue();
+            }
+            else if (value instanceof Boolean)
+            {
+                boolean booleanValue = ((Boolean) value).booleanValue();
+                if (booleanValue)
+                    return 1L;
+            }
+        }
+
+        return defaultValue;
+    }
+    
     public static float getFloatForKey(String key, float defaultValue) {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
         try {
@@ -541,6 +569,13 @@ public class Cocos2dxHelper {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
+        editor.apply();
+    }
+    
+    public static void setLongForKey(String key, long value) {
+        SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong(key, value);
         editor.apply();
     }
     
