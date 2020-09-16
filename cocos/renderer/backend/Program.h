@@ -140,13 +140,14 @@ public:
      * @return The uniformInfos.
      */
     virtual const std::unordered_map<std::string, UniformInfo>& getAllActiveUniformInfo(ShaderStage stage) const = 0;
-    
-protected:
+
     /**
      * Set engin built-in program type.
      * @param type Specifies the program type.
      */
     void setProgramType(uint32_t type);
+
+protected:
     
     /**
      * @param vs Specifes the vertex shader source.
