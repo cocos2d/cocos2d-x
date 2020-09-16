@@ -51,7 +51,7 @@ public:
     static void destroyInstance();
     
     /// get built-in program
-    backend::Program* getBuiltinProgram(ProgramType type) const;
+    backend::Program* getBuiltinProgram(uint32_t type) const;
     
     /**
      * Remove a program object from cache.
@@ -89,9 +89,9 @@ protected:
     bool init();
 
     /// Add built-in program
-    void addProgram(ProgramType type);
+    void addProgram(uint32_t type);
     
-    static std::unordered_map<backend::ProgramType, backend::Program*> _cachedPrograms; ///< The cached program object.
+    static std::unordered_map<uint32_t, backend::Program*> _cachedPrograms; ///< The cached program object.
     static std::unordered_map<std::string, backend::Program*> _cachedCustomPrograms; ///< The cached custom program object.
     static ProgramCache *_sharedProgramCache; ///< A shared instance of the program cache.
 };

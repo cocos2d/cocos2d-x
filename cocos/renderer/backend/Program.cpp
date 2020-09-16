@@ -33,12 +33,12 @@ Program::Program(const std::string& vs, const std::string& fs)
 {
 }
 
-void Program::setProgramType(ProgramType type)
+void Program::setProgramType(uint32_t type)
 {
     _programType = type;
 }
 
-Program* Program::getBuiltinProgram(ProgramType type)
+Program* Program::getBuiltinProgram(uint32_t type)
 {
     return ProgramCache::getInstance()->getBuiltinProgram(type);
 }

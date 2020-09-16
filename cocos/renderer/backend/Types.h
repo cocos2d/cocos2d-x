@@ -326,43 +326,43 @@ enum class TextureCubeFace : uint32_t
     NEGATIVE_Z = 5
 };
 
-enum class ProgramType : size_t
+class ProgramType
 {
-    POSITION_COLOR_LENGTH_TEXTURE,          //positionColorLengthTexture_vert, positionColorLengthTexture_frag
-    POSITION_COLOR_TEXTURE_AS_POINTSIZE,    //positionColorTextureAsPointsize_vert, positionColor_frag
-    POSITION_COLOR,                         //positionColor_vert,           positionColor_frag
-    POSITION,                               //position_vert,                positionColor_frag
-    POSITION_UCOLOR,                        //positionUColor_vert,          positionUColor_frag
-    POSITION_TEXTURE,                       //positionTexture_vert,         positionTexture_frag
-    POSITION_TEXTURE_COLOR,                 //positionTextureColor_vert,    positionTextureColor_frag
-    POSITION_TEXTURE_COLOR_ALPHA_TEST,      //positionTextureColor_vert,    positionTextureColorAlphaTest_frag
-    LABEL_NORMAL,                           //positionTextureColor_vert,    label_normal_frag
-    LABLE_OUTLINE,                          //positionTextureColor_vert,    labelOutline_frag
-    LABLE_DISTANCEFIELD_GLOW,               //positionTextureColor_vert,    labelDistanceFieldGlow_frag
-    LABEL_DISTANCE_NORMAL,                  //positionTextureColor_vert,    label_distanceNormal_frag
-   
-    LAYER_RADIA_GRADIENT,                   //position_vert,                layer_radialGradient_frag
-    
-    ETC1,                                   //positionTextureColor_vert,    etc1_frag
-    ETC1_GRAY,                              //positionTextureColor_vert,    etc1Gray_frag
-    GRAY_SCALE,                             //positionTextureColor_vert,    grayScale_frag
-    CAMERA_CLEAR,                           //cameraClear_vert,             cameraClear_frag
-    
-    TERRAIN_3D,                             //CC3D_terrain_vert,                    CC3D_terrain_frag
-    LINE_COLOR_3D,                          //lineColor3D_vert,                     lineColor3D_frag
-    SKYBOX_3D,                              //CC3D_skybox_vert,                     CC3D_skybox_frag
-    SKINPOSITION_TEXTURE_3D,                //CC3D_skinPositionTexture_vert,        CC3D_colorTexture_frag
-    SKINPOSITION_NORMAL_TEXTURE_3D,         //CC3D_skinPositionNormalTexture_vert,  CC3D_colorNormalTexture_frag
-    POSITION_NORMAL_TEXTURE_3D,             //CC3D_positionNormalTexture_vert,      CC3D_colorNormalTexture_frag
-    POSITION_NORMAL_3D,                     //CC3D_positionNormalTexture_vert,      CC3D_colorNormal_frag
-    POSITION_TEXTURE_3D,                    //CC3D_positionTexture_vert,            CC3D_colorTexture_frag
-    POSITION_3D,                            //CC3D_positionTexture_vert,            CC3D_color_frag
-    POSITION_BUMPEDNORMAL_TEXTURE_3D,       //CC3D_positionNormalTexture_vert,      CC3D_colorNormalTexture_frag
-    SKINPOSITION_BUMPEDNORMAL_TEXTURE_3D,   //CC3D_skinPositionNormalTexture_vert,  CC3D_colorNormalTexture_frag
-    PARTICLE_TEXTURE_3D,                    //CC3D_particle_vert,                   CC3D_particleTexture_frag
-    PARTICLE_COLOR_3D,                      //CC3D_particle_vert,                   CC3D_particleColor_frag
+public:
+    static const uint32_t POSITION_COLOR_LENGTH_TEXTURE = 0;            //positionColorLengthTexture_vert, positionColorLengthTexture_frag
+    static const uint32_t POSITION_COLOR_TEXTURE_AS_POINTSIZE = 1;      //positionColorTextureAsPointsize_vert, positionColor_frag
+    static const uint32_t POSITION_COLOR = 2;                           //positionColor_vert,           positionColor_frag
+    static const uint32_t POSITION = 3;                                 //position_vert,                positionColor_frag
+    static const uint32_t POSITION_UCOLOR = 4;                          //positionUColor_vert,          positionUColor_frag
+    static const uint32_t POSITION_TEXTURE = 5;                         //positionTexture_vert,         positionTexture_frag
+    static const uint32_t POSITION_TEXTURE_COLOR = 6;                   //positionTextureColor_vert,    positionTextureColor_frag
+    static const uint32_t POSITION_TEXTURE_COLOR_ALPHA_TEST = 7;        //positionTextureColor_vert,    positionTextureColorAlphaTest_frag
+    static const uint32_t LABEL_NORMAL = 8;                             //positionTextureColor_vert,    label_normal_frag
+    static const uint32_t LABLE_OUTLINE = 9;                            //positionTextureColor_vert,    labelOutline_frag
+    static const uint32_t LABLE_DISTANCEFIELD_GLOW = 10;                //positionTextureColor_vert,    labelDistanceFieldGlow_frag
+    static const uint32_t LABEL_DISTANCE_NORMAL = 11;                   //positionTextureColor_vert,    label_distanceNormal_frag
 
-    CUSTOM_PROGRAM,                         //user-define program
+    static const uint32_t LAYER_RADIA_GRADIENT = 12;                    //position_vert,                layer_radialGradient_frag
+
+    static const uint32_t ETC1 = 13;                                    //positionTextureColor_vert,    etc1_frag
+    static const uint32_t ETC1_GRAY = 14;                               //positionTextureColor_vert,    etc1Gray_frag
+    static const uint32_t GRAY_SCALE = 15;                              //positionTextureColor_vert,    grayScale_frag
+    static const uint32_t CAMERA_CLEAR = 16;                            //cameraClear_vert,             cameraClear_frag
+    static const uint32_t TERRAIN_3D = 17;                              //CC3D_terrain_vert,                    CC3D_terrain_frag
+    static const uint32_t LINE_COLOR_3D = 18;                           //lineColor3D_vert,                     lineColor3D_frag
+    static const uint32_t SKYBOX_3D = 19;                               //CC3D_skybox_vert,                     CC3D_skybox_frag
+    static const uint32_t SKINPOSITION_TEXTURE_3D = 20;                 //CC3D_skinPositionTexture_vert,        CC3D_colorTexture_frag
+    static const uint32_t SKINPOSITION_NORMAL_TEXTURE_3D = 21;          //CC3D_skinPositionNormalTexture_vert,  CC3D_colorNormalTexture_frag
+    static const uint32_t POSITION_NORMAL_TEXTURE_3D = 22;              //CC3D_positionNormalTexture_vert,      CC3D_colorNormalTexture_frag
+    static const uint32_t POSITION_NORMAL_3D = 23;                      //CC3D_positionNormalTexture_vert,      CC3D_colorNormal_frag
+    static const uint32_t POSITION_TEXTURE_3D = 24;                     //CC3D_positionTexture_vert,            CC3D_colorTexture_frag
+    static const uint32_t POSITION_3D = 25;                             //CC3D_positionTexture_vert,            CC3D_color_frag
+    static const uint32_t POSITION_BUMPEDNORMAL_TEXTURE_3D = 26;        //CC3D_positionNormalTexture_vert,      CC3D_colorNormalTexture_frag
+    static const uint32_t SKINPOSITION_BUMPEDNORMAL_TEXTURE_3D = 27;    //CC3D_skinPositionNormalTexture_vert,  CC3D_colorNormalTexture_frag
+    static const uint32_t PARTICLE_TEXTURE_3D = 28;                     //CC3D_particle_vert,                   CC3D_particleTexture_frag
+    static const uint32_t PARTICLE_COLOR_3D = 29;                       //CC3D_particle_vert,                   CC3D_particleColor_frag
+
+    static const uint32_t CUSTOM_PROGRAM = 0x1000;                      //user-define program
 };
 
 ///built-in uniform name
