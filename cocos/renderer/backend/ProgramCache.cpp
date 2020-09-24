@@ -29,20 +29,6 @@
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
 
-namespace std
-{
-    template <>
-    struct hash<uint32_t>
-    {
-        typedef uint32_t argument_type;
-        typedef std::size_t result_type;
-        result_type operator()(argument_type const& v) const
-        {
-            return hash<int>()(static_cast<int>(v));
-        }
-    };
-}
-
 CC_BACKEND_BEGIN
 
 namespace
