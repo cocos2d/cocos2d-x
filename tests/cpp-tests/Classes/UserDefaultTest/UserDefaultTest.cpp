@@ -118,14 +118,14 @@ void UserDefaultTest::doTest()
 
     // test saving of Data buffers
     setData<int>("int_data");
-    setData<long>("long_data");
+    setData<uint64_t>("long_data");
     setData<float>("float_data");
     setData<double>("double_data");
 
     printValue();
 
     logData<int>("int_data");
-    logData<long>("long_data");
+    logData<uint64_t>("long_data");
     logData<float>("float_data");
     logData<double>("double_data");
 
@@ -143,7 +143,7 @@ void UserDefaultTest::doTest()
     UserDefault::getInstance()->setBoolForKey("bool", false);
 
     setData2<int>("int_data");
-    setData2<long>("long_data");
+    setData2<uint64_t>("long_data");
     setData2<float>("float_data");
     setData2<double>("double_data");
 
@@ -153,7 +153,7 @@ void UserDefaultTest::doTest()
     printValue();
 
     logData<int>("int_data");
-    logData<long>("long_data");
+    logData<uint64_t>("long_data");
     logData<float>("float_data");
     logData<double>("double_data");
 
@@ -186,7 +186,7 @@ void UserDefaultTest::printValue()
     sprintf(strTemp, "integer is %d", i);
     this->_label->setString(this->_label->getString() + "\n" + strTemp);
 
-    long l = UserDefault::getInstance()->getLongForKey("long");
+    uint64_t l = UserDefault::getInstance()->getLongForKey("long");
     sprintf(strTemp, "long is %ld", l);
     this->_label->setString(this->_label->getString() + "\n" + strTemp);
 

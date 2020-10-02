@@ -234,12 +234,12 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
     return ret;
 }
 
-long UserDefault::getLongForKey(const char* pKey)
+int64_t UserDefault::getLongForKey(const char* pKey)
 {
     return getLongForKey(pKey, 0);
 }
 
-long UserDefault::getLongForKey(const char* pKey, long defaultValue)
+int64_t UserDefault::getLongForKey(const char* pKey, long defaultValue)
 {
     const char* value = nullptr;
     tinyxml2::XMLElement* rootNode;
@@ -252,7 +252,7 @@ long UserDefault::getLongForKey(const char* pKey, long defaultValue)
         value = (const char*)(node->FirstChild()->Value());
     }
 
-    long ret = defaultValue;
+    int64_t ret = defaultValue;
 
     if (value)
     {
@@ -410,7 +410,7 @@ void UserDefault::setIntegerForKey(const char* pKey, int value)
     setValueForKey(pKey, tmp);
 }
 
-void UserDefault::setLongForKey(const char* pKey, long value)
+void UserDefault::setLongForKey(const char* pKey, int64_t value)
 {
     // check key
     if (! pKey)

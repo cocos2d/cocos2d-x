@@ -228,12 +228,12 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
 	return JniHelper::callStaticIntMethod(helperClassName, "getIntegerForKey", pKey, defaultValue);
 }
 
-long UserDefault::getLongForKey(const char* pKey)
+int64_t UserDefault::getLongForKey(const char* pKey)
 {
     return getLongForKey(pKey, 0);
 }
 
-long UserDefault::getLongForKey(const char* pKey, long defaultValue)
+int64_t UserDefault::getLongForKey(const char* pKey, int64_t defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
     tinyxml2::XMLDocument* doc = nullptr;
@@ -242,7 +242,7 @@ long UserDefault::getLongForKey(const char* pKey, long defaultValue)
     {
         if (node->FirstChild())
         {
-            long ret = atol((const char*)node->FirstChild()->Value());
+            int64_t ret = atol((const char*)node->FirstChild()->Value());
 
             // set value in NSUserDefaults
             setLongForKey(pKey, ret);

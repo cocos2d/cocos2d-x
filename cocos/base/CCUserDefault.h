@@ -80,7 +80,7 @@ public:
     int     getIntegerForKey(const char* key);
     
     /**
-     * Get bool value by key, if the key doesn't exist, will return passed default value.
+     * Get integer value by key, if the key doesn't exist, will return passed default value.
      * @param key The key to get value.
      * @param defaultValue The default value to return if the key doesn't exist.
      * @return Integer value of the key.
@@ -89,22 +89,22 @@ public:
     virtual int getIntegerForKey(const char* key, int defaultValue);
     
     /**
-     * Get long value by key, if the key doesn't exist, will return 0.
+     * Get long (64bit integer) value by key, if the key doesn't exist, will return 0.
      * You can set the default value, or it is 0.
      * @param key The key to get value.
-     * @return Long value of the key.
+     * @return Long (64bit integer) value of the key.
      * @js NA
      */
-    long     getLongForKey(const char* key);
+    int64_t     getLongForKey(const char* key);
     
     /**
-     * Get long value by key, if the key doesn't exist, will return passed default value.
+     * Get long (64bit integer) value by key, if the key doesn't exist, will return passed default value.
      * @param key The key to get value.
      * @param defaultValue The default value to return if the key doesn't exist.
-     * @return Long value of the key.
+     * @return Long (64bit integer) value of the key.
      * @js NA
      */
-    virtual long getLongForKey(const char* key, long defaultValue);
+    virtual int64_t getLongForKey(const char* key, long defaultValue);
     
     /**
      * Get float value by key, if the key doesn't exist, will return 0.0.
@@ -191,12 +191,12 @@ public:
      */
     virtual void setIntegerForKey(const char* key, int value);
     /**
-     * Set long value by key.
+     * Set long (64bit integer) value by key.
      * @param key The key to set.
      * @param value A long value to set to the key.
      * @js NA
      */
-    virtual void setLongForKey(const char* key, long value);
+    virtual void setLongForKey(const char* key, int64_t value);
     /**
      * Set float value by key.
      * @param key The key to set.
