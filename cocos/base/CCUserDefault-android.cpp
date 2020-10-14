@@ -261,7 +261,7 @@ int64_t UserDefault::getLongForKey(const char* pKey, int64_t defaultValue)
     }
 #endif
 
-	return JniHelper::callStaticLongMethod(helperClassName, "getLongForKey", pKey, defaultValue);
+	return JniHelper::callStaticLongMethod(helperClassName, "getLongForKey", pKey, static_cast<long>(defaultValue));
 }
 
 float UserDefault::getFloatForKey(const char* pKey)
@@ -457,13 +457,13 @@ void UserDefault::setIntegerForKey(const char* pKey, int value)
     JniHelper::callStaticVoidMethod(helperClassName, "setIntegerForKey", pKey, value);
 }
 
-void UserDefault::setLongForKey(const char* pKey, long value)
+void UserDefault::setLongForKey(const char* pKey, int64_t value)
 {
 #ifdef KEEP_COMPATABILITY
     deleteNodeByKey(pKey);
 #endif
 
-    JniHelper::callStaticVoidMethod(helperClassName, "setLongForKey", pKey, value);
+    JniHelper::callStaticVoidMethod(helperClassName, "setLongForKey", pKey, static_cast<long>(value));
 }
 
 void UserDefault::setFloatForKey(const char* pKey, float value)

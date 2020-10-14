@@ -104,7 +104,7 @@ public:
      * @return Long (64bit integer) value of the key.
      * @js NA
      */
-    virtual int64_t getLongForKey(const char* key, long defaultValue);
+    virtual int64_t getLongForKey(const char* key, int64_t defaultValue);
     
     /**
      * Get float value by key, if the key doesn't exist, will return 0.0.

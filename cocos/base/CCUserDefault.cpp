@@ -239,7 +239,7 @@ int64_t UserDefault::getLongForKey(const char* pKey)
     return getLongForKey(pKey, 0);
 }
 
-int64_t UserDefault::getLongForKey(const char* pKey, long defaultValue)
+int64_t UserDefault::getLongForKey(const char* pKey, int64_t defaultValue)
 {
     const char* value = nullptr;
     tinyxml2::XMLElement* rootNode;

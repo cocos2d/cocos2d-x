@@ -140,7 +140,7 @@ public:
     @return value from Java static long method if there are proper JniMethodInfo; otherwise 0.
     */
     template <typename... Ts>
-    static long callStaticLongMethod(const std::string& className, 
+    static int64_t callStaticLongMethod(const std::string& className, 
                                    const std::string& methodName, 
                                    Ts... xs) {
         jlong ret = 0;
