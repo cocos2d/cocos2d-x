@@ -417,7 +417,7 @@ void Sprite::setProgramState(backend::ProgramState *programState)
 
 void Sprite::setTexture(Texture2D *texture)
 {
-    if (_programState == nullptr) {
+    if (_programState == nullptr || _programState->getProgram()->getProgramType() == backend::ProgramType::POSITION_TEXTURE_COLOR) {
         const auto isETC1 = texture && texture->getAlphaTextureName();
         setProgramState((isETC1) ? backend::ProgramType::ETC1 : backend::ProgramType::POSITION_TEXTURE_COLOR);
     }
