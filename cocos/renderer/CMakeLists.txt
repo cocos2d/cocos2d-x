@@ -69,6 +69,7 @@ set(COCOS_RENDERER_SRC
     renderer/backend/VertexLayout.cpp
     renderer/backend/ProgramCache.cpp
     renderer/backend/Program.cpp
+    renderer/backend/ProgramState.cpp
     renderer/backend/ShaderCache.cpp
     renderer/backend/RenderPassDescriptor.cpp
     )
@@ -99,7 +100,6 @@ list(APPEND COCOS_RENDERER_SRC
     renderer/backend/opengl/TextureGL.cpp
     renderer/backend/opengl/UtilsGL.cpp
     renderer/backend/opengl/DeviceInfoGL.cpp
-    renderer/backend/opengl/ProgramStateGL.cpp
 )
 
 else()
@@ -130,7 +130,6 @@ list(APPEND COCOS_RENDERER_SRC
     renderer/backend/metal/Utils.mm
     renderer/backend/metal/ProgramMTL.mm
     renderer/backend/metal/DeviceInfoMTL.mm
-    renderer/backend/metal/ProgramStateMTL.mm
 )
 
 endif()
