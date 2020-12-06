@@ -44,8 +44,13 @@ static void luaTableToObjcDictionary(lua_State *L, NSMutableDictionary *dict,NSS
     lua_pushnil(L);
     while(lua_next(L, -2))
     {
-        NSString *key2 = [NSString stringWithCString:lua_tostring(L, -2) encoding:NSUTF8StringEncoding];
-        
+        NSString *key2 = NULL;
+        if (lua_type(L, -2) == LUA_TNUMBER) {
+            key2 = [[NSNumber numberWithInt:lua_tonumber(L, -2)] stringValue];
+        }else{
+            key2 = [NSString stringWithCString:lua_tostring(L, -2) encoding:NSUTF8StringEncoding];
+        }
+
         switch (lua_type(L, -1))
         {
             case LUA_TNUMBER:
