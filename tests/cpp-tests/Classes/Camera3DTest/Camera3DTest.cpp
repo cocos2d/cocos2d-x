@@ -247,7 +247,7 @@ void Camera3DTestDemo::SwitchViewCallback(Ref* sender, CameraType cameraType)
         _sprite3D->getWorldToNodeTransform().getForwardVector(&newFaceDir);
         newFaceDir.normalize();
         _camera->setPosition3D(Vec3(0,35,0) + _sprite3D->getPosition3D());
-        _camera->lookAt(_sprite3D->getPosition3D() + newFaceDir*50);
+        _camera->lookAt(_sprite3D->getPosition3D() - newFaceDir*50);
         
         _RotateRightlabel->setColor(Color3B::WHITE);
         _RotateLeftlabel->setColor(Color3B::WHITE);
