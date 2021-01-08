@@ -32,4 +32,11 @@ DEPENDS+=' libssl-dev'
 DEPENDS+=' libgtk-3-dev'
 DEPENDS+=' binutils'
 
-sudo apt-get install --force-yes --yes $DEPENDS > /dev/null
+# sudo apt-get install --force-yes --yes $DEPENDS > /dev/null
+
+# SOURCE: --force-yes is deprecated due to some reasons. The following can be used to install it without any errors. 
+# https://superuser.com/questions/1438031/ubuntu-18-command-apt-get-dist-upgrade-qq-force-yes-deprecated/1444431
+
+sudo apt-get install --allow-unauthenticated $DEPENDS > /dev/null
+
+
