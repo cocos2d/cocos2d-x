@@ -24,7 +24,7 @@ cocos2d-x is:
   * Easy to use
   * Community supported
 
-Git user attention
+Instructions to build and install from source
 -----------------------
 
 1. Clone the repo from GitHub.
@@ -39,6 +39,17 @@ Git user attention
 3. After running `download-deps.py`.
 
          cocos2d-x $ git submodule update --init
+
+4. If on linux, run `install-deps-linux.sh`
+
+5. Build with cmake:
+
+```
+mkdir build
+cd build
+cmake ..
+make
+```
 
 Download stable versions
 -----------------------
@@ -113,13 +124,6 @@ $ cd cocos2d-x
 $ ./setup.py
 $ source FILE_TO_SAVE_SYSTEM_VARIABLE
 
-```
-
-Should invoke this script if using linux system
-
-```
-$ cd cocos2d-x
-$ ./install-linux-deps.sh
 ```
 
 Running Tests
