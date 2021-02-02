@@ -30,6 +30,20 @@
 #include "../UIScene.h"
 
 DEFINE_TEST_SUITE(UIRichTextTests);
+using namespace cocos2d::ui;
+
+enum RichTextWrapLanguage: int {
+    RichTextWrapLanguage_Original = 0,
+    RichTextWrapLanguage_Spanish,
+    RichTextWrapLanguage_Romanian,
+    RichTextWrapLanguage_Russian,
+    RichTextWrapLanguage_English,
+    RichTextWrapLanguage_French,
+    RichTextWrapLanguage_Korean,
+    RichTextWrapLanguage_Chinese,
+
+    RichTextWrapLanguage_Max
+};
 
 class UIRichTextTest : public UIScene
 {
@@ -37,12 +51,19 @@ public:
     CREATE_FUNC(UIRichTextTest);
 
     bool init() override;
+    void setLanguage(RichTextWrapLanguage language);
+    void addSingleRichTextWithText(const std::string& text);
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchLanguage(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
+    RichTextWrapLanguage _currentLanguage;
+    RichText::WrapMode _currentWrappingMode;
+    RichText::HorizontalAlignment _currentAlignment;
+
 };
 
 class UIRichTextXMLBasic : public UIScene

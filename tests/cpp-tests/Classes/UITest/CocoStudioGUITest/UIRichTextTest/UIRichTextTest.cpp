@@ -55,28 +55,19 @@ UIRichTextTests::UIRichTextTests()
 //
 // UIRichTextTest
 //
+
+#define _RICH_TEXT_TAG (15)
+
 bool UIRichTextTest::init()
 {
     if (UIScene::init())
     {
         Size widgetSize = _widget->getContentSize();
+        float x = widgetSize.width * 1 / 4;
 
-        auto config = Configuration::getInstance();
-        config->loadConfigFile("configs/config-test-ok.plist");
-
-
-        std::string str1 = config->getValue("Chinese").asString();
-        std::string str2 = config->getValue("Japanese").asString();
-        CCLOG("str1:%s ascii length = %ld, utf8 length = %ld, substr = %s",
-            str1.c_str(),
-            static_cast<long>(str1.length()),
-            StringUtils::getCharacterCountInUTF8String(str1),
-            Helper::getSubStringOfUTF8String(str1, 0, 5).c_str());
-        CCLOG("str2:%s ascii length = %ld, utf8 length = %ld, substr = %s",
-            str2.c_str(),
-            static_cast<long>(str2.length()),
-            StringUtils::getCharacterCountInUTF8String(str2),
-            Helper::getSubStringOfUTF8String(str2, 0, 2).c_str());
+        _currentWrappingMode = RichText::WRAP_PER_WORD;
+        _currentAlignment = RichText::HorizontalAlignment::LEFT;
+        _currentLanguage = RichTextWrapLanguage_Original;
 
         // Add the alert
         Text *alert = Text::create("RichText", "fonts/Marker Felt.ttf", 30);
@@ -87,15 +78,17 @@ bool UIRichTextTest::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(x, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextTest::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
 
+        float x_inc = button->getContentSize().width * 0.9;
+
         Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button2->setTouchEnabled(true);
         button2->setTitleText("wrap mode");
-        button2->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->setPosition(Vec2(x + x_inc, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
         button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextTest::switchWrapMode, this));
         button2->setLocalZOrder(10);
         _widget->addChild(button2);
@@ -103,52 +96,152 @@ bool UIRichTextTest::init()
         Button* button3 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button3->setTouchEnabled(true);
         button3->setTitleText("alignment");
-        button3->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button3->setPosition(Vec2(x + x_inc * 2, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
         button3->addTouchEventListener(CC_CALLBACK_2(UIRichTextTest::switchAlignment, this));
         button3->setLocalZOrder(10);
         _widget->addChild(button3);
 
-        // RichText
-        _richText = RichText::create();
-        _richText->ignoreContentAdaptWithSize(false);
-        _richText->setContentSize(Size(100, 100));
+        Button* button4 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button4->setTouchEnabled(true);
+        button4->setTitleText("language");
+        button4->setPosition(Vec2(x+ x_inc * 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button4->addTouchEventListener(CC_CALLBACK_2(UIRichTextTest::switchLanguage, this));
+        button4->setLocalZOrder(10);
+        _widget->addChild(button4);
 
-        RichElementText* re1 = RichElementText::create(1, Color3B::WHITE, 255, str1, "SimSun", 10);
-        RichElementText* re2 = RichElementText::create(2, Color3B::YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
-        RichElementText* re3 = RichElementText::create(3, Color3B::GRAY, 255, str2, "Yu Mincho", 10);
-        RichElementText* re4 = RichElementText::create(4, Color3B::GREEN, 255, "And green with TTF support. ", "fonts/Marker Felt.ttf", 10);
-        RichElementText* re5 = RichElementText::create(5, Color3B::RED, 255, "Last one is red ", "Helvetica", 10);
-
-        RichElementImage* reimg = RichElementImage::create(6, Color3B::WHITE, 255, "cocosui/sliderballnormal.png");
+        setLanguage(_currentLanguage);
 
 //        TODO
 //        cocostudio::ArmatureDataManager::getInstance()->addArmatureFileInfo("cocosui/100/100.ExportJson");
 //        cocostudio::Armature *pAr = cocostudio::Armature::create("100"); //
 //        pAr->getAnimation()->play("Animation1");
 
-//        RichElementCustomNode* recustom = RichElementCustomNode::create(1, Color3B::WHITE, 255, pAr);
-        RichElementText* re6 = RichElementText::create(7, Color3B::ORANGE, 255, "Have fun!! ", "Helvetica", 10);
-        _richText->pushBackElement(re1);
-        _richText->insertElement(re2, 1);
-        _richText->pushBackElement(re3);
-        _richText->pushBackElement(re4);
-        _richText->pushBackElement(re5);
-        _richText->insertElement(reimg, 2);
-//        _richText->pushBackElement(recustom);
-        _richText->pushBackElement(re6);
-
-        _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
-        _richText->setLocalZOrder(10);
-
-
-        _widget->addChild(_richText);
-
-        // test remove all children, this call won't effect the test
-        _richText->removeAllChildren();
-
         return true;
     }
     return false;
+}
+
+void UIRichTextTest::setLanguage(RichTextWrapLanguage language)
+{
+    Size widgetSize = _widget->getContentSize();
+
+    _widget->removeChildByTag(_RICH_TEXT_TAG);
+
+    switch(language) {
+        case RichTextWrapLanguage_Original: {
+            auto config = Configuration::getInstance();
+            config->loadConfigFile("configs/config-test-ok.plist");
+
+            std::string str1 = config->getValue("Chinese").asString();
+            std::string str2 = config->getValue("Japanese").asString();
+
+            CCLOG("str1:%s ascii length = %ld, utf8 length = %ld, substr = %s",
+                  str1.c_str(),
+                  static_cast<long>(str1.length()),
+                  StringUtils::getCharacterCountInUTF8String(str1),
+                  Helper::getSubStringOfUTF8String(str1, 0, 5).c_str());
+            CCLOG("str2:%s ascii length = %ld, utf8 length = %ld, substr = %s",
+                  str2.c_str(),
+                  static_cast<long>(str2.length()),
+                  StringUtils::getCharacterCountInUTF8String(str2),
+                  Helper::getSubStringOfUTF8String(str2, 0, 2).c_str());
+
+            // RichText
+            _richText = RichText::create();
+            _richText->setTag(_RICH_TEXT_TAG);
+            _richText->setWrapMode(_currentWrappingMode);
+            _richText->setHorizontalAlignment(_currentAlignment);
+            _richText->ignoreContentAdaptWithSize(false);
+            _richText->setContentSize(Size(100, 100));
+
+            RichElementText *re1 = RichElementText::create(1, Color3B::WHITE, 255, str1, "SimSun",
+                                                           10);
+            RichElementText *re2 = RichElementText::create(2, Color3B::YELLOW, 255,
+                                                           "And this is yellow. ", "Helvetica", 10);
+            RichElementText *re3 = RichElementText::create(3, Color3B::GRAY, 255, str2, "Yu Mincho",
+                                                           10);
+            RichElementText *re4 = RichElementText::create(4, Color3B::GREEN, 255,
+                                                           "And green with TTF support. ",
+                                                           "fonts/Marker Felt.ttf", 10);
+            RichElementText *re5 = RichElementText::create(5, Color3B::RED, 255, "Last one is red ",
+                                                           "Helvetica", 10);
+
+            RichElementImage *reimg = RichElementImage::create(6, Color3B::WHITE, 255,
+                                                               "cocosui/sliderballnormal.png");
+
+            //        RichElementCustomNode* recustom = RichElementCustomNode::create(1, Color3B::WHITE, 255, pAr);
+            RichElementText *re6 = RichElementText::create(7, Color3B::ORANGE, 255, "Have fun!! ",
+                                                           "Helvetica", 10);
+            _richText->pushBackElement(re1);
+            _richText->insertElement(re2, 1);
+            _richText->pushBackElement(re3);
+            _richText->pushBackElement(re4);
+            _richText->pushBackElement(re5);
+            _richText->insertElement(reimg, 2);
+//        _richText->pushBackElement(recustom);
+            _richText->pushBackElement(re6);
+
+            _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
+            _richText->setLocalZOrder(10);
+
+            _widget->addChild(_richText);
+
+            // test remove all children, this call won't effect the test
+            _richText->removeAllChildren();
+        }
+            break;
+
+        case RichTextWrapLanguage_Spanish:
+            addSingleRichTextWithText("Pingüino Pingüino Pingüino canción canción canción canción tamaño tamaño tamaño.");
+            break;
+
+        case RichTextWrapLanguage_Romanian:
+            addSingleRichTextWithText("Cântecul Cântecul Cântecul Cântecul Cântecul politică politică politică politică.");
+            break;
+
+        case RichTextWrapLanguage_Russian:
+            addSingleRichTextWithText("Франция с завтрашнего дня закроет свои границы со странами, не входящими в Евросоюз: она пытается избежать нового ограничения");
+            break;
+
+        case RichTextWrapLanguage_English:
+            addSingleRichTextWithText("Testing word-wrapping. Testing word-wrapping. Testing word-wrapping. Testing word-wrapping.");
+            break;
+
+        case RichTextWrapLanguage_French:
+            addSingleRichTextWithText("espère espère espère l'appel l'appel l'opposant Alexeï Alexeï enquête Royaume-Uni Royaume-Uni");
+            break;
+
+        case RichTextWrapLanguage_Korean:
+            addSingleRichTextWithText("차가운 대리석으로 둘러싸인 담으로 둘러싸인 정원에서 승인 된 라임 나무 줄, 난 자랍니다");
+            break;
+
+        case RichTextWrapLanguage_Chinese:
+            addSingleRichTextWithText("在圍牆花園裡四周是冷大理石和成行的樹我成長");
+            break;
+    }
+}
+
+void UIRichTextTest::addSingleRichTextWithText(const std::string& text)
+{
+    Size widgetSize = _widget->getContentSize();
+
+    _richText = RichText::create();
+    _richText->setTag(_RICH_TEXT_TAG);
+    _richText->setWrapMode(_currentWrappingMode);
+    _richText->setHorizontalAlignment(_currentAlignment);
+    _richText->ignoreContentAdaptWithSize(false);
+    _richText->setContentSize(Size(100, 100));
+
+    RichElementText *re = RichElementText::create(5, Color3B::YELLOW, 255,
+                                                  text,
+                                                  "Helvetica", 10);
+    _richText->pushBackElement(re);
+
+    _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
+    _richText->setLocalZOrder(10);
+
+    _widget->addChild(_richText);
+    _richText->removeAllChildren();
 }
 
 void UIRichTextTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
@@ -178,20 +271,27 @@ void UIRichTextTest::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
 {
     if (type == Widget::TouchEventType::ENDED)
     {
-        auto wrapMode = _richText->getWrapMode();
-        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
-        _richText->setWrapMode(wrapMode);
+        _currentWrappingMode = (_currentWrappingMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(_currentWrappingMode);
     }
 }
 
 void UIRichTextTest::switchAlignment(Ref *sender, Widget::TouchEventType type) {
     if (type == Widget::TouchEventType::ENDED)
     {
-        auto alignment = _richText->getHorizontalAlignment();
-        alignment = static_cast<RichText::HorizontalAlignment>((static_cast<std::underlying_type<RichText::HorizontalAlignment>::type>(alignment) + 1) % 3);
-        _richText->setHorizontalAlignment(alignment);
+        _currentAlignment = static_cast<RichText::HorizontalAlignment>((static_cast<std::underlying_type<RichText::HorizontalAlignment>::type>(_currentAlignment) + 1) % 3);
+        _richText->setHorizontalAlignment(_currentAlignment);
     }
 }
+
+void UIRichTextTest::switchLanguage(Ref *sender, Widget::TouchEventType type) {
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        _currentLanguage = static_cast<RichTextWrapLanguage>((_currentLanguage + 1) % RichTextWrapLanguage_Max);
+        setLanguage(_currentLanguage);
+    }
+}
+
 
 //
 // UIRichTextXMLBasic
