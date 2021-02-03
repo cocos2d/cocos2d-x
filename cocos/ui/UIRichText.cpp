@@ -1499,16 +1499,7 @@ namespace {
     inline bool isUTF8CharWrappable(const StringUtils::StringUTF8::CharUTF8& ch)
     {
         int len = strlen((char*) ch._char.c_str());
-        bool ret = ch._char.c_str()[0] == 32 || ch._char.c_str()[0] == 45 || len >= 3; // space or '-' or CJK Unified Ideographs (Chinese, Japanese, and Korean)
-
-        char* chars = (char*)ch._char.c_str();
-        CCLOG("*** ch:%s ch:%X  ch.isASCII():%d isalnum:%d len:%d ch[0-5]: %X %X %X %X %X %X    ret:%d ",
-                ch._char.c_str(), chars,
-                ch.isASCII(), std::isalnum(ch._char[0], std::locale()), len,
-                chars[0], chars[1], chars[2], chars[3], chars[4], chars[5],
-                ret);
-
-        return ret;
+        return ch._char.c_str()[0] == 32 || ch._char.c_str()[0] == 45 || len >= 3; // space or '-' or CJK Unified Ideographs (Chinese, Japanese, and Korean)
     }
 
     int getPrevWordPos(const StringUtils::StringUTF8& text, int idx)
