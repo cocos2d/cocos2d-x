@@ -842,6 +842,7 @@ ValueMap MyXMLVisitor::tagAttrMapWithXMLElement(const char ** attrs)
 
 const std::string RichText::KEY_VERTICAL_SPACE("KEY_VERTICAL_SPACE");
 const std::string RichText::KEY_WRAP_MODE("KEY_WRAP_MODE");
+const std::string RichText::KEY_WORD_SEPARATOR_MODE("KEY_WORD_SEPARATOR_MODE");
 const std::string RichText::KEY_HORIZONTAL_ALIGNMENT("KEY_HORIZONTAL_ALIGNMENT");
 const std::string RichText::KEY_FONT_COLOR_STRING("KEY_FONT_COLOR_STRING");
 const std::string RichText::KEY_FONT_SIZE("KEY_FONT_SIZE");
@@ -886,6 +887,7 @@ RichText::RichText()
 {
     _defaults[KEY_VERTICAL_SPACE] = 0.0f;
     _defaults[KEY_WRAP_MODE] = static_cast<int>(WrapMode::WRAP_PER_WORD);
+    _defaults[KEY_WORD_SEPARATOR_MODE] = static_cast<int>(WordSeparatorMode::WordSeparatorBasedOnDevice);
 	_defaults[KEY_HORIZONTAL_ALIGNMENT] = static_cast<int>(HorizontalAlignment::LEFT);
     _defaults[KEY_FONT_COLOR_STRING] = "#ffffff";
     _defaults[KEY_FONT_SIZE] = 12.0f;
@@ -1003,6 +1005,20 @@ void RichText::setWrapMode(RichText::WrapMode wrapMode)
     if (static_cast<RichText::WrapMode>(_defaults.at(KEY_WRAP_MODE).asInt()) != wrapMode)
     {
         _defaults[KEY_WRAP_MODE] = static_cast<int>(wrapMode);
+        _formatTextDirty = true;
+    }
+}
+
+RichText::WordSeparatorMode RichText::getWordSeparatorMode()
+{
+    return static_cast<RichText::WordSeparatorMode>(_defaults.at(KEY_WORD_SEPARATOR_MODE).asInt());
+}
+
+void RichText::setWordSeparatorMode(RichText::WordSeparatorMode wordSeparatorMode)
+{
+    if (static_cast<RichText::WordSeparatorMode>(_defaults.at(KEY_WORD_SEPARATOR_MODE).asInt()) != wordSeparatorMode)
+    {
+        _defaults[KEY_WORD_SEPARATOR_MODE] = static_cast<int>(wordSeparatorMode);
         _formatTextDirty = true;
     }
 }
@@ -1223,6 +1239,9 @@ void RichText::setDefaults(const ValueMap& defaults)
     }
     if (defaults.find(KEY_WRAP_MODE) != defaults.end()) {
         _defaults[KEY_WRAP_MODE] = defaults.at(KEY_WRAP_MODE).asInt();
+    }
+    if (defaults.find(KEY_WORD_SEPARATOR_MODE) != defaults.end()) {
+        _defaults[KEY_WORD_SEPARATOR_MODE] = defaults.at(KEY_WORD_SEPARATOR_MODE).asInt();
     }
 	if (defaults.find(KEY_HORIZONTAL_ALIGNMENT) != defaults.end()) {
 		_defaults[KEY_HORIZONTAL_ALIGNMENT] = defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt();
@@ -1496,49 +1515,76 @@ void RichText::formatText()
 }
 
 namespace {
+
+    typedef bool (*FUNC_PTR_WRAPPABLE_WORD)(const StringUtils::StringUTF8::CharUTF8& ch);
+
     inline bool isUTF8CharWrappable(const StringUtils::StringUTF8::CharUTF8& ch)
+    {
+        return (!ch.isASCII() || !std::isalnum(ch._char[0], std::locale()));
+    }
+
+    inline bool isUTF8CharSpaceSlashNotHighUnicodeWrappable(const StringUtils::StringUTF8::CharUTF8& ch)
+    {
+        return ch._char.c_str()[0] == 32 || ch._char.c_str()[0] == 45; // space or '-'
+    }
+
+    inline bool isUTF8CharSpaceSlashAndKCJWrappable(const StringUtils::StringUTF8::CharUTF8& ch)
     {
         int len = strlen((char*) ch._char.c_str());
         return ch._char.c_str()[0] == 32 || ch._char.c_str()[0] == 45 || len >= 3; // space or '-' or CJK Unified Ideographs (Chinese, Japanese, and Korean)
     }
 
-    int getPrevWordPos(const StringUtils::StringUTF8& text, int idx)
+    int getPrevWordPos(const StringUtils::StringUTF8& text, int idx, FUNC_PTR_WRAPPABLE_WORD func)
     {
         if (idx <= 0)
             return -1;
 
         // start from idx-1
         const StringUtils::StringUTF8::CharUTF8Store& str = text.getString();
-        auto it = std::find_if(str.rbegin() + (str.size() - idx + 1), str.rend(), isUTF8CharWrappable);
+        auto it = std::find_if(str.rbegin() + (str.size() - idx + 1), str.rend(), func);
         if (it == str.rend())
             return -1;
         return static_cast<int>(it.base() - str.begin());
     }
 
-    int getNextWordPos(const StringUtils::StringUTF8& text, int idx)
+    int getNextWordPos(const StringUtils::StringUTF8& text, int idx, FUNC_PTR_WRAPPABLE_WORD func)
     {
         const StringUtils::StringUTF8::CharUTF8Store& str = text.getString();
         if (idx + 1 >= static_cast<int>(str.size()))
             return static_cast<int>(str.size());
 
-        auto it = std::find_if(str.begin() + idx + 1, str.end(), isUTF8CharWrappable);
+        auto it = std::find_if(str.begin() + idx + 1, str.end(), func);
         return static_cast<int>(it - str.begin());
     }
 
-    bool isWrappable(const StringUtils::StringUTF8& text)
+    bool isWrappable(const StringUtils::StringUTF8& text, FUNC_PTR_WRAPPABLE_WORD func)
     {
         const StringUtils::StringUTF8::CharUTF8Store& str = text.getString();
-        return std::any_of(str.begin(), str.end(), isUTF8CharWrappable);
+        return std::any_of(str.begin(), str.end(), func);
     }
 
-    int findSplitPositionForWord(Label* label, const StringUtils::StringUTF8& text, int estimatedIdx, float originalLeftSpaceWidth, float newLineWidth)
+    int findSplitPositionForWord(Label* label, const StringUtils::StringUTF8& text, int estimatedIdx,
+            float originalLeftSpaceWidth, float newLineWidth, RichText::WordSeparatorMode wordSeparatorMode)
     {
+        FUNC_PTR_WRAPPABLE_WORD charWrappableFunctionPointer = &isUTF8CharWrappable;
+        switch (wordSeparatorMode) {
+            case RichText::WordSeparatorSpaceSlashAndKCJ:
+                charWrappableFunctionPointer = &isUTF8CharSpaceSlashAndKCJWrappable;
+                break;
+            case RichText::WordSeparatorSpaceSlashNotHighUnicode:
+                charWrappableFunctionPointer = &isUTF8CharSpaceSlashNotHighUnicodeWrappable;
+                break;
+            case RichText::WordSeparatorBasedOnDevice:
+                charWrappableFunctionPointer = &isUTF8CharWrappable;
+                break;
+        }
+
         bool startingNewLine = (newLineWidth == originalLeftSpaceWidth);
-        if (!isWrappable(text))
+        if (!isWrappable(text, charWrappableFunctionPointer))
             return (startingNewLine ? static_cast<int>(text.length()) : 0);
 
         // The adjustment of the new line position
-        int idx = getNextWordPos(text, estimatedIdx);
+        int idx = getNextWordPos(text, estimatedIdx, charWrappableFunctionPointer);
         std::string leftStr = text.getAsCharSequence(0, idx);
         label->setString(leftStr);
         float textRendererWidth = label->getContentSize().width;
@@ -1547,7 +1593,7 @@ namespace {
             while (1)
             {
                 // try to erase a word
-                int newidx = getPrevWordPos(text, idx);
+                int newidx = getPrevWordPos(text, idx, charWrappableFunctionPointer);
                 if (newidx >= 0)
                 {
                     leftStr = text.getAsCharSequence(0, newidx);
@@ -1567,7 +1613,7 @@ namespace {
             while (1)
             {
                 // try to append a word
-                int newidx = getNextWordPos(text, idx);
+                int newidx = getNextWordPos(text, idx, charWrappableFunctionPointer);
                 leftStr = text.getAsCharSequence(0, newidx);
                 label->setString(leftStr);
                 textRendererWidth = label->getContentSize().width;
@@ -1647,6 +1693,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
 {
     bool fileExist = FileUtils::getInstance()->isFileExist(fontName);
     RichText::WrapMode wrapMode = static_cast<RichText::WrapMode>(_defaults.at(KEY_WRAP_MODE).asInt());
+    RichText::WordSeparatorMode wordSeparatorMode = static_cast<RichText::WordSeparatorMode>(_defaults.at(KEY_WORD_SEPARATOR_MODE).asInt());
 
     // split text by \n
     std::stringstream ss(text);
@@ -1720,7 +1767,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
 
             int leftLength = 0;
             if (wrapMode == WRAP_PER_WORD)
-                leftLength = findSplitPositionForWord(textRenderer, utf8Text, estimatedIdx, _leftSpaceWidth, _customSize.width);
+                leftLength = findSplitPositionForWord(textRenderer, utf8Text, estimatedIdx, _leftSpaceWidth, _customSize.width, wordSeparatorMode);
             else
                 leftLength = findSplitPositionForChar(textRenderer, utf8Text, estimatedIdx, _leftSpaceWidth, _customSize.width);
 

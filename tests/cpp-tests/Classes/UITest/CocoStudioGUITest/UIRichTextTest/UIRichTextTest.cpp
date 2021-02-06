@@ -128,6 +128,7 @@ void UIRichTextTest::setLanguage(RichTextWrapLanguage language)
     _widget->removeChildByTag(_RICH_TEXT_TAG);
 
     switch(language) {
+        default:
         case RichTextWrapLanguage_Original: {
             auto config = Configuration::getInstance();
             config->loadConfigFile("configs/config-test-ok.plist");
@@ -192,42 +193,50 @@ void UIRichTextTest::setLanguage(RichTextWrapLanguage language)
             break;
 
         case RichTextWrapLanguage_Spanish:
-            addSingleRichTextWithText("Pingüino Pingüino Pingüino canción canción canción canción tamaño tamaño tamaño.");
+            addSingleRichTextWithText("Pingüino Pingüino Pingüino canción canción canción canción tamaño tamaño tamaño.",
+                                      RichText::WordSeparatorSpaceSlashAndKCJ);
             break;
 
         case RichTextWrapLanguage_Romanian:
-            addSingleRichTextWithText("Cântecul Cântecul Cântecul Cântecul Cântecul politică politică politică politică.");
+            addSingleRichTextWithText("Cântecul Cântecul Cântecul Cântecul Cântecul politică politică politică politică.",
+                                      RichText::WordSeparatorSpaceSlashAndKCJ);
             break;
 
         case RichTextWrapLanguage_Russian:
-            addSingleRichTextWithText("Франция с завтрашнего дня закроет свои границы со странами, не входящими в Евросоюз: она пытается избежать нового ограничения");
+            addSingleRichTextWithText("Франция с завтрашнего дня закроет свои границы со странами, не входящими в Евросоюз: она пытается избежать нового ограничения",
+                                      RichText::WordSeparatorSpaceSlashAndKCJ);
             break;
 
         case RichTextWrapLanguage_English:
-            addSingleRichTextWithText("Testing word-wrapping. Testing word-wrapping. Testing word-wrapping. Testing word-wrapping.");
+            addSingleRichTextWithText("Testing word-wrapping. Testing word-wrapping. Testing word-wrapping. Testing word-wrapping.",
+                                      RichText::WordSeparatorSpaceSlashAndKCJ);
             break;
 
         case RichTextWrapLanguage_French:
-            addSingleRichTextWithText("espère espère espère l'appel l'appel l'opposant Alexeï Alexeï enquête Royaume-Uni Royaume-Uni");
+            addSingleRichTextWithText("espère espère espère l'appel l'appel l'opposant Alexeï Alexeï enquête Royaume-Uni Royaume-Uni",
+                                      RichText::WordSeparatorSpaceSlashAndKCJ);
             break;
 
         case RichTextWrapLanguage_Korean:
-            addSingleRichTextWithText("차가운 대리석으로 둘러싸인 담으로 둘러싸인 정원에서 승인 된 라임 나무 줄, 난 자랍니다");
+            addSingleRichTextWithText("차가운 대리석으로 대리석으로 대리석으로 둘러싸인 둘러싸인 담으로 둘러싸인 정원에서 승인 된 라임 나무 줄, 난 자랍니다",
+                                      RichText::WordSeparatorSpaceSlashNotHighUnicode);
             break;
 
         case RichTextWrapLanguage_Chinese:
-            addSingleRichTextWithText("在圍牆花園裡四周是冷大理石和成行的樹我成長");
+            addSingleRichTextWithText("在圍牆花園裡四周是冷大理石和成行的樹我成長",
+                                      RichText::WordSeparatorSpaceSlashAndKCJ);
             break;
     }
 }
 
-void UIRichTextTest::addSingleRichTextWithText(const std::string& text)
+void UIRichTextTest::addSingleRichTextWithText(const std::string& text, const RichText::WordSeparatorMode& wordSeparatorMode)
 {
     Size widgetSize = _widget->getContentSize();
 
     _richText = RichText::create();
     _richText->setTag(_RICH_TEXT_TAG);
     _richText->setWrapMode(_currentWrappingMode);
+    _richText->setWordSeparatorMode(wordSeparatorMode);
     _richText->setHorizontalAlignment(_currentAlignment);
     _richText->ignoreContentAdaptWithSize(false);
     _richText->setContentSize(Size(100, 100));

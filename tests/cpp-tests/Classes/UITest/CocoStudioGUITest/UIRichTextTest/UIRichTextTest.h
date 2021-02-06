@@ -52,7 +52,7 @@ public:
 
     bool init() override;
     void setLanguage(RichTextWrapLanguage language);
-    void addSingleRichTextWithText(const std::string& text);
+    void addSingleRichTextWithText(const std::string& text, const RichText::WordSeparatorMode& wordSeparatorMode);
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
