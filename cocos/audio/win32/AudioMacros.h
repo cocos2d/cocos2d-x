@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2016-2017 Chukong Technologies Inc.
+ Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -50,7 +51,7 @@ void audioLog(const char * format, ...);
 #if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0
 #define CHECK_AL_ERROR_DEBUG() \
 do { \
-    GLenum __error = alGetError(); \
+    ALenum __error = alGetError(); \
     if (__error) { \
         ALOGE("OpenAL error 0x%04X in %s %s %d\n", __error, __FILE__, __FUNCTION__, __LINE__); \
     } \

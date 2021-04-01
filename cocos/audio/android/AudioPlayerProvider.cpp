@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -39,7 +40,7 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <algorithm> // for std::find_if
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 static int getSystemAPILevel()
 {
@@ -515,4 +516,4 @@ void AudioPlayerProvider::resume()
     }
 }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

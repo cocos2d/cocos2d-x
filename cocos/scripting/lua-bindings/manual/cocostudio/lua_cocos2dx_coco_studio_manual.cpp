@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -261,7 +262,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
         
-        self->addArmatureFileInfoAsync(configFilePath, wrapper, schedule_selector(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
+        self->addArmatureFileInfoAsync(configFilePath, wrapper, CC_SCHEDULE_SELECTOR(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
         
         return 0;
     }
@@ -287,7 +288,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
         
-        self->addArmatureFileInfoAsync(imagePath, plistPath,configFilePath,wrapper, schedule_selector(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
+        self->addArmatureFileInfoAsync(imagePath, plistPath,configFilePath,wrapper, CC_SCHEDULE_SELECTOR(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
         
         return 0;
     }

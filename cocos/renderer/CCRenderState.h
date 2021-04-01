@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  Copyright (c) 2014 GamePlay3D team
  
  http://www.cocos2d-x.org
@@ -23,9 +24,7 @@
    - Qt3D: http://qt-project.org/
 
  ****************************************************************************/
-
-#ifndef __cocos2d_libs__CCRenderState__
-#define __cocos2d_libs__CCRenderState__
+#pragma once
 
 #include <string>
 #include <functional>
@@ -36,10 +35,19 @@
 #include "base/ccTypes.h"
 #include "base/CCVector.h"
 
+#include "renderer/CCPipelineDescriptor.h"
+#include "renderer/backend/Types.h"
+#include "renderer/CCMeshCommand.h"
+
 NS_CC_BEGIN
 
 class Texture2D;
 class Pass;
+class MeshCommand;
+
+using CullFaceSide = backend::CullMode;
+using FrontFace = backend::Winding;
+using DepthFunction = backend::CompareFunction;
 
 /**
  * Defines the rendering state of the graphics device.
@@ -51,146 +59,21 @@ class CC_DLL RenderState : public Ref
     friend class Pass;
 
 public:
-    /**
-     * Static initializer that is called during game startup.
-     */
-    static void initialize();
-
-    /**
-     * Static finalizer that is called during game shutdown.
-     */
-    static void finalize();
 
     std::string getName() const;
-
-
-    /** Texture that will use in the CC_Texture0 uniform.
-     Added to be backwards compatible. Use Samplers from .material instead.
-     */
-    void setTexture(Texture2D* texture);
-
-    /** Returns the texture that is going to be used for CC_Texture0.
-     Added to be backwards compatible.
-     */
-    Texture2D* getTexture() const;
 
     /**
      * Binds the render state for this RenderState and any of its parents, top-down,
      * for the given pass.
      */
-    void bind(Pass* pass);
+    void bindPass(Pass* pass, MeshCommand *);
 
-    /**
-     * Returns the topmost RenderState in the hierarchy below the given RenderState.
-     */
-    RenderState* getTopmost(RenderState* below);
-    
-    void setParent(RenderState* parent) { _parent = parent; }
-
-    enum Blend
-    {
-        BLEND_ZERO = GL_ZERO,
-        BLEND_ONE = GL_ONE,
-        BLEND_SRC_COLOR = GL_SRC_COLOR,
-        BLEND_ONE_MINUS_SRC_COLOR = GL_ONE_MINUS_SRC_COLOR,
-        BLEND_DST_COLOR = GL_DST_COLOR,
-        BLEND_ONE_MINUS_DST_COLOR = GL_ONE_MINUS_DST_COLOR,
-        BLEND_SRC_ALPHA = GL_SRC_ALPHA,
-        BLEND_ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA,
-        BLEND_DST_ALPHA = GL_DST_ALPHA,
-        BLEND_ONE_MINUS_DST_ALPHA = GL_ONE_MINUS_DST_ALPHA,
-        BLEND_CONSTANT_ALPHA = GL_CONSTANT_ALPHA,
-        BLEND_ONE_MINUS_CONSTANT_ALPHA = GL_ONE_MINUS_CONSTANT_ALPHA,
-        BLEND_SRC_ALPHA_SATURATE = GL_SRC_ALPHA_SATURATE
-    };
-
-    /**
-     * Defines the supported depth compare functions.
-     *
-     * Depth compare functions specify the comparison that takes place between the
-     * incoming pixel's depth value and the depth value already in the depth buffer.
-     * If the compare function passes, the new pixel will be drawn.
-     *
-     * The initial depth compare function is DEPTH_LESS.
-     */
-    enum DepthFunction
-    {
-        DEPTH_NEVER = GL_NEVER,
-        DEPTH_LESS = GL_LESS,
-        DEPTH_EQUAL = GL_EQUAL,
-        DEPTH_LEQUAL = GL_LEQUAL,
-        DEPTH_GREATER = GL_GREATER,
-        DEPTH_NOTEQUAL = GL_NOTEQUAL,
-        DEPTH_GEQUAL = GL_GEQUAL,
-        DEPTH_ALWAYS = GL_ALWAYS
-    };
-
-    /**
-     * Defines culling criteria for front-facing, back-facing and both-side
-     * facets.
-     */
-    enum CullFaceSide
-    {
-        CULL_FACE_SIDE_BACK = GL_BACK,
-        CULL_FACE_SIDE_FRONT = GL_FRONT,
-        CULL_FACE_SIDE_FRONT_AND_BACK = GL_FRONT_AND_BACK
-    };
-
-    /**
-     * Defines the winding of vertices in faces that are considered front facing.
-     *
-     * The initial front face mode is set to FRONT_FACE_CCW.
-     */
-    enum FrontFace
-    {
-        FRONT_FACE_CW = GL_CW,
-        FRONT_FACE_CCW = GL_CCW
-    };
-
-    /**
-     * Defines the supported stencil compare functions.
-     *
-     * Stencil compare functions determine if a new pixel will be drawn.
-     *
-     * The initial stencil compare function is STENCIL_ALWAYS.
-     */
-    enum StencilFunction
-    {
-        STENCIL_NEVER = GL_NEVER,
-        STENCIL_ALWAYS = GL_ALWAYS,
-        STENCIL_LESS = GL_LESS,
-        STENCIL_LEQUAL = GL_LEQUAL,
-        STENCIL_EQUAL = GL_EQUAL,
-        STENCIL_GREATER = GL_GREATER,
-        STENCIL_GEQUAL = GL_GEQUAL,
-        STENCIL_NOTEQUAL = GL_NOTEQUAL
-    };
-
-    /**
-     * Defines the supported stencil operations to perform.
-     *
-     * Stencil operations determine what should happen to the pixel if the
-     * stencil test fails, passes, or passes but fails the depth test.
-     *
-     * The initial stencil operation is STENCIL_OP_KEEP.
-     */
-    enum StencilOperation
-    {
-        STENCIL_OP_KEEP = GL_KEEP,
-        STENCIL_OP_ZERO = GL_ZERO,
-        STENCIL_OP_REPLACE = GL_REPLACE,
-        STENCIL_OP_INCR = GL_INCR,
-        STENCIL_OP_DECR = GL_DECR,
-        STENCIL_OP_INVERT = GL_INVERT,
-        STENCIL_OP_INCR_WRAP = GL_INCR_WRAP,
-        STENCIL_OP_DECR_WRAP = GL_DECR_WRAP
-    };
 
     /**
      * Defines a block of fixed-function render states that can be applied to a
      * RenderState object.
      */
-    class CC_DLL StateBlock : public Ref
+    class CC_DLL StateBlock // : public Ref
     {
         friend class RenderState;
         friend class Pass;
@@ -201,22 +84,22 @@ public:
         /**
          * Creates a new StateBlock with default render state settings.
          */
-        static StateBlock* create();
+        //static StateBlock* create();
 
         /** The recommended way to create StateBlocks is by calling `create`.
          * Don't use `new` or `delete` on them.
          * 
          */
-        StateBlock();
-        ~StateBlock();
-
+        StateBlock() = default;
+        ~StateBlock() = default;
+        StateBlock(const StateBlock &) = default;
         /**
          * Binds the state in this StateBlock to the renderer.
          *
          * This method handles both setting and restoring of render states to ensure that
          * only the state explicitly defined by this StateBlock is applied to the renderer.
          */
-        void bind();
+        void bind(PipelineDescriptor *programState);
 
         /**
          * Explicitly sets the source and destination used in the blend function for this render state.
@@ -241,7 +124,7 @@ public:
          *
          * @param blend Specifies how the source blending factors are computed.
          */
-        void setBlendSrc(Blend blend);
+        void setBlendSrc(backend::BlendFactor blend);
 
         /**
          * Explicitly sets the source used in the blend function for this render state.
@@ -250,7 +133,7 @@ public:
          *
          * @param blend Specifies how the destination blending factors are computed.
          */
-        void setBlendDst(Blend blend);
+        void setBlendDst(backend::BlendFactor blend);
 
         /**
          * Explicitly enables or disables backface culling.
@@ -303,46 +186,6 @@ public:
          */
         void setDepthFunction(DepthFunction func);
 
-//        /**
-//         * Toggles stencil testing.
-//         *
-//         * By default, stencil testing is disabled.
-//         *
-//         * @param enabled true to enable, false to disable.
-//         */
-//        void setStencilTest(bool enabled);
-//
-//        /**
-//         * Sets the stencil writing mask.
-//         *
-//         * By default, the stencil writing mask is all 1's.
-//         *
-//         * @param mask Bit mask controlling writing to individual stencil planes.
-//         */
-//        void setStencilWrite(unsigned int mask);
-//
-//        /**
-//         * Sets the stencil function.
-//         *
-//         * By default, the function is set to STENCIL_ALWAYS, the reference value is 0, and the mask is all 1's.
-//         *
-//         * @param func The stencil function.
-//         * @param ref The stencil reference value.
-//         * @param mask The stencil mask.
-//         */
-//        void setStencilFunction(StencilFunction func, int ref, unsigned int mask);
-//
-//        /**
-//         * Sets the stencil operation.
-//         *
-//         * By default, stencil fail, stencil pass/depth fail, and stencil and depth pass are set to STENCIL_OP_KEEP.
-//         *
-//         * @param sfail The stencil operation if the stencil test fails.
-//         * @param dpfail The stencil operation if the stencil test passes, but the depth test fails.
-//         * @param dppass The stencil operation if both the stencil test and depth test pass.
-//         */
-//        void setStencilOperation(StencilOperation sfail, StencilOperation dpfail, StencilOperation dppass);
-
         /**
          * Sets a render state from the given name and value strings.
          *
@@ -377,94 +220,46 @@ public:
             RS_ALL_ONES = 0xFFFFFFFF,
         };
 
-        /** 
-         * Invalidates the default StateBlock.
-         *
-         * Only call it if you are calling GL calls directly. Invoke this function
-         * at the end of your custom draw call.
-         * This function restores the default render state its defaults values.
-         * Since this function might call GL calls, it must be called in a GL context is present.
-         *
-         * @param stateBits Bitwise-OR of the states that needs to be invalidated
-         */
-        static void invalidate(long stateBits);
-
-        /**
-         * Restores the global Render State to the default state
-         *
-         * The difference between `invalidate()` and `restore()`, is that `restore()` will
-         * restore the global Render State based on its current state. Only the
-         * states that were changed will be restored.
-         *
-         * Rule of thumb:
-         
-         - call `restore()` if you want to restore to the default state after using `StateBlock`.
-         - call `invalidate()` if you want to restore to the default state after calling manual GL calls.
-
-         */
-        static void restore(long stateOverrideBits);
-
-        static StateBlock* _defaultState;
-
     protected:
+        
+        /**
+        * update internal states of ProgramState
+        */
+        void apply(PipelineDescriptor *pipelineDescriptor);
 
-        void bindNoRestore();
-        static void enableDepthWrite();
+        static void restoreUnmodifiedStates(long flags, PipelineDescriptor *pipelineDescriptor);
 
-        void cloneInto(StateBlock* renderState) const;
 
-        bool _cullFaceEnabled;
-        bool _depthTestEnabled;
-        bool _depthWriteEnabled;
-        DepthFunction _depthFunction;
-        bool _blendEnabled;
-        Blend _blendSrc;
-        Blend _blendDst;
-        CullFaceSide _cullFaceSide;
-        FrontFace _frontFace;
-        bool _stencilTestEnabled;
-        unsigned int _stencilWrite;
-        StencilFunction _stencilFunction;
-        int _stencilFunctionRef;
-        unsigned int _stencilFunctionMask;
-        StencilOperation _stencilOpSfail;
-        StencilOperation _stencilOpDpfail;
-        StencilOperation _stencilOpDppass;
-
-        long _bits;
+        bool _cullFaceEnabled = false;
+        bool _depthTestEnabled = true;
+        bool _depthWriteEnabled = false;
+        DepthFunction _depthFunction = DepthFunction::LESS;
+        bool _blendEnabled = true;
+        backend::BlendFactor _blendSrc = backend::BlendFactor::ONE;
+        backend::BlendFactor _blendDst = backend::BlendFactor::ZERO;
+        CullFaceSide _cullFaceSide = CullFaceSide::BACK;
+        FrontFace _frontFace = FrontFace::COUNTER_CLOCK_WISE;
+        long _modifiedBits = 0L;
 
         mutable uint32_t _hash;
         mutable bool _hashDirty;
     };
 
-    void setStateBlock(StateBlock* state);
-    StateBlock* getStateBlock() const;
+    StateBlock& getStateBlock() const;
 
 protected:
-    RenderState();
-    ~RenderState();
-    bool init(RenderState* parent);
-    void cloneInto(RenderState* state) const;
-
-    mutable uint32_t _hash;
-    mutable bool _hashDirty;
+    RenderState() = default;
+    
+    mutable uint32_t _hash = 0;
+    mutable bool _hashDirty = true;
 
     /**
      * The StateBlock of fixed-function render states that can be applied to the RenderState.
      */
-    mutable StateBlock* _state;
-
-    /**
-     * The RenderState's parent. Weak Reference
-     */
-    RenderState* _parent;
+    mutable StateBlock _state;
 
     // name, for filtering
     std::string _name;
-
-    Texture2D* _texture;
 };
 
 NS_CC_END
-
-#endif /* defined(__cocos2d_libs__CCRenderState__) */

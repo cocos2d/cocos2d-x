@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -33,7 +34,7 @@
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
-#include "deprecated/CCString.h"
+#include "scripting/deprecated/CCString.h"
 
 using namespace cocos2d;
 

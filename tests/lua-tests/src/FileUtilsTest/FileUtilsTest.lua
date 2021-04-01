@@ -302,7 +302,7 @@ function FileUtilsGetDataDemo:dumpHex(str)
 end
 
 function FileUtilsGetDataDemo:onEnter()
-    local label = cc.LabelTTF:create("error happended while reading file data", "Marker Felt", 20)
+    local label = cc.Label:createWithTTF("error happended while reading file data", "fonts/Marker Felt.ttf", 20)
     -- print(self.hexString)
     -- print("............")
     -- print(self.hexRead)

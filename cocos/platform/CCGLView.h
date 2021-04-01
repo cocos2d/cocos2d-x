@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -38,6 +39,10 @@ THE SOFTWARE.
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 typedef void* id;
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#define CC_ICON_SET_SUPPORT true
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) */
 
 /** There are some Resolution Policy for Adapt to the screen. */
 enum class ResolutionPolicy
@@ -82,13 +87,13 @@ struct GLContextAttrs
     int alphaBits;
     int depthBits;
     int stencilBits;
+    int multisamplingCount;
 };
 
 NS_CC_BEGIN
 
 class Scene;
 class Renderer;
-class VRIRenderer;
 
 /**
  * @addtogroup platform
@@ -149,12 +154,6 @@ public:
     
     /** The OpenGL context attrs. */
     static GLContextAttrs _glContextAttrs;
-
-    /** @deprecated
-     * Polls input events. Subclass must implement methods if platform
-     * does not provide event callbacks.
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual void pollInputEvents();
     
     /** Polls the events. */
     virtual void pollEvents();
@@ -238,6 +237,11 @@ public:
      * @return The visible rectangle of opengl viewport.
      */
     virtual Rect getVisibleRect() const;
+
+    /**
+     * Gets safe area rectangle
+     */
+    virtual Rect getSafeAreaRect() const;
 
     /**
      * Set the design resolution size.
@@ -350,6 +354,25 @@ public:
      */
     virtual void handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[]);
 
+    /** Set window icon (implemented for windows and linux).
+     *
+     * @param filename A path to image file, e.g., "icons/cusom.png". 
+     */
+    virtual void setIcon(const std::string& filename) const {};
+
+    /** Set window icon (implemented for windows and linux).
+     * Best icon (based on size) will be auto selected.
+     * 
+     * @param filelist The array contains icons.
+     */
+    virtual void setIcon(const std::vector<std::string>& filelist) const {};
+
+    /** Set default window icon (implemented for windows and linux).
+     * On windows it will use icon from .exe file (if included).
+     * On linux it will use default window icon.
+     */
+    virtual void setDefaultIcon() const {};
+
     /**
      * Get the opengl view port rectangle.
      *
@@ -390,6 +413,7 @@ public:
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     virtual id getCocoaWindow() = 0;
+    virtual id getNSGLContext() = 0; // stevetranby: added
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
 
     /**
@@ -397,14 +421,7 @@ public:
      * This method is called directly by the Director
      */
     void renderScene(Scene* scene, Renderer* renderer);
-
-    /**
-     * Sets a VR renderer. 
-     * if `vrrenderer` is `nullptr` VR will be disabled
-     */
-    void setVR(VRIRenderer* vrrenderer);
-    VRIRenderer* getVR() const;
-
+    
 protected:
     void updateDesignResolutionSize();
     
@@ -422,9 +439,6 @@ protected:
     float _scaleX;
     float _scaleY;
     ResolutionPolicy _resolutionPolicy;
-
-    // VR stuff
-    VRIRenderer* _vrImpl;
 };
 
 // end of platform group

@@ -1,5 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -127,6 +128,12 @@ void Mat4::createPerspective(float fieldOfView, float aspectRatio,
     dst->m[10] = (-(zFarPlane + zNearPlane)) * f_n;
     dst->m[11] = -1.0f;
     dst->m[14] = -2.0f * zFarPlane * zNearPlane * f_n;
+
+// https://metashapes.com/blog/opengl-metal-projection-matrix-problem/
+#ifdef CC_USE_METAL
+    dst->m[10] = -(zFarPlane) * f_n;
+    dst->m[14] = -(zFarPlane * zNearPlane) * f_n;
+#endif
 }
 
 void Mat4::createOrthographic(float width, float height, float zNearPlane, float zFarPlane, Mat4* dst)
@@ -153,6 +160,12 @@ void Mat4::createOrthographicOffCenter(float left, float right, float bottom, fl
     dst->m[13] = (top + bottom) / (bottom - top);
     dst->m[14] = (zNearPlane + zFarPlane) / (zNearPlane - zFarPlane);
     dst->m[15] = 1;
+
+//// https://metashapes.com/blog/opengl-metal-projection-matrix-problem/
+#ifdef CC_USE_METAL
+    dst->m[10] = 1 / (zNearPlane - zFarPlane);
+    dst->m[14] = zNearPlane / (zNearPlane - zFarPlane);
+#endif
 }
     
 void Mat4::createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,

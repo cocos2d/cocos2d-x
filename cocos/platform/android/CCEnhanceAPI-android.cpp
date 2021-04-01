@@ -12,11 +12,6 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with Samsung
 ****************************************************************************/
-
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
 #include "platform/android/jni/JniHelper.h"
 #include "platform/android/CCEnhanceAPI-android.h"
 #include <android/log.h>
@@ -25,7 +20,7 @@
 #define  LOG_TAG    "CCEnhanceAPI_android Debug"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-#define CLASS_NAME "org/cocos2dx/lib/Cocos2dxHelper"
+#define CLASS_NAME "org.cocos2dx.lib.Cocos2dxHelper"
 
 // FIXME: using ndk-r10c will cause the next function could not be found. It may be a bug of ndk-r10c.
 // Here is the workaround method to fix the problem.
@@ -106,6 +101,3 @@ int EnhanceAPI::setLowPowerMode(bool enable)
     return ret;
 }
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-

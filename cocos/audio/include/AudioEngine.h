@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -21,17 +22,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #pragma once
-
-#include "platform/CCPlatformConfig.h"
-#include "platform/CCPlatformMacros.h"
-#include "audio/include/Export.h"
 
 #include <functional>
 #include <list>
 #include <string>
 #include <unordered_map>
+
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "audio/include/Export.h"
 
 #ifdef ERROR
 #undef ERROR
@@ -43,8 +43,6 @@
  */
 
 NS_CC_BEGIN
-namespace experimental {
-
 /**
  * @class AudioProfile
  *
@@ -328,7 +326,7 @@ protected:
     
     struct AudioInfo
     {
-        const std::string* filePath;
+        std::string filePath;
         ProfileHelper* profileHelper;
         
         float volume;
@@ -368,7 +366,6 @@ protected:
     friend class AudioEngineImpl;
 };
 
-} // namespace experimental {
 NS_CC_END
 
 // end group

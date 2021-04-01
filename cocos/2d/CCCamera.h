@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2014-2017 Chukong Technologies Inc.
+Copyright (c) 2014-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2019 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -24,14 +25,12 @@ THE SOFTWARE.
  Code based GamePlay3D's Camera: http://gameplay3d.org
 
  ****************************************************************************/
-#ifndef _CCCAMERA_H__
-#define _CCCAMERA_H__
+#pragma once
 
 #include "2d/CCNode.h"
 #include "3d/CCFrustum.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
-#include "renderer/CCFrameBuffer.h"
 
 NS_CC_BEGIN
 
@@ -104,8 +103,8 @@ public:
      */
     static const Camera* getVisitingCamera();
 
-    static const experimental::Viewport& getDefaultViewport();
-    static void setDefaultViewport(const experimental::Viewport& vp);
+    static const Viewport& getDefaultViewport();
+    static void setDefaultViewport(const Viewport& vp);
 
     /**
      * Get the default camera of the current running scene.
@@ -120,8 +119,8 @@ public:
     Camera::Type getType() const { return _type; }
 
     /**get & set Camera flag*/
-    CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
-    void setCameraFlag(CameraFlag flag) { _cameraFlag = (unsigned short)flag; }
+    CameraFlag getCameraFlag() const { return _cameraFlag; }
+    void setCameraFlag(CameraFlag flag) { _cameraFlag = flag; }
 
     /**
     * Make Camera looks at target
@@ -248,19 +247,6 @@ public:
      Apply the FBO, RenderTargets and viewport.
      */
     void apply();
-    /**
-     Restore the FBO, RenderTargets and viewport.
-     */
-    void restore();
-
-    /**
-     Set FBO, which will attach several render target for the rendered result.
-     */
-    void setFrameBufferObject(experimental::FrameBuffer* fbo);
-    /**
-     Set Viewport for camera.
-     */
-    void setViewport(const experimental::Viewport& vp);
 
     /**
      * Whether or not the viewprojection matrix was updated since the last frame.
@@ -299,16 +285,13 @@ CC_CONSTRUCTOR_ACCESS:
     bool initDefault();
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
-    void applyFrameBufferObject();
     void applyViewport();
-    void restoreFrameBufferObject();
-    void restoreViewport();
 
 protected:
     static Camera* _visitingCamera;
-    static experimental::Viewport _defaultViewport;
+    static Viewport _defaultViewport;
 
-    Scene* _scene; //Scene camera belongs to
+    Scene* _scene = nullptr; //Scene camera belongs to
     Mat4 _projection;
     mutable Mat4 _view;
     mutable Mat4 _viewInv;
@@ -316,25 +299,19 @@ protected:
 
     Vec3 _up;
     Camera::Type _type;
-    float _fieldOfView;
-    float _zoom[2];
-    float _aspectRatio;
-    float _nearPlane;
-    float _farPlane;
-    mutable bool  _viewProjectionDirty;
-    bool _viewProjectionUpdated; //Whether or not the viewprojection matrix was updated since the last frame.
-    unsigned short _cameraFlag; // camera flag
+    float _fieldOfView = 0.f;
+    float _zoom[2] = {0.f};
+    float _aspectRatio = 0.f;
+    float _nearPlane = 0.f;
+    float _farPlane = 0.f;
+    mutable bool  _viewProjectionDirty = true;
+    bool _viewProjectionUpdated = false; //Whether or not the viewprojection matrix was updated since the last frame.
+    CameraFlag _cameraFlag = CameraFlag::DEFAULT; // camera flag
     mutable Frustum _frustum;   // camera frustum
-    mutable bool _frustumDirty;
-    int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller depth
+    mutable bool _frustumDirty = true;
+    int8_t  _depth = -1;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller depth
 
-    CameraBackgroundBrush* _clearBrush; //brush used to clear the back ground
-
-    experimental::Viewport _viewport;
-    experimental::FrameBuffer* _fbo;
-    GLint _oldViewport[4];
+    CameraBackgroundBrush* _clearBrush = nullptr; //brush used to clear the back ground
 };
 
 NS_CC_END
-
-#endif// __CCCAMERA_H_

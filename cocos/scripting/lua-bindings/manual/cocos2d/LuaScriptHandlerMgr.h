@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -151,7 +152,7 @@ public:
         WEBSOCKET_CLOSE,
         WEBSOCKET_ERROR,
         
-        GL_NODE_DRAW,
+        LUANODE_DRAW,
         
         SCROLLVIEW_SCROLL,
         SCROLLVIEW_ZOOM,

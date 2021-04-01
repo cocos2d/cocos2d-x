@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -51,7 +52,6 @@ unsigned int __idIndex = 0;
 #define PCMDATA_CACHEMAXSIZE 1048576
 
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
 : _totalFrames(0)
@@ -248,7 +248,7 @@ void AudioCache::readDataTask(unsigned int selfId)
         }
         else
         {
-            _queBufferFrames = sampleRate * QUEUEBUFFER_TIME_STEP;
+            _queBufferFrames = static_cast<uint32_t>(sampleRate * QUEUEBUFFER_TIME_STEP);
             BREAK_IF_ERR_LOG(_queBufferFrames == 0, "_queBufferFrames == 0");
 
             const uint32_t queBufferBytes = _queBufferFrames * bytesPerFrame;

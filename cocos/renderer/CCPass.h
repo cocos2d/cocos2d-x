@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -26,46 +27,49 @@
  - OGRE3D: http://www.ogre3d.org/
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
-
-#ifndef __cocos2d_libs__CCPass__
-#define __cocos2d_libs__CCPass__
+#pragma once
 
 #include <stdio.h>
 
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/CCMeshCommand.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 NS_CC_BEGIN
 
-class GLProgramState;
 class Technique;
 class Node;
 class VertexAttribBinding;
+class MeshIndexData;
+class RenderState;
 
-class CC_DLL Pass : public RenderState
+namespace backend
+{
+    class ProgramState;
+    class Buffer;
+}
+
+class CC_DLL Pass : public Ref
 {
     friend class Material;
-
+    friend class Technique;
+    friend class RenderState;
+    friend class VertexAttribBinding;
 public:
     /** Creates a Pass with a GLProgramState.
      */
-    static Pass* createWithGLProgramState(Technique* parent, GLProgramState* programState);
+    static Pass* createWithProgramState(Technique* parent, backend::ProgramState* programState);
 
     static Pass* create(Technique* parent);
 
-    /** Returns the GLProgramState */
-    GLProgramState* getGLProgramState() const;
+    /** Returns the ProgramState */
+    backend::ProgramState* getProgramState() const;
 
-    /** Binds the GLProgramState and the RenderState.
-     This method must be called before call the actual draw call.
-     */
-    void bind(const Mat4& modelView);
-    void bind(const Mat4& modelView, bool bindAttributes);
-
-    /** Unbinds the Pass.
-     This method must be called AFTER calling the actual draw call
-     */
-    void unbind();
+    void draw(MeshCommand *meshCommand, float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+              MeshCommand::PrimitiveType primitive, MeshCommand::IndexFormat indexFormat,
+              unsigned int indexCount, const Mat4& modelView);
 
     /**
      * Sets a vertex attribute binding for this pass.
@@ -84,27 +88,96 @@ public:
      */
     VertexAttribBinding* getVertexAttributeBinding() const;
 
-    uint32_t getHash() const;
+    void setName(const std::string &name) { _name = name; }
+    const std::string &getName() const { return _name; }
+
+    inline RenderState::StateBlock &getStateBlock() { return _renderState._state; }
 
     /**
      * Returns a clone (deep-copy) of this instance */
     Pass* clone() const;
 
+    void setTechnique(Technique *technique);
+
+    void updateMVPUniform(const Mat4& modelView);
+    
+    void setUniformTexture(uint32_t slot, backend::TextureBackend *);      //u_texture
+    void setUniformNormTexture(uint32_t slot, backend::TextureBackend *);  //u_texture
+
+    void setUniformColor(const void *, size_t);                 //ucolor
+    void setUniformMatrixPalette(const void *, size_t);         //u_matrixPalette
+
+    void setUniformDirLightColor(const void *, size_t);
+    void setUniformDirLightDir(const void *, size_t);
+
+    void setUniformPointLightColor(const void *, size_t);
+    void setUniformPointLightPosition(const void *, size_t);
+    void setUniformPointLightRangeInverse(const void *, size_t);
+
+    void setUniformSpotLightColor(const void *, size_t);
+    void setUniformSpotLightPosition(const void *, size_t);
+    void setUniformSpotLightDir(const void *, size_t);
+    void setUniformSpotLightInnerAngleCos(const void *, size_t);
+    void setUniformSpotLightOuterAngleCos(const void *, size_t);
+    void setUniformSpotLightRangeInverse(const void *, size_t);
+
+    void setUniformAmbientLigthColor(const void *, size_t);
+
 protected:
     Pass();
     ~Pass();
     bool init(Technique* parent);
-    bool initWithGLProgramState(Technique* parent, GLProgramState *glProgramState);
+    bool initWithProgramState(Technique* parent, backend::ProgramState *glProgramState);
 
-    void setGLProgramState(GLProgramState* glProgramState);
+    void setProgramState(backend::ProgramState* programState);
     Node* getTarget() const;
 
-    GLProgramState* _glProgramState;
-    VertexAttribBinding* _vertexAttribBinding;
+    VertexAttribBinding*        _vertexAttribBinding    = nullptr;
+    backend::ProgramState *     _programState           = nullptr;
+    Technique *                 _technique              = nullptr;
+    bool                        _hashDirty              = true;
+    RenderState                 _renderState;
+    std::string                 _name;
+
+private:
+    
+    void initUniformLocations();
+    void onBeforeVisitCmd(MeshCommand *);
+    void onAfterVisitCmd(MeshCommand *);
+
+    backend::UniformLocation _locMVPMatrix;
+    backend::UniformLocation _locMVMatrix;
+    backend::UniformLocation _locPMatrix;
+    backend::UniformLocation _locNormalMatrix;
+
+    backend::UniformLocation _locTexture;               //u_texture
+    backend::UniformLocation _locNormalTexture;         //u_normalTex
+
+    backend::UniformLocation _locColor;                 //ucolor
+    backend::UniformLocation _locMatrixPalette;         //u_matrixPalette
+
+    backend::UniformLocation _locDirLightColor;
+    backend::UniformLocation _locDirLightDir;
+
+    backend::UniformLocation _locPointLightColor;
+    backend::UniformLocation _locPointLightPosition;
+    backend::UniformLocation _locPointLightRangeInverse;
+
+    backend::UniformLocation _locSpotLightColor;
+    backend::UniformLocation _locSpotLightPosition;
+    backend::UniformLocation _locSpotLightDir;
+    backend::UniformLocation _locSpotLightInnerAngleCos;
+    backend::UniformLocation _locSpotLightOuterAngleCos;
+    backend::UniformLocation _locSpotLightRangeInverse;
+
+    backend::UniformLocation _locAmbientLigthColor;
+
+    //renderer state cache variables
+    bool                        _rendererDepthTestEnabled   = true;
+    backend::CompareFunction    _rendererDepthCmpFunc       = backend::CompareFunction::LESS;
+    backend::CullMode           _rendererCullMode           = backend::CullMode::BACK;
+    backend::Winding            _rendererWinding            = backend::Winding::COUNTER_CLOCK_WISE;
+    bool                        _rendererDepthWrite         = false;
 };
 
 NS_CC_END
-
-
-
-#endif /* defined(__cocos2d_libs__CCPass__) */

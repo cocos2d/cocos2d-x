@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Laschweinski
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -22,17 +23,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-
 #include "platform/CCCommon.h"
 #include "platform/linux/CCStdC-linux.h"
 #include "base/CCConsole.h"
 
 NS_CC_BEGIN
 
-void MessageBox(const char * msg, const char * title)
+void ccMessageBox(const char * msg, const char * title)
 {
     log("%s: %s", title, msg);
 }
@@ -43,5 +40,3 @@ void LuaLog(const char * format)
 }
 
 NS_CC_END
-
-#endif //  CC_TARGET_PLATFORM == CC_PLATFORM_LINUX

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -22,17 +23,15 @@ Copyright (c) 2013-2017 Chukong Technologies Inc.
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CC_FILEUTILS_ANDROID_H__
-#define __CC_FILEUTILS_ANDROID_H__
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#pragma once
 
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <memory>
 #include "jni.h"
 #include "android/asset_manager.h"
 
@@ -66,13 +65,13 @@ public:
 
     virtual std::string getNewFilename(const std::string &filename) const override;
 
-    virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) override;
+    virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) const override;
 
     virtual std::string getWritablePath() const override;
     virtual bool isAbsolutePath(const std::string& strPath) const override;
     
-    virtual long getFileSize(const std::string& filepath) override;
-
+    virtual long getFileSize(const std::string& filepath) const override;
+    virtual std::vector<std::string> listFiles(const std::string& dirPath) const override;
 private:
     virtual bool isFileExistInternal(const std::string& strFilePath) const override;
     virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
@@ -85,7 +84,3 @@ private:
 /// @}
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
-#endif // __CC_FILEUTILS_ANDROID_H__

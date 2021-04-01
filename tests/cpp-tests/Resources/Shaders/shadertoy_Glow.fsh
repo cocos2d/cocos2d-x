@@ -1,7 +1,7 @@
 
 uniform vec2 center;
 uniform vec2 resolution;
-
+uniform vec2 u_screenSize;
 
 //uniform float     iChannelTime[4];       // channel playback time (in seconds)
 //uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
@@ -9,11 +9,17 @@ vec4      iMouse = vec4(0,0,0,0);                // mouse pixel coords. xy: curr
 //uniform sampler2D iChannel0;          // input channel. XX = 2D/Cube
 
 
+uniform vec4 u_Time;
 
 void main(void)
 {
+#ifdef METAL
+	vec2 fragCoord = vec2(gl_FragCoord.x, u_screenSize.y - gl_FragCoord.y);
+#else
+	vec2 fragCoord = gl_FragCoord.xy;
+#endif
     vec2   iResolution = resolution;           // viewport resolution (in pixels)
-    float  iGlobalTime = CC_Time[1];           // shader playback time (in seconds)
+    float  iGlobalTime = u_Time[1];           // shader playback time (in seconds)
 
 	float pointRadius = 0.06;
 	float linkSize = 0.04;
@@ -21,8 +27,8 @@ void main(void)
 	
 	float minDimension = min(iResolution.x, iResolution.y);
 	vec2 bounds = vec2(iResolution.x / minDimension, iResolution.y / minDimension);
-	//vec2 uv = gl_FragCoord.xy / minDimension;
-	vec2 uv = (2. * gl_FragCoord.xy - center.xy) / iResolution.xy;
+	//vec2 uv = fragCoord.xy / minDimension;
+	vec2 uv = (2. * fragCoord.xy - center.xy) / iResolution.xy;
     
 	vec3 pointR = vec3(0.0, 0.0, 1.0);
 	vec3 pointG = vec3(0.0, 0.0, 1.0);

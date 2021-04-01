@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2012      Pierre-David Bélanger
  * Copyright (c) 2012      cocos2d-x.org
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * http://www.cocos2d-x.org
  *
@@ -24,15 +25,13 @@
  * THE SOFTWARE.
  *
  */
-
-#ifndef __MISCNODE_CCCLIPPING_NODE_H__
-#define __MISCNODE_CCCLIPPING_NODE_H__
+#pragma once
 
 #include "2d/CCNode.h"
-#include "platform/CCGL.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
-
+#include "renderer/CCCallbackCommand.h"
+#include <unordered_map>
 NS_CC_BEGIN
 
 class StencilStateManager;
@@ -93,13 +92,13 @@ public:
      *
      * @return The alpha threshold value,Should be a float between 0 and 1.
      */
-    GLfloat getAlphaThreshold() const;
+    float getAlphaThreshold() const;
     
     /** Set the alpha threshold. 
      * 
      * @param alphaThreshold The alpha threshold.
      */
-    void setAlphaThreshold(GLfloat alphaThreshold);
+    void setAlphaThreshold(float alphaThreshold);
     
     /** Inverted. If this is set to true,
      * the stencil is inverted, so the content is drawn where the stencil is NOT drawn.
@@ -155,20 +154,20 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init(Node *stencil);
 
 protected:
-    Node* _stencil;
-    GLProgram* _originStencilProgram;
-   
-    StencilStateManager* _stencilStateManager;
+    void setProgramStateRecursively(Node* node, backend::ProgramState* programState);
+    void restoreAllProgramStates();
+
+    Node* _stencil                              = nullptr;
+    StencilStateManager* _stencilStateManager   = nullptr;
     
-    GroupCommand _groupCommand;
-    CustomCommand _beforeVisitCmd;
-    CustomCommand _afterDrawStencilCmd;
-    CustomCommand _afterVisitCmd;
+    GroupCommand _groupCommandStencil;
+    GroupCommand _groupCommandChildren;
+    CallbackCommand _afterDrawStencilCmd;
+    CallbackCommand _afterVisitCmd;
+    std::unordered_map<Node*, backend::ProgramState*> _originalStencilProgramState;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);
 };
 /** @} */
 NS_CC_END
-
-#endif // __MISCNODE_CCCLIPPING_NODE_H__

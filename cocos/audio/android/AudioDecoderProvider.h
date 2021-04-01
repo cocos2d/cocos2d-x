@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -26,7 +27,7 @@ THE SOFTWARE.
 
 #include "audio/android/OpenSLHelper.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class AudioDecoder;
 
@@ -37,4 +38,4 @@ public:
     static void destroyAudioDecoder(AudioDecoder** decoder);
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

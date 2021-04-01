@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2015 Neo Kim (neo.kim@neofect.com)
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -130,8 +131,8 @@ public:
     /**
      * @lua NA
      */
-    virtual void setOpacity(GLubyte opacity) override { _opacity = opacity; }
-    virtual GLubyte getOpacity() const override { return _opacity; }
+    virtual void setOpacity(uint8_t opacity) override { _opacity = opacity; }
+    virtual uint8_t getOpacity() const override { return _opacity; }
     virtual void onEnter() override;
     virtual void update(float deltaTime) override;
     
@@ -162,7 +163,7 @@ private:
     Sprite* _lowerHalfCircle;
     Sprite* _body;
     
-    GLubyte _opacity;
+    uint8_t _opacity;
     
     float _marginFromBoundary;
     float _marginForLength;

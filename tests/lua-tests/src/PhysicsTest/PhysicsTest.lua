@@ -1154,26 +1154,33 @@ local function PhysicsContactTest()
         layer:addChild(root)
         
         local s = cc.size(VisibleRect:getVisibleRect().width, VisibleRect:getVisibleRect().height)
-        
+        local subtitleLabelPosX, subtitleLabelPosY = Helper.subtitleLabel:getPosition()
+        local restartTestItemPosX, restartTestItemPosY = Helper.restartTestItem:getPosition()
+        local prevMenuPos = subtitleLabelPosY -  Helper.subtitleLabel:getContentSize().height;
+        local menuStep = (subtitleLabelPosY  -restartTestItemPosY) * 0.25;
+
         local label = cc.Label:createWithTTF(tostring(layer.yellowBoxNum), s_arialPath, 32)
         root:addChild(label, 1)
         label:setAnchorPoint(cc.p(0.5, 0.5))
-        label:setPosition(cc.p(s.width/2, s.height-50))
+        label:setPosition(cc.p(s.width/2, prevMenuPos))
         
+        prevMenuPos = prevMenuPos - menuStep
         label = cc.Label:createWithTTF(tostring(layer.blueBoxNum), s_arialPath, 32)
         root:addChild(label, 1)
         label:setAnchorPoint(cc.p(0.5, 0.5))
-        label:setPosition(cc.p(s.width/2, s.height-90))
+        label:setPosition(cc.p(s.width/2, prevMenuPos))
         
+        prevMenuPos = prevMenuPos - menuStep
         label = cc.Label:createWithTTF(tostring(layer.yellowTriangleNum), s_arialPath, 32)
         root:addChild(label, 1)
         label:setAnchorPoint(cc.p(0.5, 0.5))
-        label:setPosition(cc.p(s.width/2, s.height-130))
+        label:setPosition(cc.p(s.width/2, prevMenuPos))
         
+        prevMenuPos = prevMenuPos - menuStep
         label = cc.Label:createWithTTF(tostring(layer.blueTriangleNum), s_arialPath, 32)
         root:addChild(label, 1)
         label:setAnchorPoint(cc.p(0.5, 0.5))
-        label:setPosition(cc.p(s.width/2, s.height-170))
+        label:setPosition(cc.p(s.width/2, prevMenuPos))
         
         local wall = cc.Node:create()
         wall:setPhysicsBody(cc.PhysicsBody:createEdgeBox(s, cc.PhysicsMaterial(0.1, 1, 0.0)))
@@ -1287,8 +1294,13 @@ local function PhysicsContactTest()
 
         resetTest()
       end
-      
-      cc.MenuItemFont:setFontSize(65)
+
+      local subtitleLabelPosX, subtitleLabelPosY = Helper.subtitleLabel:getPosition()
+      local restartTestItemPosX, restartTestItemPosY = Helper.restartTestItem:getPosition()
+      local prevMenuPos = subtitleLabelPosY -  Helper.subtitleLabel:getContentSize().height;
+      local menuStep = (subtitleLabelPosY  -restartTestItemPosY) * 0.25;
+
+      cc.MenuItemFont:setFontSize(30)
       local decrease1 = cc.MenuItemFont:create(" - ")
       decrease1:setColor(cc.c3b(0,200,20))
       local increase1 = cc.MenuItemFont:create(" + ")
@@ -1300,13 +1312,13 @@ local function PhysicsContactTest()
       
       local menu1 = cc.Menu:create(decrease1, increase1)
       menu1:alignItemsHorizontally()
-      menu1:setPosition(cc.p(s.width/2, s.height-50))
+      menu1:setPosition(cc.p(s.width/2, prevMenuPos))
       layer:addChild(menu1, 1)
       
       local label = cc.Label:createWithTTF("yellow box", s_arialPath, 32)
       layer:addChild(label, 1)
       label:setAnchorPoint(cc.p(0.5, 0.5))
-      label:setPosition(cc.p(s.width/2 - 150, s.height-50))
+      label:setPosition(cc.p(s.width/2 - 150, prevMenuPos))
       
       local decrease2 = cc.MenuItemFont:create(" - ")
       decrease2:setColor(cc.c3b(0,200,20))
@@ -1317,15 +1329,16 @@ local function PhysicsContactTest()
       decrease2:registerScriptTapHandler(onDecrease)
       increase2:registerScriptTapHandler(onIncrease)
       
+      prevMenuPos = prevMenuPos - menuStep
       local menu2 = cc.Menu:create(decrease2, increase2)
       menu2:alignItemsHorizontally()
-      menu2:setPosition(cc.p(s.width/2, s.height-90))
+      menu2:setPosition(cc.p(s.width/2,  prevMenuPos))
       layer:addChild(menu2, 1)
       
       label = cc.Label:createWithTTF("blue box", s_arialPath, 32)
       layer:addChild(label, 1)
       label:setAnchorPoint(cc.p(0.5, 0.5))
-      label:setPosition(cc.p(s.width/2 - 150, s.height-90))
+      label:setPosition(cc.p(s.width/2 - 150, prevMenuPos))
       
       local decrease3 = cc.MenuItemFont:create(" - ")
       decrease3:setColor(cc.c3b(0,200,20))
@@ -1336,15 +1349,16 @@ local function PhysicsContactTest()
       decrease3:registerScriptTapHandler(onDecrease)
       increase3:registerScriptTapHandler(onIncrease)
       
+      prevMenuPos = prevMenuPos - menuStep
       local menu3 = cc.Menu:create(decrease3, increase3)
       menu3:alignItemsHorizontally()
-      menu3:setPosition(cc.p(s.width/2, s.height-130))
+      menu3:setPosition(cc.p(s.width/2, prevMenuPos))
       layer:addChild(menu3, 1)
       
       label = cc.Label:createWithTTF("yellow triangle", s_arialPath, 32)
       layer:addChild(label, 1)
       label:setAnchorPoint(cc.p(0.5, 0.5))
-      label:setPosition(cc.p(s.width/2 - 150, s.height-130))
+      label:setPosition(cc.p(s.width/2 - 150, prevMenuPos))
       
       local decrease4 = cc.MenuItemFont:create(" - ")
       decrease4:setColor(cc.c3b(0,200,20))
@@ -1355,15 +1369,16 @@ local function PhysicsContactTest()
       decrease4:registerScriptTapHandler(onDecrease)
       increase4:registerScriptTapHandler(onIncrease)
       
+      prevMenuPos = prevMenuPos - menuStep
       local menu4 = cc.Menu:create(decrease4, increase4)
       menu4:alignItemsHorizontally()
-      menu4:setPosition(cc.p(s.width/2, s.height-170))
+      menu4:setPosition(cc.p(s.width/2, prevMenuPos))
       layer:addChild(menu4, 1)
       
       label = cc.Label:createWithTTF("blue triangle", s_arialPath, 32)
       layer:addChild(label, 1)
       label:setAnchorPoint(cc.p(0.5, 0.5))
-      label:setPosition(cc.p(s.width/2 - 150, s.height-170))
+      label:setPosition(cc.p(s.width/2 - 150, prevMenuPos))
 
 
       local contactListener = cc.EventListenerPhysicsContact:create()

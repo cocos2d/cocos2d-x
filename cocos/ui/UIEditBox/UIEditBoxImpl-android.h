@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2012 James Chen
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -63,7 +64,7 @@ public:
     virtual void setNativeInputMode(EditBox::InputMode inputMode) override;
     virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) override;
     virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType)override;
-    virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
+    virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment) override;
     virtual void setNativeText(const char* pText) override;
     virtual void setNativePlaceHolder(const char* pText) override;
     virtual void setNativeVisible(bool visible) override;

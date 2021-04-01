@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -28,18 +29,17 @@
  ****************************************************************************/
 
 #include "renderer/CCTechnique.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCMaterial.h"
 #include "renderer/CCPass.h"
 
 NS_CC_BEGIN
 
-Technique* Technique::createWithGLProgramState(Material* parent, GLProgramState* state)
+Technique* Technique::createWithProgramState(Material* parent, backend::ProgramState* state)
 {
     auto technique = new (std::nothrow) Technique();
     if (technique && technique->init(parent))
     {
-        auto pass = Pass::createWithGLProgramState(technique, state);
+        auto pass = Pass::createWithProgramState(technique, state);
         technique->addPass(pass);
 
         technique->autorelease();
@@ -70,7 +70,7 @@ Technique::~Technique()
 
 bool Technique::init(Material* parent)
 {
-    _parent = parent;
+    _material = parent;
     return true;
 }
 
@@ -81,12 +81,11 @@ Technique* Technique::clone() const
     if (technique)
     {
         technique->_name = _name;
-        RenderState::cloneInto(technique);
-
+        technique->_renderState = _renderState;
         for (const auto pass: _passes)
         {
             auto p = pass->clone();
-            p->_parent = technique;
+            p->_technique = technique;
             technique->_passes.pushBack(p);
         }
 

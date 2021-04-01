@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -131,25 +132,7 @@ public:
      *
      * @return An autoreleased Sequence object.
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
-    typedef FiniteTimeAction* M;
-    static Sequence* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
-    static Sequence* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
-    static Sequence* create(M m1, M m2, M m3, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, NULL); }
-    static Sequence* create(M m1, M m2, M m3, M m4, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, NULL); }
-    static Sequence* create(M m1, M m2, M m3, M m4, M m5, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, NULL); }
-    static Sequence* create(M m1, M m2, M m3, M m4, M m5, M m6, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, NULL); }
-    static Sequence* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, NULL); }
-    static Sequence* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, NULL); }
-    static Sequence* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, NULL); }
-    static Sequence* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
-
-    // On WP8 for variable argument lists longer than 10 items, use the other create functions or variadicCreate with NULL as the last argument
-    static Sequence* variadicCreate(FiniteTimeAction* item, ...);
-#else
     static Sequence* create(FiniteTimeAction *action1, ...) CC_REQUIRES_NULL_TERMINATION;
-#endif
 
     /** Helper constructor to create an array of sequenceable actions given an array.
      * @code
@@ -252,12 +235,12 @@ public:
     virtual Repeat* clone() const override;
     virtual Repeat* reverse() const override;
     virtual void startWithTarget(Node *target) override;
-    virtual void stop(void) override;
+    virtual void stop() override;
     /**
      * @param dt In seconds.
      */
     virtual void update(float dt) override;
-    virtual bool isDone(void) const override;
+    virtual bool isDone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     Repeat() {}
@@ -320,13 +303,13 @@ public:
     // Overrides
     //
     virtual RepeatForever* clone() const override;
-    virtual RepeatForever* reverse(void) const override;
+    virtual RepeatForever* reverse() const override;
     virtual void startWithTarget(Node* target) override;
     /**
      * @param dt In seconds.
      */
     virtual void step(float dt) override;
-    virtual bool isDone(void) const override;
+    virtual bool isDone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     RepeatForever()
@@ -360,25 +343,7 @@ public:
      *
      * @return An autoreleased Spawn object.
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported.
-    typedef FiniteTimeAction* M;
-    static Spawn* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
-    static Spawn* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
-    static Spawn* create(M m1, M m2, M m3, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, NULL); }
-    static Spawn* create(M m1, M m2, M m3, M m4, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, NULL); }
-    static Spawn* create(M m1, M m2, M m3, M m4, M m5, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, NULL); }
-    static Spawn* create(M m1, M m2, M m3, M m4, M m5, M m6, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, NULL); }
-    static Spawn* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, NULL); }
-    static Spawn* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, NULL); }
-    static Spawn* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, NULL); }
-    static Spawn* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
-
-    // On WP8 for variable argument lists longer than 10 items, use the other create functions or createSpawn with NULL as the last argument.
-    static Spawn* variadicCreate(FiniteTimeAction* item, ...);
-#else
     static Spawn* create(FiniteTimeAction *action1, ...) CC_REQUIRES_NULL_TERMINATION;
-#endif
 
     /** Helper constructor to create an array of spawned actions. 
      *
@@ -412,7 +377,6 @@ public:
     virtual Spawn* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop() override;
-    virtual bool isDone() const override;
     /**
      * @param time In seconds.
      */
@@ -1236,7 +1200,7 @@ public:
      * @param opacity A certain opacity, the range is from 0 to 255.
      * @return An autoreleased FadeTo object.
      */
-    static FadeTo* create(float duration, GLubyte opacity);
+    static FadeTo* create(float duration, uint8_t opacity);
 
     //
     // Overrides
@@ -1257,11 +1221,11 @@ CC_CONSTRUCTOR_ACCESS:
      * initializes the action with duration and opacity 
      * @param duration in seconds
      */
-    bool initWithDuration(float duration, GLubyte opacity);
+    bool initWithDuration(float duration, uint8_t opacity);
 
 protected:
-    GLubyte _toOpacity;
-    GLubyte _fromOpacity;
+    uint8_t _toOpacity;
+    uint8_t _fromOpacity;
     friend class FadeOut;
     friend class FadeIn;
 private:
@@ -1352,7 +1316,7 @@ public:
      * @param blue Blue Color, from 0 to 255.
      * @return An autoreleased TintTo object.
      */
-    static TintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
+    static TintTo* create(float duration, uint8_t red, uint8_t green, uint8_t blue);
     /**
      * Creates an action with duration and color.
      * @param duration Duration time, in seconds.
@@ -1377,7 +1341,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TintTo() {}
 
     /** initializes the action with duration and color */
-    bool initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
+    bool initWithDuration(float duration, uint8_t red, uint8_t green, uint8_t blue);
 
 protected:
     Color3B _to;
@@ -1402,7 +1366,7 @@ public:
      * @param deltaBlue Delta blue color.
      * @return An autoreleased TintBy object.
      */
-    static TintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+    static TintBy* create(float duration, int16_t deltaRed, int16_t deltaGreen, int16_t deltaBlue);
 
     //
     // Overrides
@@ -1420,16 +1384,16 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TintBy() {}
 
     /** initializes the action with duration and color */
-    bool initWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+    bool initWithDuration(float duration, int16_t deltaRed, int16_t deltaGreen, int16_t deltaBlue);
 
 protected:
-    GLshort _deltaR;
-    GLshort _deltaG;
-    GLshort _deltaB;
+    int16_t _deltaR;
+    int16_t _deltaG;
+    int16_t _deltaB;
 
-    GLshort _fromR;
-    GLshort _fromG;
-    GLshort _fromB;
+    int16_t _fromR;
+    int16_t _fromG;
+    int16_t _fromB;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TintBy);
@@ -1561,14 +1525,14 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithAnimation(Animation *animation);
 
 protected:
-    std::vector<float>* _splitTimes;
-    int             _nextFrame;
-    SpriteFrame*    _origFrame;
-    int _currFrameIndex;
-    unsigned int    _executedLoops;
-    Animation*      _animation;
+    std::vector<float>* _splitTimes = new std::vector<float>;
+    int             _nextFrame = 0;
+    SpriteFrame*    _origFrame = nullptr;
+    int _currFrameIndex = 0;
+    unsigned int    _executedLoops = 0;
+    Animation*      _animation = nullptr;
 
-    EventCustom*    _frameDisplayedEvent;
+    EventCustom*    _frameDisplayedEvent = nullptr;
     AnimationFrame::DisplayedEventInfo _frameDisplayedEventInfo;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Animate);

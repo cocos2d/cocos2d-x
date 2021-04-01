@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -38,7 +39,7 @@ class BillBoardRotationTest : public TestCase
 public:
     CREATE_FUNC(BillBoardRotationTest);
     BillBoardRotationTest();
-    virtual ~BillBoardRotationTest(void);
+    virtual ~BillBoardRotationTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
@@ -48,7 +49,7 @@ protected:
 class BillBoardTest : public TestCase
 {
 public:
-    virtual ~BillBoardTest(void);
+    virtual ~BillBoardTest();
     CREATE_FUNC(BillBoardTest);
     BillBoardTest();
     virtual std::string title() const override;

@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -43,7 +44,7 @@ NS_CC_BEGIN
 };
 
 //-----------------------------------------------------------------------
-PUNoise3D::PUNoise3D(void) : 
+PUNoise3D::PUNoise3D() : 
     _octaves(2),
     _frequency(1.0f),
     _amplitude(1.0f),
@@ -51,7 +52,7 @@ PUNoise3D::PUNoise3D(void) :
 {
 }
 //-----------------------------------------------------------------------
-PUNoise3D::~PUNoise3D(void)
+PUNoise3D::~PUNoise3D()
 {
 }
 //-----------------------------------------------------------------------

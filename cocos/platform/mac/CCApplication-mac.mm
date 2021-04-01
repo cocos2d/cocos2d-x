@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -22,17 +23,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
 #import <Cocoa/Cocoa.h>
+#import <Metal/Metal.h>
 #include <algorithm>
 
-#import "platform/CCApplication.h"
+#include "platform/CCApplication.h"
 #include "platform/CCFileUtils.h"
 #include "math/CCGeometry.h"
 #include "base/CCDirector.h"
+#include "base/ccUtils.h"
+#include "renderer/backend/metal/DeviceMTL.h"
 
 NS_CC_BEGIN
 
@@ -77,7 +77,7 @@ int Application::run()
     
     // Retain glview to avoid glview being released in the while loop
     glview->retain();
-    
+
     while (!glview->windowShouldClose())
     {
         lastTime = getCurrentMillSecond();
@@ -113,11 +113,6 @@ void Application::setAnimationInterval(float interval)
     _animationInterval = interval*1000.0f;
 }
 
-void Application::setAnimationInterval(float interval, SetIntervalReason reason)
-{
-    setAnimationInterval(interval);
-}
-
 Application::Platform Application::getTargetPlatform()
 {
     return Platform::OS_MAC;
@@ -139,12 +134,6 @@ Application* Application::getInstance()
 {
     CCASSERT(sm_pSharedApplication, "sm_pSharedApplication not set");
     return sm_pSharedApplication;
-}
-
-// @deprecated Use getInstance() instead
-Application* Application::sharedApplication()
-{
-    return Application::getInstance();
 }
 
 const char * Application::getCurrentLanguageCode()
@@ -173,27 +162,7 @@ LanguageType Application::getCurrentLanguage()
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
     
-    if ([languageCode isEqualToString:@"zh"]) return LanguageType::CHINESE;
-    if ([languageCode isEqualToString:@"en"]) return LanguageType::ENGLISH;
-    if ([languageCode isEqualToString:@"fr"]) return LanguageType::FRENCH;
-    if ([languageCode isEqualToString:@"it"]) return LanguageType::ITALIAN;
-    if ([languageCode isEqualToString:@"de"]) return LanguageType::GERMAN;
-    if ([languageCode isEqualToString:@"es"]) return LanguageType::SPANISH;
-    if ([languageCode isEqualToString:@"nl"]) return LanguageType::DUTCH;
-    if ([languageCode isEqualToString:@"ru"]) return LanguageType::RUSSIAN;
-    if ([languageCode isEqualToString:@"ko"]) return LanguageType::KOREAN;
-    if ([languageCode isEqualToString:@"ja"]) return LanguageType::JAPANESE;
-    if ([languageCode isEqualToString:@"hu"]) return LanguageType::HUNGARIAN;
-    if ([languageCode isEqualToString:@"pt"]) return LanguageType::PORTUGUESE;
-    if ([languageCode isEqualToString:@"ar"]) return LanguageType::ARABIC;
-    if ([languageCode isEqualToString:@"nb"]) return LanguageType::NORWEGIAN;
-    if ([languageCode isEqualToString:@"pl"]) return LanguageType::POLISH;
-    if ([languageCode isEqualToString:@"tr"]) return LanguageType::TURKISH;
-    if ([languageCode isEqualToString:@"uk"]) return LanguageType::UKRAINIAN;
-    if ([languageCode isEqualToString:@"ro"]) return LanguageType::ROMANIAN;
-    if ([languageCode isEqualToString:@"bg"]) return LanguageType::BULGARIAN;
-    return LanguageType::ENGLISH;
-
+    return utils::getLanguageTypeByISO2([languageCode UTF8String]);
 }
 
 bool Application::openURL(const std::string &url)
@@ -203,35 +172,15 @@ bool Application::openURL(const std::string &url)
     return [[NSWorkspace sharedWorkspace] openURL:nsUrl];
 }
 
-void Application::setResourceRootPath(const std::string& rootResDir)
-{
-    _resourceRootPath = rootResDir;
-    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
-    {
-        _resourceRootPath += '/';
-    }
-    FileUtils* pFileUtils = FileUtils::getInstance();
-    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
-    pFileUtils->setSearchPaths(searchPaths);
-}
-
-const std::string& Application::getResourceRootPath(void)
-{
-    return _resourceRootPath;
-}
-
 void Application::setStartupScriptFilename(const std::string& startupScriptFile)
 {
     _startupScriptFilename = startupScriptFile;
     std::replace(_startupScriptFilename.begin(), _startupScriptFilename.end(), '\\', '/');
 }
 
-const std::string& Application::getStartupScriptFilename(void)
+const std::string& Application::getStartupScriptFilename()
 {
     return _startupScriptFilename;
 }
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC

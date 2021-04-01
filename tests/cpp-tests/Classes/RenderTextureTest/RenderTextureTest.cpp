@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "RenderTextureTest.h"
 
 USING_NS_CC;
@@ -13,7 +37,7 @@ RenderTextureTests::RenderTextureTests()
     ADD_TEST_CASE(SpriteRenderTextureBug);
     ADD_TEST_CASE(RenderTexturePartTest);
     ADD_TEST_CASE(Issue16113Test);
-    ADD_TEST_CASE(RenderTextureWithSprite3DIssue16894);
+//    ADD_TEST_CASE(RenderTextureWithSprite3DIssue16894); this Test makes no sense
 };
 
 /**
@@ -24,26 +48,29 @@ RenderTextureSave::RenderTextureSave()
     auto s = Director::getInstance()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    _target = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+    _target = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA8888);
     _target->retain();
     _target->setPosition(Vec2(s.width / 2, s.height / 2));
 
     // note that the render texture is a Node, and contains a sprite of its texture for convenience,
     // so we can just parent it to the scene like any other Node
     this->addChild(_target, -1);
-    
+
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // Save Image menu
     MenuItemFont::setFontSize(16);
-    auto item1 = MenuItemFont::create("Save Image", CC_CALLBACK_1(RenderTextureSave::saveImage, this));
-    auto item2 = MenuItemFont::create("Clear", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
-    auto menu = Menu::create(item1, item2, nullptr);
+    auto item1 = MenuItemFont::create("Save Image PMA", CC_CALLBACK_1(RenderTextureSave::saveImageWithPremultipliedAlpha, this));
+    auto item2 = MenuItemFont::create("Save Image Non-PMA", CC_CALLBACK_1(RenderTextureSave::saveImageWithNonPremultipliedAlpha, this));
+    auto item3 = MenuItemFont::create("Add Image", CC_CALLBACK_1(RenderTextureSave::addImage, this));
+    auto item4 = MenuItemFont::create("Clear to Random", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
+    auto item5 = MenuItemFont::create("Clear to Transparent", CC_CALLBACK_1(RenderTextureSave::clearImageTransparent, this));
+    auto menu = Menu::create(item1, item2, item3, item4, item5, nullptr);
     this->addChild(menu);
     menu->alignItemsVertically();
-    menu->setPosition(Vec2(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
+    menu->setPosition(Vec2(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 100));
 }
 
 std::string RenderTextureSave::title() const
@@ -61,28 +88,77 @@ void RenderTextureSave::clearImage(cocos2d::Ref *sender)
     _target->clear(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
 
-void RenderTextureSave::saveImage(cocos2d::Ref *sender)
+void RenderTextureSave::clearImageTransparent(cocos2d::Ref* sender)
+{
+    _target->clear(0, 0, 0, 0);
+}
+
+void RenderTextureSave::saveImageWithPremultipliedAlpha(cocos2d::Ref* sender)
 {
     static int counter = 0;
 
     char png[20];
-    sprintf(png, "image-%d.png", counter);
-    
+    sprintf(png, "image-pma-%d.png", counter);
+
     auto callback = [&](RenderTexture* rt, const std::string& path)
     {
         auto sprite = Sprite::create(path);
         addChild(sprite);
         sprite->setScale(0.3f);
-        sprite->setPosition(Vec2(40, 40));
+        sprite->setPosition(Vec2(40.0f, 40.0f));
         sprite->setRotation(counter * 3);
+        _target->release();
     };
-    
+
+    _target->retain();
     _target->saveToFile(png, Image::Format::PNG, true, callback);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
     CCLOG("Image saved %s", png);
 
     counter++;
+}
+
+void RenderTextureSave::saveImageWithNonPremultipliedAlpha(cocos2d::Ref *sender)
+{
+    static int counter = 0;
+
+    char png[20];
+    sprintf(png, "image-no-pma-%d.png", counter);
+    
+    auto callback = [&](RenderTexture* rt, const std::string& path)
+    {
+        auto sprite = Sprite::create(path);
+        addChild(sprite);
+        sprite->setScale(0.3f);
+        sprite->setPosition(Vec2(40.0f, 40.0f));
+        sprite->setRotation(counter * 3);
+        rt->release();
+    };
+    
+    _target->retain();
+    _target->saveToFileAsNonPMA(png, Image::Format::PNG, true, callback);
+                                                                 
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", png);
+
+    counter++;
+}
+
+void RenderTextureSave::addImage(cocos2d::Ref* sender)
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // begin drawing to the render texture
+    _target->begin();
+
+    Sprite* sprite = Sprite::create("Images/test-rgba1.png");
+    sprite->setPosition(sprite->getContentSize().width + CCRANDOM_0_1() * (s.width - sprite->getContentSize().width), sprite->getContentSize().height + CCRANDOM_0_1() * (s.height - sprite->getContentSize().height));
+    sprite->visit();
+
+    // finish drawing and return context back to the screen
+    _target->end();
 }
 
 RenderTextureSave::~RenderTextureSave()
@@ -93,46 +169,46 @@ RenderTextureSave::~RenderTextureSave()
 
 void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    auto touch = touches[0];
-    auto start = touch->getLocation();
-    auto end = touch->getPreviousLocation();
+     auto touch = touches[0];
+     auto start = touch->getLocation();
+     auto end = touch->getPreviousLocation();
 
-    // begin drawing to the render texture
-    _target->begin();
+     // begin drawing to the render texture
+     _target->begin();
 
-    // for extra points, we'll draw this smoothly from the last position and vary the sprite's
-    // scale/rotation/offset
-    float distance = start.getDistance(end);
-    if (distance > 1)
-    {
-        int d = (int)distance;
-        _brushs.clear();
-        for(int i = 0; i < d; ++i)
-        {
-            Sprite * sprite = Sprite::create("Images/fire.png");
-            sprite->setColor(Color3B::RED);
-            sprite->setOpacity(20);
-            _brushs.pushBack(sprite);
-        }
-        for (int i = 0; i < d; i++)
-        {
-            float difx = end.x - start.x;
-            float dify = end.y - start.y;
-            float delta = (float)i / distance;
-            _brushs.at(i)->setPosition(Vec2(start.x + (difx * delta), start.y + (dify * delta)));
-            _brushs.at(i)->setRotation(rand() % 360);
-            float r = (float)(rand() % 50 / 50.f) + 0.25f;
-            _brushs.at(i)->setScale(r);
-            /*_brush->setColor(Color3B(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
-            // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-            _brushs.at(i)->setColor(Color3B(rand() % 127 + 128, 255, 255));
-            // Call visit to draw the brush, don't call draw..
-            _brushs.at(i)->visit();
-        }
-    }
+     // for extra points, we'll draw this smoothly from the last position and vary the sprite's
+     // scale/rotation/offset
+     float distance = start.getDistance(end);
+     if (distance > 1)
+     {
+         int d = (int)distance;
+         _brushs.clear();
+         for(int i = 0; i < d; ++i)
+         {
+             Sprite * sprite = Sprite::create("Images/fire.png");
+             sprite->setColor(Color3B::RED);
+             sprite->setOpacity(20);
+             _brushs.pushBack(sprite);
+         }
+         for (int i = 0; i < d; i++)
+         {
+             float difx = end.x - start.x;
+             float dify = end.y - start.y;
+             float delta = (float)i / distance;
+             _brushs.at(i)->setPosition(Vec2(start.x + (difx * delta), start.y + (dify * delta)));
+             _brushs.at(i)->setRotation(rand() % 360);
+             float r = (float)(rand() % 50 / 50.f) + 0.25f;
+             _brushs.at(i)->setScale(r);
+             /*_brush->setColor(Color3B(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
+             // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
+             _brushs.at(i)->setColor(Color3B(rand() % 127 + 128, 255, 255));
+             // Call visit to draw the brush, don't call draw..
+             _brushs.at(i)->visit();
+         }
+     }
 
-    // finish drawing and return context back to the screen
-    _target->end();
+     // finish drawing and return context back to the screen
+     _target->end();
 }
 
 /**
@@ -164,7 +240,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     spr_nonpremulti->setPosition(Vec2(s.width/2-16, s.height/2-16));
     
     /* A2 & B2 setup */
-    auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
+    auto rend = RenderTexture::create(32, 64, backend::PixelFormat::RGBA8888);
 
     if (nullptr == rend)
     {
@@ -177,7 +253,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     rend->setVirtualViewport(Vec2(s.width/2-32, s.height/2-32),Rect(0,0,s.width,s.height),Rect(0,0,pixelSize.width,pixelSize.height));
 
     // It's possible to modify the RenderTexture blending function by
-    //        [[rend sprite] setBlendFunc:(BlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+    //        [[rend sprite] setBlendFunc:(BlendFunc) {BlendFactor::ONE, BlendFactor::ONE_MINUS_SRC_ALPHA}];
     rend->begin();
     spr_premulti->visit();
     spr_nonpremulti->visit();
@@ -366,7 +442,7 @@ RenderTexturePartTest::RenderTexturePartTest()
     addChild(sprite2);
     addChild(sprite22);
     
-    _rend = RenderTexture::create(200, 200, Texture2D::PixelFormat::RGBA8888);
+    _rend = RenderTexture::create(200, 200, backend::PixelFormat::RGBA8888);
     _rend->retain();
     _rend->setKeepMatrix(true);
     Size pixelSize = Director::getInstance()->getWinSizeInPixels();
@@ -380,7 +456,7 @@ RenderTexturePartTest::RenderTexturePartTest()
     _rend->end();
     
     _spriteDraw = Sprite::createWithTexture(_rend->getSprite()->getTexture());
-    FiniteTimeAction* baseAction = MoveBy::create(1, Vec2(size.width,0));
+    FiniteTimeAction* baseAction = MoveBy::create(1, Vec2(size.width,0.0f));
     _spriteDraw->setPosition(0,size.height/2);
     _spriteDraw->setScaleY(-1);
     _spriteDraw->runAction(RepeatForever::create(Sequence::create
@@ -411,17 +487,17 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 
     _spriteDS = Sprite::create("Images/fire.png");
     _spriteDS->retain();
-    _spriteDS->setPosition(Vec2(s.width * 0.25f, 0));
+    _spriteDS->setPosition(Vec2(s.width * 0.25f, 0.0f));
     _spriteDS->setScale(10);
     
     _spriteDraw = Sprite::create("Images/fire.png");
     _spriteDraw->retain();
-    _spriteDraw->setPosition(Vec2(s.width * 0.25f, 0));
+    _spriteDraw->setPosition(Vec2(s.width * 0.25f, 0.0f));
     _spriteDraw->setScale(10);
     //! move sprite half width and height, and draw only where not marked
-    _spriteDraw->setPosition(_spriteDraw->getPosition() + Vec2(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
+    _spriteDraw->setPosition(_spriteDraw->getPosition() + Vec2(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5f, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5f));
     
-    _rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    _rend = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA4444, PixelFormat::D24S8);
 
     _rend->setPosition(Vec2(s.width * 0.5f, s.height * 0.5f));
 
@@ -436,19 +512,19 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
 
 void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _renderCmds[0].init(_globalZOrder, transform, flags);
+    _renderCmds[0].init(_globalZOrder);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
     renderer->addCommand(&_renderCmds[0]);
 
     _rend->beginWithClear(0, 0, 0, 0, 0, 0);
     
-    _renderCmds[1].init(_globalZOrder, transform, flags);
+    _renderCmds[1].init(_globalZOrder);
     _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
     renderer->addCommand(&_renderCmds[1]);
 
     _spriteDS->visit();
     
-    _renderCmds[2].init(_globalZOrder, transform, flags);
+    _renderCmds[2].init(_globalZOrder);
     _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeDraw, this);
     renderer->addCommand(&_renderCmds[2]);
 
@@ -456,50 +532,33 @@ void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transfo
     
     _rend->end();
     
-    _renderCmds[3].init(_globalZOrder, transform, flags);
+    _renderCmds[3].init(_globalZOrder);
     _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
     renderer->addCommand(&_renderCmds[3]);
 }
 
 void RenderTextureTestDepthStencil::onBeforeClear()
 {
-    glStencilMask(0xFF);
-
-    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
-    // But if users must call GL directly, they should update the state manually,
-//    RenderState::StateBlock::_defaultState->setStencilWrite(0xFF);
+    Director::getInstance()->getRenderer()->setStencilWriteMask(0xFF);
 }
 
 void RenderTextureTestDepthStencil::onBeforeStencil()
 {
     //! mark sprite quad into stencil buffer
-    glEnable(GL_STENCIL_TEST);
-    glStencilFunc(GL_NEVER, 1, 0xFF);
-    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-
-    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
-    // But if users must call GL directly, they should update the state manually,
-//    RenderState::StateBlock::_defaultState->setStencilTest(true);
-//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, 1, 0xFF);
-//    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE);
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setStencilTest(true);
+    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, 1, 0xFF);
+    renderer->setStencilOperation(backend::StencilOperation::REPLACE, backend::StencilOperation::REPLACE, backend::StencilOperation::REPLACE);
 }
 
 void RenderTextureTestDepthStencil::onBeforeDraw()
 {
-    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-
-    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
-    // But if users must call GL directly, they should update the state manually,
-//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NOTEQUAL, 1, 0xFF);
+    Director::getInstance()->getRenderer()->setStencilCompareFunction(backend::CompareFunction::NOT_EQUAL, 1, 0xFF);
 }
 
 void RenderTextureTestDepthStencil::onAfterDraw()
 {
-    glDisable(GL_STENCIL_TEST);
-
-    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
-    // But if users must call GL directly, they should update the state manually,
-//    RenderState::StateBlock::_defaultState->setStencilTest(false);
+    Director::getInstance()->getRenderer()->setStencilTest(false);
 }
 
 std::string RenderTextureTestDepthStencil::title() const
@@ -539,7 +598,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     auto s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
-    auto renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
+    auto renderTexture = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA4444);
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Vec2(s.width/2, s.height/2));
@@ -549,7 +608,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     renderTexture->addChild(sprite1);
     renderTexture->addChild(sprite2);
     renderTexture->setClearColor(Color4F(0, 0, 0, 0));
-    renderTexture->setClearFlags(GL_COLOR_BUFFER_BIT);
+    renderTexture->setClearFlags(ClearFlag::COLOR);
     
     /* add the render texture to the scene */
     addChild(renderTexture);
@@ -568,13 +627,14 @@ RenderTextureTargetNode::RenderTextureTargetNode()
 
 void RenderTextureTargetNode::touched(Ref* sender)
 {
-    if (renderTexture->getClearFlags() == 0)
+    //TODO: minggo
+    if (renderTexture->getClearFlags() == ClearFlag::NONE)
     {
-        renderTexture->setClearFlags(GL_COLOR_BUFFER_BIT);
+        renderTexture->setClearFlags(ClearFlag::COLOR);
     }
     else
     {
-        renderTexture->setClearFlags(0);
+        renderTexture->setClearFlags(ClearFlag::NONE);
         renderTexture->setClearColor(Color4F( CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     }
 }
@@ -627,7 +687,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const Mat4 &
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
-        _rt = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+        _rt = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA8888);
         _rt->retain();
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
@@ -715,12 +775,16 @@ Issue16113Test::Issue16113Test()
         auto winSize = Director::getInstance()->getVisibleSize();
         auto text = Label::createWithTTF("hello world", "fonts/Marker Felt.ttf", 40);
         text->setTextColor(Color4B::RED);
-        auto target = RenderTexture::create(winSize.width, winSize.height, Texture2D::PixelFormat::RGBA8888);
+        auto target = RenderTexture::create(winSize.width, winSize.height, backend::PixelFormat::RGBA8888);
         target->beginWithClear(0,0,0,0);
         text->setPosition(winSize.width / 2,winSize.height/2);
         text->Node::visit();
         target->end();
-        target->saveToFile("issue16113.png", Image::Format::PNG);
+        auto callback = [&](RenderTexture* rt, const std::string& path){
+            rt->release();
+        };
+        target->retain();
+        target->saveToFile("issue16113.png", Image::Format::PNG, true, callback);
     });
     auto menu = Menu::create(item1, nullptr);
     this->addChild(menu);
@@ -742,55 +806,55 @@ std::string Issue16113Test::subtitle() const
 //
 RenderTextureWithSprite3DIssue16894::RenderTextureWithSprite3DIssue16894()
 {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+     auto visibleSize = Director::getInstance()->getVisibleSize();
+     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    for (int i = 0; i < 3; ++i)
-    {
-        // Ship - Model is from cocos2d-x test project
-        auto ship = Sprite3D::create("Sprite3DTest/boss.c3b");
-        ship->setScale(6);
-        ship->setRotation3D(Vec3(180,45,0));
-        ship->setPosition(Vec2(visibleSize.width/4 + origin.x, visibleSize.height/2 + origin.y));
-        ship->setForce2DQueue(true);
-        ship->retain();
+     for (int i = 0; i < 3; ++i)
+     {
+         // Ship - Model is from cocos2d-x test project
+         auto ship = Sprite3D::create("Sprite3DTest/boss.c3b");
+         ship->setScale(6);
+         ship->setRotation3D(Vec3(180.0f,45.0f,0.0f));
+         ship->setPosition(Vec2(visibleSize.width/4 + origin.x, visibleSize.height/2 + origin.y));
+         ship->setForce2DQueue(true);
+         ship->retain();
 
-        if (i == 0)
-        {
-            addChild(ship, 1);
-            // Rotate Ship
-            auto spin = RotateBy::create(4, Vec3(0,180,0));
-            auto repeatspin = RepeatForever::create(spin);
-            ship->runAction(repeatspin);
-        }
-        _ship[i] = ship;
-    }
+         if (i == 0)
+         {
+             addChild(ship, 1);
+             //// Rotate Ship
+             auto spin = RotateBy::create(4, Vec3(0.0f,180.0f,0.0f));
+             auto repeatspin = RepeatForever::create(spin);
+             ship->runAction(repeatspin);
+         }
+         _ship[i] = ship;
+     }
 
-    // RenderTextures
-    _renderTexDefault = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888);
-    _renderTexDefault->setKeepMatrix(true);
-    addChild(_renderTexDefault);
-    _renderTexDefault->setPosition(visibleSize.width/4 * 3, visibleSize.height/2);
+     // RenderTextures
+     _renderTexDefault = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888);
+     _renderTexDefault->setKeepMatrix(true);
+     addChild(_renderTexDefault);
+     _renderTexDefault->setPosition(visibleSize.width/4 * 3, visibleSize.height/2);
 
-    _renderTexWithBuffer = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
-    _renderTexWithBuffer->setKeepMatrix(true);
-    addChild(_renderTexWithBuffer);
-    _renderTexWithBuffer->setPosition(visibleSize.width/4 * 4, visibleSize.height/2);
+     _renderTexWithBuffer = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888, backend::PixelFormat::D24S8);
+     _renderTexWithBuffer->setKeepMatrix(true);
+     addChild(_renderTexWithBuffer);
+     _renderTexWithBuffer->setPosition(visibleSize.width/4 * 4, visibleSize.height/2);
 
-    // Update
-    scheduleUpdate();
+     // Update
+     scheduleUpdate();
 
-    auto label1 = Label::createWithTTF("Normal Sprite3D\n", "fonts/arial.ttf", 10);
-    label1->setPosition(Vec2(visibleSize.width/4 * 1, 60));
-    this->addChild(label1, 1);
+     auto label1 = Label::createWithTTF("Normal Sprite3D\n", "fonts/arial.ttf", 10);
+     label1->setPosition(Vec2(visibleSize.width/4 * 1, 60.0f));
+     this->addChild(label1, 1);
 
-    auto label2 = Label::createWithTTF("RenderTexture\nDefault - No depth buffer", "fonts/arial.ttf", 10);
-    label2->setPosition(Vec2(visibleSize.width/4 * 2, 60));
-    this->addChild(label2, 1);
+     auto label2 = Label::createWithTTF("RenderTexture\nDefault - No depth buffer", "fonts/arial.ttf", 10);
+     label2->setPosition(Vec2(visibleSize.width/4 * 2, 60.0f));
+     this->addChild(label2, 1);
 
-    auto label3 = Label::createWithTTF("RenderTexture\nGL_DEPTH24_STENCIL8", "fonts/arial.ttf", 10);
-    label3->setPosition(Vec2(visibleSize.width/4 * 3, 60));
-    this->addChild(label3, 1);
+     auto label3 = Label::createWithTTF("RenderTexture\nGL_DEPTH24_STENCIL8", "fonts/arial.ttf", 10);
+     label3->setPosition(Vec2(visibleSize.width/4 * 3, 60.0f));
+     this->addChild(label3, 1);
 }
 
 RenderTextureWithSprite3DIssue16894::~RenderTextureWithSprite3DIssue16894()

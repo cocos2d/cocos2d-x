@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -58,21 +59,6 @@ Menu* Menu::create()
     return Menu::create(nullptr, nullptr);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-Menu * Menu::variadicCreate(MenuItem* item, ...)
-{
-    va_list args;
-    va_start(args,item);
-    
-    Menu *ret = Menu::createWithItems(item, args);
-    
-    va_end(args);
-    
-    return ret;
-}
-#else
-
-
 Menu * Menu::create(MenuItem* item, ...)
 {
     va_list args;
@@ -84,8 +70,6 @@ Menu * Menu::create(MenuItem* item, ...)
     
     return ret;
 }
-#endif
-
 
 Menu* Menu::createWithArray(const Vector<MenuItem*>& arrayOfItems)
 {
@@ -344,7 +328,7 @@ void Menu::alignItemsVerticallyWithPadding(float padding)
     }
 }
 
-void Menu::alignItemsHorizontally(void)
+void Menu::alignItemsHorizontally()
 {
     this->alignItemsHorizontallyWithPadding(kDefaultPadding);
 }

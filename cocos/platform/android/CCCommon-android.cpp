@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -22,10 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
 #include "platform/CCCommon.h"
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
@@ -36,9 +33,9 @@ NS_CC_BEGIN
 
 #define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
-void MessageBox(const char * pszMsg, const char * pszTitle)
+void ccMessageBox(const char * pszMsg, const char * pszTitle)
 {
-    JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxHelper", "showDialog", pszTitle, pszMsg);
+    JniHelper::callStaticVoidMethod("org.cocos2dx.lib.Cocos2dxHelper", "showDialog", pszTitle, pszMsg);
 }
 
 void LuaLog(const char * pszFormat)
@@ -47,6 +44,3 @@ void LuaLog(const char * pszFormat)
 }
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-

@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -153,5 +154,35 @@ public:
 protected:
 
     cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIScrollViewTestEvents : public UIScene
+{
+public:
+	CREATE_FUNC(UIScrollViewTestEvents);
+	
+	UIScrollViewTestEvents();
+	virtual bool init() override;
+	
+protected:
+	
+	cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIScrollViewStopScrollingTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIScrollViewStopScrollingTest);
+
+    UIScrollViewStopScrollingTest();
+    virtual bool init() override;
+
+    virtual void update(float dt) override;
+
+protected:
+
+    cocos2d::ui::Text* _displayValueLabel;
+    cocos2d::ui::ScrollView* _scrollView;
+    float _remainingTime;
 };
 #endif /* defined(__TestCpp__UIScrollViewTest__) */

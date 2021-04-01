@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "TextInputTest.h"
 
 USING_NS_CC;
@@ -10,6 +34,7 @@ TextInputTests::TextInputTests()
     ADD_TEST_CASE(TextFieldTTFDefaultTest);
     ADD_TEST_CASE(TextFieldTTFActionTest);
     ADD_TEST_CASE(TextFieldTTFSecureTextEntryTest);
+    ADD_TEST_CASE(TextFieldTTSetCursorFromPoint);
 }
 
 static Rect getRect(Node * node)
@@ -110,7 +135,7 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
     Rect rect;
     rect.size = _trackNode->getContentSize();
     auto clicked = isScreenPointInRect(endPos, Camera::getVisitingCamera(), _trackNode->getWorldToNodeTransform(), rect, nullptr);
-    this->onClickTrackNode(clicked);
+    this->onClickTrackNode(clicked, endPos);
     CCLOG("----------------------------------");
 }
 
@@ -123,7 +148,7 @@ std::string TextFieldTTFDefaultTest::subtitle() const
     return "TextFieldTTF with default behavior test";
 }
 
-void TextFieldTTFDefaultTest::onClickTrackNode(bool bClicked)
+void TextFieldTTFDefaultTest::onClickTrackNode(bool bClicked, const Vec2& touchPos)
 {
     auto pTextField = (TextFieldTTF*)_trackNode;
     if (bClicked)
@@ -172,7 +197,7 @@ std::string TextFieldTTFActionTest::subtitle() const
     return "CCTextFieldTTF with action and char limit test";
 }
 
-void TextFieldTTFActionTest::onClickTrackNode(bool bClicked)
+void TextFieldTTFActionTest::onClickTrackNode(bool bClicked, const Vec2& touchPos)
 {
     auto pTextField = (TextFieldTTF*)_trackNode;
     if (bClicked)
@@ -373,5 +398,57 @@ void TextFieldTTFSecureTextEntryTest::onEnter()
 #endif
     pTextField->setSecureTextEntry(true);
     
+    _trackNode = pTextField;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// implement TextFieldTTSetCursorFromPoint
+//////////////////////////////////////////////////////////////////////////
+
+std::string TextFieldTTSetCursorFromPoint::subtitle() const
+{
+    return "TextFieldTTF with setCursorFromPoint test";
+}
+
+void TextFieldTTSetCursorFromPoint::onClickTrackNode(bool bClicked, const Vec2& touchPos)
+{
+    auto pTextField = (TextFieldTTF*)_trackNode;
+    if (bClicked)
+    {
+        // TextFieldTTFTest be clicked
+        CCLOG("TextFieldTTSetCursorFromPoint:TextFieldTTF attachWithIME");
+        pTextField->attachWithIME();
+
+        // Set new position cursor
+        pTextField->setCursorFromPoint(touchPos, Camera::getVisitingCamera());
+    }
+    else
+    {
+        // TextFieldTTFTest not be clicked
+        CCLOG("TextFieldTTSetCursorFromPoint:TextFieldTTF detachWithIME");
+        pTextField->detachWithIME();
+    }
+}
+
+void TextFieldTTSetCursorFromPoint::onEnter()
+{
+    KeyboardNotificationLayer::onEnter();
+
+    // add TextFieldTTF
+    auto s = Director::getInstance()->getWinSize();
+
+    auto pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
+        FONT_NAME,
+        FONT_SIZE);
+    addChild(pTextField);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position to make it visible
+    pTextField->setPosition(Vec2(s.width / 2, s.height / 2 + 50));
+#else
+    pTextField->setPosition(Vec2(s.width / 2, s.height / 2));
+#endif
+
     _trackNode = pTextField;
 }

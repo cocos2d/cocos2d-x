@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -26,7 +27,7 @@
 #define _CPPTESTS_BASETEST_H__
 
 #include "cocos2d.h"
-#include "extensions/cocos-ext.h"
+ #include "extensions/cocos-ext.h"
 #include "VisibleRect.h"
 
 class TestSuite;
@@ -89,6 +90,9 @@ public:
      */
     void setTestCaseName(const std::string& name) { _testCaseName = name; }
     std::string getTestCaseName() const { return _testCaseName; }
+
+    const cocos2d::Label* getSubtitleLable() const { return _subtitleLabel; }
+    const cocos2d::MenuItemImage* getRestartTestItem() const { return _restartTestItem; }
 
     virtual void onEnter() override;
 CC_CONSTRUCTOR_ACCESS:

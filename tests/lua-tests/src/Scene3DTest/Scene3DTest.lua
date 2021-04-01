@@ -181,34 +181,16 @@ function TerrainWalkThru:init()
                 local dir = cc.vec3sub(farP, nearP)
                 dir = cc.vec3normalize(dir)
 
-                local rayStep = cc.vec3mul(dir, 15)
-                local rayPos =  nearP
-                local rayStartPosition = nearP
-                local lastRayPosition  = rayPos
-                rayPos = cc.vec3add(rayPos, rayStep)
-                -- Linear search - Loop until find a point inside and outside the terrain Vector3 
-                local height = self._terrain:getHeight(rayPos.x, rayPos.z)
+                local collisionPoint = cc.vec3(-999,-999,-999)
+                local ray =  cc.Ray:new(nearP, dir)
+                local isInTerrain = true
+                isInTerrain, collisionPoint = self._terrain:getIntersectionPoint(ray, collisionPoint)
 
-                while rayPos.y > height do
-                    lastRayPosition = rayPos 
-                    rayPos = cc.vec3add(rayPos, rayStep)
-                    height = self._terrain:getHeight(rayPos.x,rayPos.z) 
+                if( not isInTerrain) then  
+                    self._player._playerState = PLAER_STATE.IDLE
+                    return
                 end
 
-                local startPosition = lastRayPosition
-                local endPosition   = rayPos
-
-                for i = 1, 32 do
-                    -- Binary search pass 
-                    local middlePoint = cc.vec3mul(cc.vec3add(startPosition, endPosition), 0.5)
-                    if (middlePoint.y < height) then
-                        endPosition = middlePoint 
-                    else 
-                        startPosition = middlePoint
-                    end
-                end
-
-                local collisionPoint = cc.vec3mul(cc.vec3add(startPosition, endPosition), 0.5)
                 local playerPos = self._player:getPosition3D()
                 dir = cc.vec3sub(collisionPoint, playerPos)
                 dir.y = 0
@@ -217,7 +199,6 @@ function TerrainWalkThru:init()
 
                 self._player._headingAxis = vec3_cross(dir, cc.vec3(0, 0, -1), self._player._headingAxis)
                 self._player._targetPos = collisionPoint
-                -- self._player:forward()
                 self._player._playerState = PLAER_STATE.FORWARD
             end
         end
@@ -330,20 +311,24 @@ function Scene3DTest:create3DWorld()
 
     --then, create skybox
     --create and set our custom shader
-    local shader = cc.GLProgram:createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
-    local state  = cc.GLProgramState:create(shader)
 
+    local cmVert = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.vert")
+    local cmFrag = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.frag")
+    local program = ccb.Device:getInstance():newProgram(cmVert, cmFrag)
+    local state = ccb.ProgramState:new(program)
+    program:release()
     --create the second texture for cylinder
     self._textureCube = cc.TextureCube:create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
                                        "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
                                        "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg")
 
     --set texture parameters
-    local tRepeatParams = { magFilter = gl.LINEAR , minFilter = gl.LINEAR , wrapS = gl.MIRRORED_REPEAT  , wrapT = gl.MIRRORED_REPEAT }
+    local tRepeatParams = { magFilter = ccb.SamplerFilter.LINEAR , minFilter = ccb.SamplerFilter.LINEAR , sAddressMode = ccb.SamplerAddressMode.MIRRORED_REPEAT  , tAddressMode = ccb.SamplerAddressMode.MIRRORED_REPEAT }
     self._textureCube:setTexParameters(tRepeatParams)
 
     --pass the texture sampler to our custom shader
-    state:setUniformTexture("u_cubeTex", self._textureCube)
+    local cubeTexLoc = state:getUniformLocation("u_cubeTex")
+    state:setTexture(cubeTexLoc, 0, self._textureCube:getBackendTexture())
 
     --add skybox
     self._skyBox = cc.Skybox:create()
@@ -351,28 +336,6 @@ function Scene3DTest:create3DWorld()
     self._skyBox:setTexture(self._textureCube)
     self:addChild(self._skyBox)
 
-    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
-        self._backToForegroundListener = cc.EventListenerCustom:create("event_renderer_recreated", function (eventCustom)
-
-                local state = self._skyBox:getGLProgramState()
-                local glProgram = state:getGLProgram()
-                glProgram:reset()
-                glProgram:initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
-                glProgram:link()
-                glProgram:updateUniforms()
-                
-                self._textureCube:reloadTexture()
-                
-                local tRepeatParams = { magFilter = gl.NEAREST , minFilter = gl.NEAREST , wrapS = gl.MIRRORED_REPEAT  , wrapT = gl.MIRRORED_REPEAT }
-                self._textureCube:setTexParameters(tRepeatParams)
-                state:setUniformTexture("u_cubeTex", self._textureCube)
-                
-                self._skyBox:reload()
-                self._skyBox:setTexture(self._textureCube)
-        end)
-        cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(self._backToForegroundListener, 1)
-    end
 end
 
 function Scene3DTest:createUI()
@@ -510,25 +473,26 @@ function Scene3DTest:createDetailDlg()
     self._detailDlg:addChild(title)
     
     -- add a spine ffd animation on it
-    local skeletonNode = sp.SkeletonAnimation:create("spine/goblins_mesh.json", "spine/goblins.atlas", 1.5)
-    skeletonNode:setAnimation(0, "walk", true)
-    skeletonNode:setSkin("goblin")
-
-    skeletonNode:setScale(0.25)
-    local windowSize = cc.Director:getInstance():getWinSize()
-    skeletonNode:setPosition(cc.p(dlgSize.width / 2, 20))
-    self._detailDlg:addChild(skeletonNode)
+    -- TODO coulsonwang: spine is not enable in V4.0
+--    local skeletonNode = sp.SkeletonAnimation:create("spine/goblins-pro.json", "spine/goblins.atlas", 1.5)
+--    skeletonNode:setAnimation(0, "walk", true)
+--    skeletonNode:setSkin("goblin")
+--
+--    skeletonNode:setScale(0.25)
+--    local windowSize = cc.Director:getInstance():getWinSize()
+--    skeletonNode:setPosition(cc.p(dlgSize.width / 2, 20))
+--    self._detailDlg:addChild(skeletonNode)
 
     local listener = cc.EventListenerTouchOneByOne:create()
     listener:registerScriptHandler(function (touch, event)
-        if (not skeletonNode:getDebugBonesEnabled()) then
-            skeletonNode:setDebugBonesEnabled(true)
-        elseif skeletonNode:getTimeScale() == 1 then
-            skeletonNode:setTimeScale(0.3)
-        else
-            skeletonNode:setTimeScale(1)
-            skeletonNode:setDebugBonesEnabled(false)
-        end
+--        if (not skeletonNode:getDebugBonesEnabled()) then
+--            skeletonNode:setDebugBonesEnabled(true)
+--        elseif skeletonNode:getTimeScale() == 1 then
+--            skeletonNode:setTimeScale(0.3)
+--        else
+--            skeletonNode:setTimeScale(1)
+--            skeletonNode:setDebugBonesEnabled(false)
+--        end
 
         return true
     end,cc.Handler.EVENT_TOUCH_BEGAN )

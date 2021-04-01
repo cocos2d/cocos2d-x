@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "TileMapTest.h"
 #include "../testResource.h"
 
@@ -63,14 +87,16 @@ TileDemo::TileDemo()
     // fix bug #486, #419.
     // "test" is the default value in Director::setGLDefaultValues()
     // but TransitionTest may setDepthTest(false), we should revert it here
-    Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
+    Director::getInstance()->getRenderer()->setDepthCompareFunction(backend::CompareFunction::LESS_EQUAL);
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(TileDemo::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-TileDemo::~TileDemo(void)
+TileDemo::~TileDemo()
 {
 }
 
@@ -87,7 +113,8 @@ std::string TileDemo::subtitle() const
 void TileDemo::onExit()
 {
     TestCase::onExit();
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
 }
 
 void TileDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
@@ -120,7 +147,7 @@ TileMapTest::TileMapTest()
     
     addChild(map, 0, kTagTileMap);
     
-    map->setAnchorPoint( Vec2(0, 0.5f) );
+    map->setAnchorPoint( Vec2(0.0f, 0.5f) );
 
     auto scale = ScaleBy::create(4, 0.8f);
     auto scaleBack = scale->reverse();
@@ -356,7 +383,7 @@ TMXOrthoTest4::TMXOrthoTest4()
         child->getTexture()->setAntiAliasTexParameters();
     }
     
-    map->setAnchorPoint(Vec2(0, 0));
+    map->setAnchorPoint(Vec2(0.0f, 0.0f));
 
     auto layer = map->getLayer("Layer 0");
     auto s = layer->getLayerSize();
@@ -364,11 +391,11 @@ TMXOrthoTest4::TMXOrthoTest4()
     layer->setOpacity(128);
     
     Sprite* sprite;
-    sprite = layer->getTileAt(Vec2(0,0));
+    sprite = layer->getTileAt(Vec2(0.0f,0.0f));
     sprite->setScale(2);
-    sprite = layer->getTileAt(Vec2(s.width-1,0));
+    sprite = layer->getTileAt(Vec2(s.width-1,0.0f));
     sprite->setScale(2);
-    sprite = layer->getTileAt(Vec2(0,s.height-1));
+    sprite = layer->getTileAt(Vec2(0.0f,s.height-1));
     sprite->setScale(2);
     sprite = layer->getTileAt(Vec2(s.width-1,s.height-1));
     sprite->setScale(2);
@@ -385,10 +412,10 @@ void TMXOrthoTest4::removeSprite(float dt)
     auto layer = map->getLayer("Layer 0");
     auto s = layer->getLayerSize();
 
-    auto sprite = layer->getTileAt( Vec2(s.width-1,0) );
+    auto sprite = layer->getTileAt( Vec2(s.width-1,0.0f) );
     auto sprite2 = layer->getTileAt(Vec2(s.width-1, s.height-1));
     layer->removeChild(sprite, true);
-    auto sprite3 = layer->getTileAt(Vec2(2, s.height-1));
+    auto sprite3 = layer->getTileAt(Vec2(2.0f, s.height-1));
     layer->removeChild(sprite3, true);
     layer->removeChild(sprite2, true);
 }
@@ -435,7 +462,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     tile2->setAnchorPoint( Vec2(0.5f, 0.5f) );
     tile3->setAnchorPoint( Vec2(0.5f, 0.5f) );
 
-    auto move = MoveBy::create(0.5f, Vec2(0,160));
+    auto move = MoveBy::create(0.5f, Vec2(0.0f,160.0f));
     auto rotate = RotateBy::create(2, 360);
     auto scale = ScaleBy::create(2, 5);
     auto opacity = FadeOut::create(2);
@@ -855,7 +882,7 @@ TMXResizeTest::TMXResizeTest()
     {
         for (unsigned int x = 0; x < ls.width; x++) 
         {
-            layer->setTileGID(1, Vec2( x, y ) );
+            layer->setTileGID(1, Vec2( (float)x, (float)y ) );
         }
     }        
 }
@@ -878,22 +905,25 @@ std::string TMXResizeTest::subtitle() const
 //------------------------------------------------------------------
 TMXIsoZorder::TMXIsoZorder()
 {
+    Director::getInstance()->getRenderer()->setDepthTest(false);
     auto map = TMXTiledMap::create("TileMaps/iso-test-zorder.tmx");
     addChild(map, 0, kTagTileMap);
 
     auto s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
-    map->setPosition(Vec2(-s.width/2,0));
+    map->setPosition(Vec2(-s.width/2,0.0f));
     
     _tamara = Sprite::create(s_pathSister1);
     map->addChild(_tamara, (int)map->getChildren().size() );
+    
     _tamara->retain();
     int mapWidth = map->getMapSize().width * map->getTileSize().width;
-    _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Vec2( mapWidth/2,0)));
-    _tamara->setAnchorPoint(Vec2(0.5f,0));
+    _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Vec2( mapWidth/2.0f,0.0f)));
+    _tamara->setScale(0.5);
+    _tamara->setAnchorPoint(Vec2(0.5f,0.0f));
 
     
-    auto move = MoveBy::create(10, Vec2(300,250));
+    auto move = MoveBy::create(10, Vec2(300.0f,250.0f));
     auto back = move->reverse();
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
@@ -919,11 +949,11 @@ void TMXIsoZorder::repositionSprite(float dt)
     auto map = getChildByTag(kTagTileMap);
     
     // there are only 4 layers. (grass and 3 trees layers)
-    // if tamara < 48, z=4
-    // if tamara < 96, z=3
-    // if tamara < 144,z=2
+    // if tamara < 30, z=4
+    // if tamara < 60, z=3
+    // if tamara < 90,z=2
     
-    int newZ = 4 - (p.y / 48);
+    int newZ = 4 - (static_cast<int>(p.y) / 30);
     newZ = std::max(newZ,0);
     
     map->reorderChild(_tamara, newZ);    
@@ -956,10 +986,10 @@ TMXOrthoZorder::TMXOrthoZorder()
     _tamara = Sprite::create(s_pathSister1);
     map->addChild(_tamara,  (int)map->getChildren().size());
     _tamara->retain();
-    _tamara->setAnchorPoint(Vec2(0.5f,0));
+    _tamara->setAnchorPoint(Vec2(0.5f,0.0f));
 
     
-    auto move = MoveBy::create(10, Vec2(400,450));
+    auto move = MoveBy::create(10, Vec2(400.0f,450.0f));
     auto back = move->reverse();
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
@@ -1012,7 +1042,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
     addChild(map, 0, kTagTileMap);
     
     auto s = map->getContentSize();
-    map->setPosition( Vec2(-s.width/2,0) );
+    map->setPosition( Vec2(-s.width/2,0.0f) );
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
     // because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
@@ -1051,14 +1081,17 @@ void TMXIsoVertexZ::onEnter()
     
     // TIP: 2d projection should be used
     Director::getInstance()->setProjection(Director::Projection::_2D);
-    Director::getInstance()->setDepthTest(true);
+   Director::getInstance()->getRenderer()->setDepthTest(true);
+   Director::getInstance()->getRenderer()->setDepthWrite(true);
 }
 
 void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
+
     TileDemo::onExit();
 }
 
@@ -1122,14 +1155,17 @@ void TMXOrthoVertexZ::onEnter()
     
     // TIP: 2d projection should be used
     Director::getInstance()->setProjection(Director::Projection::_2D);
-    Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
+
 }
 
 void TMXOrthoVertexZ::onExit()
 {
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
     TileDemo::onExit();
 }
 
@@ -1154,7 +1190,7 @@ TMXIsoMoveLayer::TMXIsoMoveLayer()
     auto map = TMXTiledMap::create("TileMaps/iso-test-movelayer.tmx");
     addChild(map, 0, kTagTileMap);
     
-    map->setPosition(Vec2(-700,-50));
+    map->setPosition(Vec2(-700.0f,-50.0f));
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
@@ -1205,7 +1241,7 @@ TMXTilePropertyTest::TMXTilePropertyTest()
 {
     auto map = TMXTiledMap::create("TileMaps/ortho-tile-property.tmx");
     addChild(map ,0 ,kTagTileMap);
-
+    
     for(int i=1;i<=20;i++){
         for(const auto& value : map->getPropertiesForGID(i).asValueMap())
         {
@@ -1336,10 +1372,10 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     std::string resources = "TileMaps";        // partial paths are OK as resource paths.
     std::string file = resources + "/orthogonal-test1.tmx";
 
-    auto str = __String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
-    CCASSERT(str != nullptr, "Unable to open file");
+    auto fileUtils = FileUtils::getInstance();
+    std::string str = fileUtils->getStringFromFile(fileUtils->fullPathForFilename(file.c_str()));
 
-    auto map = TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
+    auto map = TMXTiledMap::createWithXML(str ,resources.c_str());
     addChild(map, 0, kTagTileMap);
 
     auto s = map->getContentSize();
@@ -1415,9 +1451,9 @@ TMXBug987::TMXBug987()
         node->getTexture()->setAntiAliasTexParameters();
     }
 
-    map->setAnchorPoint(Vec2(0, 0));
+    map->setAnchorPoint(Vec2(0.0f, 0.0f));
     auto layer = map->getLayer("Tile Layer 1");
-    layer->setTileGID(3, Vec2(2,2));
+    layer->setTileGID(3, Vec2(2.0f,2.0f));
 }
 
 std::string TMXBug987::title() const

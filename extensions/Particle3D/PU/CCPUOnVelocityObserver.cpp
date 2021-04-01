@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -37,7 +38,7 @@ static bool almostEquals(float a, float b, float epsilon = std::numeric_limits<f
 const float PUOnVelocityObserver::DEFAULT_VELOCITY_THRESHOLD = 0.0f;
 
 //-----------------------------------------------------------------------
-PUOnVelocityObserver::PUOnVelocityObserver(void) : 
+PUOnVelocityObserver::PUOnVelocityObserver() : 
     PUObserver(),
     _threshold(DEFAULT_VELOCITY_THRESHOLD),
     _compare(CO_LESS_THAN)

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -28,7 +29,6 @@
 #include "base/CCVector.h"
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
-#include "renderer/CCGLProgram.h"
 #include "renderer/ccShaders.h"
 #include "platform/CCImage.h"
 #include "base/CCNinePatchImageParser.h"
@@ -129,13 +129,13 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteF
 }
 
 Scale9Sprite::Scale9Sprite()
-: _brightState(State::NORMAL)
-, _renderingType(RenderingType::SLICE)
+: _isPatch9(false)
 , _insetLeft(0)
-, _insetTop(0)
 , _insetRight(0)
+, _insetTop(0)
 , _insetBottom(0)
-, _isPatch9(false)
+, _brightState(State::NORMAL)
+, _renderingType(RenderingType::SLICE)
 {
 }
 
@@ -154,16 +154,18 @@ bool Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)
 bool Scale9Sprite::initWithFile(const std::string& filename)
 {
     // calls super
+    auto originalCapInsets = this->getCapInsets();
     bool ret = Sprite::initWithFile(filename);
-    setupSlice9(getTexture(), Rect::ZERO);
+    setupSlice9(getTexture(), originalCapInsets);
     return ret;
 }
 
 bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect)
 {
     // calls super
+    auto originalCapInsets = this->getCapInsets();
     bool ret = Sprite::initWithFile(filename, rect);
-    setupSlice9(getTexture(), Rect::ZERO);
+    setupSlice9(getTexture(), originalCapInsets);
     return ret;
 }
 
@@ -186,8 +188,9 @@ bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, c
 bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
     // calls super
+    auto originalCapInsets = this->getCapInsets();
     bool ret = Sprite::initWithSpriteFrameName(spriteFrameName);
-    setupSlice9(getTexture(), Rect::ZERO);
+    setupSlice9(getTexture(), originalCapInsets);
     return ret;
 }
 
@@ -232,12 +235,6 @@ bool Scale9Sprite::init(Sprite* sprite, const Rect& origRect, bool rotated, cons
     return ret;
 }
 
-bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rect, bool rotated, const Rect &capInsets)
-{
-    auto sprite = Sprite::createWithTexture(batchnode->getTexture());
-    return init(sprite, rect, rotated, capInsets);
-}
-
 bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, const Rect& capInsets)
 {
     // calls super
@@ -253,23 +250,6 @@ bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, c
 
     setupSlice9(getTexture(), capInsets);
     return ret;
-}
-
-bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rect, const Rect &capInsets)
-{
-    auto sprite = Sprite::createWithTexture(batchnode->getTexture());
-    return init(sprite, rect, false, capInsets);
-}
-
-bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode *batchnode, const Rect &originalRect, bool rotated, const Rect &capInsets)
-{
-    Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
-    return updateWithSprite(sprite,
-                            originalRect,
-                            rotated,
-                            Vec2::ZERO,
-                            originalRect.size,
-                            capInsets);
 }
 
 bool Scale9Sprite::updateWithSprite(Sprite* sprite,
@@ -324,20 +304,18 @@ void Scale9Sprite::setState(Scale9Sprite::State state)
 {
     if (_brightState != state) {
         _brightState = state;
-
-        GLProgramState *glState = nullptr;
+        auto isETC1 = getTexture() && getTexture()->getAlphaTextureName();
         switch (state)
         {
             case State::NORMAL:
-                glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, getTexture());
+                Sprite::updateShaders(positionTextureColor_vert, (isETC1)?etc1_frag:positionTextureColor_frag);
                 break;
             case State::GRAY:
-                glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, getTexture());
+                Sprite::updateShaders(positionTextureColor_vert, (isETC1)?etc1Gray_frag:grayScale_frag);
             default:
                 break;
         }
 
-        setGLProgramState(glState);
         _brightState = state;
     }
 }
@@ -611,5 +589,8 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
 
 Rect Scale9Sprite::getCapInsets() const
 {
-    return getCenterRect();
+    return Rect(_insetLeft,
+                _insetTop,
+                _originalContentSize.width - _insetLeft - _insetRight,
+                _originalContentSize.height - _insetTop - _insetBottom);
 }

@@ -433,7 +433,7 @@ int lua_cocos2dx_studio_ActionFrame_setEasingParameter(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::vector<float, std::allocator<float> > arg0;
+        std::vector<float> arg0;
 
         ok &= luaval_to_std_vector_float(tolua_S, 2, &arg0, "ccs.ActionFrame:setEasingParameter");
         if(!ok)
@@ -16267,7 +16267,7 @@ int lua_cocos2dx_studio_Frame_getEasingParams(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Frame_getEasingParams'", nullptr);
             return 0;
         }
-        const std::vector<float, std::allocator<float> >& ret = cobj->getEasingParams();
+        const std::vector<float>& ret = cobj->getEasingParams();
         ccvector_float_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -16309,7 +16309,7 @@ int lua_cocos2dx_studio_Frame_setEasingParams(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::vector<float, std::allocator<float> > arg0;
+        std::vector<float> arg0;
 
         ok &= luaval_to_std_vector_float(tolua_S, 2, &arg0, "ccs.Frame:setEasingParams");
         if(!ok)

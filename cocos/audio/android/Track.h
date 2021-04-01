@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -31,7 +32,7 @@ THE SOFTWARE.
 #include <functional>
 #include <mutex>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class Track : public PcmBufferProvider, public IVolumeProvider
 {
@@ -103,4 +104,4 @@ private:
     friend class AudioMixerController;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

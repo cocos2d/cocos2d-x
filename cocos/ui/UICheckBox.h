@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -35,25 +36,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
-
-/**
- * Checkbox event type, there are two type here:
- * - selected state
- * - unselected state
- * @deprecated use `CheckBox::EventType` instead
- */
-typedef enum
-{
-    CHECKBOX_STATE_EVENT_SELECTED,
-    CHECKBOX_STATE_EVENT_UNSELECTED
-} CheckBoxEventType;
-
-/**
- * A callback which will be called after checkbox event happens.
- * @deprecated use `CheckBox::ccCheckBoxCallback` instead.
- */
-typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
-#define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
 
 /**
  *  Checkbox is a specific type of two-states button that can be either checked or unchecked.
@@ -130,29 +112,6 @@ public:
                             TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * Change Checkbox state to selected.
-     *
-     * @deprecated use `isSelected()` instead
-     * @param selected   True means the Checkbox will be selected, false means unselected.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setSelectedState(bool selected){this->setSelected(selected);}
-
-    /**
-     * Query whether the CheckBox is selected or not.
-     *
-     * @deprecated use `setSelected(bool)` instead.
-     * @return selected    true that checkbox is selected, false otherwise.
-     */
-    CC_DEPRECATED_ATTRIBUTE bool getSelectedState()const{return this->isSelected();}
-    
-    /**Add a callback function which would be called when checkbox is selected or unselected.
-     *@deprecated use `addEventListener(const ccCheckBoxCallback&)` instead
-     *@param target A pointer type in Ref*.
-     *@param selector A member function pointer in SEL_SelectedStateEvent.
-     */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
-
-    /**
      *Add a callback function which would be called when checkbox is selected or unselected.
      *@param callback A std::function with type @see `ccCheckBoxCallback`
      */
@@ -173,19 +132,6 @@ protected:
 protected:
     //if you use the old event callback, it will retain the _checkBoxEventListener
     Ref*       _checkBoxEventListener;
-    
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-    SEL_SelectedStateEvent    _checkBoxEventSelector;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
     
     ccCheckBoxCallback _checkBoxEventCallback;
 

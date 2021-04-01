@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -70,10 +71,11 @@ void Waves3D::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i ,j));
+            Vec2 pos((float)i, (float)j);
+            Vec3 v = getOriginalVertex(pos);
             v.z += (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * 0.01f) * _amplitude * _amplitudeRate);
             //CCLOG("v.z offset is %f\n", (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * .01f) * _amplitude * _amplitudeRate));
-            setVertex(Vec2(i, j), v);
+            setVertex(pos, v);
         }
     }
 }
@@ -346,7 +348,8 @@ void Lens3D::update(float /*time*/)
         {
             for (j = 0; j < _gridSize.height + 1; ++j)
             {
-                Vec3 v = getOriginalVertex(Vec2(i, j));
+                Vec2 pos((float)i, (float)j);
+                Vec3 v = getOriginalVertex(pos);
                 Vec2 vect = _position - Vec2(v.x, v.y);
                 float r = vect.getLength();
                 
@@ -370,7 +373,7 @@ void Lens3D::update(float /*time*/)
                     }
                 }
                 
-                setVertex(Vec2(i, j), v);
+                setVertex(pos, v);
             }
         }
         
@@ -438,7 +441,8 @@ void Ripple3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i, j));
+            Vec2 pos((float)i, (float)j);
+            Vec3 v = getOriginalVertex(pos);
             Vec2 vect = _position - Vec2(v.x,v.y);
             float r = vect.getLength();
             
@@ -449,7 +453,7 @@ void Ripple3D::update(float time)
                 v.z += (sinf( time*(float)M_PI * _waves * 2 + r * 0.1f) * _amplitude * _amplitudeRate * rate);
             }
             
-            setVertex(Vec2(i, j), v);
+            setVertex(pos, v);
         }
     }
 }
@@ -505,7 +509,8 @@ void Shaky3D::update(float /*time*/)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i ,j));
+            Vec2 pos((float)i, (float)j);
+            Vec3 v = getOriginalVertex(pos);
             v.x += (rand() % (_randrange*2)) - _randrange;
             v.y += (rand() % (_randrange*2)) - _randrange;
             if (_shakeZ)
@@ -513,7 +518,7 @@ void Shaky3D::update(float /*time*/)
                 v.z += (rand() % (_randrange*2)) - _randrange;
             }
             
-            setVertex(Vec2(i, j), v);
+            setVertex(pos, v);
         }
     }
 }
@@ -570,10 +575,11 @@ void Liquid::update(float time)
     {
         for (j = 1; j < _gridSize.height; ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i, j));
+            Vec2 pos((float)i, (float)j);
+            Vec3 v = getOriginalVertex(pos);
             v.x = (v.x + (sinf(time * (float)M_PI * _waves * 2 + v.x * .01f) * _amplitude * _amplitudeRate));
             v.y = (v.y + (sinf(time * (float)M_PI * _waves * 2 + v.y * .01f) * _amplitude * _amplitudeRate));
-            setVertex(Vec2(i, j), v);
+            setVertex(pos, v);
         }
     }
 }
@@ -632,7 +638,8 @@ void Waves::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i, j));
+            Vec2 pos((float)i, (float)j);
+            Vec3 v = getOriginalVertex(pos);
 
             if (_vertical)
             {
@@ -644,7 +651,7 @@ void Waves::update(float time)
                 v.y = (v.y + (sinf(time * (float)M_PI * _waves * 2 + v.x * .01f) * _amplitude * _amplitudeRate));
             }
 
-            setVertex(Vec2(i, j), v);
+            setVertex(pos, v);
         }
     }
 }
@@ -708,7 +715,8 @@ void Twirl::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i ,j));
+            Vec2 pos((float)i, (float)j);
+            Vec3 v = getOriginalVertex(pos);
             
             Vec2 avg(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
             float r = avg.getLength();
@@ -723,7 +731,7 @@ void Twirl::update(float time)
             v.x = c.x + d.x;
             v.y = c.y + d.y;
 
-            setVertex(Vec2(i ,j), v);
+            setVertex(pos, v);
         }
     }
 }

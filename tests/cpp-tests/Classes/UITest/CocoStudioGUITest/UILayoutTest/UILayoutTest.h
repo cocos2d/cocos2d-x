@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -159,6 +160,22 @@ public:
     virtual bool init() override;
 
     CREATE_FUNC(UILayoutComponent_Berth_Stretch_Test);
+};
+
+class UILayoutTest_Issue19890 : public UIScene
+{
+public:
+    virtual bool init() override;
+
+    CREATE_FUNC(UILayoutTest_Issue19890);
+};
+
+class UILayout_Clipping_Test : public UILayoutComponentTest
+{
+public:
+    virtual bool init() override;
+
+    CREATE_FUNC(UILayout_Clipping_Test);
 };
 
 #endif /* defined(__TestCpp__UILayoutTest__) */

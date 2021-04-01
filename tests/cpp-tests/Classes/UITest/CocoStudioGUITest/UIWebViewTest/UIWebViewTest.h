@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -35,13 +36,13 @@ public:
     CREATE_FUNC(WebViewTest);
     
     virtual bool init() override;
-    bool onWebViewShouldStartLoading(cocos2d::experimental::ui::WebView *sender, const std::string &url);
-    void onWebViewDidFinishLoading(cocos2d::experimental::ui::WebView *sender, const std::string &url);
-    void onWebViewDidFailLoading(cocos2d::experimental::ui::WebView *sender, const std::string &url);
+    bool onWebViewShouldStartLoading(cocos2d::ui::WebView *sender, const std::string &url);
+    void onWebViewDidFinishLoading(cocos2d::ui::WebView *sender, const std::string &url);
+    void onWebViewDidFailLoading(cocos2d::ui::WebView *sender, const std::string &url);
     
     
 private:
-    cocos2d::experimental::ui::WebView *_webView;
+    cocos2d::ui::WebView *_webView;
     
 };
 

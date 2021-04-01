@@ -3,7 +3,8 @@ Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2009      Matt Oswald
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -25,16 +26,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CC_SPRITE_BATCH_NODE_H__
-#define __CC_SPRITE_BATCH_NODE_H__
+#pragma once
 
 #include <vector>
 
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
 #include "renderer/CCTextureAtlas.h"
-#include "renderer/CCBatchCommand.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -211,6 +210,11 @@ public:
 	* @js NA
 	*/
     virtual std::string getDescription() const override;
+    
+    /**
+    * Set ProgramState
+    */
+    virtual void setProgramState(backend::ProgramState *programState) override;
 
     /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      * This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.
@@ -260,10 +264,17 @@ protected:
     void updateAtlasIndex(Sprite* sprite, ssize_t* curIndex);
     void swap(ssize_t oldIndex, ssize_t newIndex);
     void updateBlendFunc();
+    void setVertexLayout();
+    void setUniformLocation();
+    
+    virtual void updateShaders(const std::string& vertexShader, const std::string& fragmentShader);
 
-    TextureAtlas *_textureAtlas;
+    TextureAtlas *_textureAtlas = nullptr;
     BlendFunc _blendFunc;
-    BatchCommand _batchCommand;     // render command
+    QuadCommand _quadCommand;
+    
+    backend::UniformLocation _mvpMatrixLocaiton;
+    backend::UniformLocation _textureLocation;
 
     // all descendants: children, grand children, etc...
     // There is not need to retain/release these objects, since they are already retained by _children
@@ -275,5 +286,3 @@ protected:
 /** @} */
 
 NS_CC_END
-
-#endif // __CC_SPRITE_BATCH_NODE_H__

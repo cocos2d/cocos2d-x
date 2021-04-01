@@ -2,7 +2,8 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -155,11 +156,6 @@ public:
      * @return The TMXLayer for the specific layer.
      */
     TMXLayer* getLayer(const std::string& layerName) const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const std::string& layerName) const { return getLayer(layerName); };
 
     /** Return the TMXObjectGroup for the specific group. 
      *
@@ -167,11 +163,6 @@ public:
      * @return A Type of TMXObjectGroup.
      */
     TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const std::string& groupName) const { return getObjectGroup(groupName); };
 
     /** Return the value for the specific property name. 
      *
@@ -179,11 +170,6 @@ public:
      * @return Return the value for the specific property name.
      */
     Value getProperty(const std::string& propertyName) const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
 
     /** Return properties dictionary for tile GID. 
      *
@@ -191,7 +177,6 @@ public:
      * @return Return properties dictionary for tile GID.
      */
     Value getPropertiesForGID(int GID) const;
-    CC_DEPRECATED_ATTRIBUTE Value propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
     /** Assigns properties to argument value, returns true if it did found properties 
      * for that GID and did assigned a value, else it returns false.

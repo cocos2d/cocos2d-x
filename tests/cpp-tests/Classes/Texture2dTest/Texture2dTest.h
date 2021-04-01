@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -34,14 +35,6 @@ class TextureDemo : public TestCase
 {
 public:
     virtual ~TextureDemo();
-    virtual void onEnter() override;
-};
-
-class TextureTIFF : public TextureDemo
-{
-public:
-    CREATE_FUNC(TextureTIFF);
-    virtual std::string title() const override;
     virtual void onEnter() override;
 };
 
@@ -474,7 +467,6 @@ public:
 protected:
     void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
 
-    cocos2d::CustomCommand _renderCmd;
     cocos2d::Texture2D* _tex1, *_Tex2F;
 };
 
@@ -490,7 +482,6 @@ public:
 protected:
     void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
 
-    cocos2d::CustomCommand _renderCmd;
     cocos2d::Texture2D* _tex1, *_Tex2F;
 };
 

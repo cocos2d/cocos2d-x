@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -22,10 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-
 #import "platform/CCImage.h"
 #import "platform/CCCommon.h"
 #import <string>
@@ -39,6 +36,12 @@ NS_CC_BEGIN
 
 bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
 {
+    //only support for backend::PixelFormat::RGB888 or backend::PixelFormat::RGBA8888 uncompressed data
+    if (isCompressed() || (_pixelFormat != backend::PixelFormat::RGB888 && _pixelFormat != backend::PixelFormat::RGBA8888))
+    {
+        CCLOG("cocos2d: Image: saveToFile is only support for backend::PixelFormat::RGB888 or backend::PixelFormat::RGBA8888 uncompressed data for now");
+        return false;
+    }
     bool saveToPNG = false;
     bool needToCopyPixels = false;
 
@@ -84,7 +87,14 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
     if (saveToPNG && hasAlpha() && (! isToRGB))
     {
-        bitmapInfo |= kCGImageAlphaPremultipliedLast;
+        if (_hasPremultipliedAlpha)
+        {
+            bitmapInfo |= kCGImageAlphaPremultipliedLast;
+        }
+        else
+        {
+            bitmapInfo |= kCGImageAlphaLast;
+        }        
     }
     CGDataProviderRef provider        = CGDataProviderCreateWithData(nullptr, pixels, myDataLength, nullptr);
     CGColorSpaceRef colorSpaceRef    = CGColorSpaceCreateDeviceRGB();
@@ -122,6 +132,3 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
 }
 
 NS_CC_END
-
-#endif // CC_PLATFORM_IOS
-

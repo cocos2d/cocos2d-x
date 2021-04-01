@@ -2,6 +2,7 @@
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2012 James Chen
  Copyright (c) 2013-2015 zilongshanren
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -148,7 +149,7 @@ NSString* removeSiriString(NSString* str)
     return [str stringByReplacingOccurrencesOfString:siriString withString:@""];
 }
 
-const char* EditBoxImplIOS::getText(void)
+const char* EditBoxImplIOS::getText()
 {
     return [removeSiriString(_systemControl.text) UTF8String];
 }

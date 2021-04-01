@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "ActionManagerTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
@@ -29,11 +53,11 @@ ActionManagerTests::ActionManagerTests()
 //
 //------------------------------------------------------------------
 
-ActionManagerTest::ActionManagerTest(void)
+ActionManagerTest::ActionManagerTest()
 {
 }
 
-ActionManagerTest::~ActionManagerTest(void)
+ActionManagerTest::~ActionManagerTest()
 {
 }
 
@@ -103,7 +127,7 @@ void LogicTest::onEnter()
     grossini->setPosition(VisibleRect::center());
 
     grossini->runAction( Sequence::create( 
-                                                MoveBy::create(1, Vec2(150,0)),
+                                                MoveBy::create(1, Vec2(150.0f,0.0f)),
                                                 CallFuncN::create(CC_CALLBACK_1(LogicTest::bugMe,this)),
                                                 nullptr) 
                         );
@@ -147,7 +171,7 @@ void PauseTest::onEnter()
     addChild(grossini, 0, kTagGrossini);
     grossini->setPosition(VisibleRect::center() );
     
-    auto action = MoveBy::create(1, Vec2(150,0));
+    auto action = MoveBy::create(1, Vec2(150.0f,0.0f));
 
     auto director = Director::getInstance();
     director->getActionManager()->addAction(action, grossini, true);
@@ -181,7 +205,7 @@ void StopActionTest::onEnter()
     addChild(l);
     l->setPosition(VisibleRect::center().x, VisibleRect::top().y - 75);
 
-    auto pMove = MoveBy::create(2, Vec2(200, 0));
+    auto pMove = MoveBy::create(2, Vec2(200.0f, 0.0f));
     auto pCallback = CallFunc::create(CC_CALLBACK_0(StopActionTest::stopAction,this));
     auto pSequence = Sequence::create(pMove, pCallback, nullptr);
     pSequence->setTag(kTagSequence);
@@ -217,8 +241,8 @@ void StopAllActionsTest::onEnter()
     addChild(l);
     l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75) );
     
-    auto pMove1 = MoveBy::create(2, Vec2(200, 0));
-    auto pMove2 = MoveBy::create(2, Vec2(-200, 0));
+    auto pMove1 = MoveBy::create(2, Vec2(200.0f, 0.0f));
+    auto pMove2 = MoveBy::create(2, Vec2(-200.0f, 0.0f));
     auto pSequenceMove = Sequence::createWithTwoActions(pMove1, pMove2);
     auto pRepeatMove = RepeatForever::create(pSequenceMove);
     pRepeatMove->setTag(kTagSequence);
@@ -307,8 +331,8 @@ void StopActionsByFlagsTest::onEnter()
     addChild(l);
     l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75) );
 
-    auto pMove1 = MoveBy::create(2, Vec2(200, 0));
-    auto pMove2 = MoveBy::create(2, Vec2(-200, 0));
+    auto pMove1 = MoveBy::create(2, Vec2(200.0f, 0.0f));
+    auto pMove2 = MoveBy::create(2, Vec2(-200.0f, 0.0f));
     auto pSequenceMove = Sequence::createWithTwoActions(pMove1, pMove2);
     auto pRepeatMove = RepeatForever::create(pSequenceMove);
     pRepeatMove->setFlags(kMoveFlag | kRepeatForeverFlag);
@@ -370,7 +394,7 @@ void Issue14050Test::onEnter()
     sprite->initWithFile("Images/grossini.png");
     sprite->autorelease();
 
-    auto move = MoveBy::create(2, Vec2(100, 100));
+    auto move = MoveBy::create(2, Vec2(100.0f, 100.0f));
     sprite->runAction(move);
 }
 

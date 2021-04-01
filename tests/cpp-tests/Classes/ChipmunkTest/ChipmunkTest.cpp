@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 //
 // Accelerometer + Chipmunk physics + multi touches example
 // a cocos2d example
@@ -56,7 +80,7 @@ ChipmunkTest::ChipmunkTest()
 #endif
     addChild(parent, 0, kTagParentNode);
 
-    addNewSpriteAtPosition(cocos2d::Vec2(200,200));
+    addNewSpriteAtPosition(cocos2d::Vec2(200.0f,200.0f));
 
     // menu for debug layer
     MenuItemFont::setFontSize(18);
@@ -95,7 +119,7 @@ ChipmunkTest::~ChipmunkTest()
         cpShapeFree( _walls[i] );
     }
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 	cpSpaceFree(_space);
 #else
 	cpHastySpaceFree(_space);
@@ -111,14 +135,14 @@ void ChipmunkTest::initPhysics()
     // init chipmunk
     //cpInitChipmunk();
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 	_space = cpSpaceNew();
 #else
 	_space = cpHastySpaceNew();
 	cpHastySpaceSetThreads(_space, 0);
 #endif
 
-    cpSpaceSetGravity(_space, cpv(0, -100));
+    cpSpaceSetGravity(_space, cpv(0.0f, -100.0f));
 
     //
     // rogue shapes
@@ -165,7 +189,7 @@ void ChipmunkTest::update(float delta)
 
     for(int i=0; i<steps; i++){
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 		cpSpaceStep(_space, dt);
 #else
 		cpHastySpaceStep(_space, dt);

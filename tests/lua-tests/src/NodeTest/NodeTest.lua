@@ -369,7 +369,8 @@ local function StressTest2()
     sublayer:addChild(sp1, 1)
 
     local fire = cc.ParticleFire:create()
-    fire:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
+    local fireTexture = cc.Director:getInstance():getTextureCache():addImage("Images/fire.png")
+    fire:setTexture(fireTexture)
     fire:setPosition(80, s.height / 2 - 50)
 
     local copy_seq3 = seq3:clone()
@@ -426,10 +427,12 @@ end
 local function CameraOrbitTest_onEnterOrExit(tag)
 	if tag == "enter" then
 		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION3_D)
-        cc.Director:getInstance():setDepthTest(true)
+        cc.Director:getInstance():getRenderer():setDepthTest(true)
+        cc.Director:getInstance():getRenderer():setDepthWrite(true)
 	elseif tag == "exit" then
 		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT)
-        cc.Director:getInstance():setDepthTest(false)
+        cc.Director:getInstance():getRenderer():setDepthTest(false)
+        cc.Director:getInstance():getRenderer():setDepthWrite(false)
 	end
 end
 
@@ -603,7 +606,7 @@ local function NodeOpaqueTest()
 
     for i = 0, 49 do
         local background = cc.Sprite:create("Images/background1.png")
-        background:setBlendFunc(cc.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA))
+        background:setBlendFunc(cc.blendFunc(ccb.BlendFactor.ONE, ccb.BlendFactor.ONE_MINUS_SRC_ALPHA))
         background:setAnchorPoint(cc.p(0, 0))
         layer:addChild(background)
     end
@@ -621,7 +624,7 @@ local function NodeNonOpaqueTest()
 
     for i = 0, 49 do
         background = cc.Sprite:create("Images/background1.jpg")
-        background:setBlendFunc(cc.blendFunc(gl.ONE, gl.ZERO))
+        background:setBlendFunc(cc.blendFunc(ccb.BlendFactor.ONE, ccb.BlendFactor.ZERO))
         background:setAnchorPoint(cc.p(0, 0))
         layer:addChild(background)
     end

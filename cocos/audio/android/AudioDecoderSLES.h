@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -28,7 +29,7 @@ THE SOFTWARE.
 #include <mutex>
 #include <condition_variable>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class AudioDecoderSLES : public AudioDecoder
 {
@@ -93,4 +94,4 @@ private:
     friend class AudioDecoderProvider;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

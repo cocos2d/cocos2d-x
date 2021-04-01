@@ -42,10 +42,8 @@ class CocosFileList:
         self.rootDir = ""
         self.fileList_com=[]
         self.fileList_lua=[]
-        self.fileList_js=[]
 
         self.luaPath = ["cocos/scripting/lua-bindings", "external/lua", "tools/bindings-generator", "tools/tolua"]
-        self.jsPath = ["cocos/scripting/js-bindings", "external/spidermonkey", "tools/bindings-generator", "tools/tojs" ]
 
     def readIngoreFile(self, fileName):
         """
@@ -96,16 +94,8 @@ class CocosFileList:
                                 foundLuaModule = True
                                 break
 
-                        foundJSModule = False
-                        for jsPath in self.jsPath:
-                            if relativePath.upper().find(jsPath.upper()) == 0:
-                                foundJSModule = True
-                                break
-
                         if foundLuaModule:
                             self.fileList_lua.append("%s/" %relativePath)
-                        elif foundJSModule:
-                            self.fileList_js.append("%s/" %relativePath)
                         else:
                             self.fileList_com.append("%s/" %relativePath)
                         self.__parseFileList(path)
@@ -135,16 +125,8 @@ class CocosFileList:
                         foundLuaModule = True
                         break
 
-                foundJSModule = False
-                for jsPath in self.jsPath:
-                    if relativePath.upper().find(jsPath.upper()) == 0:
-                        foundJSModule = True
-                        break
-
                 if foundLuaModule:
                     self.fileList_lua.append(relativePath)
-                elif foundJSModule:
-                    self.fileList_js.append(relativePath)
                 else:
                     self.fileList_com.append(relativePath)
 
@@ -171,8 +153,7 @@ class CocosFileList:
         f = open(fileName,"w")
         self.fileList_com.sort()
         self.fileList_lua.sort()
-        self.fileList_js.sort()
-        content ={'common':self.fileList_com,'lua':self.fileList_lua,'js':self.fileList_js}
+        content ={'common':self.fileList_com,'lua':self.fileList_lua}
         json.dump(content,f,sort_keys=True,indent=4)
         f.close()
         return True
@@ -182,7 +163,7 @@ if __name__ == '__main__':
 
     cocos_root =os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
     cocos_file_path =os.path.abspath(os.path.join(cocos_root, "templates", "cocos2dx_files.json"))
-    cocos_file_ingore =os.path.abspath(os.path.join(os.path.dirname(__file__), "config.gitingore"))
+    cocos_file_ingore =os.path.abspath(os.path.join(os.path.dirname(__file__), "config.gitignore"))
     # print ("begin list files")
     cocosObj = CocosFileList()
     cocosObj.readIngoreFile(cocos_file_ingore)

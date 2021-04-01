@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -32,7 +33,7 @@ NS_CC_BEGIN
 const float PUGravityAffector::DEFAULT_GRAVITY = 1.0f;
 
 //-----------------------------------------------------------------------
-PUGravityAffector::PUGravityAffector(void) : 
+PUGravityAffector::PUGravityAffector() : 
     PUAffector(),
     _gravity(DEFAULT_GRAVITY)
 {
@@ -43,7 +44,7 @@ PUGravityAffector::~PUGravityAffector( void )
 
 }
 //-----------------------------------------------------------------------
-float PUGravityAffector::getGravity(void) const
+float PUGravityAffector::getGravity() const
 {
     return _gravity;
 }

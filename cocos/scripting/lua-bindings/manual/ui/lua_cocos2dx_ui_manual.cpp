@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -24,10 +25,10 @@
 #include "scripting/lua-bindings/manual/ui/lua_cocos2dx_ui_manual.hpp"
 #include "scripting/lua-bindings/auto/lua_cocos2dx_ui_auto.hpp"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
-#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_video_auto.hpp"
-#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_video_manual.hpp"
-#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_webview_auto.hpp"
-#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_webview_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_video_auto.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_video_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_webview_auto.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_webview_manual.hpp"
 #endif
 
 #include "scripting/lua-bindings/manual/tolua_fix.h"
@@ -769,22 +770,22 @@ static int lua_cocos2dx_LayoutParameter_setMargin(lua_State* L)
         Margin margin;
         lua_pushstring(L, "left");
         lua_gettable(L,2);
-        margin.left = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        margin.left = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
             
         lua_pushstring(L, "top");
         lua_gettable(L,2);
-        margin.top = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        margin.top = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
             
         lua_pushstring(L, "right");
         lua_gettable(L,2);
-        margin.right = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        margin.right = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
             
         lua_pushstring(L, "bottom");
         lua_gettable(L,2);
-        margin.bottom = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        margin.bottom = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
         
         self->setMargin(margin);
@@ -1182,10 +1183,10 @@ int register_ui_module(lua_State* L)
         register_all_cocos2dx_ui(L);
         register_all_cocos2dx_ui_manual(L);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
-        register_all_cocos2dx_experimental_video(L);
-        register_all_cocos2dx_experimental_video_manual(L);
-        register_all_cocos2dx_experimental_webview(L);
-        register_all_cocos2dx_experimental_webview_manual(L);
+        register_all_cocos2dx_video(L);
+        register_all_cocos2dx_video_manual(L);
+        register_all_cocos2dx_webview(L);
+        register_all_cocos2dx_webview_manual(L);
 #endif
         extendEventListenerFocusEvent(L);
     }

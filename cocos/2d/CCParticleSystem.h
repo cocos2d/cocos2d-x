@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -187,12 +188,6 @@ emitter.startSpin = 0;
 @endcode
 
 */
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#ifdef RELATIVE
-#undef RELATIVE
-#endif
-#endif
 
 class CC_DLL ParticleSystem : public Node, public TextureProtocol, public PlayableProtocol
 {
@@ -730,7 +725,6 @@ public:
     /** does the alpha value modify color */
     void setOpacityModifyRGB(bool opacityModifyRGB) override { _opacityModifyRGB = opacityModifyRGB; }
     bool isOpacityModifyRGB() const override { return _opacityModifyRGB; }
-    CC_DEPRECATED_ATTRIBUTE bool getOpacityModifyRGB() const { return isOpacityModifyRGB(); }
     
     /** Gets the particles movement type: Free or Grouped.
      @since v0.8
@@ -772,6 +766,9 @@ public:
     virtual void start() override;
     virtual void stop() override;
     /// @} end of PlayableProtocol
+    
+    void setSourcePositionCompatible(bool sourcePositionCompatible) { _sourcePositionCompatible = sourcePositionCompatible; }
+    bool isSourcePositionCompatible() const { return _sourcePositionCompatible; }
     
 CC_CONSTRUCTOR_ACCESS:
     /**
@@ -830,8 +827,8 @@ protected:
     /** whether or not the particles are using blend additive.
      If enabled, the following blending function will be used.
      @code
-     source blend function = GL_SRC_ALPHA;
-     dest blend function = GL_ONE;
+     source blend function = BlendFactor::SRC_ALPHA;
+     dest blend function = BlendFactor::ONE;
      @endcode
      */
     bool _isBlendAdditive;
@@ -984,6 +981,9 @@ protected:
     
     /** is the emitter paused */
     bool _paused;
+    
+    /** is sourcePosition compatible */
+    bool _sourcePositionCompatible;
 
     static Vector<ParticleSystem*> __allInstances;
     

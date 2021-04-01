@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2010      Stuart Carnie
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -49,12 +50,6 @@ Profiler* Profiler::getInstance()
     return g_sSharedProfiler;
 }
 
-// FIXME:: deprecated
-Profiler* Profiler::sharedProfiler(void)
-{
-    return Profiler::getInstance();
-}
-
 ProfilingTimer* Profiler::createAndAddTimerWithName(const char* timerName)
 {
     ProfilingTimer *t = new (std::nothrow) ProfilingTimer();
@@ -80,7 +75,7 @@ bool Profiler::init()
     return true;
 }
 
-Profiler::~Profiler(void)
+Profiler::~Profiler()
 {
 }
 
@@ -111,7 +106,7 @@ bool ProfilingTimer::initWithName(const char* timerName)
     return true;
 }
 
-ProfilingTimer::~ProfilingTimer(void)
+ProfilingTimer::~ProfilingTimer()
 {
     
 }

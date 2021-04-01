@@ -172,14 +172,14 @@ local function main()
 
         local function menuCallbackClosePopup()
             -- stop test sound effect
-            cc.SimpleAudioEngine:getInstance():stopEffect(effectID)
+            cc.AudioEngine:stop(effectID)
             menuPopup:setVisible(false)
         end
 
         local function menuCallbackOpenPopup()
             -- loop test sound effect
             local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
-            effectID = cc.SimpleAudioEngine:getInstance():playEffect(effectPath)
+            effectID = cc.AudioEngine:play2d(effectPath)
             menuPopup:setVisible(true)
         end
 
@@ -207,9 +207,9 @@ local function main()
 
     -- play background music, preload effect
     local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3") 
-    cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
+    cc.AudioEngine:play2d(bgMusicPath, true)
     local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
-    cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
+    cc.AudioEngine:preload(effectPath)
 
     -- run
     local sceneGame = cc.Scene:create()

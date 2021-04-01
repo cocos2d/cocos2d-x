@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -25,6 +26,7 @@
 #include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include "base/ObjectFactory.h"
+#include "base/ccConstants.h"
 #include "ui/CocosGUI.h"
 #include "platform/CCFileUtils.h"
 #include "editor-support/cocostudio/CocoStudio.h"
@@ -1174,7 +1176,7 @@ flatbuffers::Offset<flatbuffers::BlendFrame> FlatBuffersSerialize::createBlendFr
 {
     int frameIndex = 0;
     bool tween = true;
-    int32_t src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA;
+    int32_t src = GLBlendConst::ONE, dst = GLBlendConst::ONE_MINUS_SRC_ALPHA;
     std::string name = "";
     std::string value = "";
 

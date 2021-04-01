@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -22,12 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CC_APPLICATION_ANDROID_H__
-#define __CC_APPLICATION_ANDROID_H__
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#pragma once
 
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
@@ -52,7 +48,6 @@ public:
     @param interval The time, expressed in seconds, between current frame and next.
     */
     virtual void setAnimationInterval(float interval) override;
-    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
 
     /**
     @brief    Run the message loop.
@@ -109,7 +104,3 @@ protected:
 };
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
-#endif // __CC_APPLICATION_ANDROID_H__

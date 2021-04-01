@@ -7,6 +7,8 @@ varying vec2 v_texCoord;
 
 uniform vec2 resolution;
 
+uniform sampler2D u_texture;
+
 #define FILTER_SIZE 3
 #define COLOR_LEVELS 7.0
 #define EDGE_FILTER_SIZE 3
@@ -20,7 +22,7 @@ vec4 edgeFilter(in int px, in int py)
 	{
 		for (int x = -EDGE_FILTER_SIZE; x <= EDGE_FILTER_SIZE; ++x)
 		{
-			color += texture2D(CC_Texture0, v_texCoord + vec2(px + x, py + y) / resolution.xy);
+			color += texture2D(u_texture, v_texCoord + vec2(px + x, py + y) / resolution.xy);
 		}
 	}
 
@@ -38,7 +40,7 @@ void main(void)
 	{
 		for (int x = -FILTER_SIZE; x <= FILTER_SIZE; ++x)
 		{
-			color += texture2D(CC_Texture0, v_texCoord + vec2(x, y) / resolution.xy);
+			color += texture2D(u_texture, v_texCoord + vec2(x, y) / resolution.xy);
 		}
 	}
 

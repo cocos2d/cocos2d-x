@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -22,18 +23,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
 
 #include "platform/CCDevice.h"
 #include "base/ccTypes.h"
-#include "platform/apple/CCDevice-apple.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventAcceleration.h"
 #include "base/CCDirector.h"
-#import <UIKit/UIKit.h>
+#include "platform/apple/CCDevice-apple.h"
 
 // Accelerometer
 #if !defined(CC_TARGET_OS_TVOS)
@@ -143,7 +140,7 @@ static CGSize _calculateShrinkedSizeForString(NSAttributedString **str,
             *str = __attributedStringWithFontSize(mutableString, fontSize);
             
             CGSize fitSize = [*str boundingRectWithSize:CGSizeMake(constrainSize.width, MAX_MEASURE_HEIGHT)
-                                    options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                    options:(NSStringDrawingUsesLineFragmentOrigin)
                                     context:nil].size;
 
             if (fitSize.width == 0 || fitSize.height == 0) {
@@ -173,7 +170,7 @@ static CGSize _calculateShrinkedSizeForString(NSAttributedString **str,
 #define SENSOR_DELAY_GAME 0.02
 
 #if !defined(CC_TARGET_OS_TVOS)
-@interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
+@interface CCAccelerometerDispatcher : NSObject
 {
     cocos2d::Acceleration *_acceleration;
     CMMotionManager *_motionManager;
@@ -244,24 +241,34 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     _acceleration->timestamp = accelerometerData.timestamp;
 
     double tmp = _acceleration->x;
-
-    switch ([[UIApplication sharedApplication] statusBarOrientation])
+    UIInterfaceOrientation orientation;
+    if (@available(iOS 13.0, *))
+    {
+        orientation = [[[UIApplication sharedApplication].windows[0] windowScene] interfaceOrientation];
+    }
+    else
+    {
+        // Fallback on earlier versions
+        orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    }
+    
+    switch (orientation)
     {
         case UIInterfaceOrientationLandscapeRight:
             _acceleration->x = -_acceleration->y;
             _acceleration->y = tmp;
             break;
-
+            
         case UIInterfaceOrientationLandscapeLeft:
             _acceleration->x = _acceleration->y;
             _acceleration->y = -tmp;
             break;
-
+            
         case UIInterfaceOrientationPortraitUpsideDown:
             _acceleration->x = -_acceleration->y;
             _acceleration->y = -tmp;
             break;
-
+            
         case UIInterfaceOrientationPortrait:
             break;
         default:
@@ -292,9 +299,10 @@ int Device::getDPI()
             scale = [[UIScreen mainScreen] scale];
         }
 
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        UIUserInterfaceIdiom userInterfaceIdiom = [UIDevice.currentDevice userInterfaceIdiom];
+        if (userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             dpi = 132 * scale;
-        } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        } else if (userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
             dpi = 163 * scale;
         } else {
             dpi = 160 * scale;
@@ -361,7 +369,7 @@ static CGSize _calculateStringSize(NSAttributedString *str, id font, CGSize *con
 
     CGSize dim;
     dim = [str boundingRectWithSize:CGSizeMake(textRect.width, textRect.height)
-                                 options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                 options:(NSStringDrawingUsesLineFragmentOrigin)
                             context:nil].size;
 
     dim.width = ceilf(dim.width);
@@ -617,5 +625,3 @@ void Device::vibrate(float duration)
 }
 
 NS_CC_END
-
-#endif // CC_PLATFORM_IOS

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2015-2017 Chukong Technologies Inc.
+Copyright (c) 2015-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -21,16 +22,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef CC_TERRAIN_H
-#define CC_TERRAIN_H
+#pragma once
 
 #include <vector>
 
 #include "2d/CCNode.h"
 #include "2d/CCCamera.h"
 #include "renderer/CCTexture2D.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCMeshCommand.h"
+#include "renderer/CCCallbackCommand.h"
+#include "renderer/CCGroupCommand.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/backend/Types.h"
+#include "renderer/backend/ProgramState.h"
 #include "3d/CCAABB.h"
 #include "3d/CCRay.h"
 #include "base/CCEventListenerCustom.h"
@@ -117,9 +121,6 @@ public:
         Triangle(const Vec3& p1, const Vec3& p2, const Vec3& p3);
         bool getIntersectPoint(const Ray& ray, Vec3& intersectPoint) const;
 
-        /** @deprecated Use getIntersectPoint instead. */
-        CC_DEPRECATED_ATTRIBUTE bool getInsterctPoint(const Ray& ray, Vec3& interScetPoint) const;
-
         void transform(const Mat4& matrix);
         Vec3 _p1, _p2, _p3;
     };
@@ -162,8 +163,12 @@ private:
 
     struct ChunkIndices
     {
-        GLuint _indices;
-        unsigned short _size;
+        ChunkIndices() = default;
+        ChunkIndices(const ChunkIndices &);
+        ChunkIndices &operator = (const ChunkIndices &o);
+        ~ChunkIndices();
+        backend::Buffer *_indexBuffer = nullptr;
+        unsigned short _size = 0;
     };
 
     struct ChunkLODIndices
@@ -203,16 +208,15 @@ private:
     struct Chunk
     {
         /**Constructor*/
-        Chunk();
+        Chunk(Terrain *);
         /**destructor*/
         ~Chunk();
         /*vertices*/
         std::vector<TerrainVertexData> _originalVertices;
         /*LOD indices*/
         struct LOD{
-            std::vector<GLushort> _indices;
+            std::vector<uint16_t> _indices;
         };
-        GLuint _vbo;
         ChunkIndices _chunkIndices; 
         /**we now support four levels of detail*/
         LOD _lod[4];
@@ -237,9 +241,6 @@ private:
         void calculateSlope();
 
         bool getIntersectPointWithRay(const Ray& ray, Vec3& intersectPoint);
-
-        /** @deprecated Use getIntersectPointWithRay instead. */
-        CC_DEPRECATED_ATTRIBUTE bool getInsterctPointWithRay(const Ray& ray, Vec3& intersectPoint);
 
         /**current LOD of the chunk*/
         int _currentLod;
@@ -268,6 +269,9 @@ private:
         std::vector<TerrainVertexData> _currentVertices;
 
         std::vector<Triangle> _trianglesList;
+
+        backend::Buffer *_buffer = nullptr;
+        MeshCommand _command;
     };
 
    /**
@@ -443,8 +447,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Terrain();
     bool initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType);
 protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
+    
     /**
      * recursively set each chunk's LOD
      * @param cameraPos the camera position in world space
@@ -474,12 +477,17 @@ protected:
 
     ChunkIndices lookForIndicesLOD(int neighborLod[4], int selfLod, bool * result);
 
-    ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort * indices, int size);
+    ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, uint16_t * indices, int size);
 
-    ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
+    ChunkIndices insertIndicesLODSkirt(int selfLod, uint16_t * indices, int size);
     
     Chunk * getChunkByIndex(int x,int y) const;
 
+private:
+    void onBeforeDraw();
+    
+    void onAfterDraw();
+    
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;
@@ -492,8 +500,8 @@ protected:
     Texture2D * _detailMapTextures[4];
     Texture2D * _alphaMap;
     Texture2D * _lightMap;
+    Texture2D * _dummyTexture = nullptr;
     Vec3 _lightDir;
-    CustomCommand _customCommand;
     QuadTree * _quadRoot;
     Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
     std::vector<TerrainVertexData> _vertices;
@@ -506,24 +514,36 @@ protected:
     cocos2d::Image * _heightMapImage;
     Mat4 _oldCameraModelMatrix;
     Mat4 _terrainModelMatrix;
-    GLuint _normalLocation;
-    GLuint _positionLocation;
-    GLuint _texcoordLocation;
     float _maxHeight;
     float _minHeight;
     CrackFixedType _crackFixedType;
     float _skirtRatio;
     int _skirtVerticesOffset[4];
-    GLint _detailMapLocation[4];
-    GLint _alphaMapLocation;
-    GLint _alphaIsHasAlphaMapLocation;
-    GLint _lightMapCheckLocation;
-    GLint _lightMapLocation;
-    GLint _detailMapSizeLocation[4];
-    GLint _lightDirLocation;
-    RenderState::StateBlock* _stateBlock;
+    struct StateBlock {
+       // bool blend;
+        bool depthWrite = true;
+        bool depthTest  = true ;
+        backend::CullMode cullFace = backend::CullMode::FRONT;
+        backend::Winding  winding  = backend::Winding::CLOCK_WISE;
+        void apply();
+        void save();
+    };
+    
+    StateBlock _stateBlock;
+    StateBlock _stateBlockOld;
+    
+private:
+    //uniform locations
+    backend::UniformLocation _detailMapLocation[4];
+    backend::UniformLocation _alphaMapLocation;
+    backend::UniformLocation _alphaIsHasAlphaMapLocation;
+    backend::UniformLocation _lightMapCheckLocation;
+    backend::UniformLocation _lightMapLocation;
+    backend::UniformLocation _detailMapSizeLocation;
+    backend::UniformLocation _lightDirLocation;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    backend::UniformLocation _mvpMatrixLocation;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener;
 #endif
 };
@@ -532,4 +552,3 @@ protected:
 /// @}
 
 NS_CC_END
-#endif

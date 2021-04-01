@@ -1,5 +1,6 @@
 ﻿/****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -322,8 +323,8 @@ public:
     virtual Frame* clone() override;
 
     /** @deprecated Use method setAlpha() and getAlpha() of AlphaFrame instead */
-    CC_DEPRECATED_ATTRIBUTE inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
-    CC_DEPRECATED_ATTRIBUTE inline GLubyte getAlpha() const { return _alpha; }
+    CC_DEPRECATED_ATTRIBUTE inline void    setAlpha(uint8_t alpha) { _alpha = alpha; }
+    CC_DEPRECATED_ATTRIBUTE inline uint8_t getAlpha() const { return _alpha; }
 
     inline void    setColor(const cocos2d::Color3B& color) { _color = color; }
     inline cocos2d::Color3B getColor() const { return _color; }
@@ -331,7 +332,7 @@ public:
 protected:
     virtual void onApply(float percent) override;
     
-    GLubyte _alpha;
+    uint8_t _alpha;
     cocos2d::Color3B _color;
 
     int _betweenRed;
@@ -348,13 +349,13 @@ public:
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
 
-    inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
-    inline GLubyte getAlpha() const { return _alpha; }
+    inline void    setAlpha(uint8_t alpha) { _alpha = alpha; }
+    inline uint8_t getAlpha() const { return _alpha; }
 
 protected:
     virtual void onApply(float percent) override;
     
-    GLubyte _alpha;
+    uint8_t _alpha;
     int _betweenAlpha;
 };
 

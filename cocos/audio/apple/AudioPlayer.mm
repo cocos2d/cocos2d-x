@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -24,9 +25,6 @@
 
 #define LOG_TAG "AudioPlayer"
 
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
 #import <Foundation/Foundation.h>
 
 #include "audio/apple/AudioPlayer.h"
@@ -34,7 +32,6 @@
 #include "platform/CCFileUtils.h"
 #include "audio/apple/AudioDecoder.h"
 
-#define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -42,7 +39,6 @@
 #endif
 
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 namespace {
 unsigned int __idIndex = 0;
@@ -122,6 +118,23 @@ void AudioPlayer::destroy()
                 delete _rotateBufferThread;
                 _rotateBufferThread = nullptr;
                 ALOGVV("rotateBufferThread exited!");
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+                // some specific OpenAL implement defects existed on iOS platform
+                // refer to: https://github.com/cocos2d/cocos2d-x/issues/18597
+                ALint sourceState;
+                ALint bufferProcessed = 0;
+                alGetSourcei(_alSource, AL_SOURCE_STATE, &sourceState);
+                if (sourceState == AL_PLAYING) {
+                    alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
+                    while (bufferProcessed < QUEUEBUFFER_NUM) {
+                        std::this_thread::sleep_for(std::chrono::milliseconds(2));
+                        alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
+                    }
+                    alSourceUnqueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds); CHECK_AL_ERROR_DEBUG();
+                }
+                ALOGVV("UnqueueBuffers Before alSourceStop");
+#endif
             }
         }
     } while(false);
@@ -145,7 +158,7 @@ void AudioPlayer::setCache(AudioCache* cache)
 bool AudioPlayer::play2d()
 {
     _play2dMutex.lock();
-    ALOGV("AudioPlayer::play2d, _alSource: %u", _alSource);
+    ALOGVV("AudioPlayer::play2d, _alSource: %u", _alSource);
 
     /*********************************************************************/
     /*       Note that it may be in sub thread or in main thread.       **/
@@ -199,6 +212,7 @@ bool AudioPlayer::play2d()
 
             if (_streamingSource)
             {
+                // To continuously stream audio from a source without interruption, buffer queuing is required.
                 alSourceQueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds);
                 CHECK_AL_ERROR_DEBUG();
                 _rotateBufferThread = new std::thread(&AudioPlayer::rotateBufferThread, this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
@@ -235,10 +249,12 @@ bool AudioPlayer::play2d()
     return ret;
 }
 
+// rotateBufferThread is used to rotate alBufferData for _alSource when playing big audio file
 void AudioPlayer::rotateBufferThread(int offsetFrame)
 {
     char* tmpBuffer = nullptr;
     AudioDecoder decoder;
+    long long rotateSleepTime = static_cast<long long>(QUEUEBUFFER_TIME_STEP * 1000) / 2;
     do
     {
         BREAK_IF(!decoder.open(_audioCache->_fileFullPath.c_str()));
@@ -290,7 +306,12 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                             break;
                         }
                     }
-
+                    /*
+                     While the source is playing, alSourceUnqueueBuffers can be called to remove buffers which have
+                     already played. Those buffers can then be filled with new data or discarded. New or refilled
+                     buffers can then be attached to the playing source using alSourceQueueBuffers. As long as there is
+                     always a new buffer to play in the queue, the source will continue to play.
+                     */
                     ALuint bid;
                     alSourceUnqueueBuffers(_alSource, 1, &bid);
                     alBufferData(bid, _audioCache->_format, tmpBuffer, framesRead * decoder.getBytesPerFrame(), decoder.getSampleRate());
@@ -305,7 +326,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
 
             if (!_needWakeupRotateThread)
             {
-                _sleepCondition.wait_for(lk,std::chrono::milliseconds(75));
+                _sleepCondition.wait_for(lk,std::chrono::milliseconds(rotateSleepTime));
             }
 
             _needWakeupRotateThread = false;
@@ -313,7 +334,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
 
     } while(false);
 
-    ALOGV("Exit rotate buffer thread ...");
+    ALOGVV("Exit rotate buffer thread ...");
     decoder.close();
     free(tmpBuffer);
     _isRotateThreadExited = true;
@@ -346,5 +367,3 @@ bool AudioPlayer::setTime(float time)
     }
     return false;
 }
-
-#endif

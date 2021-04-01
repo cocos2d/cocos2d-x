@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -129,8 +130,20 @@ Rect Grid3DAction::getGridRect() const
 }
 
 // implementation of TiledGrid3DAction
+TiledGrid3DAction* TiledGrid3DAction::create(float duration, const Size &gridSize)
+{
+    TiledGrid3DAction *ret = new (std::nothrow) TiledGrid3DAction();
+    if (ret && ret->initWithDuration(duration, gridSize))
+    {
+        ret->autorelease();
+        return ret;
+    }
 
-GridBase* TiledGrid3DAction::getGrid(void)
+    delete ret;
+    return nullptr;
+}
+
+GridBase* TiledGrid3DAction::getGrid()
 {
     return TiledGrid3D::create(_gridSize, _gridNodeTarget->getGridRect());
 }

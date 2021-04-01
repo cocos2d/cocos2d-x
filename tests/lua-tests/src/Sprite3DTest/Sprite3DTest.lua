@@ -813,9 +813,9 @@ function Sprite3DWithOBBPerfromanceTest:delOBBWithCount( value )
     if #self._obb >= 10 then
         for i= 1, 10 do
             table.remove(self._obb)
-        end
+        end 
         self._drawOBB:clear()
-    end
+    end 
 end
 
 function Sprite3DWithOBBPerfromanceTest:initDrawBox()
@@ -941,7 +941,7 @@ function Sprite3DMirrorTest.create()
     sprite = cc.Sprite3D:create(fileName)
     sprite:setScale(5)
     sprite:setScaleX(-5)
-    sprite:setCullFace(gl.FRONT)
+    sprite:setCullFace(ccb.CullMode.FRONT)
     sprite:setRotation3D({x = 0, y = 180,z = 0})
     layer:addChild(sprite)
     sprite:setPosition( cc.p( size.width/2 + 80, size.height/2))
@@ -1002,7 +1002,7 @@ function AsyncLoadSprite3DTest:onEnter()
     ttfConfig.fontFilePath = "fonts/arial.ttf"
     ttfConfig.fontSize = 15
 
-    local paths = {"Sprite3DTest/boss.obj", "Sprite3DTest/girl.c3b", "Sprite3DTest/orc.c3b", "Sprite3DTest/ReskinGirl.c3b", "Sprite3DTest/axe.c3b"}
+    local paths = {"Sprite3DTest/girl.c3b", "Sprite3DTest/orc.c3b", "Sprite3DTest/ReskinGirl.c3b", "Sprite3DTest/axe.c3b"}
 
     local label1 = cc.Label:createWithTTF(ttfConfig,"AsyncLoad Sprite3D")
     local item1 = cc.MenuItemLabel:create(label1)
@@ -1123,21 +1123,26 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
     --create a teapot
     self._teapot = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
 
-    local shader = cc.GLProgram:createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
-    local state  = cc.GLProgramState:create(shader)
-
+    local vertexShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.vert")
+    local fragmentShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.frag")
+    local program = ccb.Device:getInstance():newProgram(vertexShader, fragmentShader)
+    local programState = ccb.ProgramState:new(program)
+    program:release()
+    
     self._textureCube = cc.TextureCube:create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
         "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
         "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg")
 
     --set texture parameters
-    local tRepeatParams = { magFilter=gl.LINEAR , minFilter=gl.LINEAR , wrapS=gl.MIRRORED_REPEAT  , wrapT=gl.MIRRORED_REPEAT }
+    local tRepeatParams = { magFilter=ccb.SamplerFilter.LINEAR , minFilter=ccb.SamplerFilter.LINEAR , sAddressMode=ccb.SamplerAddressMode.MIRROR_REPEAT  , tAddressMode=ccb.SamplerAddressMode.MIRROR_REPEAT }
     self._textureCube:setTexParameters(tRepeatParams)
 
     --pass the texture sampler to our custom shader
-    state:setUniformTexture("u_cubeTex", self._textureCube)
+    local locCubeTex = programState:getUniformLocation("u_cubeTex")
+    local cubeTexture = self._textureCube:getBackendTexture()
+    programState:setTexture(locCubeTex, 0, cubeTexture)
 
-    self._teapot:setGLProgramState(state)
+    self._teapot:setProgramState(programState)
     self._teapot:setPosition3D(cc.vec3(0, -5, 0))
     self._teapot:setRotation3D(cc.vec3(-90, 180, 0))
 
@@ -1159,19 +1164,6 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
         "a_blendIndex",
     }
 
-    local offset = 0
-    local attributeCount = self._teapot:getMesh():getMeshVertexAttribCount()
-    for i = 1, attributeCount do
-        local meshattribute = self._teapot:getMesh():getMeshVertexAttribute(i - 1)
-        state:setVertexAttribPointer(attributeNames[meshattribute.vertexAttrib+1],
-            meshattribute.size,
-            meshattribute.type,
-            false,
-            self._teapot:getMesh():getVertexSizeInBytes(),
-            offset)
-        offset = offset + meshattribute.attribSizeBytes
-    end
-
     self:addChild(self._teapot)
 
     --config skybox
@@ -1183,28 +1175,6 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
     self:addChild(camera)
     self:setCameraMask(2)
 
-    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
-        self._backToForegroundListener = cc.EventListenerCustom:create("event_renderer_recreated", function (eventCustom)
-                
-            local state = self._teapot:getGLProgramState()
-            local glProgram = state:getGLProgram()
-            glProgramreset()
-            glProgram:initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
-            glProgram:link()
-            glProgram:updateUniforms()
-
-            self._textureCube:reloadTexture()
-
-            local tRepeatParams = { magFilter=gl.NEAREST , minFilter=gl.NEAREST , wrapS=gl.MIRRORED_REPEAT  , wrapT=gl.MIRRORED_REPEAT }
-            self._textureCube:setTexParameters(tRepeatParams)
-            state:setUniformTexture("u_cubeTex", self._textureCube)
-
-            self._skyBox:reload()
-            self._skyBox:setTexture(self._textureCube)
-        end)
-        cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(self._backToForegroundListener, -1)
-    end
 end
 
 ----------------------------------------

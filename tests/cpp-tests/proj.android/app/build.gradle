@@ -1,0 +1,93 @@
+import org.gradle.internal.os.OperatingSystem;
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
+
+    defaultConfig {
+        applicationId "org.cocos2dx.cpp_tests"
+        minSdkVersion PROP_MIN_SDK_VERSION
+        targetSdkVersion PROP_TARGET_SDK_VERSION
+        versionCode 1
+        versionName "1.0"
+
+        externalNativeBuild {
+            cmake {
+                targets 'cpp_tests'
+                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
+                cppFlags "-frtti -fexceptions -fsigned-char"
+            }
+        }
+
+        ndk {
+            abiFilters = []
+            abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
+        }
+    }
+
+    sourceSets.main {
+        java.srcDir "src"
+        res.srcDir "res"
+        manifest.srcFile "AndroidManifest.xml"
+        assets.srcDir "assets"
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "../../CMakeLists.txt"
+        }
+    }
+
+    signingConfigs {
+
+       release {
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                storeFile file(RELEASE_STORE_FILE)
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                signingConfig signingConfigs.release
+            }
+        }
+
+        debug {
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+        }
+    }
+}
+
+android.applicationVariants.all { variant ->
+
+    delete "${projectDir}/assets"
+    def targetName = variant.name.capitalize()
+    def copyTaskName = "copy${targetName}ResourcesToAssets"
+    tasks.register(copyTaskName) {
+        copy {
+            from "${projectDir}/../../Resources"
+            into "${projectDir}/assets"
+            exclude "**/*.gz"
+        }
+    }
+    tasks.getByName("pre${targetName}Build").dependsOn copyTaskName
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':libcocos2dx')
+}

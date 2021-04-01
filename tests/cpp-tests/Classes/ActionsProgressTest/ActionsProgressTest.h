@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -33,8 +34,8 @@ DEFINE_TEST_SUITE(ActionsProgressTests);
 class SpriteDemo : public TestCase
 {
 public:
-    SpriteDemo(void);
-    ~SpriteDemo(void);
+    SpriteDemo();
+    ~SpriteDemo();
 
     virtual std::string title() const override;
     virtual void onEnter() override;

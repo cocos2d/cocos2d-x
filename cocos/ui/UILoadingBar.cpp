@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -45,7 +46,6 @@ LoadingBar::LoadingBar():
 _direction(Direction::LEFT),
 _percent(100.0),
 _totalLength(0),
-_textureFile(""),
 _barRenderer(nullptr),
 _renderBarTexType(TextureResType::LOCAL),
 _barRendererTextureSize(Size::ZERO),
@@ -53,7 +53,8 @@ _originalRect(Rect::ZERO),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
-_barRendererAdaptDirty(true)
+_barRendererAdaptDirty(true),
+_textureFile("")
 {
 }
 
@@ -100,7 +101,7 @@ void LoadingBar::initRenderer()
     _barRenderer = Scale9Sprite::create();
     _barRenderer->setScale9Enabled(false);
     addProtectedChild(_barRenderer, BAR_RENDERER_Z, -1);
-    _barRenderer->setAnchorPoint(Vec2(0.0,0.5));
+    _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
 }
 
     
@@ -116,7 +117,7 @@ void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
     {
         case Direction::LEFT:
             _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
-            _barRenderer->setPosition(Vec2(0,_contentSize.height*0.5f));
+            _barRenderer->setPosition(Vec2(0.0f,_contentSize.height*0.5f));
             break;
         case Direction::RIGHT:
             _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -31,8 +32,9 @@ THE SOFTWARE.
 
 #include <thread>
 #include <chrono>
+#include <stdlib.h>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 size_t AudioDecoder::fileRead(void* ptr, size_t size, size_t nmemb, void* datasource)
 {
@@ -289,4 +291,4 @@ bool AudioDecoder::interleave()
     return false;
 }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

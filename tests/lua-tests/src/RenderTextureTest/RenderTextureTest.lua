@@ -22,18 +22,16 @@ local function RenderTextureSave()
         target:saveToFile(png, cc.IMAGE_FORMAT_PNG)
         target:saveToFile(jpg, cc.IMAGE_FORMAT_JPEG)
 
-        local pImage = target:newImage()
+        local function callback(image)
+            local tex = cc.Director:getInstance():getTextureCache():addImage(image, png)
+            local sprite = cc.Sprite:createWithTexture(tex)
+            sprite:setScale(0.3)
+            ret:addChild(sprite)
+            sprite:setPosition(cc.p(40, 40))
+            sprite:setRotation(counter * 3)
+        end
 
-        local tex = cc.Director:getInstance():getTextureCache():addUIImage(pImage, png)
-
-        pImage:release()
-
-        local sprite = cc.Sprite:createWithTexture(tex)
-
-        sprite:setScale(0.3)
-        ret:addChild(sprite)
-        sprite:setPosition(cc.p(40, 40))
-        sprite:setRotation(counter * 3)
+        target:newImage(callback)
 
         cclog("Image saved %s and %s", png, jpg)
         counter = counter + 1
@@ -104,13 +102,16 @@ local function RenderTextureSave()
     -- Save Image menu
     cc.MenuItemFont:setFontSize(16)
     local item1 = cc.MenuItemFont:create("Save Image")
+    item1:setAnchorPoint(1, 1)
+    item1:setPosition(VisibleRect:rightTop().x, VisibleRect:rightTop().y)
     item1:registerScriptTapHandler(saveImage)
     local item2 = cc.MenuItemFont:create("Clear")
+    item2:setAnchorPoint(1, 1)
+    item2:setPosition(VisibleRect:rightTop().x, VisibleRect:rightTop().y - item1:getContentSize().height)
     item2:registerScriptTapHandler(clearImage)
     local menu = cc.Menu:create(item1, item2)
     ret:addChild(menu)
-    menu:alignItemsVertically()
-    menu:setPosition(cc.p(VisibleRect:rightTop().x - 80, VisibleRect:rightTop().y - 30))
+    menu:setPosition(0, 0)
     return ret
 end
 
@@ -330,7 +331,7 @@ end
 
 -- sprite:setPosition(cc.p(256, 256))
 -- sprite:setOpacity(182)
--- sprite:setFlipY(1)
+-- sprite:setFlippedY(1)
 -- this:addChild(sprite, 999999)
 -- sprite:setColor(cc.c3b::GREEN)
 

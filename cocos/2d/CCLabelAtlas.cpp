@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -104,7 +105,7 @@ LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& fnt
 bool LabelAtlas::initWithString(const std::string& theString, const std::string& fntFile)
 {
     std::string pathStr = FileUtils::getInstance()->fullPathForFilename(fntFile);
-    std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
+    std::string relPathStr = pathStr.substr(0, pathStr.find_last_of('/'))+"/";
     
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr);
 
@@ -221,7 +222,7 @@ void LabelAtlas::setString(const std::string &label)
     _quadsToDraw = len;
 }
 
-const std::string& LabelAtlas::getString(void) const
+const std::string& LabelAtlas::getString() const
 {
     return _string;
 }
@@ -263,7 +264,7 @@ void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         Vec2::ZERO,
         Vec2(size.width, 0),
         Vec2(size.width, size.height),
-        Vec2(0, size.height)
+        Vec2(0.0f, size.height)
     };
     _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 }

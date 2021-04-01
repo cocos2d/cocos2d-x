@@ -13,9 +13,9 @@ require "BillBoardTest/BillBoardTest"
 require "BugsTest/BugsTest"
 require "Camera3DTest/Camera3DTest"
 require "ClickAndMoveTest/ClickAndMoveTest"
-require "CocosDenshionTest/CocosDenshionTest"
 require "ComponentTest/main"
 require "CurrentLanguageTest/CurrentLanguageTest"
+require "DownloaderTest/DownloaderTest"
 require "DrawPrimitivesTest/DrawPrimitivesTest"
 require "EffectsTest/EffectsTest"
 require "EffectsAdvancedTest/EffectsAdvancedTest"
@@ -24,7 +24,6 @@ require "FileUtilsTest/FileUtilsTest"
 require "FontTest/FontTest"
 require "IntervalTest/IntervalTest"
 require "KeypadTest/KeypadTest"
-require "LabelTest/LabelTest"
 require "LabelTestNew/LabelTestNew"
 require "LayerTest/LayerTest"
 require "LightTest/LightTest"
@@ -32,7 +31,6 @@ require "MenuTest/MenuTest"
 require "MotionStreakTest/MotionStreakTest"
 require "NewEventDispatcherTest/NewEventDispatcherTest"
 require "NodeTest/NodeTest"
-require "OpenGLTest/OpenGLTest"
 require "ParallaxTest/ParallaxTest"
 require "ParticleTest/ParticleTest"
 require "Particle3DTest/Particle3DTest"
@@ -64,6 +62,7 @@ require "Physics3DTest/Physics3DTest"
 require "Scene3DTest/Scene3DTest"
 require "MaterialSystemTest/MaterialSystemTest"
 require "NavMeshTest/NavMeshTest"
+require "LuaLoaderTest/LuaLoaderTest"
 
 local LINE_SPACE = 40
 
@@ -100,27 +99,27 @@ local _allTests = {
     { isSupported = true,  name = "BillBoardTest"           , create_func=              BillBoardTestMain},
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "Camera3DTest"     ,        create_func=       Camera3DTestMain  },
-    { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
-    { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
+    { isSupported = true,  name = "CaptureScreenTest"       , create_func  =         CaptureScreenTestMain  },
+    { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func  =    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
-    { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = true,  name = "ComponentTest"          , create_func   =         ComponentTestMain  },
-    { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
-    { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
-    { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
+    { isSupported = false,  name = "CurlTest"              , create_func   =                  CurlTestMain  },
+    { isSupported = true,  name = "CurrentLanguageTest"    , create_func   =   CurrentLanguageTestMain      },
+    { isSupported = true,  name = "DownloaderTest"         , create_func   =            DownloaderTestMain  },
+    { isSupported = true,  name = "DrawPrimitivesTest"     , create_func   =        DrawPrimitivesTest      },
     { isSupported = true,  name = "EffectsTest"            , create_func   =               EffectsTest      },
     { isSupported = true,  name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
-    { isSupported = true,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
+    { isSupported = true,  name = "ExtensionsTest"         , create_func   =        ExtensionsTestMain      },
     { isSupported = true,  name = "FastTiledMapTest"       , create_func   =              FastTiledMapTestMain},
     { isSupported = true,  name = "FileUtilsTest"          , create_func   =              FileUtilsTestMain},
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
     { isSupported = true,  name = "IntervalTest"           , create_func   =              IntervalTestMain  },
     { isSupported = true,  name = "KeypadTest"             , create_func=                KeypadTestMain  }, 
-    { isSupported = true,  name = "LabelTest"              , create_func   =                 LabelTest      },
     { isSupported = true,  name = "LabelTestNew"           , create_func   =                 LabelTestNew      },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
-    { isSupported = true,  name = "LightTest"          , create_func   =                 LightTestMain  },
+    { isSupported = true,  name = "LightTest"              , create_func   =                 LightTestMain  },
     { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
+    { isSupported = true,  name = "LuaLoaderTest"          , create_func   =        LuaLoaderMain },
     { isSupported = true,  name = "MaterialSystemTest"     , create_func   =        MaterialSystemTest },
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
@@ -128,7 +127,6 @@ local _allTests = {
     { isSupported = true,  name = "NavMeshTest"            , create_func   =       NavMeshTest },
     { isSupported = true,  name = "NewEventDispatcherTest"  , create_func   =       NewEventDispatcherTest },
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
-    { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
     { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
     { isSupported = true,  name = "Particle3D (PU)"        , create_func   =              Particle3DTest  },
@@ -188,16 +186,15 @@ function CreateTestMenu()
     local s = cc.Director:getInstance():getWinSize()
     local CloseItem = cc.MenuItemImage:create(s_pPathClose, s_pPathClose)
     CloseItem:registerScriptTapHandler(closeCallback)
-    CloseItem:setPosition(cc.p(s.width - 30, s.height - 30))
+    CloseItem:setAnchorPoint(1, 1)
+    CloseItem:setPosition(VisibleRect:rightTop())
 
     local CloseMenu = cc.Menu:create()
     CloseMenu:setPosition(0, 0)
     CloseMenu:addChild(CloseItem)
     menuLayer:addChild(CloseMenu)
-    local targetPlatform = cc.Application:getInstance():getTargetPlatform()       
-    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
-        CloseMenu:setVisible(false)
-    end
+
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform() 
 
     -- add menu items for tests
     local MainMenu = cc.Menu:create()

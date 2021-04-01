@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -26,6 +27,7 @@ Copyright (c) 2013-2017 Chukong Technologies Inc.
  ****************************************************************************/
 
 #include "base/ccTypes.h"
+#include "renderer/backend/Types.h"
 
 NS_CC_BEGIN
 
@@ -37,12 +39,9 @@ const ssize_t CC_INVALID_INDEX = -1;
  */
 
 Color3B::Color3B()
-: r(0)
-, g(0)
-, b(0)
 {}
 
-Color3B::Color3B(GLubyte _r, GLubyte _g, GLubyte _b)
+Color3B::Color3B(uint8_t _r, uint8_t _g, uint8_t _b)
 : r(_r)
 , g(_g)
 , b(_b)
@@ -95,20 +94,16 @@ bool Color3B::operator!=(const Color4F& right) const
  */
 
 Color4B::Color4B()
-: r(0)
-, g(0)
-, b(0)
-, a(0)
 {}
 
-Color4B::Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
+Color4B::Color4B(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a)
 : r(_r)
 , g(_g)
 , b(_b)
 , a(_a)
 {}
 
-Color4B::Color4B(const Color3B& color, GLubyte _a)
+Color4B::Color4B(const Color3B& color, uint8_t _a)
 : r(color.r)
 , g(color.g)
 , b(color.b)
@@ -157,10 +152,6 @@ bool Color4B::operator!=(const Color4F& right) const
  */
 
 Color4F::Color4F()
-: r(0.0f)
-, g(0.0f)
-, b(0.0f)
-, a(0.0f)
 {}
 
 Color4F::Color4F(float _r, float _g, float _b, float _a)
@@ -214,6 +205,71 @@ bool Color4F::operator!=(const Color4B& right) const
     return !(*this == right);
 }
 
+Color4F& operator+=(Color4F& lhs, const Color4F& rhs) {
+	lhs.r += rhs.r;
+	lhs.g += rhs.g;
+	lhs.b += rhs.b;
+	lhs.a += rhs.a;
+	return lhs;
+}
+Color4F operator+(Color4F lhs, const Color4F& rhs) {
+	return lhs += rhs;
+}
+Color4F& operator-=(Color4F& lhs, const Color4F& rhs) {
+	lhs.r -= rhs.r;
+	lhs.g -= rhs.g;
+	lhs.b -= rhs.b;
+	lhs.a -= rhs.a;
+	return lhs;
+}
+Color4F operator-(Color4F lhs, const Color4F& rhs) {
+	return lhs -= rhs;
+}
+
+Color4F& operator*=(Color4F& lhs, const Color4F& rhs) {
+	lhs.r *= rhs.r;
+	lhs.g *= rhs.g;
+	lhs.b *= rhs.b;
+	lhs.a *= rhs.a;
+	return lhs;
+}
+Color4F& operator*=(Color4F& lhs, float rhs) {
+	lhs.r *= rhs;
+	lhs.g *= rhs;
+	lhs.b *= rhs;
+	lhs.a *= rhs;
+	return lhs;
+}
+Color4F operator*(Color4F lhs, const Color4F& rhs) {
+    return lhs *= rhs;
+}
+
+Color4F operator*(Color4F lhs, float rhs) {
+    return lhs *= rhs;
+}
+
+Color4F& operator/=(Color4F& lhs, const Color4F& rhs) {
+	lhs.r /= rhs.r;
+	lhs.g /= rhs.g;
+	lhs.b /= rhs.b;
+	lhs.a /= rhs.a;
+	return lhs;
+}
+Color4F& operator/=(Color4F& lhs, float rhs) {
+	lhs.r /= rhs;
+	lhs.g /= rhs;
+	lhs.b /= rhs;
+	lhs.a /= rhs;
+	return lhs;
+}
+Color4F operator/(Color4F lhs, const Color4F& rhs) {
+    return lhs /= rhs;
+}
+
+Color4F operator/(Color4F lhs, float rhs) {
+    return lhs /= rhs;
+}
+
 /**
  * Color constants
  */
@@ -248,9 +304,9 @@ const Color4F Color4F::BLACK  (    0,     0,     0, 1);
 const Color4F Color4F::ORANGE (    1,  0.5f,     0, 1);
 const Color4F Color4F::GRAY   (0.65f, 0.65f, 0.65f, 1);
 
-const BlendFunc BlendFunc::DISABLE = {GL_ONE, GL_ZERO};
-const BlendFunc BlendFunc::ALPHA_PREMULTIPLIED = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
-const BlendFunc BlendFunc::ALPHA_NON_PREMULTIPLIED = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
-const BlendFunc BlendFunc::ADDITIVE = {GL_SRC_ALPHA, GL_ONE};
+const BlendFunc BlendFunc::DISABLE = {backend::BlendFactor::ONE, backend::BlendFactor::ZERO};
+const BlendFunc BlendFunc::ALPHA_PREMULTIPLIED = { backend::BlendFactor::ONE, backend::BlendFactor::ONE_MINUS_SRC_ALPHA};
+const BlendFunc BlendFunc::ALPHA_NON_PREMULTIPLIED = { backend::BlendFactor::SRC_ALPHA, backend::BlendFactor::ONE_MINUS_SRC_ALPHA};
+const BlendFunc BlendFunc::ADDITIVE = { backend::BlendFactor::SRC_ALPHA, backend::BlendFactor::ONE};
 
 NS_CC_END

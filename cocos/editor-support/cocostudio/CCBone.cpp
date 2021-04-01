@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -81,7 +82,7 @@ Bone::Bone()
 }
 
 
-Bone::~Bone(void)
+Bone::~Bone()
 {
     CC_SAFE_DELETE(_tweenData);
     CC_SAFE_DELETE(_tween);
@@ -95,7 +96,7 @@ Bone::~Bone(void)
 
 bool Bone::init()
 {
-    return Bone::init(nullptr);
+    return Bone::init("");
 }
 
 
@@ -261,7 +262,7 @@ void Bone::updateDisplayedColor(const Color3B &parentColor)
     Node::updateDisplayedColor(parentColor);
 }
 
-void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
+void Bone::updateDisplayedOpacity(uint8_t parentOpacity)
 {
 #ifdef CC_STUDIO_ENABLED_VIEW
     _realOpacity = 255;

@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -92,7 +93,7 @@ namespace cocostudio
         Vec2 rotationSkew;
         int zOrder = 0;
         bool visible = true;
-        GLubyte alpha = 255;
+        uint8_t alpha = 255;
         int tag = 0;
         Vec2 position;
         Vec2 scale(1.0f, 1.0f);

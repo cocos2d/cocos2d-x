@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -22,11 +23,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef StencilStateManager_hpp
-#define StencilStateManager_hpp
+#pragma once
+
 #include "base/ccConfig.h"
 #include "platform/CCPlatformMacros.h"
-#include "platform/CCGL.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 /**
  * @addtogroup base
@@ -38,42 +40,51 @@ class CC_DLL StencilStateManager
 {
 public:
     StencilStateManager();
-    void onBeforeVisit();
+    ~StencilStateManager();
+    void onBeforeVisit(float globalZOrder);
     void onAfterDrawStencil();
     void onAfterVisit();
-    void setAlphaThreshold(GLfloat alphaThreshold);
+    void setAlphaThreshold(float alphaThreshold);
     void setInverted(bool inverted);
     bool isInverted()const;
-    GLfloat getAlphaThreshold()const;
+    float getAlphaThreshold()const;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(StencilStateManager);
-    static GLint s_layer;
+    static int s_layer;
     /**draw fullscreen quad to clear stencil bits
      */
-    void drawFullScreenQuadClearStencil();
+    void drawFullScreenQuadClearStencil(float globalZOrder);
     
+    void updateLayerMask();
+    void onBeforeDrawQuadCmd();
+    void onAfterDrawQuadCmd();
     
-    GLfloat _alphaThreshold;
-    bool    _inverted;
+    float _alphaThreshold = 1.f;
+    bool _inverted = false;
     
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
+    bool _currentStencilEnabled = false;
+    unsigned int _currentStencilWriteMask = ~0;
+    backend::CompareFunction _currentStencilFunc = backend::CompareFunction::ALWAYS;
+    unsigned int _currentStencilRef = 0;
+    unsigned int _currentStencilReadMask = ~0;
+    backend::StencilOperation _currentStencilFail = backend::StencilOperation::KEEP;
+    backend::StencilOperation _currentStencilPassDepthFail = backend::StencilOperation::KEEP;
+    backend::StencilOperation _currentStencilPassDepthPass = backend::StencilOperation::KEEP;
+    bool _currentDepthWriteMask = true;
+
+    unsigned int _mask_layer_le = 0;
+    int _currentLayerMask = 0;
+
+    CustomCommand _customCommand;
+    CallbackCommand _afterDrawStencilCmd;
+    CallbackCommand _afterVisitCmd;
     
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
-    
-    GLint _mask_layer_le;
+    backend::UniformLocation _mvpMatrixLocaiton;
+    backend::UniformLocation _colorUniformLocation;
+    backend::ProgramState* _programState = nullptr;
 };
 
 NS_CC_END
 // end of base group
 /** @} */
-#endif /* StencilStateManager_hpp */

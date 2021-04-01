@@ -1,170 +1,44 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "DrawPrimitivesTest.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
 USING_NS_CC;
 
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-
 using namespace std;
 
 DrawPrimitivesTests::DrawPrimitivesTests()
 {
-    ADD_TEST_CASE(DrawPrimitivesTest);
     ADD_TEST_CASE(DrawNodeTest);
-    ADD_TEST_CASE(PrimitivesCommandTest);
     ADD_TEST_CASE(Issue11942Test);
 }
 
 string DrawPrimitivesBaseTest::title() const
 {
     return "No title";
-}
-
-// DrawPrimitivesTest
-
-DrawPrimitivesTest::DrawPrimitivesTest()
-{
-}
-
-void DrawPrimitivesTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(DrawPrimitivesTest::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void DrawPrimitivesTest::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-    
-    //draw
-    CHECK_GL_ERROR_DEBUG();
-    
-    // draw a simple line
-    // The default state is:
-    // Line Width: 1
-    // color: 255,255,255,255 (white, non-transparent)
-    // Anti-Aliased
-    //  glEnable(GL_LINE_SMOOTH);
-    DrawPrimitives::drawLine( VisibleRect::leftBottom(), VisibleRect::rightTop() );
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // line: color, width, aliased
-    // glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
-    // GL_SMOOTH_LINE_WIDTH_RANGE = (1,1) on iPhone
-    //  glDisable(GL_LINE_SMOOTH);
-    glLineWidth( 5.0f );
-    DrawPrimitives::setDrawColor4B(255,0,0,255);
-    DrawPrimitives::drawLine( VisibleRect::leftTop(), VisibleRect::rightBottom() );
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // TIP:
-    // If you are going to use always the same color or width, you don't
-    // need to call it before every draw
-    //
-    // Remember: OpenGL is a state-machine.
-    
-    // draw big point in the center
-    DrawPrimitives::setPointSize(64);
-    DrawPrimitives::setDrawColor4B(0,0,255,128);
-    DrawPrimitives::drawPoint( VisibleRect::center() );
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // draw 4 small points
-    Vec2 points[] = { Vec2(60,60), Vec2(70,70), Vec2(60,70), Vec2(70,60) };
-    DrawPrimitives::setPointSize(4);
-    DrawPrimitives::setDrawColor4B(0,255,255,255);
-    DrawPrimitives::drawPoints( points, 4);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // draw a green circle with 10 segments
-    glLineWidth(16);
-    DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
-    DrawPrimitives::drawCircle( VisibleRect::center(), 100, 0, 10, false);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // draw a green circle with 50 segments with line to center
-    glLineWidth(2);
-    DrawPrimitives::setDrawColor4B(0, 255, 255, 255);
-    DrawPrimitives::drawCircle( VisibleRect::center(), 50, CC_DEGREES_TO_RADIANS(90), 50, true);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // draw a pink solid circle with 50 segments
-    glLineWidth(2);
-    DrawPrimitives::setDrawColor4B(255, 0, 255, 255);
-    DrawPrimitives::drawSolidCircle( VisibleRect::center() + Vec2(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 1.0f, 1.0f);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // open yellow poly
-    DrawPrimitives::setDrawColor4B(255, 255, 0, 255);
-    glLineWidth(10);
-    Vec2 vertices[] = { Vec2(0,0), Vec2(50,50), Vec2(100,50), Vec2(100,100), Vec2(50,100) };
-    DrawPrimitives::drawPoly( vertices, 5, false);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // filled poly
-    glLineWidth(1);
-    Vec2 filledVertices[] = { Vec2(0,120), Vec2(50,120), Vec2(50,170), Vec2(25,200), Vec2(0,170) };
-    DrawPrimitives::drawSolidPoly(filledVertices, 5, Color4F(0.5f, 0.5f, 1, 1 ) );
-    
-    
-    // closed purble poly
-    DrawPrimitives::setDrawColor4B(255, 0, 255, 255);
-    glLineWidth(2);
-    Vec2 vertices2[] = { Vec2(30,130), Vec2(30,230), Vec2(50,200) };
-    DrawPrimitives::drawPoly( vertices2, 3, true);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // draw quad bezier path
-    DrawPrimitives::drawQuadBezier(VisibleRect::leftTop(), VisibleRect::center(), VisibleRect::rightTop(), 50);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    // draw cubic bezier path
-    DrawPrimitives::drawCubicBezier(VisibleRect::center(), Vec2(VisibleRect::center().x+30,VisibleRect::center().y+50), Vec2(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    //draw a solid polygon
-    Vec2 vertices3[] = {Vec2(60,160), Vec2(70,190), Vec2(100,190), Vec2(90,160)};
-    DrawPrimitives::drawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
-    
-    // restore original values
-    glLineWidth(1);
-    DrawPrimitives::setDrawColor4B(255,255,255,255);
-    DrawPrimitives::setPointSize(1);
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    //end draw
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-}
-
-string DrawPrimitivesTest::title() const
-{
-    return "draw primitives";
-}
-
-string DrawPrimitivesTest::subtitle() const
-{
-    return "Drawing Primitives. Use DrawNode instead";
 }
 
 // DrawNodeTest
@@ -192,54 +66,54 @@ DrawNodeTest::DrawNodeTest()
     draw->drawRect(Vec2(15,30), Vec2(30,15), Vec2(15,0), Vec2(0,15), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     
     // draw a circle
-    draw->drawCircle(VisibleRect::center() + Vec2(140,0), 100, CC_DEGREES_TO_RADIANS(90), 50, true, 1.0f, 2.0f, Color4F(1.0, 0.0, 0.0, 0.5));
+    draw->drawCircle(VisibleRect::center() + Vec2(140,0), 100, CC_DEGREES_TO_RADIANS(90), 50, true, 1.0f, 2.0f, Color4F(1.0f, 0.0f, 0.0f, 0.5f));
     
-    draw->drawCircle(VisibleRect::center() - Vec2(140,0), 50, CC_DEGREES_TO_RADIANS(90), 30, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    draw->drawCircle(VisibleRect::center() - Vec2(140,0), 50, CC_DEGREES_TO_RADIANS(90), 30, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1.0f));
 
     // Draw some beziers
-    draw->drawQuadBezier(Vec2(s.width - 150, s.height - 150), Vec2(s.width - 70, s.height - 10), Vec2(s.width - 10, s.height - 10), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawQuadBezier(Vec2(s.width - 150, s.height - 150), Vec2(s.width - 70, s.height - 10), Vec2(s.width - 10, s.height - 10), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5f));
     
-    draw->drawQuadBezier(Vec2(0, s.height), Vec2(s.width/2, s.height/2), Vec2(s.width, s.height), 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawQuadBezier(Vec2(0.0f, s.height), Vec2(s.width/2, s.height/2), Vec2(s.width, s.height), 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5f));
     
-    draw->drawCubicBezier(VisibleRect::center(), Vec2(VisibleRect::center().x+30,VisibleRect::center().y+50), Vec2(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawCubicBezier(VisibleRect::center(), Vec2(VisibleRect::center().x+30,VisibleRect::center().y+50), Vec2(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5f));
     
-    draw->drawCubicBezier(Vec2(s.width - 250, 40), Vec2(s.width - 70, 100), Vec2(s.width - 30, 250), Vec2(s.width - 10, s.height - 50), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawCubicBezier(Vec2(s.width - 250, 40.0f), Vec2(s.width - 70, 100.0f), Vec2(s.width - 30, 250.0f), Vec2(s.width - 10, s.height - 50), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5f));
     
     auto array = PointArray::create(20);
-    array->addControlPoint(Vec2(0,0));
-    array->addControlPoint(Vec2(80,80));
-    array->addControlPoint(Vec2(s.width-80,80));
+    array->addControlPoint(Vec2(0.0f,0.0f));
+    array->addControlPoint(Vec2(80.0f,80.0f));
+    array->addControlPoint(Vec2(s.width-80,80.0f));
     array->addControlPoint(Vec2(s.width-80,s.height-80));
-    array->addControlPoint(Vec2(80,s.height-80));
-    array->addControlPoint(Vec2(80,80));
+    array->addControlPoint(Vec2(80.0f,s.height-80));
+    array->addControlPoint(Vec2(80.0f,80.0f));
     array->addControlPoint(Vec2(s.width/2, s.height/2));
-    draw->drawCardinalSpline(array, 0.5, 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawCardinalSpline(array, 0.5f, 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5f));
     
     auto array2 = PointArray::create(20);
-    array2->addControlPoint(Vec2(s.width / 2, 30));
-    array2->addControlPoint(Vec2(s.width  -80, 30));
+    array2->addControlPoint(Vec2(s.width / 2, 30.0f));
+    array2->addControlPoint(Vec2(s.width  -80, 30.0f));
     array2->addControlPoint(Vec2(s.width - 80, s.height - 80));
     array2->addControlPoint(Vec2(s.width / 2, s.height - 80));
-    array2->addControlPoint(Vec2(s.width / 2, 30));
-    draw->drawCatmullRom(array2, 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    array2->addControlPoint(Vec2(s.width / 2, 30.0f));
+    draw->drawCatmullRom(array2, 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5f));
     
     // open random color poly
-    Vec2 vertices[] = { Vec2(0,0), Vec2(50,50), Vec2(100,50), Vec2(100,100), Vec2(50,100) };
-    draw->drawPoly( vertices, 5, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    Vec2 vertices[] = { Vec2(0.0f,0.0f), Vec2(50.0f,50.0f), Vec2(100.0f,50.0f), Vec2(100.0f,100.0f), Vec2(50.0f,100.0f) };
+    draw->drawPoly( vertices, 5, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1.0f));
     
     // closed random color poly
-    Vec2 vertices2[] = { Vec2(30,130), Vec2(30,230), Vec2(50,200) };
-    draw->drawPoly( vertices2, 3, true, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    Vec2 vertices2[] = { Vec2(30.0f,130.0f), Vec2(30.0f,230.0f), Vec2(50.0f,200.0f) };
+    draw->drawPoly( vertices2, 3, true, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1.0f));
     
     // Draw 10 circles
     for( int i=0; i < 10; i++)
     {
-        draw->drawDot(Vec2(s.width/2, s.height/2), 10*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+        draw->drawDot(Vec2(s.width/2, s.height/2), 10*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1.0f));
     }
     
     // Draw polygons
-    Vec2 points[] = { Vec2(s.height/4,0), Vec2(s.width,s.height/5), Vec2(s.width/3*2,s.height) };
-    draw->drawPolygon(points, sizeof(points)/sizeof(points[0]), Color4F(1,0,0,0.5), 4, Color4F(0,0,1,0.5));
+    Vec2 points[] = { Vec2(s.height/4,0.0f), Vec2(s.width,s.height/5), Vec2(s.width/3*2,s.height) };
+    draw->drawPolygon(points, sizeof(points)/sizeof(points[0]), Color4F(1.0f,0.0f,0.0f,0.5f), 4, Color4F(0.0f,0.0f,1.0f,0.5f));
     
     // star poly (triggers buggs)
     {
@@ -253,7 +127,7 @@ DrawNodeTest::DrawNodeTest()
             //              {o -h, o+w}, {o,o},                         // left spike
         };
         
-        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1));
+        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1.0f,0.0f,0.0f,0.5f), 1, Color4F(0.0f,0.0f,1.0f,1.0f));
     }
     
     // star poly (doesn't trigger bug... order is important un tesselation is supported.
@@ -268,36 +142,36 @@ DrawNodeTest::DrawNodeTest()
             Vec2(o -h, o+w),                                     // left spike
         };
         
-        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1));
+        draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1.0f,0.0f,0.0f,0.5f), 1, Color4F(0.0f,0.0f,1.0f,1.0f));
     }
     
     //draw a solid polygon
-    Vec2 vertices3[] = {Vec2(60,160), Vec2(70,190), Vec2(100,190), Vec2(90,160)};
-    draw->drawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
+    Vec2 vertices3[] = {Vec2(60.0f,160.0f), Vec2(70.0f,190.0f), Vec2(100.0f,190.0f), Vec2(90.0f,160.0f)};
+    draw->drawSolidPoly( vertices3, 4, Color4F(1.0f,1.0f,0.0f,1.0f) );
     
     //draw a solid rectangle
-    draw->drawSolidRect(Vec2(10,10), Vec2(20,20), Color4F(1,1,0,1));
+    draw->drawSolidRect(Vec2(10.0f,10.0f), Vec2(20.0f,20.0f), Color4F(1.0f,1.0f,0.0f,1.0f));
     
     //draw a solid circle
-    draw->drawSolidCircle( VisibleRect::center() + Vec2(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 2.0f, 2.0f, Color4F(0.0, 1.0, 0.0, 1.0));
+    draw->drawSolidCircle( VisibleRect::center() + Vec2(140.0f,0.0f), 40, CC_DEGREES_TO_RADIANS(90), 50, 2.0f, 2.0f, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
     
     // Draw segment
-    draw->drawSegment(Vec2(20,s.height), Vec2(20,s.height/2), 10, Color4F(0, 1, 0, 1));
+    draw->drawSegment(Vec2(20.0f,s.height), Vec2(20.0f,s.height/2), 10, Color4F(0.0f, 1.0f, 0.0f, 1.0f));
     
-    draw->drawSegment(Vec2(10,s.height/2), Vec2(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
+    draw->drawSegment(Vec2(10.0f,s.height/2), Vec2(s.width/2, s.height/2), 40, Color4F(1.0f, 0.0f, 1.0f, 0.5f));
 
     // Draw triangle
-    draw->drawTriangle(Vec2(10, 10), Vec2(70, 30), Vec2(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    draw->drawTriangle(Vec2(10.0f, 10.0f), Vec2(70.0f, 30.0f), Vec2(100.0f, 140.0f), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5f));
     
     for (int i = 0; i < 100; i++) {
-        draw->drawPoint(Vec2(i*7, 5), (float)i/5+1, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+        draw->drawPoint(Vec2(i*7.0f, 5.0f), (float)i/5+1, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1.0f));
     }
 
     auto draw1 = DrawNode::create();
     this->addChild(draw1, 10);
     draw1->setLineWidth(4);
-    draw1->drawLine(Vec2(0, s.height), Vec2(s.width, s.height - 20), Color4F::YELLOW);
-    draw1->drawLine(Vec2(0, 0), Vec2(s.width, s.height - 20), Color4F::YELLOW);
+    draw1->drawLine(Vec2(0.0f, s.height), Vec2(s.width, s.height - 20), Color4F::YELLOW);
+    draw1->drawLine(Vec2(0.0f, 0.0f), Vec2(s.width, s.height - 20), Color4F::YELLOW);
 
     draw->runAction(RepeatForever::create(Sequence::create(FadeIn::create(1.2),FadeOut::create(1.2), NULL)));
     draw1->runAction(RepeatForever::create(Sequence::create(FadeIn::create(1.2),FadeOut::create(1.2), NULL)));
@@ -313,80 +187,6 @@ string DrawNodeTest::subtitle() const
     return "Testing DrawNode - batched draws. Concave polygons are BROKEN";
 }
 
-// PrimitivesCommandTest
-PrimitivesCommandTest::PrimitivesCommandTest()
-{
-    // draws a quad
-    V3F_C4B_T2F data[] = {
-        {{0,    0,0}, {255,  0,  0,255}, {0,1}},
-        {{200,  0,0}, {0,  255,255,255}, {1,1}},
-        {{200,200,0}, {255,255,  0,255}, {1,0}},
-        {{0,  200,0}, {255,255,255,255}, {0,0}},
-    };
-
-    uint16_t indices[] = {
-        0,1,2,
-        2,0,3
-    };
-
-    static const int TOTAL_VERTS = sizeof(data) / sizeof(data[0]);
-    static const int TOTAL_INDICES = TOTAL_VERTS*6/4;
-
-    auto vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), TOTAL_VERTS);
-    vertexBuffer->updateVertices(data, TOTAL_VERTS,0);
-
-    auto vertsData = VertexData::create();
-    vertsData->setStream(vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
-    vertsData->setStream(vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-    vertsData->setStream(vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
-
-
-    auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, TOTAL_INDICES);
-    indexBuffer->updateIndices(indices, TOTAL_INDICES, 0);
-
-    _primitive = Primitive::create(vertsData, indexBuffer, GL_TRIANGLES);
-    _primitive->setCount(TOTAL_INDICES);
-    _primitive->setStart(0);
-
-    auto cache = Director::getInstance()->getTextureCache();
-    _texture = cache->addImage("Images/grossini.png");
-    _programState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-
-    _primitive->retain();
-    _texture->retain();
-    _programState->retain();
-}
-
-PrimitivesCommandTest::~PrimitivesCommandTest()
-{
-    CC_SAFE_RELEASE(_primitive);
-    CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_programState);
-}
-
-
-void PrimitivesCommandTest::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
-{
-    _primitiveCommand.init(_globalZOrder,
-                           _texture->getName(),
-                           _programState,
-                           BlendFunc::ALPHA_NON_PREMULTIPLIED,
-                           _primitive,
-                           transform,
-                           flags);
-    renderer->addCommand(&_primitiveCommand);
-}
-
-string PrimitivesCommandTest::title() const
-{
-    return "PrimitiveCommand test";
-}
-
-string PrimitivesCommandTest::subtitle() const
-{
-    return "Drawing Primitives using PrimitiveCommand";
-}
-
 //
 // Issue11942Test
 //
@@ -397,9 +197,9 @@ Issue11942Test::Issue11942Test()
 
     // draw a circle
     draw->setLineWidth(1);
-    draw->drawCircle(VisibleRect::center() - Vec2(140,0), 50, CC_DEGREES_TO_RADIANS(90), 30, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    draw->drawCircle(VisibleRect::center() - Vec2(140.0f,0.0f), 50, CC_DEGREES_TO_RADIANS(90), 30, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     draw->setLineWidth(10);
-    draw->drawCircle(VisibleRect::center() + Vec2(140,0), 50, CC_DEGREES_TO_RADIANS(90), 30, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    draw->drawCircle(VisibleRect::center() + Vec2(140.0f,0.0f), 50, CC_DEGREES_TO_RADIANS(90), 30, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
 }
 
 string Issue11942Test::title() const
@@ -411,10 +211,3 @@ string Issue11942Test::subtitle() const
 {
     return "drawCircle() with width";
 }
-
-
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif

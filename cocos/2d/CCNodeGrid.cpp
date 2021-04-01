@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -21,7 +22,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "2d/CCNodeGrid.h"
 #include "2d/CCGrid.h"
 #include "renderer/CCRenderer.h"
@@ -52,11 +52,7 @@ NodeGrid* NodeGrid::create(const cocos2d::Rect &rect)
 }
 
 NodeGrid::NodeGrid()
-: _gridTarget(nullptr)
-, _nodeGrid(nullptr)
-, _gridRect(Rect::ZERO)
 {
-
 }
 
 void NodeGrid::setTarget(Node* target)
@@ -110,10 +106,6 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     if(dirty)
         _modelViewTransform = this->transform(parentTransform);
     _transformUpdated = false;
-    
-    _groupCommand.init(_globalZOrder);
-    renderer->addCommand(&_groupCommand);
-    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
@@ -131,10 +123,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
         _nodeGrid->set2DProjection();
     }
 
-    _gridBeginCommand.init(_globalZOrder);
-    _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
-    renderer->addCommand(&_gridBeginCommand);
-
+    onGridBeginDraw();
 
     if(_gridTarget)
     {
@@ -180,12 +169,8 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
         director->setProjection(beforeProjectionType);
     }
 
-    _gridEndCommand.init(_globalZOrder);
-    _gridEndCommand.func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
-    renderer->addCommand(&_gridEndCommand);
+    onGridEndDraw();
 
-    renderer->popGroup();
- 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 

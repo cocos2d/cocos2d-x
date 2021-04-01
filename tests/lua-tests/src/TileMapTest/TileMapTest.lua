@@ -751,6 +751,7 @@ end
 --
 --------------------------------------------------------------------
 local function TMXIsoZorder()
+    cc.Director:getInstance():getRenderer():setDepthTest(false)
     local m_tamara = nil
     local ret = createTileDemoLayer("TMX Iso Zorder", "Sprite should hide behind the trees")
     local map = cc.TMXTiledMap:create("TileMaps/iso-test-zorder.tmx")
@@ -782,7 +783,7 @@ local function TMXIsoZorder()
         -- if tamara < 96, z=3
         -- if tamara < 144,z=2
 
-        local newZ = 4 - (p.y / 48)
+        local newZ = 4 - math.floor((p.y / 48))
         newZ = math.max(newZ,0)
 
         map:reorderChild(m_tamara, newZ)
@@ -904,6 +905,8 @@ local function TMXIsoVertexZ()
             -- TIP: 2d projection should be used
             cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D )
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
+            cc.Director:getInstance():getRenderer():setDepthTest(true)
+            cc.Director:getInstance():getRenderer():setDepthWrite(true)
         elseif event == "exit" then
             -- At exit use any other projection.
             cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT )
@@ -911,6 +914,8 @@ local function TMXIsoVertexZ()
                 m_tamara:release()
             end
             scheduler:unscheduleScriptEntry(schedulerEntry)
+            cc.Director:getInstance():getRenderer():setDepthTest(false)
+            cc.Director:getInstance():getRenderer():setDepthWrite(false)
         end
     end
 
@@ -958,6 +963,8 @@ local function TMXOrthoVertexZ()
             -- TIP: 2d projection should be used
             cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D )
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
+            cc.Director:getInstance():getRenderer():setDepthTest(true)
+            cc.Director:getInstance():getRenderer():setDepthWrite(true)
         elseif event == "exit" then
             -- At exit use any other projection.
             cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT )
@@ -965,6 +972,8 @@ local function TMXOrthoVertexZ()
                 m_tamara:release()
             end
             scheduler:unscheduleScriptEntry(schedulerEntry)
+            cc.Director:getInstance():getRenderer():setDepthTest(false)
+            cc.Director:getInstance():getRenderer():setDepthWrite(false)
         end
     end
 
@@ -1203,7 +1212,6 @@ end
 function TileMapTestMain()
     cclog("TileMapTestMain")
     Helper.index = 1
-    cc.Director:getInstance():setDepthTest(true)
     local scene = cc.Scene:create()
 
     Helper.createFunctionTable = {

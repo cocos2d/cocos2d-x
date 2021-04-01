@@ -57,7 +57,7 @@ static unsigned little4u(unsigned char *ptr)
     return (ptr[3] << 24) + (ptr[2] << 16) + (ptr[1] << 8) + ptr[0];
 }
 
-static int isLittleEndian(void)
+static int isLittleEndian()
 {
     static const short one = 1;
     return *((const char *) &one) == 1;

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -236,7 +237,6 @@ void Skin::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
     // TODO: implement z order
     _quadCommand.init(_globalZOrder, 
         _texture, 
-        getGLProgramState(), 
         _blendFunc, 
         &_quad, 
         1,

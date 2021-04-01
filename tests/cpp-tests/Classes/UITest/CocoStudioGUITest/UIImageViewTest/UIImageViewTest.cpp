@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "UIImageViewTest.h"
 
 USING_NS_CC;
@@ -42,7 +66,7 @@ bool UIImageViewTest::init()
         auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UIImageViewTest::printWidgetResources, this));
         item1->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + item1->getContentSize().height * 3));
         auto pMenu1 = Menu::create(item1, nullptr);
-        pMenu1->setPosition(Vec2(0, 0));
+        pMenu1->setPosition(Vec2(0.0f, 0.0f));
         this->addChild(pMenu1, 10);
         
         return true;
@@ -109,8 +133,8 @@ bool UIImageViewTest_Scale9_State_Change::init()
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
         imageView->ignoreContentAdaptWithSize(false);
         imageView->setScale9Enabled(true);
-        imageView->setContentSize(Size(100, 100));
-        imageView->setCapInsets(Rect(20,20,20,20));
+        imageView->setContentSize(Size(100.0f, 100.0f));
+        imageView->setCapInsets(Rect(20.0f,20.0f,20.0f,20.0f));
         imageView->setPosition(Vec2(widgetSize.width / 2.0f,
             widgetSize.height / 2.0f));
 
@@ -157,7 +181,7 @@ bool UIImageViewTest_ContentSize::init()
         // Create the imageview
         ImageView* imageView = ImageView::create("cocosui/buttonHighlighted.png");
         imageView->setScale9Enabled(true);
-        imageView->setContentSize(Size(200, 80));
+        imageView->setContentSize(Size(200.0f, 80.0f));
         imageView->setPosition(Vec2(widgetSize.width / 2.0f,
                                     widgetSize.height / 2.0f ));
        
@@ -233,7 +257,7 @@ bool UIImageViewFlipTest::init()
         
         auto toggleButton = Button::create();
         toggleButton->setTitleText("Toggle FlipX");
-        toggleButton->setPosition(imageView->getPosition() + Vec2(-50, - imageView->getContentSize().height/2 - 20));
+        toggleButton->setPosition(imageView->getPosition() + Vec2(-50.0f, - imageView->getContentSize().height/2 - 20));
         this->addChild(toggleButton);
         toggleButton->addClickEventListener([=](Ref*){
             imageView->setFlippedX(!imageView->isFlippedX());
@@ -241,7 +265,7 @@ bool UIImageViewFlipTest::init()
         
         auto toggleScale9 = Button::create();
         toggleScale9->setTitleText("Toggle Scale9");
-        toggleScale9->setPosition(imageView->getPosition() + Vec2(+50, - imageView->getContentSize().height/2- 20));
+        toggleScale9->setPosition(imageView->getPosition() + Vec2(+50.0f, - imageView->getContentSize().height/2- 20));
         this->addChild(toggleScale9);
         toggleScale9->addClickEventListener([=](Ref*){
             imageView->setScale9Enabled(!imageView->isScale9Enabled());

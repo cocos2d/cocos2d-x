@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -21,11 +22,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef _SPRITE3D_TEST_H_
-#define _SPRITE3D_TEST_H_
+#pragma once
 
 #include "BaseTest.h"
+#include "renderer/backend/ProgramState.h"
 #include <string>
 
 namespace cocos2d {
@@ -93,9 +93,9 @@ protected:
     
     float _cylinder_texture_offset;
     float _shining_duration;
-    cocos2d::GLProgramState * _state;
+    cocos2d::backend::ProgramState * _state = nullptr;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
@@ -129,9 +129,9 @@ private:
     unsigned int   _curState;
     cocos2d::Sprite3D * _plane;
     cocos2d::Sprite3D * _orc;
-    cocos2d::GLProgramState * _state;
+    cocos2d::backend::ProgramState *_state = nullptr;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
@@ -159,9 +159,9 @@ public:
     virtual std::string subtitle() const override;
     
 protected:
-    cocos2d::GLProgramState * _state;
+    cocos2d::backend::ProgramState * _state;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 
@@ -192,7 +192,7 @@ public:
 protected:
     std::vector<cocos2d::Sprite3D*> _sprites;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
@@ -250,7 +250,7 @@ public:
 protected:
     std::vector<cocos2d::Sprite3D*> _sprites;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
@@ -342,6 +342,7 @@ protected:
     int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
     cocos2d::Sprite3D* _sprite;
 };
+
 class Sprite3DWithOBBPerformanceTest : public Sprite3DTestDemo
 {
 public:
@@ -458,6 +459,7 @@ namespace cocos2d
 class TextureCube;
 class Skybox;
 }
+
 class Sprite3DCubeMapTest : public Sprite3DTestDemo
 {
 public:
@@ -477,7 +479,7 @@ protected:
     cocos2d::Sprite3D* _teapot;
     cocos2d::Camera *_camera;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
@@ -528,18 +530,6 @@ protected:
     cocos2d::Sprite3D* _sprite3d;
 };
 
-class Sprite3DTestMeshLight : public Sprite3DTestDemo
-{
-public:
-    CREATE_FUNC(Sprite3DTestMeshLight);
-    Sprite3DTestMeshLight();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-protected:
-    cocos2d::Sprite3D* _sprite;
-};
-
 class CameraBackgroundClearTest : public Sprite3DTestDemo
 {
 public:
@@ -565,7 +555,7 @@ public:
     virtual ~Sprite3DVertexColorTest();
 protected:
     cocos2d::Sprite3D* _sprite;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
@@ -591,6 +581,7 @@ public:
     Sprite3DNormalMappingTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    virtual void update(float dt) override;
 
     virtual ~Sprite3DNormalMappingTest();
 };
@@ -623,5 +614,3 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
-
-#endif

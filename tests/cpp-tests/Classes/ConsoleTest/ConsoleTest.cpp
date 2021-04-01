@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -26,7 +27,7 @@
 #include "../testResource.h"
 #include <stdio.h>
 #include <stdlib.h>
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -54,7 +55,7 @@ BaseTestConsole::BaseTestConsole()
 {
 }
 
-BaseTestConsole::~BaseTestConsole(void)
+BaseTestConsole::~BaseTestConsole()
 {
 }
 
@@ -72,7 +73,7 @@ std::string BaseTestConsole::title() const
 ConsoleCustomCommand::ConsoleCustomCommand()
 {
     _console = Director::getInstance()->getConsole();
-    static struct Console::Command commands[] = {
+    static Console::Command commands[] = {
         {"hello", "This is just a user generated command", [](int fd, const std::string& args) {
             const char msg[] = "how are you?\nArguments passed: ";
             send(fd, msg, sizeof(msg),0);
@@ -154,7 +155,7 @@ void ConsoleUploadFile::uploadFile()
     hints.ai_flags = 0;
     hints.ai_protocol = 0;          /* Any protocol */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
@@ -186,7 +187,7 @@ void ConsoleUploadFile::uploadFile()
         if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
             break;                  /* Success */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         closesocket(sfd);
 #else
         close(sfd);
@@ -254,7 +255,7 @@ void ConsoleUploadFile::uploadFile()
     // Sleep 1s to wait server to receive all data.
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     closesocket(sfd);
     WSACleanup();
 #else

@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #ifndef _TESTS_H_
 #define _TESTS_H_
 
@@ -5,8 +29,10 @@
 #include "Box2DTest/Box2dTest.h"
 #include "Box2DTestBed/Box2dView.h"
 #endif
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
 #include "ChipmunkTest/ChipmunkTest.h"
+#endif
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "ClippingNodeTest/ClippingNodeTest.h"
 #endif
 #include "NewAudioEngineTest/NewAudioEngineTest.h"
@@ -30,12 +56,10 @@
 #include "ActionsEaseTest/ActionsEaseTest.h"
 #include "ActionsProgressTest/ActionsProgressTest.h"
 #include "ActionsTest/ActionsTest.h"
-#include "AllocatorTest/AllocatorTest.h"
 #include "BillBoardTest/BillBoardTest.h"
 #include "BugsTest/BugsTest.h"
 #include "Camera3DTest/Camera3DTest.h"
 #include "ClickAndMoveTest/ClickAndMoveTest.h"
-#include "CocosDenshionTest/CocosDenshionTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "ConsoleTest/ConsoleTest.h"
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
@@ -49,7 +73,6 @@
 #include "FontTest/FontTest.h"
 #include "InputTest/MouseTest.h"
 #include "IntervalTest/IntervalTest.h"
-#include "LabelTest/LabelTest.h"
 #include "LabelTest/LabelTestNew.h"
 #include "LayerTest/LayerTest.h"
 #include "LightTest/LightTest.h"
@@ -92,8 +115,7 @@
 #include "UnitTest/UnitTest.h"
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "VibrateTest/VibrateTest.h"
-#include "VRTest/VRTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "SpriteFrameCacheTest/SpriteFrameCacheTest.h"
-
+#include "ZipTest/ZipTests.h"
 #endif

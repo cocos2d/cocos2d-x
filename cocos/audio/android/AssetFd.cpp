@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -27,7 +28,7 @@ THE SOFTWARE.
 #include "audio/android/cutils/log.h"
 #include "audio/android/AssetFd.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 AssetFd::AssetFd(int assetFd)
         : _assetFd(assetFd)
@@ -44,4 +45,4 @@ AssetFd::~AssetFd()
     }
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

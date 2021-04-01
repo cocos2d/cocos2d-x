@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -24,9 +25,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __SPRITE_NODE_CCSPRITE_H__
-#define __SPRITE_NODE_CCSPRITE_H__
+#pragma once
 
 #include <string>
 #include "2d/CCNode.h"
@@ -183,7 +182,7 @@ public:
      * A SpriteFrame will be fetched from the SpriteFrameCache by spriteFrameName param.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   spriteFrameName A null terminated string which indicates the sprite frame name.
+     * @param   spriteFrameName The name of sprite frame.
      * @return  An autoreleased sprite object.
      */
     static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
@@ -305,9 +304,6 @@ public:
     virtual void setSpriteFrame(SpriteFrame* newFrame);
     /** @} */
 
-    /** @deprecated Use `setSpriteFrame()` instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
-
     /**
      * Returns whether or not a SpriteFrame is being displayed.
      */
@@ -317,12 +313,6 @@ public:
      * Returns the current displayed frame.
      */
     virtual SpriteFrame* getSpriteFrame() const;
-    /** @deprecated Use `getSpriteFrame()` instead.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* getDisplayFrame() const { return getSpriteFrame(); }
-    /** @deprecated Use `getSpriteFrame()` instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() const { return getSpriteFrame(); };
 
     /// @} End of frames methods
 
@@ -333,7 +323,7 @@ public:
      * Changes the display frame with animation name and index.
      * The animation name will be get from the AnimationCache.
      */
-    virtual void setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex);
+    virtual void setDisplayFrameWithAnimationName(const std::string& animationName, unsigned int frameIndex);
     /// @}
 
 
@@ -351,154 +341,6 @@ public:
      * Makes the Sprite to be updated in the Atlas.
      */
     virtual void setDirty(bool dirty) { _dirty = dirty; }
-
-    /**
-     * Returns the quad (tex coords, vertex coords and color) information.
-     * @js  NA
-     * @lua NA
-     */
-    V3F_C4B_T2F_Quad getQuad() const { return _quad; }
-
-    /**
-     * Returns whether or not the texture rectangle is rotated.
-     */
-    bool isTextureRectRotated() const { return _rectRotated; }
-
-    /**
-     * Returns the index used on the TextureAtlas.
-     */
-    ssize_t getAtlasIndex() const { return _atlasIndex; }
-
-    /**
-     * Sets the index used on the TextureAtlas.
-     *
-     * @warning Don't modify this value unless you know what you are doing.
-     */
-    void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
-
-    /**
-     * Returns the rect of the Sprite in points.
-     */
-    const Rect& getTextureRect() const { return _rect; }
-
-    /**
-     * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
-     */
-    TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
-
-    /**
-     * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
-     */
-    void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }
-
-    /**
-     * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
-     */
-    const Vec2& getOffsetPosition() const { return _offsetPosition; }
-
-
-    /**
-     * Returns the flag which indicates whether the sprite is flipped horizontally or not.
-     *
-     * It only flips the texture of the sprite, and not the texture of the sprite's children.
-     * Also, flipping the texture doesn't alter the anchorPoint.
-     * If you want to flip the anchorPoint too, and/or to flip the children too use:
-     * sprite->setScaleX(sprite->getScaleX() * -1);
-     *
-     * @return true if the sprite is flipped horizontally, false otherwise.
-     */
-    bool isFlippedX() const;
-    /**
-     * Sets whether the sprite should be flipped horizontally or not.
-     *
-     * @param flippedX true if the sprite should be flipped horizontally, false otherwise.
-     */
-    void setFlippedX(bool flippedX);
-
-    /** @deprecated Use isFlippedX() instead.
-    * @js NA
-    * @lua NA
-    */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flippedX) { setFlippedX(flippedX); };
-
-    /**
-     * Return the flag which indicates whether the sprite is flipped vertically or not.
-     *
-     * It only flips the texture of the sprite, and not the texture of the sprite's children.
-     * Also, flipping the texture doesn't alter the anchorPoint.
-     * If you want to flip the anchorPoint too, and/or to flip the children too use:
-     * sprite->setScaleY(sprite->getScaleY() * -1);
-     *
-     * @return true if the sprite is flipped vertically, false otherwise.
-     */
-    bool isFlippedY() const;
-    /**
-     * Sets whether the sprite should be flipped vertically or not.
-     *
-     * @param flippedY true if the sprite should be flipped vertically, false otherwise.
-     */
-    void setFlippedY(bool flippedY);
-
-    /// @} End of Sprite properties getter/setters
-
-    /** @deprecated Use isFlippedY() instead.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
-
-    /**
-     * returns a reference of the polygon information associated with this sprite
-     *
-     * @return a reference of PolygonInfo
-     */
-    const PolygonInfo& getPolygonInfo() const;
-
-    /**
-     * set the sprite to use this new PolygonInfo
-     *
-     * @param PolygonInfo the polygon information object
-     */
-    void setPolygonInfo(const PolygonInfo& info);
-
-    /** whether or not contentSize stretches the sprite's texture */
-    void setStretchEnabled(bool enabled);
-
-    /** @deprecated Use setStretchEnabled() instead. */
-    CC_DEPRECATED_ATTRIBUTE void setStrechEnabled(bool enabled);
-
-    /** returns whether or not contentSize stretches the sprite's texture */
-    bool isStretchEnabled() const;
-
-    /** @deprecated Use isStretchEnabled() instead. */
-    CC_DEPRECATED_ATTRIBUTE bool isStrechEnabled() const;
-
-    //
-    // Overrides
-    //
-    /// @{
-    /// @name Functions inherited from TextureProtocol.
-    /**
-    *@code
-    *When this function bound into js or lua,the parameter will be changed.
-    *In js: var setBlendFunc(var src, var dst).
-    *In lua: local setBlendFunc(local src, local dst).
-    *@endcode
-    */
-    void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
-    /**
-    * @js  NA
-    * @lua NA
-    */
-    const BlendFunc& getBlendFunc() const override { return _blendFunc; }
-    /// @}
 
     /**
      * @js NA
@@ -532,13 +374,146 @@ public:
     virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Vec2& anchor) override;
     virtual void setContentSize(const Size& size) override;
-    
+
     virtual void setIgnoreAnchorPointForPosition(bool value) override;
-    
+
     virtual void setVisible(bool bVisible) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB() const override;
+    /// @}
+
+    /**
+     * Returns the quad (tex coords, vertex coords and color) information.
+     * @js  NA
+     * @lua NA
+     */
+    V3F_C4B_T2F_Quad getQuad() const { return _quad; }
+
+    /**
+     * Returns whether or not the texture rectangle is rotated.
+     */
+    bool isTextureRectRotated() const { return _rectRotated; }
+
+    /**
+     * Returns the index used on the TextureAtlas.
+     */
+    unsigned int getAtlasIndex() const { return _atlasIndex; }
+
+    /**
+     * Sets the index used on the TextureAtlas.
+     *
+     * @warning Don't modify this value unless you know what you are doing.
+     */
+    void setAtlasIndex(unsigned int atlasIndex) { _atlasIndex = atlasIndex; }
+
+    /**
+     * Returns the rect of the Sprite in points.
+     */
+    const Rect& getTextureRect() const { return _rect; }
+
+    /**
+     * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
+     */
+    TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
+
+    /**
+    * Set ProgramState
+    */
+    virtual void setProgramState(backend::ProgramState *programState) override;
+
+    /**
+    * Get current ProgramState
+    */
+    virtual backend::ProgramState *getProgramState() const override;
+
+    /**
+     * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
+     */
+    void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }
+
+    /**
+     * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
+     */
+    const Vec2& getOffsetPosition() const { return _offsetPosition; }
+
+
+    /**
+     * Returns the flag which indicates whether the sprite is flipped horizontally or not.
+     *
+     * It only flips the texture of the sprite, and not the texture of the sprite's children.
+     * Also, flipping the texture doesn't alter the anchorPoint.
+     * If you want to flip the anchorPoint too, and/or to flip the children too use:
+     * sprite->setScaleX(sprite->getScaleX() * -1);
+     *
+     * @return true if the sprite is flipped horizontally, false otherwise.
+     */
+    bool isFlippedX() const;
+    /**
+     * Sets whether the sprite should be flipped horizontally or not.
+     *
+     * @param flippedX true if the sprite should be flipped horizontally, false otherwise.
+     */
+    void setFlippedX(bool flippedX);
+
+    /**
+     * Return the flag which indicates whether the sprite is flipped vertically or not.
+     *
+     * It only flips the texture of the sprite, and not the texture of the sprite's children.
+     * Also, flipping the texture doesn't alter the anchorPoint.
+     * If you want to flip the anchorPoint too, and/or to flip the children too use:
+     * sprite->setScaleY(sprite->getScaleY() * -1);
+     *
+     * @return true if the sprite is flipped vertically, false otherwise.
+     */
+    bool isFlippedY() const;
+    /**
+     * Sets whether the sprite should be flipped vertically or not.
+     *
+     * @param flippedY true if the sprite should be flipped vertically, false otherwise.
+     */
+    void setFlippedY(bool flippedY);
+
+    /// @} End of Sprite properties getter/setters
+
+    /**
+     * returns a reference of the polygon information associated with this sprite
+     *
+     * @return a reference of PolygonInfo
+     */
+    const PolygonInfo& getPolygonInfo() const;
+
+    /**
+     * set the sprite to use this new PolygonInfo
+     *
+     * @param PolygonInfo the polygon information object
+     */
+    void setPolygonInfo(const PolygonInfo& info);
+
+    /** whether or not contentSize stretches the sprite's texture */
+    void setStretchEnabled(bool enabled);
+
+    /** returns whether or not contentSize stretches the sprite's texture */
+    bool isStretchEnabled() const;
+
+    //
+    // Overrides
+    //
+    /// @{
+    /// @name Functions inherited from TextureProtocol.
+    /**
+    *@code
+    *When this function bound into js or lua,the parameter will be changed.
+    *In js: var setBlendFunc(var src, var dst).
+    *In lua: local setBlendFunc(local src, local dst).
+    *@endcode
+    */
+    void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
+    /**
+    * @js  NA
+    * @lua NA
+    */
+    const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
     int getResourceType() const { return _fileType; }
@@ -646,42 +621,53 @@ CC_CONSTRUCTOR_ACCESS :
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
+
+    virtual void setVertexLayout();
+    virtual void updateShaders(const char* vert, const char* frag);
     
 protected:
-
     virtual void updateColor() override;
     virtual void setTextureCoords(const Rect& rect);
     virtual void setTextureCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
     virtual void setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
-    void populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
+    virtual void flipX();
+    virtual void flipY();
+    virtual void updateProgramStateTexture();
 
     void updatePoly();
     void updateStretchFactor();
-
+    void populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad);
+    void setMVPMatrixUniform();
+    void setProgramState(backend::ProgramType type);
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
-    TextureAtlas*       _textureAtlas;      /// SpriteBatchNode texture atlas (weak reference)
-    ssize_t             _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
-    SpriteBatchNode*    _batchNode;         /// Used batch node (weak reference)
+    TextureAtlas* _textureAtlas = nullptr;          /// SpriteBatchNode texture atlas (weak reference)
+    unsigned int _atlasIndex = 0;                   /// Absolute (real) Index on the SpriteSheet
+    SpriteBatchNode* _batchNode = nullptr;          /// Used batch node (weak reference)
 
-    bool                _dirty;             /// Whether the sprite needs to be updated
-    bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
-    bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
-    Mat4              _transformToBatch;
+    bool _dirty = false;             /// Whether the sprite needs to be updated
+    bool _recursiveDirty = false;    /// Whether all of the sprite's children needs to be updated
+    bool _shouldBeHidden = false;    /// should not be drawn because one of the ancestors is not visible
+    Mat4 _transformToBatch;
 
     //
     // Data used when the sprite is self-rendered
     //
-    BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
-    Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
-    SpriteFrame*     _spriteFrame;
-    TrianglesCommand _trianglesCommand;     ///
+    BlendFunc _blendFunc;            /// It's required for TextureProtocol inheritance
+    Texture2D* _texture = nullptr;   /// Texture2D object that is used to render the sprite
+    SpriteFrame* _spriteFrame = nullptr;
+    TrianglesCommand _trianglesCommand;
+    
+    backend::UniformLocation _mvpMatrixLocation;
+    backend::UniformLocation _textureLocation;
+    backend::UniformLocation _alphaTextureLocation;
+        
 #if CC_SPRITE_DEBUG_DRAW
-    DrawNode *_debugDrawNode;
+    DrawNode *_debugDrawNode = nullptr;
 #endif //CC_SPRITE_DEBUG_DRAW
     //
     // Shared data
@@ -689,12 +675,12 @@ protected:
 
     // texture
     Rect _rect;                             /// Rectangle of Texture2D
-    bool _rectRotated;                      /// Whether the texture is rotated
+    bool _rectRotated = false;              /// Whether the texture is rotated
 
-    Rect _centerRectNormalized;             /// Rectangle to implement "slice 9"
-    RenderMode _renderMode;                 /// render mode used by the Sprite: Quad, Slice9, Polygon or Quad_Batchnode
-    Vec2 _stretchFactor;                    /// stretch factor to match the contentSize. for 1- and 9- slice sprites
-    Size _originalContentSize;              /// original content size
+    Rect _centerRectNormalized = {0,0,1,1}; /// Rectangle to implement "slice 9"
+    RenderMode _renderMode = Sprite::RenderMode::QUAD;   /// render mode used by the Sprite: Quad, Slice9, Polygon or Quad_Batchnode
+    Vec2 _stretchFactor = Vec2::ONE;                     /// stretch factor to match the contentSize. for 1- and 9- slice sprites
+    Size _originalContentSize = Size::ZERO;              /// original content size
 
 
     // Offset Position (used by Zwoptex)
@@ -703,24 +689,24 @@ protected:
 
     // vertex coords, texture coords and color info
     V3F_C4B_T2F_Quad _quad;
-    V3F_C4B_T2F* _trianglesVertex;
-    unsigned short* _trianglesIndex;
+    V3F_C4B_T2F* _trianglesVertex = nullptr;
+    unsigned short* _trianglesIndex = nullptr;
     PolygonInfo  _polyInfo;
 
     // opacity and RGB protocol
-    bool _opacityModifyRGB;
+    bool _opacityModifyRGB = false;
 
     // image is flipped
-    bool _flippedX;                         /// Whether the sprite is flipped horizontally or not
-    bool _flippedY;                         /// Whether the sprite is flipped vertically or not
+    bool _flippedX = false;                 /// Whether the sprite is flipped horizontally or not
+    bool _flippedY = false;                 /// Whether the sprite is flipped vertically or not
 
-    bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
+    bool _insideBounds = true;              /// whether or not the sprite was inside bounds the previous frame
 
     std::string _fileName;
-    int _fileType;
+    int _fileType = 0;
 
-    bool _stretchEnabled;
-
+    bool _stretchEnabled = true;
+    
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };
@@ -730,5 +716,3 @@ private:
 /// @}
 
 NS_CC_END
-
-#endif // __SPRITE_NODE_CCSPRITE_H__

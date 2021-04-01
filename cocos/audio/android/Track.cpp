@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +30,7 @@ THE SOFTWARE.
 
 #include <math.h>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 Track::Track(const PcmData &pcmData)
         : onStateChanged(nullptr)
@@ -102,4 +103,4 @@ void Track::setState(State state)
     }
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

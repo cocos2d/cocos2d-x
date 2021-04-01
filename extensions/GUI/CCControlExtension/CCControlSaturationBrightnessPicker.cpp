@@ -8,6 +8,8 @@
  * Modified by Yannick Loriot.
  * http://yannickloriot.com
  * 
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -102,14 +104,14 @@ void ControlSaturationBrightnessPicker::updateWithHSV(HSV hsv)
     hsvTemp.v = 1;
     
     RGBA rgb = ControlUtils::RGBfromHSV(hsvTemp);
-    _background->setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    _background->setColor(Color3B((uint8_t)(rgb.r * 255.0f), (uint8_t)(rgb.g * 255.0f), (uint8_t)(rgb.b * 255.0f)));
 }
 
 void ControlSaturationBrightnessPicker::updateDraggerWithHSV(HSV hsv)
 {
     // Set the position of the slider to the correct saturation and brightness
-    Vec2 pos(_startPos.x + boxPos + (boxSize*(1 - hsv.s)),
-                              _startPos.y + boxPos + (boxSize*hsv.v));
+    Vec2 pos(_startPos.x + boxPos + (boxSize*(1 - (float)hsv.s)),
+                              _startPos.y + boxPos + (boxSize*(float)hsv.v));
     
     // update
     updateSliderPosition(pos);

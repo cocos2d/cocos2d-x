@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -44,11 +45,11 @@ ActionsProgressTests::ActionsProgressTests()
 // SpriteDemo
 //
 //------------------------------------------------------------------
-SpriteDemo::SpriteDemo(void)
+SpriteDemo::SpriteDemo()
 {
 }
 
-SpriteDemo::~SpriteDemo(void)
+SpriteDemo::~SpriteDemo()
 {
 }
 
@@ -117,9 +118,9 @@ void SpriteProgressToHorizontal::onEnter()
     auto left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType(ProgressTimer::Type::BAR);
     //    Setup for a bar starting from the left since the midpoint is 0 for the x
-    left->setMidpoint(Vec2(0,0));
+    left->setMidpoint(Vec2(0.0f,0.0f));
     //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
-    left->setBarChangeRate(Vec2(1, 0));
+    left->setBarChangeRate(Vec2(1.0f, 0.0f));
     addChild(left);
     left->setPosition(100, s.height/2);
     left->runAction( RepeatForever::create(to1));
@@ -127,9 +128,9 @@ void SpriteProgressToHorizontal::onEnter()
     auto right = ProgressTimer::create(Sprite::create(s_pathSister2));
     right->setType(ProgressTimer::Type::BAR);
     //    Setup for a bar starting from the left since the midpoint is 1 for the x
-    right->setMidpoint(Vec2(1, 0));
+    right->setMidpoint(Vec2(1.0f, 0.0f));
     //    Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
-    right->setBarChangeRate(Vec2(1, 0));
+    right->setBarChangeRate(Vec2(1.0f, 0.0f));
     addChild(right);
     right->setPosition(s.width-100, s.height/2);
     right->runAction( RepeatForever::create(to2));
@@ -158,9 +159,9 @@ void SpriteProgressToVertical::onEnter()
     left->setType(ProgressTimer::Type::BAR);
 
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    left->setMidpoint(Vec2(0,0));
+    left->setMidpoint(Vec2(0.0f,0.0f));
     //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    left->setBarChangeRate(Vec2(0, 1));
+    left->setBarChangeRate(Vec2(0.0f, 1.0f));
     addChild(left);
     left->setPosition(100, s.height/2);
     left->runAction( RepeatForever::create(to1));
@@ -244,7 +245,7 @@ void SpriteProgressBarVarious::onEnter()
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     left->setMidpoint(Vec2(0.5f, 0.5f));
     //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    left->setBarChangeRate(Vec2(1, 0));
+    left->setBarChangeRate(Vec2(1.0f, 0.0f));
     addChild(left);
     left->setPosition(100, s.height/2);
     left->runAction(RepeatForever::create(to->clone()));
@@ -301,7 +302,7 @@ void SpriteProgressBarTintAndFade::onEnter()
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     left->setMidpoint(Vec2(0.5f, 0.5f));
     //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    left->setBarChangeRate(Vec2(1, 0));
+    left->setBarChangeRate(Vec2(1.0f, 0.0f));
     addChild(left);
     left->setPosition(100, s.height/2);
     left->runAction(RepeatForever::create(to->clone()));
@@ -362,7 +363,7 @@ void SpriteProgressWithSpriteFrame::onEnter()
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     left->setMidpoint(Vec2(0.5f, 0.5f));
     //    Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    left->setBarChangeRate(Vec2(1, 0));
+    left->setBarChangeRate(Vec2(1.0f, 0.0f));
     addChild(left);
     left->setPosition(100, s.height/2);
     left->runAction(RepeatForever::create(to->clone()));

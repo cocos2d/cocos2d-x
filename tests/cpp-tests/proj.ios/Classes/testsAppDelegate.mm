@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -27,7 +28,7 @@
 
 #import "platform/ios/CCEAGLView-ios.h"
 #import "cocos2d.h"
-#import "AppDelegate.h"
+#import "../../Classes/AppDelegate.h"
 #import "RootViewController.h"
 
 @implementation AppController
@@ -56,8 +57,8 @@ static AppDelegate s_sharedApplication;
                                          depthFormat: cocos2d::GLViewImpl::_depthFormat
                                   preserveBackbuffer: NO
                                           sharegroup: nil
-                                       multiSampling: NO
-                                     numberOfSamples: 0 ];
+                                       multiSampling: cocos2d::GLViewImpl::_multisamplingCount > 0 ? YES : NO
+                                     numberOfSamples: cocos2d::GLViewImpl::_multisamplingCount ];
 
 #if !defined(CC_TARGET_OS_TVOS)
     [eaglView setMultipleTouchEnabled:YES];
@@ -66,7 +67,7 @@ static AppDelegate s_sharedApplication;
     // Use RootViewController manage CCEAGLView
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
 #if !defined(CC_TARGET_OS_TVOS)
-    viewController.wantsFullScreenLayout = YES;
+    viewController.extendedLayoutIncludesOpaqueBars = YES;
 #endif
     viewController.view = eaglView;
 
@@ -85,7 +86,7 @@ static AppDelegate s_sharedApplication;
     [window makeKeyAndVisible];
 
 #if !defined(CC_TARGET_OS_TVOS)
-    [[UIApplication sharedApplication] setStatusBarHidden:true];
+    [viewController prefersStatusBarHidden];
 #endif
     
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController

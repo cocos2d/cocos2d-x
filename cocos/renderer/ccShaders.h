@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2012 		cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -23,12 +24,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#pragma once
 
-#ifndef __CCSHADER_H__
-#define __CCSHADER_H__
 /// @cond DO_NOT_SHOW
 
-#include "platform/CCGL.h"
 #include "platform/CCPlatformMacros.h"
 
 /**
@@ -38,71 +37,53 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-extern CC_DLL const GLchar * ccPosition_uColor_frag;
-extern CC_DLL const GLchar * ccPosition_uColor_vert;
+extern CC_DLL const char * positionColor_vert;
+extern CC_DLL const char * positionColor_frag;
+extern CC_DLL const char * positionTexture_vert;
+extern CC_DLL const char * positionTexture_frag;
+extern CC_DLL const char * positionTextureColor_vert;
+extern CC_DLL const char * positionTextureColor_frag;
+extern CC_DLL const char * positionTextureColorAlphaTest_frag;
+extern CC_DLL const char * label_normal_frag;
+extern CC_DLL const char * label_distanceNormal_frag;
+extern CC_DLL const char * labelOutline_frag;
+extern CC_DLL const char * labelDistanceFieldGlow_frag;
+extern CC_DLL const char * lineColor3D_frag;
+extern CC_DLL const char * lineColor3D_vert;
+extern CC_DLL const char * positionColorLengthTexture_vert;
+extern CC_DLL const char * positionColorLengthTexture_frag;
+extern CC_DLL const char * positionColorTextureAsPointsize_vert;
+extern CC_DLL const char * position_vert;
+extern CC_DLL const char * positionNoMVP_vert;
+extern CC_DLL const char * layer_radialGradient_frag;
+extern CC_DLL const char * grayScale_frag;
+extern CC_DLL const char * positionTextureUColor_vert;
+extern CC_DLL const char * positionTextureUColor_frag;
+extern CC_DLL const char * positionUColor_vert;
+extern CC_DLL const char * positionUColor_frag;
+extern CC_DLL const char * etc1_frag;
+extern CC_DLL const char * etc1Gray_frag;
+extern CC_DLL const char * cameraClear_vert;
+extern CC_DLL const char * cameraClear_frag;
 
-extern CC_DLL const GLchar * ccPositionColor_frag;
-extern CC_DLL const GLchar * ccPositionColor_vert;
-
-extern CC_DLL const GLchar * ccPositionColorTextureAsPointsize_vert;
-
-extern CC_DLL const GLchar * ccPositionTexture_frag;
-extern CC_DLL const GLchar * ccPositionTexture_vert;
-
-extern CC_DLL const GLchar * ccPositionTextureA8Color_frag;
-extern CC_DLL const GLchar * ccPositionTextureA8Color_vert;
-
-extern CC_DLL const GLchar * ccPositionTextureColor_frag;
-extern CC_DLL const GLchar * ccPositionTextureColor_vert;
-
-extern CC_DLL const GLchar * ccPositionTextureColor_noMVP_frag;
-extern CC_DLL const GLchar * ccPositionTextureColor_noMVP_vert;
-
-extern CC_DLL const GLchar * ccPositionTextureColorAlphaTest_frag;
-
-extern CC_DLL const GLchar * ccPositionTexture_uColor_frag;
-extern CC_DLL const GLchar * ccPositionTexture_uColor_vert;
-
-extern CC_DLL const GLchar * ccPositionColorLengthTexture_frag;
-extern CC_DLL const GLchar * ccPositionColorLengthTexture_vert;
-
-extern CC_DLL const GLchar * ccPositionTexture_GrayScale_frag;
-
-extern CC_DLL const GLchar * ccLabelDistanceFieldNormal_frag;
-extern CC_DLL const GLchar * ccLabelDistanceFieldGlow_frag;
-extern CC_DLL const GLchar * ccLabelNormal_frag;
-extern CC_DLL const GLchar * ccLabelOutline_frag;
-
-extern CC_DLL const GLchar * ccLabel_vert;
-
-extern CC_DLL const GLchar * cc3D_PositionTex_vert;
-extern CC_DLL const GLchar * cc3D_SkinPositionTex_vert;
-extern CC_DLL const GLchar * cc3D_ColorTex_frag;
-extern CC_DLL const GLchar * cc3D_Color_frag;
-extern CC_DLL const GLchar * cc3D_PositionNormalTex_vert;
-extern CC_DLL const GLchar * cc3D_SkinPositionNormalTex_vert;
-extern CC_DLL const GLchar * cc3D_ColorNormalTex_frag;
-extern CC_DLL const GLchar * cc3D_ColorNormal_frag;
-extern CC_DLL const GLchar * cc3D_Particle_vert;
-extern CC_DLL const GLchar * cc3D_Particle_tex_frag;
-extern CC_DLL const GLchar * cc3D_Particle_color_frag;
-extern CC_DLL const GLchar * cc3D_Skybox_vert;
-extern CC_DLL const GLchar * cc3D_Skybox_frag;
-extern CC_DLL const GLchar * cc3D_Terrain_vert;
-extern CC_DLL const GLchar * cc3D_Terrain_frag;
-extern CC_DLL const GLchar * ccCameraClearVert;
-extern CC_DLL const GLchar * ccCameraClearFrag;
-// ETC1 ALPHA supports.
-extern CC_DLL const GLchar* ccETC1ASPositionTextureColor_frag;
-extern CC_DLL const GLchar* ccETC1ASPositionTextureGray_frag;
-
-extern CC_DLL const GLchar* ccPosition_vert;
-extern CC_DLL const GLchar* ccShader_LayerRadialGradient_frag;
-
+extern CC_DLL const char * CC3D_color_frag;
+extern CC_DLL const char * CC3D_colorNormal_frag;
+extern CC_DLL const char * CC3D_colorNormalTexture_frag;
+extern CC_DLL const char * CC3D_colorTexture_frag;
+extern CC_DLL const char * CC3D_particleTexture_frag;
+extern CC_DLL const char * CC3D_particleColor_frag;
+extern CC_DLL const char * CC3D_particle_vert;
+extern CC_DLL const char * CC3D_positionNormalTexture_vert;
+extern CC_DLL const char * CC3D_skinPositionNormalTexture_vert;
+extern CC_DLL const char * CC3D_positionTexture_vert;
+extern CC_DLL const char * CC3D_skinPositionTexture_vert;
+extern CC_DLL const char * CC3D_skybox_frag;
+extern CC_DLL const char * CC3D_skybox_vert;
+extern CC_DLL const char * CC3D_terrain_frag;
+extern CC_DLL const char * CC3D_terrain_vert;
 NS_CC_END
 /**
  end of support group
  @}
  */
 /// @endcond
-#endif /* __CCSHADER_H__ */

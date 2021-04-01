@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -29,9 +30,7 @@
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/backend/ProgramState.h"
 #include "2d/CCCamera.h"
 #include "3d/CCSprite3D.h"
 
@@ -244,7 +243,7 @@ float PURibbonTrail::getWidthChange(size_t chainIndex) const
 
 }
 //-----------------------------------------------------------------------
-void PURibbonTrail::manageController(void)
+void PURibbonTrail::manageController()
 {
     _needTimeUpdate = false;
     for (size_t i = 0; i < _chainCount; ++i)
@@ -403,7 +402,7 @@ void PURibbonTrail::resetTrail(size_t index, const Node* node)
     addChainElement(index, e);
 }
 //-----------------------------------------------------------------------
-void PURibbonTrail::resetAllTrails(void)
+void PURibbonTrail::resetAllTrails()
 {
     for (size_t i = 0; i < _nodeList.size(); ++i)
     {

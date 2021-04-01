@@ -1,6 +1,7 @@
 /**
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2014-2017 Chukong Technologies
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -123,18 +124,6 @@ public:
      * @param angle The angle of rotation (in radians).
      */
     Quaternion(const Vec3& axis, float angle);
-
-    /**
-     * Constructs a new quaternion that is a copy of the specified one.
-     *
-     * @param copy The quaternion to copy.
-     */
-    Quaternion(const Quaternion& copy);
-
-    /**
-     * Destructor.
-     */
-    ~Quaternion();
 
     /**
      * Returns the identity quaternion.

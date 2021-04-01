@@ -3,12 +3,12 @@ attribute vec3 a_normal;
 attribute vec4 a_blendWeight;
 attribute vec4 a_blendIndex;
 
-attribute vec2 a_texCoord;
 uniform float OutlineWidth;
 
 const int SKINNING_JOINT_COUNT = 60;
 // Uniforms
 uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];
+uniform mat4 u_MVPMatrix;
 
 // Varyings
 varying vec2 TextureCoordOut;
@@ -65,9 +65,9 @@ vec4 SkinnedVec3(vec4 vec)
 
 void main()
 {
-    vec4 pos = CC_MVPMatrix * SkinnedVec3(vec4(a_position,1.0));
+    vec4 pos = u_MVPMatrix * SkinnedVec3(vec4(a_position,1.0));
     
-    vec4 normalproj = CC_MVPMatrix * vec4(SkinnedVec3(vec4(a_normal,0.0)).xyz, 0);
+    vec4 normalproj = u_MVPMatrix * vec4(SkinnedVec3(vec4(a_normal,0.0)).xyz, 0);
     normalproj = normalize(normalproj);
     pos.xy += normalproj.xy * (OutlineWidth * (pos.z * 0.5 + 0.5));
 

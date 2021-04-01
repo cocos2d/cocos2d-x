@@ -431,7 +431,7 @@ function SpritePolygonPerformance:init()
         dt = dt * 0.3 + self._prevDt * 0.7
         self._prevDt = dt
         self._elapsedTime = self._elapsedTime + dt
-        local loops = (0.025 - dt)*1000
+        local loops = math.floor((0.025 - dt)*1000)
         if dt < 0.025 and loops > 0 then
             self._continuousHighDtTime = cc.clampf(self._continuousHighDtTime-dt*2, 0.0, 1.0)
             self._waitingTime = cc.clampf(self._waitingTime-dt, 0.0, 5.0)

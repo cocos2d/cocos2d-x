@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -38,7 +39,7 @@ public:
     ~UIPageViewTest();
     virtual bool init() override;
 
-    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageViewEventType type);
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
 
 protected:
 

@@ -26,7 +26,7 @@ Sprite1.__index = Sprite1
 
 function Sprite1.addNewSpriteWithCoords(layer, point)
     local idx = math.floor(math.random() * 1400 / 100)
-    local x = math.floor(math.mod(idx,5) * 85)
+    local x = math.floor(math.fmod(idx,5) * 85)
     local y = math.floor(idx / 5) * 121
 
     local sprite = cc.Sprite:create("Images/grossini_dance_atlas.png", cc.rect(x,y,85,121) )
@@ -87,7 +87,7 @@ SpriteBatchNode1.__index = SpriteBatchNode1
 function SpriteBatchNode1.addNewSpriteWithCoords(layer, point)
     local BatchNode = layer:getChildByTag( kTagSpriteBatchNode )
     local idx = math.floor(math.random() * 1400 / 100)
-    local x = math.floor(math.mod(idx,5) * 85)
+    local x = math.floor(math.fmod(idx,5) * 85)
     local y = math.floor(idx / 5) * 121
 
     local sprite = cc.Sprite:createWithTexture(BatchNode:getTexture(), cc.rect(x,y,85,121) )
@@ -264,8 +264,8 @@ function SpriteFrameTest.onEnter()
     local animation = cc.Animation:createWithSpriteFrames(animFrames, 0.3)
     SpriteFrameTest.m_pSprite1:runAction( cc.RepeatForever:create( cc.Animate:create(animation) ) )
 
-    SpriteFrameTest.m_pSprite1:setFlipX(false)
-    SpriteFrameTest.m_pSprite1:setFlipY(false)
+    SpriteFrameTest.m_pSprite1:setFlippedX(false)
+    SpriteFrameTest.m_pSprite1:setFlippedY(false)
 
     SpriteFrameTest.m_pSprite2 = cc.Sprite:createWithSpriteFrameName("grossini_dance_01.png")
     SpriteFrameTest.m_pSprite2:setPosition( cc.p( s.width/2 + 80, s.height/2) )
@@ -292,8 +292,8 @@ function SpriteFrameTest.onEnter()
 
     SpriteFrameTest.m_pSprite2:runAction(cc.RepeatForever:create( cc.Animate:create(animMixed) ) )
 
-    SpriteFrameTest.m_pSprite2:setFlipX(false)
-    SpriteFrameTest.m_pSprite2:setFlipY(false)
+    SpriteFrameTest.m_pSprite2:setFlippedX(false)
+    SpriteFrameTest.m_pSprite2:setFlippedY(false)
 
 
     performWithDelay(Helper.currentLayer,SpriteFrameTest.startIn05Secs, 0.5)
@@ -316,7 +316,7 @@ function SpriteFrameTest.flipSprites(dt)
 
     local fx = false
     local fy = false
-    local i  = math.mod(SpriteFrameTest.m_nCounter, 4)
+    local i  = math.fmod(SpriteFrameTest.m_nCounter, 4)
 
     if(i == 0) then
         fx = false
@@ -332,10 +332,10 @@ function SpriteFrameTest.flipSprites(dt)
         fy = true
     end
 
-    SpriteFrameTest.m_pSprite1:setFlipX(fx)
-    SpriteFrameTest.m_pSprite1:setFlipY(fy)
-    SpriteFrameTest.m_pSprite2:setFlipX(fx)
-    SpriteFrameTest.m_pSprite2:setFlipY(fy)
+    SpriteFrameTest.m_pSprite1:setFlippedX(fx)
+    SpriteFrameTest.m_pSprite1:setFlippedY(fy)
+    SpriteFrameTest.m_pSprite2:setFlippedX(fx)
+    SpriteFrameTest.m_pSprite2:setFlippedY(fy)
 end
 
 

@@ -2,7 +2,8 @@
  * Copyright (c) 2008 Radu Gruian
  * Copyright (c) 2011 Vit Valentin
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -96,7 +97,7 @@ public:
      * @param controlPoint A control point.
      * @param index Insert the point to array in index.
      */
-    void insertControlPoint(const Vec2 &controlPoint, ssize_t index);
+    void insertControlPoint(const Vec2& controlPoint, ssize_t index);
 
     /** Replaces an existing controlPoint at index.
      *
@@ -104,7 +105,7 @@ public:
      * @param controlPoint A control point.
      * @param index Replace the point to array in index.
      */
-    void replaceControlPoint(const Vec2 &controlPoint, ssize_t index);
+    void replaceControlPoint(const Vec2& controlPoint, ssize_t index);
 
     /** Get the value of a controlPoint at a given index.
      *
@@ -112,7 +113,7 @@ public:
      * @param index Get the point in index.
      * @return A Vec2.
      */
-    Vec2 getControlPointAtIndex(ssize_t index);
+    const Vec2& getControlPointAtIndex(ssize_t index) const;
 
     /** Deletes a control point at a given index
      *
@@ -147,14 +148,14 @@ public:
     /**
      * @js NA
      */
-    const std::vector<Vec2*>* getControlPoints() const;
+    const std::vector<Vec2>& getControlPoints() const;
     /**
      * @js NA
      */
-    void setControlPoints(std::vector<Vec2*> *controlPoints);
+    void setControlPoints(std::vector<Vec2> controlPoints);
 private:
     /** Array that contains the control points. */
-    std::vector<Vec2*> *_controlPoints;
+    std::vector<Vec2> _controlPoints;
 };
 
 /** @class CardinalSplineTo

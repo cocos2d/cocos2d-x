@@ -1,4 +1,3 @@
-require "ExtensionTest/CocosBuilderTest"
 require "ExtensionTest/WebProxyTest"
 
 local LINE_SPACE = 40
@@ -88,7 +87,7 @@ local function runEditBoxTest()
 		end
 	end
     -- top
-    EditName = cc.EditBox:create(editBoxSize, cc.Scale9Sprite:create("extensions/green_edit.png"))
+    EditName = ccui.EditBox:create(editBoxSize, ccui.Scale9Sprite:create("extensions/green_edit.png"))
     EditName:setPosition(cc.p(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4))
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
     if kTargetIphone == targetPlatform or kTargetIpad == targetPlatform then
@@ -107,7 +106,7 @@ local function runEditBoxTest()
     newLayer:addChild(EditName)
    
     --middle
-    EditPassword = cc.EditBox:create(editBoxSize, cc.Scale9Sprite:create("extensions/orange_edit.png"))
+    EditPassword = ccui.EditBox:create(editBoxSize, ccui.Scale9Sprite:create("extensions/orange_edit.png"))
     EditPassword:setPosition(cc.p(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2))
 	if kTargetIphone == targetPlatform or kTargetIpad == targetPlatform then
 		EditPassword:setFont("American Typewriter", 30)
@@ -125,7 +124,7 @@ local function runEditBoxTest()
     newLayer:addChild(EditPassword)
      
     --bottom
-    EditEmail = cc.EditBox:create(cc.size(editBoxSize.width, editBoxSize.height), cc.Scale9Sprite:create("extensions/yellow_edit.png"))
+    EditEmail = ccui.EditBox:create(cc.size(editBoxSize.width, editBoxSize.height), ccui.Scale9Sprite:create("extensions/yellow_edit.png"))
     EditEmail:setPosition(cc.p(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4))
     EditEmail:setAnchorPoint(cc.p(0.5, 1.0))
     EditEmail:setPlaceHolder("Email:")

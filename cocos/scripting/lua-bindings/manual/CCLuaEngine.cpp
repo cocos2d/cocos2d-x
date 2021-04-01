@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -27,7 +28,6 @@
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 
 #include "extensions/GUI/CCControlExtension/CCControl.h"
-#include "scripting/lua-bindings/manual/cocos2d/LuaOpengl.h"
 #include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_manual.hpp"
 #include "scripting/lua-bindings/manual/extension/lua_cocos2dx_extension_manual.h"
 #include "scripting/lua-bindings/manual/cocostudio/lua_cocos2dx_coco_studio_manual.hpp"
@@ -420,10 +420,10 @@ int LuaEngine::handleAccelerometerEvent(void* data)
         return 0;
     
     Acceleration* accelerationValue = static_cast<Acceleration*>(basicScriptData->value);
-    _stack->pushFloat(accelerationValue->x);
-    _stack->pushFloat(accelerationValue->y);
-    _stack->pushFloat(accelerationValue->z);
-    _stack->pushFloat(accelerationValue->timestamp);
+    _stack->pushFloat(float(accelerationValue->x));
+    _stack->pushFloat(float(accelerationValue->y));
+    _stack->pushFloat(float(accelerationValue->z));
+    _stack->pushFloat(float(accelerationValue->timestamp));
     int ret = _stack->executeFunctionByHandler(handler, 4);
     _stack->clean();
     return ret;

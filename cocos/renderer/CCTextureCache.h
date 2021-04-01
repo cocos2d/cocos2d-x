@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -51,7 +52,7 @@ NS_CC_BEGIN
  * @{
  */
 /*
-* From version 3.0, TextureCache will never to treated as a singleton, it will be owned by director.
+* From version 3.0, TextureCache will never be treated as a singleton, it will be owned by director.
 * All call by TextureCache::getInstance() should be replaced by Director::getInstance()->getTextureCache().
 */
 
@@ -62,26 +63,6 @@ NS_CC_BEGIN
 class CC_DLL TextureCache : public Ref
 {
 public:
-    /** Returns the shared instance of the cache. */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * getInstance();
-
-    /** @deprecated Use getInstance() instead. */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
-
-    /** Purges the cache. It releases the retained instance.
-     @since v0.99.0
-     */
-    CC_DEPRECATED_ATTRIBUTE static void destroyInstance();
-
-    /** @deprecated Use destroyInstance() instead. */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
-
-    /** Reload all textures.
-    Should not call it, called by frame work.
-    Now the function do nothing, use VolatileTextureMgr::reloadAllTextures.
-     */
-    CC_DEPRECATED_ATTRIBUTE static void reloadAllTextures();
-
     // ETC1 ALPHA supports.
     static void setETC1AlphaFileSuffix(const std::string& suffix);
     static std::string getETC1AlphaFileSuffix();
@@ -108,8 +89,8 @@ public:
     * If the filename was not previously loaded, it will create a new Texture2D.
     * Object and it will return it. It will use the filename as a key.
     * Otherwise it will return a reference of a previously loaded image.
-    * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr.
-     @param filepath A null terminated string.
+    * Supported image extensions: .png, .bmp, .jpeg, .pvr.
+     @param filepath The file path.
     */
     Texture2D* addImage(const std::string &filepath);
 
@@ -118,7 +99,7 @@ public:
     * Otherwise it will load a texture in a new thread, and when the image is loaded, the callback will be called with the Texture2D as a parameter.
     * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
     * Supported image extensions: .png, .jpg
-     @param filepath A null terminated string.
+     @param filepath The file path.
      @param callback A callback function would be invoked after the image is loaded.
      @since v0.8
     */
@@ -146,14 +127,12 @@ public:
     * If "key" is nil, then a new texture will be created each time.
     */
     Texture2D* addImage(Image *image, const std::string &key);
-    CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const std::string& key) { return addImage(image,key); }
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
     @param key It's the related/absolute path of the file image.
     @since v0.99.5
     */
     Texture2D* getTextureForKey(const std::string& key) const;
-    CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const std::string& key) const { return getTextureForKey(key); }
 
     /** Reload texture from the image file.
     * If the file image hasn't loaded before, load it.
@@ -278,12 +257,10 @@ protected:
     void *_textureData;
     int  _dataLen;
     Size _textureSize;
-    Texture2D::PixelFormat _pixelFormat;
+    backend::PixelFormat _pixelFormat;
 
     std::string _fileName;
 
-    bool                      _hasMipmaps;
-    Texture2D::TexParams      _texParams;
     std::string               _text;
     FontDefinition            _fontDefinition;
 };
@@ -293,21 +270,21 @@ class CC_DLL VolatileTextureMgr
 public:
     static void addImageTexture(Texture2D *tt, const std::string& imageFileName);
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
-    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
+    static void addDataTexture(Texture2D *tt, void* data, int dataLen, backend::PixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
-
-    static void setHasMipmaps(Texture2D *t, bool hasMipmaps);
-    static void setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams);
     static void removeTexture(Texture2D *t);
     static void reloadAllTextures();
+
 public:
     static std::list<VolatileTexture*> _textures;
     static bool _isReloading;
-private:
+
     // find VolatileTexture by Texture2D*
     // if not found, create a new one
     static VolatileTexture* findVolotileTexture(Texture2D *tt);
-    static void reloadTexture(Texture2D* texture, const std::string& filename, Texture2D::PixelFormat pixelFormat);
+
+private:
+    static void reloadTexture(Texture2D* texture, const std::string& filename, backend::PixelFormat pixelFormat);
 };
 
 #endif

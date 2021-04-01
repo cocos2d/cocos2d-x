@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -23,34 +24,61 @@
  ****************************************************************************/
 #include "navmesh/CCNavMeshDebugDraw.h"
 #if CC_USE_NAVMESH
-
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
+#include <stddef.h> // offsetof
+#include "base/ccTypes.h"
+#include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Device.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/ccShaders.h"
 #include "base/CCDirector.h"
 #include "base/ccMacros.h"
+
 
 NS_CC_BEGIN
 
 NavMeshDebugDraw::NavMeshDebugDraw()
-: _currentPrimitive(nullptr)
-, _primitiveType(GL_POINTS)
-, _currentDepthMask(true)
-, _dirtyBuffer(true)
 {
-    _stateBlock = RenderState::StateBlock::create();
-    _stateBlock->setCullFace(true);
-    _stateBlock->setCullFaceSide(RenderState::CullFaceSide::CULL_FACE_SIDE_BACK);
-    _stateBlock->setDepthTest(true);
-    _stateBlock->setBlend(true);
-    _stateBlock->setBlendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED);
-    CC_SAFE_RETAIN(_stateBlock);
+    auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR);
+    _programState = new backend::ProgramState(program);
+    _locMVP = _programState->getUniformLocation("u_MVPMatrix");
+
+    auto vertexLayout = _programState->getVertexLayout();
+    vertexLayout->setAttribute("a_position", 
+                                _programState->getAttributeLocation("a_position"),
+                                backend::VertexFormat::FLOAT3,
+                                offsetof(V3F_C4F, position), 
+                                false);
+    vertexLayout->setAttribute("a_color", 
+                                _programState->getAttributeLocation("a_color"), 
+                                backend::VertexFormat::FLOAT4, 
+                                offsetof(V3F_C4F, color), 
+                                false);
+    vertexLayout->setLayout(sizeof(V3F_C4F));
+
+    _beforeCommand.func = CC_CALLBACK_0(NavMeshDebugDraw::onBeforeVisitCmd, this);
+    _afterCommand.func  = CC_CALLBACK_0(NavMeshDebugDraw::onAfterVisitCmd, this);
+
+    _beforeCommand.set3D(true);
+    _beforeCommand.setTransparent(true);
+    _afterCommand.set3D(true);
+    _afterCommand.setTransparent(true);
     
-    _customCmd.set3D(true);
-    _customCmd.setTransparent(true);
-    _program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR);
-    glGenBuffers(1, &_vbo);
+}
+
+void NavMeshDebugDraw::initCustomCommand(CustomCommand &command)
+{
+    command.set3D(true);
+    command.setTransparent(true);
+    command.init(0, Mat4::IDENTITY, Node::FLAGS_RENDER_AS_3D);
+    command.setDrawType(CustomCommand::DrawType::ARRAY);
+    auto &pipelineDescriptor = command.getPipelineDescriptor();
+    pipelineDescriptor.programState = _programState;
+
+    auto &blend = pipelineDescriptor.blendDescriptor;
+    blend.blendEnabled = true;
+    blend.sourceRGBBlendFactor = blend.sourceAlphaBlendFactor = BlendFunc::ALPHA_NON_PREMULTIPLIED.src;
+    blend.destinationRGBBlendFactor = blend.destinationAlphaBlendFactor = BlendFunc::ALPHA_NON_PREMULTIPLIED.dst;
 }
 
 void NavMeshDebugDraw::vertex(const float /*x*/, const float /*y*/, const float /*z*/, unsigned int /*color*/, const float /*u*/, const float /*v*/)
@@ -78,11 +106,11 @@ void NavMeshDebugDraw::vertex(const float* pos, unsigned int color)
 
 NavMeshDebugDraw::~NavMeshDebugDraw()
 {
-    CC_SAFE_RELEASE(_stateBlock);
     for (auto iter : _primitiveList){
         delete iter;
     }
-    glDeleteBuffers(1, &_vbo);
+    CC_SAFE_RELEASE_NULL(_programState);
+    CC_SAFE_RELEASE_NULL(_vertexBuffer);
 }
 
 void NavMeshDebugDraw::depthMask(bool state)
@@ -119,54 +147,106 @@ Vec4 NavMeshDebugDraw::getColor(unsigned int col)
     return Vec4(r, g, b, a) * factor;
 }
 
-GLenum NavMeshDebugDraw::getPrimitiveType(duDebugDrawPrimitives prim)
+backend::PrimitiveType NavMeshDebugDraw::getPrimitiveType(duDebugDrawPrimitives prim)
 {
     switch (prim)
     {
     case DU_DRAW_POINTS:
-        return GL_POINTS;
+        return backend::PrimitiveType::POINT;
     case DU_DRAW_LINES:
-        return GL_LINES;
+        return backend::PrimitiveType::LINE;
     case DU_DRAW_TRIS:
-        return GL_TRIANGLES;
+        return backend::PrimitiveType::TRIANGLE;
     default:
-        return GL_POINTS;
+        return backend::PrimitiveType::POINT;
     }
-}
-
-void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t /*flags*/)
-{
-    _program->use();
-    _program->setUniformsForBuiltins(transform);
-
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4F), (GLvoid *)offsetof(V3F_C4F, position));
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(V3F_C4F), (GLvoid *)offsetof(V3F_C4F, color));
-    if (_dirtyBuffer){
-        glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4F)* _vertices.size(), &_vertices[0], GL_STATIC_DRAW);
-        _dirtyBuffer = false;
-    }
-    for (auto &iter : _primitiveList){
-        if (iter->type == GL_POINTS)
-            continue;
-        
-        _stateBlock->setDepthWrite(iter->depthMask);
-        if (iter->type == GL_LINES){
-            glLineWidth(iter->size);
-        }
-        _stateBlock->bind();
-        glDrawArrays(iter->type, iter->start, iter->end - iter->start);
-        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, iter->end - iter->start);
-    }
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void NavMeshDebugDraw::draw(Renderer* renderer)
 {
-    _customCmd.init(0, Mat4::IDENTITY, Node::FLAGS_RENDER_AS_3D);
-    _customCmd.func = CC_CALLBACK_0(NavMeshDebugDraw::drawImplement, this, Mat4::IDENTITY, 0);
-    renderer->addCommand(&_customCmd);
+    auto &transform = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+
+    _beforeCommand.init(0, Mat4::IDENTITY, Node::FLAGS_RENDER_AS_3D);
+    _beforeCommand.init(0, Mat4::IDENTITY, Node::FLAGS_RENDER_AS_3D);
+
+    _programState->setUniform(_locMVP, transform.m, sizeof(transform.m));
+
+    renderer->addCommand(&_beforeCommand);
+
+    if (!_vertexBuffer || _vertexBuffer->getSize() < _vertices.size() * sizeof(_vertices[0]))
+    {
+        _vertexBuffer = backend::Device::getInstance()->newBuffer(_vertices.size() * sizeof(_vertices[0]), backend::BufferType::VERTEX, backend::BufferUsage::STATIC);
+        _dirtyBuffer = true;
+    }
+
+    if (_dirtyBuffer)
+    {
+        _vertexBuffer->updateData(_vertices.data(), sizeof(_vertices[0]) * _vertices.size());
+        _dirtyBuffer = false;
+    }
+    int idx = 0;
+    if (_commands.size() < _primitiveList.size())
+    {
+        _commands.resize(_primitiveList.size());
+    }
+    for (auto &iter : _primitiveList) {
+        if (iter->type == backend::PrimitiveType::POINT)
+            continue;
+        if (iter->end - iter->start <= 0)
+            continue;
+
+        auto &command = _commands[idx];
+
+        initCustomCommand(command);
+        command.setBeforeCallback(CC_CALLBACK_0(NavMeshDebugDraw::onBeforeEachCommand, this, iter->depthMask));
+
+        if (iter->type == backend::PrimitiveType::LINE) {
+            command.setLineWidth(iter->size);
+        }
+
+        command.setVertexBuffer(_vertexBuffer);
+        command.setPrimitiveType(iter->type);
+        command.setVertexDrawInfo(iter->start, iter->end - iter->start);
+
+        renderer->addCommand(&command);
+
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, iter->end - iter->start);
+        idx++;
+    }
+
+    renderer->addCommand(&_afterCommand);
+}
+
+
+void NavMeshDebugDraw::onBeforeVisitCmd()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    
+    _rendererDepthTestEnabled = renderer->getDepthTest();
+    _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
+    _rendererCullMode = renderer->getCullMode();
+
+    _rendererDepthWrite = renderer->getDepthWrite();
+    _rendererWinding = renderer->getWinding();
+
+    renderer->setCullMode(backend::CullMode::NONE);
+    renderer->setDepthTest(true);
+}
+
+void NavMeshDebugDraw::onAfterVisitCmd()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthTest(_rendererDepthTestEnabled);
+    renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
+    renderer->setCullMode(_rendererCullMode);
+    renderer->setDepthWrite(_rendererDepthWrite);
+    renderer->setWinding(_rendererWinding);
+}
+
+void NavMeshDebugDraw::onBeforeEachCommand(bool enableDepthWrite)
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthWrite(enableDepthWrite);
 }
 
 void NavMeshDebugDraw::clear()

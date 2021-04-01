@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -32,7 +33,6 @@ THE SOFTWARE.
 #include "base/CCEventListenerCustom.h"
 #include "base/ccUTF8.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCFrameBuffer.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsWorld.h"
@@ -50,28 +50,16 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 Scene::Scene()
+: _defaultCamera(Camera::create())
+, _event(Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1)))
 {
-#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-    _physics3DWorld = nullptr;
-    _physics3dDebugCamera = nullptr;
-#endif
-#if CC_USE_NAVMESH
-    _navMesh = nullptr;
-    _navMeshDebugCamera = nullptr;
-#endif
-#if CC_USE_PHYSICS
-    _physicsWorld = nullptr;
-#endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
     
-    _cameraOrderDirty = true;
-    
     //create default camera
-    _defaultCamera = Camera::create();
+
     addChild(_defaultCamera);
     
-    _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
     
     Camera::_visitingCamera = nullptr;
@@ -186,11 +174,6 @@ const std::vector<Camera*>& Scene::getCameras()
 
 void Scene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)
 {
-    render(renderer, &eyeTransform, eyeProjection, 1);
-}
-
-void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount)
-{
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
     const auto& transform = getNodeToParentTransform();
@@ -213,14 +196,12 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
         // then the "nodeToParent transform" will be lost.
         // And it is important that the change is "permanent", because the matrix might be used for calculate
         // culling and other stuff.
-        for (unsigned int i = 0; i < multiViewCount; ++i) {
-            if (eyeProjections)
-                camera->setAdditionalProjection(eyeProjections[i] * camera->getProjectionMatrix().getInversed());
-            if (eyeTransforms)
-                camera->setAdditionalTransform(eyeTransforms[i].getInversed());
-            director->pushProjectionMatrix(i);
-            director->loadProjectionMatrix(Camera::_visitingCamera->getViewProjectionMatrix(), i);
-        }
+        if (eyeProjection)
+            camera->setAdditionalProjection(*eyeProjection * camera->getProjectionMatrix().getInversed());
+
+        camera->setAdditionalTransform(eyeTransform.getInversed());
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
 
         camera->apply();
         //clear background with max depth
@@ -235,45 +216,37 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
 #endif
 
         renderer->render();
-        camera->restore();
 
-        for (unsigned int i = 0; i < multiViewCount; ++i)
-            director->popProjectionMatrix(i);
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
         // we shouldn't restore the transform matrix since it could be used
         // from "update" or other parts of the game to calculate culling or something else.
-//        camera->setNodeToParentTransform(eyeCopy);
+        //        camera->setNodeToParentTransform(eyeCopy);
     }
 
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
     {
         Camera *physics3dDebugCamera = _physics3dDebugCamera != nullptr ? _physics3dDebugCamera: defaultCamera;
-        
-        for (unsigned int i = 0; i < multiViewCount; ++i) {
-            if (eyeProjections)
-                physics3dDebugCamera->setAdditionalProjection(eyeProjections[i] * physics3dDebugCamera->getProjectionMatrix().getInversed());
-            if (eyeTransforms)
-                physics3dDebugCamera->setAdditionalTransform(eyeTransforms[i].getInversed());
-            director->pushProjectionMatrix(i);
-            director->loadProjectionMatrix(physics3dDebugCamera->getViewProjectionMatrix(), i);
-        }
-        
+
+        if (eyeProjection)
+            physics3dDebugCamera->setAdditionalProjection(*eyeProjection * physics3dDebugCamera->getProjectionMatrix().getInversed());
+
+        physics3dDebugCamera->setAdditionalTransform(eyeTransform.getInversed());
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, physics3dDebugCamera->getViewProjectionMatrix());
+
         physics3dDebugCamera->apply();
         physics3dDebugCamera->clearBackground();
 
         _physics3DWorld->debugDraw(renderer);
         renderer->render();
-        
-        physics3dDebugCamera->restore();
 
-        for (unsigned int i = 0; i < multiViewCount; ++i)
-            director->popProjectionMatrix(i);
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }
 #endif
 
     Camera::_visitingCamera = nullptr;
-//    experimental::FrameBuffer::applyDefaultFBO();
 }
 
 void Scene::removeAllChildren()

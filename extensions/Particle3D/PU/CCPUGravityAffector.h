@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -45,14 +46,14 @@ public:
 
     /** 
     */
-    float getGravity(void) const;
+    float getGravity() const;
     void setGravity(float gravity);
 
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUGravityAffector(void);
-    virtual ~PUGravityAffector(void);
+    PUGravityAffector();
+    virtual ~PUGravityAffector();
 
 protected:
 

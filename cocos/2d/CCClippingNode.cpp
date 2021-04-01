@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2012      Pierre-David Bélanger
  * Copyright (c) 2012      cocos2d-x.org
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * cocos2d-x: http://www.cocos2d-x.org
  *
@@ -24,40 +25,18 @@
  * THE SOFTWARE.
  *
  */
-
 #include "2d/CCClippingNode.h"
-#include "2d/CCDrawingPrimitives.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCRenderState.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/ProgramState.h"
 #include "base/CCDirector.h"
 #include "base/CCStencilStateManager.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#define CC_CLIPPING_NODE_OPENGLES 0
-#else
-#define CC_CLIPPING_NODE_OPENGLES 1
-#endif
-
 NS_CC_BEGIN
-
-#if CC_CLIPPING_NODE_OPENGLES
-static void setProgram(Node *n, GLProgram *p)
-{
-    n->setGLProgram(p);
-    
-    auto& children = n->getChildren();
-    for(const auto &child : children) {
-        setProgram(child, p);
-    }
-}
-#endif
 
 ClippingNode::ClippingNode()
 : _stencil(nullptr)
 , _stencilStateManager(new StencilStateManager())
-, _originStencilProgram(nullptr)
 {
 }
 
@@ -206,31 +185,26 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
 
     //Add group command
         
-    _groupCommand.init(_globalZOrder);
-    renderer->addCommand(&_groupCommand);
+    _groupCommandStencil.init(_globalZOrder);
+    renderer->addCommand(&_groupCommandStencil);
 
-    renderer->pushGroup(_groupCommand.getRenderQueueID());
+    renderer->pushGroup(_groupCommandStencil.getRenderQueueID());
 
-    _beforeVisitCmd.init(_globalZOrder);
-    _beforeVisitCmd.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencilStateManager);
-    renderer->addCommand(&_beforeVisitCmd);
+    // _beforeVisitCmd.init(_globalZOrder);
+    // _beforeVisitCmd.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencilStateManager);
+    // renderer->addCommand(&_beforeVisitCmd);
+    _stencilStateManager->onBeforeVisit(_globalZOrder);
     
     auto alphaThreshold = this->getAlphaThreshold();
     if (alphaThreshold < 1)
     {
-#if CC_CLIPPING_NODE_OPENGLES
-        // since glAlphaTest do not exists in OES, use a shader that writes
-        // pixel only if greater than an alpha threshold
-        GLProgram *program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-        // set our alphaThreshold
-        program->use();
-        program->setUniformLocationWith1f(alphaValueLocation, alphaThreshold);
-        // we need to recursively apply this shader to all the nodes in the stencil node
-        // FIXME: we should have a way to apply shader to all nodes without having to do this
-        setProgram(_stencil, program);
-#endif
+        auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_TEXTURE_COLOR_ALPHA_TEST);
+        auto programState = new (std::nothrow) backend::ProgramState(program);
+        auto alphaLocation = programState->getUniformLocation("u_alpha_value");
+        programState->setUniform(alphaLocation, &alphaThreshold, sizeof(alphaThreshold));
+        setProgramStateRecursively(_stencil, programState);
 
+        CC_SAFE_RELEASE_NULL(programState);
     }
     _stencil->visit(renderer, _modelViewTransform, flags);
 
@@ -241,6 +215,14 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     int i = 0;
     bool visibleByCamera = isVisitableByVisitingCamera();
     
+
+    // `_groupCommandChildren` is used as a barrier
+    // to ensure commands above be executed before children nodes
+    _groupCommandChildren.init(_globalZOrder);
+    renderer->addCommand(&_groupCommandChildren);
+
+    renderer->pushGroup(_groupCommandChildren.getRenderQueueID());
+
     if(!_children.empty())
     {
         sortAllChildren();
@@ -265,6 +247,9 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     {
         this->draw(renderer, _modelViewTransform, flags);
     }
+
+
+    renderer->popGroup();
 
     _afterVisitCmd.init(_globalZOrder);
     _afterVisitCmd.func = CC_CALLBACK_0(StencilStateManager::onAfterVisit, _stencilStateManager);
@@ -324,9 +309,15 @@ void ClippingNode::setStencil(Node *stencil)
             _stencil->onEnterTransitionDidFinish();
         }
     }
-    
+
     if (_stencil != nullptr)
-        _originStencilProgram = _stencil->getGLProgram();
+    {
+        _originalStencilProgramState[_stencil] = _stencil->getProgramState();
+        auto& children = _stencil->getChildren();
+        for (const auto &child : children) {
+            _originalStencilProgramState[child] = child->getProgramState();
+        }
+    }
 }
 
 bool ClippingNode::hasContent() const
@@ -334,22 +325,19 @@ bool ClippingNode::hasContent() const
     return _children.size() > 0;
 }
 
-GLfloat ClippingNode::getAlphaThreshold() const
+float ClippingNode::getAlphaThreshold() const
 {
     return _stencilStateManager->getAlphaThreshold();
 }
 
-void ClippingNode::setAlphaThreshold(GLfloat alphaThreshold)
+void ClippingNode::setAlphaThreshold(float alphaThreshold)
 {
-#if CC_CLIPPING_NODE_OPENGLES
     if (alphaThreshold == 1 && alphaThreshold != _stencilStateManager->getAlphaThreshold())
     {
         // should reset program used by _stencil
         if (_stencil)
-            setProgram(_stencil, _originStencilProgram);
+            restoreAllProgramStates();
     }
-#endif
-    
     _stencilStateManager->setAlphaThreshold(alphaThreshold);
 }
 
@@ -361,6 +349,27 @@ bool ClippingNode::isInverted() const
 void ClippingNode::setInverted(bool inverted)
 {
     _stencilStateManager->setInverted(inverted);
+}
+
+void ClippingNode::setProgramStateRecursively(Node* node, backend::ProgramState* programState)
+{
+    _originalStencilProgramState[node] = node->getProgramState();
+    node->setProgramState(programState);
+
+    auto& children = node->getChildren();
+    for (const auto &child : children) {
+        setProgramStateRecursively(child, programState);
+    }
+}
+
+void ClippingNode::restoreAllProgramStates()
+{
+    for (auto item : _originalStencilProgramState)
+    {
+        auto node = item.first;
+        auto programState = item.second;
+        node->setProgramState(programState);
+    }
 }
 
 

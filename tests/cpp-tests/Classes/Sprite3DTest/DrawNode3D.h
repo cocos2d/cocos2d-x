@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -76,7 +77,7 @@ public:
     */
     void setBlendFunc(const BlendFunc &blendFunc);
 
-    void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
+    void updateCommand(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags);
     
     // Overrides
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
@@ -87,6 +88,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
+
+    void onBeforeDraw();
+    void onAfterDraw();
+
     struct V3F_C4B
     {
         cocos2d::Vec3     vertices;
@@ -94,20 +99,20 @@ protected:
     };
     void ensureCapacity(int count);
 
-    GLuint      _vao;
-    GLuint      _vbo;
-
-    int         _bufferCapacity;
-    GLsizei     _bufferCount;
-    V3F_C4B*    _buffer;
 
     BlendFunc   _blendFunc;
     cocos2d::CustomCommand _customCommand;
-
-    bool        _dirty;
+    backend::ProgramState* _programStateLine                    = nullptr;
+    backend::DepthStencilDescriptor *_depthstencilDescriptor    = nullptr;
+    backend::UniformLocation _locMVPMatrix;
+    std::vector<V3F_C4B> _bufferLines;
+    
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode3D);
+
+    bool _isDirty                   = true;
+    bool _rendererDepthTestEnabled  = true;
 };
 
 NS_CC_END

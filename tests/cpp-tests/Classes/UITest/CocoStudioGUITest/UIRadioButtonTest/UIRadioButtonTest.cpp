@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "UIRadioButtonTest.h"
 
 USING_NS_CC;
@@ -141,17 +165,17 @@ bool UIRadioButtonTwoGroupsTest::init()
         
         // Add a label in which the radio button events will be displayed
         _groupEventLabel = Text::create("RadioButtonGroup : No Event", "fonts/Marker Felt.ttf", 25);
-        _groupEventLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _groupEventLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _groupEventLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 70));
         _uiLayer->addChild(_groupEventLabel);
         
         _buttonEventLabel = Text::create("RadioButton : No Event", "fonts/Marker Felt.ttf", 25);
-        _buttonEventLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _buttonEventLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _buttonEventLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 35));
         _uiLayer->addChild(_buttonEventLabel);
         
         _logConsole = Text::create("", "fonts/Marker Felt.ttf", 10);
-        _logConsole->setAnchorPoint(Vec2(0, 1));
+        _logConsole->setAnchorPoint(Vec2(0.0f, 1.0f));
         _logConsole->setPosition(Vec2(widgetSize.width / 2.0f + 110, widgetSize.height / 2.0f + 55));
         _uiLayer->addChild(_logConsole);
 
@@ -280,7 +304,7 @@ void UIRadioButtonTwoGroupsTest::addLog(const std::string& log)
     
     if(_numberOfLogLines > 10)
     {
-        size_t pos = existingLog.find("\n") + 1;
+        size_t pos = existingLog.find('\n') + 1;
         std::string newLog = existingLog.substr(pos);
         existingLog = newLog;
         --_numberOfLogLines;

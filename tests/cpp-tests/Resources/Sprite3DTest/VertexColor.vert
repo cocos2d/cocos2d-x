@@ -7,8 +7,10 @@ varying lowp vec4 v_fragmentColor;
 varying vec4 v_fragmentColor;
 #endif
 
+uniform mat4 u_MVPMatrix;
+
 void main()
 {
-    gl_Position = CC_MVPMatrix * a_position;
+    gl_Position = u_MVPMatrix * a_position;
     v_fragmentColor = a_color;
 }

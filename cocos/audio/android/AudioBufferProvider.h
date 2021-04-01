@@ -20,7 +20,7 @@
 #include <stdint.h>
 #include "audio/android/utils/Errors.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 // ----------------------------------------------------------------------------
 
 class AudioBufferProvider
@@ -77,4 +77,4 @@ public:
 };
 
 // ----------------------------------------------------------------------------
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

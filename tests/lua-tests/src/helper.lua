@@ -33,7 +33,8 @@ Helper = {
     createFunctioinTable = nil,
     currentLayer = nil,
     titleLabel = nil,
-    subtitleLabel = nil
+    subtitleLabel = nil,
+	restartTestItem = nil
 }
 
 function Helper.nextAction()
@@ -93,6 +94,7 @@ function Helper.initWithLayer(layer)
     item1:registerScriptTapHandler(Helper.backAction)
     item2:registerScriptTapHandler(Helper.restartAction)
     item3:registerScriptTapHandler(Helper.nextAction)
+	Helper.restartTestItem = item2
 
     local menu = cc.Menu:create()
     menu:addChild(item1)
@@ -113,7 +115,7 @@ local function MainMenuCallback()
     local scene = cc.Scene:create()
     scene:addChild(CreateTestMenu())
     Helper.usePhysics = false
-    cc.Director:getInstance():setDepthTest(false)
+    cc.Director:getInstance():getRenderer():setDepthTest(false)
     cc.Director:getInstance():replaceScene(scene)
 end
 

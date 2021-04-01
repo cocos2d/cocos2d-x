@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -21,14 +22,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
-#ifndef __AUDIO_ENGINE_INL_H_
-#define __AUDIO_ENGINE_INL_H_
+#pragma once
 
 #include <unordered_map>
+#include <list>
 
 #include "base/CCRef.h"
 #include "audio/apple/AudioCache.h"
@@ -37,7 +34,6 @@
 NS_CC_BEGIN
 class Scheduler;
 
-namespace experimental{
 #define MAX_AUDIOINSTANCES 24
 
 class AudioEngineImpl : public cocos2d::Ref
@@ -66,12 +62,14 @@ public:
 
 private:
     void _play2d(AudioCache *cache, int audioID);
+    ALuint findValidSource();
+
     static ALvoid myAlSourceNotificationCallback(ALuint sid, ALuint notificationID, ALvoid* userData);
 
     ALuint _alSources[MAX_AUDIOINSTANCES];
 
     //source,used
-    std::unordered_map<ALuint, bool> _alSourceUsed;
+    std::list<ALuint> _unusedSourcesPool;
 
     //filePath,bufferInfo
     std::unordered_map<std::string, AudioCache> _audioCaches;
@@ -85,7 +83,4 @@ private:
     int _currentAudioID;
     Scheduler* _scheduler;
 };
-}
 NS_CC_END
-#endif // __AUDIO_ENGINE_INL_H_
-#endif

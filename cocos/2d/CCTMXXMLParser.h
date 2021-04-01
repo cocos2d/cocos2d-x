@@ -2,7 +2,8 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -177,10 +178,6 @@ public:
     /** creates a TMX Format with an XML string and a TMX resource path */
     static TMXMapInfo * createWithXML(const std::string& tmxString, const std::string& resourcePath);
     
-    /** creates a TMX Format with a tmx file */
-    CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithTMXFile(const char *tmxFile) { return TMXMapInfo::create(tmxFile); };
-    /** creates a TMX Format with an XML string and a TMX resource path */
-    CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath) { return TMXMapInfo::createWithXML(tmxString, resourcePath); };
     /**
      * @js ctor
      */
@@ -264,7 +261,6 @@ public:
 
     /// is storing characters?
     bool isStoringCharacters() const { return _storingCharacters; }
-    CC_DEPRECATED_ATTRIBUTE bool getStoringCharacters() const { return isStoringCharacters(); }
     void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; }
 
     /// properties

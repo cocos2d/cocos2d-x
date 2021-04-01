@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "UIScrollViewTest.h"
 
 USING_NS_CC;
@@ -14,6 +38,8 @@ UIScrollViewTests::UIScrollViewTests()
     ADD_TEST_CASE(UIScrollViewRotated);
     ADD_TEST_CASE(UIScrollViewDisableTest);
     ADD_TEST_CASE(UIScrollViewInnerSize);
+    ADD_TEST_CASE(UIScrollViewTestEvents);
+    ADD_TEST_CASE(UIScrollViewStopScrollingTest);
 }
 // UIScrollViewTest_Vertical
 
@@ -279,8 +305,8 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setDirection(ui::ScrollView::Direction::BOTH);
-        sc->setInnerContainerSize(Size(480, 320));
-        sc->setContentSize(Size(100,100));
+        sc->setInnerContainerSize(Size(480.0f, 320.0f));
+        sc->setContentSize(Size(100.0f,100.0f));
 		sc->setScrollBarEnabled(false);
         Size backgroundSize = background->getContentSize();
         sc->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -289,7 +315,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
                               (backgroundSize.height - sc->getContentSize().height) / 2.0f));
         sc->scrollToPercentBothDirection(Vec2(50, 50), 1, true);
         ImageView* iv = ImageView::create("cocosui/Hello.png");
-        iv->setPosition(Vec2(240, 160));
+        iv->setPosition(Vec2(240.0f, 160.0f));
         sc->addChild(iv);
         _uiLayer->addChild(sc);
         
@@ -336,19 +362,19 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setBounceEnabled(true);
         sc->setDirection(ui::ScrollView::Direction::BOTH);
-        sc->setInnerContainerSize(Size(480, 320));
-        sc->setContentSize(Size(100,100));
-		sc->setScrollBarPositionFromCornerForHorizontal(Vec2(5, sc->getContentSize().height - 5));
-		sc->setScrollBarPositionFromCornerForVertical(Vec2(sc->getContentSize().width - 5, 5));
+        sc->setInnerContainerSize(Size(480.0f, 320.0f));
+        sc->setContentSize(Size(100.0f,100.0f));
+		sc->setScrollBarPositionFromCornerForHorizontal(Vec2(5.0f, sc->getContentSize().height - 5));
+		sc->setScrollBarPositionFromCornerForVertical(Vec2(sc->getContentSize().width - 5, 5.0f));
 		sc->setScrollBarAutoHideEnabled(false);
         Size backgroundSize = background->getContentSize();
         sc->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                               (backgroundSize.width - sc->getContentSize().width) / 2.0f,
                               (widgetSize.height - backgroundSize.height) / 2.0f +
                               (backgroundSize.height - sc->getContentSize().height) / 2.0f));
-        sc->scrollToPercentBothDirection(Vec2(50, 50), 1, true);
+        sc->scrollToPercentBothDirection(Vec2(50.0f, 50.0f), 1, true);
         ImageView* iv = ImageView::create("cocosui/Hello.png");
-        iv->setPosition(Vec2(240, 160));
+        iv->setPosition(Vec2(240.0f, 160.0f));
         sc->addChild(iv);
         _uiLayer->addChild(sc);
         return true;
@@ -401,7 +427,7 @@ bool UIScrollViewNestTest::init()
                                      (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
                                      (widgetSize.height - backgroundSize.height) / 2.0f +
                                      (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
-		scrollView->setScrollBarPositionFromCornerForVertical(Vec2(scrollView->getContentSize().width - 4, 4));
+		scrollView->setScrollBarPositionFromCornerForVertical(Vec2(scrollView->getContentSize().width - 4, 4.0f));
 		scrollView->setScrollBarColor(Color3B::BLUE);
         _uiLayer->addChild(scrollView);
         
@@ -438,14 +464,14 @@ bool UIScrollViewNestTest::init()
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         sc->setBounceEnabled(true);
         sc->setDirection(ui::ScrollView::Direction::BOTH);
-        sc->setInnerContainerSize(Size(480, 320));
-        sc->setContentSize(Size(100,100));
+        sc->setInnerContainerSize(Size(480.0f, 320.0f));
+        sc->setContentSize(Size(100.0f,100.0f));
         sc->setPropagateTouchEvents(false);
-        sc->setPosition(Vec2(180,100));
-        sc->scrollToPercentBothDirection(Vec2(50, 50), 1, true);
-		sc->setScrollBarPositionFromCorner(Vec2(4, 4));
+        sc->setPosition(Vec2(180.0f,100.0f));
+        sc->scrollToPercentBothDirection(Vec2(50.0f, 50.0f), 1, true);
+		sc->setScrollBarPositionFromCorner(Vec2(4.0f, 4.0f));
         ImageView* iv = ImageView::create("cocosui/Hello.png");
-        iv->setPosition(Vec2(240, 160));
+        iv->setPosition(Vec2(240.0f, 160.0f));
         sc->addChild(iv);
 
         
@@ -681,4 +707,213 @@ bool UIScrollViewInnerSize::init()
     }
 
     return false;
+}
+
+// UIScrollViewTestEvents
+
+UIScrollViewTestEvents::UIScrollViewTestEvents()
+    : _displayValueLabel(nullptr)
+{
+    
+}
+
+bool UIScrollViewTestEvents::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the dragpanel events will be displayed
+        _displayValueLabel = Text::create("(no events)","fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("ScrollView events","fonts/Marker Felt.ttf",30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+        
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+        
+        Layout* background = static_cast<Layout*>(root->getChildByName("background_Panel"));
+        
+        // Create the dragpanel
+        ui::ScrollView* scrollView = ui::ScrollView::create();
+        scrollView->setDirection(ui::ScrollView::Direction::BOTH);
+        scrollView->setTouchEnabled(true);
+        scrollView->setBounceEnabled(true);
+        scrollView->setBackGroundImageScale9Enabled(true);
+        scrollView->setBackGroundImage("cocosui/green_edit.png");
+        scrollView->setContentSize(Size(210, 122.5));
+        scrollView->setScrollBarWidth(4);
+        scrollView->setScrollBarPositionFromCorner(Vec2(6, 6));
+        Size backgroundSize = background->getContentSize();
+        scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+                                     (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
+                                     (widgetSize.height - backgroundSize.height) / 2.0f +
+                                     (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
+        ImageView* imageView = ImageView::create("Hello.png");
+        scrollView->addChild(imageView);
+        
+        scrollView->setInnerContainerSize(imageView->getContentSize());
+        Size innerSize = scrollView->getInnerContainerSize();
+        imageView->setPosition(Vec2(innerSize.width / 2.0f, innerSize.height / 2.0f));
+        
+        _uiLayer->addChild(scrollView);
+        
+        // Jump to right bottom
+        scrollView->jumpToBottomRight();
+        
+        auto getRandomColor = [] {
+            return Color4B(random(0, 255), random(0, 255), random(0, 255), 255);
+        };
+        scrollView->addEventListener([&](Ref*, ui::ScrollView::EventType e) {
+            switch ( e ) {
+                case ui::ScrollView::EventType::SCROLLING_BEGAN:
+                    _displayValueLabel->setString("scrolling began!");
+                    _displayValueLabel->setTextColor(getRandomColor());
+                    break;
+                case ui::ScrollView::EventType::SCROLLING_ENDED:
+                    _displayValueLabel->setString("scrolling ended!");
+                    _displayValueLabel->setTextColor(getRandomColor());
+                    break;
+                default: break;
+            }
+        });
+        
+        return true;
+    }
+    
+    return false;
+}
+
+// UIScrollViewStopScrollingTest
+
+UIScrollViewStopScrollingTest::UIScrollViewStopScrollingTest()
+    : _displayValueLabel(nullptr)
+    , _scrollView(nullptr)
+    , _remainingTime(0.0f)
+{
+
+}
+
+bool UIScrollViewStopScrollingTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the time remaining till scrolling stop will be displayed.
+        _displayValueLabel = Text::create("Scrolling stop isn't scheduled", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text* alert = Text::create("Click the button and start to scroll", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+
+        Layout* background = static_cast<Layout*>(root->getChildByName("background_Panel"));
+
+        // Create the dragpanel
+        _scrollView = ui::ScrollView::create();
+        _scrollView->setDirection(ui::ScrollView::Direction::BOTH);
+        _scrollView->setTouchEnabled(true);
+        _scrollView->setBounceEnabled(true);
+        _scrollView->setBackGroundImageScale9Enabled(true);
+        _scrollView->setBackGroundImage("cocosui/green_edit.png");
+        _scrollView->setContentSize(Size(210, 122.5));
+        _scrollView->setScrollBarWidth(4);
+        _scrollView->setScrollBarPositionFromCorner(Vec2(6, 6));
+        Size backgroundSize = background->getContentSize();
+        _scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+            (backgroundSize.width - _scrollView->getContentSize().width) / 2.0f,
+            (widgetSize.height - backgroundSize.height) / 2.0f +
+            (backgroundSize.height - _scrollView->getContentSize().height) / 2.0f));
+        ImageView* imageView = ImageView::create("Hello.png");
+        _scrollView->addChild(imageView);
+        _scrollView->setInnerContainerSize(imageView->getContentSize());
+        Size innerSize = _scrollView->getInnerContainerSize();
+        imageView->setPosition(Vec2(innerSize.width / 2.0f, innerSize.height / 2.0f));
+        _uiLayer->addChild(_scrollView);
+
+        // Log some ScrollView events.
+        _scrollView->addEventListener([&] (Ref*, ui::ScrollView::EventType e)
+        {
+            switch (e)
+            {
+            case ui::ScrollView::EventType::SCROLLING_BEGAN:
+                CCLOG("scrolling began!");
+                break;
+            case ui::ScrollView::EventType::SCROLLING_ENDED:
+                CCLOG("scrolling ended!");
+                break;
+            case ui::ScrollView::EventType::AUTOSCROLL_ENDED:
+                CCLOG("auto-scrolling ended!");
+                break;
+            default: break;
+            }
+        });
+
+        // Jump to right bottom
+        _scrollView->jumpToBottomRight();
+
+        // Add button that will schedule scrolling stop when it is clicked.
+        Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        button_scale9->setTitleText("Stop scrolling in 3 sec.");
+        button_scale9->setScale9Enabled(true);
+        button_scale9->setContentSize(Size(120.0f, button_scale9->getVirtualRendererSize().height));
+        button_scale9->setPosition(Vec2(innerSize.width / 2.0f, innerSize.height / 2.0f));
+        button_scale9->addClickEventListener([this] (Ref*) { this->_remainingTime = 3.0f; });
+        _scrollView->addChild(button_scale9);
+
+        // Schedule update for this scene.
+        Director::getInstance()->getScheduler()->scheduleUpdate(this, 0, false);
+
+        return true;
+    }
+
+    return false;
+}
+
+void UIScrollViewStopScrollingTest::update(float dt)
+{
+    UIScene::update(dt);
+
+    if (_remainingTime > 0.0f)
+    {
+        _remainingTime -= dt;
+        
+        if (_remainingTime > 0.0f)
+        {
+            // Update timer caption.
+            char strRemainingTime[100];
+            sprintf(strRemainingTime, "Stop scrolling in %.1f sec.", _remainingTime);
+            _displayValueLabel->setString(std::string(strRemainingTime));
+        }
+        else
+        {
+            _scrollView->stopOverallScroll();
+
+            // Update timer caption.
+            std::string strRemainingTime = "Scrolling stop isn't scheduled";
+            _displayValueLabel->setString(strRemainingTime);
+
+            // Show hint label.
+            auto hintLabel = Label::createWithTTF("Stopped!", "fonts/Marker Felt.ttf", 32.0f);
+            Size contentSize = _uiLayer->getContentSize();
+            hintLabel->setPosition(Vec2(contentSize.width / 2.0f, contentSize.height / 2.0f));
+            hintLabel->runAction(Spawn::createWithTwoActions(
+                FadeOut::create(0.3f),
+                ScaleTo::create(0.3f, 2.0f)
+                ));
+            _uiLayer->addChild(hintLabel);
+        }
+    }
 }

@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -31,7 +32,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgram.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/Program.h"
+#include "renderer/backend/ProgramState.h"
 
 NS_CC_BEGIN
 
@@ -245,16 +248,12 @@ void TMXLayer::parseInternalProperties()
             _useAutomaticVertexZ = true;
             auto alphaFuncVal = getProperty("cc_alpha_func");
             float alphaFuncValue = alphaFuncVal.asFloat();
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
 
-            GLint alphaValueLocation = glGetUniformLocation(getGLProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-
-            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-            
-            // use shader program to set uniform
-            getGLProgram()->use();
-            getGLProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
-            CHECK_GL_ERROR_DEBUG();
+            auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
+            auto& vertexShader = pipelineDescriptor.programState->getProgram()->getVertexShader();
+            updateShaders(vertexShader, positionTextureColorAlphaTest_frag);
+            auto alphaValueLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha_value");
+            pipelineDescriptor.programState->setUniform(alphaValueLocation, &alphaFuncValue, sizeof(alphaFuncValue));
         }
         else
         {
@@ -425,7 +424,7 @@ Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
         
         for(const auto &child : _children) {
             Sprite* sp = static_cast<Sprite*>(child);
-            ssize_t ai = sp->getAtlasIndex();
+            auto ai = sp->getAtlasIndex();
             if ( ai >= indexForZ )
             {
                 sp->setAtlasIndex(ai+1);
@@ -450,8 +449,8 @@ Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
     setupTileSprite(tile ,pos ,gid);
 
     // get atlas index
-    ssize_t indexForZ = atlasIndexForExistantZ(z);
-    tile->setAtlasIndex(indexForZ);
+    auto indexForZ = atlasIndexForExistantZ(z);
+    tile->setAtlasIndex(static_cast<unsigned int>(indexForZ) );
     tile->setDirty(true);
     tile->updateTransform();
     _tiles[z] = gid;
@@ -672,7 +671,7 @@ void TMXLayer::removeTileAt(const Vec2& pos)
             // update possible children
             for(const auto &obj : _children) {
                 Sprite* child = static_cast<Sprite*>(obj);
-                ssize_t ai = child->getAtlasIndex();
+                auto ai = child->getAtlasIndex();
                 if ( ai >= atlasIndex )
                 {
                     child->setAtlasIndex(ai-1);

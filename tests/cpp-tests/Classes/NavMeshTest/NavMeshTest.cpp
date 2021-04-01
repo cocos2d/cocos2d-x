@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -51,7 +52,7 @@ NavMeshTests::NavMeshTests()
 void NavMeshDisabled::onEnter()
 {
     TTFConfig ttfConfig("fonts/arial.ttf", 16);
-    auto label = Label::createWithTTF(ttfConfig, "Should define CC_USE_NAVMESH\n to run this test case");
+    auto label = Label::createWithTTF(ttfConfig, "Should define CC_USE_NAVMESH & CC_USE_PHYSICS\n to run this test case");
     
     auto size = Director::getInstance()->getWinSize();
     label->setPosition(Vec2(size.width / 2, size.height / 2));
@@ -62,14 +63,14 @@ void NavMeshDisabled::onEnter()
 }
 #else
 
-NavMeshBaseTestDemo::NavMeshBaseTestDemo(void)
+NavMeshBaseTestDemo::NavMeshBaseTestDemo()
     : _camera(nullptr)
     , _needMoveAgents(false)
 {
 
 }
 
-NavMeshBaseTestDemo::~NavMeshBaseTestDemo(void)
+NavMeshBaseTestDemo::~NavMeshBaseTestDemo()
 {
     for (auto iter : _agents){
         AgentUserData *data = static_cast<AgentUserData *>(iter.first->getUserData());
@@ -218,7 +219,7 @@ Vec3 jump(const Vec3* pV1, const Vec3* pV2, float height, float t)
     pOut.x = pV1->x + t * (pV2->x - pV1->x);
     pOut.y = pV1->y + t * (pV2->y - pV1->y);
     pOut.z = pV1->z + t * (pV2->z - pV1->z);
-    pOut.y += height * sinf(M_PI * t);
+    pOut.y += height * sinf((float)M_PI * t);
     return pOut;
 }
 
@@ -257,17 +258,17 @@ void NavMeshBaseTestDemo::moveAgents(const cocos2d::Vec3 &des)
 void NavMeshBaseTestDemo::update(float delta)
 {
     for (auto iter : _agents){
-        float speed = iter.first->getCurrentVelocity().length() * 0.2;
+        float speed = iter.first->getCurrentVelocity().length() * 0.2f;
         iter.second->setSpeed(0.0f < speed ? speed : 0.0f);
     }
 }
 
-NavMeshBasicTestDemo::NavMeshBasicTestDemo(void)
+NavMeshBasicTestDemo::NavMeshBasicTestDemo()
 {
 
 }
 
-NavMeshBasicTestDemo::~NavMeshBasicTestDemo(void)
+NavMeshBasicTestDemo::~NavMeshBasicTestDemo()
 {
 }
 
@@ -334,12 +335,12 @@ void NavMeshBasicTestDemo::onEnter()
     createAgent(result.hitPosition);
 }
 
-NavMeshAdvanceTestDemo::NavMeshAdvanceTestDemo(void)
+NavMeshAdvanceTestDemo::NavMeshAdvanceTestDemo()
 {
 
 }
 
-NavMeshAdvanceTestDemo::~NavMeshAdvanceTestDemo(void)
+NavMeshAdvanceTestDemo::~NavMeshAdvanceTestDemo()
 {
 
 }

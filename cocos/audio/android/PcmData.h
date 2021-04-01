@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +30,7 @@ THE SOFTWARE.
 #include <vector>
 #include <memory>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 struct PcmData
 {
@@ -62,4 +63,4 @@ struct PcmData
     std::string toString() const;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

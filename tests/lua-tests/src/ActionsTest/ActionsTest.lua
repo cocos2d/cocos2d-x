@@ -181,7 +181,7 @@ local function ActionRotationalSkewVSStandardSkew()
     local box = cc.LayerColor:create(cc.c4b(255,255,0,255));
     box:setAnchorPoint(cc.p(0.5,0.5));
     box:setContentSize( boxSize );
-    box:ignoreAnchorPointForPosition(false);
+    box:setIgnoreAnchorPointForPosition(false);
     box:setPosition(cc.p(s.width/2, s.height - 100 - box:getContentSize().height/2));
     layer:addChild(box);
     local label = cc.Label:createWithTTF("Standard cocos2d Skew", s_markerFeltFontPath, 16);
@@ -197,7 +197,7 @@ local function ActionRotationalSkewVSStandardSkew()
     box = cc.LayerColor:create(cc.c4b(255,255,0,255));
     box:setAnchorPoint(cc.p(0.5,0.5));
     box:setContentSize(boxSize);
-    box:ignoreAnchorPointForPosition(false);
+    box:setIgnoreAnchorPointForPosition(false);
     box:setPosition(cc.p(s.width/2, s.height - 250 - box:getContentSize().height/2));
     layer:addChild(box);
     label = cc.Label:createWithTTF("Rotational Skew", s_markerFeltFontPath, 16);
@@ -824,7 +824,7 @@ local function ActionCallFuncND()
 	centerSprites(1)
 
     local function doRemoveFromParentAndCleanup(sender,table)
-        grossini:removeFromParentAndCleanup(table[1])
+        grossini:removeFromParent(true)
     end
 
     local action = cc.Sequence:create(

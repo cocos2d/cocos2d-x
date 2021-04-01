@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "MultiTouchTest.h"
 
 USING_NS_CC;
@@ -23,8 +47,8 @@ public:
         DrawNode* drawNode = DrawNode::create();
         auto s = Director::getInstance()->getWinSize();
         Color4F color(touchColor.r/255.0f, touchColor.g/255.0f, touchColor.b/255.0f, 1.0f);
-        drawNode->drawLine(Vec2(0, touchPoint.y), Vec2(s.width, touchPoint.y), color);
-        drawNode->drawLine(Vec2(touchPoint.x, 0), Vec2(touchPoint.x, s.height), color);
+        drawNode->drawLine(Vec2(0.0f, touchPoint.y), Vec2(s.width, touchPoint.y), color);
+        drawNode->drawLine(Vec2(touchPoint.x, 0.0f), Vec2(touchPoint.x, s.height), color);
         drawNode->drawDot(touchPoint, 3, color);
         addChild(drawNode);
     }
@@ -50,7 +74,7 @@ bool MultiTouchTest::init()
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         
         auto title = Label::createWithSystemFont("Please touch the screen!", "", 24);
-        title->setPosition(VisibleRect::top()+Vec2(0, -40));
+        title->setPosition(VisibleRect::top()+Vec2(0.0f, -40.0f));
         addChild(title);
         
         return true;

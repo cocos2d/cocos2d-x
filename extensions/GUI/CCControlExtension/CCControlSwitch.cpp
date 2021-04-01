@@ -5,6 +5,8 @@
  * Copyright 2012 Yannick Loriot. All rights reserved.
  * http://yannickloriot.com
  * 
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -85,8 +87,8 @@ public:
     CC_SYNTHESIZE(float, _offPosition, OffPosition)
     
     CC_SYNTHESIZE_RETAIN(Texture2D*, _maskTexture, MaskTexture)
-    CC_SYNTHESIZE(GLuint, _textureLocation, TextureLocation)
-    CC_SYNTHESIZE(GLuint, _maskLocation, MaskLocation)
+    CC_SYNTHESIZE(uint32_t, _textureLocation, TextureLocation)
+    CC_SYNTHESIZE(uint32_t, _maskLocation, MaskLocation)
     
     CC_SYNTHESIZE_RETAIN(Sprite*, _onSprite, OnSprite)
     CC_SYNTHESIZE_RETAIN(Sprite*, _offSprite, OffSprite)
@@ -422,7 +424,7 @@ bool ControlSwitch::onTouchBegan(Touch *pTouch, Event* /*pEvent*/)
 void ControlSwitch::onTouchMoved(Touch *pTouch, Event* /*pEvent*/)
 {
     Vec2 location    = this->locationFromTouch(pTouch);
-    location            = Vec2(location.x - _initialTouchXPosition, 0);
+    location            = Vec2(location.x - _initialTouchXPosition, 0.0f);
     
     _moved              = true;
     

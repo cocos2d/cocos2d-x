@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "controller.h"
 #include <functional>
 #include <chrono>
@@ -19,20 +43,16 @@ class RootTests : public TestList
 public:
     RootTests()
     {
-        addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
+        //addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
         addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });
         addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
-        addTest("Allocator - Basic", [](){return new (std::nothrow) AllocatorTests(); });
-        addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); });
         addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
-#if CC_ENABLE_BOX2D_INTEGRATION
-        addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
-        addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+       addTest("Chipmunk", []() { return new ChipmunkTests(); });
 #endif
         addTest("Bugs", []() { return new BugsTests(); });
-        addTest("Chipmunk", []() { return new ChipmunkTests(); });
         addTest("Click and Move", [](){return new ClickAndMoveTest(); });
         addTest("Configuration", []() { return new ConfigurationTests(); });
         addTest("Console", []() { return new ConsoleTests(); });
@@ -59,7 +79,6 @@ public:
         addTest("Node: Clipping", []() { return new ClippingNodeTests(); });
         addTest("Node: Draw", [](){return new DrawPrimitivesTests(); });
         addTest("Node: Label - New API", [](){return new NewLabelTests(); });
-        addTest("Node: Label - Old API", [](){return new LabelTests(); });
         addTest("Node: Layer", [](){return new LayerTests(); });
         addTest("Node: Light", [](){return new LightTests(); });
         addTest("Node: Menu", [](){return new MenuTests(); });
@@ -69,7 +88,7 @@ public:
         addTest("Node: Particles", [](){return new ParticleTests(); });
         addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
 #if CC_USE_PHYSICS
-        addTest("Node: Physics", []() { return new PhysicsTests(); });
+       addTest("Node: Physics", []() { return new PhysicsTests(); });
 #endif
         addTest("Node: Physics3D", []() { return new Physics3DTests(); } );
         addTest("Node: RenderTexture", [](){return new RenderTextureTests(); });
@@ -97,16 +116,16 @@ public:
         addTest("Touches", [](){return new TouchesTests(); });
         addTest("Transitions", [](){return new TransitionsTests(); });
         addTest("Unit Test", []() { return new UnitTests(); });
+        addTest("Unzip Test", []() {return new ZipTests();});
         addTest("URL Open Test", []() { return new OpenURLTests(); });
         addTest("UserDefault", []() { return new UserDefaultTests(); });
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         addTest("Vibrate", []() { return new VibrateTests(); });
 #endif
-        addTest("VR Test", []() { return new VRTests(); });
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
-        addTest("SpriteFrameCache", []() { return new SpriteFrameCacheTests(); });
+        addTest("SpriteFrameCache", []() { return new SpriteFrameCacheTests(); }); // TODO
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        addTest("Window Test", []() { return new WindowTests(); });
+        addTest("Window Test", []() { return new WindowTests(); }); // TODO wrong effect
 #endif
     }
 };
@@ -421,7 +440,7 @@ void TestController::logEx(const char * format, ...)
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buff);
 
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
     WCHAR wszBuf[1024] = { 0 };
     MultiByteToWideChar(CP_UTF8, 0, buff, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);

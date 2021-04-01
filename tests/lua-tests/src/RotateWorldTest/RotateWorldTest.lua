@@ -87,7 +87,7 @@ local function CreateRotateWorldLayer()
 
     white:setScale(0.5)
     white:setPosition(cc.p(x / 4, y / 4))
-    white:ignoreAnchorPointForPosition(false)
+    white:setIgnoreAnchorPointForPosition(false)
     white:setPosition(cc.p(x / 4 * 3, y / 4 * 3))
 
     layer:addChild(blue, -1)

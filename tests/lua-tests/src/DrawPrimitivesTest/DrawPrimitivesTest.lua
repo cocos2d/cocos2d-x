@@ -2,7 +2,7 @@
 
 local function drawPrimitivesMainLayer()
     local kItemTagBasic = 1000
-    local testCount = 2
+    local testCount = 1
     local maxCases = testCount
     local curCase  = 0
     local size = cc.Director:getInstance():getWinSize()
@@ -49,19 +49,11 @@ local function drawPrimitivesMainLayer()
     end
 
     local function GetTitle()
-        if 0 == curCase then
-            return "Draw primitives"
-        elseif 1 == curCase then
-            return "Test DrawNode"
-        end
+        return "Test DrawNode"
     end
     
     local function GetSubTitle()
-        if 0 == curCase then
-            return "Drawing Primitives by call gl funtions"
-        elseif 1 == curCase then
-            return "Testing DrawNode - batched draws. Concave polygons are BROKEN"
-        end
+        return "Testing DrawNode - batched draws. Concave polygons are BROKEN"
     end
 
     local function InitTitle(layer)
@@ -76,95 +68,6 @@ local function drawPrimitivesMainLayer()
         layer:addChild(subLabelTitle, 15)
         subLabelTitle:setAnchorPoint(cc.p(0.5, 0.5))
         subLabelTitle:setPosition(cc.p(size.width / 2, size.height - 80)) 
-    end
-
-    local function createDrawPrimitivesEffect()
-        local layer = cc.Layer:create()
-
-        InitTitle(layer)
-
-        local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(cc.size(size.width, size.height))
-        glNode:setAnchorPoint(cc.p(0.5, 0.5))
-
-        local function primitivesDraw(transform, transformUpdated)
-
-            kmGLPushMatrix()
-            kmGLLoadMatrix(transform)
-
-            cc.DrawPrimitives.drawLine(VisibleRect:leftBottom(), VisibleRect:rightTop() )
-
-            gl.lineWidth( 5.0 )
-            cc.DrawPrimitives.drawColor4B(255,0,0,255)
-            cc.DrawPrimitives.drawLine( VisibleRect:leftTop(), VisibleRect:rightBottom() )
-
-
-
-            cc.DrawPrimitives.setPointSize(64)
-            cc.DrawPrimitives.drawColor4B(0, 0, 255, 128)
-            cc.DrawPrimitives.drawPoint(VisibleRect:center())
-
-            local points = {cc.p(60,60), cc.p(70,70), cc.p(60,70), cc.p(70,60) }
-            cc.DrawPrimitives.setPointSize(4)
-            cc.DrawPrimitives.drawColor4B(0,255,255,255)
-            cc.DrawPrimitives.drawPoints(points,4)
-
-            gl.lineWidth(16)
-            cc.DrawPrimitives.drawColor4B(0, 255, 0, 255)
-            cc.DrawPrimitives.drawCircle( VisibleRect:center(), 100, 0, 10, false)
-
-            gl.lineWidth(2)
-            cc.DrawPrimitives.drawColor4B(0, 255, 255, 255)
-            cc.DrawPrimitives.drawCircle( VisibleRect:center(), 50, math.pi / 2, 50, true)
-
-            gl.lineWidth(2)
-            cc.DrawPrimitives.drawColor4B(255, 0, 255, 255)
-            cc.DrawPrimitives.drawSolidCircle( cc.p(VisibleRect:center().x + 140 ,VisibleRect:center().y), 40, math.rad(90), 50, 1.0, 1.0)
-
-            gl.lineWidth(10)
-            cc.DrawPrimitives.drawColor4B(255, 255, 0, 255)
-            local yellowPoints = { cc.p(0,0), cc.p(50,50), cc.p(100,50), cc.p(100,100), cc.p(50,100)}
-            cc.DrawPrimitives.drawPoly( yellowPoints, 5, false)
-
-            gl.lineWidth(1)
-            local filledVertices = { cc.p(0,120), cc.p(50,120), cc.p(50,170), cc.p(25,200), cc.p(0,170) }
-            cc.DrawPrimitives.drawSolidPoly(filledVertices, 5, cc.c4f(0.5, 0.5, 1, 1))
-
-            gl.lineWidth(2)
-            cc.DrawPrimitives.drawColor4B(255, 0, 255, 255)
-            local closePoints= { cc.p(30,130), cc.p(30,230), cc.p(50,200) }
-            cc.DrawPrimitives.drawPoly( closePoints, 3, true)
-
-            cc.DrawPrimitives.drawQuadBezier(VisibleRect:leftTop(), VisibleRect:center(), VisibleRect:rightTop(), 50)
-
-            cc.DrawPrimitives.drawCubicBezier(VisibleRect:center(), cc.p(VisibleRect:center().x + 30, VisibleRect:center().y + 50), cc.p(VisibleRect:center().x + 60,VisibleRect:center().y - 50), VisibleRect:right(), 100)
-
-            local solidvertices = {cc.p(60,160), cc.p(70,190), cc.p(100,190), cc.p(90,160)}
-            cc.DrawPrimitives.drawSolidPoly( solidvertices, 4, cc.c4f(1, 1, 0, 1) )
-
-            local array = {
-                cc.p(0, 0),
-                cc.p(size.width / 2 - 30, 0),
-                cc.p(size.width / 2 - 30, size.height - 80),
-                cc.p(0, size.height - 80),
-                cc.p(0, 0),
-            }
-            cc.DrawPrimitives.drawCatmullRom( array, 5)
-
-            cc.DrawPrimitives.drawCardinalSpline( array, 0,100)
-
-            gl.lineWidth(1)
-            cc.DrawPrimitives.drawColor4B(255,255,255,255)
-            cc.DrawPrimitives.setPointSize(1)
-
-            kmGLPopMatrix()
-        end
-
-        glNode:registerScriptDrawHandler(primitivesDraw)
-        layer:addChild(glNode,-10)
-        glNode:setPosition( size.width / 2, size.height / 2)
-
-        return layer
     end
 
     local function createDrawNodeTest()
@@ -271,11 +174,7 @@ local function drawPrimitivesMainLayer()
     end
 
     local function createLayerByCurCase(curCase)
-        if 0 == curCase then
-            return createDrawPrimitivesEffect()
-        elseif 1 == curCase then
-            return createDrawNodeTest()
-        end
+        return createDrawNodeTest()
     end
 
     function showCurrentTest()    

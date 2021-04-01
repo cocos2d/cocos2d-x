@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -521,17 +522,7 @@ void RelativeLayoutManager::calculateFinalPositionWithRelativeAlign()
             break;
     }
 }
-
-bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout)
-{
-    return calculateFinalPositionWithRelativeWidget(layout);
-}
-
-void RelativeLayoutManager::caculateFinalPositionWithRelativeAlign()
-{
-    calculateFinalPositionWithRelativeAlign();
-}
-
+    
 void RelativeLayoutManager::doLayout(LayoutProtocol *layout)
 {
     

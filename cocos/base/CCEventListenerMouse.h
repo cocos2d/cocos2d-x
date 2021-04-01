@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -23,11 +24,11 @@
 
  ****************************************************************************/
 
-#include "base/CCEventListener.h"
-#include "base/CCEventMouse.h"
-
 #ifndef __cocos2d_libs__CCMouseEventListener__
 #define __cocos2d_libs__CCMouseEventListener__
+
+#include "base/CCEventListener.h"
+#include "base/CCEventMouse.h"
 
 /**
  * @addtogroup base

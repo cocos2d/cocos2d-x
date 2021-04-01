@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2016-2017 Chukong Technologies Inc.
+ Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -37,7 +38,7 @@
 #define LOGD(...) printf(__VA_ARGS__)
 #endif
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 #define DEFAULT_THREAD_POOL_MIN_NUM (4)
 #define DEFAULT_THREAD_POOL_MAX_NUM (20)
@@ -439,4 +440,4 @@ void ThreadPool::setThread(int tid)
             new(std::nothrow) std::thread(f)); // compiler may not support std::make_unique()
 }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

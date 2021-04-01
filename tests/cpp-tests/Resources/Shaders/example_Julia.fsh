@@ -6,11 +6,18 @@ precision highp float;
 
 uniform vec2 center;
 uniform vec2 resolution;
+uniform vec2 u_screenSize;
+uniform vec4 u_Time;
 
 void main(void)
 {
-    float time = CC_Time[1];
-    vec2 p = 2.0 * (gl_FragCoord.xy - center.xy) / resolution.xy;
+    float time = u_Time[1];
+#ifdef METAL
+	vec2 fragCoord = vec2(gl_FragCoord.x, u_screenSize.y - gl_FragCoord.y);
+#else
+	vec2 fragCoord = gl_FragCoord.xy;
+#endif
+    vec2 p = 2.0 * (fragCoord - center.xy) / resolution.xy;
     vec2 cc = vec2( cos(.25*time), sin(.25*time*1.423) );
 
     float dmin = 1000.0;

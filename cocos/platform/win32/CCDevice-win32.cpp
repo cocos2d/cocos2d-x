@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -22,10 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
 #include "platform/CCDevice.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCStdC.h"
@@ -41,7 +38,7 @@ int Device::getDPI()
         int PixelsX = GetDeviceCaps(hScreenDC, HORZRES);
         int MMX = GetDeviceCaps(hScreenDC, HORZSIZE);
         ReleaseDC(nullptr, hScreenDC);
-        dpi = 254.0f*PixelsX / MMX / 10;
+        dpi = (int)(254.0f*PixelsX / MMX / 10);
     }
     return dpi;
 }
@@ -175,7 +172,7 @@ public:
                 {
                     if (AddFontResource(pwszBuffer))
                     {
-                        SendMessage(_wnd, WM_FONTCHANGE, 0, 0);
+                        PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
                     }
                     delete[] pwszBuffer;
                     pwszBuffer = nullptr;
@@ -470,7 +467,7 @@ private:
             if (pwszBuffer)
             {
                 RemoveFontResource(pwszBuffer);
-                SendMessage(_wnd, WM_FONTCHANGE, 0, 0);
+                PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
                 delete[] pwszBuffer;
                 pwszBuffer = nullptr;
             }
@@ -492,7 +489,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     {
         BitmapDC& dc = sharedBitmapDC();
 
-        if (!dc.setFont(textDefinition._fontName.c_str(), textDefinition._fontSize,false))
+        if (!dc.setFont(textDefinition._fontName.c_str(), (int)textDefinition._fontSize,false))
         {
             log("Can't found font(%s), use system default", textDefinition._fontName.c_str());
         }
@@ -500,7 +497,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         // draw text
         // does changing to SIZE here affects the font size by rounding from float?
         SIZE size = { (LONG)textDefinition._dimensions.width,(LONG)textDefinition._dimensions.height };
-        CC_BREAK_IF(!dc.drawText(text, size, align, textDefinition._fontName.c_str(), textDefinition._fontSize, textDefinition._enableWrap, textDefinition._overflow));
+        CC_BREAK_IF(!dc.drawText(text, size, align, textDefinition._fontName.c_str(), (int)textDefinition._fontSize, textDefinition._enableWrap, textDefinition._overflow));
 
         int dataLen = size.cx * size.cy * 4;
         unsigned char* dataBuf = (unsigned char*)malloc(sizeof(unsigned char) * dataLen);
@@ -556,5 +553,3 @@ void Device::vibrate(float duration)
 }
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

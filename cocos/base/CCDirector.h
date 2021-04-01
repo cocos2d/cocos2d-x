@@ -2,7 +2,8 @@
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2019 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -24,9 +25,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CCDIRECTOR_H__
-#define __CCDIRECTOR_H__
+#pragma once
 
 #include <stack>
 #include <thread>
@@ -37,7 +36,6 @@ THE SOFTWARE.
 #include "base/CCVector.h"
 #include "2d/CCScene.h"
 #include "math/CCMath.h"
-#include "platform/CCGL.h"
 #include "platform/CCGLView.h"
 
 NS_CC_BEGIN
@@ -62,10 +60,6 @@ class Renderer;
 class Camera;
 
 class Console;
-namespace experimental
-{
-    class FrameBuffer;
-}
 
 /**
  * @brief Matrix stack type.
@@ -141,12 +135,6 @@ public:
      */
     static Director* getInstance();
 
-    /**
-     * @deprecated Use getInstance() instead.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
-    
     /**
      * @js ctor
      */
@@ -256,7 +244,12 @@ public:
     /** Returns visible origin coordinate of the OpenGL view in points. */
     Vec2 getVisibleOrigin() const;
 
-    /** 
+    /**
+     * Returns safe area rectangle of the OpenGL view in points.
+     */
+    Rect getSafeAreaRect() const;
+
+    /**
      * Converts a screen coordinate to an OpenGL coordinate.
      * Useful to convert (multi) touch coordinates to the current layout (portrait or landscape).
      */
@@ -379,18 +372,12 @@ public:
      * @js NA
      */
     void setGLDefaultValues();
-
-    /** Enables/disables OpenGL alpha blending. */
-    void setAlphaBlending(bool on);
     
     /** Sets clear values for the color buffers,
      * value range of each element is [0.0, 1.0].
      * @js NA
      */
     void setClearColor(const Color4F& clearColor);
-
-    /** Enables/disables OpenGL depth test. */
-    void setDepthTest(bool on);
 
     void mainLoop();
     /** Invoke main loop with delta time. Then `calculateDeltaTime` can just use the delta time directly.
@@ -469,34 +456,15 @@ public:
      */
     void pushMatrix(MATRIX_STACK_TYPE type);
 
-    /**
-     * Clones a projection matrix and put it to the top of projection matrix stack.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void pushProjectionMatrix(size_t index);
-
     /** Pops the top matrix of the specified type of matrix stack.
      * @js NA
      */
     void popMatrix(MATRIX_STACK_TYPE type);
 
-    /** Pops the top matrix of the projection matrix stack.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void popProjectionMatrix(size_t index);
-
     /** Adds an identity matrix to the top of specified type of matrix stack.
      * @js NA
      */
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
-
-    /** Adds an identity matrix to the top of projection matrix stack.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void loadProjectionIdentityMatrix(size_t index);
 
     /**
      * Adds a matrix to the top of specified type of matrix stack.
@@ -508,15 +476,6 @@ public:
     void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
 
     /**
-     * Adds a matrix to the top of projection matrix stack.
-     *
-     * @param mat The matrix that to be added.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void loadProjectionMatrix(const Mat4& mat, size_t index);
-
-    /**
      * Multiplies a matrix to the top of specified type of matrix stack.
      *
      * @param type Matrix type.
@@ -526,45 +485,16 @@ public:
     void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
 
     /**
-     * Multiplies a matrix to the top of projection matrix stack.
-     *
-     * @param mat The matrix that to be multiplied.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void multiplyProjectionMatrix(const Mat4& mat, size_t index);
-
-    /**
      * Gets the top matrix of specified type of matrix stack.
      * @js NA
      */
     const Mat4& getMatrix(MATRIX_STACK_TYPE type) const;
 
     /**
-     * Gets the top matrix of projection matrix stack.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    const Mat4& getProjectionMatrix(size_t index) const;
-
-    /**
      * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
      * @js NA
      */
     void resetMatrixStack();
-
-    /**
-     * Init the projection matrix stack.
-     * @param stackCount The size of projection matrix stack.
-     * @js NA
-     */
-    void initProjectionMatrixStack(size_t stackCount);
-
-    /**
-     * Get the size of projection matrix stack.
-     * @js NA
-     */
-    size_t getProjectionMatrixStackSize();
 
     /**
      * returns the cocos2d thread id.
@@ -585,10 +515,10 @@ protected:
     virtual void setAnimationInterval(float interval, SetIntervalReason reason);
 
     void purgeDirector();
-    bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
+    bool _purgeDirectorInNextLoop = false; // this flag will be set to true in end()
     
     void restartDirector();
-    bool _restartDirectorInNextLoop; // this flag will be set to true in restart()
+    bool _restartDirectorInNextLoop = false; // this flag will be set to true in restart()
     
     void setNextScene();
     
@@ -610,70 +540,72 @@ protected:
     void initMatrixStack();
 
     std::stack<Mat4> _modelViewMatrixStack;
-    /** In order to support GL MultiView features, we need to use the matrix array,
-        but we don't know the number of MultiView, so using the vector instead.
-     */
-    std::vector< std::stack<Mat4> > _projectionMatrixStackList;
     std::stack<Mat4> _textureMatrixStack;
+    std::stack<Mat4> _projectionMatrixStack;
 
     /** Scheduler associated with this director
      @since v2.0
      */
-    Scheduler *_scheduler;
+    Scheduler *_scheduler = nullptr;
     
     /** ActionManager associated with this director
      @since v2.0
      */
-    ActionManager *_actionManager;
+    ActionManager *_actionManager = nullptr;
     
     /** EventDispatcher associated with this director
      @since v3.0
      */
-    EventDispatcher* _eventDispatcher;
-    EventCustom *_eventProjectionChanged, *_eventBeforeDraw, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate, *_eventResetDirector, *_beforeSetNextScene, *_afterSetNextScene;
+    EventDispatcher* _eventDispatcher = nullptr;
+    EventCustom* _eventProjectionChanged = nullptr;
+    EventCustom* _eventBeforeDraw =nullptr; 
+    EventCustom* _eventAfterDraw = nullptr;
+    EventCustom* _eventAfterVisit = nullptr;
+    EventCustom* _eventBeforeUpdate = nullptr;
+    EventCustom* _eventAfterUpdate = nullptr;
+    EventCustom* _eventResetDirector = nullptr;
+    EventCustom* _beforeSetNextScene = nullptr;
+    EventCustom* _afterSetNextScene = nullptr;
         
     /* delta time since last tick to main loop */
-	float _deltaTime;
-    bool _deltaTimePassedByCaller;
+	float _deltaTime = 0.0f;
+    bool _deltaTimePassedByCaller = false;
     
     /* The _openGLView, where everything is rendered, GLView is a abstract class,cocos2d-x provide GLViewImpl
      which inherit from it as default renderer context,you can have your own by inherit from it*/
-    GLView *_openGLView;
+    GLView *_openGLView = nullptr;
 
     //texture cache belongs to this director
-    TextureCache *_textureCache;
+    TextureCache *_textureCache = nullptr;
 
-    float _animationInterval;
-    float _oldAnimationInterval;
-
-    /* landscape mode ? */
-    bool _landscape;
+    float _animationInterval = 0.0f;
+    float _oldAnimationInterval = 0.0f;
     
-    bool _displayStats;
-    float _accumDt;
-    float _frameRate;
+    bool _displayStats = false;
+    float _accumDt = 0.0f;
+    float _frameRate = 0.0f;
     
-    LabelAtlas *_FPSLabel;
-    LabelAtlas *_drawnBatchesLabel;
-    LabelAtlas *_drawnVerticesLabel;
+    LabelAtlas *_FPSLabel = nullptr;
+    LabelAtlas *_drawnBatchesLabel = nullptr;
+    LabelAtlas *_drawnVerticesLabel = nullptr;
     
     /** Whether or not the Director is paused */
-    bool _paused;
+    bool _paused = false;
 
     /* How many frames were called since the director started */
-    unsigned int _totalFrames;
-    unsigned int _frames;
-    float _secondsPerFrame;
+    unsigned int _totalFrames = 0;
+    unsigned int _frames = 0;
+    float _secondsPerFrame = 1.f;
     
     /* The running scene */
-    Scene *_runningScene;
+    Scene *_runningScene = nullptr;
     
     /* will be the next 'runningScene' in the next frame
      nextScene is a weak reference. */
-    Scene *_nextScene;
+    Scene *_nextScene = nullptr;
     
     /* If true, then "old" scene will receive the cleanup message */
-    bool _sendCleanupToScene;
+    bool _sendCleanupToScene = false;
 
     /* scheduled scenes */
     Vector<Scene*> _scenesStack;
@@ -682,50 +614,41 @@ protected:
     std::chrono::steady_clock::time_point _lastUpdate;
 
     /* whether or not the next delta time will be zero */
-    bool _nextDeltaTimeZero;
+    bool _nextDeltaTimeZero = false;
     
     /* projection used */
-    Projection _projection;
+    Projection _projection = Projection::DEFAULT;
 
     /* window size in points */
-    Size _winSizeInPoints;
+    Size _winSizeInPoints = Size::ZERO;
     
     /* content scale factor */
-    float _contentScaleFactor;
+    float _contentScaleFactor = 1.0f;
 
     /* This object will be visited after the scene. Useful to hook a notification node */
-    Node *_notificationNode;
+    Node *_notificationNode = nullptr;
 
     /* Renderer for the Director */
-    Renderer *_renderer;
-    
-    /* Default FrameBufferObject*/
-    experimental::FrameBuffer* _defaultFBO;
+    Renderer *_renderer = nullptr;
+
+    Color4F _clearColor = {0, 0, 0, 1};
 
     /* Console for the director */
-    Console *_console;
+    Console *_console = nullptr;
 
-    bool _isStatusLabelUpdated;
+    bool _isStatusLabelUpdated = true;
 
     /* cocos2d thread id */
     std::thread::id _cocos2d_thread_id;
 
     /* whether or not the director is in a valid state */
-    bool _invalid;
+    bool _invalid = false;
 
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
 };
 
-// FIXME: Added for backward compatibility in case
-// someone is subclassing it.
-// Should be removed in v4.0
-class DisplayLinkDirector : public Director
-{};
-
 // end of base group
 /** @} */
 
 NS_CC_END
-
-#endif // __CCDIRECTOR_H__

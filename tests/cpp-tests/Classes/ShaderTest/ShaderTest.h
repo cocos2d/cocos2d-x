@@ -1,11 +1,33 @@
-#ifndef _SHADER_TEST_H_
-#define _SHADER_TEST_H_
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+#pragma once
 
 #include "ui/CocosGUI.h"
 
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
-
 
 DEFINE_TEST_SUITE(ShaderTests);
 
@@ -106,8 +128,8 @@ public:
     ShaderRetroEffect();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    bool init() override;
-    void update(float dt) override;
+    virtual bool init() override;
+    virtual void update(float dt) override;
 protected:
     cocos2d::Label* _label;
     float           _accum;
@@ -130,14 +152,34 @@ protected:
     bool initWithVertex(const std::string &vert, const std::string &frag);
     void loadShaderVertex(const std::string &vert, const std::string &frag);
 
-    void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
+    virtual void setProgramState(cocos2d::backend::ProgramState *programState) override
+    {
+        if (programState != _programState)
+        {
+            CC_SAFE_RELEASE_NULL(_programState);
+            _programState = programState;
+            CC_SAFE_RETAIN(_programState);
+        }
+        _customCommand.getPipelineDescriptor().programState = programState;
+        updateUniforms();
+    }
 
-    cocos2d::Vec2 _center;
-    cocos2d::Vec2 _resolution;
-    float      _time;
-    std::string _vertFileName;
-    std::string _fragFileName;
-    cocos2d::CustomCommand _customCommand;
+    void updateUniforms();
+
+    cocos2d::Vec2                   _center;
+    cocos2d::Vec2                   _resolution;
+    float                           _time;
+    std::string                     _vertFileName;
+    std::string                     _fragFileName;
+    cocos2d::CustomCommand          _customCommand;
+
+    cocos2d::backend::UniformLocation   _locResolution;
+    cocos2d::backend::UniformLocation   _locCenter;
+    cocos2d::backend::UniformLocation   _locMVP;
+    cocos2d::backend::UniformLocation   _locTime;
+    cocos2d::backend::UniformLocation   _locSinTime;
+    cocos2d::backend::UniformLocation   _locCosTime;
+    cocos2d::backend::UniformLocation   _locScreenSize;
 };
 
 class ShaderLensFlare : public ShaderTestDemo
@@ -178,4 +220,3 @@ public:
     virtual bool init() override;
 };
 
-#endif

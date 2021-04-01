@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -23,35 +24,19 @@
  ****************************************************************************/
 
 #include "DrawNode3D.h"
-
+#include "renderer/backend/Buffer.h"
 NS_CC_BEGIN
 
 
 DrawNode3D::DrawNode3D()
-: _vao(0)
-, _vbo(0)
-, _bufferCapacity(0)
-, _bufferCount(0)
-, _buffer(nullptr)
-, _dirty(false)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
 
 DrawNode3D::~DrawNode3D()
 {
-    free(_buffer);
-    _buffer = nullptr;
-    
-    glDeleteBuffers(1, &_vbo);
-    _vbo = 0;
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glDeleteVertexArrays(1, &_vao);
-        GL::bindVAO(0);
-        _vao = 0;
-    }
+    CC_SAFE_RELEASE_NULL(_programStateLine);
+    CC_SAFE_DELETE(_depthstencilDescriptor);
 }
 
 DrawNode3D* DrawNode3D::create()
@@ -73,48 +58,54 @@ void DrawNode3D::ensureCapacity(int count)
 {
     CCASSERT(count>=0, "capacity must be >= 0");
     
-    if(_bufferCount + count > _bufferCapacity)
+    auto EXTENDED_SIZE = _bufferLines.size() + count;
+
+    _bufferLines.reserve(EXTENDED_SIZE);
+
+    if (!_customCommand.getVertexBuffer() || _customCommand.getVertexBuffer()->getSize() < (EXTENDED_SIZE * sizeof(_bufferLines[0])))
     {
-		_bufferCapacity += MAX(_bufferCapacity, count);
-		_buffer = (V3F_C4B*)realloc(_buffer, _bufferCapacity*sizeof(V3F_C4B));
-	}
+        _customCommand.createVertexBuffer(sizeof(V3F_C4B), EXTENDED_SIZE + (EXTENDED_SIZE >> 1), CustomCommand::BufferUsage::DYNAMIC);
+    }
+
 }
 
 bool DrawNode3D::init()
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    auto &pd = _customCommand.getPipelineDescriptor();
+    auto program = backend::Program::getBuiltinProgram(backend::ProgramType::LINE_COLOR_3D);
+    _programStateLine = new backend::ProgramState(program);
+    pd.programState = _programStateLine;
+    
+    _locMVPMatrix = _programStateLine->getUniformLocation("u_MVPMatrix");
 
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_COLOR));
-    
-    ensureCapacity(512);
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
+    _customCommand.setBeforeCallback(CC_CALLBACK_0(DrawNode3D::onBeforeDraw, this));
+    _customCommand.setAfterCallback(CC_CALLBACK_0(DrawNode3D::onAfterDraw, this));
+
+    auto layout = _programStateLine->getVertexLayout();
+#define INITIAL_VERTEX_BUFFER_LENGTH 512
+
+    ensureCapacity(INITIAL_VERTEX_BUFFER_LENGTH);
+
+    _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::LINE);
+
+    const auto& attributeInfo = _programStateLine->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
     {
-        glGenVertexArrays(1, &_vao);
-        GL::bindVAO(_vao);
+        layout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
-    
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
-    
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, vertices));
-    
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, colors));
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
+    iter = attributeInfo.find("a_color");
+    if(iter != attributeInfo.end())
     {
-        GL::bindVAO(0);
+        layout->setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
     }
+    layout->setLayout(sizeof(V3F_C4B));
     
-    CHECK_GL_ERROR_DEBUG();
-    
-    _dirty = true;
-    
+    _customCommand.createVertexBuffer(sizeof(V3F_C4B), INITIAL_VERTEX_BUFFER_LENGTH, CustomCommand::BufferUsage::DYNAMIC);
+    _isDirty = true;
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Need to listen the event only when not use batchnode, because it will use VBO
     auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
@@ -131,46 +122,36 @@ bool DrawNode3D::init()
 void DrawNode3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(DrawNode3D::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
+
+    updateCommand(renderer, transform, flags);
+
+    if (_isDirty && !_bufferLines.empty())
+    {
+        _customCommand.updateVertexBuffer(_bufferLines.data(), (unsigned int)(_bufferLines.size() * sizeof(_bufferLines[0])));
+        _customCommand.setVertexDrawInfo(0, _bufferLines.size());
+        _isDirty = false;
+    }
+
+    if (!_bufferLines.empty())
+    {
+        renderer->addCommand(&_customCommand);
+    }
 }
 
-void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
+void DrawNode3D::updateCommand(cocos2d::Renderer* renderer,const Mat4 &transform, uint32_t flags)
 {
-    auto glProgram = getGLProgram();
-    glProgram->use();
-    glProgram->setUniformsForBuiltins(transform);
-    glEnable(GL_DEPTH_TEST);
-    RenderState::StateBlock::_defaultState->setDepthTest(true);
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    auto &matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto mvp = matrixP * transform;
 
-    if (_dirty)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
-        _dirty = false;
-    }
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        GL::bindVAO(_vao);
-    }
-    else
-    {
-        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    _programStateLine->setUniform(_locMVPMatrix, mvp.m, sizeof(mvp.m));
 
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-        // vertex
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, vertices));
 
-        // color
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, colors));
-    }
+    auto &blend = _customCommand.getPipelineDescriptor().blendDescriptor;
+    blend.blendEnabled = true;
+    blend.sourceRGBBlendFactor = blend.sourceAlphaBlendFactor = _blendFunc.src;
+    blend.destinationRGBBlendFactor = blend.destinationAlphaBlendFactor = _blendFunc.dst;
 
-    glDrawArrays(GL_LINES, 0, _bufferCount);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
-    CHECK_GL_ERROR_DEBUG();
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _bufferLines.size());
 }
 
 void DrawNode3D::drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color)
@@ -181,14 +162,11 @@ void DrawNode3D::drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color
     Color4B col = Color4B(color);
     V3F_C4B a = {Vec3(from.x, from.y, from.z), col};
     V3F_C4B b = {Vec3(to.x, to.y, to.z), col, };
-    
-    V3F_C4B *lines = (V3F_C4B *)(_buffer + _bufferCount);
-    lines[0] = a;
-    lines[1] = b;
-    
-    _bufferCount += vertex_count;
-    _dirty = true;
 
+    _bufferLines.push_back(a);
+    _bufferLines.push_back(b);
+    
+    _isDirty = true;
 }
 
 void DrawNode3D::drawCube(Vec3* vertices, const Color4F &color)
@@ -214,8 +192,8 @@ void DrawNode3D::drawCube(Vec3* vertices, const Color4F &color)
 
 void DrawNode3D::clear()
 {
-    _bufferCount = 0;
-    _dirty = true;
+    _bufferLines.clear();
+    _isDirty = true;
 }
 
 const BlendFunc& DrawNode3D::getBlendFunc() const
@@ -227,5 +205,20 @@ void DrawNode3D::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }
+
+
+void DrawNode3D::onBeforeDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    _rendererDepthTestEnabled = renderer->getDepthTest();
+    renderer->setDepthTest(true);
+}
+
+void DrawNode3D::onAfterDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthTest(_rendererDepthTestEnabled);
+}
+
 
 NS_CC_END

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -26,9 +27,9 @@ THE SOFTWARE.
 
 #include "audio/android/AudioDecoder.h"
 
-#include "tremolo/Tremolo/ivorbisfile.h"
+#include "Tremolo/ivorbisfile.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class AudioDecoderOgg : public AudioDecoder
 {
@@ -42,4 +43,4 @@ protected:
     friend class AudioDecoderProvider;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

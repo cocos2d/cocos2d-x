@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -25,8 +26,18 @@ THE SOFTWARE.
 
 #include "Camera3DTest.h"
 #include "testResource.h"
+#include "ui/UISlider.h"
+#include  "platform/CCFileUtils.h"
+#include "renderer/backend/Device.h"
 
 USING_NS_CC;
+
+#define SET_UNIFORM(name, addr, size) do {                      \
+        auto _loc_ = _programState1->getUniformLocation(name);  \
+        _programState1->setUniform(_loc_, (addr), (size));      \
+        _loc_ = _programState2->getUniformLocation(name);       \
+        _programState2->setUniform(_loc_, (addr), (size));      \
+    } while(false) 
 
 enum
 {
@@ -42,7 +53,8 @@ Camera3DTests::Camera3DTests()
     ADD_TEST_CASE(CameraCullingDemo);
     ADD_TEST_CASE(FogTestDemo);
     ADD_TEST_CASE(CameraArcBallDemo);
-    ADD_TEST_CASE(CameraFrameBufferTest);
+    //ADD_TEST_CASE(CameraFrameBufferTest); //TODO render target
+    ADD_TEST_CASE(BackgroundColorBrushTest);
 }
 
 //------------------------------------------------------------------
@@ -56,7 +68,7 @@ CameraRotationTest::CameraRotationTest()
     auto s = Director::getInstance()->getWinSize();
     
     _camControlNode = Node::create();
-    _camControlNode->setPositionNormalized(Vec2(.5,.5));
+    _camControlNode->setPositionNormalized(Vec2(0.5f,0.5f));
     addChild(_camControlNode);
 
     _camNode = Node::create();
@@ -75,30 +87,30 @@ CameraRotationTest::CameraRotationTest()
     //Billboards
     //Yellow is at the back
     bill1 = BillBoard::create("Images/Icon.png");
-    bill1->setPosition3D(Vec3(50, 10, -10));
+    bill1->setPosition3D(Vec3(50.0f, 10.0f, -10.0f));
     bill1->setColor(Color3B::YELLOW);
     bill1->setScale(0.6f);
     sp3d->addChild(bill1);
     
     l1 = Label::create();
-    l1->setPosition(Vec2(0,-10));
+    l1->setPosition(Vec2(0.0f,-10.0f));
     l1->setString("Billboard1");
     l1->setColor(Color3B::WHITE);
     l1->setScale(3);
     bill1->addChild(l1);
 
     auto p1 = ParticleSystemQuad::create("Particles/SmallSun.plist");
-    p1->setPosition(30,80);
+    p1->setPosition(30.0f,80.0f);
     bill1->addChild(p1);
     
     bill2 = BillBoard::create("Images/Icon.png");
-    bill2->setPosition3D(Vec3(-50, -10, 10));
+    bill2->setPosition3D(Vec3(-50.0f, -10.0f, 10.0f));
     bill2->setScale(0.6f);
     sp3d->addChild(bill2);
     
     l2 = Label::create();
     l2->setString("Billboard2");
-    l2->setPosition(Vec2(0,-10));
+    l2->setPosition(Vec2(0.0f,-10.0f));
     l2->setColor(Color3B::WHITE);
     l2->setScale(3);
     bill2->addChild(l2);
@@ -116,7 +128,7 @@ CameraRotationTest::CameraRotationTest()
 
     //Listener
     _lis = EventListenerTouchOneByOne::create();
-    _lis->onTouchBegan = [this](Touch* t, Event* e) {
+    _lis->onTouchBegan = [](Touch* t, Event* e) {
         return true;
     };
 
@@ -135,7 +147,7 @@ CameraRotationTest::CameraRotationTest()
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_lis, this);
     
-    schedule(schedule_selector(CameraRotationTest::update));
+    schedule(CC_SCHEDULE_SELECTOR(CameraRotationTest::update));
 }
 
 CameraRotationTest::~CameraRotationTest()
@@ -172,8 +184,9 @@ void CameraRotationTest::update(float dt)
 // Camera3DTestDemo
 //
 //------------------------------------------------------------------
-Camera3DTestDemo::Camera3DTestDemo(void)
-: _incRot(nullptr)
+Camera3DTestDemo::Camera3DTestDemo()
+: _cameraType(CameraType::Free)
+, _incRot(nullptr)
 , _decRot(nullptr)
 , _camera(nullptr)
 , _bZoomOut(false)
@@ -182,7 +195,7 @@ Camera3DTestDemo::Camera3DTestDemo(void)
 , _bRotateRight(false)
 {
 }
-Camera3DTestDemo::~Camera3DTestDemo(void)
+Camera3DTestDemo::~Camera3DTestDemo()
 {
 }
 void Camera3DTestDemo::reachEndCallBack()
@@ -271,7 +284,7 @@ void Camera3DTestDemo::onEnter()
     
     auto containerForLabel1 = Node::create();
     _ZoomOutlabel = Label::createWithTTF(ttfConfig,"zoom out");
-    _ZoomOutlabel->setPosition(s.width-50, VisibleRect::top().y-30);
+    _ZoomOutlabel->setPosition(s.width-50, VisibleRect::top().y-20);
     containerForLabel1->addChild(_ZoomOutlabel);
     addChild(containerForLabel1, 10);
     
@@ -285,7 +298,7 @@ void Camera3DTestDemo::onEnter()
     
     auto containerForLabel2 = Node::create();
     _ZoomInlabel = Label::createWithTTF(ttfConfig,"zoom in");
-    _ZoomInlabel->setPosition(s.width-50, VisibleRect::top().y-100);
+    _ZoomInlabel->setPosition(s.width-50, VisibleRect::top().y-70);
     containerForLabel2->addChild(_ZoomInlabel);
     addChild(containerForLabel2, 10);
     
@@ -299,7 +312,7 @@ void Camera3DTestDemo::onEnter()
     
     auto containerForLabel3 = Node::create();
     _RotateLeftlabel = Label::createWithTTF(ttfConfig,"rotate left");
-    _RotateLeftlabel->setPosition(s.width-50, VisibleRect::top().y-170);
+    _RotateLeftlabel->setPosition(s.width-50, VisibleRect::top().y-120);
     containerForLabel3->addChild(_RotateLeftlabel);
     addChild(containerForLabel3, 10);
     
@@ -313,7 +326,7 @@ void Camera3DTestDemo::onEnter()
     
     auto containerForLabel4 = Node::create();
     _RotateRightlabel = Label::createWithTTF(ttfConfig,"rotate right");
-    _RotateRightlabel->setPosition(s.width-50, VisibleRect::top().y-240);
+    _RotateRightlabel->setPosition(s.width-50, VisibleRect::top().y-170);
     containerForLabel4->addChild(_RotateRightlabel);
     addChild(containerForLabel4, 10);
     
@@ -342,7 +355,7 @@ void Camera3DTestDemo::onEnter()
     schedule(CC_SCHEDULE_SELECTOR(Camera3DTestDemo::updateCamera), 0.0f);
     if (_camera == nullptr)
     {
-        _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+        _camera=Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
         _camera->setCameraFlag(CameraFlag::USER1);
         _layer3D->addChild(_camera);
     }
@@ -351,16 +364,16 @@ void Camera3DTestDemo::onEnter()
     //draw x
     for( int j =-20; j<=20 ;j++)
     {
-        line->drawLine(Vec3(-100, 0, 5*j),Vec3(100,0,5*j),Color4F(1,0,0,1));
+        line->drawLine(Vec3(-100.0f, 0.0f, 5.0f*j),Vec3(100.0f,0.0f,5.0f*j),Color4F(1,0,0,1));
     }
     //draw z
     for( int j =-20; j<=20 ;j++)
     {
-        line->drawLine(Vec3(5*j, 0, -100),Vec3(5*j,0,100),Color4F(0,0,1,1));
+        line->drawLine(Vec3(5.0f*j, 0.0f, -100.0f),Vec3(5.0f*j,0.0f,100.0f),Color4F(0,0,1,1));
     }
     //draw y
-    line->drawLine(Vec3(0, -50, 0),Vec3(0,0,0),Color4F(0,0.5,0,1));
-    line->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
+    line->drawLine(Vec3(0.0f, -50.0f, 0.0f),Vec3(0,0,0),Color4F(0,0.5,0,1));
+    line->drawLine(Vec3(0, 0, 0),Vec3(0,50.0f,0),Color4F(0,1,0,1));
     _layer3D->addChild(line);
 
     _layer3D->setCameraMask(2);
@@ -398,11 +411,6 @@ void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool p
 }
 void Camera3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    for ( auto &item: touches )
-    {
-        auto touch = item;
-        auto location = touch->getLocation();
-    }
 }
 void Camera3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
@@ -696,7 +704,7 @@ void Camera3DTestDemo::onTouchesRotateRightEnd(Touch* touch, Event* event)
 
 ////////////////////////////////////////////////////////////
 // CameraCullingDemo
-CameraCullingDemo::CameraCullingDemo(void)
+CameraCullingDemo::CameraCullingDemo()
 : _layer3D(nullptr)
 , _cameraType(CameraType::FirstPerson)
 , _cameraFirst(nullptr)
@@ -707,7 +715,7 @@ CameraCullingDemo::CameraCullingDemo(void)
 , _row(3)
 {
 }
-CameraCullingDemo::~CameraCullingDemo(void)
+CameraCullingDemo::~CameraCullingDemo()
 {
 }
 
@@ -720,7 +728,7 @@ void CameraCullingDemo::onEnter()
 {
     CameraBaseTest::onEnter();
 
-    schedule(schedule_selector(CameraCullingDemo::update), 0.0f);
+    schedule(CC_SCHEDULE_SELECTOR(CameraCullingDemo::update), 0.0f);
     
     auto s = Director::getInstance()->getWinSize();
     /*auto listener = EventListenerTouchAllAtOnce::create();
@@ -794,13 +802,13 @@ void CameraCullingDemo::onExit()
 void CameraCullingDemo::update(float dt)
 {
     _drawAABB->clear();
-    
+
     if(_cameraType == CameraType::ThirdPerson)
         drawCameraFrustum();
-    
+
     Vector<Node*>& children = _layer3D->getChildren();
     Vec3 corners[8];
-    
+
     for (const auto& iter: children)
     {
         const AABB& aabb = static_cast<Sprite3D*>(iter)->getAABB();
@@ -815,7 +823,7 @@ void CameraCullingDemo::update(float dt)
 void CameraCullingDemo::reachEndCallBack()
 {
     _cameraFirst->stopActionByTag(100);
-    auto inverse = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0));
+    auto inverse = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0.0f));
     inverse->retain();
     
     _moveAction->release();
@@ -832,11 +840,11 @@ void CameraCullingDemo::switchViewCallback(Ref* sender)
     
     if (_cameraFirst == nullptr)
     {
-        _cameraFirst = Camera::createPerspective(30, (GLfloat)s.width/s.height, 10, 200);
+        _cameraFirst = Camera::createPerspective(30.0f, (float)s.width/s.height, 10.0f, 200.0f);
         _cameraFirst->setCameraFlag(CameraFlag::USER8);
-        _cameraFirst->setPosition3D(Vec3(-100,0,0));
-        _cameraFirst->lookAt(Vec3(1000,0,0));
-        _moveAction = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0));
+        _cameraFirst->setPosition3D(Vec3(-100.0f,0.0f,0.0f));
+        _cameraFirst->lookAt(Vec3(1000.0f,0.0f,0.0f));
+        _moveAction = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0.0f));
         _moveAction->retain();
         auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(CameraCullingDemo::reachEndCallBack, this)), nullptr);
         seq->setTag(100);
@@ -846,9 +854,9 @@ void CameraCullingDemo::switchViewCallback(Ref* sender)
     
     if (_cameraThird == nullptr)
     {
-        _cameraThird = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+        _cameraThird = Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
         _cameraThird->setCameraFlag(CameraFlag::USER8);
-        _cameraThird->setPosition3D(Vec3(0, 130, 130));
+        _cameraThird->setPosition3D(Vec3(0.0f, 130.0f, 130.0f));
         _cameraThird->lookAt(Vec3(0,0,0));
         addChild(_cameraThird);
     }
@@ -880,8 +888,8 @@ void CameraCullingDemo::addSpriteCallback(Ref* sender)
         for (int z = -_row; z < _row; z++)
         {
             auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
-            sprite->setPosition3D(Vec3(x * 30, 0, z * 30));
-            sprite->setRotation3D(Vec3(0,180,0));
+            sprite->setPosition3D(Vec3(x * 30.0f, 0.0f, z * 30.0f));
+            sprite->setRotation3D(Vec3(0.0f,180.0f,0.0f));
             _objects.push_back(sprite);
             _layer3D->addChild(sprite);
         }
@@ -909,7 +917,7 @@ void CameraCullingDemo::delSpriteCallback(Ref* sender)
         for (int z = -_row; z < _row; z++)
         {
             auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
-            sprite->setPosition3D(Vec3(x * 30, 0, z * 30));
+            sprite->setPosition3D(Vec3(x * 30.0f, 0.0f, z * 30.0f));
             _objects.push_back(sprite);
             _layer3D->addChild(sprite);
         }
@@ -977,7 +985,7 @@ void CameraCullingDemo::drawCameraFrustum()
 
 ////////////////////////////////////////////////////////////
 // CameraArcBallDemo
-CameraArcBallDemo::CameraArcBallDemo(void)
+CameraArcBallDemo::CameraArcBallDemo()
 : CameraBaseTest()
 , _layer3D(nullptr)
 , _cameraType(CameraType::Free)
@@ -992,7 +1000,7 @@ CameraArcBallDemo::CameraArcBallDemo(void)
 , _sprite3D2(nullptr)
 {
 }
-CameraArcBallDemo::~CameraArcBallDemo(void)
+CameraArcBallDemo::~CameraArcBallDemo()
 {
 }
 
@@ -1005,7 +1013,7 @@ void CameraArcBallDemo::onEnter()
 {
     CameraBaseTest::onEnter();
     _rotationQuat.set(0.0f, 0.0f, 0.0f, 1.0f);
-    schedule(schedule_selector(CameraArcBallDemo::update), 0.0f);
+    schedule(CC_SCHEDULE_SELECTOR(CameraArcBallDemo::update), 0.0f);
     auto s = Director::getInstance()->getWinSize();
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(CameraArcBallDemo::onTouchsMoved, this);
@@ -1031,24 +1039,24 @@ void CameraArcBallDemo::onEnter()
 
     if (_camera == nullptr)
     {
-        _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+        _camera=Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
         _camera->setCameraFlag(CameraFlag::USER1);
-        _camera->setPosition3D(Vec3(0, 10, 50));
-        _camera->lookAt(Vec3(0, 0, 0), Vec3(0, 1, 0));
+        _camera->setPosition3D(Vec3(0.0f, 10.0f, 50.0f));
+        _camera->lookAt(Vec3(0, 0, 0), Vec3(0.0f, 1.0f, 0.0f));
         _camera->retain();
         _layer3D->addChild(_camera);
     }
 
     _sprite3D1 = Sprite3D::create("Sprite3DTest/orc.c3b");
     _sprite3D1->setScale(0.5);
-    _sprite3D1->setRotation3D(Vec3(0,180,0));
+    _sprite3D1->setRotation3D(Vec3(0.0f,180.0f,0.0f));
     _sprite3D1->setPosition3D(Vec3(0,0,0));
     _layer3D->addChild(_sprite3D1);
 
     _sprite3D2 = Sprite3D::create("Sprite3DTest/boss.c3b");
     _sprite3D2->setScale(0.6f);
-    _sprite3D2->setRotation3D(Vec3(-90,0,0));
-    _sprite3D2->setPosition3D(Vec3(20,0,0));
+    _sprite3D2->setRotation3D(Vec3(-90.0f,0.0f,0.0f));
+    _sprite3D2->setPosition3D(Vec3(20.0f,0.0f,0.0f));
     _layer3D->addChild(_sprite3D2);
 
     _drawGrid =DrawNode3D::create();
@@ -1056,15 +1064,15 @@ void CameraArcBallDemo::onEnter()
     //draw x
     for( int j =-20; j<=20 ;j++)
     {
-        _drawGrid->drawLine(Vec3(-100, 0, 5*j),Vec3(100,0,5*j),Color4F(1,0,0,1));
+        _drawGrid->drawLine(Vec3(-100.0f, 0, 5.0f*j),Vec3(100.0f,0,5.0f*j),Color4F(1,0,0,1));
     }
     //draw z
     for( int j =-20; j<=20 ;j++)
     {
-        _drawGrid->drawLine(Vec3(5*j, 0, -100),Vec3(5*j,0,100),Color4F(0,0,1,1));
+        _drawGrid->drawLine(Vec3(5.0f*j, 0, -100.0f),Vec3(5.0f*j,0,100.0f),Color4F(0,0,1,1));
     }
     //draw y
-    _drawGrid->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
+    _drawGrid->drawLine(Vec3(0, 0, 0),Vec3(0,50.0f,0),Color4F(0,1,0,1));
     _layer3D->addChild(_drawGrid);
 
     _layer3D->setCameraMask(2);
@@ -1091,10 +1099,10 @@ void CameraArcBallDemo::onTouchsMoved( const std::vector<Touch*> &touchs, Event 
             Size visibleSize = Director::getInstance()->getVisibleSize();
             Vec2 prelocation = touchs[0]->getPreviousLocationInView();
             Vec2 location = touchs[0]->getLocationInView();
-            location.x = 2.0 * (location.x) / (visibleSize.width) - 1.0f;
-            location.y = 2.0 * (visibleSize.height - location.y) / (visibleSize.height) - 1.0f;
-            prelocation.x = 2.0 * (prelocation.x) / (visibleSize.width) - 1.0f;
-            prelocation.y = 2.0 * (visibleSize.height - prelocation.y) / (visibleSize.height) - 1.0f;
+            location.x = 2.0f * (location.x) / (visibleSize.width) - 1.0f;
+            location.y = 2.0f * (visibleSize.height - location.y) / (visibleSize.height) - 1.0f;
+            prelocation.x = 2.0f * (prelocation.x) / (visibleSize.width) - 1.0f;
+            prelocation.y = 2.0f * (visibleSize.height - prelocation.y) / (visibleSize.height) - 1.0f;
 
             Vec3 axes;
             float angle;
@@ -1129,7 +1137,7 @@ void CameraArcBallDemo::calculateArcBall( cocos2d::Vec3 & axis, float & angle, f
     Vec3::cross(p2, p1, &axis);  //calculate rotation axis
     axis.normalize();
 
-    float t = (p2 - p1).length() / (2.0 * _radius);
+    float t = (p2 - p1).length() / (2.0f * _radius);
     //clamp -1 to 1
     if (t > 1.0) t = 1.0;
     if (t < -1.0) t = -1.0;
@@ -1148,7 +1156,7 @@ float CameraArcBallDemo::projectToSphere( float r, float x, float y )
     }                         
     else                               //on hyperbola
     {
-        t = r / 1.41421356237309504880;
+        t = r / 1.41421356237309504880f;
         z = t*t / d;
     }
     return z;
@@ -1199,17 +1207,14 @@ void CameraArcBallDemo::update(float dt)
 
 ////////////////////////////////////////////////////////////
 // FogTestDemo
-FogTestDemo::FogTestDemo(void)
+FogTestDemo::FogTestDemo()
 : CameraBaseTest()
-, _layer3D(nullptr)
-, _cameraType(CameraType::Free)
-, _camera(nullptr)
-, _shader(nullptr)
-, _state(nullptr)
 {
 }
-FogTestDemo::~FogTestDemo(void)
+FogTestDemo::~FogTestDemo()
 {
+    CC_SAFE_RELEASE_NULL(_programState1);
+    CC_SAFE_RELEASE_NULL(_programState2);
 }
 
 std::string FogTestDemo::title() const
@@ -1220,7 +1225,7 @@ std::string FogTestDemo::title() const
 void FogTestDemo::onEnter()
 {
     CameraBaseTest::onEnter();
-    schedule(schedule_selector(FogTestDemo::update), 0.0f);
+    schedule(CC_SCHEDULE_SELECTOR(FogTestDemo::update), 0.0f);
     Director::getInstance()->setClearColor(Color4F(0.5,0.5,0.5,1));
 
     auto s = Director::getInstance()->getWinSize();
@@ -1251,83 +1256,81 @@ void FogTestDemo::onEnter()
     addChild(layer3D,0);
     _layer3D=layer3D;
 
-    _shader =GLProgram::createWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag");
-    _state = GLProgramState::create(_shader);
+    CC_SAFE_RELEASE_NULL(_programState1);
+    CC_SAFE_RELEASE_NULL(_programState2);
 
+    auto vertexSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.vert");
+    auto fragSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.frag");
+    auto program = backend::Device::getInstance()->newProgram(vertexSource, fragSource);
+    _programState1 = new backend::ProgramState(program);
+    _programState2 = new backend::ProgramState(program);
+    CC_SAFE_RELEASE(program);
+    
     _sprite3D1 = Sprite3D::create("Sprite3DTest/teapot.c3b");
     _sprite3D2 = Sprite3D::create("Sprite3DTest/teapot.c3b");
 
-    _sprite3D1->setGLProgramState(_state);
-    _sprite3D2->setGLProgramState(_state);
-    //pass mesh's attribute to shader
-    long offset = 0; 
-    auto attributeCount = _sprite3D1->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount; i++) {
-        auto meshattribute = _sprite3D1->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size, 
-            meshattribute.type,
-            GL_FALSE,
-            _sprite3D1->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-        offset += meshattribute.attribSizeBytes;
-    }
+    _sprite3D1->setProgramState(_programState1);
+    _sprite3D2->setProgramState(_programState2);
 
-    long offset1 = 0; 
-    auto attributeCount1 = _sprite3D2->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount1; i++) {
-        auto meshattribute = _sprite3D2->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size, 
-            meshattribute.type,
-            GL_FALSE,
-            _sprite3D2->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset1);
-        offset1 += meshattribute.attribSizeBytes;
-    }
+    auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
+    float   fogStart    = 10;
+    float   fogEnd      = 60;
+    int     fogEquation = 0;
 
-    _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-    _state->setUniformFloat("u_fogStart",10);
-    _state->setUniformFloat("u_fogEnd",60);
-    _state->setUniformInt("u_fogEquation" ,0);
+    SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+    SET_UNIFORM("u_fogStart",    &fogStart,      sizeof(fogStart));
+    SET_UNIFORM("u_fogEnd",      &fogEnd,        sizeof(fogEnd));
+    SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
 
     _layer3D->addChild(_sprite3D1);
     _sprite3D1->setPosition3D( Vec3( 0, 0,0 ) );
     _sprite3D1->setScale(2.0f);
-    _sprite3D1->setRotation3D(Vec3(-90,180,0));
+    _sprite3D1->setRotation3D(Vec3(-90.0f,180.0f,0.0f));
 
     _layer3D->addChild(_sprite3D2);
-    _sprite3D2->setPosition3D( Vec3( 0, 0,-20 ) );
+    _sprite3D2->setPosition3D( Vec3( 0.0f, 0.0f,-20.0f) );
     _sprite3D2->setScale(2.0f);
-    _sprite3D2->setRotation3D(Vec3(-90,180,0));
+    _sprite3D2->setRotation3D(Vec3(-90.0f,180.0f,0.0f));
 
     if (_camera == nullptr)
     {
-        _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+        _camera=Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
         _camera->setCameraFlag(CameraFlag::USER1);
-        _camera->setPosition3D(Vec3(0, 30, 40));
-        _camera->lookAt(Vec3(0,0,0), Vec3(0, 1, 0));
+        _camera->setPosition3D(Vec3(0.0f, 30.0f, 40.0f));
+        _camera->lookAt(Vec3(0,0,0), Vec3(0.0f, 1.0f, 0.0f));
 
         _layer3D->addChild(_camera);
     }
     _layer3D->setCameraMask(2);
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
                                                                 Director::getInstance()->setClearColor(Color4F(0.5,0.5,0.5,1));
-                                                                auto glProgram = _state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
+                                                                CC_SAFE_RELEASE_NULL(_programState1);
+                                                                CC_SAFE_RELEASE_NULL(_programState2);
+
+                                                                auto vertexSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.vert");
+                                                                auto fragSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.frag");
+                                                                auto program = backend::Device::getInstance()->newProgram(vertexSource, fragSource);
+                                                                _programState1 = new backend::ProgramState(program);
+                                                                _programState2 = new backend::ProgramState(program);
+
+                                                                _sprite3D1->setProgramState(_programState1);
+                                                                _sprite3D2->setProgramState(_programState2);
+                                                                CC_SAFE_RELEASE(program);
                                                                 
-                                                                _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-                                                                _state->setUniformFloat("u_fogStart",10);
-                                                                _state->setUniformFloat("u_fogEnd",60);
-                                                                _state->setUniformInt("u_fogEquation" ,0);
+                                                                auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
+                                                                float   fogStart    = 10;
+                                                                float   fogEnd      = 60;
+                                                                int     fogEquation = 0;
+
+                                                                SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+                                                                SET_UNIFORM("u_fogStart",    &fogStart,      sizeof(fogStart));
+                                                                SET_UNIFORM("u_fogEnd",      &fogEnd,        sizeof(fogEnd));
+                                                                SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
                                                             }
                                                             );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
@@ -1339,31 +1342,36 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
 {
     if(type == 0)
     {
-        _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogStart",10);
-        _state->setUniformFloat("u_fogEnd",60);
-        _state->setUniformInt("u_fogEquation" ,0);
+        auto fogColor   = Vec4(0.5, 0.5, 0.5, 1.0);
+        float fogStart  = 10;
+        float fogEnd    = 60;
+        int fogEquation = 0;
 
-        _sprite3D1->setGLProgramState(_state);
-        _sprite3D2->setGLProgramState(_state);
+        SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+        SET_UNIFORM("u_fogStart",    &fogStart,      sizeof(fogStart));
+        SET_UNIFORM("u_fogEnd",      &fogEnd,        sizeof(fogEnd));
+        SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
+
     }
     else if(type == 1)
     {
-        _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03f);
-        _state->setUniformInt("u_fogEquation" ,1);
+        auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
+        float   fogDensity  = 0.03f;
+        int     fogEquation = 1;
 
-        _sprite3D1->setGLProgramState(_state);
-        _sprite3D2->setGLProgramState(_state);
+        SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+        SET_UNIFORM("u_fogDensity",  &fogDensity,    sizeof(fogDensity));
+        SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
     }
     else if(type == 2)
     {
-        _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03f);
-        _state->setUniformInt("u_fogEquation" ,2);
+        auto    fogColor = Vec4(0.5, 0.5, 0.5, 1.0);
+        float   fogDensity = 0.03f;
+        int     fogEquation = 2;
 
-        _sprite3D1->setGLProgramState(_state);
-        _sprite3D2->setGLProgramState(_state);
+        SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+        SET_UNIFORM("u_fogDensity",  &fogDensity,    sizeof(fogDensity));
+        SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
     }
 }
 
@@ -1376,7 +1384,7 @@ void FogTestDemo::onExit()
         _camera = nullptr;
     }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -1410,68 +1418,150 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
     }
 }
 
-CameraFrameBufferTest::CameraFrameBufferTest()
+//CameraFrameBufferTest::CameraFrameBufferTest()
+//{
+//    
+//}
+//
+//CameraFrameBufferTest::~CameraFrameBufferTest()
+//{
+//    
+//}
+//
+//std::string CameraFrameBufferTest::title() const
+//{
+//    return "Camera FrameBuffer Object Test";
+//}
+//
+//void CameraFrameBufferTest::onEnter()
+//{
+//    auto sizeInpixels = Director::getInstance()->getWinSizeInPixels();
+//    auto size = Director::getInstance()->getWinSize();
+//    auto fboSize = Size(sizeInpixels.width * 1, sizeInpixels.height * 1.5);
+//    auto fbo = experimental::FrameBuffer::create(1, fboSize.width, fboSize.height);
+//    
+//    CameraBaseTest::onEnter();
+//    //auto sprite = Sprite::createWithTexture(fbo);
+//    //sprite->setPosition(Vec2(100,100));
+//    //std::string filename = "Sprite3DTest/girl.c3b";
+//    //auto sprite = Sprite3D::create(filename);
+//    //sprite->setScale(1.0);
+//    //auto animation = Animation3D::create(filename);
+//    //if (animation)
+//    //{
+//    //    auto animate = Animate3D::create(animation);
+//        
+//    //    sprite->runAction(RepeatForever::create(animate));
+//    //}
+//    //sprite->setPosition(Vec2(100,100));
+//    auto rt = experimental::RenderTarget::create(fboSize.width, fboSize.height);
+//    auto rtDS = experimental::RenderTargetDepthStencil::create(fboSize.width, fboSize.height);
+//    fbo->attachRenderTarget(rt);
+//    fbo->attachDepthStencilTarget(rtDS);
+//    auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
+//    sprite->setScale(0.3f);
+//    sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
+//    sprite->setPosition(size.width/2, size.height/2);
+//    addChild(sprite);
+//    
+//    auto sprite2 = Sprite::create(s_pathGrossini);
+//    sprite2->setPosition(Vec2(size.width/5,size.height/5));
+//    addChild(sprite2);
+//    sprite2->setCameraMask((unsigned short)CameraFlag::USER1);
+//    auto move = MoveBy::create(1.0, Vec2(100,100));
+//    sprite2->runAction(
+//                       RepeatForever::create(
+//                                             Sequence::createWithTwoActions(
+//                                                                            move, move->reverse())
+//                                             )
+//                       );
+//    
+//    auto camera = Camera::create();
+//    camera->setCameraFlag(CameraFlag::USER1);
+//    camera->setDepth(-1);
+//    camera->setFrameBufferObject(fbo);
+//    fbo->setClearColor(Color4F(1,1,1,1));
+//    addChild(camera);
+//}
+
+BackgroundColorBrushTest::BackgroundColorBrushTest()
 {
-    
 }
 
-CameraFrameBufferTest::~CameraFrameBufferTest()
+BackgroundColorBrushTest::~BackgroundColorBrushTest()
 {
-    
 }
 
-std::string CameraFrameBufferTest::title() const
+std::string BackgroundColorBrushTest::title() const
 {
-    return "Camera FrameBuffer Object Test";
+    return "CameraBackgroundColorBrush Test";
 }
 
-void CameraFrameBufferTest::onEnter()
+std::string BackgroundColorBrushTest::subtitle() const
 {
-    auto sizeInpixels = Director::getInstance()->getWinSizeInPixels();
-    auto size = Director::getInstance()->getWinSize();
-    auto fboSize = Size(sizeInpixels.width * 1, sizeInpixels.height * 1.5);
-    auto fbo = experimental::FrameBuffer::create(1, fboSize.width, fboSize.height);
-    
+    return "right side object colored by CameraBG";
+}
+
+void BackgroundColorBrushTest::onEnter()
+{
     CameraBaseTest::onEnter();
-    //auto sprite = Sprite::createWithTexture(fbo);
-    //sprite->setPosition(Vec2(100,100));
-    //std::string filename = "Sprite3DTest/girl.c3b";
-    //auto sprite = Sprite3D::create(filename);
-    //sprite->setScale(1.0);
-    //auto animation = Animation3D::create(filename);
-    //if (animation)
-    //{
-    //    auto animate = Animate3D::create(animation);
+    
+    auto s = Director::getInstance()->getWinSize();
+    
+    {
+        // 1st Camera
+        auto camera = Camera::createPerspective(60.0f, (float)s.width/s.height, 1.0f, 1000.0f);
+        camera->setPosition3D(Vec3(0.0f, 0.0f, 200.0f));
+        camera->lookAt(Vec3::ZERO);
+        camera->setDepth(-2);
+        camera->setCameraFlag(CameraFlag::USER1);
+        addChild(camera);
         
-    //    sprite->runAction(RepeatForever::create(animate));
-    //}
-    //sprite->setPosition(Vec2(100,100));
-    auto rt = experimental::RenderTarget::create(fboSize.width, fboSize.height);
-    auto rtDS = experimental::RenderTargetDepthStencil::create(fboSize.width, fboSize.height);
-    fbo->attachRenderTarget(rt);
-    fbo->attachDepthStencilTarget(rtDS);
-    auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
-    sprite->setScale(0.3f);
-    sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
-    sprite->setPosition(size.width/2, size.height/2);
-    addChild(sprite);
+        // 3D model
+        auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
+        model->setScale(4);
+        model->setPosition3D(Vec3(20.0f, 0.0f, 0.0f));
+        model->setTexture("Sprite3DTest/boss.png");
+        model->setCameraMask(static_cast<unsigned short>(CameraFlag::USER1));
+        addChild(model);
+        model->runAction(RepeatForever::create(RotateBy::create(1.f, Vec3(10.0f, 20.0f, 30.0f))));
+    }
     
-    auto sprite2 = Sprite::create(s_pathGrossini);
-    sprite2->setPosition(Vec2(size.width/5,size.height/5));
-    addChild(sprite2);
-    sprite2->setCameraMask((unsigned short)CameraFlag::USER1);
-    auto move = MoveBy::create(1.0, Vec2(100,100));
-    sprite2->runAction(
-                       RepeatForever::create(
-                                             Sequence::createWithTwoActions(
-                                                                            move, move->reverse())
-                                             )
-                       );
-    
-    auto camera = Camera::create();
-    camera->setCameraFlag(CameraFlag::USER1);
-    camera->setDepth(-1);
-    camera->setFrameBufferObject(fbo);
-    fbo->setClearColor(Color4F(1,1,1,1));
-    addChild(camera);
+    {
+        auto base = Node::create();
+        base->setContentSize(s);
+        base->setCameraMask(static_cast<unsigned short>(CameraFlag::USER2));
+        addChild(base);
+        
+        // 2nd Camera
+        auto camera = Camera::createPerspective(60, (float)s.width/s.height, 1, 1000);
+        auto colorBrush = CameraBackgroundBrush::createColorBrush(Color4F(.1f, .1f, 1.f, .5f), 1.f);
+        camera->setBackgroundBrush(colorBrush);
+        camera->setPosition3D(Vec3(0.0f, 0.0f, 200.0f));
+        camera->lookAt(Vec3::ZERO);
+        camera->setDepth(-1);
+        camera->setCameraFlag(CameraFlag::USER2);
+        base->addChild(camera);
+        
+        // for alpha setting
+        auto slider = ui::Slider::create();
+        slider->loadBarTexture("cocosui/sliderTrack.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+        slider->setPosition(Vec2(s.width/2, s.height/4));
+        slider->setPercent(50);
+        slider->addEventListener([slider, colorBrush](Ref*, ui::Slider::EventType){
+            colorBrush->setColor(Color4F(.1f, .1f, 1.f, (float)slider->getPercent()/100.f));
+        });
+        addChild(slider);
+        
+        // 3D model for 2nd camera
+        auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
+        model->setScale(4);
+        model->setPosition3D(Vec3(-20.0f, 0.0f, 0.0f));
+        model->setTexture("Sprite3DTest/boss.png");
+        model->setCameraMask(static_cast<unsigned short>(CameraFlag::USER2));
+        base->addChild(model);
+        model->runAction(RepeatForever::create(RotateBy::create(1.f, Vec3(10.0f, 20.0f, 30.0f))));
+    }
 }

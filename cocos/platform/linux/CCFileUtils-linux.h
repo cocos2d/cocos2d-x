@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Laschweinski
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -22,11 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_FILEUTILS_LINUX_H__
-#define __CC_FILEUTILS_LINUX_H__
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+#pragma once
 
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
@@ -61,7 +58,3 @@ private:
 /// @}
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-
-#endif    // __CC_FILEUTILS_LINUX_H__

@@ -1,4 +1,0 @@
-include ':libcocos2dx'
-project(':libcocos2dx').projectDir = new File(settingsDir, '../../../../cocos/platform/android/libcocos2dx')
-include ':LuaEmptyTest'
-project(':LuaEmptyTest').projectDir = new File(settingsDir, 'app')

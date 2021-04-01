@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -1075,7 +1076,7 @@ bool ParticleSnow::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height + 10);
-        setPosVar(Vec2(winSize.width/2, 0));
+        setPosVar(Vec2(winSize.width/2, 0.0f));
 
         // angle
         _angle = -90;
@@ -1187,7 +1188,7 @@ bool ParticleRain::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height);
-        setPosVar(Vec2(winSize.width/2, 0));
+        setPosVar(Vec2(winSize.width/2, 0.0f));
 
         // life of particles
         _life = 4.5f;

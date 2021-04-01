@@ -2,7 +2,8 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -29,13 +30,12 @@ THE SOFTWARE.
 #include "base/ccUTF8.h"
 
 NS_CC_BEGIN
-namespace experimental {
 
 // implementation FastTMXTiledMap
 
-TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
+FastTMXTiledMap * FastTMXTiledMap::create(const std::string& tmxFile)
 {
-    TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
+    FastTMXTiledMap *ret = new (std::nothrow) FastTMXTiledMap();
     if (ret->initWithTMXFile(tmxFile))
     {
         ret->autorelease();
@@ -45,9 +45,9 @@ TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
     return nullptr;
 }
 
-TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std::string& resourcePath)
+FastTMXTiledMap* FastTMXTiledMap::createWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
-    TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
+    FastTMXTiledMap *ret = new (std::nothrow) FastTMXTiledMap();
     if (ret->initWithXML(tmxString, resourcePath))
     {
         ret->autorelease();
@@ -57,7 +57,7 @@ TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std:
     return nullptr;
 }
 
-bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
+bool FastTMXTiledMap::initWithTMXFile(const std::string& tmxFile)
 {
     CCASSERT(tmxFile.size()>0, "FastTMXTiledMap: tmx file should not be empty");
     
@@ -75,7 +75,7 @@ bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
     return true;
 }
 
-bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& resourcePath)
+bool FastTMXTiledMap::initWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
     setContentSize(Size::ZERO);
 
@@ -87,24 +87,24 @@ bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& r
     return true;
 }
 
-TMXTiledMap::TMXTiledMap()
+FastTMXTiledMap::FastTMXTiledMap()
     :_mapSize(Size::ZERO)
     ,_tileSize(Size::ZERO)        
 {
 }
 
-TMXTiledMap::~TMXTiledMap()
+FastTMXTiledMap::~FastTMXTiledMap()
 {
 }
 
 // private
-TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
+FastTMXLayer * FastTMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
     TMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
     if (tileset == nullptr)
         return nullptr;
     
-    TMXLayer *layer = TMXLayer::create(tileset, layerInfo, mapInfo);
+    FastTMXLayer *layer = FastTMXLayer::create(tileset, layerInfo, mapInfo);
 
     // tell the layerinfo to release the ownership of the tiles map.
     layerInfo->_ownTiles = false;
@@ -113,7 +113,7 @@ TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
     return layer;
 }
 
-TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
+TMXTilesetInfo * FastTMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
     Size size = layerInfo->_layerSize;
     auto& tilesets = mapInfo->getTilesets();
@@ -157,7 +157,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
     return nullptr;
 }
 
-void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
+void FastTMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 {
     _mapSize = mapInfo->getMapSize();
     _tileSize = mapInfo->getTileSize();
@@ -175,7 +175,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
     for(const auto &layerInfo : layers) {
         if (layerInfo->_visible)
         {
-            TMXLayer *child = parseLayer(layerInfo, mapInfo);
+            FastTMXLayer *child = parseLayer(layerInfo, mapInfo);
             if (child == nullptr) {
                 idx++;
                 continue;
@@ -195,13 +195,13 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 }
 
 // public
-TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
+FastTMXLayer * FastTMXTiledMap::getLayer(const std::string& layerName) const
 {
     CCASSERT(layerName.size() > 0, "Invalid layer name!");
     
     for (auto& child : _children)
     {
-        TMXLayer* layer = dynamic_cast<TMXLayer*>(child);
+        FastTMXLayer* layer = dynamic_cast<FastTMXLayer*>(child);
         if(layer)
         {
             if(layerName.compare( layer->getLayerName()) == 0)
@@ -215,7 +215,7 @@ TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
     return nullptr;
 }
 
-TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
+TMXObjectGroup * FastTMXTiledMap::getObjectGroup(const std::string& groupName) const
 {
     CCASSERT(groupName.size() > 0, "Invalid group name!");
 
@@ -234,28 +234,27 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
     return nullptr;
 }
 
-Value TMXTiledMap::getProperty(const std::string& propertyName) const
+Value FastTMXTiledMap::getProperty(const std::string& propertyName) const
 {
-    if (_properties.find(propertyName) != _properties.end())
-        return _properties.at(propertyName);
+    auto propsItr = _properties.find(propertyName);
+    if (propsItr != _properties.end())
+        return propsItr->second;
     
     return Value();
 }
 
-Value TMXTiledMap::getPropertiesForGID(int GID) const
+Value FastTMXTiledMap::getPropertiesForGID(int GID) const
 {
-    if (_tileProperties.find(GID) != _tileProperties.end())
-        return _tileProperties.at(GID);
+    auto propsItr = _tileProperties.find(GID);
+    if (propsItr != _tileProperties.end())
+        return propsItr->second;
     
     return Value();
 }
 
-std::string TMXTiledMap::getDescription() const
+std::string FastTMXTiledMap::getDescription() const
 {
     return StringUtils::format("<FastTMXTiledMap | Tag = %d, Layers = %d", _tag, static_cast<int>(_children.size()));
 }
 
-} //end of namespace experimental
-
 NS_CC_END
-

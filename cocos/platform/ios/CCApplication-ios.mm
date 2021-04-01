@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -22,15 +23,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #import "CCApplication.h"
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #import <UIKit/UIKit.h>
 
 #import "math/CCGeometry.h"
 #import "platform/ios/CCDirectorCaller-ios.h"
+#import "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -62,11 +61,6 @@ void Application::setAnimationInterval(float interval)
     [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
 }
 
-void Application::setAnimationInterval(float interval, SetIntervalReason reason)
-{
-    setAnimationInterval(interval);
-}
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,12 +69,6 @@ Application* Application::getInstance()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
-}
-
-// @deprecated Use getInstance() instead
-Application* Application::sharedApplication()
-{
-    return Application::getInstance();
 }
 
 const char * Application::getCurrentLanguageCode()
@@ -109,32 +97,13 @@ LanguageType Application::getCurrentLanguage()
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
 
-    if ([languageCode isEqualToString:@"zh"]) return LanguageType::CHINESE;
-    if ([languageCode isEqualToString:@"en"]) return LanguageType::ENGLISH;
-    if ([languageCode isEqualToString:@"fr"]) return LanguageType::FRENCH;
-    if ([languageCode isEqualToString:@"it"]) return LanguageType::ITALIAN;
-    if ([languageCode isEqualToString:@"de"]) return LanguageType::GERMAN;
-    if ([languageCode isEqualToString:@"es"]) return LanguageType::SPANISH;
-    if ([languageCode isEqualToString:@"nl"]) return LanguageType::DUTCH;
-    if ([languageCode isEqualToString:@"ru"]) return LanguageType::RUSSIAN;
-    if ([languageCode isEqualToString:@"ko"]) return LanguageType::KOREAN;
-    if ([languageCode isEqualToString:@"ja"]) return LanguageType::JAPANESE;
-    if ([languageCode isEqualToString:@"hu"]) return LanguageType::HUNGARIAN;
-    if ([languageCode isEqualToString:@"pt"]) return LanguageType::PORTUGUESE;
-    if ([languageCode isEqualToString:@"ar"]) return LanguageType::ARABIC;
-    if ([languageCode isEqualToString:@"nb"]) return LanguageType::NORWEGIAN;
-    if ([languageCode isEqualToString:@"pl"]) return LanguageType::POLISH;
-    if ([languageCode isEqualToString:@"tr"]) return LanguageType::TURKISH;
-    if ([languageCode isEqualToString:@"uk"]) return LanguageType::UKRAINIAN;
-    if ([languageCode isEqualToString:@"ro"]) return LanguageType::ROMANIAN;
-    if ([languageCode isEqualToString:@"bg"]) return LanguageType::BULGARIAN;
-    return LanguageType::ENGLISH;
+    return utils::getLanguageTypeByISO2([languageCode UTF8String]);
 
 }
 
 Application::Platform Application::getTargetPlatform()
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) // idiom for iOS <= 3.2, otherwise: [UIDevice userInterfaceIdiom] is faster.
+    if ([UIDevice.currentDevice userInterfaceIdiom] == UIUserInterfaceIdiomPad) // idiom for iOS <= 3.2, otherwise: [UIDevice userInterfaceIdiom] is faster.
     {
         return Platform::OS_IPAD;
     }
@@ -156,7 +125,16 @@ bool Application::openURL(const std::string &url)
 {
     NSString* msg = [NSString stringWithCString:url.c_str() encoding:NSUTF8StringEncoding];
     NSURL* nsUrl = [NSURL URLWithString:msg];
-    return [[UIApplication sharedApplication] openURL:nsUrl];
+    
+    id application = [UIApplication sharedApplication];
+    if ([application respondsToSelector:@selector(openURL:options:completionHandler:)] )
+    {
+        [application openURL:nsUrl options:@{} completionHandler:nil];
+    }
+    else
+    {
+        return [application openURL:nsUrl];
+    }
 }
 
 void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
@@ -164,5 +142,3 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 }
 
 NS_CC_END
-
-#endif // CC_PLATFORM_IOS

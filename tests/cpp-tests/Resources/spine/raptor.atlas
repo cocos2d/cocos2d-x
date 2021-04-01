@@ -1,278 +1,271 @@
 
 raptor.png
-size: 1024,1024
+size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-back_arm
-  rotate: true
-  xy: 140, 191
-  size: 46, 29
-  orig: 46, 29
+back-arm
+  rotate: false
+  xy: 895, 295
+  size: 46, 25
+  orig: 46, 25
   offset: 0, 0
   index: -1
-back_bracer
+back-bracer
   rotate: true
-  xy: 167, 317
+  xy: 992, 216
   size: 39, 28
   orig: 39, 28
   offset: 0, 0
   index: -1
-back_hand
+back-hand
   rotate: false
-  xy: 167, 358
+  xy: 594, 58
   size: 36, 34
   orig: 36, 34
   offset: 0, 0
   index: -1
-back_knee
-  rotate: false
-  xy: 299, 478
+back-knee
+  rotate: true
+  xy: 729, 86
   size: 49, 67
   orig: 49, 67
   offset: 0, 0
   index: -1
-back_thigh
-  rotate: true
-  xy: 167, 437
+back-thigh
+  rotate: false
+  xy: 379, 2
   size: 39, 24
   orig: 39, 24
   offset: 0, 0
   index: -1
-eyes_closed
+eyes-open
   rotate: true
-  xy: 2, 2
+  xy: 902, 194
   size: 47, 45
   orig: 47, 45
   offset: 0, 0
   index: -1
-eyes_open
-  rotate: true
-  xy: 49, 2
-  size: 47, 45
-  orig: 47, 45
-  offset: 0, 0
-  index: -1
-eyes_surprised
-  rotate: true
-  xy: 96, 2
-  size: 47, 45
-  orig: 47, 45
-  offset: 0, 0
-  index: -1
-front_arm
+front-arm
   rotate: false
-  xy: 419, 544
-  size: 48, 30
-  orig: 48, 30
+  xy: 945, 306
+  size: 48, 26
+  orig: 48, 26
   offset: 0, 0
   index: -1
-front_bracer
+front-bracer
   rotate: false
-  xy: 880, 695
+  xy: 949, 197
   size: 41, 29
   orig: 41, 29
   offset: 0, 0
   index: -1
-front_hand
-  rotate: true
-  xy: 167, 394
+front-hand
+  rotate: false
+  xy: 949, 266
   size: 41, 38
   orig: 41, 38
   offset: 0, 0
   index: -1
-front_open_hand
+front-open-hand
   rotate: false
-  xy: 880, 726
+  xy: 875, 148
   size: 43, 44
   orig: 43, 44
   offset: 0, 0
   index: -1
-front_thigh
-  rotate: false
-  xy: 360, 545
+front-thigh
+  rotate: true
+  xy: 793, 171
   size: 57, 29
   orig: 57, 29
   offset: 0, 0
   index: -1
 gun
-  rotate: false
-  xy: 785, 774
+  rotate: true
+  xy: 379, 28
   size: 107, 103
   orig: 107, 103
   offset: 0, 0
   index: -1
-gun_nohand
+gun-nohand
   rotate: false
-  xy: 614, 703
+  xy: 487, 87
   size: 105, 102
   orig: 105, 102
   offset: 0, 0
   index: -1
 head
   rotate: false
-  xy: 2, 137
+  xy: 807, 361
   size: 136, 149
   orig: 136, 149
   offset: 0, 0
   index: -1
-lower_leg
-  rotate: true
-  xy: 780, 699
+lower-leg
+  rotate: false
+  xy: 827, 195
   size: 73, 98
   orig: 73, 98
   offset: 0, 0
   index: -1
-mouth_grind
-  rotate: false
-  xy: 469, 544
+mouth-grind
+  rotate: true
+  xy: 920, 145
   size: 47, 30
   orig: 47, 30
   offset: 0, 0
   index: -1
-mouth_oooo
+mouth-smile
   rotate: true
-  xy: 894, 772
-  size: 105, 30
-  orig: 105, 30
-  offset: 0, 0
-  index: -1
-mouth_smile
-  rotate: true
-  xy: 140, 239
+  xy: 992, 257
   size: 47, 30
   orig: 47, 30
   offset: 0, 0
   index: -1
 neck
-  rotate: true
-  xy: 538, 577
+  rotate: false
+  xy: 359, 114
   size: 18, 21
   orig: 18, 21
   offset: 0, 0
   index: -1
-raptor_arm_back
+raptor-back-arm
   rotate: false
-  xy: 940, 936
+  xy: 653, 142
   size: 82, 86
   orig: 82, 86
   offset: 0, 0
   index: -1
-raptor_body
+raptor-body
   rotate: false
-  xy: 2, 737
-  size: 610, 285
-  orig: 610, 285
+  xy: 2, 277
+  size: 632, 233
+  orig: 632, 233
   offset: 0, 0
   index: -1
-raptor_front_arm
+raptor-front-arm
   rotate: true
-  xy: 195, 464
+  xy: 484, 4
   size: 81, 102
   orig: 81, 102
   offset: 0, 0
   index: -1
-raptor_front_leg
+raptor-front-leg
   rotate: false
-  xy: 2, 478
+  xy: 2, 18
   size: 191, 257
   orig: 191, 257
   offset: 0, 0
   index: -1
-raptor_hindleg_back
+raptor-hindleg-back
   rotate: false
-  xy: 614, 807
+  xy: 636, 295
   size: 169, 215
   orig: 169, 215
   offset: 0, 0
   index: -1
-raptor_horn
+raptor-horn
   rotate: false
-  xy: 360, 655
+  xy: 195, 22
   size: 182, 80
   orig: 182, 80
   offset: 0, 0
   index: -1
-raptor_horn_back
-  rotate: false
-  xy: 360, 576
+raptor-horn-back
+  rotate: true
+  xy: 945, 334
   size: 176, 77
   orig: 176, 77
   offset: 0, 0
   index: -1
-raptor_jaw
+raptor-jaw
   rotate: false
-  xy: 785, 879
-  size: 153, 143
-  orig: 153, 143
+  xy: 359, 137
+  size: 126, 138
+  orig: 126, 138
   offset: 0, 0
   index: -1
-raptor_saddle_noshadow
-  rotate: false
-  xy: 2, 288
-  size: 163, 188
-  orig: 163, 188
-  offset: 0, 0
-  index: -1
-raptor_saddle_strap_front
-  rotate: false
-  xy: 721, 710
-  size: 57, 95
-  orig: 57, 95
-  offset: 0, 0
-  index: -1
-raptor_saddle_strap_rear
+raptor-jaw-tooth
   rotate: true
-  xy: 940, 880
+  xy: 895, 322
+  size: 37, 48
+  orig: 37, 48
+  offset: 0, 0
+  index: -1
+raptor-mouth-inside
+  rotate: true
+  xy: 949, 228
+  size: 36, 41
+  orig: 36, 41
+  offset: 0, 0
+  index: -1
+raptor-saddle-strap-back
+  rotate: true
+  xy: 653, 86
   size: 54, 74
   orig: 54, 74
   offset: 0, 0
   index: -1
-raptor_saddle_w_shadow
+raptor-saddle-strap-front
   rotate: false
-  xy: 195, 547
-  size: 163, 188
-  orig: 163, 188
+  xy: 594, 94
+  size: 57, 95
+  orig: 57, 95
   offset: 0, 0
   index: -1
-raptor_tongue
-  rotate: true
-  xy: 544, 649
+raptor-saddle-w-shadow
+  rotate: false
+  xy: 195, 104
+  size: 162, 171
+  orig: 162, 171
+  offset: 0, 0
+  index: -1
+raptor-tail-shadow
+  rotate: false
+  xy: 636, 230
+  size: 189, 63
+  orig: 189, 63
+  offset: 0, 0
+  index: -1
+raptor-tongue
+  rotate: false
+  xy: 807, 295
   size: 86, 64
   orig: 86, 64
   offset: 0, 0
   index: -1
-stirrup_back
+stirrup-back
   rotate: true
-  xy: 140, 145
+  xy: 952, 151
   size: 44, 35
   orig: 44, 35
   offset: 0, 0
   index: -1
-stirrup_front
+stirrup-front
   rotate: false
-  xy: 538, 597
+  xy: 902, 243
   size: 45, 50
   orig: 45, 50
   offset: 0, 0
   index: -1
-stirrup_strap
+stirrup-strap
   rotate: false
-  xy: 350, 497
+  xy: 824, 147
   size: 49, 46
   orig: 49, 46
   offset: 0, 0
   index: -1
 torso
-  rotate: true
-  xy: 610, 647
+  rotate: false
+  xy: 737, 137
   size: 54, 91
   orig: 54, 91
   offset: 0, 0
   index: -1
 visor
   rotate: false
-  xy: 2, 51
+  xy: 487, 191
   size: 131, 84
   orig: 131, 84
   offset: 0, 0

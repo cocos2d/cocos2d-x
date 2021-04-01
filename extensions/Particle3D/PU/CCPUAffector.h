@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -81,12 +82,12 @@ public:
 
     /** Todo
     */
-    const AffectSpecialisation& getAffectSpecialisation(void) const {return _affectSpecialisation;};
+    const AffectSpecialisation& getAffectSpecialisation() const {return _affectSpecialisation;};
     void setAffectSpecialisation(const AffectSpecialisation& affectSpecialisation) {_affectSpecialisation = affectSpecialisation;};
 
     /** Todo
     */
-    const std::string& getAffectorType(void) const {return _affectorType;};
+    const std::string& getAffectorType() const {return _affectorType;};
     void setAffectorType(const std::string& affectorType) {_affectorType = affectorType;};
 
     /** Add a ParticleEmitter name that excludes Particles emitted by this ParticleEmitter from being
@@ -100,7 +101,7 @@ public:
 
     /** Todo
     */
-    const std::string& getName(void) const {return _name;};
+    const std::string& getName() const {return _name;};
     void setName(const std::string& name) {_name = name;};
 
     virtual void copyAttributesTo (PUAffector* affector);

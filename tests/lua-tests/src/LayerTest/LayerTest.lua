@@ -311,7 +311,7 @@ local function LayerTest1()
     local s = cc.Director:getInstance():getWinSize()
     local  layer = cc.LayerColor:create( cc.c4b(0xFF, 0x00, 0x00, 0x80), 200, 200)
 
-    layer:ignoreAnchorPointForPosition(false)
+    layer:setIgnoreAnchorPointForPosition(false)
     layer:setPosition( cc.p(s.width/2, s.height/2) )
     ret:addChild(layer, 1, kTagLayer)
 
@@ -356,12 +356,12 @@ local function LayerTest2()
     local s = cc.Director:getInstance():getWinSize()
     local  layer1 = cc.LayerColor:create( cc.c4b(255, 255, 0, 80), 100, 300)
     layer1:setPosition(cc.p(s.width/3, s.height/2))
-    layer1:ignoreAnchorPointForPosition(false)
+    layer1:setIgnoreAnchorPointForPosition(false)
     ret:addChild(layer1, 1)
 
     local  layer2 = cc.LayerColor:create( cc.c4b(0, 0, 255, 255), 100, 300)
     layer2:setPosition(cc.p((s.width/3)*2, s.height/2))
-    layer2:ignoreAnchorPointForPosition(false)
+    layer2:setIgnoreAnchorPointForPosition(false)
     ret:addChild(layer2, 1)
 
     local  actionTint = cc.TintBy:create(2, -255, -127, 0)
@@ -407,11 +407,11 @@ local function LayerTestBlend()
         local dst = 0
 
         if  blend  then
-            src = gl.SRC_ALPHA 
-            dst = gl.ONE_MINUS_SRC_ALPHA 
+            src = ccb.BlendFactor.SRC_ALPHA 
+            dst = ccb.BlendFactor.ONE_MINUS_SRC_ALPHA 
         else
-            src = gl.ONE_MINUS_DST_COLOR
-            dst = gl.ZERO
+            src = ccb.BlendFactor.ONE_MINUS_DST_COLOR
+            dst = ccb.BlendFactor.ZERO
         end
 
         layer:setBlendFunc(cc.blendFunc(src, dst))
@@ -513,7 +513,7 @@ local function LayerIgnoreAnchorPointPos()
     local function onToggle(pObject)
         local  pLayer = ret:getChildByTag(kLayerIgnoreAnchorPoint)
         local ignore = pLayer:isIgnoreAnchorPointForPosition()
-        pLayer:ignoreAnchorPointForPosition(not ignore)
+        pLayer:setIgnoreAnchorPointForPosition(not ignore)
     end
 
     local item = cc.MenuItemFont:create("Toggle ignore anchor point")
@@ -552,7 +552,7 @@ local function LayerIgnoreAnchorPointRot()
     local function onToggle(pObject)
         local  pLayer = ret:getChildByTag(kLayerIgnoreAnchorPoint)
         local ignore = pLayer:isIgnoreAnchorPointForPosition()
-        pLayer:ignoreAnchorPointForPosition(not ignore)
+        pLayer:setIgnoreAnchorPointForPosition(not ignore)
     end
 
     local item = cc.MenuItemFont:create("Toggle ignore anchor point")
@@ -592,7 +592,7 @@ local function LayerIgnoreAnchorPointScale()
     local function onToggle(pObject)
         local  pLayer = ret:getChildByTag(kLayerIgnoreAnchorPoint)
         local ignore = pLayer:isIgnoreAnchorPointForPosition()
-        pLayer:ignoreAnchorPointForPosition(not ignore)
+        pLayer:setIgnoreAnchorPointForPosition(not ignore)
         return ret
     end
 
@@ -626,7 +626,7 @@ local function LayerExtendedBlendOpacityTest()
     layer3:setEndColor(cc.c3b(255, 0, 255))
     layer3:setStartOpacity(255)
     layer3:setEndOpacity(255)
-    layer3:setBlendFunc(cc.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA))
+    layer3:setBlendFunc(cc.blendFunc(ccb.BlendFactor.SRC_ALPHA, ccb.BlendFactor.ONE_MINUS_SRC_ALPHA))
     ret:addChild(layer3)
     return ret
 end

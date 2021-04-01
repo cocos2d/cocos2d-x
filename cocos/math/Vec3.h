@@ -1,6 +1,7 @@
 /**
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2014-2017 Chukong Technologies
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -93,13 +94,6 @@ public:
     Vec3(const Vec3& p1, const Vec3& p2);
 
     /**
-     * Constructs a new vector that is a copy of the specified vector.
-     *
-     * @param copy The vector to copy.
-     */
-    Vec3(const Vec3& copy);
-
-    /**
      * Creates a new vector from an integer interpreted as an RGB value.
      * E.g. 0xff0000 represents red or the vector (1, 0, 0).
      *
@@ -108,11 +102,6 @@ public:
      * @return A vector corresponding to the interpreted RGB color.
      */
     static Vec3 fromColor(unsigned int color);
-
-    /**
-     * Destructor.
-     */
-    ~Vec3();
 
     /**
      * Indicates whether this vector contains all zeros.

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -26,7 +27,7 @@ THE SOFTWARE.
 #include <functional>
 #include <thread>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class ICallerThreadUtils
 {
@@ -38,4 +39,4 @@ public:
     virtual std::thread::id getCallerThreadId() = 0;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

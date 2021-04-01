@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -68,9 +69,6 @@ public:
     
     /**read all animation or only the animation with given animationName? animationName == "" read the first.*/
     static Animation3D* create(const std::string& filename, const std::string& animationName = "");
-    
-    /**the cache method to create or get an Animation3D object*/
-    CC_DEPRECATED_ATTRIBUTE static Animation3D* getOrCreate(const std::string& filename, const std::string& animationName = ""){ return create(filename, animationName); }
        
     /**get duration*/
     float getDuration() const { return _duration; }

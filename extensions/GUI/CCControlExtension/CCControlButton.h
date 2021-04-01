@@ -5,6 +5,8 @@
  * Copyright 2011 Yannick Loriot. All rights reserved.
  * http://yannickloriot.com
  * 
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -60,7 +62,7 @@ public:
     static ControlButton* create(const std::string& title, const std::string& fontName, float fontSize);
     static ControlButton* create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite, bool adjustBackGroundSize);
 
-    virtual void needsLayout(void) override;
+    virtual void needsLayout() override;
 
     virtual void setEnabled(bool enabled) override;
     virtual void setSelected(bool enabled) override;
@@ -183,8 +185,8 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *event) override;
     virtual void onTouchCancelled(Touch *touch, Event *event) override;
 
-    virtual void setOpacity(GLubyte var) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual void setOpacity(uint8_t var) override;
+    virtual void updateDisplayedOpacity(uint8_t parentOpacity) override;
 	virtual void setColor(const Color3B&) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
 

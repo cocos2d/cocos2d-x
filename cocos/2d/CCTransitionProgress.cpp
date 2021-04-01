@@ -2,7 +2,8 @@
 Copyright (c) 2009      Lam Pham
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2012      Ricardo Quesada
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -71,7 +72,7 @@ void TransitionProgress::onEnter()
     Size size = Director::getInstance()->getWinSize();
 
     // create the second render texture for outScene
-    RenderTexture *texture = RenderTexture::create((int)size.width, (int)size.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
+    RenderTexture *texture = RenderTexture::create((int)size.width, (int)size.height,backend::PixelFormat::RGBA8888, backend::PixelFormat::D24S8);
     texture->getSprite()->setAnchorPoint(Vec2(0.5f,0.5f));
     texture->setPosition(size.width/2, size.height/2);
     texture->setAnchorPoint(Vec2(0.5f,0.5f));
@@ -138,7 +139,7 @@ ProgressTimer* TransitionProgressRadialCCW::progressTimerNodeWithRenderTexture(R
     ProgressTimer* node = ProgressTimer::create(texture->getSprite());
 
     // but it is flipped upside down so we flip the sprite
-    node->getSprite()->setFlippedY(true);
+    // node->getSprite()->setFlippedY(true);
     node->setType(ProgressTimer::Type::RADIAL);
 
     //    Return the radial type that we want to use
@@ -182,7 +183,7 @@ ProgressTimer* TransitionProgressRadialCW::progressTimerNodeWithRenderTexture(Re
     ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    node->getSprite()->setFlippedY(true);
+    // node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::RADIAL );
     
     //    Return the radial type that we want to use
@@ -214,7 +215,7 @@ ProgressTimer* TransitionProgressHorizontal::progressTimerNodeWithRenderTexture(
     ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    node->getSprite()->setFlippedY(true);
+    // node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::BAR);
     
     node->setMidpoint(Vec2(1, 0));
@@ -247,7 +248,7 @@ ProgressTimer* TransitionProgressVertical::progressTimerNodeWithRenderTexture(Re
     ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    node->getSprite()->setFlippedY(true);
+    // node->getSprite()->setFlippedY(true);
     node->setType(ProgressTimer::Type::BAR);
     
     node->setMidpoint(Vec2(0, 0));
@@ -293,7 +294,7 @@ ProgressTimer* TransitionProgressInOut::progressTimerNodeWithRenderTexture(Rende
     ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    node->getSprite()->setFlippedY(true);
+    // node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::BAR);
     
     node->setMidpoint(Vec2(0.5f, 0.5f));
@@ -327,7 +328,7 @@ ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(Rende
     ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    node->getSprite()->setFlippedY(true);
+    // node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::BAR );
     
     node->setMidpoint(Vec2(0.5f, 0.5f));

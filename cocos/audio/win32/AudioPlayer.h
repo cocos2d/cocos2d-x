@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -21,16 +22,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #pragma once
 
-#include "platform/CCPlatformConfig.h"
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
-#include <string>
 #include <condition_variable>
+#include <functional>
 #include <mutex>
+#include <string>
 #include <thread>
 #ifdef OPENAL_PLAIN_INCLUDES
 #include <al.h>
@@ -40,7 +37,6 @@
 #include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
-namespace experimental{
 
 class AudioCache;
 class AudioEngineImpl;
@@ -91,8 +87,4 @@ protected:
     friend class AudioEngineImpl;
 };
 
-}
 NS_CC_END
-
-#endif //CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-

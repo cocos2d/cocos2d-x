@@ -1,28 +1,26 @@
-//
-// Copyright 2012-2015, Syoyo Fujita.
-//
-// Licensed under 2-clause BSD license.
-//
-
-//
-// version 0.9.13: Report "Material file not found message" in `err`(#46)
-// version 0.9.12: Fix groups being ignored if they have 'usemtl' just before 'g' (#44)
-// version 0.9.11: Invert `Tr` parameter(#43)
-// version 0.9.10: Fix seg fault on windows.
-// version 0.9.9 : Replace atof() with custom parser.
-// version 0.9.8 : Fix multi-materials(per-face material ID).
-// version 0.9.7 : Support multi-materials(per-face material ID) per
-// object/group.
-// version 0.9.6 : Support Ni(index of refraction) mtl parameter.
-//                 Parse transmittance material parameter correctly.
-// version 0.9.5 : Parse multiple group name.
-//                 Add support of specifying the base path to load material file.
-// version 0.9.4 : Initial support of group tag(g)
-// version 0.9.3 : Fix parsing triple 'x/y/z'
-// version 0.9.2 : Add more .mtl load support
-// version 0.9.1 : Add initial .mtl load support
-// version 0.9.0 : Initial
-//
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include <cstdlib>
 #include <cstring>

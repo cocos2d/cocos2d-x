@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2015 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -61,6 +62,7 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCMap.h"
 
@@ -164,14 +166,6 @@ public:
      */
     static SIOClient* connect(const std::string& uri, SocketIO::SIODelegate& delegate, const std::string& caFilePath);
 
-    /**
-     *  Static client creation method, similar to socketio.connect(uri) in JS.
-     *  @param  delegate the delegate which want to receive events from the socket.io client.
-     *  @param  uri      the URI of the socket.io server.
-     *  @return SIOClient* an initialized SIOClient if connected successfully, otherwise nullptr.
-     */
-    CC_DEPRECATED_ATTRIBUTE  static SIOClient* connect(SocketIO::SIODelegate& delegate, const std::string& uri);
-
 private:
 
     SocketIO();
@@ -179,10 +173,11 @@ private:
 
     static SocketIO *_inst;
 
-    cocos2d::Map<std::string, SIOClientImpl*> _sockets;
+    std::unordered_map<std::string, std::weak_ptr<SIOClientImpl
+    >> _sockets;
 
-    SIOClientImpl* getSocket(const std::string& uri);
-    void addSocket(const std::string& uri, SIOClientImpl* socket);
+    std::shared_ptr<SIOClientImpl> getSocket(const std::string& uri);
+    void addSocket(const std::string& uri, std::shared_ptr<SIOClientImpl>& socket);
     void removeSocket(const std::string& uri);
 
     friend class SIOClientImpl;
@@ -208,9 +203,9 @@ private:
 
     std::string _path, _tag;
     bool _connected;
-    SIOClientImpl* _socket;
-
-    SocketIO::SIODelegate* _delegate;
+    std::shared_ptr<SIOClientImpl> _socket;
+    
+    SocketIO::SIODelegate* _delegate = nullptr;
 
     EventRegistry _eventRegistry;
 
@@ -222,6 +217,9 @@ private:
 
     friend class SIOClientImpl;
 
+    bool isConnected() const;
+    void setConnected(bool);
+
     /**
      * Constructor of SIOClient class.
      *
@@ -231,12 +229,11 @@ private:
      * @param impl the SIOClientImpl object.
      * @param delegate the SIODelegate object.
      */
-    SIOClient(const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
+    SIOClient(const std::string& path, std::shared_ptr<SIOClientImpl>& impl, SocketIO::SIODelegate& delegate);
     /**
      * Destructor of SIOClient class.
      */
     virtual ~SIOClient();
-
 public:
     /**
      * Get the delegate for the client
@@ -254,12 +251,18 @@ public:
      * @param s message.
      */
     void send(const std::string& s);
+    void send(const std::vector<std::string>& s);
+
+
+
     /**
      *  Emit the eventname and the args to the endpoint that _path point to.
      * @param eventname
      * @param args
      */
     void emit(const std::string& eventname, const std::string& args);
+    void emit(const std::string& eventname, const std::vector<std::string> &args);
+
     /**
      * Used to register a socket.io event callback.
      * Event argument should be passed using CC_CALLBACK2(&Base::function, this).

@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -37,7 +38,7 @@
 
 NS_CC_EXT_BEGIN
 
-#define TEMP_PACKAGE_SUFFIX     "_temp"
+#define TEMP_FOLDERNAME         "_temp"
 #define VERSION_FILENAME        "version.manifest"
 #define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
 #define MANIFEST_FILENAME       "project.manifest"
@@ -55,27 +56,7 @@ const std::string AssetsManagerEx::MANIFEST_ID = "@manifest";
 // Implementation of AssetsManagerEx
 
 AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath)
-: _updateState(State::UNCHECKED)
-, _assets(nullptr)
-, _storagePath("")
-, _tempVersionPath("")
-, _cacheManifestPath("")
-, _tempManifestPath("")
-, _manifestUrl(manifestUrl)
-, _localManifest(nullptr)
-, _tempManifest(nullptr)
-, _remoteManifest(nullptr)
-, _updateEntry(UpdateEntry::NONE)
-, _percent(0)
-, _percentByFile(0)
-, _totalToDownload(0)
-, _totalWaitToDownload(0)
-, _nextSavePoint(0.0)
-, _maxConcurrentTask(32)
-, _currConcurrentTask(0)
-, _versionCompareHandle(nullptr)
-, _verifyCallback(nullptr)
-, _inited(false)
+: _manifestUrl(manifestUrl)
 {
     // Init variables
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
@@ -223,7 +204,7 @@ void AssetsManagerEx::loadLocalManifest(const std::string& /*manifestUrl*/)
     {
         std::vector<std::string> cacheSearchPaths = cachedManifest->getSearchPaths();
         std::vector<std::string> trimmedPaths = searchPaths;
-        for (auto path : cacheSearchPaths)
+        for (const auto& path : cacheSearchPaths)
         {
             const auto pos = std::find(trimmedPaths.begin(), trimmedPaths.end(), path);
             if (pos != trimmedPaths.end())
@@ -313,7 +294,8 @@ void AssetsManagerEx::setStoragePath(const std::string& storagePath)
     _fileUtils->createDirectory(_storagePath);
     
     _tempStoragePath = _storagePath;
-    _tempStoragePath.insert(_storagePath.size() - 1, TEMP_PACKAGE_SUFFIX);
+    _tempStoragePath.append(TEMP_FOLDERNAME);
+    adjustPath(_tempStoragePath);
     _fileUtils->createDirectory(_tempStoragePath);
 }
 
@@ -988,7 +970,7 @@ void AssetsManagerEx::fileSuccess(const std::string &customId, const std::string
         // Reduce count only when unit found in _downloadUnits
         _totalWaitToDownload--;
         
-        _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
+        _percent = _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
         // Notify progression event
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
     }
@@ -1132,7 +1114,7 @@ void AssetsManagerEx::destroyDownloadedVersion()
 void AssetsManagerEx::batchDownload()
 {
     _queue.clear();
-    for(auto iter : _downloadUnits)
+    for(const auto& iter : _downloadUnits)
     {
         const DownloadUnit& unit = iter.second;
         if (unit.size > 0)

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -68,7 +69,7 @@ Tween::Tween()
 }
 
 
-Tween::~Tween(void)
+Tween::~Tween()
 {
     CC_SAFE_DELETE( _from );
     CC_SAFE_DELETE( _between );

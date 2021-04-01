@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -238,7 +239,7 @@ TransitionsTests::TransitionsTests()
         addTestCase(test.name, [sceneIndex](){
             auto scene = TransitionsTest::create();
             // fix bug #486, without setDepthTest(false), FlipX,Y will flickers
-            Director::getInstance()->setDepthTest(false);
+            Director::getInstance()->getRenderer()->setDepthTest(false);
 
             if (sceneIndex % 2)
             {
@@ -328,7 +329,7 @@ void TestLayer1::onExitTransitionDidStart()
 void TestLayer1::onExit()
 {
     Layer::onExit();
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
     log("Scene 1 onExit");
 }
 
@@ -404,6 +405,6 @@ void TestLayer2::onExitTransitionDidStart()
 void TestLayer2::onExit()
 {
     Layer::onExit();
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
     log("Scene 2 onExit");
 }

@@ -8,6 +8,8 @@
  * Modified by Yannick Loriot.
  * http://yannickloriot.com
  * 
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -67,7 +69,7 @@ bool ControlColourPicker::init()
 		   especially the display of 'huePickerBackground.png' when in 800*480 window size with 480*320 design resolution and hd(960*640) resources.
 	    */
 //        spriteSheet->getTexture()->setAliasTexParameters();
-//         spriteSheet->getTexture()->setTexParameters(&params);
+//         spriteSheet->getTexture()->setSamplerDescriptor(&params);
 //         spriteSheet->getTexture()->generateMipmap();
 
         // Init default color
@@ -168,7 +170,7 @@ void ControlColourPicker::hueSliderValueChanged(Ref * sender, Control::EventType
     // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
     // FIXME: fixed me if not correct
-    Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    Control::setColor(Color3B((uint8_t)(rgb.r * 255.0f), (uint8_t)(rgb.g * 255.0f), (uint8_t)(rgb.b * 255.0f)));
     
     // Send Control callback
     sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
@@ -184,7 +186,7 @@ void ControlColourPicker::colourSliderValueChanged(Ref * sender, Control::EventT
      // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
     // FIXME: fixed me if not correct
-    Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    Control::setColor(Color3B((uint8_t)(rgb.r * 255.0f), (uint8_t)(rgb.g * 255.0f), (uint8_t)(rgb.b * 255.0f)));
     
     // Send Control callback
     sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);

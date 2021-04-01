@@ -8,6 +8,7 @@ attribute vec2 a_texCoord;
 const int SKINNING_JOINT_COUNT = 60;
 // Uniforms
 uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];
+uniform mat4 u_MVPMatrix;
 
 // Varyings
 varying vec2 TextureCoordOut;
@@ -62,7 +63,7 @@ vec4 getPosition()
 void main()
 {
     vec4 position = getPosition();
-    gl_Position = CC_MVPMatrix * position;
+    gl_Position = u_MVPMatrix * position;
     
     TextureCoordOut = a_texCoord;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;

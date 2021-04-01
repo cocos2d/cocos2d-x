@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -391,7 +392,7 @@ void Animate3D::update(float t)
                     float prekeyTime = lastTime * getDuration() * _frameRate;
                     float keyTime = t * getDuration() * _frameRate;
                     std::vector<Animate3DDisplayedEventInfo*> eventInfos;
-                    for (auto keyFrame : _keyFrameUserInfos)
+                    for (const auto& keyFrame : _keyFrameUserInfos)
                     {
                         if ((!_playReverse && keyFrame.first >= prekeyTime && keyFrame.first < keyTime)
                             || (_playReverse && keyFrame.first >= keyTime && keyFrame.first < prekeyTime))

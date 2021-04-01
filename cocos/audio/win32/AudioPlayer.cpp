@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -21,12 +22,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#define LOG_TAG "AudioPlayer"
-
-#include "platform/CCPlatformConfig.h"
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include "audio/win32/AudioPlayer.h"
 #include "audio/win32/AudioCache.h"
 #include "platform/CCFileUtils.h"
@@ -40,8 +35,9 @@
 #define ALOGVV(...) do{} while(false)
 #endif
 
+#define LOG_TAG "AudioPlayer"
+
 using namespace cocos2d;
-using namespace cocos2d::experimental;
 
 namespace {
 unsigned int __idIndex = 0;
@@ -267,7 +263,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                     bufferProcessed--;
                     if (_timeDirty) {
                         _timeDirty = false;
-                        offsetFrame = _currTime * decoder->getSampleRate();
+                        offsetFrame = (int)(_currTime * decoder->getSampleRate());
                         decoder->seek(offsetFrame);
                     }
                     else {
@@ -342,5 +338,3 @@ bool AudioPlayer::setTime(float time)
     }
     return false;
 }
-
-#endif

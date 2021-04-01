@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2016-2017 Chukong Technologies Inc.
+ Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -37,7 +38,7 @@
 #include <vector>
 #include <atomic>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 /**
  * @addtogroup base
@@ -233,4 +234,4 @@ private:
 // end of base group
 /// @}
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -33,12 +34,12 @@ THE SOFTWARE.
 namespace {
 
 std::mutex __playerContainerMutex;
-std::vector<cocos2d::experimental::UrlAudioPlayer*> __playerContainer;
+std::vector<cocos2d::UrlAudioPlayer*> __playerContainer;
 std::once_flag __onceFlag;
 
 }
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class SLUrlAudioPlayerCallbackProxy
 {
@@ -69,7 +70,7 @@ UrlAudioPlayer::UrlAudioPlayer(SLEngineItf engineItf, SLObjectItf outputMixObjec
 
     __playerContainerMutex.lock();
     __playerContainer.push_back(this);
-    ALOGV("Current UrlAudioPlayer instance count: %d", __playerContainer.size());
+    ALOGV("Current UrlAudioPlayer instance count: %d", (int)__playerContainer.size());
     __playerContainerMutex.unlock();
 
     _callerThreadId = callerThreadUtils->getCallerThreadId();
@@ -420,4 +421,4 @@ void UrlAudioPlayer::destroy()
     }
 }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

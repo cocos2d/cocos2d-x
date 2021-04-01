@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -46,8 +47,6 @@ _bottomPadding(0.0f),
 _scrollTime(DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM),
 _curSelectedIndex(-1),
 _innerContainerDoLayoutDirty(true),
-_listViewEventListener(nullptr),
-_listViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
     this->setTouchEnabled(true);
@@ -55,8 +54,6 @@ _eventCallback(nullptr)
 
 ListView::~ListView()
 {
-    _listViewEventListener = nullptr;
-    _listViewEventSelector = nullptr;
     _items.clear();
     CC_SAFE_RELEASE(_model);
 }
@@ -117,7 +114,7 @@ void ListView::updateInnerContainerSize()
         case Direction::VERTICAL:
         {
             size_t length = _items.size();
-            float totalHeight = (length - 1) * _itemsMargin + (_topPadding + _bottomPadding);
+            float totalHeight = (length == 0) ? 0.0f : (length - 1) * _itemsMargin + (_topPadding + _bottomPadding);
             for (auto& item : _items)
             {
                 totalHeight += item->getContentSize().height;
@@ -130,7 +127,7 @@ void ListView::updateInnerContainerSize()
         case Direction::HORIZONTAL:
         {
             size_t length = _items.size();
-            float totalWidth = (length - 1) * _itemsMargin + (_leftPadding + _rightPadding);
+            float totalWidth = (length == 0) ? 0.0f : (length - 1) * _itemsMargin + (_leftPadding + _rightPadding);
             for (auto& item : _items)
             {
                 totalWidth += item->getContentSize().width;
@@ -556,11 +553,6 @@ void ListView::setDirection(Direction dir)
     }
     ScrollView::setDirection(dir);
 }
-    
-void ListView::refreshView()
-{
-    forceDoLayout();
-}
 
 void ListView::requestDoLayout()
 {
@@ -586,13 +578,6 @@ void ListView::doLayout()
     _innerContainerDoLayoutDirty = false;
 }
     
-void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
-{
-    _listViewEventListener = target;
-    _listViewEventSelector = selector;
-}
-
-    
 void ListView::addEventListener(const ccListViewCallback& callback)
 {
     _eventCallback = callback;
@@ -605,10 +590,6 @@ void ListView::selectedItemEvent(TouchEventType event)
     {
         case TouchEventType::BEGAN:
         {
-            if (_listViewEventListener && _listViewEventSelector)
-            {
-                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_START);
-            }
             if (_eventCallback) {
                 _eventCallback(this,EventType::ON_SELECTED_ITEM_START);
             }
@@ -620,10 +601,6 @@ void ListView::selectedItemEvent(TouchEventType event)
         break;
         default:
         {
-            if (_listViewEventListener && _listViewEventSelector)
-            {
-                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_END);
-            }
             if (_eventCallback) {
                 _eventCallback(this, EventType::ON_SELECTED_ITEM_END);
             }
@@ -936,8 +913,6 @@ void ListView::copySpecialProperties(Widget *widget)
         setItemModel(listViewEx->_model);
         setItemsMargin(listViewEx->_itemsMargin);
         setGravity(listViewEx->_gravity);
-        _listViewEventListener = listViewEx->_listViewEventListener;
-        _listViewEventSelector = listViewEx->_listViewEventSelector;
         _eventCallback = listViewEx->_eventCallback;
     }
 }

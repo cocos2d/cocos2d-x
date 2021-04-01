@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -23,8 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_CCPLATFORMDEFINE_H__
-#define __PLATFORM_CCPLATFORMDEFINE_H__
+#pragma once
 /// @cond DO_NOT_SHOW
 
 #include "platform/CCPlatformConfig.h"
@@ -37,13 +37,8 @@ THE SOFTWARE.
 #include "platform/android/CCPlatformDefine-android.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include "platform/win32/CCPlatformDefine-win32.h"
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-#include "platform/winrt/CCPlatformDefine-winrt.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "platform/linux/CCPlatformDefine-linux.h"
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
-#include "platform/tizen/CCPlatformDefine-tizen.h"
 #endif
 
-/// @endcond
-#endif /* __PLATFORM_CCPLATFORMDEFINE_H__*/
+

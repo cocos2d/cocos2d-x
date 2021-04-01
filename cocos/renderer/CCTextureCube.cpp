@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -25,12 +26,13 @@
 #include "renderer/CCTextureCube.h"
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
-
-#include "renderer/ccGLStateCache.h"
+#include "renderer/backend/Texture.h"
+#include "renderer/backend/Device.h"
+#include "renderer/CCTextureUtils.h"
 
 NS_CC_BEGIN
 
-unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
+unsigned char* getImageData(Image* img, backend::PixelFormat&  ePixFmt)
 {
     unsigned char*    pTmpData = img->getData();
     unsigned int*     inPixel32 = nullptr;
@@ -45,30 +47,30 @@ unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
     // compute pixel format
     if (bHasAlpha)
     {
-        ePixFmt = Texture2D::PixelFormat::DEFAULT;
+        ePixFmt = backend::PixelFormat::DEFAULT;
     }
     else
     {
         if (uBPP >= 8)
         {
-            ePixFmt = Texture2D::PixelFormat::RGB888;
+            ePixFmt = backend::PixelFormat::RGB888;
         }
         else
         {
-            ePixFmt = Texture2D::PixelFormat::RGB565;
+            ePixFmt = backend::PixelFormat::RGB565;
         }
     }
 
     // Repack the pixel data into the right format
     unsigned int uLen = nWidth * nHeight;
 
-    if (ePixFmt == Texture2D::PixelFormat::RGB565)
+    if (ePixFmt == backend::PixelFormat::RGB565)
     {
         if (bHasAlpha)
         {
             // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
             inPixel32 = (unsigned int*)img->getData();
-            pTmpData = new (std::nothrow) unsigned char[nWidth * nHeight * 2];
+            pTmpData = (unsigned char *)malloc(nWidth * nHeight * 2);
             outPixel16 = (unsigned short*)pTmpData;
 
             for (unsigned int i = 0; i < uLen; ++i, ++inPixel32)
@@ -82,7 +84,7 @@ unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
         else
         {
             // Convert "RRRRRRRRGGGGGGGGBBBBBBBB" to "RRRRRGGGGGGBBBBB"
-            pTmpData = new (std::nothrow) unsigned char[nWidth * nHeight * 2];
+            pTmpData = (unsigned char *)malloc(nWidth * nHeight * 2);
             outPixel16 = (unsigned short*)pTmpData;
             inPixel8 = (unsigned char*)img->getData();
 
@@ -100,12 +102,12 @@ unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
         }
     }
 
-    if (bHasAlpha && ePixFmt == Texture2D::PixelFormat::RGB888)
+    if (bHasAlpha && ePixFmt == backend::PixelFormat::RGB888)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
         inPixel32 = (unsigned int*)img->getData();
 
-        pTmpData = new (std::nothrow) unsigned char[nWidth * nHeight * 3];
+        pTmpData = (unsigned char*)malloc(nWidth * nHeight * 3);
         unsigned char* outPixel8 = pTmpData;
 
         for (unsigned int i = 0; i < uLen; ++i, ++inPixel32)
@@ -153,6 +155,7 @@ TextureCube::TextureCube()
 
 TextureCube::~TextureCube()
 {
+    CC_SAFE_RELEASE_NULL(_texture);
 }
 
 TextureCube* TextureCube::create(const std::string& positive_x, const std::string& negative_x,
@@ -189,54 +192,64 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     images[4] = createImage(positive_z);
     images[5] = createImage(negative_z);
 
-    GLuint handle;
-    glGenTextures(1, &handle);
+    int imageSize = images[0]->getHeight();
+    for (int i = 0; i < 6; i++)
+    {
+        Image* img = images[i];
+        if(img->getWidth() != img->getHeight())
+        {
+            CCASSERT(false, "TextureCubemap: width should be equal to height!");
+            return false;
+        }
+        if(imageSize != img->getWidth())
+        {
+            CCASSERT(imageSize == img->getWidth(), "TextureCubmap: texture of each face should have same dimension");
+            return false;
+        }
+    }
 
-    GL::bindTextureN(0, handle, GL_TEXTURE_CUBE_MAP);
+    backend::TextureDescriptor textureDescriptor;
+    textureDescriptor.width = textureDescriptor.height = imageSize;
+    textureDescriptor.textureType = backend::TextureType::TEXTURE_CUBE;
+    textureDescriptor.samplerDescriptor.minFilter = backend::SamplerFilter::LINEAR;
+    textureDescriptor.samplerDescriptor.magFilter = backend::SamplerFilter::LINEAR;
+    textureDescriptor.samplerDescriptor.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    textureDescriptor.samplerDescriptor.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    _texture = static_cast<backend::TextureCubemapBackend*>(backend::Device::getInstance()->newTexture(textureDescriptor));
+    CCASSERT(_texture != nullptr, "TextureCubemap: texture can not be nullptr");
 
     for (int i = 0; i < 6; i++)
     {
         Image* img = images[i];
 
-        Texture2D::PixelFormat  ePixelFmt;
+        backend::PixelFormat  ePixelFmt;
         unsigned char*          pData = getImageData(img, ePixelFmt);
-        if (ePixelFmt == Texture2D::PixelFormat::RGBA8888 || ePixelFmt == Texture2D::PixelFormat::DEFAULT)
+        uint8_t *cData = nullptr;
+        uint8_t *useData = pData;
+
+        //convert pixel format to RGBA
+        if (ePixelFmt != backend::PixelFormat::RGBA8888 && ePixelFmt != backend::PixelFormat::DEFAULT)
         {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                         0,                  // level
-                         GL_RGBA,            // internal format
-                         img->getWidth(),    // width
-                         img->getHeight(),   // height
-                         0,                  // border
-                         GL_RGBA,            // format
-                         GL_UNSIGNED_BYTE,   // type
-                         pData);             // pixel data
+            size_t len = 0;
+            backend::PixelFormatUtils::convertDataToFormat(pData, img->getDataLen(), ePixelFmt, backend::PixelFormat::RGBA8888, &cData, &len);
+            if (cData != pData) //convert error
+            {
+                useData = cData;
+            }
+            else
+            {
+                CCASSERT(false, "error: CubeMap texture may be incorrect, failed to convert pixel format data to RGBA8888");
+            }
         }
-        else if (ePixelFmt == Texture2D::PixelFormat::RGB888)
-        {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                         0,                  // level
-                         GL_RGB,             // internal format
-                         img->getWidth(),    // width
-                         img->getHeight(),   // height
-                         0,                  // border
-                         GL_RGB,             // format
-                         GL_UNSIGNED_BYTE,   // type
-                         pData);             // pixel data
-        }
+
+        _texture->updateFaceData(static_cast<backend::TextureCubeFace>(i), useData);
+        
+        if (cData != pData)
+            free(cData);
 
         if (pData != img->getData())
-            delete[] pData;
+            free(pData);
     }
-
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    _name = handle;
-
-    GL::bindTextureN(0, 0, GL_TEXTURE_CUBE_MAP);
 
     for (auto img: images)
     {
@@ -246,18 +259,9 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     return true;
 }
 
-void TextureCube::setTexParameters(const TexParams& texParams)
+void TextureCube::setTexParameters(const Texture2D::TexParams& texParams)
 {
-    CCASSERT(_name != 0, __FUNCTION__);
-
-    GL::bindTextureN(0, _name, GL_TEXTURE_CUBE_MAP);
-
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, texParams.minFilter);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, texParams.magFilter);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, texParams.wrapS);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, texParams.wrapT);
-
-    GL::bindTextureN(0, 0, GL_TEXTURE_CUBE_MAP);
+    _texture->updateSamplerDescriptor(texParams);
 }
 
 bool TextureCube::reloadTexture()

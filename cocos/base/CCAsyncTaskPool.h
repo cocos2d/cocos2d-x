@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -72,9 +73,6 @@ public:
      * Destroys the async task pool.
      */
     static void destroyInstance();
-    
-    /** @deprecated Use method destroyInstance() instead. */
-    CC_DEPRECATED_ATTRIBUTE static void destoryInstance() { return destroyInstance(); }
     
     /**
      * Stop tasks.

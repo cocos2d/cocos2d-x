@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -33,6 +34,8 @@ UIEditBoxTests::UIEditBoxTests()
 {
     ADD_TEST_CASE(UIEditBoxTest);
     ADD_TEST_CASE(UIEditBoxTestToggleVisibility);
+    ADD_TEST_CASE(UIEditBoxTestTextHorizontalAlignment);
+    ADD_TEST_CASE(UIEditBoxTestPressedAndDisabled);
 }
 
 // UIEditBoxTest
@@ -64,7 +67,7 @@ bool UIEditBoxTest::init()
         _editName->setPlaceHolder("Name:");
         _editName->setPlaceholderFontColor(Color3B::WHITE);
         _editName->setMaxLength(8);
-        _editName->setFontSize(editBoxSize.height/2);
+        _editName->setFontSize((int)editBoxSize.height/2);
         _editName->setText("v👐👊💝");
         _editName->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
         _editName->setDelegate(this);
@@ -75,7 +78,7 @@ bool UIEditBoxTest::init()
                                         "cocosui/animationbuttonpressed.png");
         auto buttonSize = button->getContentSize();
         button->setTitleText("Single Line");
-        button->setPosition(_editName->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        button->setPosition(_editName->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         button->addClickEventListener([=](Ref* ref){
             _editName->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
         });
@@ -90,14 +93,14 @@ bool UIEditBoxTest::init()
         _editPassword->setMaxLength(6);
         _editPassword->setInputFlag(ui::EditBox::InputFlag::PASSWORD);
         _editPassword->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
-        _editPassword->setFontSize(editBoxSize.height/2);
+        _editPassword->setFontSize((int)editBoxSize.height/2);
         _editPassword->setDelegate(this);
         _editPassword->setVisible(true);
         addChild(_editPassword);
        
         auto buttonPassword = (ui::Button*)button->clone();
         buttonPassword->setTitleText("Multiline");
-        buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         buttonPassword->addClickEventListener([=](Ref* ref){
             _editPassword->setInputMode(ui::EditBox::InputMode::ANY);
         });
@@ -123,7 +126,7 @@ bool UIEditBoxTest::init()
         
         auto buttonEmail = (ui::Button*)button->clone();
         buttonEmail->setTitleText("Multiline");
-        buttonEmail->setPosition(_editEmailParent->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonEmail->setPosition(_editEmailParent->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         buttonEmail->addClickEventListener([=](Ref* ref){
             _editEmail->setInputMode(ui::EditBox::InputMode::ANY);
         });
@@ -137,11 +140,6 @@ bool UIEditBoxTest::init()
 void UIEditBoxTest::editBoxEditingDidBegin(cocos2d::ui::EditBox* editBox)
 {
     log("editBox %p DidBegin !", editBox);
-}
-
-void UIEditBoxTest::editBoxEditingDidEnd(cocos2d::ui::EditBox* editBox)
-{
-    log("editBox %p DidEnd !", editBox);
 }
 
 void UIEditBoxTest::editBoxEditingDidEndWithAction(cocos2d::ui::EditBox* editBox, cocos2d::ui::EditBoxDelegate::EditBoxEndAction action)
@@ -173,6 +171,7 @@ void UIEditBoxTest::editBoxReturn(ui::EditBox* editBox)
     }
 }
 
+// UIEditBoxTestToggleVisibility
 
 bool UIEditBoxTestToggleVisibility::init()
 {
@@ -191,7 +190,7 @@ bool UIEditBoxTestToggleVisibility::init()
         addChild(_TTFShowEditReturn);
         
         
-        auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1);
+        auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1f);
         
         // top
         std::string pNormalSprite = "extensions/green_edit.png";
@@ -201,7 +200,7 @@ bool UIEditBoxTestToggleVisibility::init()
         _editName->setPlaceHolder("Name:");
         _editName->setPlaceholderFontColor(Color3B::WHITE);
         _editName->setMaxLength(8);
-        _editName->setFontSize(editBoxSize.height/2);
+        _editName->setFontSize((int)editBoxSize.height/2);
         _editName->setText("v👐👊💝");
         _editName->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
         _editName->setDelegate(this);
@@ -212,7 +211,7 @@ bool UIEditBoxTestToggleVisibility::init()
                                         "cocosui/animationbuttonpressed.png");
         auto buttonSize = button->getContentSize();
         button->setTitleText("Toggle Visibility");
-        button->setPosition(_editName->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        button->setPosition(_editName->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         button->addClickEventListener([=](Ref* ref){
             _editName->setVisible(!_editName->isVisible());
         });
@@ -226,14 +225,14 @@ bool UIEditBoxTestToggleVisibility::init()
         _editPassword->setMaxLength(6);
         _editPassword->setInputFlag(ui::EditBox::InputFlag::PASSWORD);
         _editPassword->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
-        _editPassword->setFontSize(editBoxSize.height/2);
+        _editPassword->setFontSize((float)editBoxSize.height/2);
         _editPassword->setDelegate(this);
         _editPassword->setVisible(true);
         addChild(_editPassword);
         
         auto buttonPassword = (ui::Button*)button->clone();
         buttonPassword->setTitleText("Toggle Visibility");
-        buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         buttonPassword->addClickEventListener([=](Ref* ref){
             _editPassword->setVisible(!_editPassword->isVisible());
         });
@@ -259,7 +258,7 @@ bool UIEditBoxTestToggleVisibility::init()
         
         auto buttonEmail = (ui::Button*)button->clone();
         buttonEmail->setTitleText("Toggle Visibility");
-        buttonEmail->setPosition(_editEmailParent->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonEmail->setPosition(_editEmailParent->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0.0f));
         buttonEmail->addClickEventListener([=](Ref* ref){
             _editEmail->setVisible(!_editEmail->isVisible());
         });
@@ -273,11 +272,6 @@ bool UIEditBoxTestToggleVisibility::init()
 void UIEditBoxTestToggleVisibility::editBoxEditingDidBegin(cocos2d::ui::EditBox* editBox)
 {
     log("editBox %p DidBegin !", editBox);
-}
-
-void UIEditBoxTestToggleVisibility::editBoxEditingDidEnd(cocos2d::ui::EditBox* editBox)
-{
-    log("editBox %p DidEnd !", editBox);
 }
 
 void UIEditBoxTestToggleVisibility::editBoxTextChanged(cocos2d::ui::EditBox* editBox, const std::string& text)
@@ -301,4 +295,85 @@ void UIEditBoxTestToggleVisibility::editBoxReturn(ui::EditBox* editBox)
     {
         _TTFShowEditReturn->setString("Email EditBox return !");
     }
+}
+
+// UIEditBoxTestTextHorizontalAlignment
+
+bool UIEditBoxTestTextHorizontalAlignment::init() {
+    if (!UIScene::init()) {
+      return false;
+    }
+  
+    const auto glview = Director::getInstance()->getOpenGLView();
+    const auto visibleOrigin = glview->getVisibleOrigin();
+    const auto visibleSize = glview->getVisibleSize();
+    const auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1f);
+  
+    const auto createEditBox = [this, editBoxSize, visibleOrigin, visibleSize](const std::string& text,
+                                      const TextHAlignment alignment,
+                                      const int position_y) {
+        ui::EditBox* editbox = ui::EditBox::create(editBoxSize + Size(0,40), ui::Scale9Sprite::create("extensions/green_edit.png"));
+        editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, (float)position_y));
+        editbox->setFontColor(Color3B::RED);
+        editbox->setPlaceHolder(text.c_str());
+        editbox->setPlaceholderFontColor(Color3B::WHITE);
+        editbox->setPlaceholderFontSize((int)editBoxSize.height/2);
+        editbox->setFontSize((int)editBoxSize.height/2);
+        editbox->setText(text.c_str());
+        editbox->setTextHorizontalAlignment(alignment);
+        editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+        addChild(editbox);
+    };
+  
+    createEditBox("horizontal left text", TextHAlignment::LEFT, (int)(visibleOrigin.y+visibleSize.height*3/4));
+    createEditBox("horizontal center text", TextHAlignment::CENTER, (int)(visibleOrigin.y+visibleSize.height/2));
+    createEditBox("horizontal right text", TextHAlignment::RIGHT, (int)(visibleOrigin.y+visibleSize.height/4));
+  
+    return true;
+}
+
+// UIEditBoxTestPressedAndDisabled
+bool UIEditBoxTestPressedAndDisabled::init() {
+    if (!UIScene::init()) {
+        return false;
+    }
+
+    auto glview = Director::getInstance()->getOpenGLView();
+    auto visibleOrigin = glview->getVisibleOrigin();
+    auto visibleSize = glview->getVisibleSize();
+    const auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1f);
+
+    ui::EditBox* editbox = ui::EditBox::create(editBoxSize + Size(0,40), "extensions/yellow_edit.png", "extensions/orange_edit.png");
+    editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
+    editbox->setFontColor(Color3B::GREEN);
+    editbox->setPlaceHolder("Test Pressed Image");
+    editbox->setPlaceholderFontColor(Color3B::WHITE);
+    editbox->setPlaceholderFontSize((int)editBoxSize.height/2);
+    editbox->setFontSize((int)editBoxSize.height/2);
+    editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+    addChild(editbox);
+
+    editbox = ui::EditBox::create(editBoxSize + Size(0,40), "extensions/yellow_edit.png", "extensions/orange_edit.png", "extensions/green_edit.png");
+    editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+    editbox->setFontColor(Color3B::GREEN);
+    editbox->setPlaceHolder("Test Disabled Image - green");
+    editbox->setPlaceholderFontColor(Color3B::WHITE);
+    editbox->setPlaceholderFontSize((int)editBoxSize.height/2);
+    editbox->setFontSize((int)editBoxSize.height/2);
+    editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+    addChild(editbox);
+    editbox->setEnabled(false);
+
+    editbox = ui::EditBox::create(editBoxSize + Size(0,40), "extensions/yellow_edit.png");
+    editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
+    editbox->setFontColor(Color3B::GREEN);
+    editbox->setPlaceHolder("Disabled Gray effect");
+    editbox->setPlaceholderFontColor(Color3B::WHITE);
+    editbox->setPlaceholderFontSize((int)editBoxSize.height/2);
+    editbox->setFontSize((int)editBoxSize.height/2);
+    editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+    addChild(editbox);
+    editbox->setEnabled(false);
+
+    return true;
 }

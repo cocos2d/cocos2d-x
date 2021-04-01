@@ -849,7 +849,7 @@ function RemoveAndRetainNodeTest:onEnter()
     local function retainSprite()
         self._spriteSaved = true
         self._sprite:retain()
-        self._sprite:removeFromParent()
+        self._sprite:removeFromParent(false)
     end
 
     local function releaseSprite()

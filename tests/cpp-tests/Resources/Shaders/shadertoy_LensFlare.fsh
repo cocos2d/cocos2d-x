@@ -1,7 +1,7 @@
 
 uniform vec2 center;
 uniform vec2 resolution;
-
+uniform vec2 u_screenSize;
 //uniform float     iChannelTime[4];       // channel playback time (in seconds)
 //uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
 vec4      iMouse = vec4(0,0,0,0);                // mouse pixel coords. xy: current (if MLB down), zw: click
@@ -15,6 +15,8 @@ vec4      iMouse = vec4(0,0,0,0);                // mouse pixel coords. xy: curr
  published
  
  muuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusk!*/
+
+uniform vec4 u_Time;
 
 float noise(float t)
 {
@@ -79,11 +81,16 @@ vec3 cc(vec3 color, float factor,float factor2) // color modifier
 
 void main(void)
 {
+#ifdef METAL
+	vec2 fragCoord = vec2(gl_FragCoord.x, u_screenSize.y - gl_FragCoord.y);
+#else
+	vec2 fragCoord = gl_FragCoord.xy;
+#endif
     vec2   iResolution = resolution;           // viewport resolution (in pixels)
-    float  iGlobalTime = CC_Time[1];           // shader playback time (in seconds)
+    float  iGlobalTime = u_Time[1];           // shader playback time (in seconds)
 
 	//vec2 uv = gl_FragCoord.xy / iResolution.xy - 0.5;
-    vec2 uv = (gl_FragCoord.xy - center.xy) / iResolution.xy;
+    vec2 uv = (fragCoord.xy - center.xy) / iResolution.xy;
 	uv.x *= iResolution.x/iResolution.y; //fix aspect ratio
 	vec3 mouse = vec3(iMouse.xy/iResolution.xy - 0.5,iMouse.z-.5);
 	mouse.x *= iResolution.x/iResolution.y; //fix aspect ratio
@@ -94,7 +101,7 @@ void main(void)
 	}
 	
 	vec3 color = vec3(1.4,1.2,1.0)*lensflare(uv,mouse.xy);
-	color -= noise(gl_FragCoord.xy)*.015;
+	color -= noise(fragCoord.xy)*.015;
 	color = cc(color,.5,.1);
 	gl_FragColor = vec4(color,1.0);
 }

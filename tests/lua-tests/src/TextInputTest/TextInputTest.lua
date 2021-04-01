@@ -10,8 +10,8 @@ function TextInput.create()
     local res = "Images/CyanSquare.png"
     local width = 200
     local height = 40
-    local back = cc.Scale9Sprite:create(res)
-    local edit = ccui.EditBox:create(cc.size(width,height),res)
+    local back = ccui.Scale9Sprite:create(res)
+    local edit = ccui.EditBox:create(cc.size(width,height),back)
     layer:addChild(edit)
     edit:setPosition( cc.p(250,200) )
     edit:setPlaceHolder("click to input text")

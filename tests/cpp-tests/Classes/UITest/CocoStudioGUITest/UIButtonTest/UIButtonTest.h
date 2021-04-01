@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -278,6 +279,16 @@ public:
     CREATE_FUNC(UIButtonWithPolygonInfo);
     
     UIButtonWithPolygonInfo();
+    
+    virtual bool init() override;
+};
+
+class UIButtonScale9ChangeSpriteFrame: public UIScene
+{
+public:
+    CREATE_FUNC(UIButtonScale9ChangeSpriteFrame);
+    
+    UIButtonScale9ChangeSpriteFrame();
     
     virtual bool init() override;
 };

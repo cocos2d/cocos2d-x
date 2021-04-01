@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -60,7 +61,7 @@ typedef struct PhysicsRayCastInfo
     Vec2 contact;
     Vec2 normal;
 
-    // FIXME: correct thing to do is use `cpFlaot` instead of float.
+    // FIXME: correct thing to do is use `cpFloat` instead of float.
     // but in order to do so, we should include "chipmunk_types.h"
     // in Chipmunk v7.0, chipmunk_types includes all the mac types that
     // conflicts with cocos2d Size, Point,... etc types. And all the CocosStudio
@@ -310,6 +311,16 @@ public:
     void setDebugDrawMask(int mask);
 
     /**
+     * set the callback which invoked before update of each object in physics world.
+     */
+    void setPreUpdateCallback(const std::function<void()> &callback);
+
+    /**
+     * set the callback which invoked after update of each object in physics world.
+     */
+    void setPostUpdateCallback(const std::function<void()> &callback);
+
+    /**
     * Get the debug draw mask.
     *
     * @return An integer number.
@@ -351,7 +362,7 @@ protected:
     virtual void addShape(PhysicsShape* shape);
     virtual void removeShape(PhysicsShape* shape);
     virtual void update(float delta, bool userCall = false);
-    
+
     virtual void debugDraw();
     
     virtual bool collisionBeginCallback(PhysicsContact& contact);
@@ -366,7 +377,7 @@ protected:
     virtual void removeBodyOrDelay(PhysicsBody* body);
     virtual void updateBodies();
     virtual void updateJoints();
-    
+
 protected:
     Vec2 _gravity;
     float _speed;
@@ -393,6 +404,9 @@ protected:
     std::vector<PhysicsJoint*> _delayAddJoints;
     std::vector<PhysicsJoint*> _delayRemoveJoints;
     
+    std::function<void()> _preUpdateCallback;
+    std::function<void()> _postUpdateCallback;
+
 protected:
     PhysicsWorld();
     virtual ~PhysicsWorld();

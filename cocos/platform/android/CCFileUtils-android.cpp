@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -22,10 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
 #include "platform/android/CCFileUtils-android.h"
 #include "platform/CCCommon.h"
 #include "platform/android/jni/JniHelper.h"
@@ -33,9 +30,6 @@ THE SOFTWARE.
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
 #include "base/ZipUtils.h"
-#include "base/CCDirector.h"
-#include "base/CCEventDispatcher.h"
-#include "base/CCEventType.h"
 
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -47,6 +41,8 @@ THE SOFTWARE.
 #define  ASSETS_FOLDER_NAME_LENGTH   7
 
 using namespace std;
+
+#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
 
 NS_CC_BEGIN
 
@@ -92,6 +88,8 @@ FileUtilsAndroid::~FileUtilsAndroid()
 
 bool FileUtilsAndroid::init()
 {
+    DECLARE_GUARD;
+
     _defaultResRootPath = ASSETS_FOLDER_NAME;
     
     std::string assetsPath(getApkPath());
@@ -157,6 +155,9 @@ std::string FileUtilsAndroid::getNewFilename(const std::string &filename) const
 
 bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
 {
+    
+    DECLARE_GUARD;
+
     if (strFilePath.empty())
     {
         return false;
@@ -207,7 +208,13 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
         return false;
     }
 
-    const char* s = dirPath.c_str();
+    std::string dirPathCopy = dirPath;
+    if(dirPathCopy[dirPathCopy.length() - 1] == '/')
+    {
+        dirPathCopy.erase(dirPathCopy.length() - 1);
+    }
+
+    const char* s = dirPathCopy.c_str();
     
     // find absolute path in flash memory
     if (s[0] == '/')
@@ -221,6 +228,8 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
     }
     else
     {
+
+
         // find it in apk's assets dir
         // Found "assets/" at the beginning of the path and we don't want it
         CCLOG("find in apk dirPath(%s)", s);
@@ -228,6 +237,7 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
         {
             s += ASSETS_FOLDER_NAME_LENGTH;
         }
+
         if (FileUtilsAndroid::assetmanager)
         {
             AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
@@ -244,6 +254,7 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
 
 bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
 {
+    DECLARE_GUARD;
     // On Android, there are two situations for full path.
     // 1) Files in APK, e.g. assets/path/path/file.png
     // 2) Files not in APK, e.g. /data/data/org.cocos2dx.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
@@ -255,8 +266,9 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
-long FileUtilsAndroid::getFileSize(const std::string& filepath)
+long FileUtilsAndroid::getFileSize(const std::string& filepath) const
 {
+    DECLARE_GUARD;
     long size = FileUtils::getFileSize(filepath);
     if (size != -1) {
         return size;
@@ -281,10 +293,55 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath)
     return size;
 }
 
-FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
+std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath) const
 {
-    Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(EVENT_BEFORE_READ_FILE);
 
+    if(!dirPath.empty() && dirPath[0] == '/') return FileUtils::listFiles(dirPath);
+
+    std::vector<std::string> fileList;
+    string fullPath = fullPathForDirectory(dirPath);
+
+    static const std::string apkprefix("assets/");
+    string relativePath = "";
+    size_t position = fullPath.find(apkprefix);
+    if (0 == position) {
+        // "assets/" is at the beginning of the path and we don't want it
+        relativePath += fullPath.substr(apkprefix.size());
+    } else {
+        relativePath = fullPath;
+    }
+
+    if(obbfile) return obbfile->listFiles(relativePath);
+
+    if (nullptr == assetmanager) {
+        LOGD("... FileUtilsAndroid::assetmanager is nullptr");
+        return fileList;
+    }
+
+    if(relativePath[relativePath.length() - 1] == '/')
+    {
+        relativePath.erase(relativePath.length() - 1);
+    }
+
+    auto *dir = AAssetManager_openDir(assetmanager, relativePath.c_str());
+    if(nullptr == dir) {
+        LOGD("... FileUtilsAndroid::failed to open dir %s", relativePath.c_str());
+        AAssetDir_close(dir);
+        return fileList;
+    }
+    const char *tmpDir = nullptr;
+    while((tmpDir = AAssetDir_getNextFileName(dir))!= nullptr)
+    {
+        string filepath(tmpDir);
+        if(isDirectoryExistInternal(filepath)) filepath += "/";
+        fileList.push_back(filepath);
+    }
+    AAssetDir_close(dir);
+    return fileList;
+}
+
+FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer) const
+{
     static const std::string apkprefix("assets/");
     if (filename.empty())
         return FileUtils::Status::NotExists;
@@ -340,7 +397,7 @@ string FileUtilsAndroid::getWritablePath() const
     // Fix for Nexus 10 (Android 4.2 multi-user environment)
     // the path is retrieved through Java Context.getCacheDir() method
     string dir("");
-    string tmp = JniHelper::callStaticStringMethod("org/cocos2dx/lib/Cocos2dxHelper", "getCocos2dxWritablePath");
+    string tmp = JniHelper::callStaticStringMethod("org.cocos2dx.lib.Cocos2dxHelper", "getCocos2dxWritablePath");
 
     if (tmp.length() > 0)
     {
@@ -355,5 +412,3 @@ string FileUtilsAndroid::getWritablePath() const
 }
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

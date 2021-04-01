@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -27,7 +28,7 @@ THE SOFTWARE.
 #include "audio/android/AudioDecoderOgg.h"
 #include "platform/CCFileUtils.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 AudioDecoderOgg::AudioDecoderOgg()
 {
@@ -109,4 +110,4 @@ bool AudioDecoderOgg::decodeToPcm()
     return (curPos > 0);
 }
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {

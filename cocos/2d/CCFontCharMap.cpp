@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
 
@@ -34,7 +35,7 @@ NS_CC_BEGIN
 FontCharMap * FontCharMap::create(const std::string& plistFile)
 {
     std::string pathStr = FileUtils::getInstance()->fullPathForFilename(plistFile);
-    std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
+    std::string relPathStr = pathStr.substr(0, pathStr.find_last_of('/'))+"/";
 
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr);
 
@@ -113,7 +114,7 @@ FontAtlas * FontCharMap::createFontAtlas()
     int itemsPerColumn = (int)(s.height / _itemHeight);
     int itemsPerRow = (int)(s.width / _itemWidth);
 
-    tempAtlas->setLineHeight(_itemHeight);
+    tempAtlas->setLineHeight((float)_itemHeight);
 
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
 
@@ -125,6 +126,7 @@ FontAtlas * FontCharMap::createFontAtlas()
     tempDefinition.width = _itemWidth / contentScaleFactor;
     tempDefinition.height = _itemHeight / contentScaleFactor;
     tempDefinition.xAdvance = _itemWidth;
+    tempDefinition.rotated = false;
 
     int charId = _mapStartChar;
     for (int row = 0; row < itemsPerColumn; ++row)

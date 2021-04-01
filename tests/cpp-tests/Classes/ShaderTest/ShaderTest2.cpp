@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -26,9 +27,23 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "renderer/backend/Device.h"
 #include <tuple>
 
 USING_NS_CC;
+
+#define SET_UNIFORM(ps, name, value)  do {   \
+decltype(value) __v = value;                           \
+auto __loc = (ps)->getUniformLocation(name);  \
+(ps)->setUniform(__loc, &__v, sizeof(__v));  \
+} while(false) 
+
+#define SET_TEXTURE(ps, name, idx, value)  do {   \
+auto * __v = value;                           \
+auto __loc = (ps)->getUniformLocation(name);  \
+(ps)->setTexture(__loc, idx, __v);  \
+} while(false) 
+
 
 Shader2Tests::Shader2Tests()
 {
@@ -42,6 +57,19 @@ Shader2Tests::Shader2Tests()
 static int tuple_sort( const std::tuple<ssize_t,Effect*,QuadCommand> &tuple1, const std::tuple<ssize_t,Effect*,QuadCommand> &tuple2 )
 {
     return std::get<0>(tuple1) < std::get<0>(tuple2);
+}
+
+
+static void updateUniforms(backend::ProgramState *programState)
+{
+    float time = Director::getInstance()->getTotalFrames() * Director::getInstance()->getAnimationInterval();
+    Vec4 uTime(time / 10.0f, time, time * 2.0f, time * 4.0f);
+    Vec4 sinTime(time / 8.0f, time / 4.0f, time / 2.0f, sinf(time));
+    Vec4 cosTime(time / 8.0f, time / 4.0f, time / 2.0f, cosf(time));
+
+    SET_UNIFORM(programState, "u_Time", uTime);
+    SET_UNIFORM(programState, "u_SinTime", sinTime);
+    SET_UNIFORM(programState, "u_CosTime", cosTime);
 }
 
 class Effect;
@@ -66,7 +94,7 @@ public:
             _defaultEffect = effect;
             CC_SAFE_RETAIN(_defaultEffect);
 
-            setGLProgramState(_defaultEffect->getGLProgramState());
+            setProgramState(_defaultEffect->getProgramState());
         }
     }
     void addEffect(Effect *effect, ssize_t order) {
@@ -93,24 +121,30 @@ public:
 
                 if(std::get<0>(effect) >=0)
                     break;
-                auto glProgramState = std::get<1>(effect)->getGLProgramState();
-                if (glProgramState)
+                auto* programState = std::get<1>(effect)->getProgramState();
+                if (programState)
                 {
                     QuadCommand &q = std::get<2>(effect);
-                    q.init(_globalZOrder, _texture->getName(), glProgramState, _blendFunc, &_quad, 1, transform, flags);
+                    q.init(_globalZOrder, _texture, _blendFunc, &_quad, 1, transform, flags);
+                    updateUniforms(programState);
                     renderer->addCommand(&q);
                 }
                 idx++;
             }
 
             // normal effect: order == 0
-            _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
+            _trianglesCommand.init(_globalZOrder, _texture, _blendFunc, _polyInfo.triangles, transform, flags);
+
+            updateUniforms(_trianglesCommand.getPipelineDescriptor().programState);
             renderer->addCommand(&_trianglesCommand);
 
             // positive effects: order >= 0
             for(auto it = std::begin(_effects)+idx; it != std::end(_effects); ++it) {
                 QuadCommand &q = std::get<2>(*it);
-                q.init(_globalZOrder, _texture->getName(), std::get<1>(*it)->getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
+                auto* programState = std::get<1>(*it)->getProgramState();
+                updateUniforms(programState);
+                q.init(_globalZOrder, _texture, _blendFunc, &_quad, 1, transform, flags);
+                q.getPipelineDescriptor().programState = programState;
                 renderer->addCommand(&q);
                 idx++;
             }
@@ -136,47 +170,31 @@ protected:
 // Effect
 //
 
-bool Effect::initGLProgramState(const std::string &fragmentFilename)
+bool Effect::initProgramState(const std::string &fragmentFilename)
 {
     auto fileUtiles = FileUtils::getInstance();
     auto fragmentFullPath = fileUtiles->fullPathForFilename(fragmentFilename);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-    auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     _fragSource = fragSource;
 #endif
-    
-    _glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
-    CC_SAFE_RETAIN(_glprogramstate);
+    auto program = backend::Device::getInstance()->newProgram(positionTextureColor_vert, fragSource.c_str());
+    auto programState = new backend::ProgramState(program);
+    CC_SAFE_RELEASE(_programState);
+    CC_SAFE_RELEASE(program);
+    _programState = programState;
 
-    return _glprogramstate != nullptr;
+    return _programState != nullptr;
 }
 
 Effect::Effect()
-: _glprogramstate(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
-                                                      [this](EventCustom*)
-                                                      {
-                                                          auto glProgram = _glprogramstate->getGLProgram();
-                                                          glProgram->reset();
-                                                          glProgram->initWithByteArrays(ccPositionTextureColor_noMVP_vert, _fragSource.c_str());
-                                                          glProgram->link();
-                                                          glProgram->updateUniforms();
-                                                      }
-                                                      );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backgroundListener, -1);
-#endif
 }
 
 Effect::~Effect()
 {
-    CC_SAFE_RELEASE_NULL(_glprogramstate);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backgroundListener);
-#endif
+    CC_SAFE_RELEASE_NULL(_programState);
 }
 
 // Blur
@@ -197,24 +215,18 @@ protected:
 
 void EffectBlur::setTarget(EffectSprite *sprite)
 {
-    if (_glprogramstate == nullptr)
+    if (_programState == nullptr)
         return;
     
     Size size = sprite->getTexture()->getContentSizeInPixels();
-    _glprogramstate->setUniformVec2("resolution", size);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    _glprogramstate->setUniformFloat("blurRadius", _blurRadius);
-    _glprogramstate->setUniformFloat("sampleNum", _blurSampleNum);
-#endif
+    SET_UNIFORM(_programState, "resolution", size);
+    SET_UNIFORM(_programState, "blurRadius", _blurRadius);
+    SET_UNIFORM(_programState, "sampleNum", _blurSampleNum);
 }
 
 bool EffectBlur::init(float blurRadius, float sampleNum)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    initGLProgramState("Shaders/example_Blur.fsh");
-#else
-    initGLProgramState("Shaders/example_Blur_winrt.fsh");
-#endif
+    initProgramState("Shaders/example_Blur.fsh");
     _blurRadius = blurRadius;
     _blurSampleNum = sampleNum;
     
@@ -239,15 +251,15 @@ public:
 
     bool init()
     {
-        initGLProgramState("Shaders/example_Outline.fsh");
+        initProgramState("Shaders/example_Outline.fsh");
 
         Vec3 color(1.0f, 0.2f, 0.3f);
-        GLfloat radius = 0.01f;
-        GLfloat threshold = 1.75;
+        float radius = 0.01f;
+        float threshold = 1.75;
 
-        _glprogramstate->setUniformVec3("u_outlineColor", color);
-        _glprogramstate->setUniformFloat("u_radius", radius);
-        _glprogramstate->setUniformFloat("u_threshold", threshold);
+        SET_UNIFORM(_programState, "u_outlineColor", color);
+        SET_UNIFORM(_programState, "u_radius", radius);
+        SET_UNIFORM(_programState, "u_threshold", threshold);
         return true;
     }
 };
@@ -260,14 +272,14 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_Noisy.fsh");
+        initProgramState("Shaders/example_Noisy.fsh");
         return true;
     }
 
     virtual void setTarget(EffectSprite* sprite) override
     {
         auto s = sprite->getTexture()->getContentSizeInPixels();
-        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
+        SET_UNIFORM(_programState, "resolution", Vec2(s.width, s.height));
     }
 };
 
@@ -279,14 +291,14 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_EdgeDetection.fsh");
+        initProgramState("Shaders/example_EdgeDetection.fsh");
         return true;
     }
 
     virtual void setTarget(EffectSprite* sprite) override
     {
         auto s = sprite->getTexture()->getContentSizeInPixels();
-        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
+        SET_UNIFORM(_programState, "resolution", Vec2(s.width, s.height));
     }
 };
 
@@ -298,7 +310,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_GreyScale.fsh");
+        initProgramState("Shaders/example_GreyScale.fsh");
         return true;
     }
 };
@@ -311,7 +323,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_Sepia.fsh");
+        initProgramState("Shaders/example_Sepia.fsh");
         return true;
     }
 };
@@ -324,14 +336,14 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_Bloom.fsh");
+        initProgramState("Shaders/example_Bloom.fsh");
         return true;
     }
 
     virtual void setTarget(EffectSprite* sprite) override
     {
         auto s = sprite->getTexture()->getContentSizeInPixels();
-        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
+        SET_UNIFORM(_programState, "resolution", Vec2(s.width, s.height));
     }
 };
 
@@ -343,14 +355,14 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_CelShading.fsh");
+        initProgramState("Shaders/example_CelShading.fsh");
         return true;
     }
 
     virtual void setTarget(EffectSprite* sprite) override
     {
         auto s = sprite->getTexture()->getContentSizeInPixels();
-        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
+        SET_UNIFORM(_programState, "resolution", Vec2(s.width, s.height));
     }
 };
 
@@ -362,17 +374,16 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_LensFlare.fsh");
+        initProgramState("Shaders/example_LensFlare.fsh");
         return true;
     }
 
     virtual void setTarget(EffectSprite* sprite) override
     {
         auto s = sprite->getTexture()->getContentSizeInPixels();
-        getGLProgramState()->setUniformVec2("textureResolution", Vec2(s.width, s.height));
-
+        SET_UNIFORM(_programState, "textureResolution", Vec2(s.width, s.height));
         s = Director::getInstance()->getWinSize();
-        getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
+        SET_UNIFORM(_programState, "resolution", Vec2(s.width, s.height));
 
     }
 };
@@ -409,44 +420,41 @@ protected:
 
 bool EffectNormalMapped::init()
 {
-    initGLProgramState("Shaders3D/Normal.frag");
+    initProgramState("Shaders3D/Normal.frag");
     _kBump = 2;
     return true;
 }
 bool EffectNormalMapped::initNormalMap(const std::string& normalMapFileName)
 {
     auto normalMapTexture = Director::getInstance()->getTextureCache()->addImage(normalMapFileName);
-    getGLProgramState()->setUniformTexture("u_normalMap", normalMapTexture);
+    SET_TEXTURE(_programState, "u_normalMap", 1, normalMapTexture->getBackendTexture());
     return true;
 }
 void EffectNormalMapped::setTarget(EffectSprite* sprite)
 {
     _sprite = sprite;
-    getGLProgramState()->setUniformFloat("u_kBump", _kBump);
-    getGLProgramState()->setUniformVec2("u_contentSize", Vec2(sprite->getContentSize().width,sprite->getContentSize().height));
+    SET_UNIFORM(_programState, "u_kBump", _kBump);
+    SET_UNIFORM(_programState, "u_contentSize", Vec2(sprite->getContentSize().width, sprite->getContentSize().height));
 }
 
 void EffectNormalMapped::setKBump(float value)
 {
     _kBump = value;
-    auto glProgramState = getGLProgramState();
-    if(glProgramState) glProgramState->setUniformFloat("u_kBump", _kBump);
+    SET_UNIFORM(_programState, "u_kBump", _kBump);
+
 }
 
 void EffectNormalMapped::setLightPos(const Vec3& pos)
 {
     _lightPos = pos;
-    auto glProgramState = getGLProgramState();
-    if(glProgramState) glProgramState->setUniformVec4("u_lightPosInLocalSpace", Vec4(_lightPos.x,_lightPos.y,_lightPos.z,1));
-    
+    SET_UNIFORM(_programState, "u_lightPosInLocalSpace", Vec4(_lightPos.x, _lightPos.y, _lightPos.z, 1));
 }
 
 void EffectNormalMapped::setLightColor(const Color4F& color)
 {
     _lightColor = color;
-    auto glProgramState = getGLProgramState();
-    if(glProgramState) getGLProgramState()->setUniformVec3("u_diffuseL", Vec3(_lightColor.r,_lightColor.g,_lightColor.b));
-    
+    SET_UNIFORM(_programState, "u_diffuseL", Vec3(_lightColor.r, _lightColor.g, _lightColor.b));
+
 }
 
 EffectSpriteTest::EffectSpriteTest()
@@ -481,15 +489,15 @@ bool EffectSpriteTest::init()
         auto menu = Menu::create(itemPrev, itemNext, nullptr);
         menu->alignItemsHorizontally();
         menu->setScale(0.5);
-        menu->setAnchorPoint(Vec2(0,0));
-        menu->setPosition(Vec2(s.width/2,70));
+        menu->setAnchorPoint(Vec2(0.0f,0.0f));
+        menu->setPosition(Vec2(s.width/2,70.0f));
         addChild(menu);
 
         _sprite = EffectSprite::create("Images/grossini.png");
-        _sprite->setPosition(Vec2(0, s.height/2));
+        _sprite->setPosition(Vec2(0.0f, s.height/2));
         addChild(_sprite);
 
-        auto jump = JumpBy::create(4, Vec2(s.width,0), 100, 4);
+        auto jump = JumpBy::create(4, Vec2(s.width,0.0f), 100, 4);
         auto rot = RotateBy::create(4, 720);
         auto spawn = Spawn::create(jump, rot, nullptr);
         auto rev = spawn->reverse();
@@ -542,7 +550,7 @@ bool EffectSpriteLamp::init()
         Mat4 mat = _sprite->getNodeToWorldTransform();
         Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
         lampEffect->setLightColor(Color4F(1,1,1,1));
-        lampEffect->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+        lampEffect->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50.0f));
         lampEffect->setKBump(2);
         _sprite->setEffect(lampEffect);
         _effect = lampEffect;
@@ -568,7 +576,7 @@ void EffectSpriteLamp::onTouchesBegan(const std::vector<Touch*>& touches, Event 
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
         Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
-        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50.0f));
     }
 }
 
@@ -583,7 +591,7 @@ void EffectSpriteLamp::onTouchesMoved(const std::vector<Touch*>& touches, Event 
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
         Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
-        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50.0f));
     }
 }
 
@@ -598,6 +606,6 @@ void EffectSpriteLamp::onTouchesEnded(const std::vector<Touch*>& touches, Event 
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
         Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
-        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50.0f));
     }
 }

@@ -1,5 +1,6 @@
-﻿/****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+/****************************************************************************
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -26,6 +27,7 @@
 #define __CCTEXTURECUBE_H__
 
 #include "renderer/CCTexture2D.h"
+#include "renderer/backend/Texture.h"
 
 #include <string>
 #include <unordered_map>
@@ -42,7 +44,7 @@ NS_CC_BEGIN
  TextureCube is a collection of six separate square textures that are put 
  onto the faces of an imaginary cube.
 */
-class CC_DLL TextureCube: public Texture2D
+class CC_DLL TextureCube : public Ref
 {
 public:
     /** create cube texture from 6 textures.
@@ -61,7 +63,9 @@ public:
     /** Sets the min filter, mag filter, wrap s and wrap t texture parameters.
     If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
     */
-    void setTexParameters(const TexParams&);
+    void setTexParameters(const Texture2D::TexParams&);
+
+    backend::TextureBackend* getBackendTexture() { return _texture; }
 
     /** reload texture cube after GLESContext reconstructed.*/
     bool reloadTexture();
@@ -82,6 +86,7 @@ protected:
               const std::string& positive_z, const std::string& negative_z);
 private:
     std::vector<std::string> _imgPath;
+    backend::TextureCubemapBackend *_texture = nullptr;
 };
 
 // end of 3d group

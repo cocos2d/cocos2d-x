@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -24,11 +25,11 @@ THE SOFTWARE.
 #include "audio/android/utils/Utils.h"
 #include "platform/android/jni/JniHelper.h"
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 int getSDKVersion()
 {
-    return JniHelper::callStaticIntMethod("org/cocos2dx/lib/Cocos2dxHelper", "getSDKVersion");
+    return JniHelper::callStaticIntMethod("org.cocos2dx.lib.Cocos2dxHelper", "getSDKVersion");
 }
 
-}} // end of namespace cocos2d { namespace experimental
+} // end of namespace cocos2d

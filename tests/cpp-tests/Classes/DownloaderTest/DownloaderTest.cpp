@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -28,22 +29,23 @@
 #include "../testResource.h"
 
 #include "ui/UILoadingBar.h"
+#include "ui/UIButton.h"
 #include "network/CCDownloader.h"
 
 USING_NS_CC;
 
 static const char* sURLList[] =
 {
-    "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
-    "http://www.cocos2d-x.org/docs/manual/framework/native/wiki/logo-resources-of-cocos2d-x/res/2dx_icon_512_rounded.png",
-    "http://www.cocos2d-x.org/attachments/1503/no_exist.txt",  // try to download no exist file
-    "http://download.sdkbox.com/installer/v1/sdkbox-iap_v2.3.6.1.tar.gz",
+    "https://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
+    "https://cocos2d-x.org/images/logo.png",
+    "https://www.cocos2d-x.org/attachments/1503/no_exist.txt",  // try to download no exist file
+    "https://github.com/openssl/openssl/archive/OpenSSL_1_1_1a.zip",
 };
 const static int sListSize = (sizeof(sURLList)/sizeof(sURLList[0]));
 static const char* sNameList[sListSize] =
 {
     "cocos2dx_landscape.png",
-    "2dx_icon_512_rounded.png",
+    "logo.png",
     "inexist file",
     "big file",
 };
@@ -81,7 +83,7 @@ struct DownloaderTest : public TestCase
         // add a title on the top
         auto title = Label::createWithTTF(name,"fonts/arial.ttf",16);
         title->setTag(TAG_TITLE);
-        title->setAnchorPoint(Vec2(0.5, 1));
+        title->setAnchorPoint(Vec2(0.5f, 1.0f));
         title->setPosition(viewSize.width / 2, viewSize.height - margin);
         bg->addChild(title, 10);
         
@@ -90,16 +92,16 @@ struct DownloaderTest : public TestCase
                                       "cocosui/animationbuttonpressed.png");
         btn->setTag(TAG_BUTTON);
         btn->setTitleText("Download");
-        btn->setAnchorPoint(Vec2(0.5, 0));
+        btn->setAnchorPoint(Vec2(0.5f, 0.0f));
         btn->setPosition(Vec2(viewSize.width / 2, margin));
         btn->addClickEventListener(callback);
         bg->addChild(btn, 10);
         
         // add a progress bar
-        auto bar = ui::LoadingBar::create("cocosui/UIEditorTest/UISlider/silder_progressBar.png");
+        auto bar = ui::LoadingBar::create("ccs-res/cocosui/sliderProgress.png");
         bar->setTag(TAG_PROGRESS_BAR);
         bar->ignoreContentAdaptWithSize(false);
-        bar->setAnchorPoint(Vec2(0.5, 0));
+        bar->setAnchorPoint(Vec2(0.5f, 0.0f));
         bar->setContentSize(Size(viewSize.width - margin * 2, btn->getContentSize().height));
         bar->setPosition(btn->getPosition());
         bar->setVisible(false);
@@ -108,9 +110,9 @@ struct DownloaderTest : public TestCase
         // add a status label
         auto label = Label::createWithTTF("","fonts/arial.ttf",14);
         label->setTag(TAG_STATUS);
-        label->setAnchorPoint(Vec2(0.5, 0.5));
+        label->setAnchorPoint(Vec2(0.5f, 0.5f));
         label->setPosition(Vec2(viewSize.width / 2, viewSize.height / 2));
-        label->setContentSize(Size(viewSize.width, 0));
+        label->setContentSize(Size(viewSize.width, 0.0f));
         label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
         label->setDimensions(viewSize.width, viewSize.height);
         bg->addChild(label, 20);
@@ -165,7 +167,7 @@ struct DownloaderTest : public TestCase
             this->downloader->createDownloadDataTask(sURLList[1], sNameList[1]);
         });
         topLeftView->setName(sNameList[1]);
-        topLeftView->setAnchorPoint(Vec2(1, 0));
+        topLeftView->setAnchorPoint(Vec2(1.0f, 0.0f));
         topLeftView->setPosition(VisibleRect::center());
         this->addChild(topLeftView);
 
@@ -319,7 +321,52 @@ struct DownloaderTest : public TestCase
     }
 };
 
+struct DownloaderMultiTask : public TestCase
+{
+    CREATE_FUNC(DownloaderMultiTask);
+
+    virtual std::string title() const override { return "Downloader Multi Task"; }
+    virtual std::string subtitle() const override { return "see the console output"; }
+
+    std::unique_ptr<network::Downloader> downloader;
+
+    DownloaderMultiTask()
+    {
+        // countOfMaxProcessingTasks 32
+        network::DownloaderHints hints = {32, 60, ".going"};
+        downloader.reset(new network::Downloader(hints));
+    }
+
+    virtual void onEnter() override
+    {
+        TestCase::onEnter();
+        char path[256];
+        char name[64];
+        // add 64 download task at same time.
+        for(int i=0; i< 64;i++){
+            sprintf(name, "%d_%s", i, sNameList[0]);
+            sprintf(path, "%sCppTests/DownloaderTest/%s", FileUtils::getInstance()->getWritablePath().c_str(), name);
+            log("downloader task create: %s", name);
+            this->downloader->createDownloadFileTask(sURLList[0], path, name);
+        }
+
+        downloader->onFileTaskSuccess = ([] (const network::DownloadTask& task) {
+            log("downloader task success: %s", task.identifier.c_str());
+        });
+
+        downloader->onTaskError = ([] (const network::DownloadTask& task, int errorCode, int errorCodeInternal, const std::string& errorStr) {
+            log("downloader task failed : %s, identifier(%s) error code(%d), internal error code(%d) desc(%s)"
+                , task.requestURL.c_str()
+                , task.identifier.c_str()
+                , errorCode
+                , errorCodeInternal
+                , errorStr.c_str());
+        });
+    }
+};
+
 DownloaderTests::DownloaderTests()
 {
     ADD_TEST_CASE(DownloaderTest);
+    ADD_TEST_CASE(DownloaderMultiTask);
 };

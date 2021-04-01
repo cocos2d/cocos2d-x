@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +26,7 @@ THE SOFTWARE.
 
 #include <unistd.h>
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
 class AssetFd
 {
@@ -38,5 +39,5 @@ private:
     int _assetFd;
 };
 
-}} // namespace cocos2d { namespace experimental {
+} // namespace cocos2d {
 
