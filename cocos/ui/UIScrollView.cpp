@@ -199,6 +199,12 @@ void ScrollView::setInnerContainerSize(const Size &size)
     {
         innerSizeHeight = size.height;
     }
+
+    if (_autoScrolling)
+    {
+        _autoScrollStartPosition.y -= innerSizeHeight - _innerContainer->getContentSize().height;
+    }
+    
     _innerContainer->setContentSize(Size(innerSizeWidth, innerSizeHeight));
 
     // Calculate and set the position of the inner container.
