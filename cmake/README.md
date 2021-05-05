@@ -53,11 +53,36 @@ open Cocos2d-x.xcodeproj
 
 ### Generate iOS Project
 
+*Create iOS device project*
 ```sh
-cd cocos2d-x
+cd cocos2d-
 mkdir ios-build && cd ios-build
 cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos
 open Cocos2d-x.xcodeproj
+```
+
+*Create iOS simulator project*
+```sh
+cd cocos2d-
+mkdir ios-build && cd ios-build
+cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
+open Cocos2d-x.xcodeproj
+```
+
+If you meet the error like this:
+```
+CMake Error at CMakeLists.txt:28 (project):
+  No CMAKE_C_COMPILER could be found.
+
+
+
+CMake Error at CMakeLists.txt:28 (project):
+  No CMAKE_CXX_COMPILER could be found.
+```
+
+Then you can set C/C++ compiler manually like this
+```sh
+cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
 ```
 
 #### How do I customize the generated Xcode project?
