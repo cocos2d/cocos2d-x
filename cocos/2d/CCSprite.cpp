@@ -382,7 +382,7 @@ void Sprite::updateShaders(const char* vert, const char* frag)
     CC_SAFE_RELEASE(program);
 }
 
-void Sprite::setProgramState(backend::ProgramType type)
+void Sprite::setProgramState(uint32_t type)
 {
     if(_programState != nullptr &&
        _programState->getProgram()->getProgramType() == type)
