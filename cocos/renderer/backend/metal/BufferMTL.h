@@ -86,7 +86,7 @@ public:
     void beginFrame();
     
 private:
-    void updateIndex();
+    void inflightBuffer(std::size_t offset, std::size_t size);
 
     id<MTLBuffer> _mtlBuffer = nil;
     NSMutableArray* _dynamicDataBuffers = nil;
