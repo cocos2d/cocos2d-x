@@ -46,6 +46,7 @@
 #include "xxhash.h"
 
 #include "renderer/backend/Backend.h"
+#include "platform/CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -152,6 +153,7 @@ void RenderQueue::realloc(size_t reserveSize)
 //
 //
 static const int DEFAULT_RENDER_QUEUE = 0;
+static const int ENABLE_MSAA_GLOBAL_METAL = true;
 
 //
 // constructors, destructor, init
@@ -168,6 +170,13 @@ Renderer::Renderer()
 
     // for the batched TriangleCommand
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
+    
+#ifdef CC_USE_METAL
+    if(ENABLE_MSAA_GLOBAL_METAL && GLView::getGLContextAttrs().multisamplingCount > 1){
+        _renderTargetFlag |= RenderTargetFlag::MSAA;
+        _renderPassDescriptor.msaaEnabled = true;
+    }
+#endif
 }
 
 Renderer::~Renderer()
@@ -196,6 +205,9 @@ void Renderer::init()
 
 void Renderer::addCommand(RenderCommand* command)
 {
+    auto commandType = command->getType();
+    CCASSERT(!(commandType == RenderCommand::Type::CUSTOM_COMMAND && command->getPipelineDescriptor().programState == nullptr), "Cannot add custom command without programState");
+
     int renderQueueID =_commandGroupStack.top();
     addCommand(command, renderQueueID);
 }
@@ -223,6 +235,7 @@ void Renderer::popGroup()
 
 int Renderer::createRenderQueue()
 {
+    CCASSERT(!_isRendering, "Cannot change render queue while rendering");
     RenderQueue newRenderQueue;
     _renderGroups.push_back(newRenderQueue);
     return (int)_renderGroups.size() - 1;
@@ -381,6 +394,11 @@ void Renderer::beginFrame()
 
 void Renderer::endFrame()
 {
+#ifdef CC_USE_METAL
+    if(_renderPassDescriptor.msaaEnabled)
+        resolveMsaaColorTo(nullptr);
+#endif
+    
     _commandBuffer->endFrame();
 
 #ifdef CC_USE_METAL
@@ -752,8 +770,8 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
     auto device = backend::Device::getInstance();
     _renderPipeline->update(pipelineDescriptor, renderPassDescriptor);
     backend::DepthStencilState* depthStencilState = nullptr;
-    auto needDepthStencilAttachment = renderPassDescriptor.depthTestEnabled || renderPassDescriptor.stencilTestEnabled;
-    if (needDepthStencilAttachment)
+    auto needDepthStencilAttachment = renderPassDescriptor.needDepthStencilAttachment();
+    if (needDepthStencilAttachment || _depthStencilDescriptor.encodeUnifiedMsaa)
     {
         depthStencilState = device->createDepthStencilState(_depthStencilDescriptor);
     }
@@ -827,11 +845,19 @@ void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachmen
         _renderPassDescriptor.stencilTestEnabled = false;
         _renderPassDescriptor.stencilAttachmentTexture = nullptr;
     }
+    
+    if(flags & RenderTargetFlag::MSAA)
+        _renderPassDescriptor.msaaEnabled = (GLView::getGLContextAttrs().multisamplingCount > 1);
+    else
+        _renderPassDescriptor.msaaEnabled = false;
 }
 
 void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil, float globalOrder)
 {
     _clearFlag = flags;
+    bool msaaEnabled = false;
+    if(_renderTargetFlag & RenderTargetFlag::MSAA)
+        msaaEnabled = true;
 
     CallbackCommand* command = new CallbackCommand();
     command->init(globalOrder);
@@ -860,6 +886,8 @@ void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigne
             descriptor.stencilTestEnabled = true;
             descriptor.stencilAttachmentTexture = _renderPassDescriptor.stencilAttachmentTexture;
         }
+        
+        descriptor.msaaEnabled = msaaEnabled;
 
         _commandBuffer->beginRenderPass(descriptor);
         _commandBuffer->endRenderPass();
@@ -867,6 +895,71 @@ void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigne
         delete command;
     };
     addCommand(command);
+}
+
+void Renderer::beginUnifiedMsaa(Texture2D* resolveTex, const Color4F& color, float depth, unsigned int stencil, float globalOrder)
+{
+    CallbackCommand* command = new CallbackCommand();
+    command->init(globalOrder);
+    command->func = [=]() -> void {
+        backend::RenderPassDescriptor descriptor;
+        
+        {
+            _clearColor = color;
+            descriptor.clearColorValue = {color.r, color.g, color.b, color.a};
+            descriptor.needClearColor = true;
+            descriptor.needColorAttachment = true;
+            descriptor.colorAttachmentsTexture[0] = _renderPassDescriptor.colorAttachmentsTexture[0];
+        }
+        
+        {
+            descriptor.clearDepthValue = depth;
+            descriptor.needClearDepth = true;
+            descriptor.depthTestEnabled = true;
+            descriptor.depthAttachmentTexture = _renderPassDescriptor.depthAttachmentTexture;
+        }
+        
+        {
+            descriptor.clearStencilValue = stencil;
+            descriptor.needClearStencil = true;
+            descriptor.stencilTestEnabled = true;
+            descriptor.stencilAttachmentTexture = _renderPassDescriptor.stencilAttachmentTexture;
+        }
+        
+        descriptor.msaaEnabled = true;
+        descriptor.encodeUnifiedMsaa = true;
+        descriptor.msaaResolveTexture = resolveTex->getBackendTexture();
+
+        _commandBuffer->beginRenderPass(descriptor);
+        
+        CCASSERT(not _depthStencilDescriptor.encodeUnifiedMsaa, "unexpected");
+        _depthStencilDescriptor.encodeUnifiedMsaa = true;
+        
+        delete command;
+    };
+    addCommand(command);
+}
+
+void Renderer::endUnifiedMsaa()
+{
+    _commandBuffer->endRenderPass();
+    CCASSERT(_depthStencilDescriptor.encodeUnifiedMsaa, "unexpected");
+    _depthStencilDescriptor.encodeUnifiedMsaa = false;
+    _commandBuffer->unlockMtlEncoder();
+}
+
+void Renderer::resolveMsaaColorTo(Texture2D* dst)
+{
+    backend::RenderPassDescriptor descriptor;
+    descriptor.encodeMsaaResolve = true;
+    
+    if(dst){
+        descriptor.colorAttachmentsTexture[0] = _renderPassDescriptor.colorAttachmentsTexture[0];
+        descriptor.msaaResolveTexture = dst->getBackendTexture();
+    }
+    
+    _commandBuffer->beginRenderPass(descriptor);
+    _commandBuffer->endRenderPass();
 }
 
 Texture2D* Renderer::getColorAttachment() const

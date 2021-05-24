@@ -60,6 +60,17 @@ class EventCustom;
 class CC_DLL RenderTexture : public Node 
 {
 public:
+    enum class MsaaMode : int {
+        /// Render without msaa
+        None = 0,
+        /// General render-pipeline with enabled msaa (Metal only).
+        /// Will create new encoder on clear, MSAA resolving, and every 2d/3d switch.
+        MtlCommon = 1,
+        /// Create a unified-encoder on beginWithClear (Metal only).
+        /// Unified encoder provide single metal-pass for clear, MSAA-Resolve, and every 2d/3d switch operations.
+        MtlUnified = 2
+    };
+    
     /** Initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format. 
      *
      * @param w The RenderTexture object width.
@@ -68,6 +79,7 @@ public:
      * @param depthStencilFormat The depthStencil format.
      */
     static RenderTexture * create(int w ,int h, backend::PixelFormat format, backend::PixelFormat depthStencilFormat);
+    static RenderTexture * create(int w ,int h, backend::PixelFormat format, backend::PixelFormat depthStencilFormat, MsaaMode multisampling);
 
     /** Creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid. 
      *
@@ -344,6 +356,7 @@ protected:
     //renderer caches and callbacks
     void onBegin();
     void onEnd();
+    void resolveMsaaColorTexture();
     void clearColorAttachment();
 
     void onSaveToFile(const std::string& fileName, bool isRGBA = true, bool forceNonPMA = false);
@@ -358,6 +371,7 @@ protected:
     Texture2D* _texture2D = nullptr;
     Texture2D* _depthStencilTexture = nullptr;
     Texture2D* _texture2DCopy = nullptr;    // a copy of _texture
+    Texture2D* _textureMsaaTarget = nullptr;
     Texture2D* _oldColorAttachment = nullptr;
     Texture2D* _oldDepthAttachment = nullptr;
     Texture2D* _oldStencilAttachment = nullptr;
@@ -370,6 +384,7 @@ protected:
     float _clearDepth = 1.f;
     int _clearStencil = 0;
     bool _autoDraw = false;
+    MsaaMode _multisampling = MsaaMode::None;
     ClearFlag _clearFlags = ClearFlag::NONE;
 
     /** The Sprite being used.

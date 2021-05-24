@@ -25,10 +25,13 @@
 #pragma once
 
 #include "../Device.h"
+#include "base/CCMap.h"
 #import <Metal/Metal.h>
 #import <QuartzCore/CAMetalLayer.h>
 
 CC_BACKEND_BEGIN
+
+class DepthStencilStateMTL;
 
 /**
  * @addtogroup _metal
@@ -154,6 +157,7 @@ private:
     
     id<MTLDevice> _mtlDevice = nil;
     id<MTLCommandQueue> _mtlCommandQueue = nil;
+    Map<unsigned int, DepthStencilStateMTL*>  _depthStencilStateCache;
 };
 
 // end of _metal group

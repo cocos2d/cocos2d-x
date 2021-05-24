@@ -197,4 +197,33 @@ private:
     cocos2d::RenderTexture* _renderTexWithBuffer;
 };
 
+class RenderTextureWithMsaaSprite3D : public RenderTextureTest
+{
+   
+public:
+    CREATE_FUNC(RenderTextureWithMsaaSprite3D);
+    RenderTextureWithMsaaSprite3D();
+    
+    void resetTest();
+    
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual void update(float t)override;
+    
+    void onScaleTest(cocos2d::Ref* sender);
+    void onMssa(cocos2d::Ref* sender);
+
+private:
+    cocos2d::Vector<cocos2d::Node*> _nodes;
+    cocos2d::RenderTexture* _renderTexWithBuffer = nullptr;
+    int _testScale = 1;
+    cocos2d::RenderTexture::MsaaMode _useMsaa = cocos2d::RenderTexture::MsaaMode::None;
+    
+    cocos2d::MenuItemFont* _btnScale = nullptr;
+    cocos2d::MenuItemFont* _btnMsaa = nullptr;
+};
+
 #endif

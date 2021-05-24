@@ -31,7 +31,7 @@
 #include "Macros.h"
 #include "Types.h"
 #include "RenderPassDescriptor.h"
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 #include "ProgramState.h"
 #include "VertexLayout.h"
 
@@ -183,6 +183,8 @@ public:
      * @param backRef Specifies back stencil reference value.
      */
     void setStencilReferenceValue(unsigned int frontRef, unsigned int backRef);
+    
+    virtual void unlockMtlEncoder();
 
 protected:
     virtual ~CommandBuffer() = default;

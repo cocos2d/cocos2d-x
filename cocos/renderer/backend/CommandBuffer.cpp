@@ -37,4 +37,9 @@ void CommandBuffer::setStencilReferenceValue(unsigned int frontRef, unsigned int
     _stencilReferenceValueBack = backRef;
 }
 
+void CommandBuffer::unlockMtlEncoder()
+{
+    // do nothing
+}
+
 CC_BACKEND_END
