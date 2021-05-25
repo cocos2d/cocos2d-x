@@ -1907,7 +1907,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             {
                 auto textureAtlas = batchNode->getTextureAtlas();
                 if (!textureAtlas->getTotalQuads())
-                    return;
+                    continue;
 
                 auto &batch = _batchCommands[i++];
                 auto &&commands = batch.getCommandArray();
