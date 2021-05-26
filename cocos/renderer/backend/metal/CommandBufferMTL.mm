@@ -219,6 +219,16 @@ CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
 
 CommandBufferMTL::~CommandBufferMTL()
 {
+    if (_mtlCommandBuffer != nil) {
+        if ([_mtlCommandBuffer status] == MTLCommandBufferStatus::MTLCommandBufferStatusScheduled) {
+            // Waiting the background rendering's completion to prevent os-x app crashes on some MacBooks.
+            [_mtlCommandBuffer waitUntilCompleted];
+        }
+
+        [_mtlCommandBuffer release];
+        _mtlCommandBuffer = nil;
+        return;
+    }
     dispatch_semaphore_signal(_frameBoundarySemaphore);
 }
 
@@ -226,6 +236,10 @@ void CommandBufferMTL::beginFrame()
 {
     _autoReleasePool = [[NSAutoreleasePool alloc] init];
     dispatch_semaphore_wait(_frameBoundarySemaphore, DISPATCH_TIME_FOREVER);
+
+    if (_mtlCommandBuffer != nil) {
+        [_mtlCommandBuffer release];
+    }    
 
     _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
     [_mtlCommandBuffer enqueue];
@@ -369,7 +383,8 @@ void CommandBufferMTL::endFrame()
     }];
 
     [_mtlCommandBuffer commit];
-    [_mtlCommandBuffer release];
+    // _mtlCommandBuffer will be released at the beginning of the next frame
+    // @see CommandBufferMTL::beginFrame
     DeviceMTL::resetCurrentDrawable();
     [_autoReleasePool drain];
 }
