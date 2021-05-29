@@ -258,7 +258,6 @@ class CocosZipInstaller(object):
             self.download_zip_file()
 
     def download_file_with_retry(self, times, delay):
-        import urllib2
         times_count = 0
         while(times_count < times):
             times_count += 1
