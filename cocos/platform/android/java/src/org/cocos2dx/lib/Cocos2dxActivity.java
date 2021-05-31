@@ -92,6 +92,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         });
     }
 
+    public void performHapticFeedback() {
+        getWindow().getDecorView().performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+    }
+
     public void setEnableVirtualButton(boolean value) {
         this.showVirtualButton = value;
     }

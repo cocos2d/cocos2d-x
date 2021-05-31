@@ -43,6 +43,10 @@
 
 const float MAX_MEASURE_HEIGHT = 10000;
 
+static UIImpactFeedbackGenerator *impactFeedbackGenerator[3];
+static UINotificationFeedbackGenerator *notificationFeedbackGenerator;
+static UISelectionFeedbackGenerator *selectionFeedbackGenerator;
+
 
 static NSAttributedString* __attributedStringWithFontSize(NSMutableAttributedString* attributedString, CGFloat fontSize)
 {
@@ -622,6 +626,82 @@ void Device::vibrate(float duration)
         // play the less annoying tick noise or one of your own
         AudioServicesPlayAlertSound (kSystemSoundID_Vibrate);
     }
+}
+
+void Device::prepareImpactFeedbackGenerator(ImpactFeedbackStyle style)
+{
+    if (impactFeedbackGenerator[style] == nullptr) {
+        UIImpactFeedbackStyle impactStyle;
+        switch (style) {
+            case ImpactFeedbackStyleLight:
+                impactStyle = UIImpactFeedbackStyleLight;
+                break;
+            case ImpactFeedbackStyleMedium:
+                impactStyle = UIImpactFeedbackStyleMedium;
+                break;
+            case ImpactFeedbackStyleHeavy:
+                impactStyle = UIImpactFeedbackStyleHeavy;
+                break;
+        }
+        
+        impactFeedbackGenerator[style] = [[UIImpactFeedbackGenerator alloc] initWithStyle:impactStyle];
+    }
+    [impactFeedbackGenerator[style] prepare];
+}
+
+void Device::impactOccured(ImpactFeedbackStyle style)
+{
+    if (impactFeedbackGenerator[style] == nullptr) {
+        prepareImpactFeedbackGenerator(style);
+    }
+    [impactFeedbackGenerator[style] impactOccurred];
+}
+
+void Device::prepareNotificationFeedbackGenerator()
+{
+    if (notificationFeedbackGenerator == nullptr) {
+        notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+    }
+    [notificationFeedbackGenerator prepare];
+}
+
+void Device::notificationOccured(NotificationFeedbackType type)
+{
+    if (notificationFeedbackGenerator == nullptr) {
+        prepareNotificationFeedbackGenerator();
+    }
+    
+    UINotificationFeedbackType notificationType;
+    switch (type) {
+        case NotificationFeedbackTypeError:
+            notificationType = UINotificationFeedbackTypeError;
+            break;
+        case NotificationFeedbackTypeSuccess:
+            notificationType = UINotificationFeedbackTypeSuccess;
+            break;
+        case NotificationFeedbackTypeWarning:
+            notificationType = UINotificationFeedbackTypeWarning;
+            break;
+    }
+    
+    [notificationFeedbackGenerator notificationOccurred:notificationType];
+}
+
+void Device::prepareSelectionFeedbackGenerator()
+{
+    if (selectionFeedbackGenerator == nullptr) {
+        selectionFeedbackGenerator = [[UISelectionFeedbackGenerator alloc] init];
+    }
+    [selectionFeedbackGenerator prepare];
+}
+
+void Device::selectionChanged()
+{
+    if (selectionFeedbackGenerator == nullptr) {
+        prepareSelectionFeedbackGenerator();
+    }
+    [selectionFeedbackGenerator selectionChanged];
+    [selectionFeedbackGenerator prepare];
 }
 
 NS_CC_END

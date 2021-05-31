@@ -312,6 +312,10 @@ public class Cocos2dxHelper {
         ((Cocos2dxActivity)sActivity).setKeepScreenOn(value);
     }
 
+    public static void performHapticFeedback() {
+        ((Cocos2dxActivity)sActivity).performHapticFeedback();
+    }
+
     public static void vibrate(float duration) {
         sVibrateService.vibrate((long)(duration * 1000));
     }
