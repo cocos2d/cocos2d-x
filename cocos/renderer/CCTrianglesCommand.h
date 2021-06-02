@@ -40,7 +40,7 @@ NS_CC_BEGIN
 */
 namespace backend {
     class TextureBackend;
-    class Program;
+    class ProgramState;
 }
 
 class Texture2D;
@@ -99,9 +99,6 @@ public:
     /**Get the model view matrix.*/
     const Mat4& getModelView() const { return _mv; }
     
-    /** update material ID */
-    void updateMaterialID();
-  
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
     void generateMaterialID();
@@ -118,7 +115,7 @@ protected:
 
     // Cached value to determine to generate material id or not.
     BlendFunc _blendType = BlendFunc::DISABLE;
-    backend::ProgramType _programType = backend::ProgramType::CUSTOM_PROGRAM;
+    backend::ProgramState* _programState = nullptr;
     backend::TextureBackend* _texture = nullptr;
 };
 
