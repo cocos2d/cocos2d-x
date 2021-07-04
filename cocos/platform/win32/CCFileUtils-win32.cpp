@@ -226,7 +226,7 @@ std::string FileUtilsWin32::getFullPathForFilenameWithinDirectory(const std::str
 
 void FileUtilsWin32::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
 {
-    std::string fullpath = fullPathForFilename(dirPath);
+    std::string fullpath = fullPathForDirectory(dirPath);
     if (isDirectoryExist(fullpath))
     {
         tinydir_dir dir;
