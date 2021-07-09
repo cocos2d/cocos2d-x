@@ -151,7 +151,7 @@ std::string getUrlStringByFileName(const std::string &fileName) {
         urlString.append("file://").append(fullPath);
     }
     else if (fullPath.find(assetsPath) == 0) {
-        urlString = fullPath.replace(fullPath.find_first_of(assetsPath), assetsPath.length(), assetsPath);
+        urlString = fullPath.replace(fullPath.find_first_of(assetsPath), assetsPath.length(), basePath);
     }
     else {
         urlString.append(basePath).append(fullPath);
