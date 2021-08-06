@@ -164,7 +164,18 @@ public:
         return *this;
     }
     
-    operator T * () const { return _ptr; }
+// This operation is now removed by default, as it is dangerous.
+// Implicit decay to a raw pointer may result in the retained object being accidentally destroyed in some circumstances.
+// This issue can arise for example when returning a 'RefPtr' from a function and assigning it to a raw pointer.
+// Instead, explicitly call 'get()' if extracting the raw pointer is intended, similar to how 'std::shared_ptr' and 'std::unique_ptr' are used.
+//
+// If you understand the risks and just want your project to compile as usual for now, define 'CC_REFPTR_ALLOW_RAWPTR_DECAY' to be '1'.
+// Eventually however this conversion should be removed from the API.
+#if CC_REFPTR_ALLOW_DECAY_TO_RAW_PTR
+    CC_DEPRECATED_ATTRIBUTE operator T * () const { return _ptr; }
+#else
+    operator T * () const = delete;
+#endif
     
     T & operator * () const
     {
@@ -263,12 +274,22 @@ public:
         CC_REF_PTR_SAFE_RELEASE(_ptr);
         _ptr = other._ptr;
     }
+
+    /**
+     * Helper: construct a new object using the specified arguments and wrap it in a 'RefPtr<T>'.
+     * The newly created object has a single reference to it, held by the returned 'RefPtr<T>'.
+     * Similar in concept to 'std::make_shared' and 'std::make_unique' for standard shared and unique pointers.
+     */
+    template <class... ArgTypes>
+    static inline RefPtr<T> make(ArgTypes&&... args)
+    {
+        RefPtr<T> ptr;
+        ptr.weakAssign(new T(args...));
+        return ptr;
+    }
     
 private:
     T * _ptr;
-
-    // NOTE: We can ensure T is derived from cocos2d::Ref at compile time here.
-    static_assert(std::is_base_of<Ref, typename std::remove_const<T>::type>::value, "T must be derived from Ref");
 };
 
 template <class T> inline
