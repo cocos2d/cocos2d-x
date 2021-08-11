@@ -37,6 +37,7 @@ USING_NS_CC;
 #define EVENT_AFTER_DRAW_RESET_POSITION "director_after_draw"
 using std::max;
 #define INITIAL_SIZE (10000)
+#define VETEXT_BUFF_SIZE (64000)
 
 #include "renderer/ccShaders.h"
 #include "renderer/backend/Device.h"
