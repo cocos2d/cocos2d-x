@@ -24,7 +24,7 @@ macro(cocos2dx_depend)
     elseif(APPLE)
 
         include_directories(/System/Library/Frameworks)
-        find_library(ICONV_LIBRARY iconv)
+        find_library(SYS_ICONV_LIBRARY iconv)
         find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
         find_library(FOUNDATION_LIBRARY Foundation)
         find_library(OPENAL_LIBRARY OpenAL)
@@ -35,7 +35,7 @@ macro(cocos2dx_depend)
             ${AUDIOTOOLBOX_LIBRARY}
             ${QUARTZCORE_LIBRARY}
             ${FOUNDATION_LIBRARY}
-            ${ICONV_LIBRARY}
+            ${SYS_ICONV_LIBRARY}
             ${GAMECONTROLLER_LIBRARY}
             )
 
