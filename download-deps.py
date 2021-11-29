@@ -107,7 +107,10 @@ class CocosZipInstaller(object):
             print("==> version file doesn't exist")
 
     def get_input_value(self, prompt):
-        ret = raw_input(prompt)
+        if sys.version_info[0] > 2:
+            ret = input(prompt)
+        else:
+            ret = raw_input(prompt)
         ret.rstrip(" \t")
         return ret
 
@@ -336,21 +339,8 @@ class CocosZipInstaller(object):
             print("==> Download (%s) finish!" % self._filename)
 
 
-def _check_python_version():
-    major_ver = sys.version_info[0]
-    if major_ver > 2:
-        print ("The python version is %d.%d. But python 2.x is required. (Version 2.7 is well tested)\n"
-               "Download it here: https://www.python.org/" % (major_ver, sys.version_info[1]))
-        return False
-
-    return True
-
-
 def main():
     workpath = os.path.dirname(os.path.realpath(__file__))
-
-    if not _check_python_version():
-        exit()
 
     parser = OptionParser()
     parser.add_option('-r', '--remove-download',
