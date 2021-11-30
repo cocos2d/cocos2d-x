@@ -275,6 +275,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     if (descirptor.needClearStencil)
     {
         mask |= GL_STENCIL_BUFFER_BIT;
+        glStencilMask(0xff);
         glClearStencil(descirptor.clearStencilValue);
     }
 
