@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build_ubuntu:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -26,11 +26,33 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: download-deps.py
         run: ./download-deps.py --r no
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: cmake setup
+        run: cmake -B b -S .
+
+      - name: cmake build
+        run: cmake --build b
+
+  # This workflow contains a single job called "build"
+  build_windows:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: download-deps.py
+        run: download-deps.py --r no
+
+      # Runs a set of commands using the runners shell
+      - name: cmake setup
+        run: cmake -B b -S . -G "Visual Studio 17 2022" -A Win32
+
+      - name: cmake build
+        run: cmake --build b
