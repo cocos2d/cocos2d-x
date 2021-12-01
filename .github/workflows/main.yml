@@ -55,7 +55,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: cmake setup
-        run: cmake -B b -S . -G "Visual Studio 17 2022" -A Win32
+        run: cmake -B b -S . -G "Visual Studio 16 2019" -A Win32
 
       - name: cmake build
         run: cmake --build b
