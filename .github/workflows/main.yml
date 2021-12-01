@@ -19,7 +19,7 @@ jobs:
       - run: python download-deps.py --r no
       - run: echo -e "y" | bash build/install-deps-linux.sh
       - run: cmake -B b -S .
-      - run: cmake --build b --parallel
+      - run: cmake --build b
 
   # ubuntu-20_04:
   #   runs-on: ubuntu-20.04
