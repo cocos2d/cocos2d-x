@@ -16,47 +16,34 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: download-deps.py
-        run: python download-deps.py --r no
-      - name: install-deps-linux.sh
-        run: echo -e "y" | bash build/install-deps-linux.sh
-      - name: cmake setup
-        run: cmake -B b -S .
-      - name: cmake build
-        run: cmake --build b
+      - run: python download-deps.py --r no
+      - run: echo -e "y" | bash build/install-deps-linux.sh
+      - run: cmake -B b -S .
+      - run: cmake --build b
 
   windows-2019:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
-      - name: download-deps.py
-        run: python download-deps.py --r no
-      - name: cmake setup
-        run: cmake -B b -S . -G "Visual Studio 16 2019" -A Win32
-      - name: cmake build
-        run: cmake --build b
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S . -G "Visual Studio 16 2019" -A Win32
+      - run: cmake --build b
 
   windows-2022:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v2
-      - name: download-deps.py
-        run: python download-deps.py --r no
-      - name: cmake setup
-        run: cmake -B b -S . -G "Visual Studio 17 2022" -A Win32
-      - name: cmake build
-        run: cmake --build b
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S . -G "Visual Studio 17 2022" -A Win32
+      - run: cmake --build b
 
   macos-10_15:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
-      - name: download-deps.py
-        run: python download-deps.py --r no
-      - name: cmake setup
-        run: cmake -B b -S .
-      - name: cmake build
-        run: cmake --build b
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S .
+      - run: cmake --build b
 
   macos-11:
     runs-on: macos-11
