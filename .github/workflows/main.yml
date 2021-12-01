@@ -68,7 +68,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
       - run: cmake -B b -S .  -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
-      - run: cmake --build b --config Release --target cpp-tests -- -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
+      - run: cmake --build b --parallel --config Release --target cpp-tests -- -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
 
   macos-11_ios:
     runs-on: macos-11
@@ -76,7 +76,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
       - run: cmake -B b -S .  -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
-      - run: cmake --build b --config Release --target cpp-tests -- -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
+      - run: cmake --build b --parallel --config Release --target cpp-tests -- -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
 
   # windows-2019-android:
   #   runs-on: windows-2019
