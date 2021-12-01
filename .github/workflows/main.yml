@@ -27,7 +27,10 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: download-deps.py
-        run: ./download-deps.py --r no
+        python: download-deps.py --r no
+
+      - name: install-deps-linux.sh
+        run: echo -e "y" | bash build/install-deps-linux.sh
 
       # Runs a set of commands using the runners shell
       - name: cmake setup
@@ -48,7 +51,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: download-deps.py
-        run: download-deps.py --r no
+        python: download-deps.py --r no
 
       # Runs a set of commands using the runners shell
       - name: cmake setup
