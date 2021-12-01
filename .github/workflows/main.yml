@@ -12,14 +12,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  ubuntu-18_04:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: python download-deps.py --r no
-      - run: echo -e "y" | bash build/install-deps-linux.sh
-      - run: cmake -B b -S .
-      - run: cmake --build b
+  # ubuntu-18_04:
+  #   runs-on: ubuntu-18.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: python download-deps.py --r no
+  #     - run: echo -e "y" | bash build/install-deps-linux.sh
+  #     - run: cmake -B b -S .
+  #     - run: cmake --build b
 
   # ubuntu-20_04:
   #   runs-on: ubuntu-20.04
@@ -62,21 +62,21 @@ jobs:
   #     - run: cmake -B b -S .
   #     - run: cmake --build b
 
-  # macos-10_15_ios:
-  #   runs-on: macos-10.15
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: python download-deps.py --r no
-  #     - run: cmake -B b -S .  -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
-  #     - run: cmake --build b --parallel --config Release --target cpp-tests -- -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
+  macos-10_15_ios:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S .  -GXcode -DCMAKE_SYSTEM_NAME=iOS
+      - run: cmake --build b --parallel --config Release --target cpp-tests
 
-  # macos-11_ios:
-  #   runs-on: macos-11
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: python download-deps.py --r no
-  #     - run: cmake -B b -S .  -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
-  #     - run: cmake --build b --parallel --config Release --target cpp-tests -- -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
+  macos-11_ios:
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S .  -GXcode -DCMAKE_SYSTEM_NAME=iOS
+      - run: cmake --build b --parallel --config Release --target cpp-tests -- -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
 
   # windows-2019-android:
   #   runs-on: windows-2019
