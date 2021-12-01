@@ -37,6 +37,7 @@ THE SOFTWARE.
 ****************************************************************************"""
 
 import os.path
+from urllib.error import HTTPError
 import zipfile
 import shutil
 import sys
@@ -95,7 +96,10 @@ class CocosZipInstaller(object):
         self._url = data["repo_parent"] + self._repo_name + '/archive/' + self._filename
         self._zip_file_size = int(data["zip_file_size"])
         # 'v' letter was swallowed by github, so we need to substring it from the 2nd letter
-        self._extracted_folder_name = os.path.join(self._workpath, self._repo_name + '-' + self._current_version[1:])
+        if self._current_version[0] == 'v':
+            self._extracted_folder_name = os.path.join(self._workpath, self._repo_name + '-' + self._current_version[1:])
+        else:
+            self._extracted_folder_name = os.path.join(self._workpath, self._repo_name + '-' + self._current_version)
 
         try:
             data = self.load_json_file(version_path)
@@ -107,10 +111,10 @@ class CocosZipInstaller(object):
             print("==> version file doesn't exist")
 
     def get_input_value(self, prompt):
-        if sys.version_info[0] > 2:
-            ret = input(prompt)
-        else:
+        if(python_2):
             ret = raw_input(prompt)
+        else:
+            ret = input(prompt)
         ret.rstrip(" \t")
         return ret
 
@@ -121,18 +125,26 @@ class CocosZipInstaller(object):
         except OSError:
             pass
         print("==> Ready to download '%s' from '%s'" % (self._filename, self._url))
-        import urllib2
+        if(python_2):
+            import urllib2 as urllib
+        else:
+            import urllib.request as urllib
         try:
-            u = urllib2.urlopen(self._url)
-        except urllib2.HTTPError as e:
+            u = urllib.urlopen(self._url)
+        except Exception as e:
             if e.code == 404:
                 print("==> Error: Could not find the file from url: '%s'" % (self._url))
-            print("==> Http request failed, error code: " + str(e.code) + ", reason: " + e.read())
+            print("==> Http request failed, error code: " + str(e.code) + ", reason: " + str(e.read()))
             sys.exit(1)
 
         f = open(self._filename, 'wb')
         meta = u.info()
-        content_len = meta.getheaders("Content-Length")
+        content_len = 0
+        if(python_2):
+            content_len = meta.getheaders("Content-Length")
+        else:
+            content_len = meta['Content-Length']
+
         file_size = 0
         if content_len and len(content_len) > 0:
             file_size = int(content_len[0])
@@ -246,7 +258,6 @@ class CocosZipInstaller(object):
             self.download_zip_file()
 
     def download_file_with_retry(self, times, delay):
-        import urllib2
         times_count = 0
         while(times_count < times):
             times_count += 1
@@ -339,6 +350,14 @@ class CocosZipInstaller(object):
             print("==> Download (%s) finish!" % self._filename)
 
 
+def _is_python_version_2():
+    major_ver = sys.version_info[0]
+    print ("The python version is %d.%d." % (major_ver, sys.version_info[1]))
+    if major_ver > 2:
+        return False
+    return True
+
+
 def main():
     workpath = os.path.dirname(os.path.realpath(__file__))
 
@@ -365,6 +384,7 @@ def main():
 
 # -------------- main --------------
 if __name__ == '__main__':
+    python_2 = _is_python_version_2()
     try:
         main()
     except Exception as e:
