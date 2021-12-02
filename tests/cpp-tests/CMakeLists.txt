@@ -425,7 +425,7 @@ if(LINUX OR WINDOWS)
     cocos_copy_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
 
-if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16.0")
+if(${CMAKE_VERSION} VERSION_GREATER "3.16.0")
     message("CMake 3.16 target_precompile_headers")
     target_precompile_headers(${APP_NAME} PRIVATE 
        "$<$<COMPILE_LANGUAGE:CXX>:precheader.h>")
