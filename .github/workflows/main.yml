@@ -63,7 +63,7 @@ jobs:
       - run: cmake -B b -S .
       - run: cmake --build b
 
-  macos-10_15:
+  macos-10_15_xcode:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
@@ -71,7 +71,7 @@ jobs:
       - run: cmake -B b -S . -GXcode
       - run: cmake --build b --target cpp-tests
 
-  macos-11:
+  macos-11_xcode:
     runs-on: macos-11
     steps:
       - uses: actions/checkout@v2
