@@ -489,5 +489,5 @@ endif()
 if(${CMAKE_VERSION} VERSION_GREATER "3.16.0")
     message("CMake 3.16 target_precompile_headers")
     target_precompile_headers(${APP_NAME} PRIVATE
-       "$<$<COMPILE_LANGUAGE:CXX>:Classes/precheader.h>")
+       "$<$<COMPILE_LANGUAGE:CXX>:precheader.h>")
 endif()
