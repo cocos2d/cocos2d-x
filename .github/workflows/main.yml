@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
-      - run: cmake -B b -S .
+      - run: cmake -B b -S . -GXcode
       - run: cmake --build b
 
   macos-11:
@@ -59,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
-      - run: cmake -B b -S .
+      - run: cmake -B b -S . -GXcode
       - run: cmake --build b
 
   macos-10_15_ios:

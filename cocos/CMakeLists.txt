@@ -29,6 +29,10 @@
 # build luacocos2d if BUILD_LUA_LIBS=ON
 # build jscocos2d if BUILD_JS_LIBS=ON
 
+# https://gitlab.kitware.com/cmake/cmake/-/issues/22304#note_973092
+# If you don't enable OBCXX language to your project you will get the C++ compiler to compile your Objective-C++ files
+# project(cocos2d LANGUAGES CXX OBJCXX)
+
 # The version number
 set(COCOS2D_X_VERSION 3.17.2)
 
