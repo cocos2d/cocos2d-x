@@ -63,6 +63,7 @@ android {
         else if (PROP_BUILD_TYPE == 'cmake') {
             cmake {
                 path "../../CMakeLists.txt"
+                version "3.18.0+"
             }
         }
     }
