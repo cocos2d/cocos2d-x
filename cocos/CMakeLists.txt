@@ -31,7 +31,7 @@
 
 # https://gitlab.kitware.com/cmake/cmake/-/issues/22304#note_973092
 # If you don't enable OBCXX language to your project you will get the C++ compiler to compile your Objective-C++ files
-project(cocos2d LANGUAGES LANGUAGES CXX OBJCXX)
+project(cocos2d LANGUAGES CXX OBJCXX)
 
 # The version number
 set(COCOS2D_X_VERSION 3.17.2)
