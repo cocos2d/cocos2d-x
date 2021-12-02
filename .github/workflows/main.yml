@@ -84,10 +84,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
-      - name: build, optional set cmake to cmake in path
-        run: |
-          echo cmake.dir=`where cmake` > local.properties
-          ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
+      - run: ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
         shell: bash
         working-directory: tests/cpp-tests/proj.android
 
@@ -96,9 +93,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
-      - name: build, optional set cmake to cmake in path
-        run: |
-          echo cmake.dir=`which cmake` > local.properties
-          ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
+      - run: ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
         shell: bash
         working-directory: tests/cpp-tests/proj.android
