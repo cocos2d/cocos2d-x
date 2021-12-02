@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: echo -e "y" | bash install-deps-linux.sh
       - run: cmake -B b -S .
@@ -25,6 +27,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: echo -e "y" | bash install-deps-linux.sh
       - run: cmake -B b -S .
@@ -34,6 +38,8 @@ jobs:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: cmake -B b -S . -G "Visual Studio 16 2019" -A Win32
       - run: cmake --build b
@@ -42,6 +48,8 @@ jobs:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: cmake -B b -S . -G "Visual Studio 17 2022" -A Win32
       - run: cmake --build b
@@ -50,6 +58,8 @@ jobs:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: cmake -B b -S .
       - run: cmake --build b
@@ -58,6 +68,8 @@ jobs:
     runs-on: macos-11
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: cmake -B b -S .
       - run: cmake --build b
@@ -66,6 +78,8 @@ jobs:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: cmake -B b -S . -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
       - run: cmake --build b --config Release --target cpp-tests -- -quiet
@@ -74,6 +88,8 @@ jobs:
     runs-on: macos-11
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: cmake -B b -S . -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
       - run: cmake --build b --config Release --target cpp-tests -- -quiet -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
@@ -82,6 +98,8 @@ jobs:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
         shell: bash
@@ -91,6 +109,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+        with:
+            submodules: recursive
       - run: python download-deps.py --r no
       - run: ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
         shell: bash
