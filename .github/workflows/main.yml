@@ -21,14 +21,15 @@ jobs:
       - run: cmake -B b -S .
       - run: cmake --build b
 
-  ubuntu-20_04:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: python download-deps.py --r no
-      - run: echo -e "y" | bash build/install-deps-linux.sh
-      - run: cmake -B b -S .
-      - run: cmake --build b
+  # https://github.com/cocos2d/cocos2d-x/issues/20471
+  # ubuntu-20_04:
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: python download-deps.py --r no
+  #     - run: echo -e "y" | bash build/install-deps-linux.sh
+  #     - run: cmake -B b -S .
+  #     - run: cmake --build b
 
   windows-2019:
     runs-on: windows-2019
@@ -44,6 +45,22 @@ jobs:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
       - run: cmake -B b -S . -G "Visual Studio 17 2022" -A Win32
+      - run: cmake --build b
+
+  macos-10_15:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S .
+      - run: cmake --build b
+
+  macos-11:
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S .
       - run: cmake --build b
 
   macos-10_15:
