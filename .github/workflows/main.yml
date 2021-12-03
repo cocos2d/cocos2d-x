@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
       - run: cmake -B b -S . -GXcode
-      - run: cmake --build b --target cpp-tests
+      - run: cmake --build b
 
   macos-11:
     runs-on: macos-11
@@ -61,7 +61,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
       - run: cmake -B b -S . -GXcode
-      - run: cmake --build b --target cpp-tests
+      - run: cmake --build b
 
   ios_macos-10_15:
     runs-on: macos-10.15
