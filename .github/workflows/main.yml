@@ -21,14 +21,15 @@ jobs:
       - run: cmake -B b -S .
       - run: cmake --build b
 
-  ubuntu-20_04:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: python download-deps.py --r no
-      - run: echo -e "y" | bash build/install-deps-linux.sh
-      - run: cmake -B b -S .
-      - run: cmake --build b
+  # https://github.com/cocos2d/cocos2d-x/issues/20471
+  # ubuntu-20_04:
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: python download-deps.py --r no
+  #     - run: echo -e "y" | bash build/install-deps-linux.sh
+  #     - run: cmake -B b -S .
+  #     - run: cmake --build b
 
   windows-2019:
     runs-on: windows-2019
@@ -51,34 +52,34 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
-      - run: cmake -B b -S .
-      - run: cmake --build b
+      - run: cmake -B b -S . -GXcode
+      - run: cmake --build b --target cpp-tests
 
   macos-11:
     runs-on: macos-11
     steps:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
-      - run: cmake -B b -S .
-      - run: cmake --build b
+      - run: cmake -B b -S . -GXcode
+      - run: cmake --build b --target cpp-tests
 
-  macos-10_15_ios:
+  ios_macos-10_15:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
-      - run: cmake -B b -S . -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
+      - run: cmake -B b -S . -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_SYSTEM_PROCESSOR=arm64
       - run: cmake --build b --config Release --target cpp-tests -- -quiet
 
-  macos-11_ios:
+  ios_macos-11:
     runs-on: macos-11
     steps:
       - uses: actions/checkout@v2
       - run: python download-deps.py --r no
-      - run: cmake -B b -S . -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
+      - run: cmake -B b -S . -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_SYSTEM_PROCESSOR=arm64
       - run: cmake --build b --config Release --target cpp-tests -- -quiet -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
 
-  windows-2019-android:
+  android_windows-2019:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
@@ -87,7 +88,7 @@ jobs:
         shell: bash
         working-directory: tests/cpp-tests/proj.android
 
-  ubuntu-20_04-android:
+  android_ubuntu-20_04:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
