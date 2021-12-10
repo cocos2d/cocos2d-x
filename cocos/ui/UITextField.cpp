@@ -869,6 +869,21 @@ void TextField::setCursorFromPoint(const Vec2 &point, const Camera* camera)
 }
 
 
+int TextField::getStringNumLines()
+{
+    return _textFieldRenderer->getStringNumLines();
+}
+
+int TextField::getLineHeight() const
+{
+    return _textFieldRenderer->getLineHeight();
+}
+
+void TextField::setLineBreakWithoutSpace(bool breakWithoutSpace)
+{
+    _textFieldRenderer->setLineBreakWithoutSpace(breakWithoutSpace);
+}
+
 }
 
 NS_CC_END
