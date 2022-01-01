@@ -425,6 +425,11 @@ namespace cocos2d {
       _system_control->setFontColor(win_color);
     }
 
+    void UIEditBoxImplWinrt::setNativeInsertionPointColor(const Color4B& color)
+    {
+        //not implemented yet
+    }
+    
     void UIEditBoxImplWinrt::setNativeInputMode(EditBox::InputMode inputMode)
     {
       _system_control->setInputMode((int)inputMode);
