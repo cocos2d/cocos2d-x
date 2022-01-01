@@ -50,6 +50,7 @@ UICCTextField::UICCTextField()
 , _detachWithIME(false)
 , _insertText(false)
 , _deleteBackward(false)
+, _controlKeyPressedCode(cocos2d::EventKeyboard::KeyCode::KEY_NONE)
 {
 }
 
@@ -262,6 +263,32 @@ void UICCTextField::setDeleteBackward(bool deleteBackward)
 bool UICCTextField::getDeleteBackward()const
 {
     return _deleteBackward;
+}
+
+bool UICCTextField::onTextFieldControlKey(TextFieldTTF * pSender, EventKeyboard::KeyCode keyCode)
+{
+    setControlKeyPressed(keyCode);
+    return false;
+}
+
+void UICCTextField::setControlKeyPressed(EventKeyboard::KeyCode keyCode)
+{
+    _controlKeyPressedCode = keyCode;
+}
+
+cocos2d::EventKeyboard::KeyCode UICCTextField::getControlKeyPressed() const
+{
+    return _controlKeyPressedCode;
+}
+
+bool UICCTextField::isControlKeyPressed() const
+{
+    return getControlKeyPressed() != EventKeyboard::KeyCode::KEY_NONE;
+}
+
+void UICCTextField::resetControlKeyPressed()
+{
+    setControlKeyPressed(cocos2d::EventKeyboard::KeyCode::KEY_NONE);
 }
 
 static const int TEXTFIELD_RENDERER_Z = (-1);
@@ -604,6 +631,19 @@ void TextField::update(float /*dt*/)
         setDeleteBackward(false);
     }
 
+    if (isControlKeyPressed())
+    {
+        EventKeyboard::KeyCode key = getControlKeyPressed();
+        if (key == EventKeyboard::KeyCode::KEY_DELETE || key == EventKeyboard::KeyCode::KEY_KP_DELETE)
+        {
+            _textFieldRendererAdaptDirty = true;
+            updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+        }
+
+        controlKeyEvent(key);
+        resetControlKeyPressed();
+    }
+
     if (getInsertText())
     {
         //we update the content size first such that when user call getContentSize() in event callback won't be wrong
@@ -723,6 +763,53 @@ void TextField::deleteBackwardEvent()
     {
         _ccEventCallback(this, static_cast<int>(EventType::DELETE_BACKWARD));
     }
+    this->release();
+}
+
+void TextField::controlKeyEvent(EventKeyboard::KeyCode keyCode)
+{
+    this->retain();
+
+    switch (keyCode)
+    {
+    case EventKeyboard::KeyCode::KEY_HOME:
+    case EventKeyboard::KeyCode::KEY_KP_HOME:
+    case EventKeyboard::KeyCode::KEY_END:
+    case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+    case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+        if (_textFieldEventListener && _textFieldEventSelector)
+        {
+            (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_CURSOR_POSITION_CHANGED);
+        }
+        if (_eventCallback)
+        {
+            _eventCallback(this, EventType::CURSOR_POSITION_CHANGED);
+        }
+        if (_ccEventCallback)
+        {
+            _ccEventCallback(this, static_cast<int>(EventType::CURSOR_POSITION_CHANGED));
+        }
+        break;
+        break;
+    case EventKeyboard::KeyCode::KEY_DELETE:
+    case EventKeyboard::KeyCode::KEY_KP_DELETE:
+        if (_textFieldEventListener && _textFieldEventSelector)
+        {
+            (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DELETE);
+        }
+        if (_eventCallback)
+        {
+            _eventCallback(this, EventType::DELETE);
+        }
+        if (_ccEventCallback)
+        {
+            _ccEventCallback(this, static_cast<int>(EventType::DELETE));
+        }
+        break;
+    default:
+        break;
+    }
+
     this->release();
 }
 
@@ -868,6 +955,30 @@ void TextField::setCursorFromPoint(const Vec2 &point, const Camera* camera)
     _textFieldRenderer->setCursorFromPoint(point, camera);
 }
 
+void TextField::setControlKeyPressed(EventKeyboard::KeyCode keyCode)
+{
+    _textFieldRenderer->setControlKeyPressed(keyCode);
+}
+
+void TextField::resetControlKeyPressed()
+{
+    _textFieldRenderer->resetControlKeyPressed();
+}
+
+EventKeyboard::KeyCode TextField::getControlKeyPressed() const
+{
+    return _textFieldRenderer->getControlKeyPressed();
+}
+
+bool TextField::isControlKeyPressed() const
+{
+    return _textFieldRenderer->isControlKeyPressed();
+}
+
+std::size_t TextField::getCursorPosition() const
+{
+    return _textFieldRenderer->getCursorPosition();
+}
 
 }
 

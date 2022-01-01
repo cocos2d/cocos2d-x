@@ -71,6 +71,11 @@ public:
     virtual bool onTextFieldDeleteBackward(TextFieldTTF* sender, const char* delText, size_t nLen);
 
     /**
+     *@brief    If the sender doesn't want to make reaction to control key, return true.
+     */
+    virtual bool onTextFieldControlKey(TextFieldTTF* sender, EventKeyboard::KeyCode keyCode);
+
+    /**
      *@brief    If the sender doesn't want to draw, return true.
      * @js NA
      */
@@ -223,16 +228,34 @@ public:
     void setCursorEnabled(bool enabled);
 
     /**
+    * returns true if cursor is enabled.
+    * @js NA
+    */
+    bool isCursorEnabled() const;
+
+    /**
     * Set char showing cursor.
     * @js NA
     */
     void setCursorChar(char cursor);
 
     /**
+    * Get char showing cursor.
+    * @js NA
+    */
+    char getCursorChar() const;
+
+    /**
     * Set cursor position, if enabled
     * @js NA
     */
     void setCursorPosition(std::size_t cursorPosition);
+
+    /**
+    * Get cursor position
+    * @js NA
+    */
+    std::size_t getCursorPosition() const;
 
     /**
     * Set cursor position to hit letter, if enabled
