@@ -305,6 +305,12 @@ void TextFieldTTF::deleteBackward()
         return;
     }
 
+    if (_cursorEnabled && (_cursorPosition == 0))
+    {
+        // Nothing to delete. Cursor is at the beginning of string.
+        return;
+    }
+
     // get the delete byte number
     size_t deleteLen = 1;    // default, erase 1 byte
 
