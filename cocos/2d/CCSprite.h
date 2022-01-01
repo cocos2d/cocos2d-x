@@ -551,6 +551,15 @@ CC_CONSTRUCTOR_ACCESS :
      */
     Sprite();
     virtual ~Sprite();
+    
+#if CC_SPRITE_DEBUG_DRAW
+    /// @name DebugDraw
+    /// @{
+    static void enableDebugDraw(const bool value);
+    static bool getDebugDrawEnabled() { return _debugDrawEnabled; }
+    static void setDebugDrawColor(const Color4F& color);
+    /// @}
+#endif
 
     /* Initializes an empty sprite with no parameters. */
     virtual bool init() override;
@@ -647,6 +656,8 @@ CC_CONSTRUCTOR_ACCESS :
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
+
+
     
 protected:
 
@@ -727,6 +738,12 @@ protected:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
+    
+#if CC_SPRITE_DEBUG_DRAW
+    static bool _debugDrawEnabled;	   /// Is debug drawing of sprites enabled or not
+    static Color4F _debugDrawColor;    /// Color to be used to paint the debug bounding boxes
+#endif
+
 };
 
 
