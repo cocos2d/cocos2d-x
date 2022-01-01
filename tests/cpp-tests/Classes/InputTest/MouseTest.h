@@ -25,6 +25,8 @@
 #ifndef __MOUSE_TEST_H_
 #define __MOUSE_TEST_H_
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+
 #include "cocos2d.h"
 #include "../BaseTest.h"
 
@@ -86,4 +88,68 @@ private:
     cocos2d::EventListenerMouse* _lis;
 };
 
-#endif
+
+class CursorPositionTest : public BaseMouseTest
+{
+public:
+	CREATE_FUNC(CursorPositionTest);
+	CursorPositionTest();
+	~CursorPositionTest();
+
+	void switchScreenSize();
+	void usingFrameSize();
+
+	void onMouseMove(cocos2d::Event * event);
+
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+private:
+	int _mode;
+	cocos2d::EventListenerMouse* _lis;
+	cocos2d::Label* _lblMousePos;
+};
+
+class FirstPersonShooter : public BaseMouseTest
+{
+public:
+	CREATE_FUNC(FirstPersonShooter);
+	FirstPersonShooter();
+	~FirstPersonShooter();
+
+	virtual void update(float dt) override;
+
+	void switchScreenSize();
+
+	void onMouseMove(cocos2d::Event * evnt);
+
+	void onFocused();
+	void onUnFocused();
+
+	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode);
+	void keyReleased(cocos2d::EventKeyboard::KeyCode keyCode);
+
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+private:
+	void processInput();
+	void updateCamera(float dt);
+
+	int _mode;
+	cocos2d::EventListenerMouse* _lis;
+	cocos2d::EventListenerKeyboard* _kbLis;
+	bool _keyStates[256];
+	cocos2d::Label* _lblMousePos;
+	cocos2d::Camera* _camera;
+
+	float _sensitivity, _vel;
+    float _pitch, _yaw;
+    cocos2d::Vec2 _prevMousePos;
+	int _forward, _sideward, _upward;
+
+	bool _cursorFree;
+	bool _focused;
+    bool _firstMove;
+};
+#endif // !CC_TARGET_PLATFORM
+
+#endif // !__MOUSE_TEST_H_
