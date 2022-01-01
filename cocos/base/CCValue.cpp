@@ -96,6 +96,13 @@ Value::Value(const std::string& v)
     *_field.strVal = v;
 }
 
+Value::Value(std::string&& v)
+: _type(Type::STRING)
+{
+    _field.strVal = new (std::nothrow) std::string();
+    *_field.strVal = std::move(v);
+}
+
 Value::Value(const ValueVector& v)
 : _type(Type::VECTOR)
 {
@@ -316,6 +323,13 @@ Value& Value::operator= (const std::string& v)
 {
     reset(Type::STRING);
     *_field.strVal = v;
+    return *this;
+}
+
+Value& Value::operator= (std::string&& v)
+{
+    reset(Type::STRING);
+    *_field.strVal = std::move(v);
     return *this;
 }
 
