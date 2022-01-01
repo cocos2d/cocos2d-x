@@ -286,7 +286,15 @@ cc.Class.extend = function (prop) {
     Class.extend = cc.Class.extend;
 
     classId = ClassManager.getNewID();
-    ClassManager[classId] = _super;
+
+    /*
+    * this line of code will save every class prototype who has been extended.
+    * and those proto objects will never be release even if the code files has
+    * benn reload and all classes has been redefined.
+    * but, those saved proto objects has no use for everywhere!
+    */
+    // ClassManager[classId] = _super;
+    
     desc = { writable: true, enumerable: false, configurable: true };
     Class.id = classId;
     desc.value = classId;
