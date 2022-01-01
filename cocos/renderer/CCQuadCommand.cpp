@@ -37,7 +37,7 @@
 NS_CC_BEGIN
 
 int QuadCommand::__indexCapacity = -1;
-GLushort* QuadCommand::__indices = nullptr;
+std::vector<GLushort> QuadCommand::__indices;
 
 QuadCommand::QuadCommand():
 _indexSize(-1),
@@ -47,10 +47,6 @@ _ownedIndices()
 
 QuadCommand::~QuadCommand()
 {
-    for (auto& indices : _ownedIndices)
-    {
-        CC_SAFE_DELETE_ARRAY(indices);
-    }
 }
 
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
@@ -65,7 +61,7 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glPr
     Triangles triangles;
     triangles.verts = &quads->tl;
     triangles.vertCount = (int)quadCount * 4;
-    triangles.indices = __indices;
+    triangles.indices = __indices.data();
     triangles.indexCount = (int)quadCount * 6;
     TrianglesCommand::init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags);
 }
@@ -86,8 +82,8 @@ void QuadCommand::reIndex(int indicesCount)
 
         CCLOG("cocos2d: QuadCommand: resizing index size from [%d] to [%d]", __indexCapacity, indicesCount);
 
-        _ownedIndices.push_back(__indices);
-        __indices = new (std::nothrow) GLushort[indicesCount];
+        _ownedIndices.push_back(std::move(__indices));
+        __indices.resize(indicesCount);
         __indexCapacity = indicesCount;
     }
 
