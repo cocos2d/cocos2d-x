@@ -5052,7 +5052,7 @@ int lua_cocos2dx_Node_setRotationSkewX(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback(lua_State* tolua_S)
+int lua_cocos2dx_Node_setOnEnterTransitionDidFinishCallback(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5072,7 +5072,7 @@ int lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setOnEnterTransitionDidFinishCallback'", nullptr);
         return 0;
     }
 #endif
@@ -5089,19 +5089,19 @@ int lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback(lua_State* tolua_S)
 		;
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setOnEnterTransitionDidFinishCallback'", nullptr);
             return 0;
         }
-        cobj->setonEnterTransitionDidFinishCallback(arg0);
+        cobj->setOnEnterTransitionDidFinishCallback(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setonEnterTransitionDidFinishCallback",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setOnEnterTransitionDidFinishCallback",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setOnEnterTransitionDidFinishCallback'.",&tolua_err);
 #endif
 
     return 0;
@@ -5923,7 +5923,7 @@ int lua_cocos2dx_Node_setNormalizedPosition(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Node_setonExitTransitionDidStartCallback(lua_State* tolua_S)
+int lua_cocos2dx_Node_setOnExitTransitionDidStartCallback(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5943,7 +5943,7 @@ int lua_cocos2dx_Node_setonExitTransitionDidStartCallback(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setonExitTransitionDidStartCallback'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setOnExitTransitionDidStartCallback'", nullptr);
         return 0;
     }
 #endif
@@ -5960,19 +5960,19 @@ int lua_cocos2dx_Node_setonExitTransitionDidStartCallback(lua_State* tolua_S)
 		;
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setonExitTransitionDidStartCallback'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setOnExitTransitionDidStartCallback'", nullptr);
             return 0;
         }
-        cobj->setonExitTransitionDidStartCallback(arg0);
+        cobj->setOnExitTransitionDidStartCallback(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setonExitTransitionDidStartCallback",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setOnExitTransitionDidStartCallback",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setonExitTransitionDidStartCallback'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setOnExitTransitionDidStartCallback'.",&tolua_err);
 #endif
 
     return 0;
@@ -10993,7 +10993,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"setScaleY",lua_cocos2dx_Node_setScaleY);
         tolua_function(tolua_S,"setScaleX",lua_cocos2dx_Node_setScaleX);
         tolua_function(tolua_S,"setRotationSkewX",lua_cocos2dx_Node_setRotationSkewX);
-        tolua_function(tolua_S,"setonEnterTransitionDidFinishCallback",lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback);
+        tolua_function(tolua_S,"setOnEnterTransitionDidFinishCallback",lua_cocos2dx_Node_setOnEnterTransitionDidFinishCallback);
         tolua_function(tolua_S,"removeAllComponents",lua_cocos2dx_Node_removeAllComponents);
         tolua_function(tolua_S,"_setLocalZOrder",lua_cocos2dx_Node__setLocalZOrder);
         tolua_function(tolua_S,"setCameraMask",lua_cocos2dx_Node_setCameraMask);
@@ -11010,7 +11010,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"setOnEnterCallback",lua_cocos2dx_Node_setOnEnterCallback);
         tolua_function(tolua_S,"stopActionsByFlags",lua_cocos2dx_Node_stopActionsByFlags);
         tolua_function(tolua_S,"setNormalizedPosition",lua_cocos2dx_Node_setNormalizedPosition);
-        tolua_function(tolua_S,"setonExitTransitionDidStartCallback",lua_cocos2dx_Node_setonExitTransitionDidStartCallback);
+        tolua_function(tolua_S,"setOnExitTransitionDidStartCallback",lua_cocos2dx_Node_setOnExitTransitionDidStartCallback);
         tolua_function(tolua_S,"convertTouchToNodeSpace",lua_cocos2dx_Node_convertTouchToNodeSpace);
         tolua_function(tolua_S,"removeAllChildren",lua_cocos2dx_Node_removeAllChildrenWithCleanup);
         tolua_function(tolua_S,"getNodeToParentAffineTransform",lua_cocos2dx_Node_getNodeToParentAffineTransform);

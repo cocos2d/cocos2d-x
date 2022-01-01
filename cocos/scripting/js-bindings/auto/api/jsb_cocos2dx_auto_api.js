@@ -970,10 +970,10 @@ getColor : function (
 },
 
 /**
- * @method setonEnterTransitionDidFinishCallback
+ * @method setOnEnterTransitionDidFinishCallback
  * @param {function} arg0
  */
-setonEnterTransitionDidFinishCallback : function (
+setOnEnterTransitionDidFinishCallback : function (
 func 
 )
 {
@@ -1020,10 +1020,10 @@ getTag : function (
 },
 
 /**
- * @method getonEnterTransitionDidFinishCallback
+ * @method getOnEnterTransitionDidFinishCallback
  * @return {function}
  */
-getonEnterTransitionDidFinishCallback : function (
+getOnEnterTransitionDidFinishCallback : function (
 )
 {
     return std::function<void ()>;
@@ -1132,10 +1132,10 @@ vec2
 },
 
 /**
- * @method setonExitTransitionDidStartCallback
+ * @method setOnExitTransitionDidStartCallback
  * @param {function} arg0
  */
-setonExitTransitionDidStartCallback : function (
+setOnExitTransitionDidStartCallback : function (
 func 
 )
 {
@@ -2031,10 +2031,10 @@ func
 },
 
 /**
- * @method getonExitTransitionDidStartCallback
+ * @method getOnExitTransitionDidStartCallback
  * @return {function}
  */
-getonExitTransitionDidStartCallback : function (
+getOnExitTransitionDidStartCallback : function (
 )
 {
     return std::function<void ()>;

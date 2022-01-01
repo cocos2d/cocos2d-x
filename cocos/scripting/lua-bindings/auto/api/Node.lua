@@ -199,7 +199,7 @@
 --------------------------------
 -- Set the callback of event EnterTransitionDidFinish.<br>
 -- param callback A std::function<void()> callback.
--- @function [parent=#Node] setonEnterTransitionDidFinishCallback 
+-- @function [parent=#Node] setOnEnterTransitionDidFinishCallback 
 -- @param self
 -- @param #function callback
 -- @return Node#Node self (return value: cc.Node)
@@ -342,7 +342,7 @@
 --------------------------------
 -- Set the callback of event ExitTransitionDidStart.<br>
 -- param callback A std::function<void()> callback.
--- @function [parent=#Node] setonExitTransitionDidStartCallback 
+-- @function [parent=#Node] setOnExitTransitionDidStartCallback 
 -- @param self
 -- @param #function callback
 -- @return Node#Node self (return value: cc.Node)
