@@ -402,6 +402,7 @@ HttpClient::HttpClient()
 , _timeoutForRead(60)
 , _threadCount(0)
 , _cookie(nullptr)
+, _latency(0)
 , _requestSentinel(new HttpRequest())
 , _clearRequestPredicate(nullptr)
 , _clearResponsePredicate(nullptr)
@@ -658,6 +659,12 @@ int HttpClient::getTimeoutForRead()
     std::lock_guard<std::mutex> lock(_timeoutForReadMutex);
     return _timeoutForRead;
 }
+    
+void HttpClient::setLatency(double latencyValue)
+{
+    _latency = latencyValue;
+}
+  
     
 const std::string& HttpClient::getCookieFilename()
 {

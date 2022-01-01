@@ -418,26 +418,31 @@ HttpClientClearRequestsTest::HttpClientClearRequestsTest()
     addChild(menuRequest);
     
     // Get
-    auto labelGet = Label::createWithTTF("Test Clear all Get", "fonts/arial.ttf", 22);
+    auto labelGet = Label::createWithTTF("[Test: Clear all requests]", "fonts/arial.ttf", 22);
     auto itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientClearRequestsTest::onMenuCancelAllClicked, this));
-    itemGet->setPosition(CENTER, winSize.height - MARGIN - SPACE);
+    itemGet->setPosition(CENTER, winSize.height - MARGIN - SPACE * 1.5);
     menuRequest->addChild(itemGet);
     
     // Post
-    auto labelPost = Label::createWithTTF("Test Clear but only with the tag DELETE", "fonts/arial.ttf", 22);
+    auto labelPost = Label::createWithTTF("[Test: Clear but only with the tag DELETE]", "fonts/arial.ttf", 22);
     auto itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientClearRequestsTest::onMenuCancelSomeClicked, this));
     itemPost->setPosition(CENTER, winSize.height - MARGIN - 2 * SPACE);
     menuRequest->addChild(itemPost);
     
     // Response Code Label
-    _labelStatusCode = Label::createWithTTF("HTTP Status Code", "fonts/arial.ttf", 18);
-    _labelStatusCode->setPosition(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE);
+    _labelStatusCode = Label::createWithTTF("HTTP Status Code", "fonts/arial.ttf", 16);
+    _labelStatusCode->setPosition(winSize.width / 2,  winSize.height - MARGIN - 3 * SPACE);
     addChild(_labelStatusCode);
     
     // Tracking Data Label
     _labelTrakingData = Label::createWithTTF("Got 0 of 0 expected http requests", "fonts/arial.ttf", 16);
-    _labelTrakingData->setPosition(CENTER,  winSize.height - MARGIN - 5 * SPACE);
+    _labelTrakingData->setPosition(CENTER,  winSize.height - MARGIN - 3.5 * SPACE);
     addChild(_labelTrakingData);
+    
+    // Tracking Data Latency
+    _labelLatency = Label::createWithTTF("Latency: ---", "fonts/arial.ttf", 16);
+    _labelLatency->setPosition(CENTER,  winSize.height - MARGIN - 4 * SPACE);
+    addChild(_labelLatency);
     
     _totalExpectedRequests = 0;
     _totalProcessedRequests = 0;
@@ -526,7 +531,14 @@ void HttpClientClearRequestsTest::onHttpRequestCompleted(HttpClient *sender, Htt
     // You can get original request type from: response->request->reqType
     if (0 != strlen(response->getHttpRequest()->getTag()))
     {
-        log("%s completed", response->getHttpRequest()->getTag());
+        log("%s completed, latency:%ff", response->getHttpRequest()->getTag(), HttpClient::getInstance()->getLatency());
+    }
+    
+    if (_labelLatency)
+    {
+        char statusString[64] = {};
+        sprintf(statusString, "Latency (Seconds):%ff", HttpClient::getInstance()->getLatency());
+        _labelLatency->setString(statusString);
     }
     
     long statusCode = response->getResponseCode();
