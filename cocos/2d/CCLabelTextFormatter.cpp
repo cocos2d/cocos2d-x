@@ -85,21 +85,41 @@ int Label::getFirstWordLen(const std::u32string& utf32Text, int startIndex, int 
     FontLetterDefinition letterDef;
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
 
-    for (int index = startIndex; index < textLen; ++index)
+    bool try_to_keep_next_symbol = false;
+    bool make_that_symbol_last = false;
+    for (int index = startIndex; index < textLen && !make_that_symbol_last; ++index)
     {
         char32_t character = utf32Text[index];
 
+        // Avoid of changing world length because of cursor symbol.
+        if (character == StringUtils::AsciiCharacters::NextCharNoChangeX)
+        {
+           // Skip this symbol and next one (it's cursor).
+           ++index;
+           continue;
+        }
+
         if (character == StringUtils::UnicodeCharacters::NewLine
             || (!StringUtils::isUnicodeNonBreaking(character)
-                && (StringUtils::isUnicodeSpace(character)
-                    || StringUtils::isCJKUnicode(character))))
+                && StringUtils::isUnicodeSpace(character)))
         {
             break;
         }
 
-        if (!getFontLetterDef(character, letterDef))
+        if (StringUtils::isCJKLineEndingForbiddenSymbol(character))
         {
-            break;
+            try_to_keep_next_symbol = true;
+        }
+        else if (index < textLen - 1 && StringUtils::isCJKLineStartingForbiddenSymbol(utf32Text[index + 1]))
+        {
+            try_to_keep_next_symbol = true;
+        }
+        else if (StringUtils::isCJKUnicode(character) || StringUtils::isCJKLineStartingForbiddenSymbol(character))
+        {
+            if (!try_to_keep_next_symbol)
+                break;
+
+            make_that_symbol_last = true;
         }
 
         if (_maxLineWidth > 0.f)

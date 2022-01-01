@@ -191,7 +191,27 @@ CC_DLL bool isCJKUnicode(char32_t ch);
  *
  */
 CC_DLL bool isUnicodeNonBreaking(char32_t ch);
-    
+
+/**
+ *  @brief Whether the character is cjk punctuation symbol that is not allowed to start a new line.
+ *  @param ch    The unicode character.
+ *  @returns     Whether the character is cjk punctuation symbol that is not allowed to start a new line.
+ *
+ *  @see https://en.wikipedia.org/wiki/Line_breaking_rules_in_East_Asian_languages
+ *
+ */
+CC_DLL bool isCJKLineStartingForbiddenSymbol(char32_t ch);
+
+/**
+ *  @brief Whether the character is cjk punctuation symbol that is not allowed end line.
+ *  @param ch    The unicode character.
+ *  @returns     Whether the character is cjk punctuation symbol that is not allowed end line.
+ *
+ *  @see https://en.wikipedia.org/wiki/Line_breaking_rules_in_East_Asian_languages
+ *
+ */
+CC_DLL bool isCJKLineEndingForbiddenSymbol(char32_t ch);
+
 /**
  *  @brief Returns the length of the string in characters.
  *  @param utf8 An UTF-8 encoded string.

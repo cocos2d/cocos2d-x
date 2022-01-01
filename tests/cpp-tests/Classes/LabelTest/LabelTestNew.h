@@ -1014,4 +1014,29 @@ private:
     static void setLetterColors(cocos2d::Label* label, const cocos2d::Color3B& color);
 };
 
+class LabelCJKPunctualionLineBreaking : public TestCase
+{
+public:
+    CREATE_FUNC(LabelCJKPunctualionLineBreaking);
+
+    LabelCJKPunctualionLineBreaking();
+
+protected:
+
+    void updateDrawNodeSize(const cocos2d::Size &drawNodeSize);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+
+    void initSliders(const cocos2d::Size& size);
+    void initTestLabel(const cocos2d::Size& size);
+    void initDrawNode(const cocos2d::Size& size);
+    cocos2d::DrawNode* _drawNode;
+    cocos2d::TextFieldTTF* _text_field;
+    cocos2d::Vec2  _beginPos;
+};
+
 #endif
