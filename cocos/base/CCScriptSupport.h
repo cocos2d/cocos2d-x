@@ -262,7 +262,8 @@ enum ScriptEventType
     kCommonEvent,
     kComponentEvent,
     kRestartGame,
-    kScriptActionEvent
+    kScriptActionEvent,
+    kWidgetEvent
 };
 
 /**
@@ -510,6 +511,24 @@ struct KeypadScriptData
     : actionType(inActionType),nativeObject(inNativeObject)
     {
     }
+};
+
+struct WidgetInterceptData
+{
+    int touchType;
+    Node* sender;
+    Touch* touch;
+    void* nativeObject;
+    
+    WidgetInterceptData(int touchType,
+                        Node* sender,
+                        Touch* touch,
+                        void* inNativeObject)
+    : touchType(touchType),
+      sender(sender),
+      touch(touch),
+      nativeObject(inNativeObject)
+    {}
 };
 
 
