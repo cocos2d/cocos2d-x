@@ -32,6 +32,7 @@
 #include "base/ccUTF8.h"
 #include "ui/UIEditBox/UIEditBox.h"
 #include "ui/UIEditBox/Mac/CCUIEditBoxMac.h"
+#include "platform/desktop/CCGLViewImpl-desktop.h"
 
 NS_CC_BEGIN
 
@@ -46,9 +47,6 @@ EditBoxImplMac::EditBoxImplMac(EditBox* pEditText)
 : EditBoxImplCommon(pEditText)
 , _sysEdit(nullptr)
 {
-    //! TODO: Retina on Mac
-    //! _inRetinaMode = [[CCEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
-    _inRetinaMode = false;
 }
 
 EditBoxImplMac::~EditBoxImplMac()
@@ -77,8 +75,8 @@ NSFont* EditBoxImplMac::constructFont(const char *fontName, int fontSize)
 {
     NSString * fntName = [NSString stringWithUTF8String:fontName];
     fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
-    float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float retinaFactor = ((GLViewImpl*)glview)->isRetinaEnabled() ? 2.0f : 1.0f;
     float scaleFactor = glview->getScaleX();
     
     if (fontSize == -1)
@@ -196,13 +194,14 @@ void EditBoxImplMac::setNativeVisible(bool visible)
 void EditBoxImplMac::updateNativeFrame(const cocos2d::Rect &rect)
 {
     GLView* eglView = Director::getInstance()->getOpenGLView();
+    float factor = ((GLViewImpl*)eglView)->isRetinaEnabled() ? 2.0f : 1.0f;
     auto viewPortRect = eglView->getViewPortRect();
     // Coordinate System on OSX has its origin at the lower left corner.
 //    https://developer.apple.com/library/ios/documentation/General/Conceptual/Devpedia-CocoaApp/CoordinateSystem.html
     auto screenPosY = viewPortRect.size.height - rect.origin.y - rect.size.height;
-    [_sysEdit updateFrame:CGRectMake(rect.origin.x,
-                                     screenPosY,
-                                     rect.size.width, rect.size.height)];
+    [_sysEdit updateFrame:CGRectMake(rect.origin.x / factor,
+                                     screenPosY / factor,
+                                     rect.size.width / factor, rect.size.height / factor)];
 }
     
 const char* EditBoxImplMac::getNativeDefaultFontName()

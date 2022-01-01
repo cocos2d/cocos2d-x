@@ -77,7 +77,6 @@ public:
 private:
     NSFont*    constructFont(const char* fontName, int fontSize);
     
-    bool              _inRetinaMode;
     UIEditBoxImplMac* _sysEdit;
 };
 
