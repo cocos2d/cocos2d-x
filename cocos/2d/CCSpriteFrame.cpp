@@ -38,17 +38,21 @@ NS_CC_BEGIN
 SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect)
 {
     SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
-    spriteFrame->initWithTextureFilename(filename, rect);
-    spriteFrame->autorelease();
-
+    if(spriteFrame) {
+	spriteFrame->initWithTextureFilename(filename, rect);
+    	spriteFrame->autorelease();
+    }
+	
     return spriteFrame;
 }
 
 SpriteFrame* SpriteFrame::createWithTexture(Texture2D *texture, const Rect& rect)
 {
     SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
-    spriteFrame->initWithTexture(texture, rect);
-    spriteFrame->autorelease();
+    if(spriteFrame) {
+    	spriteFrame->initWithTexture(texture, rect);
+    	spriteFrame->autorelease();
+    }
     
     return spriteFrame;
 }
