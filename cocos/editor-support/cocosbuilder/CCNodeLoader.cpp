@@ -406,7 +406,6 @@ Vec2 NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader *
     Size containerSize = ccbReader->getAnimationManager()->getContainerSize(pParent);
     
     Vec2 pt = getAbsolutePosition(Vec2(x,y), type, containerSize, pPropertyName);
-    pNode->setPosition(pt);
     
     if (ccbReader->getAnimatedProperties()->find(pPropertyName) != ccbReader->getAnimatedProperties()->end())
     {
@@ -509,8 +508,6 @@ float * NodeLoader::parsePropTypeScaleLock(Node * pNode, Node * /*pParent*/, CCB
     float y = ccbReader->readFloat();
     
     CCBReader::ScaleType type = static_cast<CCBReader::ScaleType>(ccbReader->readInt(false));
-    
-    setRelativeScale(pNode, x, y, type, pPropertyName);
     
     if (ccbReader->getAnimatedProperties()->find(pPropertyName) != ccbReader->getAnimatedProperties()->end())
     {
