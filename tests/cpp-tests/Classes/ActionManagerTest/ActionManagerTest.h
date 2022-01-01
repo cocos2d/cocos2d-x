@@ -129,4 +129,14 @@ public:
 protected:
 };
 
+class Issue18907Test : public ActionManagerTest
+{
+public:
+    CREATE_FUNC(Issue18907Test);
+    
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+protected:
+};
+
 #endif
