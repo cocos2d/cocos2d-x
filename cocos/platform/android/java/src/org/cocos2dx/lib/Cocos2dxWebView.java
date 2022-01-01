@@ -134,7 +134,8 @@ public class Cocos2dxWebView extends WebView {
                 Log.d(TAG, "'shouldOverrideUrlLoading' failed");
             }
 
-            return result[0];
+            final boolean willOverrideLoading = !result[0];
+            return willOverrideLoading;
         }
 
         @Override
