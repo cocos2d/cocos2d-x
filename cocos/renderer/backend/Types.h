@@ -76,7 +76,7 @@ enum class PixelFormat
     BGRA8888,
     //! 32-bit texture: RGBA8888
     RGBA8888,
-    //! 24-bit texture: RGBA888
+    //! 24-bit texture: RGB888
     RGB888,
     //! 16-bit texture without Alpha channel
     RGB565,
