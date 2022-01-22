@@ -330,7 +330,7 @@ void CommandBufferGL::setWinding(Winding winding)
 void CommandBufferGL::setIndexBuffer(Buffer* buffer)
 {
     assert(buffer != nullptr);
-    if (buffer == nullptr)
+    if (buffer == nullptr || _indexBuffer == buffer)
         return;
     
     buffer->retain();
@@ -345,6 +345,7 @@ void CommandBufferGL::setVertexBuffer(Buffer* buffer)
         return;
     
     buffer->retain();
+    CC_SAFE_RELEASE(_vertexBuffer);
     _vertexBuffer = static_cast<BufferGL*>(buffer);
 }
 
