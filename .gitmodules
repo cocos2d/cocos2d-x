@@ -1,9 +1,9 @@
 [submodule "tools/cocos2d-console"]
         path = tools/cocos2d-console
-        url = git://github.com/cocos2d/cocos2d-console.git
+        url = https://github.com/cocos2d/cocos2d-console.git
 [submodule "tools/bindings-generator"]
         path = tools/bindings-generator
-        url = git://github.com/cocos2d/bindings-generator.git
+        url = https://github.com/cocos2d/bindings-generator.git
 [submodule "tests/cpp-tests/Resources/ccs-res"]
         path = tests/cpp-tests/Resources/ccs-res
-        url = git://github.com/dumganhar/ccs-res.git
+        url = https://github.com/dumganhar/ccs-res.git
