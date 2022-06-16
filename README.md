@@ -37,8 +37,12 @@ Git user attention
          cocos2d-x $ python download-deps.py
 
 3. After running `download-deps.py`.
+  __ Currently there is a problem with submodules URL specification __
+  __ to circunvent this issue change urls in .gitmodules and .git/config __
+  __ from '''git://'''  to '''https://'''___
 
          cocos2d-x $ git submodule update --init
+         
 
 Download stable versions
 -----------------------
