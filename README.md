@@ -36,9 +36,13 @@ Git user attention
          $ cd cocos2d-x
          cocos2d-x $ python download-deps.py
 
-3. After running `download-deps.py`.
+3. After running `download-deps.py`.  
 
          cocos2d-x $ git submodule update --init
+         
+> **ATTENTION** Currently there is a problem with submodules URL specification. to circumvent this issue, change urls
+in `.gitmodules` and `.git/config` files from _git://_  to _https://_.
+         
 
 Download stable versions
 -----------------------
