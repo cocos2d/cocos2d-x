@@ -639,105 +639,103 @@ void MyXMLVisitor::startElement(void* /*ctx*/, const char *elementName, const ch
             auto result = tagBehavior.handleVisitEnter(tagAttrValueMap);
             ValueMap& attrValueMap = result.first;
             RichElement* richElement = result.second;
-            if (!attrValueMap.empty()) {
-                Attributes attributes;
-                
-                if (attrValueMap.find(RichText::KEY_FONT_SIZE) != attrValueMap.end()) {
-                    attributes.fontSize = attrValueMap.at(RichText::KEY_FONT_SIZE).asFloat();
+            Attributes attributes;
+            
+            if (attrValueMap.find(RichText::KEY_FONT_SIZE) != attrValueMap.end()) {
+                attributes.fontSize = attrValueMap.at(RichText::KEY_FONT_SIZE).asFloat();
+            }
+            if (attrValueMap.find(RichText::KEY_FONT_SMALL) != attrValueMap.end()) {
+                attributes.fontSize = getFontSize() * 0.8f;
+            }
+            if (attrValueMap.find(RichText::KEY_FONT_BIG) != attrValueMap.end()) {
+                attributes.fontSize = getFontSize() * 1.25f;
+            }
+            if (attrValueMap.find(RichText::KEY_FONT_COLOR_STRING) != attrValueMap.end()) {
+                attributes.setColor(_richText->color3BWithString(attrValueMap.at(RichText::KEY_FONT_COLOR_STRING).asString()));
+            }
+            if (attrValueMap.find(RichText::KEY_FONT_FACE) != attrValueMap.end()) {
+                attributes.face = attrValueMap.at(RichText::KEY_FONT_FACE).asString();
+            }
+            if (attrValueMap.find(RichText::KEY_TEXT_BOLD) != attrValueMap.end()) {
+                attributes.bold = true;
+            }
+            if (attrValueMap.find(RichText::KEY_TEXT_ITALIC) != attrValueMap.end()) {
+                attributes.italics = true;
+            }
+            if (attrValueMap.find(RichText::KEY_TEXT_LINE) != attrValueMap.end()) {
+                auto keyTextLine = attrValueMap.at(RichText::KEY_TEXT_LINE).asString();
+                if (keyTextLine == RichText::VALUE_TEXT_LINE_DEL) {
+                    attributes.line = StyleLine::STRIKETHROUGH;
                 }
-                if (attrValueMap.find(RichText::KEY_FONT_SMALL) != attrValueMap.end()) {
-                    attributes.fontSize = getFontSize() * 0.8f;
+                else if (keyTextLine == RichText::VALUE_TEXT_LINE_UNDER) {
+                    attributes.line = StyleLine::UNDERLINE;
                 }
-                if (attrValueMap.find(RichText::KEY_FONT_BIG) != attrValueMap.end()) {
-                    attributes.fontSize = getFontSize() * 1.25f;
-                }
-                if (attrValueMap.find(RichText::KEY_FONT_COLOR_STRING) != attrValueMap.end()) {
-                    attributes.setColor(_richText->color3BWithString(attrValueMap.at(RichText::KEY_FONT_COLOR_STRING).asString()));
-                }
-                if (attrValueMap.find(RichText::KEY_FONT_FACE) != attrValueMap.end()) {
-                    attributes.face = attrValueMap.at(RichText::KEY_FONT_FACE).asString();
-                }
-                if (attrValueMap.find(RichText::KEY_TEXT_BOLD) != attrValueMap.end()) {
+            }
+            if (attrValueMap.find(RichText::KEY_URL) != attrValueMap.end()) {
+                attributes.url = attrValueMap.at(RichText::KEY_URL).asString();
+                attributes.setColor(_richText->getAnchorFontColor3B());
+                if (_richText->isAnchorTextBoldEnabled()) {
                     attributes.bold = true;
                 }
-                if (attrValueMap.find(RichText::KEY_TEXT_ITALIC) != attrValueMap.end()) {
+                if (_richText->isAnchorTextItalicEnabled()) {
                     attributes.italics = true;
                 }
-                if (attrValueMap.find(RichText::KEY_TEXT_LINE) != attrValueMap.end()) {
-                    auto keyTextLine = attrValueMap.at(RichText::KEY_TEXT_LINE).asString();
-                    if (keyTextLine == RichText::VALUE_TEXT_LINE_DEL) {
-                        attributes.line = StyleLine::STRIKETHROUGH;
-                    }
-                    else if (keyTextLine == RichText::VALUE_TEXT_LINE_UNDER) {
-                        attributes.line = StyleLine::UNDERLINE;
-                    }
+                if (_richText->isAnchorTextUnderlineEnabled()) {
+                    attributes.line = StyleLine::UNDERLINE;
                 }
-                if (attrValueMap.find(RichText::KEY_URL) != attrValueMap.end()) {
-                    attributes.url = attrValueMap.at(RichText::KEY_URL).asString();
-                    attributes.setColor(_richText->getAnchorFontColor3B());
-                    if (_richText->isAnchorTextBoldEnabled()) {
-                        attributes.bold = true;
-                    }
-                    if (_richText->isAnchorTextItalicEnabled()) {
-                        attributes.italics = true;
-                    }
-                    if (_richText->isAnchorTextUnderlineEnabled()) {
-                        attributes.line = StyleLine::UNDERLINE;
-                    }
-                    if (_richText->isAnchorTextDelEnabled()) {
-                        attributes.line = StyleLine::STRIKETHROUGH;
-                    }
-                    if (_richText->isAnchorTextOutlineEnabled()) {
-                        attributes.effect = StyleEffect::OUTLINE;
-                        attributes.outlineColor = _richText->getAnchorTextOutlineColor3B();
-                        attributes.outlineSize = _richText->getAnchorTextOutlineSize();
-                    }
-                    if (_richText->isAnchorTextShadowEnabled()) {
-                        attributes.effect = StyleEffect::SHADOW;
-                        attributes.shadowColor = _richText->getAnchorTextShadowColor3B();
-                        attributes.shadowOffset = _richText->getAnchorTextShadowOffset();
-                        attributes.shadowBlurRadius = _richText->getAnchorTextShadowBlurRadius();
-                    }
-                    if (_richText->isAnchorTextGlowEnabled()) {
-                        attributes.effect = StyleEffect::GLOW;
-                        attributes.glowColor = _richText->getAnchorTextGlowColor3B();
-                    }
+                if (_richText->isAnchorTextDelEnabled()) {
+                    attributes.line = StyleLine::STRIKETHROUGH;
                 }
-                if (attrValueMap.find(RichText::KEY_TEXT_STYLE) != attrValueMap.end()) {
-                    auto keyTextStyle = attrValueMap.at(RichText::KEY_TEXT_STYLE).asString();
-                    if (keyTextStyle == RichText::VALUE_TEXT_STYLE_OUTLINE) {
-                        attributes.effect = StyleEffect::OUTLINE;
-                        if (attrValueMap.find(RichText::KEY_TEXT_OUTLINE_COLOR) != attrValueMap.end()) {
-                            attributes.outlineColor = _richText->color3BWithString(attrValueMap.at(RichText::KEY_TEXT_OUTLINE_COLOR).asString());
-                        }
-                        if (attrValueMap.find(RichText::KEY_TEXT_OUTLINE_SIZE) != attrValueMap.end()) {
-                            attributes.outlineSize = attrValueMap.at(RichText::KEY_TEXT_OUTLINE_SIZE).asInt();
-                        }
-                    }
-                    else if (keyTextStyle == RichText::VALUE_TEXT_STYLE_SHADOW) {
-                        attributes.effect = StyleEffect::SHADOW;
-                        if (attrValueMap.find(RichText::KEY_TEXT_SHADOW_COLOR) != attrValueMap.end()) {
-                            attributes.shadowColor = _richText->color3BWithString(attrValueMap.at(RichText::KEY_TEXT_SHADOW_COLOR).asString());
-                        }
-                        if ((attrValueMap.find(RichText::KEY_TEXT_SHADOW_OFFSET_WIDTH) != attrValueMap.end())
-                                && (attrValueMap.find(RichText::KEY_TEXT_SHADOW_OFFSET_HEIGHT) != attrValueMap.end())) {
-                            attributes.shadowOffset = Size(attrValueMap.at(RichText::KEY_TEXT_SHADOW_OFFSET_WIDTH).asFloat(),
-                                                           attrValueMap.at(RichText::KEY_TEXT_SHADOW_OFFSET_HEIGHT).asFloat());
-                        }
-                        if (attrValueMap.find(RichText::KEY_TEXT_SHADOW_BLUR_RADIUS) != attrValueMap.end()) {
-                            attributes.shadowBlurRadius = attrValueMap.at(RichText::KEY_TEXT_SHADOW_BLUR_RADIUS).asInt();
-                        }
-                    }
-                    else if (keyTextStyle == RichText::VALUE_TEXT_STYLE_GLOW) {
-                        attributes.effect = StyleEffect::GLOW;
-                        if (attrValueMap.find(RichText::KEY_TEXT_GLOW_COLOR) != attrValueMap.end()) {
-                            attributes.glowColor = _richText->color3BWithString(attrValueMap.at(RichText::KEY_TEXT_GLOW_COLOR).asString());
-                        }
-                    }
+                if (_richText->isAnchorTextOutlineEnabled()) {
+                    attributes.effect = StyleEffect::OUTLINE;
+                    attributes.outlineColor = _richText->getAnchorTextOutlineColor3B();
+                    attributes.outlineSize = _richText->getAnchorTextOutlineSize();
                 }
-                
-                pushBackFontElement(attributes);
+                if (_richText->isAnchorTextShadowEnabled()) {
+                    attributes.effect = StyleEffect::SHADOW;
+                    attributes.shadowColor = _richText->getAnchorTextShadowColor3B();
+                    attributes.shadowOffset = _richText->getAnchorTextShadowOffset();
+                    attributes.shadowBlurRadius = _richText->getAnchorTextShadowBlurRadius();
+                }
+                if (_richText->isAnchorTextGlowEnabled()) {
+                    attributes.effect = StyleEffect::GLOW;
+                    attributes.glowColor = _richText->getAnchorTextGlowColor3B();
+                }
             }
+            if (attrValueMap.find(RichText::KEY_TEXT_STYLE) != attrValueMap.end()) {
+                auto keyTextStyle = attrValueMap.at(RichText::KEY_TEXT_STYLE).asString();
+                if (keyTextStyle == RichText::VALUE_TEXT_STYLE_OUTLINE) {
+                    attributes.effect = StyleEffect::OUTLINE;
+                    if (attrValueMap.find(RichText::KEY_TEXT_OUTLINE_COLOR) != attrValueMap.end()) {
+                        attributes.outlineColor = _richText->color3BWithString(attrValueMap.at(RichText::KEY_TEXT_OUTLINE_COLOR).asString());
+                    }
+                    if (attrValueMap.find(RichText::KEY_TEXT_OUTLINE_SIZE) != attrValueMap.end()) {
+                        attributes.outlineSize = attrValueMap.at(RichText::KEY_TEXT_OUTLINE_SIZE).asInt();
+                    }
+                }
+                else if (keyTextStyle == RichText::VALUE_TEXT_STYLE_SHADOW) {
+                    attributes.effect = StyleEffect::SHADOW;
+                    if (attrValueMap.find(RichText::KEY_TEXT_SHADOW_COLOR) != attrValueMap.end()) {
+                        attributes.shadowColor = _richText->color3BWithString(attrValueMap.at(RichText::KEY_TEXT_SHADOW_COLOR).asString());
+                    }
+                    if ((attrValueMap.find(RichText::KEY_TEXT_SHADOW_OFFSET_WIDTH) != attrValueMap.end())
+                            && (attrValueMap.find(RichText::KEY_TEXT_SHADOW_OFFSET_HEIGHT) != attrValueMap.end())) {
+                        attributes.shadowOffset = Size(attrValueMap.at(RichText::KEY_TEXT_SHADOW_OFFSET_WIDTH).asFloat(),
+                                                        attrValueMap.at(RichText::KEY_TEXT_SHADOW_OFFSET_HEIGHT).asFloat());
+                    }
+                    if (attrValueMap.find(RichText::KEY_TEXT_SHADOW_BLUR_RADIUS) != attrValueMap.end()) {
+                        attributes.shadowBlurRadius = attrValueMap.at(RichText::KEY_TEXT_SHADOW_BLUR_RADIUS).asInt();
+                    }
+                }
+                else if (keyTextStyle == RichText::VALUE_TEXT_STYLE_GLOW) {
+                    attributes.effect = StyleEffect::GLOW;
+                    if (attrValueMap.find(RichText::KEY_TEXT_GLOW_COLOR) != attrValueMap.end()) {
+                        attributes.glowColor = _richText->color3BWithString(attrValueMap.at(RichText::KEY_TEXT_GLOW_COLOR).asString());
+                    }
+                }
+            }
+            
+            pushBackFontElement(attributes);
             if (richElement) {
                 if (richElement->equalType(RichElement::Type::IMAGE)) {
                     richElement->setColor(getColor());
