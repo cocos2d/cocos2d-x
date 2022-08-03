@@ -642,6 +642,7 @@ void MyXMLVisitor::startElement(void* /*ctx*/, const char *elementName, const ch
             if (tagBehavior.isFontElement)
             {
                 Attributes attributes;
+                
                 if (attrValueMap.find(RichText::KEY_FONT_SIZE) != attrValueMap.end()) {
                     attributes.fontSize = attrValueMap.at(RichText::KEY_FONT_SIZE).asFloat();
                 }
