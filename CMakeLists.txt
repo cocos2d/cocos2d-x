@@ -47,8 +47,6 @@ include(PreventInSourceBuilds)
 # works before build libcocos2d
 include(CocosBuildSet)
 
-set(BUILD_LUA_LIBS ON) 
-
 add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
 # prevent tests project to build "cocos2d-x/cocos" again
