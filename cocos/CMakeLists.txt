@@ -150,7 +150,7 @@ endif()
 
 if(${CMAKE_VERSION} VERSION_GREATER "3.16.0")
     message("CMake 3.16 target_precompile_headers")
-    target_precompile_headers(cocos2d PRIVATE
+    target_precompile_headers(cocos2d PRIVATE 
        "$<$<COMPILE_LANGUAGE:CXX>:cocos2d.h>")
 endif()
 
@@ -159,17 +159,3 @@ endif()
 #    # TODO: Only turn this off if ${CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET} < 11.0
 #    target_compile_options(cocos2d PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-aligned-allocation>)
 #endif()
-
-export(TARGETS cocos2d
-    external
-    ext_recast
-    ext_tinyxml2
-    ext_xxhash
-    ext_xxtea
-    ext_clipper
-    ext_edtaa3func
-    ext_convertUTF
-    ext_poly2tri
-    ext_md5
-    ext_unzip
-    FILE cocos2d-export.cmake)
