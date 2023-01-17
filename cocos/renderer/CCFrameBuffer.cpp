@@ -392,6 +392,7 @@ FrameBuffer::FrameBuffer()
 , _rt(nullptr)
 , _rtDepthStencil(nullptr)
 , _isDefault(false)
+, _restoreDepthMask(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 , _dirtyFBOListener(nullptr)
 #endif
@@ -470,12 +471,30 @@ void FrameBuffer::applyFBO()
     {
         CCLOG("FrameBuffer Status Error %d", (int)glCheckFramebufferStatus(GL_FRAMEBUFFER));
     }
+
+    if (_rtDepthStencil->getBuffer())
+    {
+        GLboolean depthWitable = GL_FALSE;
+        glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWitable);
+        if (depthWitable == GL_FALSE)
+        {
+            glDepthMask(GL_TRUE);
+            _restoreDepthMask = true;
+        }
+    }
+
     CHECK_GL_ERROR_DEBUG();
 }
 
 void FrameBuffer::restoreFBO()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, _previousFBO);
+    if (_restoreDepthMask)
+    {
+        glDepthMask(GL_FALSE);
+        _restoreDepthMask = false;
+    }
+
 }
 
 void FrameBuffer::attachDepthStencilTarget(RenderTargetDepthStencil* rt)
