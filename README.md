@@ -43,7 +43,7 @@ Git user attention
 Download stable versions
 -----------------------
 
-* [Cocos2d-x stable versions](http://www.cocos2d-x.org/download)
+* [Cocos2d-x stable versions](https://cocos2d-x.org/download)
 
 Documentations and samples
 -------------
@@ -165,15 +165,17 @@ Spreading the word!
 --------------------------------
 You can help us spread the word about cocos2d-x! We would surely appreciate it!
 
-* Talk about us on Facebook! Our [Facebook Page](https://www.facebook.com/cocos2dx/)
-* Tweet, Tweet! Our [Twitter](https://twitter.com/cocos2dx)
-* Read our [Blog](http://blog.cocos2d-x.org/) and promote it on your social media.
+* Twitter: [@CocosEngine](https://twitter.com/CocosEngine)
+* Facebook: [https://www.facebook.com/CocosEngine](https://www.facebook.com/CocosEngine)
+* YouTube: [https://www.youtube.com/cocosengine](https://www.youtube.com/cocosengine)
+* Weibo: [@Cocos引擎](https://weibo.com/cocos2dx)
+* bilibili: [https://space.bilibili.com/491120849](https://space.bilibili.com/491120849)
 
 Where to get help
 --------------------------------
 
-* [English Forums](http://discuss.cocos2d-x.org)
-* [中文社区](http://forum.cocos.com/c/cocos2d-x)
+* [English Forums][9]
+* [中文社区][10]
 * [Bug Tracker](https://github.com/cocos2d/cocos2d-x/issues)
 * [API Reference](http://docs.cocos2d-x.org/api-ref/index.html).
 * [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v4/docs/RELEASE_NOTES.md)
@@ -192,25 +194,19 @@ Did you find a bug? Do you have feature request? Do you want to merge a feature?
 
   * [contributing to cocos2d-x][8]
 
-Contact us
-----------
-
-   * Forum: [http://discuss.cocos2d-x.org][9]
-   * Twitter: [http://www.twitter.com/cocos2dx][10]
-   * Weibo: [http://t.sina.com.cn/cocos2dx][11]
-
-Want an awesome editor?
+Embrace the Future: Switch to Cocos Creator for a Better Experience
 --------------------------------
-[Cocos Creator][12] is the new generation of Cocos game engine with a full featured editor and content creation friendly workflow. It supports all major platforms allowing games to be quickly released for the web, iOS, Android, Windows, Mac, and various mini-game platforms. A pure JavaScript-developed engine runtime is available on the web and mini-game platforms for better performance and smaller packages. On other native platforms, C++ is used to implement the underlying framework, providing greater operational efficiency. The engine is completely [open source][13], and retains the advantages of Cocos2d-x which includes high performance, customizability, ease for debugging, easy to learn, and small package size.
+[Cocos Creator][12] is the new generation of Cocos game engine with a full featured editor and content creation friendly workflow. It supports all major platforms allowing games to be quickly released for the web, iOS, Android, Windows, Mac, and various mini-game platforms. Millions of developers have built 2D / 3D experiences, from hardcore games to web instant entertainment. A pure JavaScript-developed engine runtime is available on the web and mini-game platforms for better performance and smaller packages. On other native platforms, C++ is used to implement the underlying framework, providing greater operational efficiency. The engine is completely [open source][13], and retains the advantages of Cocos2d-x which includes high performance, customizability, ease for debugging, easy to learn, and small package size.
 
-[1]: http://www.cocos2d-x.org "cocos2d-x"
-[4]: http://www.cocos2d-x.org/download/version#Cocos2d-x
+Therefore, we no longer recommend new users to start with Cocos2d-x. Instead, please use the brand-new [Cocos Creator][12] for project development to enjoy the best editor and 3D support.
+
+[1]: https://www.cocos.com/en/cocos2d-x "cocos2d-x"
+[4]: https://cocos2d-x.org/download/version#Cocos2d-x
 [5]: http://www.box2d.org "Box2D"
 [6]: http://www.chipmunk-physics.net "Chipmunk2D"
 [7]: http://esotericsoftware.com/ "http://esotericsoftware.com/"
 [8]: https://github.com/cocos2d/cocos2d-x/blob/v3/CONTRIBUTING.md
-[9]: http://discuss.cocos2d-x.org "http://discuss.cocos2d-x.org"
-[10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
-[11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
+[9]: https://discuss.cocos2d-x.org/c/cocos2d-x/21
+[10]: https://forum.cocos.org/c/cocos2d-x/16
 [12]: https://www.cocos.com/en/products#CocosCreator
-[13]: https://github.com/cocos-creator/engine
+[13]: https://github.com/cocos/cocos-engine
