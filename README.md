@@ -208,5 +208,5 @@ Therefore, we no longer recommend new users to start with Cocos2d-x. Instead, pl
 [8]: https://github.com/cocos2d/cocos2d-x/blob/v3/CONTRIBUTING.md
 [9]: https://discuss.cocos2d-x.org/c/cocos2d-x/21
 [10]: https://forum.cocos.org/c/cocos2d-x/16
-[12]: https://www.cocos.com/en/products#CocosCreator
+[12]: https://www.cocos.com/en/creator
 [13]: https://github.com/cocos/cocos-engine
