@@ -261,7 +261,10 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         setDirty(false);
 
         _flippedX = _flippedY = false;
-
+        
+        //need reset if _texture is changed
+        _unflippedOffsetPositionFromCenter = Vec2::ZERO;
+        
         // default transform anchor: center
         setAnchorPoint(Vec2::ANCHOR_MIDDLE);
 
