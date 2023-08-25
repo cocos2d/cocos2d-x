@@ -1347,7 +1347,7 @@ void Sprite::setScaleX(float scaleX)
 void Sprite::setScaleY(float scaleY)
 {
 #ifdef CC_USE_METAL
-    if(_texture->isRenderTarget())
+    if (_texture && _texture->isRenderTarget())
        scaleY = std::abs(scaleY);
 #endif
     Node::setScaleY(scaleY);
