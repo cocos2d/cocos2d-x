@@ -233,6 +233,9 @@ Mat4 Skin::getNodeToWorldTransformAR() const
 void Skin::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
 {
     auto mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
+    pipelineDescriptor.programState = getProgramState();
 
     // TODO: implement z order
     _quadCommand.init(_globalZOrder, 
