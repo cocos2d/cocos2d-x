@@ -552,4 +552,28 @@ void Device::vibrate(float duration)
     CC_UNUSED_PARAM(duration);
 }
 
+void Device::prepareImpactFeedbackGenerator(ImpactFeedbackStyle style)
+{
+}
+
+void Device::impactOccured(ImpactFeedbackStyle style)
+{
+}
+
+void Device::prepareNotificationFeedbackGenerator()
+{
+}
+
+void Device::notificationOccured(NotificationFeedbackType type)
+{
+}
+
+void Device::prepareSelectionFeedbackGenerator()
+{
+}
+
+void Device::selectionChanged()
+{
+}
+
 NS_CC_END

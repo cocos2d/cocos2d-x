@@ -178,6 +178,33 @@ void Device::vibrate(float duration)
     JniHelper::callStaticVoidMethod(helperClassName, "vibrate", duration);
 }
 
+void Device::prepareImpactFeedbackGenerator(ImpactFeedbackStyle style)
+{
+}
+
+void Device::impactOccured(ImpactFeedbackStyle style)
+{
+    JniHelper::callStaticVoidMethod(helperClassName, "performHapticFeedback");
+}
+
+void Device::prepareNotificationFeedbackGenerator()
+{
+}
+
+void Device::notificationOccured(NotificationFeedbackType type)
+{
+    JniHelper::callStaticVoidMethod(helperClassName, "performHapticFeedback");
+}
+
+void Device::prepareSelectionFeedbackGenerator()
+{
+}
+
+void Device::selectionChanged()
+{
+    JniHelper::callStaticVoidMethod(helperClassName, "performHapticFeedback");
+}
+
 NS_CC_END
 
 // this method is called by Cocos2dxBitmap
