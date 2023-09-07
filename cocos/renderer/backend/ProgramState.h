@@ -252,6 +252,9 @@ public:
     */
     void setParameterAutoBinding(const std::string &uniformName, const std::string &autoBinding);
 
+    void setBatchId(uint32_t batchId) { _programStateBatchId = batchId; }
+    uint32_t getBatchId() const { return _programStateBatchId; }
+
     inline std::shared_ptr<VertexLayout> getVertexLayout() const { return _vertexLayout; }
 protected:
 
@@ -317,6 +320,7 @@ protected:
     */
     void applyAutoBinding(const std::string &, const std::string &);
 
+    uint32_t _programStateBatchId = 0;
     backend::Program*                                       _program = nullptr;
     std::unordered_map<UniformLocation, UniformCallback, UniformLocation>   _callbackUniforms;
     char* _vertexUniformBuffer = nullptr;

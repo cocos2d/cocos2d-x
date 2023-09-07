@@ -50,13 +50,17 @@ void TrianglesCommand::init(float globalOrder, Texture2D* texture, const BlendFu
 
     if (_programType != _pipelineDescriptor.programState->getProgram()->getProgramType() ||
         _texture != texture->getBackendTexture() ||
-        _blendType != blendType)
+        _blendType != blendType ||
+        _programStateBatchId != _pipelineDescriptor.programState->getBatchId())
     {
         _programType = _pipelineDescriptor.programState->getProgram()->getProgramType();
         _texture = texture->getBackendTexture();
         _blendType = blendType;
-        
-        //since it would be too expensive to check the uniforms, simplify enable batching for built-in program.
+        _programStateBatchId = _pipelineDescriptor.programState->getBatchId();
+
+        //since it would be too expensive to check the uniforms, simplify enable batching for built-in program, and user-specific unique IDs
+        // Users should assign custom shader programType by masking an ID value with with backend::ProgramType::CUSTOM_PROGRAM. For example, programType = backend::ProgramType::CUSTOM_PROGRAM | value;
+        // along with setting the ProgramState::setProgramStateId(uniqueId) for shaders using the same backend::Program but different ProgramState uniform values.
         if(_programType == backend::ProgramType::CUSTOM_PROGRAM)
             setSkipBatching(true);
         
@@ -86,7 +90,8 @@ void TrianglesCommand::generateMaterialID()
     struct
     {
         void* texture;
-        backend::ProgramType programType;
+        uint32_t programType;
+        uint32_t programStateBatchId;
         backend::BlendFactor src;
         backend::BlendFactor dst;
     }hashMe;
@@ -100,6 +105,7 @@ void TrianglesCommand::generateMaterialID()
     hashMe.src = _blendType.src;
     hashMe.dst = _blendType.dst;
     hashMe.programType = _programType;
+    hashMe.programStateBatchId = _programStateBatchId;
     _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
 }
 

@@ -29,20 +29,6 @@
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
 
-namespace std
-{
-    template <>
-    struct hash<cocos2d::backend::ProgramType>
-    {
-        typedef cocos2d::backend::ProgramType argument_type;
-        typedef std::size_t result_type;
-        result_type operator()(argument_type const& v) const
-        {
-            return hash<int>()(static_cast<int>(v));
-        }
-    };
-}
-
 CC_BACKEND_BEGIN
 
 namespace
@@ -63,7 +49,7 @@ namespace
     }
 }
 
-std::unordered_map<backend::ProgramType, backend::Program*>  ProgramCache::_cachedPrograms;
+std::unordered_map<uint32_t, backend::Program*>  ProgramCache::_cachedPrograms;
 std::unordered_map<std::string, backend::Program*> ProgramCache::_cachedCustomPrograms;
 
 ProgramCache* ProgramCache::_sharedProgramCache = nullptr;
@@ -131,7 +117,7 @@ bool ProgramCache::init()
     return true;
 }
 
-void ProgramCache::addProgram(ProgramType type)
+void ProgramCache::addProgram(uint32_t type)
 {
     Program* program = nullptr;
     switch (type) {
@@ -250,7 +236,7 @@ void ProgramCache::addProgram(ProgramType type)
     ProgramCache::_cachedPrograms.emplace(type, program);
 }
 
-backend::Program* ProgramCache::getBuiltinProgram(ProgramType type) const
+backend::Program* ProgramCache::getBuiltinProgram(uint32_t type) const
 {
     const auto& iter = ProgramCache::_cachedPrograms.find(type);
     if (ProgramCache::_cachedPrograms.end() != iter)
