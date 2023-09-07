@@ -1739,9 +1739,9 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     }
 }
 
-void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/*color*/, uint8_t /*opacity*/, int width, int height, const std::string& url)
+void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/*color*/, uint8_t /*opacity*/, int width, int height, const std::string& url, const Widget::TextureResType resType)
 {
-    Sprite* imageRenderer = Sprite::create(filePath);
+    Sprite* imageRenderer = (resType == Widget::TextureResType::LOCAL?Sprite::create(filePath): Sprite::createWithSpriteFrameName(filePath));
     if (imageRenderer)
     {
         auto currentSize = imageRenderer->getContentSize();
