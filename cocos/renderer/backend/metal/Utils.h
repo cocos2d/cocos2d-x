@@ -100,13 +100,40 @@ public:
      */
     static void swizzleImage(unsigned char* image, std::size_t width, std::size_t height, MTLPixelFormat format);
     
+    /**
+     * Get the default msaa color texture.
+     * @return Will return or create msaa bufer appropriate for
+     * DeviceMTL::getCurrentDrawable().texture size
+     */
+    static id<MTLTexture> getDefaultMsaaColorTarget();
+    /**
+    * Get the default msaa depth and stencil texture.
+    * @return Will return or create msaa bufer appropriate for
+    * DeviceMTL::getCurrentDrawable().texture size
+    */
+    static id<MTLTexture> getDefaultMsaaDepthTarget();
+    static id<MTLTexture> getDefaultDepthTarget(bool withMsaa);
+    
 private:
     static id<MTLTexture> createDepthStencilAttachmentTexture();
-
+    
+    static id<MTLTexture> createDefaultMsaaDepthTarget();
+    static id<MTLTexture> createDefaultMsaaColorTarget();
     
     static id<MTLTexture> _defaultColorAttachmentTexture;
     static id<MTLTexture> _defaultDepthStencilAttachmentTexture;
+    
+    static id<MTLTexture> _defaultMsaaColorTarget;
+    static id<MTLTexture> _defaultMsaaDepthTarget;
 };
+
+inline id<MTLTexture> Utils::getDefaultDepthTarget(bool withMsaa)
+{
+    if(withMsaa)
+        return getDefaultMsaaDepthTarget();
+    else
+        return getDefaultDepthStencilTexture();
+}
 
 // end of _metal group
 /// @}

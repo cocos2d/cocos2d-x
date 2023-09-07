@@ -41,6 +41,11 @@ RenderPassDescriptor& RenderPassDescriptor::operator=(const RenderPassDescriptor
     stencilAttachmentTexture = descriptor.stencilAttachmentTexture;
     colorAttachmentsTexture[0] = descriptor.colorAttachmentsTexture[0];
     
+    msaaEnabled = descriptor.msaaEnabled;
+    encodeUnifiedMsaa = descriptor.encodeUnifiedMsaa;
+    msaaResolveTexture = descriptor.msaaResolveTexture;
+    encodeMsaaResolve = descriptor.encodeMsaaResolve;
+    
     return *this;
 }
 
@@ -57,7 +62,11 @@ bool RenderPassDescriptor::operator==(const RenderPassDescriptor& descriptor) co
         needClearStencil == descriptor.needClearStencil &&
         depthAttachmentTexture == descriptor.depthAttachmentTexture &&
         stencilAttachmentTexture == descriptor.stencilAttachmentTexture &&
-        colorAttachmentsTexture[0] == descriptor.colorAttachmentsTexture[0])
+        colorAttachmentsTexture[0] == descriptor.colorAttachmentsTexture[0] &&
+        msaaEnabled == descriptor.msaaEnabled &&
+       encodeMsaaResolve == descriptor.encodeMsaaResolve &&
+        encodeUnifiedMsaa == descriptor.encodeUnifiedMsaa &&
+        msaaResolveTexture == descriptor.msaaResolveTexture )
     {
         return true;
     }
@@ -65,6 +74,11 @@ bool RenderPassDescriptor::operator==(const RenderPassDescriptor& descriptor) co
     {
         return false;
     }
+}
+
+bool RenderPassDescriptor::needDepthStencilAttachment() const
+{
+    return depthTestEnabled || stencilTestEnabled;    
 }
 
 CC_BACKEND_END

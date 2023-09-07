@@ -649,6 +649,7 @@ enum class RenderTargetFlag : uint8_t
     COLOR = 1,
     DEPTH = 1 << 1,
     STENCIL = 1 << 2,
+    MSAA = 1 << 4,
     ALL = COLOR | DEPTH | STENCIL
 };
 ENABLE_BITMASK_OPERATORS(RenderTargetFlag)

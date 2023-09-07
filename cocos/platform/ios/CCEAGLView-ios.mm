@@ -150,6 +150,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         metalLayer.device = device;
         metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
         metalLayer.framebufferOnly = YES;
+        metalLayer.drawableSize =  CGSizeMake(originalRect_.size.width * self.contentScaleFactor, originalRect_.size.height * self.contentScaleFactor);
         cocos2d::backend::DeviceMTL::setCAMetalLayer(metalLayer);
     }
     

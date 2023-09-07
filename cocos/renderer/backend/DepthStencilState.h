@@ -61,6 +61,7 @@ struct DepthStencilDescriptor
     bool depthTestEnabled = false;
     
     bool stencilTestEnabled = false;
+    bool encodeUnifiedMsaa = false;
     StencilDescriptor backFaceStencil;
     StencilDescriptor frontFaceStencil;
 };
