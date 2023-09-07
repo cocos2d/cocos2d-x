@@ -80,13 +80,31 @@ public:
     int     getIntegerForKey(const char* key);
     
     /**
-     * Get bool value by key, if the key doesn't exist, will return passed default value.
+     * Get integer value by key, if the key doesn't exist, will return passed default value.
      * @param key The key to get value.
      * @param defaultValue The default value to return if the key doesn't exist.
      * @return Integer value of the key.
      * @js NA
      */
     virtual int getIntegerForKey(const char* key, int defaultValue);
+    
+    /**
+     * Get long (64bit integer) value by key, if the key doesn't exist, will return 0.
+     * You can set the default value, or it is 0.
+     * @param key The key to get value.
+     * @return Long (64bit integer) value of the key.
+     * @js NA
+     */
+    int64_t     getLongForKey(const char* key);
+    
+    /**
+     * Get long (64bit integer) value by key, if the key doesn't exist, will return passed default value.
+     * @param key The key to get value.
+     * @param defaultValue The default value to return if the key doesn't exist.
+     * @return Long (64bit integer) value of the key.
+     * @js NA
+     */
+    virtual int64_t getLongForKey(const char* key, int64_t defaultValue);
     
     /**
      * Get float value by key, if the key doesn't exist, will return 0.0.
@@ -172,6 +190,13 @@ public:
      * @js NA
      */
     virtual void setIntegerForKey(const char* key, int value);
+    /**
+     * Set long (64bit integer) value by key.
+     * @param key The key to set.
+     * @param value A long value to set to the key.
+     * @js NA
+     */
+    virtual void setLongForKey(const char* key, int64_t value);
     /**
      * Set float value by key.
      * @param key The key to set.
