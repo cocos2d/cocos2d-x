@@ -86,7 +86,8 @@ namespace cocos2d {
             virtual void setVisible(bool visible) = 0;
             virtual void setContentSize(const Size& size) = 0;
             virtual void setAnchorPoint(const Vec2& anchorPoint) = 0;
-            
+            virtual void setGlobalZOrder(float globalZOrder) = 0;
+
             /**
              * check the editbox's position, update it when needed
              */
