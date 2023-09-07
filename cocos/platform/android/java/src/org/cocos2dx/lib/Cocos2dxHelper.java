@@ -405,6 +405,16 @@ public class Cocos2dxHelper {
         }
     }
 
+    private static int displayMetricsToDPI(DisplayMetrics metrics)
+    {
+        if(metrics.xdpi != metrics.ydpi) {
+            Log.w(Cocos2dxHelper.TAG, "xdpi != ydpi, use (xdpi + ydpi)/2 instead.");
+            return (int) ((metrics.xdpi + metrics.ydpi) / 2.0);
+        } else {
+            return (int)metrics.xdpi;
+        }
+    }
+
     public static int getDPI()
     {
         if (sActivity != null)
@@ -416,8 +426,15 @@ public class Cocos2dxHelper {
                 Display d = wm.getDefaultDisplay();
                 if (d != null)
                 {
+                    try {
+                        Method getRealMetrics = d.getClass().getMethod("getRealMetrics", metrics.getClass());
+                        getRealMetrics.invoke(d, metrics);
+                        return displayMetricsToDPI(metrics);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     d.getMetrics(metrics);
-                    return (int)(metrics.density*160.0f);
+                    return displayMetricsToDPI(metrics);
                 }
             }
         }
