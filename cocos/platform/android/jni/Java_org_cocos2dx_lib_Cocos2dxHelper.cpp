@@ -52,18 +52,18 @@ using namespace std;
 
 extern "C" {
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetContext(JNIEnv*  env, jobject thiz, jobject context, jobject assetManager) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetContext(JNIEnv*  env, jclass thiz, jobject context, jobject assetManager) {
         JniHelper::setClassLoaderFrom(context);
         FileUtilsAndroid::setassetmanager(AAssetManager_fromJava(env, assetManager));
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAudioDeviceInfo(JNIEnv*  env, jobject thiz, jboolean isSupportLowLatency, jint deviceSampleRate, jint deviceAudioBufferSizeInFrames) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAudioDeviceInfo(JNIEnv*  env, jclass thiz, jboolean isSupportLowLatency, jint deviceSampleRate, jint deviceAudioBufferSizeInFrames) {
         __deviceSampleRate = deviceSampleRate;
         __deviceAudioBufferSizeInFrames = deviceAudioBufferSizeInFrames;
         LOGD("nativeSetAudioDeviceInfo: sampleRate: %d, bufferSizeInFrames: %d", __deviceSampleRate, __deviceAudioBufferSizeInFrames);
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jclass obj, jbyteArray text) {
         jsize  size = env->GetArrayLength(text);
 
         if (size > 0) {
