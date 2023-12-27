@@ -8,7 +8,7 @@ local function baseInit(self)
     self._angle = 0
 
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_MAC  or targetPlatform == cc.PLATFORM_OS_IPHONE  or targetPlatform == cc.PLATFORM_OS_IPAD or targetPlatform == cc.PLATFORM_OS_TIZEN then
+    if targetPlatform == cc.PLATFORM_OS_MAC  or targetPlatform == cc.PLATFORM_OS_IPHONE  or targetPlatform == cc.PLATFORM_OS_IPAD or targetPlatform == cc.PLATFORM_OS_TIZEN or targetPlatform == cc.PLATFORM_OS_OHOS then
         cc.FileUtils:getInstance():addSearchPath("Particle3D/materials")
         cc.FileUtils:getInstance():addSearchPath("Particle3D/scripts")
     else

@@ -1,0 +1,8 @@
+# 图像渲染
+1.在Index.ets中加载XComponent组件
+
+2.在PluginManager:GetInstance()->Export()中获取native层的XComponent实例
+
+3.pluginRender中创建XComponent依赖的回调，并调用OH_NativeComponent_RegisterCallback方法，将其与XComponent进行绑定。
+
+4.当XComponent走到OnSurfaxeCreated生命周期时，会触发3.中创建的回调，此时可以拿到XComponent的window实例，将其传递给egl用于与openGL ES绑定，后续渲染流程保持cocos2dx原流程即可

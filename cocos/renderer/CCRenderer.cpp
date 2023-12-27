@@ -793,30 +793,33 @@ void Renderer::drawBatchedTriangles()
     auto conf = Configuration::getInstance();
     if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
-        //Bind VAO
-        GL::bindVAO(_buffersVAO);
-        //Set VBO data
-        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+        // TBD need fixed ohos platform not support glUnmapBufferOES,can not use vao
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+       //Bind VAO
+       GL::bindVAO(_buffersVAO);
+       //Set VBO data
+       glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        // option 1: subdata
+       // option 1: subdata
 //        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
 
-        // option 2: data
+       // option 2: data
 //        glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex, _verts, GL_STATIC_DRAW);
 
-        // option 3: orphaning + glMapBuffer
-        // FIXME: in order to work as fast as possible, it must "and the exact same size and usage hints it had before."
-        //  source: https://www.opengl.org/wiki/Buffer_Object_Streaming#Explicit_multiple_buffering
-        // so most probably we won't have any benefit of using it
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex, nullptr, GL_STATIC_DRAW);
-        void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        memcpy(buf, _verts, sizeof(_verts[0]) * _filledVertex);
-        glUnmapBuffer(GL_ARRAY_BUFFER);
+       // option 3: orphaning + glMapBuffer
+       // FIXME: in order to work as fast as possible, it must "and the exact same size and usage hints it had before."
+       //  source: https://www.opengl.org/wiki/Buffer_Object_Streaming#Explicit_multiple_buffering
+       // so most probably we won't have any benefit of using it
+       glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex, nullptr, GL_STATIC_DRAW);
+       void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+       memcpy(buf, _verts, sizeof(_verts[0]) * _filledVertex);
+       glUnmapBuffer(GL_ARRAY_BUFFER);
 
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
+       glBindBuffer(GL_ARRAY_BUFFER, 0);
+       
+       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+       glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
+#endif
     }
     else
     {

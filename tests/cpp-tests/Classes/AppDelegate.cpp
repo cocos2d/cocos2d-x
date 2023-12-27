@@ -30,6 +30,7 @@
 #include "controller.h"
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "extensions/cocos-ext.h"
+#include "audio/include/AudioEngine.h"
 
 USING_NS_CC;
 
@@ -73,14 +74,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0f / 60);
 
     auto screenSize = glview->getFrameSize();
-    auto designSize = Size(480, 320);
+    auto designSize = Size(960, 960);
 
     auto fileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
     {
-        auto resourceSize = Size(960, 640);
+        auto resourceSize = Size(960, 960);
         searchPaths.push_back("hd");
         searchPaths.push_back("ccs-res/hd");
         searchPaths.push_back("ccs-res");
@@ -127,6 +128,7 @@ void AppDelegate::applicationDidEnterBackground()
     }
     
     Director::getInstance()->stopAnimation();
+    _testController->onEnterBackground();
 }
 
 // this function will be called when the app is active again
@@ -138,4 +140,6 @@ void AppDelegate::applicationWillEnterForeground()
     }
     
     Director::getInstance()->startAnimation();
+    // resume audioEngine, otherwise the opensl audioPlayer will always be suspended.
+    _testController->onEnterForeground();
 }

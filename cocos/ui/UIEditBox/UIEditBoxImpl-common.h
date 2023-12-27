@@ -30,7 +30,6 @@
 
 #include "platform/CCPlatformConfig.h"
 #include "2d/CCLabel.h"
-#include "ui/UIEditBox/UIEditBoxImpl-common.h"
 #include "ui/UIEditBox/UIEditBoxImpl.h"
 
 NS_CC_BEGIN

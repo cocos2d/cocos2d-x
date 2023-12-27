@@ -197,7 +197,6 @@ std::string AssetsManager::keyOfDownloadedVersion() const
 bool AssetsManager::checkUpdate()
 {
     if (_versionFileUrl.size() == 0 || _isDownloading) return false;
-    
     // Clear _version before assign new value.
     _version.clear();
     _isDownloading = true;

@@ -71,6 +71,8 @@ if(ANDROID)
     list(APPEND GAME_SOURCE
          proj.android/app/jni/main.cpp
          )
+elseif(OHOS)
+    list(APPEND GAME_SOURCE proj.ohos/entry/src/main/cpp/main.cpp)
 elseif(LINUX)
     list(APPEND GAME_SOURCE
          proj.linux/main.cpp
@@ -132,7 +134,9 @@ list(APPEND GAME_SOURCE
 
 set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
-if(NOT ANDROID)
+if(OHOS)
+    add_library(${APP_NAME} SHARED ${APP_SRC})
+elseif(NOT ANDROID)
     add_executable(${APP_NAME} ${APP_SRC})
 else()
     add_library(${APP_NAME} SHARED ${APP_SRC})

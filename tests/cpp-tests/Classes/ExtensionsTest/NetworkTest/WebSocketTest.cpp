@@ -137,7 +137,8 @@ void WebSocketTest::startTestCallback(Ref* sender)
     std::vector<std::string> protocols;
     protocols.push_back("myprotocol_1");
     protocols.push_back("myprotocol_2");
-    if (!_wsiSendText->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
+    // if (!_wsiSendText->init(*this, "wss://echo.websocket.events", &protocols, "cacert.pem"))
+    if (!_wsiSendText->init(*this, "ws://echo.websocket.events"))
     {
         CC_SAFE_DELETE(_wsiSendText);
     }
@@ -147,7 +148,8 @@ void WebSocketTest::startTestCallback(Ref* sender)
     }
 
     protocols.erase(protocols.begin());
-    if (!_wsiSendBinary->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
+    // if (!_wsiSendBinary->init(*this, "wss://echo.websocket.events", &protocols, "cacert.pem"))
+    if (!_wsiSendBinary->init(*this, "ws://echo.websocket.events"))
     {
         CC_SAFE_DELETE(_wsiSendBinary);
     }
@@ -196,7 +198,6 @@ void WebSocketTest::onMessage(network::WebSocket* ws, const network::WebSocket::
         sprintf(times, "%d", _sendTextTimes);
         std::string textStr = std::string("response text msg: ")+data.bytes+", "+times;
         log("%s", textStr.c_str());
-        
         _sendTextStatus->setString(textStr.c_str());
     }
     else
@@ -338,7 +339,7 @@ WebSocketCloseTest::WebSocketCloseTest()
 
     _wsiTest = new network::WebSocket();
 
-    if (!_wsiTest->init(*this, "ws://echo.websocket.org"))
+    if (!_wsiTest->init(*this, "ws://echo.websocket.events"))
     {
         delete _wsiTest;
         _wsiTest = nullptr;

@@ -1,0 +1,48 @@
+{
+  "app": {
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compileSdkVersion": "4.0.0(10)",
+        "compatibleSdkVersion": "4.0.0(10)",
+        "targetSdkVersion": "4.0.0(10)",
+        //指定HarmonyOS应用/服务目标版本。若没有设置，默认为compatibleSdkVersion
+        "runtimeOS": "HarmonyOS"
+        //指定为HarmonyOS/OpenHarmony
+      }
+    ],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "material": {
+          "certpath": "C:\\Users\\w30051888\\.ohos\\config\\openharmony\\auto_ohos_default_proj.ohos_ohos.cocos3.17.2.game.controller.tests.cer",
+          "storePassword": "0000001B5832CA3EFDF43D2E8E705E7567162DF43D737BE04257C4D37E7B6E21CF23E11B00CF54DBBC1D1A",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B2844737166A6F28F5FCA0097D2321CF5E58BE9F2ADEE07813720152C17DADFF1C9F3905FE57D57",
+          "profile": "C:\\Users\\w30051888\\.ohos\\config\\openharmony\\auto_ohos_default_proj.ohos_ohos.cocos3.17.2.game.controller.tests.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\w30051888\\.ohos\\config\\openharmony\\auto_ohos_default_proj.ohos_ohos.cocos3.17.2.game.controller.tests.p12"
+        }
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "libSysCapabilities",
+      "srcPath": "./libSysCapabilities"
+    }
+  ]
+}

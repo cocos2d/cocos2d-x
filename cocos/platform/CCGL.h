@@ -44,6 +44,8 @@ THE SOFTWARE.
 #include "platform/linux/CCGL-linux.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 #include "platform/tizen/CCGL-tizen.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+#include "platform/ohos/CCGL-ohos.h"
 #endif
 
 /// @endcond

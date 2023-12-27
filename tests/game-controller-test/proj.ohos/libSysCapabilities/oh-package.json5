@@ -1,0 +1,14 @@
+{
+  "license": "ISC",
+  "types": "",
+  "devDependencies": {},
+  "name": "libsyscapabilities",
+  "description": "a npm package which contains arkUI2.0 page",
+  "ohos": {
+    "org": ""
+  },
+  "main": "index.ts",
+  "type": "module",
+  "version": "1.0.0",
+  "dependencies": {}
+}

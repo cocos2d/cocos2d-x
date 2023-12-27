@@ -65,6 +65,8 @@
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "ConsoleTest/ConsoleTest.h"
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
+#include "SDKTest/SDKTest.h"
+#include "PaySDKTest/PaySDKTest.h"
 #include "DataVisitorTest/DataVisitorTest.h"
 #include "DownloaderTest/DownloaderTest.h"
 #include "DrawPrimitivesTest/DrawPrimitivesTest.h"

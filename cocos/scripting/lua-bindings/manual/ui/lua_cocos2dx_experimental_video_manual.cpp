@@ -24,7 +24,7 @@
 
 #include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_video_manual.hpp"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #include "ui/UIVideoPlayer.h"
 #include "scripting/lua-bindings/manual/tolua_fix.h"

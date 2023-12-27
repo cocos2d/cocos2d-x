@@ -1,0 +1,20 @@
+{
+  "module": {
+    "name": "libSysCapabilities",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "phone",
+      "tablet",
+      "tv",
+      "wearable",
+      "car",
+      "2in1"
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.ACCESS_EXTENSIONAL_DEVICE_DRIVER"
+      }
+    ]
+  }
+}

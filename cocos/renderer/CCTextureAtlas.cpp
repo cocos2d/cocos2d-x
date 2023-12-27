@@ -618,45 +618,47 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     auto conf = Configuration::getInstance();
     if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
-        //
-        // Using VBO and VAO
-        //
+	// TBD need fixed ohos platform not support glUnmapBufferOES,can not use vao
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+       //
+       // Using VBO and VAO
+       //
 
-        // FIXME:: update is done in draw... perhaps it should be done in a timer
-        if (_dirty) 
-        {
-            glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-            // option 1: subdata
+       // FIXME:: update is done in draw... perhaps it should be done in a timer
+       if (_dirty) 
+       {
+           glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+           // option 1: subdata
 //            glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
 
-            // option 2: data
+           // option 2: data
 //            glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
 
-            // option 3: orphaning + glMapBuffer
-            glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, nullptr, GL_DYNAMIC_DRAW);
-            void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-            memcpy(buf, _quads, sizeof(_quads[0])* _totalQuads);
-            glUnmapBuffer(GL_ARRAY_BUFFER);
-            
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
+           // option 3: orphaning + glMapBuffer
+           glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, nullptr, GL_DYNAMIC_DRAW);
+           void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+           memcpy(buf, _quads, sizeof(_quads[0])* _totalQuads);
+           glUnmapBuffer(GL_ARRAY_BUFFER);
+           
+           glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-            _dirty = false;
-        }
+           _dirty = false;
+       }
 
-        GL::bindVAO(_VAOname);
+       GL::bindVAO(_VAOname);
 
 #if CC_REBIND_INDICES_BUFFER
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 #endif
 
-        glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-        
-        GL::bindVAO(0);
-        
+       glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
+       
+       GL::bindVAO(0);
+       
 #if CC_REBIND_INDICES_BUFFER
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif
-
+#endif
 //    glBindVertexArray(0);
     }
     else

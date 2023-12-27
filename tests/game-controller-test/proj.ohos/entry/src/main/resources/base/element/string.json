@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "entry_desc",
+      "value": "3.17.2_game_controller_test"
+    },
+    {
+      "name": "MainAbility_label",
+      "value": "3.17.2_game_controller_test"
+    },
+    {
+      "name": "MainAbility_desc",
+      "value": "description"
+    }
+  ]
+}

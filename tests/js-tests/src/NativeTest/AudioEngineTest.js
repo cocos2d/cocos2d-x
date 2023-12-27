@@ -429,6 +429,9 @@ var InvalidAudioFileTest = AudioEngineBase.extend({
             else if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_WINDOWS) {
                 jsb.AudioEngine.play2d("background.caf"); 
             }
+            else if (cc.sys.os == cc.sys.OS_OHOS){
+                jsb.AudioEngine.play2d("background.wav"); 
+            }
         });
         playItem.setNormalizedPosition(cc.p(0.5, 0.6));
         this.addChild(playItem);
