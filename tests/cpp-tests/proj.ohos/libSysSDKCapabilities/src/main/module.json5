@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "libSysSDKCapabilities",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "tablet"
+    ]
+  }
+}
