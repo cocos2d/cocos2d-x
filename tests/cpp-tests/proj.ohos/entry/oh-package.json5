@@ -8,7 +8,6 @@
   "version": "1.0.0",
   "dependencies": {
     "@ohos/libSysCapabilities": "../libSysCapabilities",
-    "@ohos/libSysSDKCapabilities": "../libSysSDKCapabilities",
     "libnativerender.so": "file:./src/main/cpp/types/libentry"
   }
 }

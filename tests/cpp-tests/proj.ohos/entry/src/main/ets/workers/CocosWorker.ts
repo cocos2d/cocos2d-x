@@ -1,7 +1,6 @@
 import worker, { ThreadWorkerGlobalScope } from '@ohos.worker';
 import nativeRender from "libnativerender.so";
 import { ContextType } from "@ohos/libSysCapabilities"
-import { SDKContextType, SDKNapiHelper, LoginSDK, PaySDK } from "@ohos/libSysSDKCapabilities"
 import { VideoPlayer } from "@ohos/libSysCapabilities"
 import { CocosEditBox } from "@ohos/libSysCapabilities"
 import { Dialog } from "@ohos/libSysCapabilities"
@@ -16,13 +15,10 @@ const inputNapi: nativeRender.CPPFunctions = nativeRender.getContext(ContextType
 const webViewNapi: nativeRender.CPPFunctions = nativeRender.getContext(ContextType.WEBVIEW_NAPI);
 const videoPlayNapi: nativeRender.CPPFunctions = nativeRender.getContext(ContextType.VIDEOPLAYER_NAPI);
 const napiContext: nativeRender.CPPFunctions = nativeRender.getContext(ContextType.NATIVE_API);
-const loginSDKNapi: nativeRender.CPPFunctions = nativeRender.getSDKContext(SDKContextType.LOGINSDK_NAPI)
-const paySDKNapi: nativeRender.CPPFunctions = nativeRender.getSDKContext(SDKContextType.PAYSDK_NAPI)
 workerContext.workerInit()
 
 napiContext.nativeEngineStart();
 NapiHelper.registerFunctions(napiContext.registerFunction)
-SDKNapiHelper.registerFunctions(napiContext.registerFunction)
 
 const workerPort: ThreadWorkerGlobalScope = worker.workerPort;
 
@@ -36,8 +32,6 @@ workerPort.onmessage = function(e) : void {
             JumpManager.init(workerPort);
             WebView.init(workerPort);
             VideoPlayer.init(workerPort);
-            LoginSDK.init(workerPort);
-            PaySDK.init(workerPort);
             napiContext.initAsyncInfo();
             break;
         case "abilityContextInit":
@@ -63,14 +57,6 @@ workerPort.onmessage = function(e) : void {
             break;
         case "onVideoCallBack":
             videoPlayNapi.onVideoCallBack(data.viewTag, data.event);
-            break;
-        case "syncLoginSDKResult":
-            console.log('！！！！！！！！！！！！！loginSDKNapi syncLoginSDKResult: %{public}s', JSON.stringify(data.data));
-            loginSDKNapi.syncLoginSDKResult(data.data);
-            break;
-        case "syncPaySDKResult":
-            console.log('！！！！！！！！！！！！！paySDKNapi syncPaySDKResult: %{public}s', JSON.stringify(data.data));
-            paySDKNapi.syncPaySDKResult(data.data);
             break;
         case "exit":
             appLifecycle.onBackPress();

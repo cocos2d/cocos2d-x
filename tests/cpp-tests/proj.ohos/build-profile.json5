@@ -41,10 +41,6 @@
     {
       "name": "libSysCapabilities",
       "srcPath": "./libSysCapabilities"
-    },
-    {
-      "name": "libSysSDKCapabilities",
-      "srcPath": "./libSysSDKCapabilities"
     }
   ]
 }

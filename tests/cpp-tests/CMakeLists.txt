@@ -95,8 +95,6 @@ list(APPEND GAME_HEADER
      Classes/UnitTest/RefPtrTest.h
      Classes/ConfigurationTest/ConfigurationTest.h
      Classes/CurrentLanguageTest/CurrentLanguageTest.h
-     Classes/SDKTest/SDKTest.h
-     Classes/PaySDKTest/PaySDKTest.h
      Classes/AppDelegate.h
      Classes/LabelTest/LabelTestNew.h
      Classes/LabelTest/LabelTest.h
@@ -249,8 +247,6 @@ list(APPEND GAME_SOURCE
      Classes/ConsoleTest/ConsoleTest.cpp
      Classes/CurlTest/CurlTest.cpp
      Classes/CurrentLanguageTest/CurrentLanguageTest.cpp
-     Classes/SDKTest/SDKTest.cpp
-     Classes/PaySDKTest/PaySDKTest.cpp
      Classes/DataVisitorTest/DataVisitorTest.cpp
      Classes/DownloaderTest/DownloaderTest.cpp
      Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp
@@ -464,7 +460,6 @@ if (ANDROID)
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 elseif (OHOS)
     add_library(${APP_NAME} STATIC ${all_code_files})
-    target_include_directories(${APP_NAME} PUBLIC ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/proj.ohos/libSysSDKCapabilities/src/main/cpp)
 else()
     add_executable(${APP_NAME} ${all_code_files})
 endif()

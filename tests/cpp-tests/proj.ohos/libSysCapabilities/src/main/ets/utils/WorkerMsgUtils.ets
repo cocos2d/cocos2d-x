@@ -11,7 +11,7 @@ export class WorkerMsgUtils {
     static workPort = worker.workerPort;
     static log : Logger = new Logger(0x0001, 'WorkerMsgUtils')
 
-    static async recvWorkerThreadMessage(event: MessageEvents) {
+    static recvWorkerThreadMessage(event: MessageEvents) {
         let eventData: BaseWorkerMsgEntity = event.data;
         WorkerMsgUtils.log.debug('mainThread receiveMsg, module:%{public}s, function:%{public}s', eventData.module, eventData.function);
 

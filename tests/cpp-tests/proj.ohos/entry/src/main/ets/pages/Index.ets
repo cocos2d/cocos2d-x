@@ -10,28 +10,28 @@ import { CocosEditBox } from '../components/CocosEditBox'
 import { CocosWebView } from '../components/CocosWebview'
 import { CocosVideoPlayer } from '../components/CocosVideoPlayer'
 import { TextInputDialog } from '../components/TextInputDialog'
-import { EventData, sdkManagerMsg } from "@ohos/libSysSDKCapabilities"
 import { GlobalContext, GlobalContextConstants } from "@ohos/libSysCapabilities"
-import { MessageEvents } from '@ohos.worker'
-import common from '@ohos.app.ability.common'
-
 const nativePageLifecycle: nativeRender.CPPFunctions = nativeRender.getContext(ContextType.JSPAGE_LIFECYCLE);
-
-let cocosWorker = WorkerManager.getInstance().getWorker();
 
 @Entry
 @Component
 struct Index {
+
+  cocosWorker = WorkerManager.getInstance().getWorker();
   xcomponentController: XComponentController = new XComponentController();
+
   // EditBox
   @State editBoxArray: TextInputInfo[] = [];
   private editBoxIndexMap: Map<number, TextInputInfo> = new Map;
+
   // WebView
   @State webViewArray: WebViewInfo[] = [];
   private webViewIndexMap: Map<number, number> = new Map;
+
   // videoPlayer
   @State videoPlayerInfoArray: VideoPlayerInfo[] = [];
   private videoPlayerIndexMap: Map<number, VideoPlayerInfo> = new Map;
+
   // textInputDialog
   showMessage: TextInputDialogEntity = new TextInputDialogEntity('');
   dialogController: CustomDialogController = new CustomDialogController({
@@ -47,7 +47,7 @@ struct Index {
     console.log('[LIFECYCLE-Page] onPageShow');
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_EDIT_BOX_ARRAY, this.editBoxArray);
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_EDIT_BOX_INDEX_MAP, this.editBoxIndexMap);
-    GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_COCOS_WORKER, cocosWorker);
+    GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_COCOS_WORKER, this.cocosWorker);
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY, this.webViewArray);
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_INDEX_MAP, this.webViewIndexMap);
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_VIDEO_PLAYER_ARRAY, this.videoPlayerInfoArray);
@@ -64,7 +64,7 @@ struct Index {
 
   onBackPress() {
     console.log('[LIFECYCLE-Page] onBackPress');
-    cocosWorker.postMessage({ type: "exit" });
+    this.cocosWorker.postMessage({ type: "exit" });
     return true;
   }
 
@@ -78,51 +78,9 @@ struct Index {
       })
         .onLoad((context) => {
           console.log('[cocos] XComponent.onLoad Callback');
-          cocosWorker.postMessage({ type: "abilityContextInit", data: GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT)});
-          cocosWorker.postMessage({ type: "onXCLoad", data: "XComponent" });
-          cocosWorker.onmessage = async (event: MessageEvents) => {
-            let eventData: EventData = event.data;
-            switch (eventData.module) {
-              case 'LoginSDK':
-                let result: string;
-                try {
-                  result = await sdkManagerMsg.handlePullSDK(eventData as EventData);
-                } catch (e) {
-                  result =JSON.stringify(e);
-                }
-                console.log('！！！！！！！！！！！！！login success: %{public}s', JSON.stringify(result));
-                if (result != null || result != undefined) {
-                  console.log('！！！！！！！！！！！！！login cocosWorker postMessage start ' );
-                  try{
-                    cocosWorker.postMessage({type:"syncLoginSDKResult", data: result});
-                  }catch (e){
-                    console.log('！！！！！！！！！！！！！login  cocosWorker postMessage error %{public}s',e );
-                  }
-                  console.log('！！！！！！！！！！！！！login  cocosWorker postMessage end ' );
-                }
-                break;
-              case 'PaySDK':
-                let paySDKResult: string;
-                try {
-                  paySDKResult = await sdkManagerMsg.handlePullSDK(eventData as EventData);
-                } catch (e) {
-                  paySDKResult =JSON.stringify(e);
-                }
-                console.log('！！！！！！！！！！！！！check pay env success: %{public}s', JSON.stringify(paySDKResult));
-                if (paySDKResult != null || paySDKResult != undefined) {
-                  console.log('！！！！！！！！！！！！！  cocosWorker postMessage start ' );
-                  try{
-                    cocosWorker.postMessage({type:"syncPaySDKResult", data: paySDKResult});
-                  }catch (e){
-                    console.log('！！！！！！！！！！！！！ cocosWorker postMessage error %{public}s',e );
-                  }
-                  console.log('！！！！！！！！！！！！！ cocosWorker postMessage end ' );
-                }
-                break;
-              default:
-                 WorkerMsgUtils.recvWorkerThreadMessage(event);
-            }
-          };
+          this.cocosWorker.postMessage({ type: "abilityContextInit", data: GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT)});
+          this.cocosWorker.postMessage({ type: "onXCLoad", data: "XComponent" });
+          this.cocosWorker.onmessage = WorkerMsgUtils.recvWorkerThreadMessage;
         })
         .onDestroy(() => {
         })

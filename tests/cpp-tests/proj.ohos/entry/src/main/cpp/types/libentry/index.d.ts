@@ -23,9 +23,6 @@ export interface CPPFunctions {
   jsCallback: () => void;
   onVideoCallBack: (viewTag: number, event: number) => void;
   onAccelerometerCallBack: (x: number, y: number, z: number, interval: number) => void;
-  syncLoginSDKResult: (data: string) => void;
-  syncPaySDKResult: (data: string) => void;
 }
 
 export const getContext: (a: number) => CPPFunctions;
-export const getSDKContext: (a: number) => CPPFunctions;

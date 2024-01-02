@@ -15,14 +15,9 @@ add_library(${PROJECT_NAME} SHARED  main.cpp
 
 include_directories(${COCOS2DX_ROOT_PATH}/external/opengles/api)
 target_include_directories(${PROJECT_NAME}  PUBLIC ${CLASSES_PATH}
-                                            PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
-                                            PUBLIC ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/proj.ohos/libSysSDKCapabilities/src/main/cpp
-                                            PUBLIC ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/proj.ohos/libSysSDKCapabilities/src/main/cpp/napi
-                                                    )
+                                            PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos)
 
 add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-tests cpp_tests)
-add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-tests/proj.ohos/libSysSDKCapabilities/src/main/cpp libsyssdkcapabilities)
-
 find_library(hilog-lib hilog_ndk.z)
 find_library(libuv-lib uv)
-target_link_libraries(${PROJECT_NAME} PUBLIC cpp_tests syssdkcapabilities ${hilog-lib} ${libuv-lib})
+target_link_libraries(${PROJECT_NAME} PUBLIC cpp_tests ${hilog-lib} ${libuv-lib})

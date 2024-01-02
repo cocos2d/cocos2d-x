@@ -20,7 +20,6 @@
         "startWindowIcon": "$media:icon",
         "startWindowBackground": "$color:white",
         "visible": true,
-        //        "orientation": "landscape",
         "skills": [
           {
             "entities": [
@@ -56,14 +55,6 @@
       {
         "name": "partialUpdateStrictCheck",
         "value": "warn"
-      },
-      {
-        "name": "client_id",
-        "value": "109123919"
-      },
-      {
-        "name": "app_id",
-        "value": "1238224619626834624"
       }
     ]
   }
