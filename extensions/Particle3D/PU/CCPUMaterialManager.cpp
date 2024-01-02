@@ -167,11 +167,10 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
     FileUtilsOhos *fileUtilsOhos = dynamic_cast<FileUtilsOhos*>(FileUtils::getInstance());
     std::vector<std::string> files = fileUtilsOhos -> listFiles(fileFolder);
-    for (auto fileName : files) {
+    for (std::string fileName : files) {
         if (FileUtils::getInstance()->getFileExtension(fileName) == ".material")
         {
-            std::string fullpath = std::string(fileName);
-            loadMaterials(fullpath);
+            loadMaterials(fileName);
             state = true;
         }
     }
