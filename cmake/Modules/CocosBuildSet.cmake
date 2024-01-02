@@ -24,8 +24,8 @@ message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 
 # the default behavior of build module
 option(DEBUG_MODE "Debug or Release?" ON)
-option(BUILD_LUA_LIBS "Build lua libraries" ON)
-option(BUILD_JS_LIBS "Build js libraries" ON)
+option(BUILD_LUA_LIBS "Build lua libraries" OFF)
+option(BUILD_JS_LIBS "Build js libraries" OFF)
 
 # include helper functions
 include(CocosBuildHelpers)
