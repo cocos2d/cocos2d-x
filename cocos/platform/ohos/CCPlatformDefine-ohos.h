@@ -1,4 +1,4 @@
-#ifndef __CCPLATFORMDEFINE_H__
+#ifndef __CCPLATFORMDEFINE_OHOS_H__
 #define __CCPLATFORMDEFINE_H__
 
 #include "platform/CCPlatformConfig.h"
