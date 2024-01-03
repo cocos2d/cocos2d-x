@@ -70,7 +70,7 @@ elseif(ANDROID)
         # it's special for android, not a common file
         ui/UIWebView.cpp
         )
-ELSEIF(OHOS)
+elseif(OHOS)
     set(COCOS_UI_SPECIFIC_HEADER
             ui/UIWebView.h
             ui/UIEditBox/UIEditBoxImpl-ohos.h
