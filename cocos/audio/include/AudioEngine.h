@@ -175,11 +175,6 @@ public:
     /** Pause all playing audio instances. */
     static void pauseAll();
 
-    #if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
-    static void onEnterBackground();
-    static void onEnterForeground();
-    #endif
-
     /** 
      * Resume an audio instance.
      *

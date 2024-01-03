@@ -5,7 +5,8 @@
     "description": "$string:entry_desc",
     "mainElement": "EntryAbility",
     "deviceTypes": [
-      "phone"
+      "phone",
+      "tablet"
     ],
     "deliveryWithInstall": true,
     "installationFree": false,
@@ -13,13 +14,13 @@
     "abilities": [
       {
         "name": "MainAbility",
-        "srcEntrance": "./ets/MainAbility/MainAbility.ts",
+        "srcEntry": "./ets/MainAbility/MainAbility.ts",
         "description": "$string:MainAbility_desc",
         "icon": "$media:icon",
         "label": "$string:MainAbility_label",
         "startWindowIcon": "$media:icon",
         "startWindowBackground": "$color:white",
-        "visible": true,
+        "exported": true,
         "skills": [
           {
             "entities": [

@@ -48,4 +48,4 @@ protected:
 
 NS_CC_END
 #endif    // end of CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
-#endif    // end of __CC_EGLVIEW_ANDROID_H__
+#endif    // end of __CC_EGLVIEWIMPL_OHOS_H__
