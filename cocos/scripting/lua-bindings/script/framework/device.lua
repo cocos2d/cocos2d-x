@@ -59,7 +59,7 @@ elseif target == cc.PLATFORM_OS_WINRT then
 elseif target == cc.PLATFORM_OS_WP8 then
     device.platform = "wp8"
 elseif target == cc.PLATFORM_OS_OHOS then
-    device.platform = "harmony"
+    device.platform = "openharmony"
 end
 
 local language_ = app:getCurrentLanguage()
