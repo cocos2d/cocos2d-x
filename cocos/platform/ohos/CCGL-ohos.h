@@ -1,5 +1,6 @@
 #ifndef __CCGL_H__
-#define __CCGL_H__
+#ifndef __CCGL_OHOS_H__
+#define __CCGL_OHOS_H__
 
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
