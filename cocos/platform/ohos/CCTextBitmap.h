@@ -23,10 +23,9 @@ NS_CC_BEGIN
         static const int VERTICALALIGN_TOP = 1;
         static const int VERTICALALIGN_BOTTOM = 2;
         static const int VERTICALALIGN_CENTER = 3;
-        static CCTextBitmap* createCCTextBitmap(const char *text, const char *pFontName, const Device::TextAlign eAlignMask, int width_, int height_, double fontSize);
-        static CCTextBitmap* createCCTextBitmap(const char *text, const char *pFontName, const float a, const float r, const float g, const float b, 
+        static void createCCTextBitmap(CCTextBitmap* cCTextBitmap, const char *text, const char *pFontName, const float a, const float r, const float g, const float b, 
             const Device::TextAlign eAlignMask, int width_, int height_, double fontSize);
-        static CCTextBitmap* createCCTextBitmap(const char *text,  const char *pFontName, const int pFontSize,
+        static void createCCTextBitmap(CCTextBitmap* cCTextBitmap, const char *text,  const char *pFontName, const int pFontSize,
                                                 const float fontTintA, const float fontTintR, const float fontTintG, const float fontTintB,
                                                 const Device::TextAlign eAlignMask, const int pWidth, const int pHeight, const bool shadow,
                                                 const float shadowDX, const float shadowDY, const float shadowBlur, const bool stroke,

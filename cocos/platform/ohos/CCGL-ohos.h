@@ -1,4 +1,3 @@
-#ifndef __CCGL_H__
 #ifndef __CCGL_OHOS_H__
 #define __CCGL_OHOS_H__
 
@@ -41,4 +40,4 @@ extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
 
-#endif // __CCGL_H__
+#endif // __CCGL_OHOS_H__

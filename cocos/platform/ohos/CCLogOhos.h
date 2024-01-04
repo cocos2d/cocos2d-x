@@ -1,5 +1,5 @@
-#ifndef DISP_COMMON_H
-#define DISP_COMMON_H
+#ifndef __CC_LOG_OHOS_H__
+#define __CC_LOG_OHOS_H__
 #include <string.h>
 #include <stdint.h>
 #include <hilog/log.h>
@@ -118,4 +118,4 @@ extern "C" {
 }
 #endif
 
-#endif /* DISP_COMMON_H */
+#endif /* __CC_LOG_OHOS_H__ */

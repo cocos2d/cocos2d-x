@@ -6,23 +6,10 @@
 
 NS_CC_BEGIN
 
-CCTextBitmap* CCTextBitmap::createCCTextBitmap(const char *text, const char *pFontName, const Device::TextAlign eAlignMask, int width_, int height_, double fontSize)
-{
-    return createCCTextBitmap(text, pFontName, 
-        fontSize, 255, 0, 0, 0, eAlignMask,
-        width_, height_, 
-        false, 1, 1, 1, 
-        false, 1, 1, 1, 1);
-}
-
-CCTextBitmap* CCTextBitmap::createCCTextBitmap(const char *text, const char *pFontName, const float a, const float r, const float g, const float b, 
+void CCTextBitmap::createCCTextBitmap(CCTextBitmap* cCTextBitmap, const char *text, const char *pFontName, const float a, const float r, const float g, const float b, 
             const Device::TextAlign eAlignMask, int width_, int height_, double fontSize)
 {
-    return createCCTextBitmap(text, pFontName, 
-        fontSize, a, r, g, b, eAlignMask,
-        width_, height_, 
-        false, 1, 1, 1, 
-        false, 1, 1, 1, 1);
+    createCCTextBitmap(cCTextBitmap, text, pFontName, fontSize, a, r, g, b, eAlignMask, width_, height_, false, 1, 1, 1, false, 1, 1, 1, 1);
 }
 
 double CCTextBitmap::calxStartPosition(int pAlignment, int layoutWidth, int realWidth, int textWidth)
@@ -82,14 +69,12 @@ int CCTextBitmap::processTextAlign(int pAlignment)
     return align;
 }
 
-CCTextBitmap* CCTextBitmap::createCCTextBitmap(const char *text,  const char *pFontName, const int fontSize,
+void CCTextBitmap::createCCTextBitmap(CCTextBitmap* cCTextBitmap, const char *text,  const char *pFontName, const int fontSize,
             const float fontTintA, const float fontTintR, const float fontTintG, const float fontTintB,
             const Device::TextAlign eAlignMask, const int pWidth, const int pHeight, const bool shadow,
             const float shadowDX, const float shadowDY, const float shadowBlur, const bool stroke,
             const float strokeR, const float strokeG, const float strokeB, const float strokeSize)
 {
-    CCTextBitmap *cCTextBitmap = new CCTextBitmap();
-    
     // Manages typographical styles, such as text orientation.
     cCTextBitmap->_typographyStyle = OH_Drawing_CreateTypographyStyle();
     // Set the text to be displayed from left to right.
@@ -178,7 +163,6 @@ CCTextBitmap* CCTextBitmap::createCCTextBitmap(const char *text,  const char *pF
     cCTextBitmap->pixelAddr = OH_Drawing_BitmapGetPixels(cCTextBitmap->_bitmap);
     cCTextBitmap->width = textWidth;
     cCTextBitmap->height = textHeight;
-    return cCTextBitmap;
 }
 
 void* CCTextBitmap::getPixelAddr()
@@ -188,15 +172,15 @@ void* CCTextBitmap::getPixelAddr()
 
 CCTextBitmap::~CCTextBitmap()
 {
-  OH_Drawing_CanvasDestroy(_canvas);
-//  OH_Drawing_BitmapDestroy(_bitmap);
-  OH_Drawing_DestroyTypographyStyle(_typographyStyle);
-  OH_Drawing_DestroyTextStyle(_textStyle);
-  OH_Drawing_DestroyTypographyHandler(_typographyCreate);
-  OH_Drawing_DestroyTypography(_typography);
-  OH_Drawing_DestroyFontCollection(_fontCollection);  
+    OH_Drawing_CanvasDestroy(_canvas);
+    OH_Drawing_BitmapDestroy(_bitmap);
+    OH_Drawing_DestroyTypographyStyle(_typographyStyle);
+    OH_Drawing_DestroyTextStyle(_textStyle);
+    OH_Drawing_DestroyTypographyHandler(_typographyCreate);
+    OH_Drawing_DestroyTypography(_typography);
+    OH_Drawing_DestroyFontCollection(_fontCollection);
 
-  pixelAddr = nullptr;
+    pixelAddr = nullptr;
 }
 
 

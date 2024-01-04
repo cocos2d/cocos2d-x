@@ -49,16 +49,20 @@ public:
         }
     }
    
-    bool getBitmapFromJavaShadowStroke(	const char *text, int nWidth, int nHeight, Device::TextAlign eAlignMask, const FontDefinition& textDefinition)
+    bool getBitmapWithDrawing(	const char *text, int nWidth, int nHeight, Device::TextAlign eAlignMask, const FontDefinition& textDefinition)
     {
-        CCTextBitmap* cCtextBitmap = CCTextBitmap::createCCTextBitmap(text, textDefinition._fontName.data(), textDefinition._fontAlpha, textDefinition._fontFillColor.r, 
+        CCTextBitmap *cCtextBitmap = new CCTextBitmap();
+        CCTextBitmap::createCCTextBitmap(cCtextBitmap, text, textDefinition._fontName.data(), textDefinition._fontAlpha, textDefinition._fontFillColor.r, 
             textDefinition._fontFillColor.g, textDefinition._fontFillColor.b ,eAlignMask, nWidth, nHeight, textDefinition._fontSize);
         void* pixels = cCtextBitmap->getPixelAddr();
         cocos2d::BitmapDC& bitmapDC = sharedBitmapDC();
         bitmapDC.m_nWidth = cCtextBitmap->GetWidth();
         bitmapDC.m_nHeight = cCtextBitmap->GetHeight();
-        bitmapDC.m_pData = (unsigned char*)pixels;
-
+        long size = bitmapDC.m_nWidth * bitmapDC.m_nHeight * 4;
+        bitmapDC.m_pData = new unsigned char[size];
+        memcpy(bitmapDC.m_pData, pixels, size);
+        
+        delete cCtextBitmap;
         return true;
     }
 
@@ -71,22 +75,19 @@ public:
     
     static BitmapDC& sharedBitmapDC()
     {
+        // TBD not safe for multi threads
         static BitmapDC s_BmpDC;
         return s_BmpDC;
     }
 };
 
-Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
-{
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha) {
     Data ret;
-    do 
-    {
+    do {
         BitmapDC &dc = BitmapDC::sharedBitmapDC();
-
-        if(! dc.getBitmapFromJavaShadowStroke(text, 
-            (int)textDefinition._dimensions.width, 
-            (int)textDefinition._dimensions.height, 
-            align, textDefinition )) { break;};
+        if(! dc.getBitmapWithDrawing(text, (int)textDefinition._dimensions.width, (int)textDefinition._dimensions.height, align, textDefinition )) { 
+            break;
+        };
 
         width = dc.m_nWidth;
         height = dc.m_nHeight;

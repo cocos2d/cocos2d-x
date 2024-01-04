@@ -1,5 +1,5 @@
 #ifndef __CC_STD_C_OHOS_H__
-#define __CC_STD_C_H__
+#define __CC_STD_C_OHOS_H__
 
 #include "platform/CCPlatformMacros.h"
 #include <float.h>
@@ -20,4 +20,4 @@
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
 
-#endif  // __CC_STD_C_H__
+#endif  // __CC_STD_C_OHOS_H__

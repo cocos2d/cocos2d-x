@@ -1,5 +1,5 @@
 #ifndef __CCPLATFORMDEFINE_OHOS_H__
-#define __CCPLATFORMDEFINE_H__
+#define __CCPLATFORMDEFINE_OHOS_H__
 
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
@@ -34,4 +34,4 @@
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
 
-#endif /* __CCPLATFORMDEFINE_H__*/
+#endif /* __CCPLATFORMDEFINE_OHOS_H__*/
