@@ -75,7 +75,7 @@ LanguageType Application::getCurrentLanguage()
 
 ApplicationProtocol::Platform Application::getTargetPlatform()
 {
-    return ApplicationProtocol::Platform::OS_HARMONY;
+    return ApplicationProtocol::Platform::OS_OPENHARMONY;
 }
 
 

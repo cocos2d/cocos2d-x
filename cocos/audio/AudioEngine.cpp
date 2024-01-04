@@ -154,9 +154,6 @@ private:
 
 void AudioEngine::end()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-    stopAll();
-#endif
     if (s_threadPool)
     {
         delete s_threadPool;
@@ -354,11 +351,6 @@ void AudioEngine::resumeAll()
 
 void AudioEngine::stop(int audioID)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-   if(!_audioEngineImpl){
-        return;
-    }
-#endif
     auto it = _audioIDInfoMap.find(audioID);
     if (it != _audioIDInfoMap.end()){
         _audioEngineImpl->stop(audioID);
@@ -404,22 +396,6 @@ void AudioEngine::uncache(const std::string &filePath)
     auto audioIDsIter = _audioPathIDMap.find(filePath);
     if (audioIDsIter != _audioPathIDMap.end())
     {
-	#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-        auto lst =  _audioPathIDMap[filePath];
-        for (auto it = lst.begin() ; it != lst.end(); ++it) {
-            auto audioID = *it;
-            _audioEngineImpl->stop(audioID);
-            
-            auto itInfo = _audioIDInfoMap.find(audioID);
-            if (itInfo != _audioIDInfoMap.end()){
-                if (itInfo->second.profileHelper) {
-                    itInfo->second.profileHelper->audioIDs.remove(audioID);
-                }
-                _audioIDInfoMap.erase(audioID);
-            }
-        }
-	#else
-	
         //@Note: For safely iterating elements from the audioID list, we need to copy the list
         // since 'AudioEngine::remove' may be invoked in '_audioEngineImpl->stop' synchronously.
         // If this happens, it will break the iteration, and crash will appear on some devices.
@@ -439,7 +415,6 @@ void AudioEngine::uncache(const std::string &filePath)
                 _audioIDInfoMap.erase(audioID);
             }
         }
-#endif
         _audioPathIDMap.erase(filePath);
     }
 
