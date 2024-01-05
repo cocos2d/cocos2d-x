@@ -21,6 +21,7 @@
         "startWindowIcon": "$media:icon",
         "startWindowBackground": "$color:white",
         "exported": true,
+        "orientation": "auto_rotation_landscape",
         "skills": [
           {
             "entities": [
