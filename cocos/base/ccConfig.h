@@ -162,11 +162,7 @@ THE SOFTWARE.
  * If a device doesn't support VAO though it claims to support should add exceptions list here.
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-    #define CC_TEXTURE_ATLAS_USE_VAO 0 // TBD ohos doesn't support VAO
-#else
-    #define CC_TEXTURE_ATLAS_USE_VAO 1
-#endif
+#define CC_TEXTURE_ATLAS_USE_VAO 1
 #endif
 
 
