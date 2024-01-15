@@ -59,7 +59,7 @@ public:
         bitmapDC.m_nWidth = cCtextBitmap->GetWidth();
         bitmapDC.m_nHeight = cCtextBitmap->GetHeight();
         long size = bitmapDC.m_nWidth * bitmapDC.m_nHeight * 4;
-        bitmapDC.m_pData = new unsigned char[size];
+        bitmapDC.m_pData = (unsigned char*)malloc(sizeof(unsigned char) * size);
         memcpy(bitmapDC.m_pData, pixels, size);
         
         delete cCtextBitmap;
