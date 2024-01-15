@@ -85,7 +85,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     Data ret;
     do {
         BitmapDC &dc = BitmapDC::sharedBitmapDC();
-        if(! dc.getBitmapWithDrawing(text, (int)textDefinition._dimensions.width, (int)textDefinition._dimensions.height, align, textDefinition )) { 
+        if(!dc.getBitmapWithDrawing(text, (int)textDefinition._dimensions.width, (int)textDefinition._dimensions.height, align, textDefinition )) { 
             break;
         };
 

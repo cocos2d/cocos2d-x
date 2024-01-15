@@ -28,7 +28,7 @@ Application::~Application()
 int Application::run()
 {
     // Initialize instance and cocos2d.
-    if (! applicationDidFinishLaunching())
+    if (!applicationDidFinishLaunching())
     {
         return 0;
     }
