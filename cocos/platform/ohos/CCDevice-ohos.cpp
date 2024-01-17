@@ -43,10 +43,6 @@ public:
 
     ~BitmapDC(void)
     {
-        if (m_pData)
-        {
-            delete [] m_pData;
-        }
     }
    
     bool getBitmapWithDrawing(	const char *text, int nWidth, int nHeight, Device::TextAlign eAlignMask, const FontDefinition& textDefinition)
