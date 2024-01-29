@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2008      Apple Inc. All Rights Reserved.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -225,10 +226,11 @@ public:
      @param pixelsWide The image width.
      @param pixelsHigh The image height.
      @param contentSize The image content size.
+     @param preMultipliedAlpha The texture has premultiplied alpha
      * @js NA
      * @lua NA
      */
-    bool initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize);
+    bool initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize, bool preMultipliedAlpha = false);
 
     /** Initializes with mipmaps. 
      
@@ -237,8 +239,9 @@ public:
      @param pixelFormat The image pixelFormat.
      @param pixelsWide The image width.
      @param pixelsHigh The image height.
+     @param preMultipliedAlpha The texture has premultiplied alpha
      */
-    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh);
+    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, bool preMultipliedAlpha = false);
 
     /** Update with texture data.
      

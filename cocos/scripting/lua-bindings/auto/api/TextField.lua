@@ -207,7 +207,7 @@
 -- js NA
 -- @function [parent=#TextField] setCursorPosition 
 -- @param self
--- @param #unsigned long cursorPosition
+-- @param #unsigned int cursorPosition
 -- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------

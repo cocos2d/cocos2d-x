@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -29,7 +30,7 @@ NS_CC_BEGIN
 lua_State *LuaBridge::s_luaState = NULL;
 int        LuaBridge::s_newFunctionId = 0;
 
-LuaStack *LuaBridge::getStack(void)
+LuaStack *LuaBridge::getStack()
 {
     return LuaEngine::getInstance()->getLuaStack();
 }

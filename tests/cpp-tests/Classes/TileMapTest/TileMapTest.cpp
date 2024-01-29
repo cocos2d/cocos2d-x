@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "TileMapTest.h"
 #include "../testResource.h"
 
@@ -56,6 +80,7 @@ TileMapTests::TileMapTests()
     ADD_TEST_CASE(TMXHexAxisXTest);
     ADD_TEST_CASE(Issue16105Test);
     ADD_TEST_CASE(Issue16512Test);
+    ADD_TEST_CASE(TileAnimTest);
 }
 
 TileDemo::TileDemo()
@@ -70,7 +95,7 @@ TileDemo::TileDemo()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-TileDemo::~TileDemo(void)
+TileDemo::~TileDemo()
 {
 }
 
@@ -887,9 +912,11 @@ TMXIsoZorder::TMXIsoZorder()
     
     _tamara = Sprite::create(s_pathSister1);
     map->addChild(_tamara, (int)map->getChildren().size() );
+    
     _tamara->retain();
     int mapWidth = map->getMapSize().width * map->getTileSize().width;
     _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Vec2( mapWidth/2,0)));
+    _tamara->setScale(0.5);
     _tamara->setAnchorPoint(Vec2(0.5f,0));
 
     
@@ -919,11 +946,11 @@ void TMXIsoZorder::repositionSprite(float dt)
     auto map = getChildByTag(kTagTileMap);
     
     // there are only 4 layers. (grass and 3 trees layers)
-    // if tamara < 48, z=4
-    // if tamara < 96, z=3
-    // if tamara < 144,z=2
+    // if tamara < 30, z=4
+    // if tamara < 60, z=3
+    // if tamara < 90,z=2
     
-    int newZ = 4 - (p.y / 48);
+    int newZ = 4 - (static_cast<int>(p.y) / 30);
     newZ = std::max(newZ,0);
     
     map->reorderChild(_tamara, newZ);    
@@ -1336,10 +1363,10 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     std::string resources = "TileMaps";        // partial paths are OK as resource paths.
     std::string file = resources + "/orthogonal-test1.tmx";
 
-    auto str = __String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
+    auto str = __String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file));
     CCASSERT(str != nullptr, "Unable to open file");
 
-    auto map = TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
+    auto map = TMXTiledMap::createWithXML(str->getCString() ,resources);
     addChild(map, 0, kTagTileMap);
 
     auto s = map->getContentSize();
@@ -1695,4 +1722,36 @@ Issue16512Test::Issue16512Test()
 std::string Issue16512Test::title() const
 {
     return "Github Issue #16512. Should not crash";
+}
+
+//------------------------------------------------------------------
+//
+// TileAnimationTest
+//
+//------------------------------------------------------------------
+TileAnimTest::TileAnimTest()
+{
+
+    map = TMXTiledMap::create("TileMaps/tile_animation_test.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan= CC_CALLBACK_2(TileAnimTest::onTouchBegan, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    map->setTileAnimEnabled(_animStarted);
+}
+
+std::string TileAnimTest::title() const
+{
+    return "Tile animation test. Click to toggle the animation";
+}
+
+void TileAnimTest::onTouchBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    _animStarted = !_animStarted;
+    map->setTileAnimEnabled(_animStarted);
 }

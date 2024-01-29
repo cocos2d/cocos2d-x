@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -88,7 +89,7 @@ Skin::Skin()
 
 bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
-    CCAssert(spriteFrameName != "", "");
+    CCAssert(!spriteFrameName.empty(), "");
 
     SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     bool ret = true;

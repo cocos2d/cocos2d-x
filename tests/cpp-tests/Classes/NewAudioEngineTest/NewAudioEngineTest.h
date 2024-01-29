@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -158,6 +159,19 @@ public:
     virtual bool init() override;
 
     virtual std::string title() const override;
+};
+
+class AudioIssue18597Test : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioIssue18597Test);
+
+    float _time;
+
+    virtual bool init() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class AudioIssue11143Test : public AudioEngineTestDemo

@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "FileUtilsTest.h"
 
 USING_NS_CC;
@@ -23,6 +47,8 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestFileFuncsAsync);
     ADD_TEST_CASE(TestWriteStringAsync);
     ADD_TEST_CASE(TestWriteDataAsync);
+    ADD_TEST_CASE(TestListFiles);
+    ADD_TEST_CASE(TestIsFileExistRejectFolder);
 }
 
 // TestResolutionDirectories
@@ -178,7 +204,7 @@ std::string TestSearchPath::title() const
 
 std::string TestSearchPath::subtitle() const
 {
-    return "See the console, can see a orange box and a 'about' picture";
+    return "See the console, can see a orange box and a 'about' picture, except Android";
 }
 
 // TestFilenameLookup
@@ -537,7 +563,7 @@ void TextWritePlist::onEnter()
     else
         log("write plist file failed");
 
-    auto label = Label::createWithTTF(fullPath.c_str(), "fonts/Thonburi.ttf", 6);
+    auto label = Label::createWithTTF(fullPath, "fonts/Thonburi.ttf", 6);
     this->addChild(label);
     auto winSize = Director::getInstance()->getWinSize();
     label->setPosition(winSize.width/2, winSize.height/3);
@@ -567,7 +593,7 @@ std::string TextWritePlist::title() const
 
 std::string TextWritePlist::subtitle() const
 {
-    std::string writablePath = FileUtils::getInstance()->getWritablePath().c_str();
+    std::string writablePath = FileUtils::getInstance()->getWritablePath();
     return ("See plist file at your writablePath");
 }
 
@@ -591,7 +617,7 @@ void TestWriteString::onEnter()
     // writeTest
     std::string writeDataStr = "the string data will be write into a file";
     std::string fullPath = writablePath + fileName;
-    if (FileUtils::getInstance()->writeStringToFile(writeDataStr, fullPath.c_str()))
+    if (FileUtils::getInstance()->writeStringToFile(writeDataStr, fullPath))
     {
         log("see the plist file at %s", fullPath.c_str());
         writeResult->setString("write success:" + writeDataStr);
@@ -691,7 +717,7 @@ void TestGetContents::onEnter()
 
         // Text read string in text mode
         std::string ts = fs->getStringFromFile(_generatedFile);
-        if (ts != "\r\n\r\n")
+        if (strcmp(ts.c_str(), "\r\n\r\n")!=0)
             return std::string("failed: read as zero terminated string");
 
 
@@ -767,7 +793,7 @@ void TestWriteData::onEnter()
     Data writeData;
     writeData.copy((unsigned char *)writeDataStr.c_str(), writeDataStr.size());
     std::string fullPath = writablePath + fileName;
-    if (FileUtils::getInstance()->writeDataToFile(writeData, fullPath.c_str()))
+    if (FileUtils::getInstance()->writeDataToFile(writeData, fullPath))
     {
         log("see the plist file at %s", fullPath.c_str());
         writeResult->setString("write success:" + writeDataStr);
@@ -855,7 +881,7 @@ void TestWriteValueMap::onEnter()
     // end with /
     std::string writablePath = FileUtils::getInstance()->getWritablePath();
     std::string fullPath = writablePath + "testWriteValueMap.plist";
-    if (FileUtils::getInstance()->writeValueMapToFile(valueMap, fullPath.c_str()))
+    if (FileUtils::getInstance()->writeValueMapToFile(valueMap, fullPath))
     {
         log("see the plist file at %s", fullPath.c_str());
         writeResult->setString("write success");
@@ -866,7 +892,7 @@ void TestWriteValueMap::onEnter()
         writeResult->setString("write failed");
     }
 
-    ValueMap readValueMap = FileUtils::getInstance()->getValueMapFromFile(fullPath.c_str());
+    ValueMap readValueMap = FileUtils::getInstance()->getValueMapFromFile(fullPath);
     std::string readDataStr = "read data:\n";
     // read value map data
     ValueMap readMapInMap = readValueMap["data0"].asValueMap();
@@ -958,7 +984,7 @@ void TestWriteValueVector::onEnter()
     // end with /
     std::string writablePath = FileUtils::getInstance()->getWritablePath();
     std::string fullPath = writablePath + "testWriteValueVector.plist";
-    if (FileUtils::getInstance()->writeValueVectorToFile(array, fullPath.c_str()))
+    if (FileUtils::getInstance()->writeValueVectorToFile(array, fullPath))
     {
         log("see the plist file at %s", fullPath.c_str());
         writeResult->setString("write success");
@@ -969,7 +995,7 @@ void TestWriteValueVector::onEnter()
         writeResult->setString("write failed");
     }
 
-    ValueVector readArray = FileUtils::getInstance()->getValueVectorFromFile(fullPath.c_str());
+    ValueVector readArray = FileUtils::getInstance()->getValueVectorFromFile(fullPath);
     std::string readDataStr = "read data:\n";
     // read value map data
     ValueMap readMapInArray = readArray.at(0).asValueMap();
@@ -1364,6 +1390,97 @@ std::string TestWriteDataAsync::title() const
 }
 
 std::string TestWriteDataAsync::subtitle() const
+{
+    return "";
+}
+
+void TestListFiles::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto infoLabel = Label::createWithTTF("show file count, should not be 0", "fonts/Thonburi.ttf", 18);
+    this->addChild(infoLabel);
+    infoLabel->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto cntLabel = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(cntLabel);
+    cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
+    // writeTest
+    std::vector<std::string> listFonts = FileUtils::getInstance()->listFiles("fonts");
+    auto defaultPath = FileUtils::getInstance()->getDefaultResourceRootPath();
+    std::vector<std::string> list = FileUtils::getInstance()->listFiles (defaultPath);
+
+    char cntBuffer[200] = { 0 };
+    snprintf(cntBuffer, 200, "'fonts/' %zu, $defaultResourceRootPath %zu",listFonts.size(), list.size());
+
+    for(int i=0;i<listFonts.size();i++)
+    {
+        CCLOG("fonts/ %d: \t %s", i, listFonts[i].c_str());
+    }
+
+    for(int i=0;i<list.size();i++)
+    {
+        CCLOG("defResRootPath %d: \t %s", i, list[i].c_str());
+    }
+
+
+    cntLabel->setString(cntBuffer);
+
+}
+
+void TestListFiles::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestListFiles::title() const
+{
+    return "FileUtils: list files of directory";
+}
+
+std::string TestListFiles::subtitle() const
+{
+    return "";
+}
+
+
+
+void TestIsFileExistRejectFolder::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto infoLabel = Label::createWithTTF("tests folder 'NavMesh/maps', expect to be false", "fonts/Thonburi.ttf", 18);
+    this->addChild(infoLabel);
+    infoLabel->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto cntLabel = Label::createWithTTF("waiting...", "fonts/Thonburi.ttf", 18);
+    this->addChild(cntLabel);
+    cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
+    
+    auto exists = FileUtils::getInstance()->isFileExist("NavMesh/maps");
+    auto isDirectory = FileUtils::getInstance()->isDirectoryExist("NavMesh/maps");
+
+    char cntBuffer[200] = { 0 };
+    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s", isDirectory ? "true": "false" , exists ? "true" : "false");
+    cntLabel->setString(cntBuffer);
+
+}
+
+void TestIsFileExistRejectFolder::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestIsFileExistRejectFolder::title() const
+{
+    return "FileUtils: isFileExist(direname)";
+}
+
+std::string TestIsFileExistRejectFolder::subtitle() const
 {
     return "";
 }

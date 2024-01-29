@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2015-2017 Chukong Technologies Inc.
+ * Copyright (c) 2015-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -1088,6 +1089,14 @@ var _initSys = function () {
     sys.LANGUAGE_BULGARIAN = "bg";
 
     /**
+     * Belarusian language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.LANGUAGE_BELARUSIAN = "be";
+
+    /**
      * Unknown language code
      * @memberof cc.sys
      * @name LANGUAGE_UNKNOWN
@@ -1375,6 +1384,7 @@ var _initSys = function () {
             case 16: return sys.LANGUAGE_UKRAINIAN;
             case 17: return sys.LANGUAGE_ROMANIAN;
             case 18: return sys.LANGUAGE_BULGARIAN;
+            case 19: return sys.LANGUAGE_BELARUSIAN;
             default : return sys.LANGUAGE_ENGLISH;
         }
     })();

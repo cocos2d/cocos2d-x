@@ -5327,7 +5327,7 @@ int lua_cocos2dx_3d_Terrain_getHeightData(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_getHeightData'", nullptr);
             return 0;
         }
-        std::vector<float, std::allocator<float> > ret = cobj->getHeightData();
+        std::vector<float> ret = cobj->getHeightData();
         ccvector_float_to_luaval(tolua_S, ret);
         return 1;
     }

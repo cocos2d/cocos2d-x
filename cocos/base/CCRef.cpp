@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2017 Chukong Technologies
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -63,15 +64,15 @@ Ref::Ref()
 Ref::~Ref()
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    // if the object is referenced by Lua engine, remove it
-    if (_luaID)
+    ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (pEngine != nullptr && _luaID)
     {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
+        // if the object is referenced by Lua engine, remove it
+        pEngine->removeScriptObjectByObject(this);
     }
 #if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     else
     {
-        ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
         if (pEngine != nullptr && pEngine->getScriptType() == kScriptTypeJavascript)
         {
             pEngine->removeScriptObjectByObject(this);

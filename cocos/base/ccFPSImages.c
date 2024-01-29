@@ -2,7 +2,8 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +25,8 @@
  */
 
 #include "base/ccFPSImages.h"
+
+#if !CC_STRIP_FPS
 
 unsigned char cc_fps_images_png[] = {
     0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d,
@@ -2372,7 +2375,9 @@ unsigned char cc_fps_images_png[] = {
     0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82
 };
 
-unsigned int cc_fps_images_len(void)
+unsigned int cc_fps_images_len()
 {
 	return sizeof(cc_fps_images_png);
 }
+
+#endif // #if !CC_STRIP_FPS

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -54,7 +55,7 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
     {
         int count = _triangles.indexCount;
         _triangles.indexCount = count / 3 * 3;
-        CCLOGERROR("Resize indexCount from %zd to %zd, size must be multiple times of 3", count, _triangles.indexCount);
+        CCLOGERROR("Resize indexCount from %d to %d, size must be multiple times of 3", count, _triangles.indexCount);
     }
     _mv = mv;
     
@@ -94,11 +95,16 @@ void TrianglesCommand::generateMaterialID()
     // if they don't have the same glProgramState, they might still have the same
     // uniforms/values and glProgram, but it would be too expensive to check the uniforms.
     struct {
+        void* glProgramState;
         GLuint textureId;
         GLenum blendSrc;
         GLenum blendDst;
-        void* glProgramState;
     } hashMe;
+
+    // NOTE: Initialize hashMe struct to make the value of padding bytes be filled with zero.
+    // It's important since XXH32 below will also consider the padding bytes which probably 
+    // are set to random values by different compilers.
+    memset(&hashMe, 0, sizeof(hashMe)); 
 
     hashMe.textureId = _textureID;
     hashMe.blendSrc = _blendType.src;

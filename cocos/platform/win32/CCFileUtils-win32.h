@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -66,7 +67,7 @@ protected:
     *  @param name     The new name of the file.
     *  @return True if the file have been renamed successfully, false if not.
     */
-    virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name) override;
+    virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name) const override;
 
     /**
     *  Renames a file under the given directory.
@@ -75,7 +76,7 @@ protected:
     *  @param newfullpath  The new path + name of the file.
     *  @return True if the file have been renamed successfully, false if not.
     */
-    virtual bool renameFile(const std::string &oldfullpath, const std::string &newfullpath) override;
+    virtual bool renameFile(const std::string &oldfullpath, const std::string &newfullpath) const override;
 
     /**
     *  Checks whether a directory exists without considering search paths and resolution orders.
@@ -90,7 +91,7 @@ protected:
     *  @param filepath The full path of the file, it must be an absolute path.
     *  @return True if the file have been removed successfully, false if not.
     */
-    virtual bool removeFile(const std::string &filepath) override;
+    virtual bool removeFile(const std::string &filepath) const override;
 
     /**
     *  Creates a directory.
@@ -98,7 +99,7 @@ protected:
     *  @param dirPath The path of the directory, it must be an absolute path.
     *  @return True if the directory have been created successfully, false if not.
     */
-    virtual bool createDirectory(const std::string& dirPath) override;
+    virtual bool createDirectory(const std::string& dirPath) const override;
 
     /**
     *  Removes a directory.
@@ -106,10 +107,12 @@ protected:
     *  @param dirPath  The full path of the directory, it must be an absolute path.
     *  @return True if the directory have been removed successfully, false if not.
     */
-    virtual bool removeDirectory(const std::string& dirPath) override;
+    virtual bool removeDirectory(const std::string& dirPath) const override;
 
 
-	virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) override;
+	virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) const override;
+
+    virtual long getFileSize(const std::string &filepath) const override;
 
     /**
      *  Gets full path for filename, resolution directory and search path.
@@ -131,7 +134,23 @@ protected:
      *  @param filename  The name of the file.
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
-    virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const override;
+    virtual std::string getFullPathForFilenameWithinDirectory(const std::string& directory, const std::string& filename) const override;
+
+    /**
+    *  List all files in a directory.
+    *
+    *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+    *  @return File paths in a string vector
+    */
+    virtual std::vector<std::string> listFiles(const std::string& dirPath) const override;
+
+    /**
+    *  List all files recursively in a directory.
+    *
+    *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+    *  @return File paths in a string vector
+    */
+    virtual void listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const override;
 };
 
 // end of platform group

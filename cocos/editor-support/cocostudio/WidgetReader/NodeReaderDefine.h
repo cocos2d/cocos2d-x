@@ -1,5 +1,6 @@
 ﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -35,10 +36,10 @@
 #define DECLARE_CLASS_NODE_READER_INFO \
 public: \
 static cocos2d::ObjectFactory::TInfo __Type; \
-static cocos2d::Ref* createInstance(void); \
+static cocos2d::Ref* createInstance(); \
 
 #define IMPLEMENT_CLASS_NODE_READER_INFO(className) \
-cocos2d::Ref* className::createInstance(void) \
+cocos2d::Ref* className::createInstance() \
 { \
 return className::getInstance(); \
 } \
@@ -47,6 +48,6 @@ cocos2d::ObjectFactory::TInfo className::__Type(#className, &className::createIn
 #define CREATE_CLASS_NODE_READER_INFO(className) \
 cocos2d::ObjectFactory::TInfo(#className, &className::createInstance) \
 
-#define FLATSTR_TO_BOOL(str) (str.compare("True") == 0) ? true : false
+#define FLATSTR_TO_BOOL(str) (str == "True") ? true : false
 
 #endif /* defined(__cocos2d_libs__NodeReaderDefine__) */

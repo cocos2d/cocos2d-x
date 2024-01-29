@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -84,7 +85,7 @@ public:
     virtual void setTexture(Texture2D *texture) override;
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
-    virtual const Color3B& getColor(void) const override;
+    virtual const Color3B& getColor() const override;
     virtual void setColor(const Color3B& color) override;
     virtual void setOpacity(GLubyte opacity) override;
     /**

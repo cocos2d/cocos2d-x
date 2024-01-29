@@ -3,7 +3,8 @@ Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -423,6 +424,17 @@ size_t ActionManager::getNumberOfRunningActionsInTargetByTag(const Node *target,
     return count;
 }
 
+ssize_t ActionManager::getNumberOfRunningActions() const
+{
+    ssize_t count = 0;
+    struct _hashElement* element = nullptr;
+    struct _hashElement* tmp = nullptr;
+    HASH_ITER(hh, _targets, element, tmp)
+    {
+        count += (element->actions ? element->actions->num : 0);
+    }
+    return count;
+}
 
 // main loop
 void ActionManager::update(float dt)

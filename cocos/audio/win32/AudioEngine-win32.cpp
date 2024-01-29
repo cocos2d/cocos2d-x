@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -360,6 +361,9 @@ void AudioEngineImpl::stop(int audioID)
     //Note: Don't set the flag to false here, it should be set in 'update' function.
     // Otherwise, the state got from alSourceState may be wrong
 //    _alSourceUsed[player->_alSource] = false;
+
+    // Call 'update' method to cleanup immediately since the schedule may be cancelled without any notification.
+    update(0.0f);
 }
 
 void AudioEngineImpl::stopAll()
@@ -374,6 +378,9 @@ void AudioEngineImpl::stopAll()
 //    {
 //        _alSourceUsed[_alSources[index]] = false;
 //    }
+
+    // Call 'update' method to cleanup immediately since the schedule may be cancelled without any notification.
+    update(0.0f);
 }
 
 float AudioEngineImpl::getDuration(int audioID)
@@ -475,6 +482,7 @@ void AudioEngineImpl::update(float dt)
             if (player->_finishCallbak) {
                 auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
                 filePath = *audioInfo.filePath;
+                player->setCache(nullptr); // it's safe for player didn't free audio cache
             }
 
             AudioEngine::remove(audioID);
@@ -508,6 +516,11 @@ void AudioEngineImpl::uncache(const std::string &filePath)
 void AudioEngineImpl::uncacheAll()
 {
     _audioCaches.clear();
+    for(auto&& player : _audioPlayers)
+    {
+        // prevent player hold invalid AudioCache* pointer, since all audio caches purged
+        player.second->setCache(nullptr);
+    }
 }
 
 #endif

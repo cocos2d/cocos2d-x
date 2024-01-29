@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +30,7 @@ using namespace cocos2d;
 
 namespace cocostudio {
 
-ProcessBase::ProcessBase(void)
+ProcessBase::ProcessBase()
     : _processScale(1)
     , _isPause(true)
     , _isComplete(true)
@@ -47,7 +48,7 @@ ProcessBase::ProcessBase(void)
 }
 
 
-ProcessBase::~ProcessBase(void)
+ProcessBase::~ProcessBase()
 {
 }
 

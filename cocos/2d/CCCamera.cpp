@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -107,17 +108,8 @@ const Camera* Camera::getVisitingCamera()
 // end static methods
 
 Camera::Camera()
-: _scene(nullptr)
-, _viewProjectionDirty(true)
-, _cameraFlag(1)
-, _frustumDirty(true)
-, _viewProjectionUpdated(false)
-, _depth(-1)
-, _fbo(nullptr)
 {
     _frustum.setClipZ(true);
-    _clearBrush = CameraBackgroundBrush::createDepthBrush(1.f);
-    _clearBrush->retain();
 }
 
 Camera::~Camera()
@@ -236,6 +228,7 @@ bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPla
     Mat4::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
     _viewProjectionDirty = true;
     _frustumDirty = true;
+    _type = Type::PERSPECTIVE;
     
     return true;
 }
@@ -249,6 +242,7 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     Mat4::createOrthographicOffCenter(0, _zoom[0], 0, _zoom[1], _nearPlane, _farPlane, &_projection);
     _viewProjectionDirty = true;
     _frustumDirty = true;
+    _type = Type::ORTHOGRAPHIC;
     
     return true;
 }

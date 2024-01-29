@@ -18,6 +18,7 @@
 -- param opacity A opacity in GLubyte.<br>
 -- param filePath A image file name.<br>
 -- param url uniform resource locator<br>
+-- param texType texture type, may be a valid file path, or a sprite frame name<br>
 -- return True if initialize success, false otherwise.
 -- @function [parent=#RichElementImage] init 
 -- @param self
@@ -26,6 +27,7 @@
 -- @param #unsigned char opacity
 -- @param #string filePath
 -- @param #string url
+-- @param #int texType
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -49,6 +51,7 @@
 -- param opacity A opacity in GLubyte.<br>
 -- param filePath A image file name.<br>
 -- param url uniform resource locator<br>
+-- param texType texture type, may be a valid file path, or a sprite frame name<br>
 -- return A RichElementImage instance.
 -- @function [parent=#RichElementImage] create 
 -- @param self
@@ -57,6 +60,7 @@
 -- @param #unsigned char opacity
 -- @param #string filePath
 -- @param #string url
+-- @param #int texType
 -- @return RichElementImage#RichElementImage ret (return value: ccui.RichElementImage)
         
 --------------------------------

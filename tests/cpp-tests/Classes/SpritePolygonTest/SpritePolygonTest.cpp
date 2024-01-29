@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "SpritePolygonTest.h"
 #include "../testResource.h"
 #include "ui/CocosGUI.h"
@@ -86,7 +110,7 @@ bool SpritePolygonTestCase::init()
 
 void SpritePolygonTestCase::updateDrawNode()
 {
-    if (_isDebugDraw && _drawNodes.size() > 0) {
+    if (_isDebugDraw && !_drawNodes.empty()) {
         for (int i = 0; i < _drawNodes.size(); i++)
         {
                 auto drawnode = _drawNodes.at(i);
@@ -273,15 +297,16 @@ void SpritePolygonTestSlider::initSliders()
     slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     slider->loadProgressBarTexture("cocosui/sliderProgress.png");
     slider->setPosition(Vec2(vsize.width/2, vsize.height/4));
-    
-    slider->addEventListener(CC_CALLBACK_2(SpritePolygonTestSlider::changeEpsilon, this));
-    slider->setPercent((int)(sqrtf(1.0f/19.0f)*100));
-    
+
     auto ttfConfig = TTFConfig("fonts/arial.ttf", 8);
     _epsilonLabel = Label::createWithTTF(ttfConfig, "Epsilon: 2.0");
     addChild(_epsilonLabel);
     _epsilonLabel->setPosition(Vec2(vsize.width/2, vsize.height/4 + 15));
     addChild(slider);
+
+    slider->addEventListener(CC_CALLBACK_2(SpritePolygonTestSlider::changeEpsilon, this));
+    slider->setPercent((int)(sqrtf(1.0f/19.0f)*100));
+
 }
 
 void SpritePolygonTestSlider::makeSprites(const std::string* list, const int count, const float y)
@@ -303,7 +328,7 @@ void SpritePolygonTestSlider::changeEpsilon(cocos2d::Ref *pSender, cocos2d::ui::
         float epsilon = powf(slider->getPercent()/100.0,2)*19.0f + 1.0f;
         for(auto child : _children)
         {
-            if(child->getName().size())
+            if(!child->getName().empty())
             {
                 Sprite *sp = (Sprite*)child;
                 auto file = sp->getName();
@@ -320,7 +345,7 @@ void SpritePolygonTestSlider::changeEpsilon(cocos2d::Ref *pSender, cocos2d::ui::
 void SpritePolygonTestSlider::updateLabel(const cocos2d::Sprite *sp, const PolygonInfo &pinfo)
 {
     Label *label = (Label*)(sp->getChildByName(sp->getName()));
-    auto filename = sp->getName();
+    const auto& filename = sp->getName();
     auto size = pinfo.getRect().size/Director::getInstance()->getContentScaleFactor();
     label->setString(filename+"\nVerts: "+Value((int)pinfo.getVertCount()).asString()+ "\nPixels: "+Value((int)(pinfo.getArea()/(size.width*size.height)*100)).asString()+"%");
 }

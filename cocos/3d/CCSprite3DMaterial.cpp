@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -214,7 +215,7 @@ Sprite3DMaterial* Sprite3DMaterial::createBuiltInMaterial(MaterialType type, boo
 Sprite3DMaterial* Sprite3DMaterial::createWithFilename(const std::string& path)
 {
     auto validfilename = FileUtils::getInstance()->fullPathForFilename(path);
-    if (validfilename.size() > 0) {
+    if (!validfilename.empty()) {
         auto it = _materials.find(validfilename);
         if (it != _materials.end())
             return (Sprite3DMaterial*)it->second->clone();

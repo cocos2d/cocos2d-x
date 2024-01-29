@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 
 
 #include "editor-support/cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
@@ -438,7 +462,7 @@ namespace cocostudio
         auto imageFileNameDic = options->backGroundImageData();
         int imageFileNameType = imageFileNameDic->resourceType();
         std::string imageFileName = imageFileNameDic->path()->c_str();
-        if (imageFileName != "")
+        if (!imageFileName.empty())
         {
             switch (imageFileNameType)
             {
@@ -515,11 +539,11 @@ namespace cocostudio
         //         listView->setGravity(gravity);
         
         std::string directionType = options->directionType()->c_str();
-        if (directionType == "")
+        if (directionType.empty())
         {
             listView->setDirection(ListView::Direction::HORIZONTAL);
             std::string verticalType = options->verticalType()->c_str();
-            if (verticalType == "")
+            if (verticalType.empty())
             {
                 listView->setGravity(ListView::Gravity::TOP);
             }
@@ -536,7 +560,7 @@ namespace cocostudio
         {
             listView->setDirection(ListView::Direction::VERTICAL);
             std::string horizontalType = options->horizontalType()->c_str();
-            if (horizontalType == "")
+            if (horizontalType.empty())
             {
                 listView->setGravity(ListView::Gravity::LEFT);
             }
@@ -585,7 +609,7 @@ namespace cocostudio
         return listView;
     }
     
-    int ListViewReader::getResourceType(std::string key)
+    int ListViewReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

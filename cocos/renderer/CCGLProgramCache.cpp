@@ -2,7 +2,8 @@
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -34,6 +35,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerCustom.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
+#include "platform/CCDataManager.h"
 
 NS_CC_BEGIN
 
@@ -74,6 +76,7 @@ enum {
 
     kShaderType_ETC1ASPositionTextureGray,
     kShaderType_ETC1ASPositionTextureGray_noMVP,
+    kShaderType_LayerRadialGradient,
     kShaderType_MAX,
 };
 
@@ -125,12 +128,17 @@ GLProgramCache::~GLProgramCache()
 
 bool GLProgramCache::init()
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    DataManager::onShaderLoaderBegin();
+#endif
     loadDefaultGLPrograms();
     
     auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* /*event*/){
         reloadDefaultGLProgramsRelativeToLights();
     });
-    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    DataManager::onShaderLoaderEnd();
+#endif
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
     
     return true;
@@ -300,6 +308,10 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new(std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray_noMVP);
     _programs.emplace(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP, p);
+    
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_LayerRadialGradient);
+    _programs.emplace(GLProgram::SHADER_LAYER_RADIAL_GRADIENT, p);
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -467,6 +479,10 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray_noMVP);
+    
+    p = getGLProgram(GLProgram::SHADER_LAYER_RADIAL_GRADIENT);
+    loadDefaultGLProgram(p, kShaderType_LayerRadialGradient);
+    _programs.emplace(GLProgram::SHADER_LAYER_RADIAL_GRADIENT, p);
 }
 
 void GLProgramCache::reloadDefaultGLProgramsRelativeToLights()
@@ -619,6 +635,9 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             break;
         case kShaderType_ETC1ASPositionTextureGray_noMVP:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureGray_frag);
+            break;
+        case kShaderType_LayerRadialGradient:
+            p->initWithByteArrays(ccPosition_vert, ccShader_LayerRadialGradient_frag);
             break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);

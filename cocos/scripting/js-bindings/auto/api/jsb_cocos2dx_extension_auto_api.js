@@ -1859,13 +1859,13 @@ hasVisibleParents : function (
 },
 
 /**
- * @method getDirection
- * @return {cc.ScrollView::Direction}
+ * @method setSwallowTouches
+ * @param {bool} arg0
  */
-getDirection : function (
+setSwallowTouches : function (
+bool 
 )
 {
-    return 0;
 },
 
 /**
@@ -2100,6 +2100,16 @@ minContainerOffset : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method getDirection
+ * @return {cc.ScrollView::Direction}
+ */
+getDirection : function (
+)
+{
+    return 0;
 },
 
 /**

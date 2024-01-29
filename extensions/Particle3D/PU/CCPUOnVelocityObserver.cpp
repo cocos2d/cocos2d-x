@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -24,25 +25,26 @@
  ****************************************************************************/
 
 #include "extensions/Particle3D/PU/CCPUOnVelocityObserver.h"
+#include <cmath>
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 static bool almostEquals(float a, float b, float epsilon = std::numeric_limits<float>::epsilon())
 {
-    return fabs(a - b) <= ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * epsilon); 
-};
+    return std::fabs(a - b) <= ( (std::fabs(a) < std::fabs(b) ? std::fabs(b) : std::fabs(a)) * epsilon);
+}
 
 // Constants
 const float PUOnVelocityObserver::DEFAULT_VELOCITY_THRESHOLD = 0.0f;
 
 //-----------------------------------------------------------------------
-PUOnVelocityObserver::PUOnVelocityObserver(void) : 
-    PUObserver(),
-    _threshold(DEFAULT_VELOCITY_THRESHOLD),
-    _compare(CO_LESS_THAN)
+PUOnVelocityObserver::PUOnVelocityObserver()
+: PUObserver()
+, _threshold(DEFAULT_VELOCITY_THRESHOLD)
+, _compare(CO_LESS_THAN)
 {
-};
+}
 //-----------------------------------------------------------------------
 bool PUOnVelocityObserver::observe (PUParticle3D* particle, float /*timeElapsed*/)
 {

@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -227,7 +228,7 @@ void drawCircle( const Vec2& center, float radius, float angle, unsigned int seg
 
     const float coef = 2.0f * (float)M_PI/segments;
 
-    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    GLfloat *vertices = (GLfloat*)calloc( 2*(segments+2), sizeof(GLfloat));
     if( ! vertices )
         return;
 
@@ -267,7 +268,7 @@ void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned in
     
     const float coef = 2.0f * (float)M_PI/segments;
     
-    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    GLfloat *vertices = (GLfloat*)calloc( 2*(segments+2), sizeof(GLfloat));
     if( ! vertices )
         return;
     

@@ -31,7 +31,7 @@
 #ifndef SPINE_SKELETONRENDERER_H_
 #define SPINE_SKELETONRENDERER_H_
 
-#include <spine/spine.h>
+#include "spine/spine.h"
 #include "cocos2d.h"
 
 namespace spine {
@@ -64,6 +64,9 @@ public:
 
 	void setDebugBonesEnabled(bool enabled);
 	bool getDebugBonesEnabled() const;
+	
+	void setDebugMeshesEnabled(bool enabled);
+	bool getDebugMeshesEnabled() const;
 
 	// --- Convenience methods for common Skeleton_* functions.
 	void updateWorldTransform ();
@@ -91,6 +94,14 @@ public:
 	bool setAttachment (const std::string& slotName, const std::string& attachmentName);
 	/* @param attachmentName May be 0 for no attachment. */
 	bool setAttachment (const std::string& slotName, const char* attachmentName);
+	
+	/* Enables/disables two color tinting for this instance. May break batching */
+	void setTwoColorTint(bool enabled);
+	/* Whether two color tinting is enabled */
+	bool isTwoColorTint();
+	
+	/* Sets the vertex effect to be used, set to 0 to disable vertex effects */
+	void setVertexEffect(spVertexEffect* effect);
 
     // --- BlendProtocol
     virtual void setBlendFunc (const cocos2d::BlendFunc& blendFunc)override;
@@ -117,7 +128,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);
 	virtual AttachmentVertices* getAttachmentVertices (spRegionAttachment* attachment) const;
-	virtual AttachmentVertices* getAttachmentVertices (spMeshAttachment* attachment) const;
+	virtual AttachmentVertices* getAttachmentVertices (spMeshAttachment* attachment) const;	
 
 	bool _ownsSkeletonData;
 	spAtlas* _atlas;
@@ -130,6 +141,9 @@ protected:
 	float _timeScale;
 	bool _debugSlots;
 	bool _debugBones;
+	bool _debugMeshes;
+	spSkeletonClipping* _clipper;
+	spVertexEffect* _effect;
 };
 
 }

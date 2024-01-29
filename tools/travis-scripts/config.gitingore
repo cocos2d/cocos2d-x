@@ -45,12 +45,10 @@ win32-msvc-vs201*-x86
 *.ilk
 *.log
 [Bb]in
-[Dd]ebug/
 [Dd]ebug.win32/
 *.sbr
 *.sdf
 obj/
-[Rr]elease/
 [Rr]elease.win32/
 _ReSharper*/
 [Tt]est[Rr]esult*

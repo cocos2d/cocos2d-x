@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2017 Chukong Technologies
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -46,13 +47,13 @@ public:
     /**
      * @js ctor
      */
-    __Set(void);
+    __Set();
     __Set(const __Set &rSetObject);
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~__Set(void);
+    virtual ~__Set();
 
     /**
     * @brief Create and return a new empty set.

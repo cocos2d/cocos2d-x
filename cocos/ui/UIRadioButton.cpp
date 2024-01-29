@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2015 Neo Kim (neo.kim@neofect.com)
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -313,7 +314,7 @@ void RadioButtonGroup::setAllowedNoSelection(bool allowedNoSelection)
     _allowedNoSelection = allowedNoSelection;
     if(!_allowedNoSelection && _selectedRadioButton == nullptr)
     {
-        if (_radioButtons.size() > 0)
+        if (!_radioButtons.empty())
         {
             setSelectedButton(_radioButtons.at(0));
         }

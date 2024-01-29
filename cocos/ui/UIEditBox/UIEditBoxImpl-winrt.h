@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2014 cocos2d-x.org
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -72,6 +73,8 @@ namespace ui {
     void removeTextBox();
     void setInputScope(TextBox^ textBox);
     void _setTextHorizontalAlignment(TextBox^ textBox);
+	void _setTexVerticalAlignment(Windows::UI::Xaml::Controls::Control^ textBox);
+	void _setPadding(Windows::UI::Xaml::Controls::Control^ editBox);
 
     // Properties
     Windows::Foundation::Rect _rect;

@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -38,7 +39,6 @@
 #include "extensions/Particle3D/PU/CCPUSlaveEmitterTranslator.h"
 #include "extensions/Particle3D/PU/CCPUSphereSurfaceEmitterTranslator.h"
 
-using namespace std;
 NS_CC_BEGIN
 
 class PUEmitterManager

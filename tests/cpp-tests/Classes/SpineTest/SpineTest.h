@@ -28,7 +28,7 @@
 
 #include "cocos2d.h"
 #include "../BaseTest.h"
-#include <spine/spine-cocos2dx.h>
+#include "spine/spine-cocos2dx.h"
 
 DEFINE_TEST_SUITE(SpineTests);
 
@@ -40,7 +40,6 @@ public:
     virtual std::string title() const;
 protected:
     std::string    _title;
-    bool _useBinary;
 };
 
 class BatchingExample: public SpineTestLayer {
@@ -57,6 +56,17 @@ protected:
     spAnimationStateData* _stateData;
 };
 
+class CoinExample: public SpineTestLayer
+{
+public:
+    CREATE_FUNC(CoinExample);
+    
+    virtual bool init();
+    
+private:
+    spine::SkeletonAnimation* skeletonNode;
+};
+
 class GoblinsExample : public SpineTestLayer {
 public:
     CREATE_FUNC(GoblinsExample);
@@ -65,14 +75,6 @@ public:
     
 private:
     spine::SkeletonAnimation* skeletonNode;
-};
-
-class GoblinsExampleBinary: public GoblinsExample
-{
-public:
-    CREATE_FUNC(GoblinsExampleBinary);
-    
-    virtual bool init ();
 };
 
 class RaptorExample : public SpineTestLayer {
@@ -84,14 +86,6 @@ public:
 private:
     spine::SkeletonAnimation* skeletonNode;
 };
-
-class RaptorExampleBinary : public RaptorExample
-{
-public:
-    CREATE_FUNC(RaptorExampleBinary);
-    virtual bool init();
-};
-
 
 class SpineboyExample : public SpineTestLayer {
 public:
@@ -105,13 +99,6 @@ private:
     spine::SkeletonAnimation* skeletonNode;
 };
 
-class SpineboyExampleBinary : public SpineboyExample
-{
-public:
-    CREATE_FUNC (SpineboyExampleBinary);
-    virtual bool init();
-};
-
 class TankExample : public SpineTestLayer {
 public:
     CREATE_FUNC(TankExample);
@@ -120,13 +107,6 @@ public:
     
 private:
     spine::SkeletonAnimation* skeletonNode;
-};
-
-class TankExampleBinary : public TankExample
-{
-public:
-    CREATE_FUNC(TankExampleBinary);
-    virtual bool init();
 };
 
 #endif // _EXAMPLELAYER_H_

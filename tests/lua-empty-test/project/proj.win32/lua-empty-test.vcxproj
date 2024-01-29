@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{13E55395-94A2-4CD9-BFC2-1A051F80C17D}</ProjectGuid>
     <RootNamespace>lua-empty-test.win32</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -85,7 +86,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)external\lua\luajit\include;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRLUASTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -103,19 +104,19 @@
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
-    <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)res" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)src" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)src\cocos" /D /E /I /F /Y
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)Resources\res\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)Resources\src\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)Resources\src\cocos\" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
-    </PreBuildEvent>
+    </PostBuildEvent>
     <PreLinkEvent>
       <Command>
       </Command>
@@ -135,7 +136,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <ProxyFileName>lua-empty-test_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)external\lua\luajit\include;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRLUASTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -154,7 +155,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -165,12 +166,12 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <Command>
       </Command>
     </PreLinkEvent>
-    <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)res" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)src" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)src\cocos" /D /E /I /F /Y
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)Resources\res\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)Resources\src\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)Resources\src\cocos" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
-    </PreBuildEvent>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />

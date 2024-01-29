@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -162,6 +163,18 @@ namespace cocos2d {
 
             void WebViewImpl::setBounces(bool bounces) {
                 // empty function as this was mainly a fix for iOS
+            }
+
+            void WebViewImpl::setOpacityWebView(float opacity){
+                //TODO
+            }
+        
+            float WebViewImpl::getOpacityWebView() const{
+                //TODO
+            }
+        
+            void WebViewImpl::setBackgroundTransparent(){
+                //TODO
             }
         } // namespace ui
     } // namespace experimental

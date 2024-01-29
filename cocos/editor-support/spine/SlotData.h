@@ -31,7 +31,9 @@
 #ifndef SPINE_SLOTDATA_H_
 #define SPINE_SLOTDATA_H_
 
-#include <spine/BoneData.h>
+#include "spine/dll.h"
+#include "spine/BoneData.h"
+#include "spine/Color.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,7 +48,8 @@ typedef struct spSlotData {
 	const char* const name;
 	const spBoneData* const boneData;
 	const char* attachmentName;
-	float r, g, b, a;
+	spColor color;
+	spColor* darkColor;
 	spBlendMode blendMode;
 
 #ifdef __cplusplus
@@ -55,17 +58,18 @@ typedef struct spSlotData {
 		name(0),
 		boneData(0),
 		attachmentName(0),
-		r(0), g(0), b(0), a(0),
+		color(),
+		darkColor(0),
 		blendMode(SP_BLEND_MODE_NORMAL) {
 	}
 #endif
 } spSlotData;
 
-spSlotData* spSlotData_create (const int index, const char* name, spBoneData* boneData);
-void spSlotData_dispose (spSlotData* self);
+SP_API spSlotData* spSlotData_create (const int index, const char* name, spBoneData* boneData);
+SP_API void spSlotData_dispose (spSlotData* self);
 
 /* @param attachmentName May be 0 for no setup pose attachment. */
-void spSlotData_setAttachmentName (spSlotData* self, const char* attachmentName);
+SP_API void spSlotData_setAttachmentName (spSlotData* self, const char* attachmentName);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spBlendMode BlendMode;

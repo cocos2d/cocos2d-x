@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -526,6 +527,7 @@ public:
     
 protected:
     cocos2d::Sprite3D* _sprite3d;
+    cocos2d::EventListenerCustom *_customEventListener = nullptr;
 };
 
 class Sprite3DTestMeshLight : public Sprite3DTestDemo
@@ -591,6 +593,7 @@ public:
     Sprite3DNormalMappingTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    virtual void update(float dt) override;
 
     virtual ~Sprite3DNormalMappingTest();
 };

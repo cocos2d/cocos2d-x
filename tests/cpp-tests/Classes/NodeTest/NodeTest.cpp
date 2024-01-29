@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -75,11 +76,11 @@ CocosNodeTests::CocosNodeTests()
     ADD_TEST_CASE(Issue16735Test);
 }
 
-TestCocosNodeDemo::TestCocosNodeDemo(void)
+TestCocosNodeDemo::TestCocosNodeDemo()
 {
 }
 
-TestCocosNodeDemo::~TestCocosNodeDemo(void)
+TestCocosNodeDemo::~TestCocosNodeDemo()
 {
 }
 
@@ -1383,14 +1384,14 @@ void NodeNameTest::test(float dt)
     // search from parent
     // name is xxx/..
     i = 0;
-    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+    parent->getChildByName("node1")->enumerateChildren("node[[:digit:]]+/node/..", [&i](Node* node) -> bool {
         ++i;
         return true;
     });
     CCAssert(i == 1, "");
     
     i = 0;
-    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+    parent->getChildByName("node1")->enumerateChildren("node[[:digit:]]+/node/..", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
@@ -1429,11 +1430,11 @@ void NodeNameTest::test(float dt)
     CCAssert(i == 1, "");
     
     i = 0;
-    parent->enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
+    parent->getChildByName("node1")->enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
-    CCAssert(i == 100, "");
+    CCAssert(i == 110, "");
     
     // utils::findChildren()
     

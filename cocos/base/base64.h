@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -28,10 +29,6 @@ THE SOFTWARE.
 /// @cond DO_NOT_SHOW
 
 #include "platform/CCPlatformMacros.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif    
     
 namespace cocos2d {
 
@@ -61,9 +58,6 @@ int CC_DLL base64Encode(const unsigned char *in, unsigned int inLength, char **o
 
 }//namespace   cocos2d 
 
-#ifdef __cplusplus
-}
-#endif    
 
 /// @endcond
 #endif // __SUPPORT_BASE64_H__

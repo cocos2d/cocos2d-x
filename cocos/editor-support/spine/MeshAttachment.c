@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/MeshAttachment.h>
-#include <spine/extension.h>
+#include "spine/MeshAttachment.h"
+#include "spine/extension.h"
 
 void _spMeshAttachment_dispose (spAttachment* attachment) {
 	spMeshAttachment* self = SUB_CAST(spMeshAttachment, attachment);
@@ -47,10 +47,8 @@ void _spMeshAttachment_dispose (spAttachment* attachment) {
 
 spMeshAttachment* spMeshAttachment_create (const char* name) {
 	spMeshAttachment* self = NEW(spMeshAttachment);
-	self->r = 1;
-	self->g = 1;
-	self->b = 1;
-	self->a = 1;
+	_spVertexAttachment_init(SUPER(self));
+	spColor_setFromFloats(&self->color, 1, 1, 1, 1);
 	_spAttachment_init(SUPER(SUPER(self)), name, SP_ATTACHMENT_MESH, _spMeshAttachment_dispose);
 	return self;
 }
@@ -74,14 +72,9 @@ void spMeshAttachment_updateUVs (spMeshAttachment* self) {
 	}
 }
 
-void spMeshAttachment_computeWorldVertices (spMeshAttachment* self, spSlot* slot, float* worldVertices) {
-	spVertexAttachment_computeWorldVertices(SUPER(self), slot, worldVertices);
-}
-
 void spMeshAttachment_setParentMesh (spMeshAttachment* self, spMeshAttachment* parentMesh) {
 	CONST_CAST(spMeshAttachment*, self->parentMesh) = parentMesh;
 	if (parentMesh) {
-		self->super.worldVerticesLength = parentMesh->super.worldVerticesLength;
 
 		self->super.bones = parentMesh->super.bones;
 		self->super.bonesCount = parentMesh->super.bonesCount;
@@ -95,6 +88,8 @@ void spMeshAttachment_setParentMesh (spMeshAttachment* self, spMeshAttachment* p
 		self->trianglesCount = parentMesh->trianglesCount;
 
 		self->hullLength = parentMesh->hullLength;
+		
+		self->super.worldVerticesLength = parentMesh->super.worldVerticesLength;
 
 		self->edges = parentMesh->edges;
 		self->edgesCount = parentMesh->edgesCount;

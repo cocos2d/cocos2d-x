@@ -95,18 +95,6 @@
 -- @return EventDispatcher#EventDispatcher self (return value: cc.EventDispatcher)
         
 --------------------------------
---  Adds a Custom event listener.<br>
--- It will use a fixed priority of 1.<br>
--- param eventName A given name of the event.<br>
--- param callback A given callback method that associated the event name.<br>
--- return the generated event. Needed in order to remove the event from the dispatcher
--- @function [parent=#EventDispatcher] addCustomEventListener 
--- @param self
--- @param #string eventName
--- @param #function callback
--- @return EventListenerCustom#EventListenerCustom ret (return value: cc.EventListenerCustom)
-        
---------------------------------
 --  Dispatches the event.<br>
 -- Also removes all EventListeners marked for deletion from the<br>
 -- event dispatcher list.<br>
@@ -122,7 +110,7 @@
 -- return True if dispatching events is exist
 -- @function [parent=#EventDispatcher] hasEventListener 
 -- @param self
--- @param #std::basic_string<char> listenerID
+-- @param #string listenerID
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------

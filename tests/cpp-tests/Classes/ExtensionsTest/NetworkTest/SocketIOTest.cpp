@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2015 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -107,7 +108,7 @@ SocketIOTest::SocketIOTest()
 }
 
 
-SocketIOTest::~SocketIOTest(void)
+SocketIOTest::~SocketIOTest()
 {
 }
 
@@ -119,7 +120,7 @@ void SocketIOTest::testevent(SIOClient *client, const std::string& data) {
 	std::stringstream s;
 	s << client->getTag() << " received event testevent with data: " << data.c_str();
 
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 
 }
 
@@ -130,7 +131,7 @@ void SocketIOTest::echotest(SIOClient *client, const std::string& data) {
 	std::stringstream s;
 	s << client->getTag() << " received event echotest with data: " << data.c_str();
 
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 
 }
 
@@ -142,7 +143,7 @@ void SocketIOTest::message(network::SIOClient* client, const std::string& data)
 
 	std::stringstream s;
 	s << client->getTag() << " received message with content: " << data.c_str();
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 
 }
 
@@ -152,7 +153,7 @@ void SocketIOTest::json(network::SIOClient* client, const std::string& data)
 
 	std::stringstream s;
 	s << client->getTag() << " received json message with content: " << data.c_str();
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 
 }
 
@@ -162,7 +163,7 @@ void SocketIOTest::connect(network::SIOClient* client, const std::string& data)
 
 	std::stringstream s;
 	s << client->getTag() << " connected!";
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 
 }
 
@@ -172,7 +173,7 @@ void SocketIOTest::disconnect(network::SIOClient* client, const std::string& dat
 
 	std::stringstream s;
 	s << client->getTag() << " disconnected by server!";
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 
 	this->closedSocketAction(client);
 
@@ -270,7 +271,7 @@ void SocketIOTest::onMenuTestClientDisconnectClicked(cocos2d::Ref *sender)
 		s << "Socket.io Test Client not initialized!";
 	}
 
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 
 }
 
@@ -287,7 +288,7 @@ void SocketIOTest::onMenuTestEndpointDisconnectClicked(cocos2d::Ref *sender)
 		s << "Socket.io Test Endpoint not initialized!";
 	}
 
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 
 }
 
@@ -299,7 +300,7 @@ void SocketIOTest::onClose(network::SIOClient* client)
 
 	std::stringstream s;
 	s << client->getTag() << " closed!";
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 
 	this->closedSocketAction(client);
 
@@ -311,5 +312,5 @@ void SocketIOTest::onError(network::SIOClient* client, const std::string& data)
 
 	std::stringstream s;
 	s << client->getTag() << " received error with content: " << data.c_str();
-	_sioClientStatus->setString(s.str().c_str());
+	_sioClientStatus->setString(s.str());
 }

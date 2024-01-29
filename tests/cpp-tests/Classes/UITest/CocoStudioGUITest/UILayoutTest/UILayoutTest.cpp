@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "UILayoutTest.h"
 
 USING_NS_CC;
@@ -14,9 +38,11 @@ UILayoutTests::UILayoutTests()
     ADD_TEST_CASE(UILayoutTest_Layout_Linear_Horizontal);
     ADD_TEST_CASE(UILayoutTest_Layout_Relative_Align_Parent);
     ADD_TEST_CASE(UILayoutTest_Layout_Relative_Location);
+    ADD_TEST_CASE(UILayoutTest_Layout_Scaled_Widget);
     ADD_TEST_CASE(UILayoutComponentTest);
     ADD_TEST_CASE(UILayoutComponent_Berth_Test);
     ADD_TEST_CASE(UILayoutComponent_Berth_Stretch_Test);
+    ADD_TEST_CASE(UILayoutTest_Issue19890);
 }
 
 // UILayoutTest
@@ -726,6 +752,62 @@ bool UILayoutTest_Layout_Relative_Location::init()
     return false;
 }
 
+// UILayoutTest_Layout_Relative_Location
+
+UILayoutTest_Layout_Scaled_Widget::UILayoutTest_Layout_Scaled_Widget()
+{
+}
+
+UILayoutTest_Layout_Scaled_Widget::~UILayoutTest_Layout_Scaled_Widget()
+{
+}
+
+bool UILayoutTest_Layout_Scaled_Widget::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add the alert
+        Text* alert = Text::create("Layout Scaled Widget", "fonts/Marker Felt.ttf", 20);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
+        _uiLayer->addChild(alert);
+        
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+        
+        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+        
+        // Create the layout
+        Layout* layout = Layout::create();
+        layout->setLayoutType(Layout::Type::HORIZONTAL);
+        layout->setContentSize(Size(280, 150));
+        Size backgroundSize = background->getContentSize();
+        layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+                                 (backgroundSize.width - layout->getContentSize().width) / 2.0f,
+                                 (widgetSize.height - backgroundSize.height) / 2.0f +
+                                 (backgroundSize.height - layout->getContentSize().height) / 2.0f));
+        _uiLayer->addChild(layout);
+        
+        ImageView* imageView_Center1 = ImageView::create("cocosui/scrollviewbg.png");
+        imageView_Center1->setScale(0.5);
+        layout->addChild(imageView_Center1);
+        
+        ImageView* imageView_Center2 = ImageView::create("cocosui/scrollviewbg.png");
+        imageView_Center2->setScale(1.2);
+        layout->addChild(imageView_Center2);
+        
+        ImageView* imageView_Center3 = ImageView::create("cocosui/scrollviewbg.png");
+        imageView_Center3->setScale(0.8);
+        layout->addChild(imageView_Center3);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+
 bool UILayoutComponentTest::init()
 {
     if (UIScene::init())
@@ -874,4 +956,63 @@ bool UILayoutComponent_Berth_Stretch_Test::init()
         return true;
     }
     return false;
+}
+
+bool UILayoutTest_Issue19890::init()
+{
+    if (!UIScene::init())
+    {
+        return false;
+    }
+
+    const Size widgetSize = _widget->getContentSize();
+
+    auto label = Text::create("Issue 19890", "fonts/Marker Felt.ttf", 32);
+    label->setAnchorPoint(Vec2(0.5f, -1.0f));
+    label->setPosition(Vec2(widgetSize.width / 2.0f,
+        widgetSize.height / 2.0f + label->getContentSize().height * 1.5f));
+    _uiLayer->addChild(label);
+
+    Text* alert = Text::create("3 panels should be completely visible", "fonts/Marker Felt.ttf", 20);
+    alert->setColor(Color3B(159, 168, 176));
+    alert->setPosition(Vec2(widgetSize.width / 2.0f,
+        widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+    _uiLayer->addChild(alert);
+
+    Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+
+    Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+    const Size backgroundSize = background->getContentSize();
+
+    auto panel = ui::Layout::create();
+    panel->setBackGroundColor(Color3B::RED);
+    panel->setBackGroundColorType(ui::Layout::BackGroundColorType::SOLID);
+    panel->setClippingType(ui::Layout::ClippingType::SCISSOR);
+    panel->setPosition(backgroundSize / 2);
+    panel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    panel->setClippingEnabled(true);
+    panel->setContentSize(backgroundSize); // from the left to the screen end
+    background->addChild(panel);
+
+    auto panel2 = ui::Layout::create();
+    panel2->setBackGroundColor(Color3B::BLUE);
+    panel2->setBackGroundColorType(ui::Layout::BackGroundColorType::SOLID);
+    panel2->setClippingType(ui::Layout::ClippingType::SCISSOR);
+    panel2->setPosition(panel->getContentSize() / 2);
+    panel2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    panel2->setClippingEnabled(true);
+    panel2->setContentSize(panel->getContentSize() / 2); // from the left to the screen end
+    panel->addChild(panel2);
+
+    auto panel3 = ui::Layout::create();
+    panel3->setBackGroundColor(Color3B::GREEN);
+    panel3->setBackGroundColorType(ui::Layout::BackGroundColorType::SOLID);
+    panel3->setClippingType(ui::Layout::ClippingType::SCISSOR);
+    panel3->setPosition(panel2->getContentSize() / 2);
+    panel3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    panel3->setClippingEnabled(true);
+    panel3->setContentSize(panel2->getContentSize() / 2); // from the left to the screen end
+    panel2->addChild(panel3);
+
+    return true;
 }

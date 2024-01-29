@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -183,7 +184,7 @@ public:
      * A SpriteFrame will be fetched from the SpriteFrameCache by spriteFrameName param.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   spriteFrameName A null terminated string which indicates the sprite frame name.
+     * @param   spriteFrameName The name of sprite frame.
      * @return  An autoreleased sprite object.
      */
     static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
@@ -661,6 +662,9 @@ protected:
     void updatePoly();
     void updateStretchFactor();
 
+    virtual void flipX();
+    virtual void flipY();
+
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -708,7 +712,7 @@ protected:
     PolygonInfo  _polyInfo;
 
     // opacity and RGB protocol
-    bool _opacityModifyRGB;
+    bool _opacityModifyRGB = false;
 
     // image is flipped
     bool _flippedX;                         /// Whether the sprite is flipped horizontally or not

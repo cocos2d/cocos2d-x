@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -449,7 +450,7 @@ Spawn * ActionNode::refreshActionProperty()
     for (int n = 0; n < _frameArrayNum; n++)
     {
         auto cArray = _frameArray.at(n);
-        if (cArray->size() <= 0)
+        if (cArray->empty())
         {
             continue;
         }

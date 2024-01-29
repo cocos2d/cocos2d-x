@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -409,6 +410,16 @@ Sprite * Text::getLetter(int lettetIndex)
     return _labelRenderer->getLetter(lettetIndex);
 }
 
+void Text::setBlendFunc(const BlendFunc &blendFunc)
+{
+    _labelRenderer->setBlendFunc(blendFunc);
+}
+
+const BlendFunc& Text::getBlendFunc() const
+{
+    return _labelRenderer->getBlendFunc();
+}
+    
 Widget* Text::createCloneInstance()
 {
     return Text::create();

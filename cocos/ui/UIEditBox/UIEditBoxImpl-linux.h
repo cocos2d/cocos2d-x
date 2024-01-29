@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2015 hanxi
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -55,23 +56,23 @@ public:
     
 
     virtual bool isEditing() override;
-    virtual void createNativeControl(const Rect& frame) override {};
-    virtual void setNativeFont(const char* pFontName, int fontSize) override {};
-    virtual void setNativeFontColor(const Color4B& color) override {};
-    virtual void setNativePlaceholderFont(const char* pFontName, int fontSize) override {};
-    virtual void setNativePlaceholderFontColor(const Color4B& color) override {};
-    virtual void setNativeInputMode(EditBox::InputMode inputMode) override {};
-    virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) override {};
-    virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType)override {};
-    virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment) {};
-    virtual void setNativeText(const char* pText) override {};
-    virtual void setNativePlaceHolder(const char* pText) override {};
-    virtual void setNativeVisible(bool visible) override {};
-    virtual void updateNativeFrame(const Rect& rect) override {};
-    virtual const char* getNativeDefaultFontName() override {};
+    virtual void createNativeControl(const Rect& frame) override {}
+    virtual void setNativeFont(const char* pFontName, int fontSize) override {}
+    virtual void setNativeFontColor(const Color4B& color) override {}
+    virtual void setNativePlaceholderFont(const char* pFontName, int fontSize) override {}
+    virtual void setNativePlaceholderFontColor(const Color4B& color) override {}
+    virtual void setNativeInputMode(EditBox::InputMode inputMode) override {}
+    virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) override {}
+    virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType)override {}
+    virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment) {}
+    virtual void setNativeText(const char* pText) override {}
+    virtual void setNativePlaceHolder(const char* pText) override {}
+    virtual void setNativeVisible(bool visible) override {}
+    virtual void updateNativeFrame(const Rect& rect) override {}
+    virtual const char* getNativeDefaultFontName() override { return nullptr; }
     virtual void nativeOpenKeyboard() override;
-    virtual void nativeCloseKeyboard() override {};
-    virtual void setNativeMaxLength(int maxLength) override {};
+    virtual void nativeCloseKeyboard() override {}
+    virtual void setNativeMaxLength(int maxLength) override {}
 
     
 private:

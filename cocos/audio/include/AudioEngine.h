@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -290,8 +291,23 @@ public:
      * @param filePath The file path of an audio.
      * @param callback A callback which will be called after loading is finished.
      */
-    static void preload(const std::string& filePath, std::function<void(bool isSuccess)> callback);
+    static void preload(const std::string& filePath, const std::function<void(bool isSuccess)>& callback);
 
+    /**
+     * Gets playing audio count.
+     */
+    static int getPlayingAudioCount();
+    
+    /**
+     * Whether to enable playing audios
+     * @note If it's disabled, current playing audios will be stopped and the later 'preload', 'play2d' methods will take no effects.
+     */
+    static void setEnabled(bool isEnabled);
+    /**
+     * Check whether AudioEngine is enabled.
+     */
+    static bool isEnabled();
+    
 protected:
     static void addTask(const std::function<void()>& task);
     static void remove(int audioID);
@@ -347,6 +363,8 @@ protected:
 
     class AudioEngineThreadPool;
     static AudioEngineThreadPool* s_threadPool;
+    
+    static bool _isEnabled;
     
     friend class AudioEngineImpl;
 };

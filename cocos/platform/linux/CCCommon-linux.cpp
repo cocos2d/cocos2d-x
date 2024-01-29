@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Laschweinski
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -32,7 +33,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-void MessageBox(const char * msg, const char * title)
+void ccMessageBox(const char * msg, const char * title)
 {
     log("%s: %s", title, msg);
 }

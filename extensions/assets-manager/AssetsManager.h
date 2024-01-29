@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -90,7 +91,7 @@ public:
     
     typedef std::function<void(int)> ErrorCallback;
     typedef std::function<void(int)> ProgressCallback;
-    typedef std::function<void(void)> SuccessCallback;
+    typedef std::function<void()> SuccessCallback;
 
     /* @brief To access within scripting environment
      */
@@ -204,7 +205,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onError(AssetsManager::ErrorCode errorCode) {};
+    virtual void onError(AssetsManager::ErrorCode errorCode) {}
     /** @brief Call back function for recording downloading percent
         @param percent How much percent downloaded
         @warning    This call back function just for recording downloading percent.
@@ -213,18 +214,18 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onProgress(int percent) {};
+    virtual void onProgress(int percent) {}
     /** @brief Call back function for success
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess() {};
+    virtual void onSuccess() {}
 };
 
 // Deprecated declaration
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager;
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
 
-NS_CC_EXT_END;
+NS_CC_EXT_END
 
 #endif /* defined(__AssetsManager__) */

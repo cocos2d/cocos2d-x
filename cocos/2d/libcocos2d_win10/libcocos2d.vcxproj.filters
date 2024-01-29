@@ -2020,25 +2020,10 @@
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_go.cpp">
       <Filter>external\flatbuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_js.cpp">
-      <Filter>external\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_php.cpp">
-      <Filter>external\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_python.cpp">
-      <Filter>external\flatbuffers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_text.cpp">
       <Filter>external\flatbuffers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp">
-      <Filter>external\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\reflection.cpp">
-      <Filter>external\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\util.cpp">
       <Filter>external\flatbuffers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -3953,19 +3938,7 @@
     <ClInclude Include="..\..\..\external\flatbuffers\flatbuffers.h">
       <Filter>external\flatbuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\external\flatbuffers\grpc.h">
-      <Filter>external\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\external\flatbuffers\hash.h">
-      <Filter>external\flatbuffers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\external\flatbuffers\idl.h">
-      <Filter>external\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\external\flatbuffers\reflection.h">
-      <Filter>external\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\external\flatbuffers\reflection_generated.h">
       <Filter>external\flatbuffers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\external\flatbuffers\util.h">

@@ -115,6 +115,16 @@ getMaxAudioInstance : function (
 },
 
 /**
+ * @method isEnabled
+ * @return {bool}
+ */
+isEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getCurrentTime
  * @param {int} arg0
  * @return {float}
@@ -186,6 +196,16 @@ float
 preload : function(
 str,
 func 
+)
+{
+},
+
+/**
+ * @method setEnabled
+ * @param {bool} arg0
+ */
+setEnabled : function (
+bool 
 )
 {
 },
@@ -296,6 +316,16 @@ int
 )
 {
     return cc.experimental::AudioProfile;
+},
+
+/**
+ * @method getPlayingAudioCount
+ * @return {int}
+ */
+getPlayingAudioCount : function (
+)
+{
+    return 0;
 },
 
 };

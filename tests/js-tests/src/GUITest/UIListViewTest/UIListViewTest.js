@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -504,12 +505,12 @@ var UIListViewTest_Magnetic = UIMainLayer.extend({
                 if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
                 {
                     var halfY = 110;
-                    pNode.drawLine(cc.p(center.x, center.y - halfY), cc.p(center.x, center.y + halfY), cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(cc.p(center.x, center.y - halfY), cc.p(center.x, center.y + halfY), 1, cc.color(0, 0, 0, 255));
                 }
                 else
                 {
                     var halfX = 150;
-                    pNode.drawLine(cc.p(center.x - halfX, center.y), cc.p(center.x + halfX, center.y), cc.color(0, 0, 0, 255));
+                    pNode.drawSegment(cc.p(center.x - halfX, center.y), cc.p(center.x + halfX, center.y), 1, cc.color(0, 0, 0, 255));
                 }
                 pNode.setContentSize(this._listView.getContentSize());
                 this._mainNode.addChild(pNode);

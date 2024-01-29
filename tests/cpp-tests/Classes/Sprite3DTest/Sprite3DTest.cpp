@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -30,7 +31,7 @@
 #include "3d/CCMotionStreak3D.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
-
+#include <cmath>
 #include <algorithm>
 #include "../testResource.h"
 
@@ -70,7 +71,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DPropertyTest);
     ADD_TEST_CASE(Sprite3DNormalMappingTest);
     ADD_TEST_CASE(Issue16155Test);
-};
+}
 
 //------------------------------------------------------------------
 //
@@ -825,11 +826,11 @@ void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Even
 
 AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
 {
-    _paths.push_back("Sprite3DTest/boss.obj");
-    _paths.push_back("Sprite3DTest/girl.c3b");
-    _paths.push_back("Sprite3DTest/orc.c3b");
-    _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
-    _paths.push_back("Sprite3DTest/axe.c3b");
+    _paths.emplace_back("Sprite3DTest/boss.obj");
+    _paths.emplace_back("Sprite3DTest/girl.c3b");
+    _paths.emplace_back("Sprite3DTest/orc.c3b");
+    _paths.emplace_back("Sprite3DTest/ReskinGirl.c3b");
+    _paths.emplace_back("Sprite3DTest/axe.c3b");
     
     TTFConfig ttfConfig("fonts/arial.ttf", 15);
     auto label1 = Label::createWithTTF(ttfConfig,"AsyncLoad Sprite3D");
@@ -1345,32 +1346,32 @@ void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
     _sprite = sprite;
     
     auto& body = _skins[(int)SkinType::UPPER_BODY];
-    body.push_back("Girl_UpperBody01");
-    body.push_back("Girl_UpperBody02");
+    body.emplace_back("Girl_UpperBody01");
+    body.emplace_back("Girl_UpperBody02");
     
     auto& pants = _skins[(int)SkinType::PANTS];
-    pants.push_back("Girl_LowerBody01");
-    pants.push_back("Girl_LowerBody02");
+    pants.emplace_back("Girl_LowerBody01");
+    pants.emplace_back("Girl_LowerBody02");
     
     auto& shoes = _skins[(int)SkinType::SHOES];
-    shoes.push_back("Girl_Shoes01");
-    shoes.push_back("Girl_Shoes02");
+    shoes.emplace_back("Girl_Shoes01");
+    shoes.emplace_back("Girl_Shoes02");
     
     auto& hair = _skins[(int)SkinType::HAIR];
-    hair.push_back("Girl_Hair01");
-    hair.push_back("Girl_Hair02");
+    hair.emplace_back("Girl_Hair01");
+    hair.emplace_back("Girl_Hair02");
     
     auto& face = _skins[(int)SkinType::FACE];
-    face.push_back("Girl_Face01");
-    face.push_back("Girl_Face02");
+    face.emplace_back("Girl_Face01");
+    face.emplace_back("Girl_Face02");
     
     auto& hand = _skins[(int)SkinType::HAND];
-    hand.push_back("Girl_Hand01");
-    hand.push_back("Girl_Hand02");
+    hand.emplace_back("Girl_Hand01");
+    hand.emplace_back("Girl_Hand02");
     
     auto& glasses = _skins[(int)SkinType::GLASSES];
-    glasses.push_back("");
-    glasses.push_back("Girl_Glasses01");
+    glasses.emplace_back("");
+    glasses.emplace_back("Girl_Glasses01");
     
     memset(_curSkin, 0, (int)SkinType::MAX_TYPE * sizeof(int));
     
@@ -1508,7 +1509,7 @@ void Sprite3DWithOBBPerformanceTest::update(float dt)
         _obbt.getCorners(corners);
         _drawDebug->drawCube(corners, Color4F(0,0,1,1));
     }
-    if(_obb.size() > 0)
+    if(!_obb.empty())
     {
         _drawOBB->clear();
         auto obbSize = _obb.size();
@@ -1633,7 +1634,7 @@ void Sprite3DWithOBBPerformanceTest::calculateRayByLocationInView(Ray* ray, cons
 {
     auto dir = Director::getInstance();
     auto view = dir->getWinSize();
-    auto mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    const auto& mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     Vec3 src = Vec3(location.x, location.y, -1);
     Vec3 nearPoint;
@@ -2158,7 +2159,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
 void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    if (touches.size())
+    if (!touches.empty())
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();
@@ -2294,8 +2295,7 @@ Animate3DCallbackTest::Animate3DCallbackTest()
 
         ValueMap valuemap0;
         animate->setKeyFrameUserInfo(275, valuemap0);
-        
-        auto listener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
+        _customEventListener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
         {
             auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
             auto node = getChildByTag(100);
@@ -2309,12 +2309,19 @@ Animate3DCallbackTest::Animate3DCallbackTest()
             
             cocos2d::log("frame %d", info->frame);
         });
-        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
+        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_customEventListener, -1);
     }
 }
 
 Animate3DCallbackTest::~Animate3DCallbackTest()
 {
+    cocos2d::log("Animate3DCallbackTest destroied!");
+    if(_customEventListener)
+    {
+        Director::getInstance()->getEventDispatcher()->removeEventListener(_customEventListener);
+        _customEventListener = nullptr;
+    }
+
 }
 
 std::string Animate3DCallbackTest::title() const
@@ -2440,7 +2447,8 @@ CameraBackgroundClearTest::CameraBackgroundClearTest()
 
 void CameraBackgroundClearTest::switch_CameraClearMode(cocos2d::Ref* sender)
 {
-    auto type = _camera->getBackgroundBrush()->getBrushType();
+    auto brush = _camera->getBackgroundBrush();
+    auto type = brush ? brush->getBrushType() : CameraBackgroundBrush::BrushType::NONE;
     if (type == CameraBackgroundBrush::BrushType::NONE)
     {
         _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));
@@ -2547,24 +2555,6 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
         addChild(sprite);
     }
 
-    float radius = 100.0;
-
-    PointLight* light = PointLight::create(Vec3(0.0, 0.0, 0.0), Color3B(255, 255, 255), 1000);
-    light->runAction(RepeatForever::create(Sequence::create(CallFuncN::create([radius](Node *node){
-        static float angle = 0.0;
-        static bool reverseDir = false;
-        node->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
-        if (reverseDir){
-            angle -= 0.01f;
-            if (angle < 0.0)
-                reverseDir = false;
-        }
-        else{
-            angle += 0.01f;
-            if (3.14159 < angle)
-                reverseDir = true;
-        }
-    }), nullptr)));
     //setup camera
     auto camera = Camera::createPerspective(60.0, s.width / s.height, 1.0f, 1000.f);
     camera->setCameraFlag(CameraFlag::USER1);
@@ -2572,7 +2562,31 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
     camera->lookAt(Vec3(0.f, 0.f, 0.f));
     addChild(camera);
 
+    PointLight* light = PointLight::create(Vec3(0.0, 0.0, 0.0), Color3B(255, 255, 255), 1000);
+    light->setTag(100);
     addChild(light);
+    
+    scheduleUpdate();
+}
+
+void Sprite3DNormalMappingTest::update(float dt)
+{
+    static float angle = 0.0f;
+    static bool reverseDir = false;
+    static float radius = 100.0f;
+    
+    auto light = static_cast<PointLight*>(getChildByTag(100));
+    light->setPosition3D(Vec3(radius * std::cos(angle), 0.0f, radius * std::sin(angle)));
+    if (reverseDir){
+        angle -= 0.01f;
+        if (angle < 0.0)
+            reverseDir = false;
+    }
+    else{
+        angle += 0.01f;
+        if (3.14159 < angle)
+            reverseDir = true;
+    }
 }
 
 Sprite3DNormalMappingTest::~Sprite3DNormalMappingTest()

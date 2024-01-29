@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -149,7 +150,7 @@ static std::string readFileContent(const std::string& filename, bool binary) {
     else
         s = fs->getStringFromFile(filename);
     return s;
-};
+}
 
 namespace cocostudio {
 
@@ -295,7 +296,7 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
 
     //! find the base file path
     std::string basefilePath = filePath;
-    size_t pos = basefilePath.find_last_of("/");
+    size_t pos = basefilePath.find_last_of('/');
 
     if (pos != std::string::npos)
     {
@@ -361,7 +362,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
 
     //! find the base file path
     std::string basefilePath = filePath;
-    size_t pos = basefilePath.find_last_of("/");
+    size_t pos = basefilePath.find_last_of('/');
 
     if (pos != std::string::npos)
     {
@@ -461,7 +462,7 @@ void DataReaderHelper::addDataAsyncCallBack(float /*dt*/)
         AsyncStruct *pAsyncStruct = pDataInfo->asyncStruct;
 
 
-        if (pAsyncStruct->imagePath != "" && pAsyncStruct->plistPath != "")
+        if (!pAsyncStruct->imagePath.empty() && !pAsyncStruct->plistPath.empty())
         {
             _getFileMutex.lock();
             ArmatureDataManager::getInstance()->addSpriteFrameFromFile(pAsyncStruct->plistPath, pAsyncStruct->imagePath, pDataInfo->filename);
@@ -1304,7 +1305,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
             }
 
             std::string filePath = path;
-            filePath = filePath.erase(filePath.find_last_of("."));
+            filePath = filePath.erase(filePath.find_last_of('.'));
 
             if (dataInfo->asyncStruct)
             {
@@ -1585,7 +1586,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(const rapidjson::Value& j
 
     if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
     {
-        if (movementBoneData->frameList.size() > 0)
+        if (!movementBoneData->frameList.empty())
         {
             FrameData *frameData = new (std::nothrow) FrameData();
             frameData->copy((FrameData *)movementBoneData->frameList.back());
@@ -1755,12 +1756,12 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 for (int i = 0; i < nCount; ++i)
                 {
                     key = tpChildArray[i].GetName(&tCocoLoader);
-                    if (key.compare(CONTENT_SCALE) == 0)
+                    if (key == CONTENT_SCALE)
                     {
                         std::string value = tpChildArray[i].GetValue(&tCocoLoader);
                         dataInfo->contentScale = utils::atof(value.c_str());
                     }
-                    else if ( 0 == key.compare(ARMATURE_DATA))
+                    else if ( ARMATURE_DATA == key)
                     {
                         pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
                         length = tpChildArray[i].GetChildNum();
@@ -1780,7 +1781,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             }
                         }
                     }
-                    else if ( 0 == key.compare(ANIMATION_DATA))
+                    else if ( ANIMATION_DATA == key)
                     {
                         pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
                         length = tpChildArray[i].GetChildNum();
@@ -1800,7 +1801,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             }
                         }
                     }
-                    else if (key.compare(TEXTURE_DATA) == 0)
+                    else if (key == TEXTURE_DATA)
                     {
                         pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
                         length = tpChildArray[i].GetChildNum();
@@ -1827,7 +1828,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     for (int i = 0; i < nCount; ++i)
                     {
                         key = tpChildArray[i].GetName(&tCocoLoader);
-                        if( 0 != key.compare(CONFIG_FILE_PATH))
+                        if( CONFIG_FILE_PATH != key)
                         {
                             continue;
                         }
@@ -1843,7 +1844,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             }
 
                             std::string filePath = path;
-                            filePath = filePath.erase(filePath.find_last_of("."));
+                            filePath = filePath.erase(filePath.find_last_of('.'));
 
                             if (dataInfo->asyncStruct)
                             {
@@ -1909,7 +1910,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             child = &pBoneChildren[i];
             key = child->GetName(cocoLoader);
             str = child->GetValue(cocoLoader);
-            if (key.compare(A_NAME) == 0)
+            if (key == A_NAME)
             {
                 //DICTOOL->getStringValue_json(json, A_NAME);
                 if(str != nullptr)
@@ -1917,7 +1918,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     boneData->name = str;
                 }
             }
-            else if (key.compare(A_PARENT) == 0)
+            else if (key == A_PARENT)
             {
                 //DICTOOL->getStringValue_json(json, A_PARENT);
                 if(str != nullptr)
@@ -1925,7 +1926,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     boneData->parentName = str;
                 }
             }
-            else if (key.compare(DISPLAY_DATA) == 0)
+            else if (key == DISPLAY_DATA)
             {
                 int count = child->GetChildNum();
                 stExpCocoNode *pDisplayData = child->GetChildArray(cocoLoader);
@@ -1951,7 +1952,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         std::string key = child->GetName(cocoLoader);
         const char *str = child->GetValue(cocoLoader);
         DisplayData *displayData = nullptr;
-        if (key.compare(A_DISPLAY_TYPE) == 0)
+        if (key == A_DISPLAY_TYPE)
         {
             str = child->GetValue(cocoLoader);
             DisplayType displayType = (DisplayType)(atoi(str));
@@ -1981,27 +1982,27 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             {
                                 key = SkinDataValue[i].GetName(cocoLoader);
                                 str = SkinDataValue[i].GetValue(cocoLoader);
-                                if (key.compare(A_X) == 0)
+                                if (key == A_X)
                                 {
                                     sdd->skinData.x = utils::atof(str) * s_PositionReadScale;
                                 }
-                                else if (key.compare(A_Y) == 0)
+                                else if (key == A_Y)
                                 {
                                     sdd->skinData.y = utils::atof(str) * s_PositionReadScale;
                                 }
-                                else if (key.compare(A_SCALE_X) == 0)
+                                else if (key == A_SCALE_X)
                                 {
                                     sdd->skinData.scaleX = utils::atof(str);
                                 }
-                                else if (key.compare(A_SCALE_Y) == 0)
+                                else if (key == A_SCALE_Y)
                                 {
                                     sdd->skinData.scaleY = utils::atof(str);
                                 }
-                                else if (key.compare(A_SKEW_X) == 0)
+                                else if (key == A_SKEW_X)
                                 {
                                     sdd->skinData.skewX = utils::atof(str);
                                 }
-                                else if (key.compare(A_SKEW_Y) == 0)
+                                else if (key == A_SKEW_Y)
                                 {
                                     sdd->skinData.skewY = utils::atof(str);
                                 }
@@ -2034,7 +2035,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     {
                         key = pDisplayData[i].GetName(cocoLoader);
                         str = pDisplayData[i].GetValue(cocoLoader);
-                        if (key.compare(A_PLIST) == 0)
+                        if (key == A_PLIST)
                         {
                             const char *plist = str;
                             if(plist != nullptr)
@@ -2077,14 +2078,14 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             child = &pAnimationData[i];
             key = child->GetName(cocoLoader);
             str = child->GetValue(cocoLoader);
-            if (key.compare(A_NAME) == 0)
+            if (key == A_NAME)
             {
                 if(str != nullptr)
                 {
                     aniData->name = str;
                 }
             }
-            else if (key.compare(MOVEMENT_DATA) == 0)
+            else if (key == MOVEMENT_DATA)
             {
                 int movcount = child->GetChildNum();
                 stExpCocoNode* movArray =  child->GetChildArray(cocoLoader);
@@ -2115,14 +2116,14 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             child = &pMoveDataArray[i];
             key = child->GetName(cocoLoader);
             str = child->GetValue(cocoLoader);
-            if (key.compare(A_NAME) == 0)
+            if (key == A_NAME)
             {
                 if(str != nullptr)
                 {
                     movementData->name = str;
                 }
             }
-            else if (key.compare(A_LOOP) == 0)
+            else if (key == A_LOOP)
             {
                 movementData->loop = true;
                 if(str != nullptr)
@@ -2133,7 +2134,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     }
                 }
             }
-            else if (key.compare(A_DURATION_TWEEN) == 0)
+            else if (key == A_DURATION_TWEEN)
             {
                 movementData->durationTween = 0;
                 if(str != nullptr)
@@ -2141,7 +2142,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     movementData->durationTween = atoi(str);
                 }
             }
-            else if (key.compare(A_DURATION_TO) == 0)
+            else if (key == A_DURATION_TO)
             {
                 movementData->durationTo = 0;
                 if(str != nullptr)
@@ -2149,7 +2150,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     movementData->durationTo = atoi(str);
                 }
             }
-            else if (key.compare(A_DURATION) == 0)
+            else if (key == A_DURATION)
             {
                 movementData->duration = 0;
                 if(str != nullptr)
@@ -2157,7 +2158,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     movementData->duration = atoi(str);
                 }
             }
-            else if (key.compare(A_MOVEMENT_SCALE) == 0)
+            else if (key == A_MOVEMENT_SCALE)
             {
                 movementData->scale = 1.0;
                 if(str != nullptr)
@@ -2165,7 +2166,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     movementData->scale = utils::atof(str);
                 }
             }
-            else if (key.compare(A_TWEEN_EASING) == 0)
+            else if (key == A_TWEEN_EASING)
             {
                 movementData->tweenEasing = cocos2d::tweenfunc::Linear;
                 if(str != nullptr)
@@ -2173,7 +2174,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     movementData->tweenEasing = (TweenType)(atoi(str));
                 }
             }
-            else if (key.compare(MOVEMENT_BONE_DATA) == 0)
+            else if (key == MOVEMENT_BONE_DATA)
             {
                 int count = child->GetChildNum();
                 stExpCocoNode *pMoveBoneData = child->GetChildArray(cocoLoader);
@@ -2203,21 +2204,21 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             movebonechild = &pMovementBoneDataArray[i];
             std::string key = movebonechild->GetName(cocoLoader);
             str = movebonechild->GetValue(cocoLoader);
-            if (key.compare(A_NAME) == 0)
+            if (key == A_NAME)
             {
                 if(str != nullptr)
                 {
                     movementBoneData->name = str;
                 }
             }
-            else if (key.compare(A_MOVEMENT_DELAY) == 0)
+            else if (key == A_MOVEMENT_DELAY)
             {
                 if(str != nullptr)
                 {
                     movementBoneData->delay = utils::atof(str);
                 }
             }
-            else if (key.compare(FRAME_DATA) == 0)
+            else if (key == FRAME_DATA)
             {
                 int count =movebonechild->GetChildNum();
                 stExpCocoNode *pFrameDataArray = movebonechild->GetChildArray(cocoLoader);
@@ -2270,7 +2271,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
 
         if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
         {
-            if (movementBoneData->frameList.size() > 0)
+            if (!movementBoneData->frameList.empty())
             {
                 auto frameData = movementBoneData->frameList.at(framesizemusone);
                 movementBoneData->addFrameData(frameData);
@@ -2295,7 +2296,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             std::string key = pFrameDataArray[i].GetName(cocoLoader);
             str = pFrameDataArray[i].GetValue(cocoLoader);
-            if (key.compare(A_TWEEN_EASING) == 0)
+            if (key == A_TWEEN_EASING)
             {
                 frameData->tweenEasing = cocos2d::tweenfunc::Linear;
                 if(str != nullptr)
@@ -2303,28 +2304,28 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     frameData->tweenEasing = (TweenType)(atoi(str));
                 }
             }
-            else if (key.compare(A_DISPLAY_INDEX) == 0)
+            else if (key == A_DISPLAY_INDEX)
             {
                 if(str != nullptr)
                 {
                     frameData->displayIndex = atoi(str);
                 }
             }
-            else if (key.compare(A_BLEND_SRC) == 0)
+            else if (key == A_BLEND_SRC)
             {
                 if(str != nullptr)
                 {
                     frameData->blendFunc.src = (GLenum)(atoi(str));
                 }
             }
-            else if (key.compare(A_BLEND_DST) == 0)
+            else if (key == A_BLEND_DST)
             {
                 if(str != nullptr)
                 {
                     frameData->blendFunc.dst = (GLenum)(atoi(str));
                 }
             }
-            else if (key.compare(A_TWEEN_FRAME) == 0)
+            else if (key == A_TWEEN_FRAME)
             {
                 frameData->isTween = true;
                 if(str != nullptr)
@@ -2335,14 +2336,14 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     }
                 }
             }
-            else if (key.compare(A_EVENT) == 0)
+            else if (key == A_EVENT)
             {
                 if(str != nullptr)
                 {
                     frameData->strEvent = str;
                 }
             }
-            else if (key.compare(A_DURATION) == 0)
+            else if (key == A_DURATION)
             {
                 if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
                 {
@@ -2353,7 +2354,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     }
                 }
             }
-            else if (key.compare(A_FRAME_INDEX) == 0)
+            else if (key == A_FRAME_INDEX)
             {
                 if (dataInfo->cocoStudioVersion >= VERSION_COMBINED)
                 {
@@ -2363,7 +2364,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     }
                 }
             }
-            else if (key.compare(A_EASING_PARAM) == 0)
+            else if (key == A_EASING_PARAM)
             {
                 int count = pFrameDataArray[i].GetChildNum();
                 if (count != 0 )
@@ -2403,42 +2404,42 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             std::string key = pTextureDataArray[i].GetName(cocoLoader);
             str = pTextureDataArray[i].GetValue(cocoLoader);
-            if (key.compare(A_NAME) == 0)
+            if (key == A_NAME)
             {
                 if(str != nullptr)
                 {
                     textureData->name = str;
                 }
             }
-            else if (key.compare(A_WIDTH) == 0)
+            else if (key == A_WIDTH)
             {
                 if(str != nullptr)
                 {
                     textureData->width = utils::atof(str);
                 }
             }
-            else if (key.compare(A_HEIGHT) == 0)
+            else if (key == A_HEIGHT)
             {
                 if(str != nullptr)
                 {
                     textureData->height = utils::atof(str);
                 }
             }
-            else if (key.compare(A_PIVOT_X) == 0)
+            else if (key == A_PIVOT_X)
             {
                 if(str != nullptr)
                 {
                     textureData->pivotX = utils::atof(str);
                 }
             }
-            else if (key.compare(A_PIVOT_Y) == 0)
+            else if (key == A_PIVOT_Y)
             {
                 if(str != nullptr)
                 {
                     textureData->pivotY = utils::atof(str);
                 }
             }
-            else if (key.compare(CONTOUR_DATA) == 0)
+            else if (key == CONTOUR_DATA)
             {
                 int count = pTextureDataArray[i].GetChildNum();
                 stExpCocoNode *pContourArray = pTextureDataArray[i].GetChildArray(cocoLoader);
@@ -2465,7 +2466,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             std::string key = verTexPointArray[i].GetName(cocoLoader);
             str = verTexPointArray[i].GetValue(cocoLoader);
-            if (key.compare(VERTEX_POINT) == 0)
+            if (key == VERTEX_POINT)
             {
                 int count = verTexPointArray[i].GetChildNum();
                 stExpCocoNode *pVerTexPointArray = verTexPointArray[i].GetChildArray(cocoLoader);
@@ -2496,35 +2497,35 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             child = &NodeArray[i];
             std::string key = child->GetName(cocoLoader);
             str = child->GetValue(cocoLoader);
-            if (key.compare(A_X) == 0)
+            if (key == A_X)
             {
                 node->x = utils::atof(str) * dataInfo->contentScale;
             }
-            else if (key.compare(A_Y) == 0)
+            else if (key == A_Y)
             {
                 node->y = utils::atof(str) * dataInfo->contentScale;
             }
-            else if (key.compare(A_Z) == 0)
+            else if (key == A_Z)
             {
                 node->zOrder = atoi(str);
             }
-            else if (key.compare(A_SKEW_X) == 0)
+            else if (key == A_SKEW_X)
             {
                 node->skewX = utils::atof(str);
             }
-            else if (key.compare(A_SKEW_Y) == 0)
+            else if (key == A_SKEW_Y)
             {
                 node->skewY = utils::atof(str);
             }
-            else if (key.compare(A_SCALE_X) == 0)
+            else if (key == A_SCALE_X)
             {
                 node->scaleX = utils::atof(str);
             }
-            else if (key.compare(A_SCALE_Y) == 0)
+            else if (key == A_SCALE_Y)
             {
                 node->scaleY = utils::atof(str);
             }
-            else if (key.compare(COLOR_INFO) == 0)
+            else if (key == COLOR_INFO)
             {
                 if (!isVersionL)
                 {

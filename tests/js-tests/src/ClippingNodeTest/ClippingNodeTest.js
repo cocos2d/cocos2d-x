@@ -2,6 +2,7 @@
  Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2012 Pierre-David Bélanger
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 

@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -39,6 +40,7 @@ NS_CC_BEGIN
  * @{
  */
 
+#define CC_DEFAULT_FONT_LABEL_SIZE  12
 
 /**
  * @struct TTFConfig
@@ -60,7 +62,7 @@ typedef struct _ttfConfig
     bool underline;
     bool strikethrough;
 
-    _ttfConfig(const std::string& filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+    _ttfConfig(const std::string& filePath = "",float size = CC_DEFAULT_FONT_LABEL_SIZE, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
         const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0,
                bool useItalics = false, bool useBold = false, bool useUnderline = false, bool useStrikethrough = false)
         : fontFilePath(filePath)
@@ -80,13 +82,6 @@ typedef struct _ttfConfig
         }
     }
 } TTFConfig;
-
-enum class TextFormatter : char
-{
-    NewLine = '\n',
-    CarriageReturn = '\r',
-    NextCharNoChangeX = '\b'
-};
 
 class Sprite;
 class SpriteBatchNode;
@@ -129,6 +124,14 @@ public:
          */
         RESIZE_HEIGHT
     };
+    
+    enum class LabelType {
+        TTF,
+        BMFONT,
+        CHARMAP,
+        STRING_TEXTURE
+    };
+    
     /// @name Creators
     /// @{
 
@@ -194,14 +197,58 @@ public:
     * @param text The initial text.
     * @param hAlignment Text horizontal alignment.
     * @param maxLineWidth The max line width.
-    * @param imageOffset
     *
     * @return An automatically released Label object.
     * @see setBMFontFilePath setMaxLineWidth
     */
     static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
-        const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0,
-        const Vec2& imageOffset = Vec2::ZERO);
+        const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
+
+    /**
+    * Allocates and initializes a Label, with a bitmap font file.
+    *
+    * @param bmfontPath A bitmap font file, it's a FNT format.
+    * @param text The initial text.
+    * @param hAlignment Text horizontal alignment.
+    * @param maxLineWidth The max line width.
+    * @param imageRect
+    * @param imageRotated
+    *
+    * @return An automatically released Label object.
+    * @see setBMFontFilePath setMaxLineWidth
+    */
+    static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
+        const TextHAlignment& hAlignment, int maxLineWidth, const Rect& imageRect, bool imageRotated);
+
+    /**
+    * Allocates and initializes a Label, with a bitmap font file.
+    *
+    * @param bmfontPath A bitmap font file, it's a FNT format.
+    * @param text The initial text.
+    * @param hAlignment Text horizontal alignment.
+    * @param maxLineWidth The max line width.
+    * @param subTextureKey Name of entry in PLIST texture atlas/sprite sheet
+    *
+    * @return An automatically released Label object.
+    * @see setBMFontFilePath setMaxLineWidth
+    */
+    static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
+        const TextHAlignment& hAlignment, int maxLineWidth, const std::string& subTextureKey);
+
+    /**
+    * Allocates and initializes a Label, with a bitmap font file.
+    *
+    * @param bmfontPath A bitmap font file, it's a FNT format.
+    * @param text The initial text.
+    * @param hAlignment Text horizontal alignment.
+    * @param maxLineWidth The max line width.
+    * @param imageOffset Offset into larger texture
+    *
+    * @return An automatically released Label object.
+    * @see setBMFontFilePath setMaxLineWidth
+    */
+    CC_DEPRECATED_ATTRIBUTE static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
+            const TextHAlignment& hAlignment, int maxLineWidth, const Vec2& imageOffset);
 
     /**
     * Allocates and initializes a Label, with char map configuration.
@@ -255,7 +302,16 @@ public:
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
     /** Sets a new bitmap font to Label */
-    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset = Vec2::ZERO, float fontSize = 0);
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, float fontSize = 0);
+
+    /** Sets a new bitmap font to Label */
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Rect& imageRect, bool imageRotated, float fontSize = 0);
+
+    /** Sets a new bitmap font to Label */
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const std::string& subTextureKey, float fontSize = 0);
+
+    /** Sets a new bitmap font to Label */
+    CC_DEPRECATED_ATTRIBUTE virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset, float fontSize = 0);
 
     /** Returns the bitmap font used by the Label.*/
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
@@ -550,6 +606,20 @@ public:
 
     void setLineSpacing(float height);
     float getLineSpacing() const;
+    
+    /**
+     Returns type of label
+     
+     @warning Not support system font.
+     @return the type of label
+     @since v3.17.1
+     */
+    LabelType getLabelType() const { return _currentLabelType; }
+    
+    /**
+     Returns font size
+     */
+    float getRenderingFontSize()const;
 
     /**
      * Sets the additional kerning of the Label.
@@ -631,14 +701,8 @@ protected:
         int lineIndex;
     };
 
-    enum class LabelType {
-        TTF,
-        BMFONT,
-        CHARMAP,
-        STRING_TEXTURE
-    };
-
     virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
+    bool getFontLetterDef(char32_t character, FontLetterDefinition& letterDef) const;
 
     void computeStringNumLines();
 
@@ -649,10 +713,9 @@ protected:
     bool multilineTextWrapByChar();
     bool multilineTextWrapByWord();
     bool multilineTextWrap(const std::function<int(const std::u32string&, int, int)>& lambda);
-    void shrinkLabelToContentSize(const std::function<bool(void)>& lambda);
+    void shrinkLabelToContentSize(const std::function<bool()>& lambda);
     bool isHorizontalClamp();
     bool isVerticalClamp();
-    float getRenderingFontSize()const;
     void rescaleWithOriginalFontSize();
 
     void updateLabelLetters();
@@ -676,8 +739,8 @@ protected:
     bool isHorizontalClamped(float letterPositionX, int lineIndex);
     void restoreFontSize();
     void updateLetterSpriteScale(Sprite* sprite);
-    int getFirstCharLen(const std::u32string& utf32Text, int startIndex, int textLen);
-    int getFirstWordLen(const std::u32string& utf32Text, int startIndex, int textLen);
+    int getFirstCharLen(const std::u32string& utf32Text, int startIndex, int textLen) const;
+    int getFirstWordLen(const std::u32string& utf32Text, int startIndex, int textLen) const;
 
     void reset();
 
@@ -692,6 +755,10 @@ protected:
     int _numberOfLines;
 
     std::string _bmFontPath;
+    std::string _bmSubTextureKey;
+    Rect _bmRect;
+    bool _bmRotated;
+
     TTFConfig _fontConfig;
     float _outlineSize;
 

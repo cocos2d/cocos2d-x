@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -43,7 +44,7 @@ public:
     virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
     /** Todo
     */
-    float getRadius(void) const;
+    float getRadius() const;
 
     /** Todo
     */
@@ -58,8 +59,8 @@ public:
     //virtual void _unprepare(ParticleTechnique* particleTechnique);
 
 CC_CONSTRUCTOR_ACCESS:	
-    PUVelocityMatchingAffector(void);
-    virtual ~PUVelocityMatchingAffector(void);
+    PUVelocityMatchingAffector();
+    virtual ~PUVelocityMatchingAffector();
         
 protected:
     float _radius;

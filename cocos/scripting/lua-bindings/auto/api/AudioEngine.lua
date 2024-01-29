@@ -66,6 +66,12 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- Check whether AudioEngine is enabled.
+-- @function [parent=#AudioEngine] isEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Gets the current playback position of an audio instance.<br>
 -- param audioID An audioID returned by the play2d function.<br>
 -- return The current playback position of an audio instance.
@@ -123,6 +129,14 @@
 -- @param #function callback
 -- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
 
+--------------------------------
+-- Whether to enable playing audios<br>
+-- note If it's disabled, current playing audios will be stopped and the later 'preload', 'play2d' methods will take no effects.
+-- @function [parent=#AudioEngine] setEnabled 
+-- @param self
+-- @param #bool isEnabled
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
+        
 --------------------------------
 -- Play 2d sound.<br>
 -- param filePath The path of an audio file.<br>
@@ -206,4 +220,10 @@
 -- @param #int audioID
 -- @return experimental::AudioProfile#experimental::AudioProfile ret (return value: cc.experimental::AudioProfile)
 
+--------------------------------
+-- Gets playing audio count.
+-- @function [parent=#AudioEngine] getPlayingAudioCount 
+-- @param self
+-- @return int#int ret (return value: int)
+        
 return nil

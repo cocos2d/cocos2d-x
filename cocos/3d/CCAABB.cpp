@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -34,11 +35,6 @@ AABB::AABB()
 AABB::AABB(const Vec3& min, const Vec3& max)
 {
     set(min, max);
-}
-
-AABB::AABB(const AABB& box)
-{
-	set(box._min,box._max);
 }
 
 Vec3 AABB::getCenter()

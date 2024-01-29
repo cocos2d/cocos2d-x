@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -31,7 +32,7 @@ namespace ui {
     
 const Margin Margin::ZERO = Margin(0,0,0,0);
     
-Margin::Margin(void) : left(0), top(0), right(0), bottom(0)
+Margin::Margin() : left(0), top(0), right(0), bottom(0)
 {
 }
 

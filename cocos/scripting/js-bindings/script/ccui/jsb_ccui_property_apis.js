@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2014-2017 Chukong Technologies Inc.
+ * Copyright (c) 2014-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -130,6 +131,7 @@ cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
 cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);
 cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);
 cc.defineGetterSetter(_proto, "anchorY", _proto._getAnchorY, _proto._setAnchorY);
+cc.defineGetterSetter(_proto, 'placeHolder', _proto.getPlaceHolder, _proto.setPlaceHolder);
 
 _proto = ccui.ScrollView.prototype;
 cc.defineGetterSetter(_proto, "innerWidth", _proto._getInnerWidth, _proto._setInnerWidth);

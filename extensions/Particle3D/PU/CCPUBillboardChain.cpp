@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -107,7 +108,7 @@ PUBillboardChain::~PUBillboardChain()
     CC_SAFE_RELEASE(_indexBuffer);
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::setupChainContainers(void)
+void PUBillboardChain::setupChainContainers()
 {
     // Allocate enough space for everything
     _chainElementList.resize(_chainCount * _maxElementsPerChain);
@@ -123,7 +124,7 @@ void PUBillboardChain::setupChainContainers(void)
     }
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::setupVertexDeclaration(void)
+void PUBillboardChain::setupVertexDeclaration()
 {
     //if (_vertexDeclDirty)
     //{
@@ -158,7 +159,7 @@ void PUBillboardChain::setupVertexDeclaration(void)
     //}
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::setupBuffers(void)
+void PUBillboardChain::setupBuffers()
 {
     //setupVertexDeclaration();
     if (_buffersNeedRecreating)
@@ -344,7 +345,7 @@ void PUBillboardChain::clearChain(size_t chainIndex)
 
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::clearAllChains(void)
+void PUBillboardChain::clearAllChains()
 {
     for (size_t i = 0; i < _chainCount; ++i)
     {
@@ -586,7 +587,7 @@ void PUBillboardChain::updateVertexBuffer(const Mat4 &camMat)
 
 }
 //-----------------------------------------------------------------------
-void PUBillboardChain::updateIndexBuffer(void)
+void PUBillboardChain::updateIndexBuffer()
 {
 
     setupBuffers();

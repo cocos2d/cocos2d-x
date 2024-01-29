@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -127,7 +128,7 @@ public:
     * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
     */
     virtual void setString(const std::string &label) override;
-    virtual const std::string& getString(void) const override ;
+    virtual const std::string& getString() const override ;
     
     TextHAlignment getHorizontalAlignment() const;
     void setHorizontalAlignment(TextHAlignment alignment);

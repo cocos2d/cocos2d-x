@@ -3,7 +3,8 @@ Copyright 2011 Jeff Lamarche
 Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
 Copyright 2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 
 http://www.cocos2d-x.org
@@ -265,6 +266,11 @@ public:
      Built in shader for terrain
      */
     static const char* SHADER_3D_TERRAIN;
+    
+    /**
+     Built in shader for LayerRadialGradient
+     */
+    static const char* SHADER_LAYER_RADIAL_GRADIENT;
     
     /**
      Built in shader for camera clear

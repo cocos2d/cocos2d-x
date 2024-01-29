@@ -10,11 +10,13 @@ function VisibleRect:lazyInit()
         local pEGLView = cc.EGLView:getInstance()
         local origin   = pEGLView:getVisibleOrigin()
         ]]--
-        self.s_visibleRect.x = 0
-        self.s_visibleRect.y = 0
-        local size  = cc.Director:getInstance():getWinSize()
-        self.s_visibleRect.width  = size.width
-        self.s_visibleRect.height = size.height
+        local director = cc.Director:getInstance()
+        local origin = director:getVisibleOrigin()
+        local visibleSize = director:getVisibleSize()
+        self.s_visibleRect.x = origin.x
+        self.s_visibleRect.y = origin.y
+        self.s_visibleRect.width  = visibleSize.width
+        self.s_visibleRect.height = visibleSize.height
     end
 end
 

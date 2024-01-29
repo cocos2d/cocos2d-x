@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -91,7 +92,7 @@ public:
     virtual void setMaxChainElements(size_t maxElements);
     /** Get the maximum number of chain elements per chain 
     */
-    virtual size_t getMaxChainElements(void) const { return _maxElementsPerChain; }
+    virtual size_t getMaxChainElements() const { return _maxElementsPerChain; }
     /** Set the number of chain segments (this class can render multiple chains
         at once using the same material). 
     */
@@ -99,7 +100,7 @@ public:
     /** Get the number of chain segments (this class can render multiple chains
     at once using the same material). 
     */
-    virtual size_t getNumberOfChains(void) const { return _chainCount; }
+    virtual size_t getNumberOfChains() const { return _chainCount; }
 
     /** Sets whether texture coordinate information should be included in the
         final buffers generated.
@@ -111,7 +112,7 @@ public:
     /** Gets whether texture coordinate information should be included in the
         final buffers generated.
     */
-    virtual bool getUseTextureCoords(void) const { return _useTexCoords; }
+    virtual bool getUseTextureCoords() const { return _useTexCoords; }
 
     /** The direction in which texture coordinates from elements of the
         chain are used.
@@ -131,7 +132,7 @@ public:
     /** Gets the direction in which texture coords specified on each element
         are deemed to run.
     */
-    virtual TexCoordDirection getTextureCoordDirection(void) { return _texCoordDir; }
+    virtual TexCoordDirection getTextureCoordDirection() { return _texCoordDir; }
 
     /** Set the range of the texture coordinates generated across the width of
         the chain elements.
@@ -142,7 +143,7 @@ public:
     /** Get the range of the texture coordinates generated across the width of
         the chain elements.
     */
-    virtual const float* getOtherTextureCoordRange(void) const { return _otherTexCoordRange; }
+    virtual const float* getOtherTextureCoordRange() const { return _otherTexCoordRange; }
 
     /** Sets whether vertex colour information should be included in the
         final buffers generated.
@@ -154,7 +155,7 @@ public:
     /** Gets whether vertex colour information should be included in the
         final buffers generated.
     */
-    virtual bool getUseVertexColours(void) const { return _useVertexColour; }
+    virtual bool getUseVertexColours() const { return _useVertexColour; }
 
     /** Sets whether or not the buffers created for this object are suitable
         for dynamic alteration.
@@ -164,7 +165,7 @@ public:
     /** Gets whether or not the buffers created for this object are suitable
         for dynamic alteration.
     */
-    virtual bool getDynamic(void) const { return _dynamic; }
+    virtual bool getDynamic() const { return _dynamic; }
         
     /** Add an element to the 'head' of a chain.
     @remarks
@@ -201,7 +202,7 @@ public:
     /** Remove all elements of a given chain (but leave the chain intact). */
     virtual void clearChain(size_t chainIndex);
     /** Remove all elements from all chains (but leave the chains themselves intact). */
-    virtual void clearAllChains(void);
+    virtual void clearAllChains();
 
     /** Sets whether the billboard should always be facing the camera or a custom direction
         set by each point element.
@@ -239,15 +240,15 @@ public:
 protected:
 
     /// Setup the STL collections
-    virtual void setupChainContainers(void);
+    virtual void setupChainContainers();
     /// Setup vertex declaration
-    virtual void setupVertexDeclaration(void);
+    virtual void setupVertexDeclaration();
     // Setup buffers
-    virtual void setupBuffers(void);
+    virtual void setupBuffers();
     /// Update the contents of the vertex buffer
     virtual void updateVertexBuffer(const Mat4& camMat);
     /// Update the contents of the index buffer
-    virtual void updateIndexBuffer(void);
+    virtual void updateIndexBuffer();
 
     void init(const std::string& texFile);
 

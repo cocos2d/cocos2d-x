@@ -1,5 +1,6 @@
 ﻿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -115,7 +116,7 @@ public:
 
     // NodeTree
     flatbuffers::Offset<flatbuffers::NodeTree> createNodeTree(const tinyxml2::XMLElement* objectData,
-                                                              std::string classType);
+                                                              const std::string& classType);
     
     // NodeAction
     flatbuffers::Offset<flatbuffers::NodeAction> createNodeAction(const tinyxml2::XMLElement* objectData);
@@ -136,14 +137,14 @@ public:
     flatbuffers::Offset<flatbuffers::AnimationInfo> createAnimationInfo(const tinyxml2::XMLElement* objectData);
     /**/
     
-    int getResourceType(std::string key);
+    int getResourceType(const std::string& key);
     std::string getGUIClassName(const std::string &name);
     std::string getWidgetReaderClassName(cocos2d::ui::Widget *widget);
     
     /* create flat buffers with XML */
     flatbuffers::FlatBufferBuilder* createFlatBuffersWithXMLFileForSimulator(const std::string& xmlFileName);
     flatbuffers::Offset<flatbuffers::NodeTree> createNodeTreeForSimulator(const tinyxml2::XMLElement* objectData,
-                                                                          std::string classType);
+                                                                          const std::string& classType);
     flatbuffers::Offset<flatbuffers::ProjectNodeOptions> createProjectNodeOptionsForSimulator(const tinyxml2::XMLElement* objectData);
 	/**/
     std::string getCsdVersion() { return _csdVersion; }

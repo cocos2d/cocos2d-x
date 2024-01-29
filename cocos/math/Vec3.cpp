@@ -1,5 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -44,11 +45,6 @@ Vec3::Vec3(const Vec3& p1, const Vec3& p2)
     set(p1, p2);
 }
 
-Vec3::Vec3(const Vec3& copy)
-{
-    set(copy);
-}
-
 Vec3 Vec3::fromColor(unsigned int color)
 {
     float components[3];
@@ -62,10 +58,6 @@ Vec3 Vec3::fromColor(unsigned int color)
 
     Vec3 value(components);
     return value;
-}
-
-Vec3::~Vec3()
-{
 }
 
 float Vec3::angle(const Vec3& v1, const Vec3& v2)

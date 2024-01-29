@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -112,7 +113,7 @@ LuaStack::~LuaStack()
     }
 }
 
-LuaStack *LuaStack::create(void)
+LuaStack *LuaStack::create()
 {
     LuaStack *stack = new (std::nothrow) LuaStack();
     stack->init();
@@ -128,14 +129,14 @@ LuaStack *LuaStack::attach(lua_State *L)
     return stack;
 }
 
-bool LuaStack::init(void)
+bool LuaStack::init()
 {
     _state = lua_open();
     luaL_openlibs(_state);
     toluafix_open(_state);
 
     // Register our version of the global "print" function
-    const luaL_reg global_functions [] = {
+    const luaL_Reg global_functions [] = {
         {"print", lua_print},
         {"release_print",lua_release_print},
         {nullptr, nullptr}
@@ -303,7 +304,7 @@ int LuaStack::executeGlobalFunction(const char* functionName)
     return executeFunction(0);
 }
 
-void LuaStack::clean(void)
+void LuaStack::clean()
 {
     lua_settop(_state, 0);
 }
@@ -338,7 +339,7 @@ void LuaStack::pushString(const char* stringValue, int length)
     lua_pushlstring(_state, stringValue, length);
 }
 
-void LuaStack::pushNil(void)
+void LuaStack::pushNil()
 {
     lua_pushnil(_state);
 }
@@ -800,7 +801,7 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
             std::string filename = zip->getFirstFilename();
             while (filename.length()) {
                 ssize_t bufferSize = 0;
-                unsigned char *zbuffer = zip->getFileData(filename.c_str(), &bufferSize);
+                unsigned char *zbuffer = zip->getFileData(filename, &bufferSize);
                 if (bufferSize) {
                     // remove .lua or .luac extension
                     size_t pos = filename.find_last_of('.');
@@ -874,8 +875,10 @@ int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, cons
                                               (unsigned char*)_xxteaKey,
                                               (xxtea_long)_xxteaKeyLen,
                                               &len);
-        skipBOM((const char*&)result, (int&)len);
-        r = luaL_loadbuffer(L, (char*)result, len, chunkName);
+        unsigned char* content = result;
+        xxtea_long contentSize = len;
+        skipBOM((const char*&)content, (int&)contentSize);
+        r = luaL_loadbuffer(L, (char*)content, contentSize, chunkName);
         free(result);
     }
     else

@@ -28,9 +28,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/SkeletonBounds.h>
+#include "spine/SkeletonBounds.h"
 #include <limits.h>
-#include <spine/extension.h>
+#include "spine/extension.h"
 
 spPolygon* spPolygon_create (int capacity) {
 	spPolygon* self = NEW(spPolygon);
@@ -141,7 +141,7 @@ void spSkeletonBounds_update (spSkeletonBounds* self, spSkeleton* skeleton, int/
 			self->polygons[self->count] = polygon = spPolygon_create(boundingBox->super.worldVerticesLength);
 		}
 		polygon->count = boundingBox->super.worldVerticesLength;
-		spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, polygon->vertices);
+		spVertexAttachment_computeWorldVertices(SUPER(boundingBox), slot, 0, polygon->count, polygon->vertices, 0, 2);
 
 		if (updateAabb) {
 			int ii = 0;

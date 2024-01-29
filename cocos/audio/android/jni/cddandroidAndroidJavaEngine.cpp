@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -38,7 +39,7 @@ THE SOFTWARE.
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 // Java class
-static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
+static const std::string helperClassName = "org.cocos2dx.lib.Cocos2dxHelper";
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;

@@ -70,6 +70,13 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
+-- / @} end of PlayableProtocol
+-- @function [parent=#ParticleSystem] setSourcePositionCompatible 
+-- @param self
+-- @param #bool sourcePositionCompatible
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
 --  Gets the start spin variance of each particle.<br>
 -- return The start spin variance of each particle.
 -- @function [parent=#ParticleSystem] getStartSpinVar 
@@ -738,6 +745,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#ParticleSystem] isSourcePositionCompatible 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Gets the maximum particles of the system.<br>
 -- return The maximum particles of the system.
 -- @function [parent=#ParticleSystem] getTotalParticles 
@@ -798,6 +811,12 @@
 -- @param self
 -- @param #int numberOfParticles
 -- @return ParticleSystem#ParticleSystem ret (return value: cc.ParticleSystem)
+        
+--------------------------------
+--  Gets all ParticleSystem references
+-- @function [parent=#ParticleSystem] getAllParticleSystems 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- 

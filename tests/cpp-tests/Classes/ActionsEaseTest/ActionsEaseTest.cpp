@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -1002,11 +1003,11 @@ ActionsEaseTests::ActionsEaseTests()
     ADD_TEST_CASE(SpeedTest);
 }
 
-EaseSpriteDemo::EaseSpriteDemo(void)
+EaseSpriteDemo::EaseSpriteDemo()
 {
 }
 
-EaseSpriteDemo::~EaseSpriteDemo(void)
+EaseSpriteDemo::~EaseSpriteDemo()
 {
     _grossini->release();
     _tamara->release();

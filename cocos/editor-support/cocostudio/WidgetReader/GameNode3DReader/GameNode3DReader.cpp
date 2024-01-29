@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -439,7 +440,7 @@ namespace cocostudio
         return node;
     }
 
-    int GameNode3DReader::getResourceType(std::string key)
+    int GameNode3DReader::getResourceType(const std::string& key)
     {
         if (key == "Normal" || key == "Default")
         {

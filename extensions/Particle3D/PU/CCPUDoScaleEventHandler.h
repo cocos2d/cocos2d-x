@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -54,7 +55,7 @@ public:
 
     /** Returns the scale type
     */
-    const ScaleType& getScaleType(void) const;
+    const ScaleType& getScaleType() const;
 
     /** Set the scale type. This scale type identifies to which attribute the scale factor is applied.
     */
@@ -76,8 +77,8 @@ public:
     virtual void copyAttributesTo (PUEventHandler* eventHandler) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUDoScaleEventHandler(void);
-    virtual ~PUDoScaleEventHandler(void) {};
+    PUDoScaleEventHandler();
+    virtual ~PUDoScaleEventHandler() {};
 
 protected:
     float _scaleFraction;

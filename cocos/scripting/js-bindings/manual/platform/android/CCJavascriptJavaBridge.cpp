@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +55,7 @@ JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalSt
 }
 #endif
 
-JavascriptJavaBridge::CallInfo::~CallInfo(void)
+JavascriptJavaBridge::CallInfo::~CallInfo()
 {
     if (m_returnType == TypeString && m_ret.stringValue)
     {
@@ -65,7 +66,7 @@ JavascriptJavaBridge::CallInfo::~CallInfo(void)
         m_env->DeleteLocalRef(m_classID);
 }
 
-bool JavascriptJavaBridge::CallInfo::execute(void)
+bool JavascriptJavaBridge::CallInfo::execute()
 {
     switch (m_returnType)
     {
@@ -233,7 +234,7 @@ JavascriptJavaBridge::ValueType JavascriptJavaBridge::CallInfo::checkType(const 
 }
 
 
-bool JavascriptJavaBridge::CallInfo::getMethodInfo(void)
+bool JavascriptJavaBridge::CallInfo::getMethodInfo()
 {
     m_methodID = 0;
     m_env = 0;

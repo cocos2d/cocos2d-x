@@ -2,7 +2,8 @@
  * Created by Rolando Abarca 2012.
  * Copyright (c) 2012 Rolando Abarca. All rights reserved.
  * Copyright (c) 2013 Zynga Inc. All rights reserved.
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Heavy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.cpp
  *
@@ -28,12 +29,35 @@
 
 #include "scripting/js-bindings/manual/network/XMLHTTPRequest.h"
 #include <string>
+#include <cctype>
 #include <algorithm>
 #include <sstream>
 #include "base/CCDirector.h"
+#include "base/ZipUtils.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 using namespace std;
+
+
+// trim from start (in place)
+static inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
+        return !std::isspace(ch);
+    }));
+}
+
+// trim from end (in place)
+static inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+// trim from both ends (in place)
+static inline void trim(std::string &s) {
+    ltrim(s);
+    rtrim(s);
+}
 
 
 //#pragma mark - MinXmlHttpRequest
@@ -49,7 +73,7 @@ void MinXmlHttpRequest::_gotHeader(string& header)
     char * cstr = new (std::nothrow) char [header.length()+1];
 
     // check for colon.
-    size_t found_header_field = header.find_first_of(":");
+    size_t found_header_field = header.find_first_of(':');
 
     if (found_header_field != std::string::npos)
     {
@@ -178,13 +202,48 @@ void MinXmlHttpRequest::_setHttpRequestHeader()
 void MinXmlHttpRequest::_setHttpRequestData(const char *data, size_t len)
 {
     if (len > 0 &&
-        (_meth.compare("post") == 0 || _meth.compare("POST") == 0 ||
-         _meth.compare("put") == 0 || _meth.compare("PUT") == 0))
+        (_meth == "post" || _meth == "POST" ||
+         _meth == "put" || _meth == "PUT"))
     {
         _httpRequest->setRequestData(data, len);
     }
 }
 
+MinXmlHttpRequest::EncodingType MinXmlHttpRequest::_getEncodingType() const
+{
+    auto it = _httpHeader.find("content-encoding");
+    if (it == _httpHeader.end()) {
+        return EncodingType::IDENTITY;
+    }
+
+    std::string encodingTypeStr = it->second;
+    trim(encodingTypeStr);
+    if (encodingTypeStr.empty())
+    {
+        return EncodingType::IDENTITY;
+    }
+    else if (encodingTypeStr == "gzip")
+    {
+        return EncodingType::GZIP;
+    }
+    else if (encodingTypeStr == "deflate")
+    {
+        return EncodingType::DEFLATE;
+    }
+    else if (encodingTypeStr == "br")
+    {
+        return EncodingType::BR;
+    }
+    else if (encodingTypeStr == "compress")
+    {
+        return EncodingType::COMPRESS;
+    }
+    else
+    {
+        CCLOG("[error] unrecongized Content-Encoding value %s, %s", encodingTypeStr.c_str(), "use \"identity\" as default");
+        return EncodingType::IDENTITY;
+    }
+}
 /**
  *  @brief Callback for HTTPRequest. Handles the response and invokes Callback.
  *  @param sender   Object which initialized callback
@@ -248,6 +307,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
                 callback.set(_onloadendCallback);
                 _notify(callback, JS::HandleValueArray::empty());
             }
+            _clearCallbacks();
             return;
         }
     }
@@ -269,11 +329,37 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
     _status = statusCode;
     _readyState = DONE;
 
+    const auto encodingType = _getEncodingType();
+
+#if ( CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
+    if (encodingType == EncodingType::GZIP && 
+        cocos2d::ZipUtils::ccIsGZipBuffer((unsigned char *)buffer->data(), buffer->size()))
+    {
+        unsigned char *deflatedBuffer = nullptr;
+        auto deflatedSize = cocos2d::ZipUtils::ccInflateMemory((unsigned char *)buffer->data(), buffer->size(), &deflatedBuffer);
+        CCASSERT(deflatedSize > 0, "ZipUtils::ccInflateMemory error");
+        CC_SAFE_DELETE(_data);
+        _dataSize = deflatedSize;
+        _data = (char*)malloc(_dataSize + 1);
+        _data[_dataSize] = 0;
+        memcpy((void*)_data, (const void*)deflatedBuffer, _dataSize);
+        free(deflatedBuffer);
+    }
+    else
+    {
+        _dataSize = static_cast<uint32_t>(buffer->size());
+        CC_SAFE_FREE(_data);
+        _data = (char*) malloc(_dataSize + 1);
+        _data[_dataSize] = 0;
+        memcpy((void*)_data, (const void*)buffer->data(), _dataSize);
+    }
+#else
     _dataSize = static_cast<uint32_t>(buffer->size());
     CC_SAFE_FREE(_data);
-    _data = (char*) malloc(_dataSize + 1);
-    _data[_dataSize] = '\0';
+    _data = (char*)malloc(_dataSize + 1);
+    _data[_dataSize] = 0;
     memcpy((void*)_data, (const void*)buffer->data(), _dataSize);
+#endif
 
     JS::RootedObject callback(_cx);
     if (_onreadystateCallback)
@@ -291,6 +377,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
         callback.set(_onloadendCallback);
         _notify(callback, JS::HandleValueArray::empty());
     }
+    _clearCallbacks();
 }
 /**
  * @brief   Send out request and fire callback when done.
@@ -301,6 +388,27 @@ void MinXmlHttpRequest::_sendRequest(JSContext *cx)
     _httpRequest->setResponseCallback(this, httpresponse_selector(MinXmlHttpRequest::handle_requestResponse));
     cocos2d::network::HttpClient::getInstance()->sendImmediate(_httpRequest);
     _httpRequest->release();
+}
+
+#define REMOVE_CALLBACK(x) \
+if (x)\
+{ \
+    JS::RootedValue callback(_cx); \
+    callback.set(OBJECT_TO_JSVAL(x)); \
+    js_remove_object_root(callback); \
+    x = nullptr; \
+} \
+
+void MinXmlHttpRequest::_clearCallbacks()
+{ 
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    REMOVE_CALLBACK(_onreadystateCallback)
+    REMOVE_CALLBACK(_onloadstartCallback)
+    REMOVE_CALLBACK(_onabortCallback)
+    REMOVE_CALLBACK(_onerrorCallback)
+    REMOVE_CALLBACK(_onloadCallback)
+    REMOVE_CALLBACK(_onloadendCallback)
+    REMOVE_CALLBACK(_ontimeoutCallback)
 }
 
 MinXmlHttpRequest::MinXmlHttpRequest()
@@ -352,49 +460,7 @@ MinXmlHttpRequest::MinXmlHttpRequest(JSContext *cx)
  */
 MinXmlHttpRequest::~MinXmlHttpRequest()
 {
-    JS::RootedValue callback(_cx);
-    if (_onreadystateCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onreadystateCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onloadstartCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onloadstartCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onabortCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onabortCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onerrorCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onerrorCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onloadCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onloadCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onloadendCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onloadendCallback));
-        js_remove_object_root(callback);
-    }
-    if (_ontimeoutCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_ontimeoutCallback));
-        js_remove_object_root(callback);
-    }
-
-    if (_httpRequest)
-    {
-        // We don't need to release _httpRequest here since it will be released in the http callback.
-//        _httpRequest->release();
-    }
-
+    _clearCallbacks();
     CC_SAFE_FREE(_data);
     CC_SAFE_RELEASE_NULL(_scheduler);
 }
@@ -794,10 +860,10 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
 
         {
             auto requestType =
-              (_meth.compare("get") == 0 || _meth.compare("GET") == 0) ? cocos2d::network::HttpRequest::Type::GET : (
-              (_meth.compare("post") == 0 || _meth.compare("POST") == 0) ? cocos2d::network::HttpRequest::Type::POST : (
-              (_meth.compare("put") == 0 || _meth.compare("PUT") == 0) ? cocos2d::network::HttpRequest::Type::PUT : (
-              (_meth.compare("delete") == 0 || _meth.compare("DELETE") == 0) ? cocos2d::network::HttpRequest::Type::DELETE : (
+              (_meth == "get" || _meth == "GET") ? cocos2d::network::HttpRequest::Type::GET : (
+              (_meth == "post" || _meth == "POST") ? cocos2d::network::HttpRequest::Type::POST : (
+              (_meth == "put" || _meth == "PUT") ? cocos2d::network::HttpRequest::Type::PUT : (
+              (_meth == "delete" || _meth == "DELETE") ? cocos2d::network::HttpRequest::Type::DELETE : (
                 cocos2d::network::HttpRequest::Type::UNKNOWN))));
 
             _httpRequest->setRequestType(requestType);
@@ -890,6 +956,7 @@ void MinXmlHttpRequest::update(float dt)
         {
             JS::RootedObject callback(_cx, _ontimeoutCallback);
             _notify(callback, JS::HandleValueArray::empty());
+            _clearCallbacks();
         }
         _elapsedTime = 0;
         _readyState = UNSENT;
@@ -916,6 +983,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
     {
         JS::RootedObject callback(cx, _onabortCallback);
         _notify(callback, JS::HandleValueArray::empty());
+        _clearCallbacks();
     }
 
     return true;
@@ -1052,7 +1120,6 @@ void MinXmlHttpRequest::_notify(JS::HandleObject callback, JS::HandleValueArray 
         if (callback)
         {
             JS::RootedObject obj(_cx, p->obj);
-            JSAutoCompartment ac(_cx, obj);
             //JS_IsExceptionPending(cx) && JS_ReportPendingException(cx);
             JS::RootedValue callbackVal(_cx, OBJECT_TO_JSVAL(callback));
             JS::RootedValue out(_cx);

@@ -31,10 +31,11 @@
 #ifndef SPINE_PATHATTACHMENT_H_
 #define SPINE_PATHATTACHMENT_H_
 
-#include <spine/Attachment.h>
-#include <spine/VertexAttachment.h>
-#include <spine/Atlas.h>
-#include <spine/Slot.h>
+#include "spine/dll.h"
+#include "spine/Attachment.h"
+#include "spine/VertexAttachment.h"
+#include "spine/Atlas.h"
+#include "spine/Slot.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,9 +48,7 @@ typedef struct spPathAttachment {
 	int/*bool*/ closed, constantSpeed;
 } spPathAttachment;
 
-spPathAttachment* spPathAttachment_create (const char* name);
-void spPathAttachment_computeWorldVertices (spPathAttachment* self, spSlot* slot, float* worldVertices);
-void spPathAttachment_computeWorldVertices1 (spPathAttachment* self, spSlot* slot, int start, int count, float* worldVertices, int offset);
+SP_API spPathAttachment* spPathAttachment_create (const char* name);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spPathAttachment PathAttachment;

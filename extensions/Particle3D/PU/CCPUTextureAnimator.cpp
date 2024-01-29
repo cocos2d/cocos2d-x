@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -35,24 +36,24 @@ const PUTextureAnimator::TextureAnimationType PUTextureAnimator::DEFAULT_ANIMATI
 const bool PUTextureAnimator::DEFAULT_START_RANDOM = true;
 
 //-----------------------------------------------------------------------
-PUTextureAnimator::PUTextureAnimator(void) : 
-    PUAffector(),
-    _animationTimeStep(DEFAULT_TIME_STEP),
-    _animationTimeStepCount(0.0f),
-    _startRandom(DEFAULT_START_RANDOM),
-    _animationTimeStepSet(false),
-    _nextIndex(false),
-    _textureAnimationType(DEFAULT_ANIMATION_TYPE),
-    _textureCoordsStart(DEFAULT_TEXCOORDS_START),
-    _textureCoordsEnd(DEFAULT_TEXCOORDS_END)
+PUTextureAnimator::PUTextureAnimator()
+: PUAffector()
+, _animationTimeStep(DEFAULT_TIME_STEP)
+, _animationTimeStepCount(0.0f)
+, _startRandom(DEFAULT_START_RANDOM)
+, _animationTimeStepSet(false)
+, _nextIndex(false)
+, _textureAnimationType(DEFAULT_ANIMATION_TYPE)
+, _textureCoordsStart(DEFAULT_TEXCOORDS_START)
+, _textureCoordsEnd(DEFAULT_TEXCOORDS_END)
 {
 }
 //-----------------------------------------------------------------------
-PUTextureAnimator::~PUTextureAnimator(void)
+PUTextureAnimator::~PUTextureAnimator()
 {
 }
 //-----------------------------------------------------------------------
-float PUTextureAnimator::getAnimationTimeStep(void) const
+float PUTextureAnimator::getAnimationTimeStep() const
 {
     return _animationTimeStep;
 }
@@ -63,7 +64,7 @@ void PUTextureAnimator::setAnimationTimeStep(float animationTimeStep)
     _animationTimeStepSet = true;
 }
 //-----------------------------------------------------------------------
-PUTextureAnimator::TextureAnimationType PUTextureAnimator::getTextureAnimationType(void) const
+PUTextureAnimator::TextureAnimationType PUTextureAnimator::getTextureAnimationType() const
 {
     return _textureAnimationType;
 }
@@ -73,7 +74,7 @@ void PUTextureAnimator::setTextureAnimationType(PUTextureAnimator::TextureAnimat
     _textureAnimationType = textureAnimationType;
 }
 //-----------------------------------------------------------------------
-unsigned short PUTextureAnimator::getTextureCoordsStart(void) const
+unsigned short PUTextureAnimator::getTextureCoordsStart() const
 {
     return _textureCoordsStart;
 }
@@ -83,7 +84,7 @@ void PUTextureAnimator::setTextureCoordsStart(unsigned short textureCoordsStart)
     _textureCoordsStart = textureCoordsStart;
 }
 //-----------------------------------------------------------------------
-unsigned short PUTextureAnimator::getTextureCoordsEnd(void) const
+unsigned short PUTextureAnimator::getTextureCoordsEnd() const
 {
     return _textureCoordsEnd;
 }
@@ -93,7 +94,7 @@ void PUTextureAnimator::setTextureCoordsEnd(unsigned short textureCoordsEnd)
     _textureCoordsEnd = textureCoordsEnd;
 }
 //-----------------------------------------------------------------------
-bool PUTextureAnimator::isStartRandom(void) const
+bool PUTextureAnimator::isStartRandom() const
 {
     return _startRandom;
 }

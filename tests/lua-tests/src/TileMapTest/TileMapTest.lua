@@ -782,7 +782,7 @@ local function TMXIsoZorder()
         -- if tamara < 96, z=3
         -- if tamara < 144,z=2
 
-        local newZ = 4 - (p.y / 48)
+        local newZ = 4 - math.floor((p.y / 48))
         newZ = math.max(newZ,0)
 
         map:reorderChild(m_tamara, newZ)

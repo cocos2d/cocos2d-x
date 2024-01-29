@@ -248,7 +248,7 @@ bool js_cocos2dx_extension_ScrollView_setZoomScaleInDuration(JSContext *cx, uint
 bool js_cocos2dx_extension_ScrollView_updateTweenAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setMaxScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_hasVisibleParents(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_ScrollView_getDirection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ScrollView_setSwallowTouches(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_getContainer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setMinScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_getZoomScale(JSContext *cx, uint32_t argc, jsval *vp);
@@ -272,6 +272,7 @@ bool js_cocos2dx_extension_ScrollView_setBounceable(JSContext *cx, uint32_t argc
 bool js_cocos2dx_extension_ScrollView_isTouchMoved(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_isNodeVisible(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_minContainerOffset(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ScrollView_getDirection(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setZoomScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_ScrollView(JSContext *cx, uint32_t argc, jsval *vp);

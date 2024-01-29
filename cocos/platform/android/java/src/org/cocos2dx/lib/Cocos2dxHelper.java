@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -24,7 +25,9 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.media.AudioManager;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -46,6 +49,11 @@ import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.DisplayCutout;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
+import android.view.ViewConfiguration;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.android.vending.expansion.zipfile.APKExpansionSupport;
@@ -55,10 +63,12 @@ import com.enhance.gameservice.IGameTuningService;
 
 import java.io.IOException;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -77,14 +87,13 @@ public class Cocos2dxHelper {
     // ===========================================================
 
     private static Cocos2dxMusic sCocos2dMusic;
-    private static Cocos2dxSound sCocos2dSound;
+    private static Cocos2dxSound sCocos2dSound = null;
     private static AssetManager sAssetManager;
-    private static Cocos2dxAccelerometer sCocos2dxAccelerometer;
+    private static Cocos2dxAccelerometer sCocos2dxAccelerometer = null;
     private static boolean sAccelerometerEnabled;
     private static boolean sCompassEnabled;
     private static boolean sActivityVisible;
     private static String sPackageName;
-    private static String sFileDirectory;
     private static Activity sActivity = null;
     private static Cocos2dxHelperListener sCocos2dxHelperListener;
     private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
@@ -151,13 +160,8 @@ public class Cocos2dxHelper {
             final ApplicationInfo applicationInfo = activity.getApplicationInfo();
             
             Cocos2dxHelper.sPackageName = applicationInfo.packageName;
-            Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
-            
-            Cocos2dxHelper.nativeSetApkPath(Cocos2dxHelper.getAssetsPath());
-    
-            Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(activity);
+
             Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
-            Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(activity);
             Cocos2dxHelper.sAssetManager = activity.getAssets();
             Cocos2dxHelper.nativeSetContext((Context)activity, Cocos2dxHelper.sAssetManager);
     
@@ -172,18 +176,6 @@ public class Cocos2dxHelper {
             serviceIntent.setPackage("com.enhance.gameservice");
             boolean suc = activity.getApplicationContext().bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
             //Enhance API modification end
-            
-            int versionCode = 1;
-            try {
-                versionCode = Cocos2dxActivity.getContext().getPackageManager().getPackageInfo(Cocos2dxHelper.getCocos2dxPackageName(), 0).versionCode;
-            } catch (NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            try {
-                Cocos2dxHelper.sOBBFile = APKExpansionSupport.getAPKExpansionZipFile(Cocos2dxActivity.getContext(), versionCode, 0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
     
@@ -191,27 +183,81 @@ public class Cocos2dxHelper {
     // else it returns the absolute path to the APK.
     public static String getAssetsPath()
     {
-        if (Cocos2dxHelper.sAssetsPath == "") {
-            int versionCode = 1;
-            try {
-                versionCode = Cocos2dxHelper.sActivity.getPackageManager().getPackageInfo(Cocos2dxHelper.sPackageName, 0).versionCode;
-            } catch (NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            String pathToOBB = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + Cocos2dxHelper.sPackageName + "/main." + versionCode + "." + Cocos2dxHelper.sPackageName + ".obb";
-            File obbFile = new File(pathToOBB);
+        if (Cocos2dxHelper.sAssetsPath.equals("")) {
+
+            String pathToOBB = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + Cocos2dxHelper.sPackageName;
+
+	    	// Listing all files inside the folder (pathToOBB) where OBB files are expected to be found.
+            String[] fileNames = new File(pathToOBB).list(new FilenameFilter() { // Using filter to pick up only main OBB file name.
+                public boolean accept(File dir, String name) {
+                    return name.startsWith("main.") && name.endsWith(".obb");  // It's possible to filter only by extension here to get path to patch OBB file also.
+                }
+            });
+
+            String fullPathToOBB = "";
+            if (fileNames != null && fileNames.length > 0)  // If there is at least 1 element inside the array with OBB file names, then we may think fileNames[0] will have desired main OBB file name.
+                fullPathToOBB = pathToOBB + "/" + fileNames[0];  // Composing full file name for main OBB file.
+
+            File obbFile = new File(fullPathToOBB);
             if (obbFile.exists())
-                Cocos2dxHelper.sAssetsPath = pathToOBB;
+                Cocos2dxHelper.sAssetsPath = fullPathToOBB;
             else
                 Cocos2dxHelper.sAssetsPath = Cocos2dxHelper.sActivity.getApplicationInfo().sourceDir;
         }
         
         return Cocos2dxHelper.sAssetsPath;
     }
-    
-    public static ZipResourceFile getObbFile()
+
+    //remove directory 
+    public static boolean removeDirectory(final String directory)
     {
-        return Cocos2dxHelper.sOBBFile;
+        try{
+            File file = new File(directory);
+            recursionDeleteFile(file);
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+
+    private static void recursionDeleteFile(File file)
+    {
+        if (file.isFile()) {
+            file.delete();
+            return;
+        }
+        if (file.isDirectory()) {
+            File[] childrenFile = file.listFiles();
+            if (childrenFile == null || childrenFile.length == 0) {
+                file.delete();
+                return;
+            }
+            for (File f : childrenFile) {
+                recursionDeleteFile(f);
+            }
+            file.delete();
+        }
+    }
+    
+    public static ZipResourceFile getObbFile() {
+        if (null == sOBBFile) {
+            int versionCode = 1;
+            try {
+                versionCode = Cocos2dxActivity.getContext().getPackageManager().getPackageInfo(Cocos2dxHelper.getCocos2dxPackageName(), 0).versionCode;
+            } catch (NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                sOBBFile = APKExpansionSupport.getAPKExpansionZipFile(Cocos2dxActivity.getContext(), versionCode, 0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return sOBBFile;
     }
     
     //Enhance API modification begin
@@ -255,8 +301,6 @@ public class Cocos2dxHelper {
     // Methods
     // ===========================================================
 
-    private static native void nativeSetApkPath(final String pApkPath);
-
     private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
 
     private static native void nativeSetContext(final Context pContext, final AssetManager pAssetManager);
@@ -267,7 +311,7 @@ public class Cocos2dxHelper {
         return Cocos2dxHelper.sPackageName;
     }
     public static String getCocos2dxWritablePath() {
-        return Cocos2dxHelper.sFileDirectory;
+        return sActivity.getFilesDir().getAbsolutePath();
     }
 
     public static String getCurrentLanguage() {
@@ -284,21 +328,21 @@ public class Cocos2dxHelper {
 
     public static void enableAccelerometer() {
         Cocos2dxHelper.sAccelerometerEnabled = true;
-        Cocos2dxHelper.sCocos2dxAccelerometer.enableAccel();
+        Cocos2dxHelper.getAccelerometer().enableAccel();
     }
 
     public static void enableCompass() {
         Cocos2dxHelper.sCompassEnabled = true;
-        Cocos2dxHelper.sCocos2dxAccelerometer.enableCompass();
+        Cocos2dxHelper.getAccelerometer().enableCompass();
     }
 
     public static void setAccelerometerInterval(float interval) {
-        Cocos2dxHelper.sCocos2dxAccelerometer.setInterval(interval);
+        Cocos2dxHelper.getAccelerometer().setInterval(interval);
     }
 
     public static void disableAccelerometer() {
         Cocos2dxHelper.sAccelerometerEnabled = false;
-        Cocos2dxHelper.sCocos2dxAccelerometer.disable();
+        Cocos2dxHelper.getAccelerometer().disable();
     }
 
     public static void setKeepScreenOn(boolean value) {
@@ -332,8 +376,8 @@ public class Cocos2dxHelper {
     
     public static long[] getObbAssetFileDescriptor(final String path) {
         long[] array = new long[3];
-        if (Cocos2dxHelper.sOBBFile != null) {
-            AssetFileDescriptor descriptor = Cocos2dxHelper.sOBBFile.getAssetFileDescriptor(path);
+        if (Cocos2dxHelper.getObbFile() != null) {
+            AssetFileDescriptor descriptor = Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path);
             if (descriptor != null) {
                 try {
                     ParcelFileDescriptor parcel = descriptor.getParcelFileDescriptor();
@@ -394,87 +438,91 @@ public class Cocos2dxHelper {
     }
 
     public static void preloadEffect(final String path) {
-        Cocos2dxHelper.sCocos2dSound.preloadEffect(path);
+        Cocos2dxHelper.getSound().preloadEffect(path);
     }
 
     public static int playEffect(final String path, final boolean isLoop, final float pitch, final float pan, final float gain) {
-        return Cocos2dxHelper.sCocos2dSound.playEffect(path, isLoop, pitch, pan, gain);
+        return Cocos2dxHelper.getSound().playEffect(path, isLoop, pitch, pan, gain);
     }
 
     public static void resumeEffect(final int soundId) {
-        Cocos2dxHelper.sCocos2dSound.resumeEffect(soundId);
+        Cocos2dxHelper.getSound().resumeEffect(soundId);
     }
 
     public static void pauseEffect(final int soundId) {
-        Cocos2dxHelper.sCocos2dSound.pauseEffect(soundId);
+        Cocos2dxHelper.getSound().pauseEffect(soundId);
     }
 
     public static void stopEffect(final int soundId) {
-        Cocos2dxHelper.sCocos2dSound.stopEffect(soundId);
+        Cocos2dxHelper.getSound().stopEffect(soundId);
     }
 
     public static float getEffectsVolume() {
-        return Cocos2dxHelper.sCocos2dSound.getEffectsVolume();
+        return Cocos2dxHelper.getSound().getEffectsVolume();
     }
 
     public static void setEffectsVolume(final float volume) {
-        Cocos2dxHelper.sCocos2dSound.setEffectsVolume(volume);
+        Cocos2dxHelper.getSound().setEffectsVolume(volume);
     }
 
     public static void unloadEffect(final String path) {
-        Cocos2dxHelper.sCocos2dSound.unloadEffect(path);
+        Cocos2dxHelper.getSound().unloadEffect(path);
     }
 
     public static void pauseAllEffects() {
-        Cocos2dxHelper.sCocos2dSound.pauseAllEffects();
+        Cocos2dxHelper.getSound().pauseAllEffects();
     }
 
     public static void resumeAllEffects() {
-        Cocos2dxHelper.sCocos2dSound.resumeAllEffects();
+        Cocos2dxHelper.getSound().resumeAllEffects();
     }
 
     public static void stopAllEffects() {
-        Cocos2dxHelper.sCocos2dSound.stopAllEffects();
+        Cocos2dxHelper.getSound().stopAllEffects();
     }
 
     static void setAudioFocus(boolean isAudioFocus) {
         sCocos2dMusic.setAudioFocus(isAudioFocus);
-        sCocos2dSound.setAudioFocus(isAudioFocus);
+        getSound().setAudioFocus(isAudioFocus);
     }
 
     public static void end() {
         Cocos2dxHelper.sCocos2dMusic.end();
-        Cocos2dxHelper.sCocos2dSound.end();
+        Cocos2dxHelper.getSound().end();
     }
 
     public static void onResume() {
         sActivityVisible = true;
         if (Cocos2dxHelper.sAccelerometerEnabled) {
-            Cocos2dxHelper.sCocos2dxAccelerometer.enableAccel();
+            Cocos2dxHelper.getAccelerometer().enableAccel();
         }
         if (Cocos2dxHelper.sCompassEnabled) {
-            Cocos2dxHelper.sCocos2dxAccelerometer.enableCompass();
+            Cocos2dxHelper.getAccelerometer().enableCompass();
         }
     }
 
     public static void onPause() {
         sActivityVisible = false;
         if (Cocos2dxHelper.sAccelerometerEnabled) {
-            Cocos2dxHelper.sCocos2dxAccelerometer.disable();
+            Cocos2dxHelper.getAccelerometer().disable();
         }
     }
 
     public static void onEnterBackground() {
-        sCocos2dSound.onEnterBackground();
+        getSound().onEnterBackground();
         sCocos2dMusic.onEnterBackground();
     }
     
     public static void onEnterForeground() {
-        sCocos2dSound.onEnterForeground();
+        getSound().onEnterForeground();
         sCocos2dMusic.onEnterForeground();
     }
     
     public static void terminateProcess() {
+        // Remove it from recent apps.
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            sActivity.finishAndRemoveTask();
+        }
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
@@ -498,6 +546,16 @@ public class Cocos2dxHelper {
         }
     }
 
+    private static int displayMetricsToDPI(DisplayMetrics metrics)
+    {
+        if(metrics.xdpi != metrics.ydpi) {
+            Log.w(Cocos2dxHelper.TAG, "xdpi != ydpi, use (xdpi + ydpi)/2 instead.");
+            return (int) ((metrics.xdpi + metrics.ydpi) / 2.0);
+        } else {
+            return (int)metrics.xdpi;
+        }
+    }
+
     public static int getDPI()
     {
         if (sActivity != null)
@@ -509,8 +567,15 @@ public class Cocos2dxHelper {
                 Display d = wm.getDefaultDisplay();
                 if (d != null)
                 {
+                    try {
+                        Method getRealMetrics = d.getClass().getMethod("getRealMetrics", metrics.getClass());
+                        getRealMetrics.invoke(d, metrics);
+                        return displayMetricsToDPI(metrics);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     d.getMetrics(metrics);
-                    return (int)(metrics.density*160.0f);
+                    return displayMetricsToDPI(metrics);
                 }
             }
         }
@@ -749,16 +814,124 @@ public class Cocos2dxHelper {
         }
     }
 
+    /**
+     * Returns whether the screen has a round shape. Apps may choose to change styling based
+     * on this property, such as the alignment or layout of text or informational icons.
+     *
+     * @return true if the screen is rounded, false otherwise
+     */
+    public static boolean isScreenRound() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (sActivity.getResources().getConfiguration().isScreenRound()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns whether the window is always allowed to extend into the DisplayCutout areas on the short edges of the screen.
+     *
+     * @return true if the window in display cutout mode on the short edges of the screen, false otherwise
+     */
+    @SuppressLint("InlinedApi")
+    public static boolean isCutoutEnabled() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams lp = sActivity.getWindow().getAttributes();
+            return lp.layoutInDisplayCutoutMode == WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns safe insets array.
+     *
+     * @return array of int with safe insets values
+     */
+    @SuppressLint("NewApi") 
+    public static int[] getSafeInsets() {
+        final int[] safeInsets = new int[]{0, 0, 0, 0};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Window cocosWindow = sActivity.getWindow();
+            DisplayCutout displayCutout = cocosWindow.getDecorView().getRootWindowInsets().getDisplayCutout();
+            // Judge whether it is cutouts (aka notch) screen phone by judge cutout equle to null
+            if (displayCutout != null) {
+                List<Rect> rects = displayCutout.getBoundingRects();
+                // Judge whether it is cutouts (aka notch) screen phone by judge cutout rects is null or zero size
+                if (rects != null && rects.size() != 0) {
+                    safeInsets[0] = displayCutout.getSafeInsetBottom();
+                    safeInsets[1] = displayCutout.getSafeInsetLeft();
+                    safeInsets[2] = displayCutout.getSafeInsetRight();
+                    safeInsets[3] = displayCutout.getSafeInsetTop();
+                }
+            }
+        }
+
+        return safeInsets;
+    }
+
+    /**
+     * Queries about whether any physical keys exist on the
+     * any keyboard attached to the device and returns <code>true</code>
+     * if the device does not have physical keys
+     *
+     * @return Returns <code>true</code> if the device have no physical keys,
+     * otherwise <code>false</code> will returned.
+     */
+    public static boolean hasSoftKeys() {
+        boolean hasSoftwareKeys = true;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Display display = sActivity.getWindowManager().getDefaultDisplay();
+
+            DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+            display.getRealMetrics(realDisplayMetrics);
+
+            int realHeight = realDisplayMetrics.heightPixels;
+            int realWidth = realDisplayMetrics.widthPixels;
+
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            display.getMetrics(displayMetrics);
+
+            int displayHeight = displayMetrics.heightPixels;
+            int displayWidth = displayMetrics.widthPixels;
+
+            hasSoftwareKeys = (realWidth - displayWidth) > 0 ||
+                    (realHeight - displayHeight) > 0;
+        } else {
+            boolean hasMenuKey = ViewConfiguration.get(sActivity).hasPermanentMenuKey();
+            boolean hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
+            hasSoftwareKeys = !hasMenuKey && !hasBackKey;
+        }
+        return hasSoftwareKeys;
+    }
+
     //Enhance API modification end     
     public static float[] getAccelValue() {
-        return Cocos2dxHelper.sCocos2dxAccelerometer.accelerometerValues;
+        return Cocos2dxHelper.getAccelerometer().accelerometerValues;
     }
 
     public static float[] getCompassValue() {
-        return Cocos2dxHelper.sCocos2dxAccelerometer.compassFieldValues;
+        return Cocos2dxHelper.getAccelerometer().compassFieldValues;
     }
 
     public static int getSDKVersion() {
         return Build.VERSION.SDK_INT;
+    }
+
+    private static Cocos2dxAccelerometer getAccelerometer() {
+        if (null == sCocos2dxAccelerometer)
+            Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(sActivity);
+
+        return sCocos2dxAccelerometer;
+    }
+
+    private static Cocos2dxSound getSound() {
+        if (null == sCocos2dSound)
+            sCocos2dSound = new Cocos2dxSound(sActivity);
+
+        return sCocos2dSound;
     }
 }

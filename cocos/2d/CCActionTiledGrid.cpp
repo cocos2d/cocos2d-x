@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -565,7 +566,7 @@ TurnOffTiles* TurnOffTiles::clone() const
     return TurnOffTiles::create(_duration, _gridSize, _seed);
 }
 
-TurnOffTiles::~TurnOffTiles(void)
+TurnOffTiles::~TurnOffTiles()
 {
     CC_SAFE_DELETE_ARRAY(_tilesOrder);
 }

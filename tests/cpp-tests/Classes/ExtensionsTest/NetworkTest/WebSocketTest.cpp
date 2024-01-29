@@ -1,6 +1,32 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "WebSocketTest.h"
 #include "../ExtensionsTest.h"
 #include "testResource.h"
+
+#include "WebSocketDelayTest.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -9,6 +35,7 @@ WebSocketTests::WebSocketTests()
 {
     ADD_TEST_CASE(WebSocketTest);
     ADD_TEST_CASE(WebSocketCloseTest);
+    ADD_TEST_CASE(WebSocketDelayTest);
 }
 
 WebSocketTest::WebSocketTest()
@@ -108,8 +135,8 @@ void WebSocketTest::startTestCallback(Ref* sender)
     _wsiError = new network::WebSocket();
 
     std::vector<std::string> protocols;
-    protocols.push_back("myprotocol_1");
-    protocols.push_back("myprotocol_2");
+    protocols.emplace_back("myprotocol_1");
+    protocols.emplace_back("myprotocol_2");
     if (!_wsiSendText->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
     {
         CC_SAFE_DELETE(_wsiSendText);
@@ -120,7 +147,7 @@ void WebSocketTest::startTestCallback(Ref* sender)
     }
 
     protocols.erase(protocols.begin());
-    if (!_wsiSendBinary->init(*this, "wss://echo.websocket.org", &protocols))
+    if (!_wsiSendBinary->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
     {
         CC_SAFE_DELETE(_wsiSendBinary);
     }
@@ -170,7 +197,7 @@ void WebSocketTest::onMessage(network::WebSocket* ws, const network::WebSocket::
         std::string textStr = std::string("response text msg: ")+data.bytes+", "+times;
         log("%s", textStr.c_str());
         
-        _sendTextStatus->setString(textStr.c_str());
+        _sendTextStatus->setString(textStr);
     }
     else
     {
@@ -193,7 +220,7 @@ void WebSocketTest::onMessage(network::WebSocket* ws, const network::WebSocket::
         
         binaryStr += std::string(", ")+times;
         log("%s", binaryStr.c_str());
-        _sendBinaryStatus->setString(binaryStr.c_str());
+        _sendBinaryStatus->setString(binaryStr);
     }
 }
 
@@ -258,7 +285,7 @@ void WebSocketTest::onMenuSendTextClicked(cocos2d::Ref *sender)
     {
         std::string warningStr = "send text websocket instance wasn't ready...";
         log("%s", warningStr.c_str());
-        _sendTextStatus->setString(warningStr.c_str());
+        _sendTextStatus->setString(warningStr);
     }
 }
 
@@ -280,7 +307,7 @@ void WebSocketTest::onMenuSendMultipleTextClicked(cocos2d::Ref *sender)
     {
         std::string warningStr = "send text websocket instance wasn't ready...";
         log("%s", warningStr.c_str());
-        _sendTextStatus->setString(warningStr.c_str());
+        _sendTextStatus->setString(warningStr);
     }
 }
 
@@ -300,7 +327,7 @@ void WebSocketTest::onMenuSendBinaryClicked(cocos2d::Ref *sender)
     {
         std::string warningStr = "send binary websocket instance wasn't ready...";
         log("%s", warningStr.c_str());
-        _sendBinaryStatus->setString(warningStr.c_str());
+        _sendBinaryStatus->setString(warningStr);
     }
 }
 
@@ -319,9 +346,6 @@ WebSocketCloseTest::WebSocketCloseTest()
 
     auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, [](Ref* sender){
         Director::getInstance()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        exit(0);
-#endif
     });
     closeItem->setPosition(VisibleRect::right().x / 2, VisibleRect::top().y * 2 / 3);
 

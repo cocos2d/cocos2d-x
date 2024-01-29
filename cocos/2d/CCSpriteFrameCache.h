@@ -4,7 +4,8 @@ Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -31,6 +32,7 @@ THE SOFTWARE.
 #define __SPRITE_CCSPRITE_FRAME_CACHE_H__
 
 #include <set>
+#include <unordered_map>
 #include <string>
 #include "2d/CCSpriteFrame.h"
 #include "base/CCRef.h"
@@ -86,6 +88,52 @@ class PolygonInfo;
  */
 class CC_DLL SpriteFrameCache : public Ref
 {
+protected:
+    /**
+    * used to wrap plist & frame names & SpriteFrames
+    */
+    class PlistFramesCache {
+    public:
+        PlistFramesCache() { }
+        void init() {
+            _spriteFrames.reserve(20); clear();
+        }
+        /**  Record SpriteFrame with plist and frame name, add frame name 
+        *    and plist to index
+        */
+        void insertFrame(const std::string &plist, const std::string &frame, SpriteFrame *frameObj);
+        /** Delete frame from cache, rebuild index
+        */
+        bool eraseFrame(const std::string &frame);
+        /** Delete a list of frames from cache, rebuild index
+        */
+        bool eraseFrames(const std::vector<std::string> &frame);
+        /** Delete frame from index and SpriteFrame is kept.
+        */
+        bool erasePlistIndex(const std::string &frame);
+        /** Clear index and all SpriteFrames.
+        */
+        void clear();
+
+        inline bool hasFrame(const std::string &frame) const;
+        inline bool isPlistUsed(const std::string &plist) const;
+
+        inline SpriteFrame *at(const std::string &frame);
+        inline Map<std::string, SpriteFrame*>& getSpriteFrames();
+
+        void markPlistFull(const std::string &plist, bool full) { _isPlistFull[plist] = full; }
+        bool isPlistFull(const std::string &plist) const
+        {
+            auto it = _isPlistFull.find(plist);
+            return it == _isPlistFull.end() ? false : it->second;
+        }
+    private:
+        Map<std::string, SpriteFrame*> _spriteFrames;
+        std::unordered_map<std::string, std::set<std::string>> _indexPlist2Frames;
+        std::unordered_map<std::string, std::string> _indexFrame2plist;
+        std::unordered_map<std::string, bool> _isPlistFull;
+    };
+
 public:
     /** Returns the shared instance of the Sprite Frame cache.
      *
@@ -245,20 +293,17 @@ protected:
 
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
+    void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture, const std::string &plist);
     
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(ValueMap& dictionary, const std::string &texturePath);
+    void addSpriteFramesWithDictionary(ValueMap& dictionary, const std::string &texturePath, const std::string &plist);
     
     /** Removes multiple Sprite Frames from Dictionary.
     * @since v0.99.5
     */
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
-    /** Parses list of space-separated integers */
-    void parseIntegerList(const std::string &string, std::vector<int> &res);
-    
     /** Configures PolygonInfo class with the passed sizes + triangles */
     void initializePolygonInfo(const Size &textureSize,
                                const Size &spriteSize,
@@ -267,11 +312,10 @@ protected:
                                const std::vector<int> &triangleIndices,
                                PolygonInfo &polygonInfo);
 
-    void reloadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
+    void reloadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture, const std::string &plist);
 
-    Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
-    std::set<std::string>*  _loadedFileNames;
+    PlistFramesCache _spriteFramesCache;
 };
 
 // end of _2d group

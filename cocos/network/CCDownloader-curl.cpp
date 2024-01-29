@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -37,6 +38,8 @@
 // In the file:
 // member function with suffix "Proc" designed called in DownloaderCURL::_threadProc
 // member function without suffix designed called in main thread
+
+#define CC_CURL_POLL_TIMEOUT_MS 50 //wait until DNS query done
 
 namespace cocos2d { namespace network {
     using namespace std;
@@ -253,17 +256,17 @@ namespace cocos2d { namespace network {
             DLLOG("Destruct DownloaderCURL::Impl %p %d", this, _thread.joinable());
         }
 
-        void addTask(std::shared_ptr<const DownloadTask> task, DownloadTaskCURL* coTask)
+        void addTask(const std::shared_ptr<const DownloadTask>& task, DownloadTaskCURL* coTask)
         {
             if (DownloadTask::ERROR_NO_ERROR == coTask->_errCode)
             {
                 lock_guard<mutex> lock(_requestMutex);
-                _requestQueue.push_back(make_pair(task, coTask));
+                _requestQueue.emplace_back(task, coTask);
             }
             else
             {
                 lock_guard<mutex> lock(_finishedMutex);
-                _finishedQueue.push_back(make_pair(task, coTask));
+                _finishedQueue.emplace_back(task, coTask);
             }
         }
 
@@ -380,11 +383,14 @@ namespace cocos2d { namespace network {
             }
 
             static const long LOW_SPEED_LIMIT = 1;
-            static const long LOW_SPEED_TIME = 5;
+            static const long LOW_SPEED_TIME = 10;
             curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
             curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
 
-            static const int MAX_REDIRS = 2;
+            curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
+
+            static const int MAX_REDIRS = 5;
             if (MAX_REDIRS)
             {
                 curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, true);
@@ -507,7 +513,7 @@ namespace cocos2d { namespace network {
                     // do wait action
                     if(maxfd == -1)
                     {
-                        this_thread::sleep_for(chrono::milliseconds(timeoutMS));
+                        this_thread::sleep_for(chrono::milliseconds(CC_CURL_POLL_TIMEOUT_MS));
                         rc = 0;
                     }
                     else
@@ -526,7 +532,7 @@ namespace cocos2d { namespace network {
                     }
                 }
 
-                if (coTaskMap.size())
+                if (!coTaskMap.empty())
                 {
                     mcode = CURLM_CALL_MULTI_PERFORM;
                     while(CURLM_CALL_MULTI_PERFORM == mcode)
@@ -631,7 +637,7 @@ namespace cocos2d { namespace network {
                     TaskWrapper wrapper;
                     {
                         lock_guard<mutex> lock(_requestMutex);
-                        if (_requestQueue.size())
+                        if (!_requestQueue.empty())
                         {
                             wrapper = _requestQueue.front();
                             _requestQueue.pop_front();
@@ -675,7 +681,7 @@ namespace cocos2d { namespace network {
                     lock_guard<mutex> lock(_processMutex);
                     _processSet.insert(wrapper);
                 }
-            } while (coTaskMap.size());
+            } while (!coTaskMap.empty());
 
             curl_multi_cleanup(curlmHandle);
             this->stop();
@@ -810,7 +816,7 @@ namespace cocos2d { namespace network {
                 coTask._fp = nullptr;
                 do
                 {
-                    if (0 == coTask._fileName.length())
+                    if (0 == coTask._fileName.length() || DownloadTask::ERROR_NO_ERROR != coTask._errCode)
                     {
                         break;
                     }

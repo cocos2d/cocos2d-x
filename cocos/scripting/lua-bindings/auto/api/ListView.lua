@@ -19,6 +19,13 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
+-- Get the left padding in ListView<br>
+-- return Left padding in float
+-- @function [parent=#ListView] getLeftPadding 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- brief Query the center item<br>
 -- return An item instance.
 -- @function [parent=#ListView] getCenterItemInCurrentView 
@@ -41,12 +48,29 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- Query whether the magnetic out of boundary is allowed.
+-- @function [parent=#ListView] getMagneticAllowedOutOfBoundary 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- brief Query margin between each item in ListView.<br>
 -- return A margin in float.
 -- @function [parent=#ListView] getItemsMargin 
 -- @param self
 -- @return float#float ret (return value: float)
         
+--------------------------------
+-- @overload self, int, vec2_table, vec2_table, float         
+-- @overload self, int, vec2_table, vec2_table         
+-- @function [parent=#ListView] scrollToItem
+-- @param self
+-- @param #int itemIndex
+-- @param #vec2_table positionRatioInView
+-- @param #vec2_table itemAnchorPoint
+-- @param #float timeInSec
+-- @return ListView#ListView self (return value: ccui.ListView)
+
 --------------------------------
 -- brief Jump to specific item<br>
 -- param itemIndex Specifies the item's index<br>
@@ -60,11 +84,11 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Set magnetic type of ListView.<br>
--- see `MagneticType`
--- @function [parent=#ListView] setMagneticType 
+-- Change padding with top padding<br>
+-- param t Top padding in float
+-- @function [parent=#ListView] setTopPadding 
 -- @param self
--- @param #int magneticType
+-- @param #float t
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
@@ -101,6 +125,14 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
+-- Set magnetic type of ListView.<br>
+-- see `MagneticType`
+-- @function [parent=#ListView] setMagneticType 
+-- @param self
+-- @param #int magneticType
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
 -- Set magnetic allowed out of boundary.
 -- @function [parent=#ListView] setMagneticAllowedOutOfBoundary 
 -- @param self
@@ -129,10 +161,31 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
+-- Change padding with left, top, right, and bottom padding.<br>
+-- param l Left padding in float.<br>
+-- param t Top margin in float.<br>
+-- param r Right margin in float.<br>
+-- param b Bottom margin in float.
+-- @function [parent=#ListView] setPadding 
+-- @param self
+-- @param #float l
+-- @param #float t
+-- @param #float r
+-- @param #float b
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
 -- brief Remove all items in current ListView.
 -- @function [parent=#ListView] removeAllItems 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- Get the right padding in ListView<br>
+-- return Right padding in float
+-- @function [parent=#ListView] getRightPadding 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- brief Query the bottommost item in horizontal list<br>
@@ -187,16 +240,12 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- @overload self, int, vec2_table, vec2_table, float         
--- @overload self, int, vec2_table, vec2_table         
--- @function [parent=#ListView] scrollToItem
+-- Get the top padding in ListView<br>
+-- return Top padding in float
+-- @function [parent=#ListView] getTopPadding 
 -- @param self
--- @param #int itemIndex
--- @param #vec2_table positionRatioInView
--- @param #vec2_table itemAnchorPoint
--- @param #float timeInSec
--- @return ListView#ListView self (return value: ccui.ListView)
-
+-- @return float#float ret (return value: float)
+        
 --------------------------------
 -- Insert a default item(create by a cloned model) at the end of the listview.
 -- @function [parent=#ListView] pushBackDefaultItem 
@@ -204,10 +253,12 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Query whether the magnetic out of boundary is allowed.
--- @function [parent=#ListView] getMagneticAllowedOutOfBoundary 
+-- Change padding with left padding<br>
+-- param l Left padding in float.
+-- @function [parent=#ListView] setLeftPadding 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @param #float l
+-- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
 -- brief Query the closest item to a specific position in inner container.<br>
@@ -221,11 +272,12 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- brief Query the rightmost item in horizontal list<br>
--- return An item instance.
--- @function [parent=#ListView] getRightmostItemInCurrentView 
+-- Change padding with bottom padding<br>
+-- param b Bottom padding in float
+-- @function [parent=#ListView] setBottomPadding 
 -- @param self
--- @return Widget#Widget ret (return value: ccui.Widget)
+-- @param #float b
+-- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
 -- Set the time in seconds to scroll between items.<br>
@@ -250,6 +302,21 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
+-- brief Query the rightmost item in horizontal list<br>
+-- return An item instance.
+-- @function [parent=#ListView] getRightmostItemInCurrentView 
+-- @param self
+-- @return Widget#Widget ret (return value: ccui.Widget)
+        
+--------------------------------
+-- Change padding with right padding<br>
+-- param r Right padding in float
+-- @function [parent=#ListView] setRightPadding 
+-- @param self
+-- @param #float r
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
 -- Set an item model for listview.<br>
 -- When calling `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.<br>
 -- param model  Model in `Widget*`.
@@ -257,6 +324,13 @@
 -- @param self
 -- @param #ccui.Widget model
 -- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- Get the bottom padding in ListView<br>
+-- return Bottom padding in float
+-- @function [parent=#ListView] getBottomPadding 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- brief Insert a custom widget into ListView at a given index.<br>

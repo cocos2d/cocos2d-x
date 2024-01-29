@@ -1,6 +1,7 @@
 /*
  * Created by LinWenhai on 17/11/13.
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -148,7 +149,7 @@ public:
         
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(p->obj);
-        std::string arg1 = text;
+        const std::string& arg1 = text;
         dataVal[1] = std_string_to_jsval(cx, arg1);
         
         JS::RootedValue delegateVal(cx, _JSDelegate);

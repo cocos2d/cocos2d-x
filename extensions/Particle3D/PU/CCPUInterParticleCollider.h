@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -54,7 +55,7 @@ public:
 
     /** Todo
     */
-    float getAdjustment(void) const;
+    float getAdjustment() const;
 
     /** Todo
     */
@@ -62,7 +63,7 @@ public:
 
     /** Todo
     */
-    InterParticleCollisionResponse getInterParticleCollisionResponse(void) const;
+    InterParticleCollisionResponse getInterParticleCollisionResponse() const;
 
     /** Todo
     */
@@ -71,8 +72,8 @@ public:
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUParticle3DInterParticleCollider(void);
-    virtual ~PUParticle3DInterParticleCollider(void);
+    PUParticle3DInterParticleCollider();
+    virtual ~PUParticle3DInterParticleCollider();
 
 protected:
 

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -231,6 +232,9 @@ LanguageType Application::getCurrentLanguage()
         case LANG_BULGARIAN:
             ret = LanguageType::BULGARIAN;
             break;
+        case LANG_BELARUSIAN:
+            ret = LanguageType::BELARUSIAN;
+            break;
     }
     
     return ret;
@@ -315,7 +319,7 @@ void Application::setResourceRootPath(const std::string& rootResDir)
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& Application::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath()
 {
     return _resourceRootPath;
 }

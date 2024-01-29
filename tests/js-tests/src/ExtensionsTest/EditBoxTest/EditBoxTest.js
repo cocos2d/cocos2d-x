@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -62,16 +63,19 @@ var EditBoxTestLayer = cc.Layer.extend({
         this._box3.y = 250;
         this._box3.setFontColor(cc.color(15, 250, 245));
         this._box3.setDelegate(this);
+        this._box3.setTouchEnabled(false);
+        this._box3.setTouchEnabled(true);
         this.addChild(this._box3);
 
         this._box4 = new cc.EditBox(cc.size(180, 50), new cc.Scale9Sprite("extensions/yellow_edit.png"));
         this._box4.setPlaceholderFontColor(cc.color(255, 0, 0));
-        this._box4.setPlaceHolder("Tooltip:");
+        this._box4.setPlaceHolder("This editBox can't be touched!");
         this._box4.x = 40;
         this._box4.y = -100;
         this._box4.setDelegate(this);
         this._box4.setFontColor(cc.color(5, 4, 10));
         this._box4.setMaxLength(10);
+        this._box4.setTouchEnabled(false);
         this._box3.addChild(this._box4);
 
         var itemBack = new cc.MenuItemFont("Back", this.toExtensionsMainLayer, this);

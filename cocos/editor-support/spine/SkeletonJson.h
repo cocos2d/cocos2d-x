@@ -31,11 +31,12 @@
 #ifndef SPINE_SKELETONJSON_H_
 #define SPINE_SKELETONJSON_H_
 
-#include <spine/Attachment.h>
-#include <spine/AttachmentLoader.h>
-#include <spine/SkeletonData.h>
-#include <spine/Atlas.h>
-#include <spine/Animation.h>
+#include "spine/dll.h"
+#include "spine/Attachment.h"
+#include "spine/AttachmentLoader.h"
+#include "spine/SkeletonData.h"
+#include "spine/Atlas.h"
+#include "spine/Animation.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,12 +50,12 @@ typedef struct spSkeletonJson {
 	const char* const error;
 } spSkeletonJson;
 
-spSkeletonJson* spSkeletonJson_createWithLoader (spAttachmentLoader* attachmentLoader);
-spSkeletonJson* spSkeletonJson_create (spAtlas* atlas);
-void spSkeletonJson_dispose (spSkeletonJson* self);
+SP_API spSkeletonJson* spSkeletonJson_createWithLoader (spAttachmentLoader* attachmentLoader);
+SP_API spSkeletonJson* spSkeletonJson_create (spAtlas* atlas);
+SP_API void spSkeletonJson_dispose (spSkeletonJson* self);
 
-spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const char* json);
-spSkeletonData* spSkeletonJson_readSkeletonDataFile (spSkeletonJson* self, const char* path);
+SP_API spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const char* json);
+SP_API spSkeletonData* spSkeletonJson_readSkeletonDataFile (spSkeletonJson* self, const char* path);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spSkeletonJson SkeletonJson;

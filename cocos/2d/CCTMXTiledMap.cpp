@@ -2,7 +2,8 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -60,7 +61,7 @@ TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std:
 
 bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
 {
-    CCASSERT(tmxFile.size()>0, "TMXTiledMap: tmx file should not be empty");
+    CCASSERT(!tmxFile.empty(), "TMXTiledMap: tmx file should not be empty");
 
     _tmxFile = tmxFile;
 
@@ -202,14 +203,14 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 // public
 TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
 {
-    CCASSERT(layerName.size() > 0, "Invalid layer name!");
+    CCASSERT(!layerName.empty(), "Invalid layer name!");
     
     for (auto& child : _children)
     {
         TMXLayer* layer = dynamic_cast<TMXLayer*>(child);
         if(layer)
         {
-            if(layerName.compare( layer->getLayerName()) == 0)
+            if(layerName == layer->getLayerName())
             {
                 return layer;
             }
@@ -222,7 +223,7 @@ TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
 
 TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
 {
-    CCASSERT(groupName.size() > 0, "Invalid group name!");
+    CCASSERT(!groupName.empty(), "Invalid group name!");
 
     for (const auto objectGroup : _objectGroups)
     {
@@ -270,6 +271,24 @@ std::string TMXTiledMap::getDescription() const
 int TMXTiledMap::getLayerNum()
 {
     return _tmxLayerNum;
+}
+
+void TMXTiledMap::setTileAnimEnabled(bool enabled)
+{
+    for (auto& child : _children)
+    {
+        TMXLayer* layer = dynamic_cast<TMXLayer*>(child);
+        if(layer)
+        {
+            if(layer->hasTileAnimation())
+            {
+                if(enabled)
+                    layer->getTileAnimManager()->startAll();
+                else
+                    layer->getTileAnimManager()->stopAll();
+            }
+        }
+    }
 }
 
 NS_CC_END

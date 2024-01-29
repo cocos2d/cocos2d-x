@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -43,17 +44,17 @@ public:
 
     /** Todo
     */
-    const std::string& getName(void) const {return _name;};
+    const std::string& getName() const {return _name;};
     void setName(const std::string& name) {_name = name;};
 
     /** Todo
     */
-    PUObserver* getParentObserver(void) const {return _parentObserver;};
+    PUObserver* getParentObserver() const {return _parentObserver;};
     void setParentObserver(PUObserver* parentObserver) {_parentObserver = parentObserver;};
 
     /** Todo
     */
-    const std::string& getEventHandlerType(void) const {return _eventHandlerType;};
+    const std::string& getEventHandlerType() const {return _eventHandlerType;};
     void setEventHandlerType(const std::string& eventHandlerType) {_eventHandlerType = eventHandlerType;};
 
     /** Notify that the event handler is rescaled.

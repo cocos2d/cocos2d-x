@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -114,7 +115,7 @@ public:
      * Set to true will cause the CheckBox's state to "selected", false otherwise.
      *@param selected Set to true will change CheckBox to selected state, false otherwise.
      */
-    void setSelected(bool selected);
+    virtual void setSelected(bool selected);
     
     //override functions
     virtual Size getVirtualRendererSize() const override;
@@ -195,22 +196,22 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     
-    void setupBackgroundTexture();
+    virtual void setupBackgroundTexture();
     void loadTextureBackGround(SpriteFrame* spriteFrame);
-    void setupBackgroundSelectedTexture();
+    virtual void setupBackgroundSelectedTexture();
     void loadTextureBackGroundSelected(SpriteFrame* spriteFrame);
-    void setupFrontCrossTexture();
+    virtual void setupFrontCrossTexture();
     void loadTextureFrontCross(SpriteFrame* spriteframe);
-    void setupBackgroundDisable();
+    virtual void setupBackgroundDisable();
     void loadTextureBackGroundDisabled(SpriteFrame* spriteframe);
-    void setupFrontCrossDisableTexture();
+    virtual void setupFrontCrossDisableTexture();
     void loadTextureFrontCrossDisabled(SpriteFrame* spriteframe);
     
     virtual void dispatchSelectChangedEvent(bool selected) = 0;
     
     virtual void onSizeChanged() override;
     
-    void backGroundTextureScaleChangedWithSize();
+    virtual void backGroundTextureScaleChangedWithSize();
     void backGroundSelectedTextureScaleChangedWithSize();
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();

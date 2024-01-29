@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -39,6 +40,12 @@ NS_CC_BEGIN
 
 bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
 {
+    //only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data
+    if (isCompressed() || (_renderFormat != Texture2D::PixelFormat::RGB888 && _renderFormat != Texture2D::PixelFormat::RGBA8888))
+    {
+        CCLOG("cocos2d: Image: saveToFile is only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data for now");
+        return false;
+    }
     bool saveToPNG = false;
     bool needToCopyPixels = false;
 
@@ -84,7 +91,14 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
     if (saveToPNG && hasAlpha() && (! isToRGB))
     {
-        bitmapInfo |= kCGImageAlphaPremultipliedLast;
+        if (_hasPremultipliedAlpha)
+        {
+            bitmapInfo |= kCGImageAlphaPremultipliedLast;
+        }
+        else
+        {
+            bitmapInfo |= kCGImageAlphaLast;
+        }
     }
     CGDataProviderRef provider        = CGDataProviderCreateWithData(nullptr, pixels, myDataLength, nullptr);
     CGColorSpaceRef colorSpaceRef    = CGColorSpaceCreateDeviceRGB();

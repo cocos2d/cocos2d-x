@@ -337,6 +337,11 @@
 
 
 --------------------------------------------------------
+-- the cc EventListenerController
+-- @field [parent=#cc] EventListenerController#EventListenerController EventListenerController preloaded module
+
+
+--------------------------------------------------------
 -- the cc EventListenerTouchOneByOne
 -- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
 
@@ -344,6 +349,11 @@
 --------------------------------------------------------
 -- the cc EventListenerTouchAllAtOnce
 -- @field [parent=#cc] EventListenerTouchAllAtOnce#EventListenerTouchAllAtOnce EventListenerTouchAllAtOnce preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventController
+-- @field [parent=#cc] EventController#EventController EventController preloaded module
 
 
 --------------------------------------------------------
@@ -809,6 +819,11 @@
 --------------------------------------------------------
 -- the cc LayerGradient
 -- @field [parent=#cc] LayerGradient#LayerGradient LayerGradient preloaded module
+
+
+--------------------------------------------------------
+-- the cc LayerRadialGradient
+-- @field [parent=#cc] LayerRadialGradient#LayerRadialGradient LayerRadialGradient preloaded module
 
 
 --------------------------------------------------------

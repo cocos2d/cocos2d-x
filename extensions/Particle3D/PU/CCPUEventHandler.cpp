@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -34,7 +35,7 @@ _parentObserver(0),
 _eventHandlerScale(Vec3::ONE)
 {
     //mAliasType = AT_HANDLER;
-};
+}
 
 PUEventHandler::~PUEventHandler(  )
 {

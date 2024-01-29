@@ -27,7 +27,7 @@ local Sprite = cc.Sprite
 function Sprite:playAnimationOnce(animation, args)
     local actions = {}
 
-    local showDelay = args.showDelay or 0
+    local showDelay = args.showDelay
     if showDelay then
         self:setVisible(false)
         actions[#actions + 1] = cc.DelayTime:create(showDelay)

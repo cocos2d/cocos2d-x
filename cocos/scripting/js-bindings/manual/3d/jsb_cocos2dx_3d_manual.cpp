@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -238,7 +239,7 @@ bool jsval_to_TerrainData(JSContext* cx, JS::HandleValue v, Terrain::TerrainData
         JS::ToNumber(cx, js_mapHeight, &mapHeight);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
-    ret->_heightMapSrc = heightMap.c_str();
+    ret->_heightMapSrc = heightMap;
     char* tmp = (char*)malloc(sizeof(char) * (alphaMap.size() + 1));
     strcpy(tmp, alphaMap.c_str());
     tmp[alphaMap.size()] = '\0';

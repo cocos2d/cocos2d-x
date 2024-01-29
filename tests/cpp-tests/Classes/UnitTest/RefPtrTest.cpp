@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "RefPtrTest.h"
 
 USING_NS_CC;
@@ -23,13 +47,13 @@ void RefPtrTest::onEnter()
         CC_ASSERT((__String*) nullptr == ref3.get());
         
         // Copy constructor
-        RefPtr<__String> ref4(ref2);
+        RefPtr<__String> ref4(ref2); // NOLINT(performance-unnecessary-copy-initialization)
         CC_ASSERT(strcmp("Hello", ref4->getCString()) == 0);
         CC_ASSERT(3 == ref2->getReferenceCount());
         CC_ASSERT(3 == ref4->getReferenceCount());
         
         // Copy constructor with nullptr reference
-        RefPtr<Ref> ref5(ref1);
+        RefPtr<Ref> ref5(ref1); // NOLINT(performance-unnecessary-copy-initialization)
         CC_ASSERT((Ref*) nullptr == ref5.get());
     }
     

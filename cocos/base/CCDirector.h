@@ -2,7 +2,8 @@
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -97,6 +98,11 @@ enum class MATRIX_STACK_TYPE
 class CC_DLL Director : public Ref
 {
 public:
+    /** Director will trigger an event before set next scene. */
+    static const char* EVENT_BEFORE_SET_NEXT_SCENE;
+    /** Director will trigger an event after set next scene. */
+    static const char* EVENT_AFTER_SET_NEXT_SCENE;
+    
     /** Director will trigger an event when projection type is changed. */
     static const char* EVENT_PROJECTION_CHANGED;
     /** Director will trigger an event before Schedule::update() is invoked. */
@@ -109,6 +115,8 @@ public:
     static const char* EVENT_AFTER_VISIT;
     /** Director will trigger an event after a scene is drawn, the data is sent to GPU. */
     static const char* EVENT_AFTER_DRAW;
+    /** Director will trigger an event before a scene is drawn, right after clear. */
+    static const char* EVENT_BEFORE_DRAW;
 
     /**
      * @brief Possible OpenGL projections used by director
@@ -249,7 +257,12 @@ public:
     /** Returns visible origin coordinate of the OpenGL view in points. */
     Vec2 getVisibleOrigin() const;
 
-    /** 
+    /**
+     * Returns safe area rectangle of the OpenGL view in points.
+     */
+    Rect getSafeAreaRect() const;
+
+    /**
      * Converts a screen coordinate to an OpenGL coordinate.
      * Useful to convert (multi) touch coordinates to the current layout (portrait or landscape).
      */
@@ -307,7 +320,7 @@ public:
      If level is 1, it will pop all scenes until it reaches to root scene.
      If level is <= than the current stack level, it won't do anything.
      */
- 	void popToSceneStackLevel(int level);
+    void popToSceneStackLevel(int level);
 
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
@@ -362,7 +375,7 @@ public:
      */
     void purgeCachedData();
 
-	/** Sets the default values based on the Configuration info. */
+    /** Sets the default values based on the Configuration info. */
     void setDefaultValues();
 
     // OpenGL Helper
@@ -382,10 +395,20 @@ public:
      */
     void setClearColor(const Color4F& clearColor);
 
+    /** Gets clear values for the color buffers.
+     * @js NA
+     */
+    const Color4F& getClearColor() const;
+
     /** Enables/disables OpenGL depth test. */
     void setDepthTest(bool on);
 
     void mainLoop();
+    /** Invoke main loop with delta time. Then `calculateDeltaTime` can just use the delta time directly.
+     * The delta time paseed may include vsync time. See issue #17806
+     * @since 3.16
+     */
+    void mainLoop(float dt);
 
     /** The size in pixels of the surface. It could be different than the screen size.
      * High-res devices might have a higher surface size than the screen size.
@@ -567,19 +590,22 @@ public:
 
 protected:
     void reset();
-    
+
     void purgeDirector();
-    bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
+    bool _purgeDirectorInNextLoop = false; // this flag will be set to true in end()
     
     void restartDirector();
-    bool _restartDirectorInNextLoop; // this flag will be set to true in restart()
+    bool _restartDirectorInNextLoop = false; // this flag will be set to true in restart()
     
     void setNextScene();
     
+    void updateFrameRate();
+#if !CC_STRIP_FPS
     void showStats();
     void createStatsLabel();
     void calculateMPF();
     void getFPSImageData(unsigned char** datapointer, ssize_t* length);
+#endif
     
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
@@ -600,59 +626,66 @@ protected:
     /** Scheduler associated with this director
      @since v2.0
      */
-    Scheduler *_scheduler;
+    Scheduler *_scheduler = nullptr;
     
     /** ActionManager associated with this director
      @since v2.0
      */
-    ActionManager *_actionManager;
+    ActionManager *_actionManager = nullptr;
     
     /** EventDispatcher associated with this director
      @since v3.0
      */
-    EventDispatcher* _eventDispatcher;
-    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate, *_eventResetDirector;
+    EventDispatcher* _eventDispatcher = nullptr;
+    EventCustom* _eventProjectionChanged = nullptr;
+    EventCustom* _eventBeforeDraw =nullptr; 
+    EventCustom* _eventAfterDraw = nullptr;
+    EventCustom* _eventAfterVisit = nullptr;
+    EventCustom* _eventBeforeUpdate = nullptr;
+    EventCustom* _eventAfterUpdate = nullptr;
+    EventCustom* _eventResetDirector = nullptr;
+    EventCustom* _beforeSetNextScene = nullptr;
+    EventCustom* _afterSetNextScene = nullptr;
         
     /* delta time since last tick to main loop */
-	float _deltaTime;
+	float _deltaTime = 0.0f;
+    bool _deltaTimePassedByCaller = false;
     
     /* The _openGLView, where everything is rendered, GLView is a abstract class,cocos2d-x provide GLViewImpl
      which inherit from it as default renderer context,you can have your own by inherit from it*/
-    GLView *_openGLView;
+    GLView *_openGLView = nullptr;
 
     //texture cache belongs to this director
-    TextureCache *_textureCache;
+    TextureCache *_textureCache = nullptr;
 
-    float _animationInterval;
-    float _oldAnimationInterval;
-
-    /* landscape mode ? */
-    bool _landscape;
+    float _animationInterval = 0.0f;
+    float _oldAnimationInterval = 0.0f;
     
-    bool _displayStats;
-    float _accumDt;
-    float _frameRate;
+    bool _displayStats = false;
+    float _accumDt = 0.0f;
+    float _frameRate = 0.0f;
     
-    LabelAtlas *_FPSLabel;
-    LabelAtlas *_drawnBatchesLabel;
-    LabelAtlas *_drawnVerticesLabel;
+    LabelAtlas *_FPSLabel = nullptr;
+    LabelAtlas *_drawnBatchesLabel = nullptr;
+    LabelAtlas *_drawnVerticesLabel = nullptr;
     
     /** Whether or not the Director is paused */
-    bool _paused;
+    bool _paused = false;
 
     /* How many frames were called since the director started */
-    unsigned int _totalFrames;
-    float _secondsPerFrame;
+    unsigned int _totalFrames = 0;
+    unsigned int _frames = 0;
+    float _secondsPerFrame = 1.f;
     
     /* The running scene */
-    Scene *_runningScene;
+    Scene *_runningScene = nullptr;
     
     /* will be the next 'runningScene' in the next frame
      nextScene is a weak reference. */
-    Scene *_nextScene;
+    Scene *_nextScene = nullptr;
     
     /* If true, then "old" scene will receive the cleanup message */
-    bool _sendCleanupToScene;
+    bool _sendCleanupToScene = false;
 
     /* scheduled scenes */
     Vector<Scene*> _scenesStack;
@@ -661,36 +694,33 @@ protected:
     std::chrono::steady_clock::time_point _lastUpdate;
 
     /* whether or not the next delta time will be zero */
-    bool _nextDeltaTimeZero;
+    bool _nextDeltaTimeZero = false;
     
     /* projection used */
-    Projection _projection;
+    Projection _projection = Projection::DEFAULT;
 
     /* window size in points */
-    Size _winSizeInPoints;
+    Size _winSizeInPoints = Size::ZERO;
     
     /* content scale factor */
-    float _contentScaleFactor;
+    float _contentScaleFactor = 1.0f;
 
     /* This object will be visited after the scene. Useful to hook a notification node */
-    Node *_notificationNode;
+    Node *_notificationNode = nullptr;
 
     /* Renderer for the Director */
-    Renderer *_renderer;
-    
-    /* Default FrameBufferObject*/
-    experimental::FrameBuffer* _defaultFBO;
+    Renderer *_renderer = nullptr;
 
     /* Console for the director */
-    Console *_console;
+    Console *_console = nullptr;
 
-    bool _isStatusLabelUpdated;
+    bool _isStatusLabelUpdated = true;
 
     /* cocos2d thread id */
     std::thread::id _cocos2d_thread_id;
 
     /* whether or not the director is in a valid state */
-    bool _invalid;
+    bool _invalid = false;
 
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;

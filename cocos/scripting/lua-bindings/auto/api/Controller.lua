@@ -50,17 +50,26 @@
         
 --------------------------------
 -- Start discovering new controllers.<br>
--- warning The API only work on the IOS platform. Empty implementation on other platform.
+-- warning The API has an empty implementation on Android.
 -- @function [parent=#Controller] startDiscoveryController 
 -- @param self
 -- @return Controller#Controller self (return value: cc.Controller)
         
 --------------------------------
 -- Stop the discovery process.<br>
--- warning The API only work on the IOS platform.Empty implementation on other platform.
+-- warning The API has an empty implementation on Android.
 -- @function [parent=#Controller] stopDiscoveryController 
 -- @param self
 -- @return Controller#Controller self (return value: cc.Controller)
+        
+--------------------------------
+-- Gets a Controller object with device ID.<br>
+-- param deviceId   A unique identifier to find the controller.<br>
+-- return A Controller object.
+-- @function [parent=#Controller] getControllerByDeviceId 
+-- @param self
+-- @param #int deviceId
+-- @return Controller#Controller ret (return value: cc.Controller)
         
 --------------------------------
 -- Gets a Controller object with tag.<br>

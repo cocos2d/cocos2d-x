@@ -31,6 +31,8 @@
 #ifndef SPINE_EVENTDATA_H_
 #define SPINE_EVENTDATA_H_
 
+#include "spine/dll.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -51,8 +53,8 @@ typedef struct spEventData {
 #endif
 } spEventData;
 
-spEventData* spEventData_create (const char* name);
-void spEventData_dispose (spEventData* self);
+SP_API spEventData* spEventData_create (const char* name);
+SP_API void spEventData_dispose (spEventData* self);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spEventData EventData;

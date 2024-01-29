@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2015-2017 Chukong Technologies Inc.
+Copyright (c) 2015-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -274,17 +275,20 @@ bool Terrain::initHeightMap(const std::string& heightMap)
 
 Terrain::Terrain()
 : _alphaMap(nullptr)
-, _stateBlock(nullptr)
 , _lightMap(nullptr)
 , _lightDir(-1.f, -1.f, 0.f)
+, _stateBlock(nullptr)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+, _backToForegroundListener(nullptr)
+#endif
 {
     _stateBlock = RenderState::StateBlock::create();
     CC_SAFE_RETAIN(_stateBlock);
 
     _customCommand.setTransparent(false);
     _customCommand.set3D(true);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    auto _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
         [this](EventCustom*)
     {
         reload();
@@ -509,7 +513,7 @@ Terrain::~Terrain()
         glDeleteBuffers(1,&(_chunkLodIndicesSkirtSet[i]._chunkIndices._indices));
     }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -696,7 +700,7 @@ void Terrain::setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture)
     _alphaMap = newAlphaMapTexture;
 }
 
-void Terrain::setDetailMap(unsigned int index, DetailMap detailMap)
+void Terrain::setDetailMap(unsigned int index, const DetailMap& detailMap)
 {
     if(index>4)
     {
@@ -1331,7 +1335,7 @@ bool Terrain::Chunk::getIntersectPointWithRay(const Ray& ray, Vec3& intersectPoi
 
     float minDist = FLT_MAX;
     bool isFind = false;
-    for (auto triangle : _trianglesList)
+    for (const auto& triangle : _trianglesList)
     {
         Vec3 p;
         if (triangle.getIntersectPoint(ray, p))
@@ -1579,10 +1583,10 @@ void Terrain::QuadTree::preCalculateAABB(const Mat4 & worldTransform)
 
 Terrain::QuadTree::~QuadTree()
 {
-    if(_tl) delete _tl;
-    if(_tr) delete _tr;
-    if(_bl) delete _bl;
-    if(_br) delete _br;
+    delete _tl;
+    delete _tr;
+    delete _bl;
+    delete _br;
 }
 
 Terrain::TerrainData::TerrainData(const std::string& heightMapsrc , const std::string& textureSrc, const Size & chunksize, float height, float scale)

@@ -28,9 +28,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/IkConstraint.h>
-#include <spine/Skeleton.h>
-#include <spine/extension.h>
+#include "spine/IkConstraint.h"
+#include "spine/Skeleton.h"
+#include "spine/extension.h"
 #include <float.h>
 
 spIkConstraint *spIkConstraint_create(spIkConstraintData *data, const spSkeleton *skeleton) {
@@ -150,9 +150,6 @@ void spIkConstraint_apply2 (spBone* parent, spBone* child, float targetX, float 
 		float aa = a * a, bb = b * b, ll = l1 * l1, dd = tx * tx + ty * ty, ta = ATAN2(ty, tx);
 		float c0 = bb * ll + aa * dd - aa * bb, c1 = -2 * bb * l1, c2 = bb - aa;
 		float d = c1 * c1 - 4 * c2 * c0;
-		float minAngle = 0, minDist = FLT_MAX, minX = 0, minY = 0;
-		float maxAngle = 0, maxDist = 0, maxX = 0, maxY = 0;
-		float x = l1 + a, dist = x * x, angle, y;
 		if (d >= 0) {
 			float q = SQRT(d), r0, r1;
 			if (c1 < 0) q = -q;
@@ -166,40 +163,35 @@ void spIkConstraint_apply2 (spBone* parent, spBone* child, float targetX, float 
 				goto outer;
 			}
 		}
-		if (dist > maxDist) {
-			maxAngle = 0;
-			maxDist = dist;
-			maxX = x;
-		}
-		x = l1 - a;
-		dist = x * x;
-		if (dist < minDist) {
-			minAngle = PI;
-			minDist = dist;
-			minX = x;
-		}
-		angle = ACOS(-a * l1 / (aa - bb));
-		x = a * COS(angle) + l1;
-		y = b * SIN(angle);
-		dist = x * x + y * y;
-		if (dist < minDist) {
-			minAngle = angle;
-			minDist = dist;
-			minX = x;
-			minY = y;
-		}
-		if (dist > maxDist) {
-			maxAngle = angle;
-			maxDist = dist;
-			maxX = x;
-			maxY = y;
-		}
-		if (dd <= (minDist + maxDist) / 2) {
-			a1 = ta - ATAN2(minY * bendDir, minX);
-			a2 = minAngle * bendDir;
-		} else {
-			a1 = ta - ATAN2(maxY * bendDir, maxX);
-			a2 = maxAngle * bendDir;
+		{
+			float minAngle = PI, minX = l1 - a, minDist = minX * minX, minY = 0;
+			float maxAngle = 0, maxX = l1 + a, maxDist = maxX * maxX, maxY = 0;
+			c0 = -a * l1 / (aa - bb);
+			if (c0 >= -1 && c0 <= 1) {
+				c0 = ACOS(c0);
+				x = a * COS(c0) + l1;
+				y = b * SIN(c0);
+				d = x * x + y * y;
+				if (d < minDist) {
+					minAngle = c0;
+					minDist = d;
+					minX = x;
+					minY = y;
+				}
+				if (d > maxDist) {
+					maxAngle = c0;
+					maxDist = d;
+					maxX = x;
+					maxY = y;
+				}
+			}
+			if (dd <= (minDist + maxDist) / 2) {
+				a1 = ta - ATAN2(minY * bendDir, minX);
+				a2 = minAngle * bendDir;
+			} else {
+				a1 = ta - ATAN2(maxY * bendDir, maxX);
+				a2 = maxAngle * bendDir;
+			}
 		}
 	}
 	outer: {

@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2008-2009 Jason Booth
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -135,7 +136,7 @@ public: \
     virtual ActionEase* reverse() const override; \
 private: \
     CC_DISALLOW_COPY_AND_ASSIGN(CLASSNAME); \
-};
+}
 
 /**
  @class EaseExponentialIn
@@ -393,7 +394,7 @@ private: \
  \f${ time }^{ rate }\f$.
  @ingroup Actions
  */
-EASERATE_TEMPLATE_DECL_CLASS(EaseIn);
+EASERATE_TEMPLATE_DECL_CLASS(EaseIn)
 
 /**
  @class EaseOut
@@ -402,7 +403,7 @@ EASERATE_TEMPLATE_DECL_CLASS(EaseIn);
  \f${ time }^ { (1/rate) }\f$.
  @ingroup Actions
  */
-EASERATE_TEMPLATE_DECL_CLASS(EaseOut);
+EASERATE_TEMPLATE_DECL_CLASS(EaseOut)
 
 /**
  @class EaseInOut
@@ -413,7 +414,7 @@ EASERATE_TEMPLATE_DECL_CLASS(EaseOut);
  \f$1.0-0.5*{ 2-time }^{ rate }\f$.
  @ingroup Actions
  */
-EASERATE_TEMPLATE_DECL_CLASS(EaseInOut);
+EASERATE_TEMPLATE_DECL_CLASS(EaseInOut)
 
 /**
  @class EaseElastic
@@ -471,7 +472,7 @@ public: \
     virtual EaseElastic* reverse() const override; \
 private: \
     CC_DISALLOW_COPY_AND_ASSIGN(CLASSNAME); \
-};
+}
 
 /**
  @class EaseElasticIn

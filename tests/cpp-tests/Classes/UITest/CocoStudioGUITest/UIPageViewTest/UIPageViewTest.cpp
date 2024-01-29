@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "UIPageViewTest.h"
 #include "cocos2d.h"
 
@@ -57,7 +81,7 @@ bool UIPageViewTest::init()
         PageView* pageView = PageView::create();
         pageView->setDirection(PageView::Direction::HORIZONTAL);
         pageView->setContentSize(size);
-        Size backgroundSize = background->getContentSize();
+        const Size& backgroundSize = background->getContentSize();
         pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
         pageView->removeAllItems();
         pageView->setIndicatorEnabled(true);
@@ -87,6 +111,8 @@ bool UIPageViewTest::init()
         pageView->scrollToItem(pageCount - 2);
         //This method is deprecated, we used here only testing purpose
         pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
+        
+        pageView->setIndicatorIndexNodesOpacity(255);
         
         _uiLayer->addChild(pageView);
         
@@ -264,7 +290,7 @@ bool UIPageViewTouchPropagationTest::init()
         PageView* pageView = PageView::create();
         pageView->setContentSize(Size(240.0f, 130.0f));
         pageView->setAnchorPoint(Vec2(0.5,0.5));
-        Size backgroundSize = background->getContentSize();
+        const Size& backgroundSize = background->getContentSize();
         pageView->setPosition(Vec2(widgetSize.width / 2.0f ,widgetSize.height / 2.0f));
         pageView->setBackGroundColor(Color3B::GREEN);
         pageView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
@@ -461,7 +487,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->setContentSize(Size(240.0f, 130.0f));
         pageView->setAnchorPoint(Vec2(0.5,0.5));
-        Size backgroundSize = background->getContentSize();
+        const Size& backgroundSize = background->getContentSize();
         pageView->setPosition(Vec2(widgetSize.width / 2.0f ,widgetSize.height / 2.0f));
         pageView->setBackGroundColor(Color3B::GREEN);
         pageView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
@@ -545,7 +571,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         button2->setTitleColor(Color3B::RED);
         button2->addClickEventListener([=](Ref* sender)
         {
-            if (pageView->getItems().size() > 0)
+            if (!pageView->getItems().empty())
             {
                 pageView->removeItem(pageView->getItems().size()-1);
             }
@@ -758,7 +784,7 @@ bool UIPageViewVerticalTest::init()
         pageView->setIndicatorEnabled(true);
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->setContentSize(Size(240.0f, 130.0f));
-        Size backgroundSize = background->getContentSize();
+        const Size& backgroundSize = background->getContentSize();
         pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
         pageView->removeAllItems();
         
@@ -922,7 +948,7 @@ bool UIPageViewChildSizeTest::init()
         PageView* pageView = PageView::create();
         pageView->setDirection(PageView::Direction::HORIZONTAL);
         pageView->setContentSize(size);
-        Size backgroundSize = background->getContentSize();
+        const Size& backgroundSize = background->getContentSize();
         pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
         pageView->removeAllItems();
         pageView->setIndicatorEnabled(true);

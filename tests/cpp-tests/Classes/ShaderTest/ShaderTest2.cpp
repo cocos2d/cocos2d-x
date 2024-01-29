@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -73,7 +74,7 @@ public:
         effect->retain();
         effect->setTarget(this);
 
-        _effects.push_back(std::make_tuple(order,effect,QuadCommand()));
+        _effects.emplace_back(order,effect,QuadCommand());
 
         std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
     }

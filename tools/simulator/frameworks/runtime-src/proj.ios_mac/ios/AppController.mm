@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2013 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -55,8 +56,8 @@ static AppDelegate s_sharedApplication;
                                      depthFormat: cocos2d::GLViewImpl::_depthFormat
                               preserveBackbuffer: NO
                                       sharegroup: nil
-                                   multiSampling: NO
-                                 numberOfSamples: 0 ];
+                                   multiSampling: cocos2d::GLViewImpl::_multisamplingCount > 0 ? YES : NO
+                                 numberOfSamples: cocos2d::GLViewImpl::_multisamplingCount ];
 
     [eaglView setMultipleTouchEnabled:YES];
     

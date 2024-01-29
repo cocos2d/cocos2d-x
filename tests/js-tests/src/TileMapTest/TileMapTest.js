@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -957,7 +958,7 @@ var TMXIsoZorder = TileDemo.extend({
         this.tamara.anchorX = 0.5;
         this.tamara.anchorY = 0;
 
-        var move = cc.moveBy(5, cc.pMult(cc.p(300, 250), 0.75));
+        var move = cc.moveBy(5, cc.p(300, 250));
         var back = move.reverse();
         var delay = cc.delayTime(0.5);
         var seq = cc.sequence(move, delay, back);
@@ -983,7 +984,7 @@ var TMXIsoZorder = TileDemo.extend({
         // if tamara < 96, z=3
         // if tamara < 144, z=2
 
-        var newZ = 4 - (this.tamara.y / 48);
+        var newZ = 4 - Math.floor((this.tamara.y / 48));
         newZ = parseInt(Math.max(newZ, 0), 10);
         map.reorderChild(this.tamara, newZ);
     },

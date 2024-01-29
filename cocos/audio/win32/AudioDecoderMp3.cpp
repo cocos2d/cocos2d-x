@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2016-2017 Chukong Technologies Inc.
+ Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -91,7 +92,7 @@ namespace cocos2d { namespace experimental {
                 break;
             }
 
-            if (mpg123_open(_mpg123handle, fullPath.c_str()) != MPG123_OK
+            if (mpg123_open(_mpg123handle, FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str()) != MPG123_OK
                 || mpg123_getformat(_mpg123handle, &rate, &channel, &mp3Encoding) != MPG123_OK)
             {
                 ALOGE("Trouble with mpg123: %s\n", mpg123_strerror(_mpg123handle) );

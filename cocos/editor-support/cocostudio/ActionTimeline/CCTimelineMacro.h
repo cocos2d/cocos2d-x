@@ -1,6 +1,7 @@
 ﻿/****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -28,7 +29,7 @@ Copyright (c) 2013-2017 Chukong Technologies
 #ifdef __cplusplus
 #define NS_TIMELINE_BEGIN                     namespace cocostudio { namespace timeline{
 #define NS_TIMELINE_END                       }}
-#define USING_NS_TIMELINE                     using namespace cocostudio::timeline;
+#define USING_NS_TIMELINE                     using namespace cocostudio::timeline
 #else
 #define NS_TIMELINE_BEGIN 
 #define NS_TIMELINE_END 

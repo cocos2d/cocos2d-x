@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2011      Erawppa
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -64,13 +65,13 @@ void __NotificationCenter::destroyInstance()
 }
 
 // FIXME:: deprecated
-__NotificationCenter *__NotificationCenter::sharedNotificationCenter(void)
+__NotificationCenter *__NotificationCenter::sharedNotificationCenter()
 {
     return __NotificationCenter::getInstance();
 }
 
 // FIXME:: deprecated
-void __NotificationCenter::purgeNotificationCenter(void)
+void __NotificationCenter::purgeNotificationCenter()
 {
     __NotificationCenter::destroyInstance();
 }

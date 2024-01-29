@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -193,9 +194,10 @@ void ColliderDetector::addContourData(ContourData *contourData)
     std::vector<Vec2> &calculatedVertexList = colliderBody->_calculatedVertexList;
     
     unsigned long num = contourData->vertexList.size();
+    calculatedVertexList.reserve(num);
     for (unsigned long i = 0; i < num; i++)
     {
-        calculatedVertexList.push_back(Vec2());
+        calculatedVertexList.emplace_back();
     }
 #endif
 }

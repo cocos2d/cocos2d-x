@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -29,6 +30,7 @@ THE SOFTWARE.
 #include <string>
 #include "2d/CCNode.h"
 #include "base/ccMacros.h"
+#include "base/CCData.h"
 
 /** @file ccUtils.h
 Misc free functions
@@ -170,6 +172,30 @@ namespace utils
      *  @return The md5 hash for the file
      */
     CC_DLL std::string getFileMD5Hash(const std::string &filename);
+
+
+    /**
+    *  Gets the md5 hash for the given buffer.
+    *  @param data The buffer to calculate md5 hash.
+    *  @return The md5 hash for the data
+    */
+    CC_DLL std::string getDataMD5Hash(const Data &data);
+
+    /**
+    @brief Converts language iso 639-1 code to LanguageType enum.
+    @return LanguageType enum.
+    * @js NA
+    * @lua NA
+    */
+    CC_DLL LanguageType getLanguageTypeByISO2(const char* code);
+
+    /**
+    @brief Parses a list of space-separated integers.
+    @return Vector of ints.
+    * @js NA
+    * @lua NA
+    */
+    CC_DLL std::vector<int> parseIntegerList(const std::string &intsString);
 }
 
 NS_CC_END

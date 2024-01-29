@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2015-2017 Chukong Technologies Inc.
+Copyright (c) 2015-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -368,7 +369,7 @@ public:
     /** set the alpha map*/
     void setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture);
     /**set the Detail Map */
-    void setDetailMap(unsigned int index, DetailMap detailMap);
+    void setDetailMap(unsigned int index, const DetailMap& detailMap);
 
     // Overrides, internal use only
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
@@ -523,7 +524,7 @@ protected:
     GLint _lightDirLocation;
     RenderState::StateBlock* _stateBlock;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener;
 #endif
 };

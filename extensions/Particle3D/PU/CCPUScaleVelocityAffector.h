@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -45,25 +46,25 @@ public:
 
     /** 
     */
-    PUDynamicAttribute* getDynScaleVelocity(void) const {return _dynScaleVelocity;};
+    PUDynamicAttribute* getDynScaleVelocity() const {return _dynScaleVelocity;};
     void setDynScaleVelocity(PUDynamicAttribute* dynScaleVelocity);
     void resetDynScaleVelocity(bool resetToDefault = true);
 
     /** 
     */
-    bool isSinceStartSystem(void) const {return _sinceStartSystem;};
+    bool isSinceStartSystem() const {return _sinceStartSystem;};
     void setSinceStartSystem(bool sinceStartSystem){_sinceStartSystem = sinceStartSystem;};
 
     /** 
     */
-    bool isStopAtFlip(void) const {return _stopAtFlip;};
+    bool isStopAtFlip() const {return _stopAtFlip;};
     void setStopAtFlip(bool stopAtFlip){_stopAtFlip = stopAtFlip;};
 
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	
-    PUScaleVelocityAffector(void);
-    virtual ~PUScaleVelocityAffector(void);
+    PUScaleVelocityAffector();
+    virtual ~PUScaleVelocityAffector();
 
 protected:
     PUDynamicAttribute* _dynScaleVelocity;

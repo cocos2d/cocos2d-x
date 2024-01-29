@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -44,6 +45,7 @@ var autoTestEnabled = autoTestEnabled || false;
 var autoTestCurrentTestName = autoTestCurrentTestName || "N/A";
 
 var TestScene = cc.Scene.extend({
+    _mainMenu :null, 
     ctor:function (bPortrait) {
         this._super();
         this.init();
@@ -52,6 +54,7 @@ var TestScene = cc.Scene.extend({
         var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
 
         var menu = new cc.Menu(menuItem);
+        this._mainMenu = menu;
         menu.x = 0;
         menu.y = 0;
         menuItem.x = winSize.width - 50;
@@ -65,6 +68,7 @@ var TestScene = cc.Scene.extend({
         if (director.isPaused()) {
             director.resume();
         } 
+        this._mainMenu.enabled = false;
         var scene = new cc.Scene();
         var layer = new TestController();
         scene.addChild(layer);
@@ -130,7 +134,7 @@ var TestController = cc.LayerGradient.extend({
         this._itemMenu = new cc.Menu();//item menu is where all the label goes, and the one gets scrolled
 
         for (var i = 0, len = testNames.length; i < len; i++) {
-            var label = new cc.LabelTTF(testNames[i].title, "Arial", 24);
+            var label = new cc.LabelTTF((i + 1) +". "+ testNames[i].title, "Arial", 24);
             var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
             this._itemMenu.addChild(menuItem, i + 10000);
             menuItem.x = winSize.width / 2;

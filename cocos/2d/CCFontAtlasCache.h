@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -41,7 +42,11 @@ class CC_DLL FontAtlasCache
 {  
 public:
     static FontAtlas* getFontAtlasTTF(const _ttfConfig* config);
-    static FontAtlas* getFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
+
+    static FontAtlas* getFontAtlasFNT(const std::string& fontFileName);
+    static FontAtlas* getFontAtlasFNT(const std::string& fontFileName, const std::string& subTextureKey);
+    static FontAtlas* getFontAtlasFNT(const std::string& fontFileName, const Rect& imageRect, bool imageRotated);
+    CC_DEPRECATED_ATTRIBUTE static FontAtlas* getFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset);
 
     static FontAtlas* getFontAtlasCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     static FontAtlas* getFontAtlasCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
@@ -58,7 +63,9 @@ public:
      CAUTION : All component use this font texture should be reset font name, though the file name is same!
                otherwise, it will cause program crash!
     */
-    static void reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
+    static void reloadFontAtlasFNT(const std::string& fontFileName, const Rect& imageRect, bool imageRotated);
+
+    CC_DEPRECATED_ATTRIBUTE static void reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
 
     /** Unload all texture atlas texture create by special file name.
      CAUTION : All component use this font texture should be reset font name, though the file name is same!

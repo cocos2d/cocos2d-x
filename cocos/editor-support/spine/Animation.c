@@ -28,10 +28,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Animation.h>
-#include <spine/IkConstraint.h>
+#include "spine/Animation.h"
+#include "spine/IkConstraint.h"
 #include <limits.h>
-#include <spine/extension.h>
+#include "spine/extension.h"
 
 spAnimation* spAnimation_create (const char* name, int timelinesCount) {
 	spAnimation* self = NEW(spAnimation);
@@ -51,7 +51,7 @@ void spAnimation_dispose (spAnimation* self) {
 }
 
 void spAnimation_apply (const spAnimation* self, spSkeleton* skeleton, float lastTime, float time, int loop, spEvent** events,
-		int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	int i, n = self->timelinesCount;
 
 	if (loop && self->duration) {
@@ -60,21 +60,21 @@ void spAnimation_apply (const spAnimation* self, spSkeleton* skeleton, float las
 	}
 
 	for (i = 0; i < n; ++i)
-		spTimeline_apply(self->timelines[i], skeleton, lastTime, time, events, eventsCount, alpha, setupPose, mixingOut);
+		spTimeline_apply(self->timelines[i], skeleton, lastTime, time, events, eventsCount, alpha, pose, direction);
 }
 
 /**/
 
 typedef struct _spTimelineVtable {
 	void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-			int* eventsCount, float alpha, int setupPose, int mixingOut);
+			int* eventsCount, float alpha, spMixPose pose, spMixDirection direction);
 	int (*getPropertyId) (const spTimeline* self);
 	void (*dispose) (spTimeline* self);
 } _spTimelineVtable;
 
 void _spTimeline_init (spTimeline* self, spTimelineType type, /**/
 					   void (*dispose) (spTimeline* self), /**/
-					   void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut),
+					   void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction),
 					   int (*getPropertyId) (const spTimeline* self)) {
 	CONST_CAST(spTimelineType, self->type) = type;
 	CONST_CAST(_spTimelineVtable*, self->vtable) = NEW(_spTimelineVtable);
@@ -92,8 +92,8 @@ void spTimeline_dispose (spTimeline* self) {
 }
 
 void spTimeline_apply (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-		int* eventsCount, float alpha, int /*boolean*/ setupPose, int /*boolean*/ mixingOut) {
-	VTABLE(spTimeline, self)->apply(self, skeleton, lastTime, time, firedEvents, eventsCount, alpha, setupPose, mixingOut);
+		int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
+	VTABLE(spTimeline, self)->apply(self, skeleton, lastTime, time, firedEvents, eventsCount, alpha, pose, direction);
 }
 
 int spTimeline_getPropertyId (const spTimeline* self) {
@@ -107,7 +107,7 @@ static const int BEZIER_SIZE = 10 * 2 - 1;
 
 void _spCurveTimeline_init (spCurveTimeline* self, spTimelineType type, int framesCount, /**/
 		void (*dispose) (spTimeline* self), /**/
-		void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut),
+		void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction),
 		int (*getPropertyId)(const spTimeline* self)) {
 	_spTimeline_init(SUPER(self), type, dispose, apply, getPropertyId);
 	self->curves = CALLOC(float, (framesCount - 1) * BEZIER_SIZE);
@@ -225,7 +225,7 @@ void _spBaseTimeline_dispose (spTimeline* timeline) {
 /* Many timelines have structure identical to struct spBaseTimeline and extend spCurveTimeline. **/
 struct spBaseTimeline* _spBaseTimeline_create (int framesCount, spTimelineType type, int frameSize, /**/
 		void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-				int* eventsCount, float alpha, int setupPose, int mixingOut),
+				int* eventsCount, float alpha, spMixPose pose, spMixDirection direction),
 		int (*getPropertyId) (const spTimeline* self)) {
 	struct spBaseTimeline* self = NEW(struct spBaseTimeline);
 	_spCurveTimeline_init(SUPER(self), type, framesCount, _spBaseTimeline_dispose, apply, getPropertyId);
@@ -239,7 +239,7 @@ struct spBaseTimeline* _spBaseTimeline_create (int framesCount, spTimelineType t
 /**/
 
 void _spRotateTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-		int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	spBone *bone;
 	int frame;
 	float prevRotation, frameTime, percent, r;
@@ -248,12 +248,21 @@ void _spRotateTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, 
 
 	bone = skeleton->bones[self->boneIndex];
 	if (time < self->frames[0]) {
-		if (setupPose) bone->rotation = bone->data->rotation;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				bone->rotation = bone->data->rotation;
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				r = bone->data->rotation - bone->rotation;
+				r -= (16384 - (int)(16384.499999999996 - r / 360)) * 360;
+				bone->rotation += r * alpha;
+		}
 		return;
 	}
 
 	if (time >= self->frames[self->framesCount - ROTATE_ENTRIES]) { /* Time is after last frame. */
-		if (setupPose)
+		if (pose == SP_MIX_POSE_SETUP)
 			bone->rotation = bone->data->rotation + self->frames[self->framesCount + ROTATE_PREV_ROTATION] * alpha;
 		else {
 			r = bone->data->rotation + self->frames[self->framesCount + ROTATE_PREV_ROTATION] - bone->rotation;
@@ -272,7 +281,7 @@ void _spRotateTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, 
 	r = self->frames[frame + ROTATE_ROTATION] - prevRotation;
 	r -= (16384 - (int)(16384.499999999996 - r / 360)) * 360;
 	r = prevRotation + r * percent;
-	if (setupPose) {
+	if (pose == SP_MIX_POSE_SETUP) {
 		r -= (16384 - (int)(16384.499999999996 - r / 360)) * 360;
 		bone->rotation = bone->data->rotation + r * alpha;
 	} else {
@@ -306,7 +315,7 @@ static const int TRANSLATE_PREV_TIME = -3, TRANSLATE_PREV_X = -2, TRANSLATE_PREV
 static const int TRANSLATE_X = 1, TRANSLATE_Y = 2;
 
 void _spTranslateTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
-		spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	spBone *bone;
 	int frame;
 	float frameTime, percent;
@@ -318,9 +327,15 @@ void _spTranslateTimeline_apply (const spTimeline* timeline, spSkeleton* skeleto
 
 	bone = skeleton->bones[self->boneIndex];
 	if (time < self->frames[0]) {
-		if (setupPose) {
-			bone->x = bone->data->x;
-			bone->y = bone->data->y;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				bone->x = bone->data->x;
+				bone->y = bone->data->y;
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				bone->x += (bone->data->x - bone->x) * alpha;
+				bone->y += (bone->data->y - bone->y) * alpha;
 		}
 		return;
 	}
@@ -342,7 +357,7 @@ void _spTranslateTimeline_apply (const spTimeline* timeline, spSkeleton* skeleto
 		x += (frames[frame + TRANSLATE_X] - x) * percent;
 		y += (frames[frame + TRANSLATE_Y] - y) * percent;
 	}
-	if (setupPose) {
+	if (pose == SP_MIX_POSE_SETUP) {
 		bone->x = bone->data->x + x * alpha;
 		bone->y = bone->data->y + y * alpha;
 	} else {
@@ -373,7 +388,7 @@ void spTranslateTimeline_setFrame (spTranslateTimeline* self, int frameIndex, fl
 /**/
 
 void _spScaleTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-		int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	spBone *bone;
 	int frame;
 	float frameTime, percent, x, y;
@@ -384,9 +399,15 @@ void _spScaleTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, f
 
 	bone = skeleton->bones[self->boneIndex];
 	if (time < self->frames[0]) {
-		if (setupPose) {
-			bone->scaleX = bone->data->scaleX;
-			bone->scaleY = bone->data->scaleY;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				bone->scaleX = bone->data->scaleX;
+				bone->scaleY = bone->data->scaleY;
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				bone->scaleX += (bone->data->scaleX - bone->scaleX) * alpha;
+				bone->scaleY += (bone->data->scaleY - bone->scaleY) * alpha;
 		}
 		return;
 	}
@@ -413,7 +434,7 @@ void _spScaleTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, f
 		bone->scaleY = y;
 	} else {
 		float bx, by;
-		if (setupPose) {
+		if (pose == SP_MIX_POSE_SETUP) {
 			bx = bone->data->scaleX;
 			by = bone->data->scaleY;
 		} else {
@@ -421,7 +442,7 @@ void _spScaleTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, f
 			by = bone->scaleY;
 		}
 		/* Mixing out uses sign of setup or current pose, else use sign of key. */
-		if (mixingOut) {
+		if (direction == SP_MIX_DIRECTION_OUT) {
 			x = ABS(x) * SIGNUM(bx);
 			y = ABS(y) * SIGNUM(by);
 		} else {
@@ -452,7 +473,7 @@ void spScaleTimeline_setFrame (spScaleTimeline* self, int frameIndex, float time
 /**/
 
 void _spShearTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-							 int* eventsCount, float alpha, int setupPose, int mixingOut) {
+							 int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	spBone *bone;
 	int frame;
 	float frameTime, percent, x, y;
@@ -465,9 +486,15 @@ void _spShearTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, f
 	frames = self->frames;
 	framesCount = self->framesCount;
 	if (time < self->frames[0]) {
-		if (setupPose) {
-			bone->shearX = bone->data->shearX;
-			bone->shearY = bone->data->shearY;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				bone->shearX = bone->data->shearX;
+				bone->shearY = bone->data->shearY;
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				bone->shearX += (bone->data->shearX - bone->shearX) * alpha;
+				bone->shearY += (bone->data->shearY - bone->shearY) * alpha;
 		}
 		return;
 	}
@@ -487,7 +514,7 @@ void _spShearTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, f
 		x = x + (frames[frame + TRANSLATE_X] - x) * percent;
 		y = y + (frames[frame + TRANSLATE_Y] - y) * percent;
 	}
-	if (setupPose) {
+	if (pose == SP_MIX_POSE_SETUP) {
 		bone->shearX = bone->data->shearX + x * alpha;
 		bone->shearY = bone->data->shearY + y * alpha;
 	} else {
@@ -518,20 +545,27 @@ static const int COLOR_PREV_TIME = -5, COLOR_PREV_R = -4, COLOR_PREV_G = -3, COL
 static const int COLOR_R = 1, COLOR_G = 2, COLOR_B = 3, COLOR_A = 4;
 
 void _spColorTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-		int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	spSlot *slot;
 	int frame;
 	float percent, frameTime;
 	float r, g, b, a;
+	spColor* color;
+	spColor* setup;
 	spColorTimeline* self = (spColorTimeline*)timeline;
 	slot = skeleton->slots[self->slotIndex];
 
 	if (time < self->frames[0]) {
-		if (setupPose) {
-			slot->r = slot->data->r;
-			slot->g = slot->data->g;
-			slot->b = slot->data->b;
-			slot->a = slot->data->a;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				spColor_setFromColor(&slot->color, &slot->data->color);
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				color = &slot->color;
+				setup = &slot->data->color;
+				spColor_addFloats(color, (setup->r - color->r) * alpha, (setup->g - color->g) * alpha, (setup->b - color->b) * alpha,
+						  (setup->a - color->a) * alpha);
 		}
 		return;
 	}
@@ -561,21 +595,12 @@ void _spColorTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, f
 		a += (self->frames[frame + COLOR_A] - a) * percent;
 	}
 	if (alpha == 1) {
-		slot->r = r;
-		slot->g = g;
-		slot->b = b;
-		slot->a = a;
+		spColor_setFromFloats(&slot->color, r, g, b, a);
 	} else {
-		if (setupPose) {
-			slot->r = slot->data->r;
-			slot->g = slot->data->g;
-			slot->b = slot->data->b;
-			slot->a = slot->data->a;
+		if (pose == SP_MIX_POSE_SETUP) {
+			spColor_setFromColor(&slot->color, &slot->data->color);
 		}
-		slot->r += (r - slot->r) * alpha;
-		slot->g += (g - slot->g) * alpha;
-		slot->b += (b - slot->b) * alpha;
-		slot->a += (a - slot->a) * alpha;
+		spColor_addFloats(&slot->color, (r - slot->color.r) * alpha, (g - slot->color.g) * alpha, (b - slot->color.b) * alpha, (a - slot->color.a) * alpha);
 	}
 
 	UNUSED(lastTime);
@@ -602,21 +627,131 @@ void spColorTimeline_setFrame (spColorTimeline* self, int frameIndex, float time
 
 /**/
 
+static const int TWOCOLOR_PREV_TIME = -8, TWOCOLOR_PREV_R = -7, TWOCOLOR_PREV_G = -6, TWOCOLOR_PREV_B = -5, TWOCOLOR_PREV_A = -4;
+static const int TWOCOLOR_PREV_R2 = -3, TWOCOLOR_PREV_G2 = -2, TWOCOLOR_PREV_B2 = -1;
+static const int TWOCOLOR_R = 1, TWOCOLOR_G = 2, TWOCOLOR_B = 3, TWOCOLOR_A = 4, TWOCOLOR_R2 = 5, TWOCOLOR_G2 = 6, TWOCOLOR_B2 = 7;
+
+void _spTwoColorTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
+							 int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
+	spSlot *slot;
+	int frame;
+	float percent, frameTime;
+	float r, g, b, a, r2, g2, b2;
+	spColor* light;
+	spColor* dark;
+	spColor* setupLight;
+	spColor* setupDark;
+	spColorTimeline* self = (spColorTimeline*)timeline;
+	slot = skeleton->slots[self->slotIndex];
+
+	if (time < self->frames[0]) {
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				spColor_setFromColor(&slot->color, &slot->data->color);
+				spColor_setFromColor(slot->darkColor, slot->data->darkColor);
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				light = &slot->color;
+				dark = slot->darkColor;
+				setupLight = &slot->data->color;
+				setupDark = slot->data->darkColor;
+				spColor_addFloats(light, (setupLight->r - light->r) * alpha, (setupLight->g - light->g) * alpha, (setupLight->b - light->b) * alpha,
+						  (setupLight->a - light->a) * alpha);
+				spColor_addFloats(dark, (setupDark->r - dark->r) * alpha, (setupDark->g - dark->g) * alpha, (setupDark->b - dark->b) * alpha, 0);
+		}
+		return;
+	}
+
+	if (time >= self->frames[self->framesCount - TWOCOLOR_ENTRIES]) { /* Time is after last frame */
+		int i = self->framesCount;
+		r = self->frames[i + TWOCOLOR_PREV_R];
+		g = self->frames[i + TWOCOLOR_PREV_G];
+		b = self->frames[i + TWOCOLOR_PREV_B];
+		a = self->frames[i + TWOCOLOR_PREV_A];
+		r2 = self->frames[i + TWOCOLOR_PREV_R2];
+		g2 = self->frames[i + TWOCOLOR_PREV_G2];
+		b2 = self->frames[i + TWOCOLOR_PREV_B2];
+	} else {
+		/* Interpolate between the previous frame and the current frame. */
+		frame = binarySearch(self->frames, self->framesCount, time, TWOCOLOR_ENTRIES);
+
+		r = self->frames[frame + TWOCOLOR_PREV_R];
+		g = self->frames[frame + TWOCOLOR_PREV_G];
+		b = self->frames[frame + TWOCOLOR_PREV_B];
+		a = self->frames[frame + TWOCOLOR_PREV_A];
+		r2 = self->frames[frame + TWOCOLOR_PREV_R2];
+		g2 = self->frames[frame + TWOCOLOR_PREV_G2];
+		b2 = self->frames[frame + TWOCOLOR_PREV_B2];
+
+		frameTime = self->frames[frame];
+		percent = spCurveTimeline_getCurvePercent(SUPER(self), frame / TWOCOLOR_ENTRIES - 1,
+												  1 - (time - frameTime) / (self->frames[frame + TWOCOLOR_PREV_TIME] - frameTime));
+
+		r += (self->frames[frame + TWOCOLOR_R] - r) * percent;
+		g += (self->frames[frame + TWOCOLOR_G] - g) * percent;
+		b += (self->frames[frame + TWOCOLOR_B] - b) * percent;
+		a += (self->frames[frame + TWOCOLOR_A] - a) * percent;
+		r2 += (self->frames[frame + TWOCOLOR_R2] - r2) * percent;
+		g2 += (self->frames[frame + TWOCOLOR_G2] - g2) * percent;
+		b2 += (self->frames[frame + TWOCOLOR_B2] - b2) * percent;
+	}
+	if (alpha == 1) {
+		spColor_setFromFloats(&slot->color, r, g, b, a);
+		spColor_setFromFloats(slot->darkColor, r2, g2, b2, 1);
+	} else {
+		light = &slot->color;
+		dark = slot->darkColor;
+		if (pose == SP_MIX_POSE_SETUP) {
+			spColor_setFromColor(light, &slot->data->color);
+			spColor_setFromColor(dark, slot->data->darkColor);
+		}
+		spColor_addFloats(light, (r - light->r) * alpha, (g - light->g) * alpha, (b - light->b) * alpha, (a - light->a) * alpha);
+		spColor_addFloats(dark, (r2 - dark->r) * alpha, (g2 - dark->g) * alpha, (b2 - dark->b) * alpha, 0);
+	}
+
+	UNUSED(lastTime);
+	UNUSED(firedEvents);
+	UNUSED(eventsCount);
+}
+
+int _spTwoColorTimeline_getPropertyId (const spTimeline* timeline) {
+	return (SP_TIMELINE_TWOCOLOR << 24) + SUB_CAST(spTwoColorTimeline, timeline)->slotIndex;
+}
+
+spTwoColorTimeline* spTwoColorTimeline_create (int framesCount) {
+	return (spTwoColorTimeline*)_spBaseTimeline_create(framesCount, SP_TIMELINE_TWOCOLOR, TWOCOLOR_ENTRIES, _spTwoColorTimeline_apply, _spTwoColorTimeline_getPropertyId);
+}
+
+void spTwoColorTimeline_setFrame (spTwoColorTimeline* self, int frameIndex, float time, float r, float g, float b, float a, float r2, float g2, float b2) {
+	frameIndex *= TWOCOLOR_ENTRIES;
+	self->frames[frameIndex] = time;
+	self->frames[frameIndex + TWOCOLOR_R] = r;
+	self->frames[frameIndex + TWOCOLOR_G] = g;
+	self->frames[frameIndex + TWOCOLOR_B] = b;
+	self->frames[frameIndex + TWOCOLOR_A] = a;
+	self->frames[frameIndex + TWOCOLOR_R2] = r2;
+	self->frames[frameIndex + TWOCOLOR_G2] = g2;
+	self->frames[frameIndex + TWOCOLOR_B2] = b2;
+}
+
+/**/
+
 void _spAttachmentTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
-		spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	const char* attachmentName;
 	spAttachmentTimeline* self = (spAttachmentTimeline*)timeline;
 	int frameIndex;
 	spSlot* slot = skeleton->slots[self->slotIndex];
 
-	if (mixingOut && setupPose) {
-		const char* attachmentName = slot->data->attachmentName;
+	if (direction == SP_MIX_DIRECTION_OUT && pose == SP_MIX_POSE_SETUP) {
+        attachmentName = slot->data->attachmentName;
         spSlot_setAttachment(slot, attachmentName ? spSkeleton_getAttachmentForSlotIndex(skeleton, self->slotIndex, attachmentName) : 0);
 		return;
 	}
 
 	if (time < self->frames[0]) {
-		if (setupPose) {
+		if (pose == SP_MIX_POSE_SETUP) {
 			attachmentName = slot->data->attachmentName;
 			spSlot_setAttachment(skeleton->slots[self->slotIndex],
 								 attachmentName ? spSkeleton_getAttachmentForSlotIndex(skeleton, self->slotIndex, attachmentName) : 0);
@@ -680,7 +815,7 @@ void spAttachmentTimeline_setFrame (spAttachmentTimeline* self, int frameIndex, 
 /**/
 
 void _spDeformTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-							  int* eventsCount, float alpha, int setupPose, int mixingOut) {
+							  int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	int frame, i, vertexCount;
 	float percent, frameTime;
 	const float* prevVertices;
@@ -708,11 +843,6 @@ void _spDeformTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, 
 
 	frames = self->frames;
 	framesCount = self->framesCount;
-	if (time < frames[0]) { /* Time is before first frame. */
-		if (setupPose) slot->attachmentVerticesCount = 0;
-		return;
-	}
-
 	vertexCount = self->frameVerticesCount;
 	if (slot->attachmentVerticesCount < vertexCount) {
 		if (slot->attachmentVerticesCapacity < vertexCount) {
@@ -721,18 +851,45 @@ void _spDeformTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, 
 			slot->attachmentVerticesCapacity = vertexCount;
 		}
 	}
-	if (slot->attachmentVerticesCount != vertexCount) alpha = 1; /* Don't mix from uninitialized slot vertices. */
 	slot->attachmentVerticesCount = vertexCount;
 
 	frameVertices = self->frameVertices;
 	vertices = slot->attachmentVertices;
+
+	if (time < frames[0]) { /* Time is before first frame. */
+		spVertexAttachment* vertexAttachment = SUB_CAST(spVertexAttachment, slot->attachment);
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				if (!vertexAttachment->bones) {
+					memcpy(vertices, vertexAttachment->vertices, vertexCount * sizeof(float));
+				} else {
+					for (i = 0; i < vertexCount; i++) vertices[i] = 0;
+				}
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				if (alpha == 1) break;
+				if (!vertexAttachment->bones) {
+					float* setupVertices = vertexAttachment->vertices;
+					for (i = 0; i < vertexCount; i++) {
+						vertices[i] += (setupVertices[i] - vertices[i]) * alpha;
+					}
+				} else {
+					alpha = 1 - alpha;
+					for (i = 0; i < vertexCount; i++) {
+						vertices[i] *= alpha;
+					}
+				}
+		}
+		return;
+	}
 
 	if (time >= frames[framesCount - 1]) { /* Time is after last frame. */
 		const float* lastVertices = self->frameVertices[framesCount - 1];
 		if (alpha == 1) {
 			/* Vertex positions or deform offsets, no alpha. */
 			memcpy(vertices, lastVertices, vertexCount * sizeof(float));
-		} else if (setupPose) {
+		} else if (pose == SP_MIX_POSE_SETUP) {
 			spVertexAttachment* vertexAttachment = SUB_CAST(spVertexAttachment, slot->attachment);
 			if (!vertexAttachment->bones) {
 				/* Unweighted vertex positions, with alpha. */
@@ -767,7 +924,7 @@ void _spDeformTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, 
 			float prev = prevVertices[i];
 			vertices[i] = prev + (nextVertices[i] - prev) * percent;
 		}
-	} else if (setupPose) {
+	} else if (pose == SP_MIX_POSE_SETUP) {
 		spVertexAttachment* vertexAttachment = SUB_CAST(spVertexAttachment, slot->attachment);
 		if (!vertexAttachment->bones) {
 			/* Unweighted vertex positions, with alpha. */
@@ -797,7 +954,7 @@ void _spDeformTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, 
 }
 
 int _spDeformTimeline_getPropertyId (const spTimeline* timeline) {
-	return (SP_TIMELINE_DEFORM << 24) + SUB_CAST(spDeformTimeline, timeline)->slotIndex;
+	return (SP_TIMELINE_DEFORM << 27) + SUB_CAST(spVertexAttachment, SUB_CAST(spDeformTimeline, timeline)->attachment)->id + SUB_CAST(spDeformTimeline, timeline)->slotIndex;
 }
 
 void _spDeformTimeline_dispose (spTimeline* timeline) {
@@ -840,13 +997,13 @@ void spDeformTimeline_setFrame (spDeformTimeline* self, int frameIndex, float ti
 
 /** Fires events for frames > lastTime and <= time. */
 void _spEventTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-		int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	spEventTimeline* self = (spEventTimeline*)timeline;
 	int frame;
 	if (!firedEvents) return;
 
 	if (lastTime > time) { /* Fire events after last time for looped animations. */
-		_spEventTimeline_apply(timeline, skeleton, lastTime, (float)INT_MAX, firedEvents, eventsCount, alpha, setupPose, mixingOut);
+		_spEventTimeline_apply(timeline, skeleton, lastTime, (float)INT_MAX, firedEvents, eventsCount, alpha, pose, direction);
 		lastTime = -1;
 	} else if (lastTime >= self->frames[self->framesCount - 1]) /* Last time is after last frame. */
 	return;
@@ -907,19 +1064,19 @@ void spEventTimeline_setFrame (spEventTimeline* self, int frameIndex, spEvent* e
 /**/
 
 void _spDrawOrderTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
-		spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	int i;
 	int frame;
 	const int* drawOrderToSetupIndex;
 	spDrawOrderTimeline* self = (spDrawOrderTimeline*)timeline;
 
-	if (mixingOut && setupPose) {
+	if (direction == SP_MIX_DIRECTION_OUT && pose == SP_MIX_POSE_SETUP) {
 		memcpy(skeleton->drawOrder, skeleton->slots, self->slotsCount * sizeof(spSlot*));
 		return;
 	}
 
 	if (time < self->frames[0]) {
-		if (setupPose) memcpy(skeleton->drawOrder, skeleton->slots, self->slotsCount * sizeof(spSlot*));
+		if (pose == SP_MIX_POSE_SETUP) memcpy(skeleton->drawOrder, skeleton->slots, self->slotsCount * sizeof(spSlot*));
 		return;
 	}
 
@@ -989,7 +1146,7 @@ static const int IKCONSTRAINT_PREV_TIME = -3, IKCONSTRAINT_PREV_MIX = -2, IKCONS
 static const int IKCONSTRAINT_MIX = 1, IKCONSTRAINT_BEND_DIRECTION = 2;
 
 void _spIkConstraintTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
-		spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	int frame;
 	float frameTime, percent, mix;
 	float *frames;
@@ -1000,9 +1157,15 @@ void _spIkConstraintTimeline_apply (const spTimeline* timeline, spSkeleton* skel
 	constraint = skeleton->ikConstraints[self->ikConstraintIndex];
 
 	if (time < self->frames[0]) {
-		if (setupPose) {
-			constraint->mix = constraint->data->mix;
-			constraint->bendDirection = constraint->data->bendDirection;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				constraint->mix = constraint->data->mix;
+				constraint->bendDirection = constraint->data->bendDirection;
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				constraint->mix += (constraint->data->mix - constraint->mix) * alpha;
+				constraint->bendDirection = constraint->data->bendDirection;
 		}
 		return;
 	}
@@ -1010,13 +1173,13 @@ void _spIkConstraintTimeline_apply (const spTimeline* timeline, spSkeleton* skel
 	frames = self->frames;
 	framesCount = self->framesCount;
 	if (time >= frames[framesCount - IKCONSTRAINT_ENTRIES]) { /* Time is after last frame. */
-		if (setupPose) {
+		if (pose == SP_MIX_POSE_SETUP) {
 			constraint->mix = constraint->data->mix + (frames[framesCount + IKCONSTRAINT_PREV_MIX] - constraint->data->mix) * alpha;
-			constraint->bendDirection = mixingOut ? constraint->data->bendDirection
+			constraint->bendDirection = direction == SP_MIX_DIRECTION_OUT ? constraint->data->bendDirection
 												 : (int)frames[framesCount + IKCONSTRAINT_PREV_BEND_DIRECTION];
 		} else {
 			constraint->mix += (frames[framesCount + IKCONSTRAINT_PREV_MIX] - constraint->mix) * alpha;
-			if (!mixingOut) constraint->bendDirection = (int)frames[framesCount + IKCONSTRAINT_PREV_BEND_DIRECTION];
+			if (direction == SP_MIX_DIRECTION_IN) constraint->bendDirection = (int)frames[framesCount + IKCONSTRAINT_PREV_BEND_DIRECTION];
 		}
 		return;
 	}
@@ -1027,12 +1190,12 @@ void _spIkConstraintTimeline_apply (const spTimeline* timeline, spSkeleton* skel
 	frameTime = self->frames[frame];
 	percent = spCurveTimeline_getCurvePercent(SUPER(self), frame / IKCONSTRAINT_ENTRIES - 1, 1 - (time - frameTime) / (self->frames[frame + IKCONSTRAINT_PREV_TIME] - frameTime));
 
-	if (setupPose) {
+	if (pose == SP_MIX_POSE_SETUP) {
 		constraint->mix = constraint->data->mix + (mix + (frames[frame + IKCONSTRAINT_MIX] - mix) * percent - constraint->data->mix) * alpha;
-		constraint->bendDirection = mixingOut ? constraint->data->bendDirection : (int)frames[frame + IKCONSTRAINT_PREV_BEND_DIRECTION];
+		constraint->bendDirection = direction == SP_MIX_DIRECTION_OUT ? constraint->data->bendDirection : (int)frames[frame + IKCONSTRAINT_PREV_BEND_DIRECTION];
 	} else {
 		constraint->mix += (mix + (frames[frame + IKCONSTRAINT_MIX] - mix) * percent - constraint->mix) * alpha;
-		if (!mixingOut) constraint->bendDirection = (int)frames[frame + IKCONSTRAINT_PREV_BEND_DIRECTION];
+		if (direction == SP_MIX_DIRECTION_IN) constraint->bendDirection = (int)frames[frame + IKCONSTRAINT_PREV_BEND_DIRECTION];
 	}
 
 	UNUSED(lastTime);
@@ -1067,7 +1230,7 @@ static const int TRANSFORMCONSTRAINT_SCALE = 3;
 static const int TRANSFORMCONSTRAINT_SHEAR = 4;
 
 void _spTransformConstraintTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
-									spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut) {
+									spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	int frame;
 	float frameTime, percent, rotate, translate, scale, shear;
 	spTransformConstraint* constraint;
@@ -1077,13 +1240,22 @@ void _spTransformConstraintTimeline_apply (const spTimeline* timeline, spSkeleto
 
 	constraint = skeleton->transformConstraints[self->transformConstraintIndex];
 	if (time < self->frames[0]) {
-		if (setupPose) {
-			spTransformConstraintData* data = constraint->data;
-			constraint->rotateMix = data->rotateMix;
-			constraint->translateMix = data->translateMix;
-			constraint->scaleMix = data->scaleMix;
-			constraint->shearMix = data->shearMix;
+		spTransformConstraintData* data = constraint->data;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				constraint->rotateMix = data->rotateMix;
+				constraint->translateMix = data->translateMix;
+				constraint->scaleMix = data->scaleMix;
+				constraint->shearMix = data->shearMix;
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				constraint->rotateMix += (data->rotateMix - constraint->rotateMix) * alpha;
+				constraint->translateMix += (data->translateMix - constraint->translateMix) * alpha;
+				constraint->scaleMix += (data->scaleMix - constraint->scaleMix) * alpha;
+				constraint->shearMix += (data->shearMix - constraint->shearMix) * alpha;
 		}
+		return;
 		return;
 	}
 
@@ -1111,7 +1283,7 @@ void _spTransformConstraintTimeline_apply (const spTimeline* timeline, spSkeleto
 		scale += (frames[frame + TRANSFORMCONSTRAINT_SCALE] - scale) * percent;
 		shear += (frames[frame + TRANSFORMCONSTRAINT_SHEAR] - shear) * percent;
 	}
-	if (setupPose) {
+	if (pose == SP_MIX_POSE_SETUP) {
 		spTransformConstraintData* data = constraint->data;
 		constraint->rotateMix = data->rotateMix + (rotate - data->rotateMix) * alpha;
 		constraint->translateMix = data->translateMix + (translate - data->translateMix) * alpha;
@@ -1153,7 +1325,7 @@ static const int PATHCONSTRAINTPOSITION_PREV_VALUE = -1;
 static const int PATHCONSTRAINTPOSITION_VALUE = 1;
 
 void _spPathConstraintPositionTimeline_apply(const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
-		spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	int frame;
 	float frameTime, percent, position;
 	spPathConstraint* constraint;
@@ -1163,8 +1335,13 @@ void _spPathConstraintPositionTimeline_apply(const spTimeline* timeline, spSkele
 
 	constraint = skeleton->pathConstraints[self->pathConstraintIndex];
 	if (time < self->frames[0]) {
-		if (setupPose) {
-			constraint->position = constraint->data->position;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				constraint->position = constraint->data->position;
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				constraint->position += (constraint->data->position - constraint->position) * alpha;
 		}
 		return;
 	}
@@ -1183,7 +1360,7 @@ void _spPathConstraintPositionTimeline_apply(const spTimeline* timeline, spSkele
 
 		position += (frames[frame + PATHCONSTRAINTPOSITION_VALUE] - position) * percent;
 	}
-	if (setupPose)
+	if (pose == SP_MIX_POSE_SETUP)
 		constraint->position = constraint->data->position + (position - constraint->data->position) * alpha;
 	else
 		constraint->position += (position - constraint->position) * alpha;
@@ -1213,7 +1390,7 @@ static const int PATHCONSTRAINTSPACING_PREV_VALUE = -1;
 static const int PATHCONSTRAINTSPACING_VALUE = 1;
 
 void _spPathConstraintSpacingTimeline_apply(const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
-		spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut) {
+		spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	int frame;
 	float frameTime, percent, spacing;
 	spPathConstraint* constraint;
@@ -1223,8 +1400,13 @@ void _spPathConstraintSpacingTimeline_apply(const spTimeline* timeline, spSkelet
 
 	constraint = skeleton->pathConstraints[self->pathConstraintIndex];
 	if (time < self->frames[0]) {
-		if (setupPose) {
-			constraint->spacing = constraint->data->spacing;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				constraint->spacing = constraint->data->spacing;
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				constraint->spacing += (constraint->data->spacing - constraint->spacing) * alpha;
 		}
 		return;
 	}
@@ -1244,7 +1426,7 @@ void _spPathConstraintSpacingTimeline_apply(const spTimeline* timeline, spSkelet
 		spacing += (frames[frame + PATHCONSTRAINTSPACING_VALUE] - spacing) * percent;
 	}
 
-	if (setupPose)
+	if (pose == SP_MIX_POSE_SETUP)
 		constraint->spacing = constraint->data->spacing + (spacing - constraint->data->spacing) * alpha;
 	else
 		constraint->spacing += (spacing - constraint->spacing) * alpha;
@@ -1277,7 +1459,7 @@ static const int PATHCONSTRAINTMIX_ROTATE = 1;
 static const int PATHCONSTRAINTMIX_TRANSLATE = 2;
 
 void _spPathConstraintMixTimeline_apply(const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
-											spEvent** firedEvents, int* eventsCount, float alpha, int setupPose, int mixingOut) {
+											spEvent** firedEvents, int* eventsCount, float alpha, spMixPose pose, spMixDirection direction) {
 	int frame;
 	float frameTime, percent, rotate, translate;
 	spPathConstraint* constraint;
@@ -1287,9 +1469,15 @@ void _spPathConstraintMixTimeline_apply(const spTimeline* timeline, spSkeleton* 
 
 	constraint = skeleton->pathConstraints[self->pathConstraintIndex];
 	if (time < self->frames[0]) {
-		if (setupPose) {
-			constraint->rotateMix = constraint->data->rotateMix;
-			constraint->translateMix = constraint->data->translateMix;
+		switch (pose) {
+			case SP_MIX_POSE_SETUP:
+				constraint->rotateMix = constraint->data->rotateMix;
+				constraint->translateMix = constraint->data->translateMix;
+				return;
+			case SP_MIX_POSE_CURRENT:
+			case SP_MIX_POSE_CURRENT_LAYERED: /* to appease compiler */
+				constraint->rotateMix += (constraint->data->rotateMix - constraint->rotateMix) * alpha;
+				constraint->translateMix += (constraint->data->translateMix - constraint->translateMix) * alpha;
 		}
 		return;
 	}
@@ -1312,7 +1500,7 @@ void _spPathConstraintMixTimeline_apply(const spTimeline* timeline, spSkeleton* 
 		translate += (frames[frame + PATHCONSTRAINTMIX_TRANSLATE] - translate) * percent;
 	}
 
-	if (setupPose) {
+	if (pose == SP_MIX_POSE_SETUP) {
 		constraint->rotateMix = constraint->data->rotateMix + (rotate - constraint->data->rotateMix) * alpha;
 		constraint->translateMix = constraint->data->translateMix + (translate - constraint->data->translateMix) * alpha;
 	} else {

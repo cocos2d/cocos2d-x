@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -178,7 +179,7 @@ namespace cocostudio
                 {
                     Size size = layerInfo->_layerSize;
                     auto& tilesets = mapInfo->getTilesets();
-                    if (tilesets.size()>0)
+                    if (!tilesets.empty())
                     {
                         TMXTilesetInfo* tileset = nullptr;
                         for (auto iter = tilesets.crbegin(); iter != tilesets.crend(); ++iter)

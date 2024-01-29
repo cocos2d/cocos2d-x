@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -244,7 +245,7 @@ bool ComRender::serialize(void* r)
                             for (int i = 0; i < count; ++i)
                             {
                                 std::string key = tpChildArray[i].GetName(&tCocoLoader);
-                                if (key.compare("armature_data") == 0)
+                                if (key == "armature_data")
                                 {
                                     int length = tpChildArray[i].GetChildNum();
                                     stExpCocoNode *armature_dataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
@@ -259,7 +260,7 @@ bool ComRender::serialize(void* r)
                                     {
                                         std::string key1 = armature_data[j].GetName(&tCocoLoader);
                                         const char *str1 = armature_data[j].GetValue(&tCocoLoader);
-                                        if (key.compare("name") == 0)
+                                        if (key == "name")
                                         {
                                             if (str1 != nullptr)
                                             {

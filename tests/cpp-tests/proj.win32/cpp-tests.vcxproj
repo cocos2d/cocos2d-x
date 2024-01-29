@@ -14,6 +14,7 @@
     <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
     <RootNamespace>test_win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -75,16 +76,17 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\win32\include;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\win32\include;$(EngineRoot)extensions;$(EngineRoot)external\bullet\include;$(EngineRoot)external\bullet\include\bullet;$(EngineRoot)external\Box2D\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2DXWIN32_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile>precheader.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>precheader.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
@@ -103,7 +105,7 @@
       </Command>
     </PreLinkEvent>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -114,7 +116,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\win32\include;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\win32\include;$(EngineRoot)extensions;$(EngineRoot)external\bullet\include;$(EngineRoot)external\bullet\include\bullet;$(EngineRoot)external\Box2D\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -123,6 +125,9 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precheader.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>precheader.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libcurl.lib;libssl.lib;libcrypto.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -144,7 +149,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       </Command>
     </PreLinkEvent>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -171,6 +176,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketDelayTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
@@ -186,6 +192,11 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp" />
     <ClCompile Include="..\Classes\Physics3DTest\Physics3DTest.cpp" />
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
+    <ClCompile Include="..\Classes\precheader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">precheader.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
     <ClCompile Include="..\Classes\Scene3DTest\Scene3DTest.cpp" />
     <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
@@ -311,6 +322,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketDelayTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
@@ -326,6 +338,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h" />
     <ClInclude Include="..\Classes\Physics3DTest\Physics3DTest.h" />
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />
+    <ClInclude Include="..\Classes\precheader.h" />
     <ClInclude Include="..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
     <ClInclude Include="..\Classes\Scene3DTest\Scene3DTest.h" />
     <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />

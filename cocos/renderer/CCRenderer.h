@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -160,7 +161,7 @@ public:
     void addCommand(RenderCommand* command);
 
     /** Adds a `RenderComamnd` into the renderer specifying a particular render queue ID */
-    void addCommand(RenderCommand* command, int renderQueue);
+    void addCommand(RenderCommand* command, int renderQueueID);
 
     /** Pushes a group into the render queue */
     void pushGroup(int renderQueueID);
@@ -182,6 +183,8 @@ public:
 
     /** set color for clear screen */
     void setClearColor(const Color4F& clearColor);
+    /** get color for clear screen */
+    const Color4F& getClearColor() const { return _clearColor; };
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* RenderCommands (except) TrianglesCommand should update this value */

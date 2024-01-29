@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -35,6 +36,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCSAXParser.h"
+
+
+#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
 
 NS_CC_BEGIN
 
@@ -230,6 +234,7 @@ FileUtils* FileUtils::getInstance()
 
 std::string FileUtilsApple::getWritablePath() const
 {
+    DECLARE_GUARD;
     if (_writablePath.length())
     {
         return _writablePath;
@@ -296,7 +301,7 @@ static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, str
     return ret;
 }
 
-bool FileUtilsApple::removeDirectory(const std::string& path)
+bool FileUtilsApple::removeDirectory(const std::string& path) const
 {
     if (path.empty())
     {
@@ -310,7 +315,35 @@ bool FileUtilsApple::removeDirectory(const std::string& path)
         return true;
 }
 
-std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const
+std::string FileUtilsApple::getPathForDirectory(const std::string &dir, const std::string &resolutionDiretory, const std::string &searchPath) const
+{
+    auto path = searchPath + resolutionDiretory + dir;
+    
+    if(!path.empty() && path[path.length() -1] == '/') {
+        path.erase(path.end() - 1);
+    }
+    
+    if(path[0] == '/')
+    {
+        BOOL isDir = false;
+        if([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:dir.c_str()]
+                               isDirectory:&isDir]) {
+            return isDir ? path : "";
+        }
+    }
+    else
+    {
+        NSString *fullpath = [pimpl_->getBundle() pathForResource:[NSString stringWithUTF8String:path.c_str()]
+                                                           ofType:nil];
+        if(fullpath != nil) {
+            return [fullpath UTF8String];
+        }
+    }
+    return "";
+}
+
+
+std::string FileUtilsApple::getFullPathForFilenameWithinDirectory(const std::string& directory, const std::string& filename) const
 {
     if (directory[0] != '/')
     {
@@ -332,13 +365,13 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
     return "";
 }
 
-ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename)
+ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename) const
 {
     auto d(FileUtils::getInstance()->getDataFromFile(filename));
     return getValueMapFromData(reinterpret_cast<char*>(d.getBytes()), static_cast<int>(d.getSize()));
 }
 
-ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
+ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize) const
 {
     NSData* file = [NSData dataWithBytes:filedata length:filesize];
     NSPropertyListFormat format;
@@ -358,12 +391,12 @@ ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
     return ret;
 }
 
-bool FileUtilsApple::writeToFile(const ValueMap& dict, const std::string &fullPath)
+bool FileUtilsApple::writeToFile(const ValueMap& dict, const std::string &fullPath) const
 {
     return writeValueMapToFile(dict, fullPath);
 }
 
-bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath)
+bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath) const
 {
     valueMapCompact(const_cast<ValueMap&>(dict));
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
@@ -379,7 +412,7 @@ bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& ful
     return [nsDict writeToFile:file atomically:YES];
 }
 
-void FileUtilsApple::valueMapCompact(ValueMap& valueMap)
+void FileUtilsApple::valueMapCompact(ValueMap& valueMap) const
 {
     auto itr = valueMap.begin();
     while(itr != valueMap.end()){
@@ -405,7 +438,7 @@ void FileUtilsApple::valueMapCompact(ValueMap& valueMap)
     }
 }
 
-void FileUtilsApple::valueVectorCompact(ValueVector& valueVector)
+void FileUtilsApple::valueVectorCompact(ValueVector& valueVector) const
 {
     auto itr = valueVector.begin();
     while(itr != valueVector.end()){
@@ -431,7 +464,7 @@ void FileUtilsApple::valueVectorCompact(ValueVector& valueVector)
     }
 }
 
-bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath)
+bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath) const
 {
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSMutableArray* array = [NSMutableArray array];
@@ -445,7 +478,7 @@ bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::st
 
     return true;
 }
-ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
+ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename) const
 {
     //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
     //    NSString* pathExtension= [pPath pathExtension];
@@ -466,7 +499,7 @@ ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
     return ret;
 }
 
-bool FileUtilsApple::createDirectory(const std::string& path)
+bool FileUtilsApple::createDirectory(const std::string& path) const
 {
     CCASSERT(!path.empty(), "Invalid path");
     

@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2dxandroid_static
+LOCAL_MODULE := ccandroid
 
-LOCAL_MODULE_FILENAME := libcocos2dandroid
+LOCAL_MODULE_FILENAME := libccandroid
 
 LOCAL_SRC_FILES := \
 CCApplication-android.cpp \
@@ -25,7 +25,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
-                    $(LOCAL_PATH)/../.. \
+                    $(LOCAL_PATH)/../..
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lEGL \

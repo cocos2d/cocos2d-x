@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -123,11 +124,11 @@ var MenuLayerMainMenu = cc.Layer.extend({
     },
 
     onMenuCallback:function (sender) {
-        this.parent.switchTo(1);
+        this.parent.switchTo(1, false);
     },
 
     onMenuCallbackConfig:function (sender) {
-        this.parent.switchTo(3);
+        this.parent.switchTo(3, false);
     },
 
     onAllowTouches:function (dt) {
@@ -144,7 +145,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
     },
 
     onMenuCallback2:function (sender) {
-        this.parent.switchTo(2);
+        this.parent.switchTo(2, false);
     },
 
 	onEnter: function() {
@@ -169,11 +170,11 @@ var MenuLayerMainMenu = cc.Layer.extend({
     },
 
     onMenuCallbackBugsTest:function(sender){
-        this.parent.switchTo(4);
+        this.parent.switchTo(4, false);
     },
 
     onMenuMovingCallback:function(sender){
-        this.parent.switchTo(5);
+        this.parent.switchTo(5, false);
     }
 });
 
@@ -245,7 +246,7 @@ var MenuLayer2 = cc.Layer.extend({
     },
     // callbacks
     onMenuCallback:function (sender) {
-        this.parent.switchTo(0);
+        this.parent.switchTo(0, false);
     },
     onMenuCallbackOpacity:function (sender) {
         var menu = sender.parent;
@@ -287,7 +288,7 @@ var MenuLayer3 = cc.Layer.extend({
             this._disabledItem.stopAllActions();
         }, this);
         var item2 = new cc.MenuItemFont("--- Go Back ---", function(sender){
-            this.parent.switchTo(0);
+            this.parent.switchTo(0, false);
         }, this);
 
         var spriteNormal = new cc.Sprite(s_menuItem, cc.rect(0, 23 * 2, 115, 23));
@@ -420,7 +421,7 @@ var MenuLayer4 = cc.Layer.extend({
         cc.log("Callback called");
     },
     onBackCallback:function (sender) {
-        this.parent.switchTo(0);
+        this.parent.switchTo(0, false);
     }
 });
 
@@ -458,7 +459,7 @@ var MenuBugsTest = cc.Layer.extend({
     },
 
     onBackMenuCallback:function(sender){
-        this.parent.switchTo(0);
+        this.parent.switchTo(0, false);
     }
 });
 
@@ -511,7 +512,7 @@ var RemoveMenuItemWhenMove = cc.Layer.extend({
 	},
 
     goBack: function(sender){
-        this.parent.switchTo(0);
+        this.parent.switchTo(0, false);
     }
 });
 

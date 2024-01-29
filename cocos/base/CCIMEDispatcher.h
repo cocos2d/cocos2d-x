@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -77,6 +78,11 @@ public:
      * @lua NA
      */
     const std::string& getContentText();
+ 
+    /**
+    *@brief Returns if any delegate is attached with IME.
+    */
+    bool isAnyDelegateAttachedWithIME() const;
 
     //////////////////////////////////////////////////////////////////////////
     // dispatch keyboard notification
@@ -132,7 +138,7 @@ protected:
 private:
     IMEDispatcher();
     
-    class Impl;
+    struct Impl;
     Impl * _impl;
 };
 

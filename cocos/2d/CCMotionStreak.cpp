@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2011      ForzeField Studios S.L.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -207,7 +208,7 @@ void MotionStreak::tintWithColor(const Color3B& colors)
     }
 }
 
-Texture2D* MotionStreak::getTexture(void) const
+Texture2D* MotionStreak::getTexture() const
 {
     return _texture;
 }
@@ -227,7 +228,7 @@ void MotionStreak::setBlendFunc(const BlendFunc &blendFunc)
     _blendFunc = blendFunc;
 }
 
-const BlendFunc& MotionStreak::getBlendFunc(void) const
+const BlendFunc& MotionStreak::getBlendFunc() const
 {
     return _blendFunc;
 }
@@ -237,7 +238,7 @@ void MotionStreak::setOpacity(GLubyte /*opacity*/)
     CCASSERT(false, "Set opacity no supported");
 }
 
-GLubyte MotionStreak::getOpacity(void) const
+GLubyte MotionStreak::getOpacity() const
 {
     CCASSERT(false, "Opacity no supported");
     return 0;
@@ -247,7 +248,7 @@ void MotionStreak::setOpacityModifyRGB(bool /*bValue*/)
 {
 }
 
-bool MotionStreak::isOpacityModifyRGB(void) const
+bool MotionStreak::isOpacityModifyRGB() const
 {
     return false;
 }

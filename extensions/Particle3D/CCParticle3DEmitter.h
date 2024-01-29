@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -48,7 +49,7 @@ public:
      */
     void setEnabled (bool enabled) { _isEnabled = enabled; }
     
-    bool isEnabled(void) const { return _isEnabled; }
+    bool isEnabled() const { return _isEnabled; }
 
 CC_CONSTRUCTOR_ACCESS:
     Particle3DEmitter();

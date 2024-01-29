@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2012 James Chen
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -212,7 +213,7 @@ void EditBoxImplTizen::setText(const char* pText)
     }
 }
 
-const char*  EditBoxImplTizen::getText(void)
+const char*  EditBoxImplTizen::getText()
 {
     return _text.c_str();
 }
@@ -231,7 +232,7 @@ void EditBoxImplTizen::setPlaceHolder(const char* pText)
     }
 }
 
-const char* EditBoxImplTizen::getPlaceHolder(void)
+const char* EditBoxImplTizen::getPlaceHolder()
 {
     return _placeHolder.c_str();
 }
@@ -256,12 +257,12 @@ void EditBoxImplTizen::setAnchorPoint(const Vec2& anchorPoint)
 
 }
 
-void EditBoxImplTizen::visit(void)
+void EditBoxImplTizen::visit()
 { // don't need to be implemented on tizen platform.
 
 }
 
-void EditBoxImplTizen::onEnter(void)
+void EditBoxImplTizen::onEnter()
 { // don't need to be implemented on tizen platform.
 
 }

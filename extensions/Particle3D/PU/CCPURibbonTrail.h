@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -30,6 +31,7 @@
 #include "math/CCMath.h"
 #include "extensions/Particle3D/PU/CCPUBillboardChain.h"
 #include <vector>
+#include <unordered_map>
 
 NS_CC_BEGIN
 
@@ -72,7 +74,7 @@ public:
     */
     virtual void setTrailLength(float len);
     /** Get the length of the trail. */
-    virtual float getTrailLength(void) const { return _trailLength; }
+    virtual float getTrailLength() const { return _trailLength; }
 
     /** @copydoc BillboardChain::setMaxChainElements */
     void setMaxChainElements(size_t maxElements) override;
@@ -142,13 +144,13 @@ public:
 protected:
 
     /// Manage updates to the time controller
-    void manageController(void);
+    void manageController();
     /// Node has changed position, update
     void updateTrail(size_t index, const Node* node);
     /// Reset the tracked chain to initial state
     void resetTrail(size_t index, const Node* node);
     /// Reset all tracked chains to initial state
-    void resetAllTrails(void);
+    void resetAllTrails();
 
 protected:
 
@@ -163,7 +165,7 @@ protected:
 
     // fast lookup node->chain index
     // we use positional map too because that can be useful
-    typedef std::map<const Node*, size_t> NodeToChainSegmentMap;
+    typedef std::unordered_map<const Node*, size_t> NodeToChainSegmentMap;
     NodeToChainSegmentMap _nodeToSegMap;
 
     /// Total length of trail in world units

@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -250,7 +251,11 @@ public:
      * @js NA
      */
     static ParticleSystem* createWithTotalParticles(int numberOfParticles);
-    
+
+    /** Gets all ParticleSystem references
+     */
+    static Vector<ParticleSystem*>& getAllParticleSystems();
+public:
     void addParticles(int count);
     
     void stopSystem();
@@ -769,6 +774,9 @@ public:
     virtual void stop() override;
     /// @} end of PlayableProtocol
     
+    void setSourcePositionCompatible(bool sourcePositionCompatible) { _sourcePositionCompatible = sourcePositionCompatible; }
+    bool isSourcePositionCompatible() const { return _sourcePositionCompatible; }
+    
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
@@ -815,6 +823,13 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     virtual void updateBlendFunc();
+    
+private:
+    friend class EngineDataManager;
+    /** Internal use only, it's used by EngineDataManager class for Android platform */
+    static void setTotalParticleCountFactor(float factor);
+    
+protected:
 
     /** whether or not the particles are using blend additive.
      If enabled, the following blending function will be used.
@@ -904,6 +919,9 @@ protected:
     
     /** Quantity of particles that are being simulated at the moment */
     int _particleCount;
+    /** The factor affects the total particle count, its value should be 0.0f ~ 1.0f, default 1.0f*/
+    static float __totalParticleCountFactor;
+    
     /** How many seconds the emitter will run. -1 means 'forever' */
     float _duration;
     /** sourcePosition of the emitter */
@@ -970,7 +988,12 @@ protected:
     
     /** is the emitter paused */
     bool _paused;
+    
+    /** is sourcePosition compatible */
+    bool _sourcePositionCompatible;
 
+    static Vector<ParticleSystem*> __allInstances;
+    
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystem);
 };

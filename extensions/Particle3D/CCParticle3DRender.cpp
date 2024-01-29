@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -318,7 +319,7 @@ Particle3DRender::Particle3DRender()
     _stateBlock->setDepthTest(false);
     _stateBlock->setDepthWrite(false);
     _stateBlock->setBlend(true);
-};
+}
 
 Particle3DRender::~Particle3DRender()
 {

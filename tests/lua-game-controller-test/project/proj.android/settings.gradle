@@ -1,0 +1,5 @@
+include ':libcocos2dx_with_controller'
+project(':libcocos2dx_with_controller').projectDir = new File(settingsDir, '../../../../cocos/platform/android/libcocos2dx-with-controller')
+include ':LuaGameControllerTest'
+project(':LuaGameControllerTest').projectDir = new File(settingsDir, 'app')
+rootProject.name = "lua-game-controller-test"

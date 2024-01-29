@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -183,9 +184,6 @@ void TestList::runThisTest()
             TestController::getInstance()->stopAutoTest();
             TestController::destroyInstance();
             Director::getInstance()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-            exit(0);
-#endif
         });
         closeItem->setPosition(VisibleRect::right().x - 30, VisibleRect::top().y - 30);
 

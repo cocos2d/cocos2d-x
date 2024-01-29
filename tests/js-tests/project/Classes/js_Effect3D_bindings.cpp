@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -118,7 +119,7 @@ EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &o
     if (sprite && sprite->initWithFile(objFilePath))
     {
         sprite->autorelease();
-        if(textureFilePath.size() > 0)
+        if(!textureFilePath.empty())
             sprite->setTexture(textureFilePath);
         return sprite;
     }
@@ -175,7 +176,7 @@ void EffectSprite3D::addEffect(Effect3DOutline* effect, ssize_t order)
     effect->retain();
     effect->setTarget(this);
 
-    _effects.push_back(std::make_tuple(order,effect,CustomCommand()));
+    _effects.emplace_back(order,effect,CustomCommand());
 
     std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
 }

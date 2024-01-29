@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2012 James Chen
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -59,9 +60,9 @@ namespace cocos2d {
             virtual bool isEditing() = 0;
             
             virtual void setText(const char* pText) = 0;
-            virtual const char* getText(void) = 0;
+            virtual const char* getText() = 0;
             virtual void setPlaceHolder(const char* pText) = 0;
-            virtual const char* getPlaceHolder(void) = 0;
+            virtual const char* getPlaceHolder() = 0;
 
             virtual const char* getFontName() = 0;
             virtual int getFontSize() = 0;
@@ -99,7 +100,7 @@ namespace cocos2d {
              * @js NA
              * @lua NA
              */
-            virtual void onEnter(void) = 0;
+            virtual void onEnter() = 0;
             
             
             void setDelegate(EditBoxDelegate* pDelegate) { _delegate = pDelegate; };

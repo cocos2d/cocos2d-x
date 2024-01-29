@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -130,41 +131,30 @@ PUEmitter::~PUEmitter()
 {
     _particleSystem = nullptr;
 
-    if (_dynEmissionRate)
-        delete _dynEmissionRate;
+    delete _dynEmissionRate;
 
-    if (_dynTotalTimeToLive)
-        delete _dynTotalTimeToLive;
+    delete _dynTotalTimeToLive;
 
-    if (_dynParticleMass)
-        delete _dynParticleMass;
+    delete _dynParticleMass;
 
-    if (_dynVelocity)
-        delete _dynVelocity;
+    delete _dynVelocity;
 
-    if (_dynDuration)
-        delete _dynDuration;
+    delete _dynDuration;
 
-    if (_dynRepeatDelay)
-        delete _dynRepeatDelay;
+    delete _dynRepeatDelay;
 
-    if (_dynParticleAllDimensions)
-        delete _dynParticleAllDimensions;
+    delete _dynParticleAllDimensions;
 
-    if (_dynParticleWidth)
-        delete _dynParticleWidth;
+    delete _dynParticleWidth;
 
-    if (_dynParticleHeight)
-        delete _dynParticleHeight;
+    delete _dynParticleHeight;
 
-    if (_dynParticleDepth)
-        delete _dynParticleDepth;
+    delete _dynParticleDepth;
 
     //if (mEmissionRateCameraDependency)
     //	mCameraDependencyFactory.destroy(mEmissionRateCameraDependency);
 
-    if (_dynAngle)
-        delete _dynAngle;
+    delete _dynAngle;
 }
 
 void PUEmitter::updateEmitter(Particle3D* /*particle*/, float /*deltaTime*/)
@@ -327,7 +317,7 @@ void PUEmitter::setEnabled( bool enabled )
     initTimeBased();
 }
 
-bool PUEmitter::isEnabled( void ) const
+bool PUEmitter::isEnabled() const
 {
     return _isEnabled;
 }
@@ -409,7 +399,7 @@ void PUEmitter::postUpdateEmitter( float /*deltaTime*/ )
 }
 
 //-----------------------------------------------------------------------
-bool PUEmitter::isKeepLocal(void) const
+bool PUEmitter::isKeepLocal() const
 {
     return _keepLocal;
 }
@@ -432,7 +422,7 @@ bool PUEmitter::makeParticleLocal(PUParticle3D* particle)
 }
 
 //-----------------------------------------------------------------------
-const Vec4& PUEmitter::getParticleColor(void) const
+const Vec4& PUEmitter::getParticleColor() const
 {
     return _particleColor;
 }
@@ -442,7 +432,7 @@ void PUEmitter::setParticleColor(const Vec4& particleColor)
     _particleColor = particleColor;
 }
 //-----------------------------------------------------------------------
-const Vec4& PUEmitter::getParticleColorRangeStart(void) const
+const Vec4& PUEmitter::getParticleColorRangeStart() const
 {
     return _particleColorRangeStart;
 }
@@ -453,7 +443,7 @@ void PUEmitter::setParticleColorRangeStart(const Vec4& particleColorRangeStart)
     _particleColorRangeSet = true;
 }
 //-----------------------------------------------------------------------
-const Vec4& PUEmitter::getParticleColorRangeEnd(void) const
+const Vec4& PUEmitter::getParticleColorRangeEnd() const
 {
     return _particleColorRangeEnd;
 }
@@ -464,7 +454,7 @@ void PUEmitter::setParticleColorRangeEnd(const Vec4& particleColorRangeEnd)
     _particleColorRangeSet = true;
 }
 //-----------------------------------------------------------------------
-const unsigned short& PUEmitter::getParticleTextureCoords(void) const
+const unsigned short& PUEmitter::getParticleTextureCoords() const
 {
     return _particleTextureCoords;
 }
@@ -474,7 +464,7 @@ void PUEmitter::setParticleTextureCoords(const unsigned short& particleTextureCo
     _particleTextureCoords = particleTextureCoords;
 }
 //-----------------------------------------------------------------------
-const unsigned short& PUEmitter::getParticleTextureCoordsRangeStart(void) const
+const unsigned short& PUEmitter::getParticleTextureCoordsRangeStart() const
 {
     return _particleTextureCoordsRangeStart;
 }
@@ -485,7 +475,7 @@ void PUEmitter::setParticleTextureCoordsRangeStart(const unsigned short& particl
     _particleTextureCoordsRangeSet = true;
 }
 //-----------------------------------------------------------------------
-const unsigned short& PUEmitter::getParticleTextureCoordsRangeEnd(void) const
+const unsigned short& PUEmitter::getParticleTextureCoordsRangeEnd() const
 {
     return _particleTextureCoordsRangeEnd;
 }
@@ -515,48 +505,42 @@ void PUEmitter::setEmitsName(const std::string& emitsName)
 //-----------------------------------------------------------------------
 void PUEmitter::setDynEmissionRate(PUDynamicAttribute* dynEmissionRate)
 {
-    if (_dynEmissionRate)
-        delete _dynEmissionRate;
+    delete _dynEmissionRate;
 
     _dynEmissionRate = dynEmissionRate;
 }
 //-----------------------------------------------------------------------
 void PUEmitter::setDynTotalTimeToLive(PUDynamicAttribute* dynTotalTimeToLive)
 {
-    if (_dynTotalTimeToLive)
-        delete _dynTotalTimeToLive;
+    delete _dynTotalTimeToLive;
 
     _dynTotalTimeToLive = dynTotalTimeToLive;
 }
 //-----------------------------------------------------------------------
 void PUEmitter::setDynParticleMass(PUDynamicAttribute* dynParticleMass)
 {
-    if (_dynParticleMass)
-        delete _dynParticleMass;
+    delete _dynParticleMass;
 
     _dynParticleMass = dynParticleMass;
 }
 //-----------------------------------------------------------------------
 void PUEmitter::setDynAngle(PUDynamicAttribute* dynAngle)
 {
-    if (_dynAngle)
-        delete _dynAngle;
+    delete _dynAngle;
 
     _dynAngle = dynAngle;
 }
 //-----------------------------------------------------------------------
 void PUEmitter::setDynVelocity(PUDynamicAttribute* dynVelocity)
 {
-    if (_dynVelocity)
-        delete _dynVelocity;
+    delete _dynVelocity;
 
     _dynVelocity = dynVelocity;
 }
 //-----------------------------------------------------------------------
 void PUEmitter::setDynDuration(PUDynamicAttribute* dynDuration)
 {
-    if (_dynDuration)
-        delete _dynDuration;
+    delete _dynDuration;
 
     _dynDuration = dynDuration;
     _dynDurationSet = true;
@@ -570,8 +554,7 @@ void PUEmitter::setDynDurationSet(bool durationSet)
 //-----------------------------------------------------------------------
 void PUEmitter::setDynRepeatDelay(PUDynamicAttribute* dynRepeatDelay)
 {
-    if (_dynRepeatDelay)
-        delete _dynRepeatDelay;
+    delete _dynRepeatDelay;
 
     _dynRepeatDelay = dynRepeatDelay;
     _dynRepeatDelaySet = true;
@@ -585,8 +568,7 @@ void PUEmitter::setDynRepeatDelaySet(bool repeatDelaySet)
 //-----------------------------------------------------------------------
 void PUEmitter::setDynParticleAllDimensions(PUDynamicAttribute* dynParticleAllDimensions)
 {
-    if (_dynParticleAllDimensions)
-        delete _dynParticleAllDimensions;
+    delete _dynParticleAllDimensions;
 
     _dynParticleAllDimensions = dynParticleAllDimensions;
     _dynParticleAllDimensionsSet = true;
@@ -599,8 +581,7 @@ void PUEmitter::setDynParticleAllDimensionsSet(bool particleAllDimensionsSet)
 //-----------------------------------------------------------------------
 void PUEmitter::setDynParticleWidth(PUDynamicAttribute* dynParticleWidth)
 {
-    if (_dynParticleWidth)
-        delete _dynParticleWidth;
+    delete _dynParticleWidth;
 
     _dynParticleWidth = dynParticleWidth;
     _dynParticleWidthSet = true;
@@ -613,8 +594,7 @@ void PUEmitter::setDynParticleWidthSet(bool particleWidthSet)
 //-----------------------------------------------------------------------
 void PUEmitter::setDynParticleHeight(PUDynamicAttribute* dynParticleHeight)
 {
-    if (_dynParticleHeight)
-        delete _dynParticleHeight;
+    delete _dynParticleHeight;
 
     _dynParticleHeight = dynParticleHeight;
     _dynParticleHeightSet = true;
@@ -627,8 +607,7 @@ void PUEmitter::setDynParticleHeightSet(bool particleHeightSet)
 //-----------------------------------------------------------------------
 void PUEmitter::setDynParticleDepth(PUDynamicAttribute* dynParticleDepth)
 {
-    if (_dynParticleDepth)
-        delete _dynParticleDepth;
+    delete _dynParticleDepth;
 
     _dynParticleDepth = dynParticleDepth;
     _dynParticleDepthSet = true;
@@ -639,7 +618,7 @@ void PUEmitter::setDynParticleDepthSet(bool particleDepthSet)
     _dynParticleDepthSet = particleDepthSet;
 }
 //-----------------------------------------------------------------------
-const Vec3& PUEmitter::getParticleDirection(void)
+const Vec3& PUEmitter::getParticleDirection()
 {
     return _particleDirection;
 }
@@ -654,12 +633,12 @@ void PUEmitter::setParticleDirection(const Vec3& direction)
     _upVector.normalize();
 }
 //-----------------------------------------------------------------------
-const Vec3& PUEmitter::getOriginalParticleDirection(void) const
+const Vec3& PUEmitter::getOriginalParticleDirection() const
 {
     return _originalParticleDirection;
 }
 //-----------------------------------------------------------------------
-const Quaternion& PUEmitter::getParticleOrientation(void) const
+const Quaternion& PUEmitter::getParticleOrientation() const
 {
     return _particleOrientation;
 }
@@ -669,7 +648,7 @@ void PUEmitter::setParticleOrientation(const Quaternion& orientation)
     _particleOrientation = orientation;
 }
 //-----------------------------------------------------------------------
-const Quaternion& PUEmitter::getParticleOrientationRangeStart(void) const
+const Quaternion& PUEmitter::getParticleOrientationRangeStart() const
 {
     return _particleOrientationRangeStart;
 }
@@ -680,7 +659,7 @@ void PUEmitter::setParticleOrientationRangeStart(const Quaternion& orientationRa
     _particleOrientationRangeSet = true;
 }
 //-----------------------------------------------------------------------
-const Quaternion& PUEmitter::getParticleOrientationRangeEnd(void) const
+const Quaternion& PUEmitter::getParticleOrientationRangeEnd() const
 {
     return _particleOrientationRangeEnd;
 }
@@ -691,7 +670,7 @@ void PUEmitter::setParticleOrientationRangeEnd(const Quaternion& orientationRang
     _particleOrientationRangeSet = true;
 }
 //-----------------------------------------------------------------------
-bool PUEmitter::isAutoDirection(void) const
+bool PUEmitter::isAutoDirection() const
 {
     return _autoDirection;
 }
@@ -701,7 +680,7 @@ void PUEmitter::setAutoDirection(bool autoDirection)
     _autoDirection = autoDirection;
 }
 //-----------------------------------------------------------------------
-bool PUEmitter::isForceEmission(void) const
+bool PUEmitter::isForceEmission() const
 {
     return _forceEmission;
 }
@@ -714,7 +693,7 @@ void PUEmitter::setForceEmission(bool forceEmission)
     _originalForceEmissionExecuted = false;
 }
 
-void PUEmitter::initTimeBased( void )
+void PUEmitter::initTimeBased()
 {
     if (_isEnabled)
     {

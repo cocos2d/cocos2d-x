@@ -31,12 +31,13 @@
 #ifndef SPINE_SKELETON_H_
 #define SPINE_SKELETON_H_
 
-#include <spine/SkeletonData.h>
-#include <spine/Slot.h>
-#include <spine/Skin.h>
-#include <spine/IkConstraint.h>
-#include <spine/TransformConstraint.h>
-#include <spine/PathConstraint.h>
+#include "spine/dll.h"
+#include "spine/SkeletonData.h"
+#include "spine/Slot.h"
+#include "spine/Skin.h"
+#include "spine/IkConstraint.h"
+#include "spine/TransformConstraint.h"
+#include "spine/PathConstraint.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -63,7 +64,7 @@ typedef struct spSkeleton {
 	spPathConstraint** pathConstraints;
 
 	spSkin* const skin;
-	float r, g, b, a;
+	spColor color;
 	float time;
 	int/*bool*/flipX, flipY;
 	float x, y;
@@ -85,7 +86,7 @@ typedef struct spSkeleton {
 		transformConstraints(0),
 
 		skin(0),
-		r(0), g(0), b(0), a(0),
+		color(),
 		time(0),
 		flipX(0),
 		flipY(0),
@@ -94,57 +95,57 @@ typedef struct spSkeleton {
 #endif
 } spSkeleton;
 
-spSkeleton* spSkeleton_create (spSkeletonData* data);
-void spSkeleton_dispose (spSkeleton* self);
+SP_API spSkeleton* spSkeleton_create (spSkeletonData* data);
+SP_API void spSkeleton_dispose (spSkeleton* self);
 
 /* Caches information about bones and constraints. Must be called if bones or constraints, or weighted path attachments
  * are added or removed. */
-void spSkeleton_updateCache (spSkeleton* self);
-void spSkeleton_updateWorldTransform (const spSkeleton* self);
+SP_API void spSkeleton_updateCache (spSkeleton* self);
+SP_API void spSkeleton_updateWorldTransform (const spSkeleton* self);
 
 /* Sets the bones, constraints, and slots to their setup pose values. */
-void spSkeleton_setToSetupPose (const spSkeleton* self);
+SP_API void spSkeleton_setToSetupPose (const spSkeleton* self);
 /* Sets the bones and constraints to their setup pose values. */
-void spSkeleton_setBonesToSetupPose (const spSkeleton* self);
-void spSkeleton_setSlotsToSetupPose (const spSkeleton* self);
+SP_API void spSkeleton_setBonesToSetupPose (const spSkeleton* self);
+SP_API void spSkeleton_setSlotsToSetupPose (const spSkeleton* self);
 
 /* Returns 0 if the bone was not found. */
-spBone* spSkeleton_findBone (const spSkeleton* self, const char* boneName);
+SP_API spBone* spSkeleton_findBone (const spSkeleton* self, const char* boneName);
 /* Returns -1 if the bone was not found. */
-int spSkeleton_findBoneIndex (const spSkeleton* self, const char* boneName);
+SP_API int spSkeleton_findBoneIndex (const spSkeleton* self, const char* boneName);
 
 /* Returns 0 if the slot was not found. */
-spSlot* spSkeleton_findSlot (const spSkeleton* self, const char* slotName);
+SP_API spSlot* spSkeleton_findSlot (const spSkeleton* self, const char* slotName);
 /* Returns -1 if the slot was not found. */
-int spSkeleton_findSlotIndex (const spSkeleton* self, const char* slotName);
+SP_API int spSkeleton_findSlotIndex (const spSkeleton* self, const char* slotName);
 
 /* Sets the skin used to look up attachments before looking in the SkeletonData defaultSkin. Attachments from the new skin are
  * attached if the corresponding attachment from the old skin was attached. If there was no old skin, each slot's setup mode
  * attachment is attached from the new skin.
  * @param skin May be 0.*/
-void spSkeleton_setSkin (spSkeleton* self, spSkin* skin);
+SP_API void spSkeleton_setSkin (spSkeleton* self, spSkin* skin);
 /* Returns 0 if the skin was not found. See spSkeleton_setSkin.
  * @param skinName May be 0. */
-int spSkeleton_setSkinByName (spSkeleton* self, const char* skinName);
+SP_API int spSkeleton_setSkinByName (spSkeleton* self, const char* skinName);
 
 /* Returns 0 if the slot or attachment was not found. */
-spAttachment* spSkeleton_getAttachmentForSlotName (const spSkeleton* self, const char* slotName, const char* attachmentName);
+SP_API spAttachment* spSkeleton_getAttachmentForSlotName (const spSkeleton* self, const char* slotName, const char* attachmentName);
 /* Returns 0 if the slot or attachment was not found. */
-spAttachment* spSkeleton_getAttachmentForSlotIndex (const spSkeleton* self, int slotIndex, const char* attachmentName);
+SP_API spAttachment* spSkeleton_getAttachmentForSlotIndex (const spSkeleton* self, int slotIndex, const char* attachmentName);
 /* Returns 0 if the slot or attachment was not found.
  * @param attachmentName May be 0. */
-int spSkeleton_setAttachment (spSkeleton* self, const char* slotName, const char* attachmentName);
+SP_API int spSkeleton_setAttachment (spSkeleton* self, const char* slotName, const char* attachmentName);
 
 /* Returns 0 if the IK constraint was not found. */
-spIkConstraint* spSkeleton_findIkConstraint (const spSkeleton* self, const char* constraintName);
+SP_API spIkConstraint* spSkeleton_findIkConstraint (const spSkeleton* self, const char* constraintName);
 
 /* Returns 0 if the transform constraint was not found. */
-spTransformConstraint* spSkeleton_findTransformConstraint (const spSkeleton* self, const char* constraintName);
+SP_API spTransformConstraint* spSkeleton_findTransformConstraint (const spSkeleton* self, const char* constraintName);
 
 /* Returns 0 if the path constraint was not found. */
-spPathConstraint* spSkeleton_findPathConstraint (const spSkeleton* self, const char* constraintName);
+SP_API spPathConstraint* spSkeleton_findPathConstraint (const spSkeleton* self, const char* constraintName);
 
-void spSkeleton_update (spSkeleton* self, float deltaTime);
+SP_API void spSkeleton_update (spSkeleton* self, float deltaTime);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spSkeleton Skeleton;

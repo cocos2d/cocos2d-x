@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 Copyright (c) 2011 HKASoftware
 
@@ -35,6 +36,7 @@ THE SOFTWARE.
 
  */
 #include "2d/CCFastTMXLayer.h"
+#include <cmath>
 #include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCSprite.h"
 #include "2d/CCCamera.h"
@@ -151,8 +153,9 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
     if( flags != 0 || _dirty || _quadsDirty || isViewProjectionUpdated)
     {
         Size s = Director::getInstance()->getVisibleSize();
-        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * 0.5f,
-                     Camera::getVisitingCamera()->getPositionY() - s.height * 0.5f,
+        const Vec2 &anchor = getAnchorPoint();
+        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * (anchor.x == 0.0f ? 0.5f : anchor.x),
+                     Camera::getVisitingCamera()->getPositionY() - s.height * (anchor.y == 0.0f ? 0.5f : anchor.y),
                      s.width,
                      s.height);
         
@@ -208,10 +211,10 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     visibleTiles.origin.y += 1;
     
     // if x=0.7, width=9.5, we need to draw number 0~10 of tiles, and so is height.
-    visibleTiles.size.width = ceil(visibleTiles.origin.x + visibleTiles.size.width)  - floor(visibleTiles.origin.x);
-    visibleTiles.size.height = ceil(visibleTiles.origin.y + visibleTiles.size.height) - floor(visibleTiles.origin.y);
-    visibleTiles.origin.x = floor(visibleTiles.origin.x);
-    visibleTiles.origin.y = floor(visibleTiles.origin.y);
+    visibleTiles.size.width = std::ceil(visibleTiles.origin.x + visibleTiles.size.width)  - std::floor(visibleTiles.origin.x);
+    visibleTiles.size.height = std::ceil(visibleTiles.origin.y + visibleTiles.size.height) - std::floor(visibleTiles.origin.y);
+    visibleTiles.origin.x = std::floor(visibleTiles.origin.x);
+    visibleTiles.origin.y = std::floor(visibleTiles.origin.y);
 
     // for the bigger tiles.
     int tilesOverX = 0;
@@ -220,8 +223,8 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     float tileSizeMax = std::max(tileSize.width, tileSize.height);
     if (_layerOrientation == FAST_TMX_ORIENTATION_ORTHO)
     {
-        tilesOverX = ceil(tileSizeMax / mapTileSize.width) - 1;
-        tilesOverY = ceil(tileSizeMax / mapTileSize.height) - 1;
+        tilesOverX = std::ceil(tileSizeMax / mapTileSize.width) - 1;
+        tilesOverY = std::ceil(tileSizeMax / mapTileSize.height) - 1;
         
         if (tilesOverX < 0) tilesOverX = 0;
         if (tilesOverY < 0) tilesOverY = 0;
@@ -233,8 +236,8 @@ void TMXLayer::updateTiles(const Rect& culledRect)
         if (overTileRect.size.height < 0) overTileRect.size.height = 0;
         overTileRect = RectApplyTransform(overTileRect, nodeToTileTransform);
         
-        tilesOverX = ceil(overTileRect.origin.x + overTileRect.size.width) - floor(overTileRect.origin.x);
-        tilesOverY = ceil(overTileRect.origin.y + overTileRect.size.height) - floor(overTileRect.origin.y);
+        tilesOverX = std::ceil(overTileRect.origin.x + overTileRect.size.width) - std::floor(overTileRect.origin.x);
+        tilesOverY = std::ceil(overTileRect.origin.y + overTileRect.size.height) - std::floor(overTileRect.origin.y);
     }
     else
     {
@@ -345,15 +348,15 @@ void TMXLayer::setupTiles()
     switch (_layerOrientation)
     {
         case FAST_TMX_ORIENTATION_ORTHO:
-            _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 1;
-            _screenGridSize.height = ceil(screenSize.height / _mapTileSize.height) + 1;
+            _screenGridSize.width = std::ceil(screenSize.width / _mapTileSize.width) + 1;
+            _screenGridSize.height = std::ceil(screenSize.height / _mapTileSize.height) + 1;
 
             // tiles could be bigger than the grid, add additional rows if needed
             _screenGridSize.height += _tileSet->_tileSize.height / _mapTileSize.height;
             break;
         case FAST_TMX_ORIENTATION_ISO:
-            _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
-            _screenGridSize.height = ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
+            _screenGridSize.width = std::ceil(screenSize.width / _mapTileSize.width) + 2;
+            _screenGridSize.height = std::ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
             break;
         case FAST_TMX_ORIENTATION_HEX:
         default:
@@ -440,6 +443,11 @@ void TMXLayer::updatePrimitives()
     }
 }
 
+void TMXLayer::setOpacity(GLubyte opacity) {
+    Node::setOpacity(opacity);
+    _quadsDirty = true;
+}
+
 void TMXLayer::updateTotalQuads()
 {
     if(_quadsDirty)
@@ -451,6 +459,15 @@ void TMXLayer::updateTotalQuads()
         _indices.resize(6 * int(_layerSize.width * _layerSize.height));
         _tileToQuadIndex.resize(int(_layerSize.width * _layerSize.height),-1);
         _indicesVertexZOffsets.clear();
+
+        auto color = Color4B::WHITE;
+        color.a = getDisplayedOpacity();
+
+        if (_texture->hasPremultipliedAlpha()) {
+            color.r *= color.a / 255.0f;
+            color.g *= color.a / 255.0f;
+            color.b *= color.a / 255.0f;
+        }
         
         int quadIndex = 0;
         for(int y = 0; y < _layerSize.height; ++y)
@@ -549,11 +566,11 @@ void TMXLayer::updateTotalQuads()
                 quad.tl.texCoords.v = top;
                 quad.tr.texCoords.u = right;
                 quad.tr.texCoords.v = top;
-                
-                quad.bl.colors = Color4B::WHITE;
-                quad.br.colors = Color4B::WHITE;
-                quad.tl.colors = Color4B::WHITE;
-                quad.tr.colors = Color4B::WHITE;
+
+                quad.bl.colors = color;
+                quad.br.colors = color;
+                quad.tl.colors = color;
+                quad.tr.colors = color;
                 
                 ++quadIndex;
             }
@@ -719,8 +736,9 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
 // TMXLayer - Properties
 Value TMXLayer::getProperty(const std::string& propertyName) const
 {
-    if (_properties.find(propertyName) != _properties.end())
-        return _properties.at(propertyName);
+    auto propItr = _properties.find(propertyName);
+    if (propItr != _properties.end())
+        return propItr->second;
     
     return Value();
 }

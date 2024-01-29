@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -66,6 +67,8 @@ bool EventListenerController::init()
             break;
         case EventController::ControllerEventType::BUTTON_STATUS_CHANGED:
             {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+
                 const auto&  keyStatus = evtController->_controller->_allKeyStatus[evtController->_keyCode];
                 const auto&  keyPrevStatus = evtController->_controller->_allKeyPrevStatus[evtController->_keyCode];
 
@@ -81,6 +84,7 @@ bool EventListenerController::init()
                 {
                     this->onKeyRepeat(evtController->_controller, evtController->_keyCode, event);
                 }
+#endif
             }
             break;
         case EventController::ControllerEventType::AXIS_STATUS_CHANGED:

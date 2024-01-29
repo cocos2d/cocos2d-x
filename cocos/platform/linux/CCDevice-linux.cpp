@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Laschweinski
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -33,6 +34,7 @@ THE SOFTWARE.
 #include <stdio.h>
 
 #include <algorithm>
+#include <cmath>
 #include <vector>
 #include <map>
 #include <string>
@@ -97,7 +99,7 @@ int Device::getDPI()
          */
         double xres = ((((double) DisplayWidth(dpy,scr)) * 25.4) / 
             ((double) DisplayWidthMM(dpy,scr)));
-        dpi = (int) (xres + 0.5);
+        dpi = std::lround(xres);
         //printf("dpi = %d\n", dpi);
         XCloseDisplay (dpy);
     }
@@ -348,7 +350,7 @@ public:
         std::string lowerCasePath = fontPath;
         std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
         if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-            fontPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fontPath.c_str());
+            fontPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fontPath);
 
             FILE *f = fopen(fontPath.c_str(), "r");
             if ( f ) {

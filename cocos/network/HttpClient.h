@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2012      greathqy
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -149,6 +150,34 @@ public:
     std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
 
     std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
+    
+    typedef std::function<bool(HttpRequest*)> ClearRequestPredicate;
+    typedef std::function<bool(HttpResponse*)> ClearResponsePredicate;
+
+    /**
+     * Clears the pending http responses and http requests
+     * If defined, the method uses the ClearRequestPredicate and ClearResponsePredicate
+     * to check for each request/response which to delete
+     */
+    void clearResponseAndRequestQueue(); 
+
+    /**
+    * Sets a predicate function that is going to be called to determine if we proceed
+    * each of the pending requests
+    *
+    * @param predicate function that will be called 
+    */
+    void setClearRequestPredicate(ClearRequestPredicate predicate) { _clearRequestPredicate = predicate; }
+
+    /**
+     Sets a predicate function that is going to be called to determine if we proceed
+    * each of the pending requests
+    *
+    * @param cb predicate function that will be called 
+    */
+    void setClearResponsePredicate(ClearResponsePredicate predicate) { _clearResponsePredicate = predicate; }
+
+        
 private:
     HttpClient();
     virtual ~HttpClient();
@@ -202,6 +231,9 @@ private:
     char _responseMessage[RESPONSE_BUFFER_SIZE];
 
     HttpRequest* _requestSentinel;
+    
+    ClearRequestPredicate _clearRequestPredicate;
+    ClearResponsePredicate _clearResponsePredicate;
 };
 
 } // namespace network

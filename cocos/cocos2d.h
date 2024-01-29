@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -30,7 +31,7 @@ THE SOFTWARE.
 
 // 0x00 HI ME LO
 // 00   03 08 00
-#define COCOS2D_VERSION 0x00031500
+#define COCOS2D_VERSION 0x00031702
 
 //
 // all cocos2d include files
@@ -75,8 +76,11 @@ THE SOFTWARE.
 #include "base/CCEventListenerFocus.h"
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventListenerMouse.h"
+#include "base/CCEventListenerController.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventMouse.h"
+#include "base/CCEventController.h"
+#include "base/CCController.h"
 #include "base/CCEventTouch.h"
 #include "base/CCEventType.h"
 
@@ -151,6 +155,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCMaterial.h"
 #include "renderer/CCPass.h"
@@ -207,13 +212,6 @@ THE SOFTWARE.
 //Enhance modification end
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    #include "platform/blackberry/CCApplication.h"
-    #include "platform/blackberry/CCGLViewImpl.h"
-    #include "platform/blackberry/CCGL.h"
-    #include "platform/blackberry/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #include "platform/win32/CCApplication-win32.h"
     #include "platform/desktop/CCGLViewImpl-desktop.h"
@@ -234,20 +232,6 @@ THE SOFTWARE.
     #include "platform/linux/CCGL-linux.h"
     #include "platform/linux/CCStdC-linux.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	#include "platform/winrt/CCApplication.h"
-	#include "platform/winrt/CCGLViewImpl-winrt.h"
-	#include "platform/winrt/CCGL.h"
-	#include "platform/winrt/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
-	#include "platform/tizen/CCApplication-tizen.h"
-	#include "platform/tizen/CCGLViewImpl-tizen.h"
-	#include "platform/tizen/CCGL-tizen.h"
-	#include "platform/tizen/CCStdC-tizen.h"
-#endif
 
 // script_support
 #include "base/CCScriptSupport.h"

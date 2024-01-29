@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -1082,7 +1083,7 @@ CC_DEPRECATED_ATTRIBUTE inline void CC_DLL ccGLBindTexture2DN(GLuint textureUnit
 CC_DEPRECATED_ATTRIBUTE inline void CC_DLL ccGLDeleteTexture(GLuint textureId) { GL::deleteTexture(textureId); }
 CC_DEPRECATED_ATTRIBUTE inline void CC_DLL ccGLDeleteTextureN(GLuint textureUnit, GLuint textureId) { GL::deleteTexture(textureId); }
 CC_DEPRECATED_ATTRIBUTE inline void CC_DLL ccGLBindVAO(GLuint vaoId) { GL::bindVAO(vaoId); }
-CC_DEPRECATED_ATTRIBUTE inline void CC_DLL ccGLEnable( int flags ) { /* ignore */ };
+CC_DEPRECATED_ATTRIBUTE inline void CC_DLL ccGLEnable( int flags ) { /* ignore */ }
 CC_DEPRECATED_ATTRIBUTE typedef int ccGLServerState;
 
 CC_DEPRECATED_ATTRIBUTE typedef Data CCData;
@@ -1121,11 +1122,11 @@ CC_DEPRECATED_ATTRIBUTE const unsigned int KM_GL_MODELVIEW = 0x1700;
 CC_DEPRECATED_ATTRIBUTE const unsigned int KM_GL_PROJECTION = 0x1701;
 CC_DEPRECATED_ATTRIBUTE const unsigned int KM_GL_TEXTURE = 0x1702;
 
-CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLFreeAll(void);
-CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLPushMatrix(void);
-CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLPopMatrix(void);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLFreeAll();
+CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLPushMatrix();
+CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLPopMatrix();
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLMatrixMode(unsigned int mode);
-CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLLoadIdentity(void);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLLoadIdentity();
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLLoadMatrix(const Mat4* pIn);
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLMultMatrix(const Mat4* pIn);
 CC_DEPRECATED_ATTRIBUTE void CC_DLL kmGLTranslatef(float x, float y, float z);

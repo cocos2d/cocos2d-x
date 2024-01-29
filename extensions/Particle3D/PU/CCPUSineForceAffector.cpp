@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -24,6 +25,7 @@
  ****************************************************************************/
 
 #include "CCPUSineForceAffector.h"
+#include <cmath>
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
@@ -32,15 +34,15 @@ const float PUSineForceAffector::DEFAULT_FREQ_MIN = 1.0f;
 const float PUSineForceAffector::DEFAULT_FREQ_MAX = 1.0f;
 
 //-----------------------------------------------------------------------
-PUSineForceAffector::PUSineForceAffector(void) : 
-    PUBaseForceAffector(),
-    _angle(361),
-    _frequencyMin(DEFAULT_FREQ_MIN),
-    _frequencyMax(DEFAULT_FREQ_MAX),
-    _frequency(1.0f)
+PUSineForceAffector::PUSineForceAffector()
+: PUBaseForceAffector()
+, _angle(361)
+, _frequencyMin(DEFAULT_FREQ_MIN)
+, _frequencyMax(DEFAULT_FREQ_MAX)
+, _frequency(1.0f)
 {
 }
-PUSineForceAffector::~PUSineForceAffector( void )
+PUSineForceAffector::~PUSineForceAffector()
 {
 
 }
@@ -49,7 +51,7 @@ void PUSineForceAffector::preUpdateAffector(float deltaTime)
 {
     // Scale by time
     _angle += _frequency * deltaTime;
-    float sineValue = sin(_angle);
+    float sineValue = std::sin(_angle);
     _scaledVector = _forceVector * deltaTime * sineValue;
 
     if (_angle > M_PI * 2.0f)

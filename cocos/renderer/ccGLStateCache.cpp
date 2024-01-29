@@ -2,7 +2,8 @@
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -60,7 +61,7 @@ namespace
 
 namespace GL {
 
-void invalidateStateCache( void )
+void invalidateStateCache()
 {
     Director::getInstance()->resetMatrixStack();
     s_currentProjectionMatrix = -1;
@@ -137,7 +138,7 @@ void blendFunc(GLenum sfactor, GLenum dfactor)
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
-void blendResetToCache(void)
+void blendResetToCache()
 {
 	glBlendEquation(GL_FUNC_ADD);
 #if CC_ENABLE_GL_STATE_CACHE
@@ -269,7 +270,7 @@ void enableVertexAttribs(uint32_t flags)
 
 // GL Uniforms functions
 
-void setProjectionMatrixDirty( void )
+void setProjectionMatrixDirty()
 {
     s_currentProjectionMatrix = -1;
 }

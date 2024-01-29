@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -23,6 +24,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
+
+#include <utility>
 
 #include "editor-support/cocostudio/CCComExtensionData.h"
 
@@ -93,7 +96,7 @@ bool ActionTimeline::init()
     return true;
 }
 
-void ActionTimeline::play(std::string name, bool loop)
+void ActionTimeline::play(const std::string& name, bool loop)
 {
     if (_animationInfos.find(name) == _animationInfos.end())
     {
@@ -175,7 +178,7 @@ ActionTimeline* ActionTimeline::clone() const
     newAction->setDuration(_duration);
     newAction->setTimeSpeed(_timeSpeed);
 
-    for (auto timelines : _timelineMap)
+    for (const auto& timelines : _timelineMap)
     {
         for(auto timeline : timelines.second)
         {      
@@ -184,7 +187,7 @@ ActionTimeline* ActionTimeline::clone() const
         }
     }
     
-    for( auto info : _animationInfos)
+    for(const auto& info : _animationInfos)
     {
         newAction->addAnimationInfo(info.second);
     }
@@ -193,7 +196,7 @@ ActionTimeline* ActionTimeline::clone() const
 
 void ActionTimeline::step(float delta)
 {
-    if (!_playing || _timelineMap.size() == 0 || _duration == 0)
+    if (!_playing || _timelineMap.empty() || _duration == 0)
     {
         return;
     }
@@ -232,7 +235,7 @@ void ActionTimeline::step(float delta)
 }
 
 typedef std::function<void(Node*)> tCallBack;
-void foreachNodeDescendant(Node* parent, tCallBack callback)
+void foreachNodeDescendant(Node* parent, const tCallBack& callback)
 {
     callback(parent);
 
@@ -311,7 +314,7 @@ void ActionTimeline::addAnimationInfo(const AnimationInfo& animationInfo)
     addFrameEndCallFunc(animationInfo.endIndex, animationInfo.name, animationInfo.clipEndCallBack);
 }
 
-void ActionTimeline::removeAnimationInfo(std::string animationName)
+void ActionTimeline::removeAnimationInfo(const std::string& animationName)
 {
     auto clipIter = _animationInfos.find(animationName);
     if (clipIter == _animationInfos.end())
@@ -334,7 +337,7 @@ const AnimationInfo& ActionTimeline::getAnimationInfo(const std::string &animati
     return _animationInfos.find(animationName)->second;
 }
 
-void ActionTimeline::setAnimationEndCallFunc(const std::string animationName, std::function<void()> func)
+void ActionTimeline::setAnimationEndCallFunc(const std::string& animationName, const std::function<void()>& func)
 {
     auto clipIter = _animationInfos.find(animationName);
     if (clipIter == _animationInfos.end())
@@ -346,7 +349,7 @@ void ActionTimeline::setAnimationEndCallFunc(const std::string animationName, st
     addFrameEndCallFunc(clipIter->second.endIndex, animationName, func);
 }
 
-void ActionTimeline::setFrameEventCallFunc(std::function<void(Frame *)> listener)
+void ActionTimeline::setFrameEventCallFunc(const std::function<void(Frame *)>& listener)
 {
     _frameEventListener = listener;
 }
@@ -356,7 +359,7 @@ void ActionTimeline::clearFrameEventCallFunc()
     _frameEventListener = nullptr;
 }
 
-void ActionTimeline::setLastFrameCallFunc(std::function<void()> listener)
+void ActionTimeline::setLastFrameCallFunc(const std::function<void()>& listener)
 {
     _lastFrameListener = listener;
 }
@@ -374,7 +377,7 @@ void ActionTimeline::emitFrameEvent(Frame* frame)
     }
 }
 
-void ActionTimeline::addFrameEndCallFunc(int frameIndex, const std::string& funcKey, std::function<void()> func)
+void ActionTimeline::addFrameEndCallFunc(int frameIndex, const std::string& funcKey, const std::function<void()>& func)
 {
     if (func != nullptr)
     {
@@ -415,7 +418,7 @@ void ActionTimeline::emitFrameEndCallFuncs(int frameIndex)
     if (clipEndCallsIter != _frameEndCallFuncs.end())
     {
         auto clipEndCalls = (*clipEndCallsIter).second;
-        for (auto call : clipEndCalls)
+        for (const auto& call : clipEndCalls)
             (call).second();
     }
 }

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -27,8 +28,8 @@ THE SOFTWARE.
 #define __CC_APPLICATION_PROTOCOL_H__
 
 #include "platform/CCPlatformMacros.h"
-#include "base/CCScriptSupport.h"
 #include "base/CCAutoreleasePool.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
@@ -65,9 +66,6 @@ public:
      * @lua NA
      */
     virtual ~ApplicationProtocol(){
-#if CC_ENABLE_SCRIPT_BINDING
-        ScriptEngineManager::destroyInstance();
-#endif
         /** clean auto release pool. */
         PoolManager::destroyInstance();
     }

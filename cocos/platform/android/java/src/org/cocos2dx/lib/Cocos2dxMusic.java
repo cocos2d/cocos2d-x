@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -279,7 +280,7 @@ public class Cocos2dxMusic {
                 mediaPlayer.setDataSource(fis.getFD());
                 fis.close();
             } else {
-                if (Cocos2dxHelper.getObbFile() != null) {
+                if (Cocos2dxHelper.getObbFile() != null && Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path) != null) {
                     final AssetFileDescriptor assetFileDescriptor = Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path);
                     mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
                 } else {

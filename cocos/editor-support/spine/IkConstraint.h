@@ -31,8 +31,9 @@
 #ifndef SPINE_IKCONSTRAINT_H_
 #define SPINE_IKCONSTRAINT_H_
 
-#include <spine/IkConstraintData.h>
-#include <spine/Bone.h>
+#include "spine/dll.h"
+#include "spine/IkConstraintData.h"
+#include "spine/Bone.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,13 +63,13 @@ typedef struct spIkConstraint {
 #endif
 } spIkConstraint;
 
-spIkConstraint* spIkConstraint_create (spIkConstraintData* data, const struct spSkeleton* skeleton);
-void spIkConstraint_dispose (spIkConstraint* self);
+SP_API spIkConstraint* spIkConstraint_create (spIkConstraintData* data, const struct spSkeleton* skeleton);
+SP_API void spIkConstraint_dispose (spIkConstraint* self);
 
-void spIkConstraint_apply (spIkConstraint* self);
+SP_API void spIkConstraint_apply (spIkConstraint* self);
 
-void spIkConstraint_apply1 (spBone* bone, float targetX, float targetY, float alpha);
-void spIkConstraint_apply2 (spBone* parent, spBone* child, float targetX, float targetY, int bendDirection, float alpha);
+SP_API void spIkConstraint_apply1 (spBone* bone, float targetX, float targetY, float alpha);
+SP_API void spIkConstraint_apply2 (spBone* parent, spBone* child, float targetX, float targetY, int bendDirection, float alpha);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spIkConstraint IkConstraint;

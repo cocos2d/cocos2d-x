@@ -1,45 +1,45 @@
 /******************************************************************************
- * Spine Runtimes Software License v2.5
- *
- * Copyright (c) 2013-2016, Esoteric Software
- * All rights reserved.
- *
- * You are granted a perpetual, non-exclusive, non-sublicensable, and
- * non-transferable license to use, install, execute, and perform the Spine
- * Runtimes software and derivative works solely for personal or internal
- * use. Without the written permission of Esoteric Software (see Section 2 of
- * the Spine Software License Agreement), you may not (a) modify, translate,
- * adapt, or develop new applications using the Spine Runtimes or otherwise
- * create derivative works or improvements of the Spine Runtimes or (b) remove,
- * delete, alter, or obscure any trademarks or any copyright, trademark, patent,
- * or other intellectual property or proprietary rights notices on or in the
- * Software, including any copy thereof. Redistributions in binary or source
- * form must include this license and terms.
- *
- * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
- * USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
- * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *****************************************************************************/
+* Spine Runtimes Software License v2.5
+*
+* Copyright (c) 2013-2016, Esoteric Software
+* All rights reserved.
+*
+* You are granted a perpetual, non-exclusive, non-sublicensable, and
+* non-transferable license to use, install, execute, and perform the Spine
+* Runtimes software and derivative works solely for personal or internal
+* use. Without the written permission of Esoteric Software (see Section 2 of
+* the Spine Software License Agreement), you may not (a) modify, translate,
+* adapt, or develop new applications using the Spine Runtimes or otherwise
+* create derivative works or improvements of the Spine Runtimes or (b) remove,
+* delete, alter, or obscure any trademarks or any copyright, trademark, patent,
+* or other intellectual property or proprietary rights notices on or in the
+* Software, including any copy thereof. Redistributions in binary or source
+* form must include this license and terms.
+*
+* THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
+* IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+* EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+* SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+* PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
+* USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+* IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*****************************************************************************/
 
-#include <spine/Atlas.h>
+#include "spine/Atlas.h"
 #include <ctype.h>
-#include <spine/extension.h>
+#include "spine/extension.h"
 
-spAtlasPage* spAtlasPage_create (spAtlas* atlas, const char* name) {
+spAtlasPage* spAtlasPage_create(spAtlas* atlas, const char* name) {
 	spAtlasPage* self = NEW(spAtlasPage);
 	CONST_CAST(spAtlas*, self->atlas) = atlas;
 	MALLOC_STR(self->name, name);
 	return self;
 }
 
-void spAtlasPage_dispose (spAtlasPage* self) {
+void spAtlasPage_dispose(spAtlasPage* self) {
 	_spAtlasPage_disposeTexture(self);
 	FREE(self->name);
 	FREE(self);
@@ -47,11 +47,11 @@ void spAtlasPage_dispose (spAtlasPage* self) {
 
 /**/
 
-spAtlasRegion* spAtlasRegion_create () {
+spAtlasRegion* spAtlasRegion_create() {
 	return NEW(spAtlasRegion);
 }
 
-void spAtlasRegion_dispose (spAtlasRegion* self) {
+void spAtlasRegion_dispose(spAtlasRegion* self) {
 	FREE(self->name);
 	FREE(self->splits);
 	FREE(self->pads);
@@ -65,7 +65,7 @@ typedef struct {
 	const char* end;
 } Str;
 
-static void trim (Str* str) {
+static void trim(Str* str) {
 	while (isspace((unsigned char)*str->begin) && str->begin < str->end)
 		(str->begin)++;
 	if (str->begin == str->end) return;
@@ -76,7 +76,7 @@ static void trim (Str* str) {
 }
 
 /* Tokenize string without modification. Returns 0 on failure. */
-static int readLine (const char** begin, const char* end, Str* str) {
+static int readLine(const char** begin, const char* end, Str* str) {
 	if (*begin == end) return 0;
 	str->begin = *begin;
 
@@ -92,7 +92,7 @@ static int readLine (const char** begin, const char* end, Str* str) {
 }
 
 /* Moves str->begin past the first occurence of c. Returns 0 on failure. */
-static int beginPast (Str* str, char c) {
+static int beginPast(Str* str, char c) {
 	const char* begin = str->begin;
 	while (1) {
 		char lastSkippedChar = *begin;
@@ -105,7 +105,7 @@ static int beginPast (Str* str, char c) {
 }
 
 /* Returns 0 on failure. */
-static int readValue (const char** begin, const char* end, Str* str) {
+static int readValue(const char** begin, const char* end, Str* str) {
 	readLine(begin, end, str);
 	if (!beginPast(str, ':')) return 0;
 	trim(str);
@@ -113,9 +113,9 @@ static int readValue (const char** begin, const char* end, Str* str) {
 }
 
 /* Returns the number of tuple values read (1, 2, 4, or 0 for failure). */
-static int readTuple (const char** begin, const char* end, Str tuple[]) {
+static int readTuple(const char** begin, const char* end, Str tuple[]) {
 	int i;
-	Str str = {NULL, NULL};
+	Str str = { NULL, NULL };
 	readLine(begin, end, &str);
 	if (!beginPast(&str, ':')) return 0;
 
@@ -131,7 +131,7 @@ static int readTuple (const char** begin, const char* end, Str tuple[]) {
 	return i + 1;
 }
 
-static char* mallocString (Str* str) {
+static char* mallocString(Str* str) {
 	int length = (int)(str->end - str->begin);
 	char* string = MALLOC(char, length + 1);
 	memcpy(string, str->begin, length);
@@ -139,7 +139,7 @@ static char* mallocString (Str* str) {
 	return string;
 }
 
-static int indexOf (const char** array, int count, Str* str) {
+static int indexOf(const char** array, int count, Str* str) {
 	int length = (int)(str->end - str->begin);
 	int i;
 	for (i = count - 1; i >= 0; i--)
@@ -147,24 +147,24 @@ static int indexOf (const char** array, int count, Str* str) {
 	return 0;
 }
 
-static int equals (Str* str, const char* other) {
+static int equals(Str* str, const char* other) {
 	return strncmp(other, str->begin, str->end - str->begin) == 0;
 }
 
-static int toInt (Str* str) {
+static int toInt(Str* str) {
 	return (int)strtol(str->begin, (char**)&str->end, 10);
 }
 
-static spAtlas* abortAtlas (spAtlas* self) {
+static spAtlas* abortAtlas(spAtlas* self) {
 	spAtlas_dispose(self);
 	return 0;
 }
 
-static const char* formatNames[] = {"", "Alpha", "Intensity", "LuminanceAlpha", "RGB565", "RGBA4444", "RGB888", "RGBA8888"};
-static const char* textureFilterNames[] = {"", "Nearest", "Linear", "MipMap", "MipMapNearestNearest", "MipMapLinearNearest",
-		"MipMapNearestLinear", "MipMapLinearLinear"};
+static const char* formatNames[] = { "", "Alpha", "Intensity", "LuminanceAlpha", "RGB565", "RGBA4444", "RGB888", "RGBA8888" };
+static const char* textureFilterNames[] = { "", "Nearest", "Linear", "MipMap", "MipMapNearestNearest", "MipMapLinearNearest",
+"MipMapNearestLinear", "MipMapLinearLinear" };
 
-spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* rendererObject) {
+spAtlas* spAtlas_create(const char* begin, int length, const char* dir, void* rendererObject) {
 	spAtlas* self;
 
 	int count;
@@ -184,7 +184,8 @@ spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* r
 	while (readLine(&begin, end, &str)) {
 		if (str.end - str.begin == 0) {
 			page = 0;
-		} else if (!page) {
+		}
+		else if (!page) {
 			char* name = mallocString(&str);
 			char* path = MALLOC(char, dirLength + needsSlash + strlen(name) + 1);
 			memcpy(path, dir, dirLength);
@@ -223,7 +224,8 @@ spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* r
 						page->uWrap = SP_ATLAS_REPEAT;
 					else if (*str.begin == 'y')
 						page->vWrap = SP_ATLAS_REPEAT;
-				} else if (equals(&str, "xy")) {
+				}
+				else if (equals(&str, "xy")) {
 					page->uWrap = SP_ATLAS_REPEAT;
 					page->vWrap = SP_ATLAS_REPEAT;
 				}
@@ -231,7 +233,8 @@ spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* r
 
 			_spAtlasPage_createTexture(page, path);
 			FREE(path);
-		} else {
+		}
+		else {
 			spAtlasRegion *region = spAtlasRegion_create();
 			if (lastRegion)
 				lastRegion->next = region;
@@ -258,12 +261,14 @@ spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* r
 			if (region->rotate) {
 				region->u2 = (region->x + region->height) / (float)page->width;
 				region->v2 = (region->y + region->width) / (float)page->height;
-			} else {
+			}
+			else {
 				region->u2 = (region->x + region->width) / (float)page->width;
 				region->v2 = (region->y + region->height) / (float)page->height;
 			}
 
-			if (!(count = readTuple(&begin, end, tuple))) return abortAtlas(self);
+			count = readTuple(&begin, end, tuple);
+			if (!count) return abortAtlas(self);
 			if (count == 4) { /* split is optional */
 				region->splits = MALLOC(int, 4);
 				region->splits[0] = toInt(tuple);
@@ -271,7 +276,8 @@ spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* r
 				region->splits[2] = toInt(tuple + 2);
 				region->splits[3] = toInt(tuple + 3);
 
-				if (!(count = readTuple(&begin, end, tuple))) return abortAtlas(self);
+				count = readTuple(&begin, end, tuple);
+				if (!count) return abortAtlas(self);
 				if (count == 4) { /* pad is optional, but only present with splits */
 					region->pads = MALLOC(int, 4);
 					region->pads[0] = toInt(tuple);
@@ -298,7 +304,7 @@ spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* r
 	return self;
 }
 
-spAtlas* spAtlas_createFromFile (const char* path, void* rendererObject) {
+spAtlas* spAtlas_createFromFile(const char* path, void* rendererObject) {
 	int dirLength;
 	char *dir;
 	int length;
@@ -324,7 +330,7 @@ spAtlas* spAtlas_createFromFile (const char* path, void* rendererObject) {
 	return atlas;
 }
 
-void spAtlas_dispose (spAtlas* self) {
+void spAtlas_dispose(spAtlas* self) {
 	spAtlasRegion* region, *nextRegion;
 	spAtlasPage* page = self->pages;
 	while (page) {
@@ -343,7 +349,7 @@ void spAtlas_dispose (spAtlas* self) {
 	FREE(self);
 }
 
-spAtlasRegion* spAtlas_findRegion (const spAtlas* self, const char* name) {
+spAtlasRegion* spAtlas_findRegion(const spAtlas* self, const char* name) {
 	spAtlasRegion* region = self->regions;
 	while (region) {
 		if (strcmp(region->name, name) == 0) return region;

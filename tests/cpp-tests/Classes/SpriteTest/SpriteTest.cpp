@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -136,7 +137,7 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteSlice9Test9);
     ADD_TEST_CASE(SpriteSlice9Test10);
     ADD_TEST_CASE(Issue17119);
-};
+}
 
 //------------------------------------------------------------------
 //
@@ -5419,9 +5420,9 @@ void SpriteSlice9Test5::update(float dt)
     float angle = _elapsed;
 
     // cap the value between 0 and 0.8
-    float x = ((cos(angle) + sin(angle*3)) + 2) / 5.0f;
-    float y1 = (sin(angle) + 1) / 2.5;
-    float y2 = (sin(angle+M_PI_2) + 1) / 2.5;
+    float x = ((std::cos(angle) + std::sin(angle*3)) + 2) / 5.0f;
+    float y1 = (std::sin(angle) + 1) / 2.5;
+    float y2 = (std::sin(angle+M_PI_2) + 1) / 2.5;
     float y = y1;
     for (int i=0; i<3; ++i) {
         if (i==1) {
@@ -5492,9 +5493,9 @@ void SpriteSlice9Test6::update(float dt)
     float angle = _elapsed;
 
     // cap the value between 0 and 1
-    float x = ((cos(angle*2) - sin(angle/2)) + 2) / 4;
-    float y1 = (sin(angle) + 1) / 2;
-    float y2 = (sin(angle+M_PI_2) + 1) / 2;
+    float x = ((std::cos(angle*2) - std::sin(angle/2)) + 2) / 4;
+    float y1 = (std::sin(angle) + 1) / 2;
+    float y2 = (std::sin(angle+M_PI_2) + 1) / 2;
     float y = y1;
     for (int i=0; i<3; ++i) {
         if (i==1) {

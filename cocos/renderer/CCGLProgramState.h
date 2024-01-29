@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2014-2017 Chukong Technologies Inc.
+Copyright (c) 2014-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
  
@@ -489,7 +490,7 @@ protected:
     // Map of custom auto binding resolvers.
     static std::vector<AutoBindingResolver*> _customAutoBindingResolvers;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundlistener;
 #endif
 

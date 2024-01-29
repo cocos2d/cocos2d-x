@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -56,7 +57,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~GridBase(void);
+    virtual ~GridBase();
 
     /**@{
      Init the Grid base.
@@ -101,7 +102,7 @@ public:
     /**@{
      Init and reset the status when render effects by using the grid.
      */
-    void beforeDraw(void);
+    void beforeDraw();
     void afterDraw(Node *target);
     /**@}*/
     
@@ -114,14 +115,14 @@ public:
     /**@}*/
     
     /**Interface used to blit the texture with grid to screen.*/
-    virtual void blit(void);
+    virtual void blit();
     /**Interface, Reuse the grid vertices.*/
-    virtual void reuse(void);
+    virtual void reuse();
     /**Interface, Calculate the vertices used for the blit.*/
-    virtual void calculateVertexPoints(void);
+    virtual void calculateVertexPoints();
     
     /**Change projection to 2D for grabbing.*/
-    void set2DProjection(void);
+    void set2DProjection();
     
     /**
      * @brief Set the effect grid rect.
@@ -171,7 +172,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~Grid3D(void);
+    ~Grid3D();
 
     /** Returns the vertex at a given position.
      * @js NA

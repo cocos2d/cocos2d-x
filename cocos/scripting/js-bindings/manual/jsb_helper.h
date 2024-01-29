@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,12 +37,12 @@
 static JSClass js_class; \
 static JSObject* js_proto; \
 static JSObject* js_parent; \
-static void _js_register(JSContext* cx, JS::HandleObject global);
+static void _js_register(JSContext* cx, JS::HandleObject global)
 
 #define JS_BINDED_CLASS_GLUE_IMPL(klass) \
 JSClass klass::js_class = {}; \
 JSObject* klass::js_proto = NULL; \
-JSObject* klass::js_parent = NULL; \
+JSObject* klass::js_parent = NULL
 
 #define JS_BINDED_FUNC(klass, name) \
 bool name(JSContext *cx, unsigned argc, jsval *vp)
@@ -111,7 +112,7 @@ bool klass::_js_set_##propName(JSContext *cx, const JS::CallArgs& args)
 
 #define JS_BINDED_PROP_ACCESSOR(klass, propName) \
 JS_BINDED_PROP_GET(klass, propName); \
-JS_BINDED_PROP_SET(klass, propName);
+JS_BINDED_PROP_SET(klass, propName)
 
 #define JS_BINDED_PROP_DEF_GETTER(klass, propName) \
 JS_PSG(#propName, _js_get_##klass##_##propName, JSPROP_ENUMERATE | JSPROP_PERMANENT)

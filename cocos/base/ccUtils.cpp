@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -33,6 +34,7 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "base/CCEventDispatcher.h"
 #include "base/base64.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -123,7 +125,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
             }
             else
             {
-                CCASSERT(filename.find("/") == std::string::npos, "The existence of a relative path is not guaranteed!");
+                CCASSERT(filename.find('/') == std::string::npos, "The existence of a relative path is not guaranteed!");
                 outputFile = FileUtils::getInstance()->getWritablePath() + filename;
             }
 
@@ -138,7 +140,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
                 startedCapture = false;
             };
 
-            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, mainThread, nullptr, [image, outputFile]()
+            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, std::move(mainThread), nullptr, [image, outputFile]()
             {
                 succeedSaveToFile = image->saveToFile(outputFile);
                 delete image;
@@ -411,23 +413,136 @@ Node* findChild(Node* levelRoot, int tag)
 
 std::string getFileMD5Hash(const std::string &filename)
 {
+    Data data;
+    FileUtils::getInstance()->getContents(filename, &data);
+
+    return getDataMD5Hash(data);
+}
+
+std::string getDataMD5Hash(const Data &data)
+{
     static const unsigned int MD5_DIGEST_LENGTH = 16;
 
-    Data d;
-    FileUtils::getInstance()->getContents(filename, &d);
+    if (data.isNull())
+    {
+        return std::string();
+    }
 
     md5_state_t state;
     md5_byte_t digest[MD5_DIGEST_LENGTH];
-    char hexOutput[(MD5_DIGEST_LENGTH << 1) + 1] = {0};
+    char hexOutput[(MD5_DIGEST_LENGTH << 1) + 1] = { 0 };
 
     md5_init(&state);
-    md5_append(&state, (const md5_byte_t *)d.getBytes(), (int)d.getSize());
+    md5_append(&state, (const md5_byte_t *)data.getBytes(), (int)data.getSize());
     md5_finish(&state, digest);
 
     for (int di = 0; di < 16; ++di)
         sprintf(hexOutput + di * 2, "%02x", digest[di]);
 
     return hexOutput;
+}
+
+LanguageType getLanguageTypeByISO2(const char* code)
+{
+    // this function is used by all platforms to get system language
+    // except windows: cocos/platform/win32/CCApplication-win32.cpp
+    LanguageType ret = LanguageType::ENGLISH;
+
+    if (strncmp(code, "zh", 2) == 0)
+    {
+        ret = LanguageType::CHINESE;
+    }
+    else if (strncmp(code, "ja", 2) == 0)
+    {
+        ret = LanguageType::JAPANESE;
+    }
+    else if (strncmp(code, "fr", 2) == 0)
+    {
+        ret = LanguageType::FRENCH;
+    }
+    else if (strncmp(code, "it", 2) == 0)
+    {
+        ret = LanguageType::ITALIAN;
+    }
+    else if (strncmp(code, "de", 2) == 0)
+    {
+        ret = LanguageType::GERMAN;
+    }
+    else if (strncmp(code, "es", 2) == 0)
+    {
+        ret = LanguageType::SPANISH;
+    }
+    else if (strncmp(code, "nl", 2) == 0)
+    {
+        ret = LanguageType::DUTCH;
+    }
+    else if (strncmp(code, "ru", 2) == 0)
+    {
+        ret = LanguageType::RUSSIAN;
+    }
+    else if (strncmp(code, "hu", 2) == 0)
+    {
+        ret = LanguageType::HUNGARIAN;
+    }
+    else if (strncmp(code, "pt", 2) == 0)
+    {
+        ret = LanguageType::PORTUGUESE;
+    }
+    else if (strncmp(code, "ko", 2) == 0)
+    {
+        ret = LanguageType::KOREAN;
+    }
+    else if (strncmp(code, "ar", 2) == 0)
+    {
+        ret = LanguageType::ARABIC;
+    }
+    else if (strncmp(code, "nb", 2) == 0)
+    {
+        ret = LanguageType::NORWEGIAN;
+    }
+    else if (strncmp(code, "pl", 2) == 0)
+    {
+        ret = LanguageType::POLISH;
+    }
+    else if (strncmp(code, "tr", 2) == 0)
+    {
+        ret = LanguageType::TURKISH;
+    }
+    else if (strncmp(code, "uk", 2) == 0)
+    {
+        ret = LanguageType::UKRAINIAN;
+    }
+    else if (strncmp(code, "ro", 2) == 0)
+    {
+        ret = LanguageType::ROMANIAN;
+    }
+    else if (strncmp(code, "bg", 2) == 0)
+    {
+        ret = LanguageType::BULGARIAN;
+    }
+    else if (strncmp(code, "be", 2) == 0)
+    {
+        ret = LanguageType::BELARUSIAN;
+    }
+    return ret;
+}
+
+std::vector<int> parseIntegerList(const std::string &intsString) {
+    std::vector<int> result;
+
+    const char *cStr = intsString.c_str();
+    char *endptr;
+
+    for (long int i = strtol(cStr, &endptr, 10); endptr != cStr; i = strtol(cStr, &endptr, 10)) {
+        if (errno == ERANGE) {
+            errno = 0;
+            CCLOGWARN("%s contains out of range integers", intsString.c_str());
+        }
+        result.push_back(static_cast<int>(i));
+        cStr= endptr;
+    }
+
+    return result;
 }
 
 }

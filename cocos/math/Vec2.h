@@ -1,6 +1,7 @@
 /**
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2014-2017 Chukong Technologies
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -91,18 +92,6 @@ public:
      * @param p2 The second point.
      */
     Vec2(const Vec2& p1, const Vec2& p2);
-
-    /**
-     * Constructs a new vector that is a copy of the specified vector.
-     *
-     * @param copy The vector to copy.
-     */
-    Vec2(const Vec2& copy);
-
-    /**
-     * Destructor.
-     */
-    ~Vec2();
 
     /**
      * Indicates whether this vector contains all zeros.

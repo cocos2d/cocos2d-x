@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -405,7 +406,7 @@ static int tolua_Cocos2d_glBlendColor00(lua_State* tolua_S)
     if (
         !tolua_isnumber(tolua_S, 1, 0, &tolua_err)          ||
         !tolua_isnumber(tolua_S, 2, 0, &tolua_err)          ||
-        !tolua_isnumber(tolua_S, 2, 0, &tolua_err)          ||
+        !tolua_isnumber(tolua_S, 3, 0, &tolua_err)          ||
         !tolua_isnumber(tolua_S, 4, 0, &tolua_err)          ||
         !tolua_isnoobj(tolua_S, 5, &tolua_err)
         )

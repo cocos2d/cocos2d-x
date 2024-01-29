@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -55,7 +56,7 @@ btVector3 convertVec3TobtVector3( const cocos2d::Vec3 &vec3 )
 cocos2d::Mat4 convertbtTransformToMat4( const btTransform &btTrans )
 {
     cocos2d::Mat4 mat;
-    auto rot = btTrans.getBasis();
+    const auto& rot = btTrans.getBasis();
     auto row = rot.getRow(0);
     mat.m[0] = row.getX();
     mat.m[4] = row.getY();

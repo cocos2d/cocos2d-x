@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2010      Lam Pham
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -180,10 +181,10 @@ protected:
     
     Tex2F textureCoordFromAlphaPoint(Vec2 alpha);
     Vec2 vertexFromAlphaPoint(Vec2 alpha);
-    void updateProgress(void);
-    void updateBar(void);
-    void updateRadial(void);
-    virtual void updateColor(void) override;
+    void updateProgress();
+    void updateBar();
+    void updateRadial();
+    virtual void updateColor() override;
     Vec2 boundaryTexCoord(char index);
 
     Type _type;

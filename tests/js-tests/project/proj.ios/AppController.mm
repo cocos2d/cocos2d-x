@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2013 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -81,6 +82,11 @@ static AppDelegate s_sharedApplication;
 #if !defined(CC_TARGET_OS_TVOS)
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
 #endif
+    //Launching the app with the arguments -NSAllowsDefaultLineBreakStrategy NO to force back to the old behavior.
+    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 13.0f)
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSAllowsDefaultLineBreakStrategy"];
+    }
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);

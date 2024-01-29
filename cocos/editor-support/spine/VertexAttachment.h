@@ -31,8 +31,9 @@
 #ifndef SPINE_VERTEXATTACHMENT_H_
 #define SPINE_VERTEXATTACHMENT_H_
 
-#include <spine/Attachment.h>
-#include <spine/Slot.h>
+#include "spine/dll.h"
+#include "spine/Attachment.h"
+#include "spine/Slot.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,15 +50,15 @@ struct spVertexAttachment {
 	float* vertices;
 
 	int worldVerticesLength;
+
+	int id;
 };
 
-void spVertexAttachment_computeWorldVertices (spVertexAttachment* self, spSlot* slot, float* worldVertices);
-void spVertexAttachment_computeWorldVertices1 (spVertexAttachment* self, int start, int count, spSlot* slot, float* worldVertices, int offset);
+SP_API void spVertexAttachment_computeWorldVertices (spVertexAttachment* self, spSlot* slot, int start, int count, float* worldVertices, int offset, int stride);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spVertexAttachment VertexAttachment;
 #define VertexAttachment_computeWorldVertices(...) spVertexAttachment_computeWorldVertices(__VA_ARGS__)
-#define VertexAttachment_computeWorldVertices1(...) spVertexAttachment_computeWorldVertices1(__VA_ARGS__)
 #endif
 
 #ifdef __cplusplus

@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -94,14 +95,14 @@ public:
     virtual ~LabelBMFont();
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
-    static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
+    static LabelBMFont* create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT, const Vec2& imageOffset = Vec2::ZERO);
 
     /** Creates an label.
      */
     static LabelBMFont * create();
 
     /** init a bitmap font atlas with an initial string and the FNT file */
-    bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
+    bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT, const Vec2& imageOffset = Vec2::ZERO);
 
     // super method
     virtual void setString(const std::string& newString) override;
@@ -117,6 +118,7 @@ public:
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
 
     void setFntFile(const std::string& fntFile, const Vec2& imageOffset = Vec2::ZERO);
+    void setFntFile(const std::string& fntFile, const Rect& imageRect, bool imageRotated);
     const std::string& getFntFile() const;
 
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -91,7 +92,7 @@ namespace {
 }
 
 //default context attributions are set as follows
-GLContextAttrs GLView::_glContextAttrs = {5, 6, 5, 0, 16, 0};
+GLContextAttrs GLView::_glContextAttrs = {8, 8, 8, 8, 24, 8, 0};
 
 void GLView::setGLContextAttrs(GLContextAttrs& glContextAttrs)
 {
@@ -104,12 +105,12 @@ GLContextAttrs GLView::getGLContextAttrs()
 }
 
 GLView::GLView()
-: _scaleX(1.0f)
+: _screenSize(0,0)
+, _designResolutionSize(0,0)
+, _scaleX(1.0f)
 , _scaleY(1.0f)
 , _resolutionPolicy(ResolutionPolicy::UNKNOWN)
 , _vrImpl(nullptr)
-, _designResolutionSize(0,0)
-, _screenSize(0,0)
 {
 }
 
@@ -196,7 +197,7 @@ const Size& GLView::getDesignResolutionSize() const
     return _designResolutionSize;
 }
 
-const Size& GLView::getFrameSize() const
+Size GLView::getFrameSize() const
 {
     return _screenSize;
 }
@@ -217,6 +218,11 @@ Rect GLView::getVisibleRect() const
     ret.size = getVisibleSize();
     ret.origin = getVisibleOrigin();
     return ret;
+}
+
+Rect GLView::getSafeAreaRect() const
+{
+    return getVisibleRect();
 }
 
 Size GLView::getVisibleSize() const
@@ -325,7 +331,7 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
         }
     }
 
-    if (touchEvent._touches.size() == 0)
+    if (touchEvent._touches.empty())
     {
         CCLOG("touchesBegan: size = 0");
         return;
@@ -382,7 +388,7 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], 
         }
     }
 
-    if (touchEvent._touches.size() == 0)
+    if (touchEvent._touches.empty())
     {
         CCLOG("touchesMoved: size = 0");
         return;
@@ -436,7 +442,7 @@ void GLView::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num
 
     }
 
-    if (touchEvent._touches.size() == 0)
+    if (touchEvent._touches.empty())
     {
         CCLOG("touchesEnded or touchesCancel: size = 0");
         return;

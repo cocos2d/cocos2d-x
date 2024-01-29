@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -50,20 +51,20 @@ static unsigned short quadIndices9[]={
 const static float PRECISION = 10.0f;
 
 PolygonInfo::PolygonInfo()
-: _rect(Rect::ZERO)
+: _isVertsOwner(true)
+, _rect(Rect::ZERO)
 , _filename("")
-, _isVertsOwner(true)
 {
     triangles.verts = nullptr;
     triangles.indices = nullptr;
     triangles.vertCount = 0;
     triangles.indexCount = 0;
-};
+}
 
 PolygonInfo::PolygonInfo(const PolygonInfo& other)
 : triangles()
-, _rect()
 , _isVertsOwner(true)
+, _rect()
 {
     _filename = other._filename;
     _isVertsOwner = true;
@@ -75,7 +76,7 @@ PolygonInfo::PolygonInfo(const PolygonInfo& other)
     triangles.indexCount = other.triangles.indexCount;
     memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount * sizeof(other.triangles.verts[0]));
     memcpy(triangles.indices, other.triangles.indices, other.triangles.indexCount * sizeof(other.triangles.indices[0]));
-};
+}
 
 PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
 {
@@ -415,7 +416,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
         }
         else
         {
-            _points.push_back(Vec2((float)(curx - rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
+            _points.emplace_back((float)(curx - rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor);
         }
 
         count++;
@@ -568,7 +569,7 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     }
     for(const auto& pt : p2->Contour)
     {
-        outPoints.push_back(Vec2(pt.X/PRECISION, pt.Y/PRECISION));
+        outPoints.emplace_back(pt.X/PRECISION, pt.Y/PRECISION);
     }
     return outPoints;
 }

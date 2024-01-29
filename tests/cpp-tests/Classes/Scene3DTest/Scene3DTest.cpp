@@ -1,8 +1,32 @@
-#include "Scene3DTest.h"
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
+#include "Scene3DTest.h"
+#include <cmath>
 #include "ui/CocosGUI.h"
 #include "renderer/CCRenderState.h"
-#include <spine/spine-cocos2dx.h>
+#include "spine/spine-cocos2dx.h"
 
 #include "../testResource.h"
 #include "../TerrainTest/TerrainTest.h"
@@ -704,7 +728,7 @@ void Scene3DTestScene::createDetailDlg()
     
     // add a spine ffd animation on it
     auto skeletonNode =
-        SkeletonAnimationCullingFix::createWithFile("spine/goblins_mesh.json", "spine/goblins.atlas", 1.5f);
+        SkeletonAnimationCullingFix::createWithFile("spine/goblins-pro.json", "spine/goblins.atlas", 1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
     
@@ -783,32 +807,32 @@ void Scene3DTestScene::createDescDlg()
     }
     
     auto& body = _skins[(int)SkinType::UPPER_BODY];
-    body.push_back("Girl_UpperBody01");
-    body.push_back("Girl_UpperBody02");
+    body.emplace_back("Girl_UpperBody01");
+    body.emplace_back("Girl_UpperBody02");
     
     auto& pants = _skins[(int)SkinType::PANTS];
-    pants.push_back("Girl_LowerBody01");
-    pants.push_back("Girl_LowerBody02");
+    pants.emplace_back("Girl_LowerBody01");
+    pants.emplace_back("Girl_LowerBody02");
     
     auto& shoes = _skins[(int)SkinType::SHOES];
-    shoes.push_back("Girl_Shoes01");
-    shoes.push_back("Girl_Shoes02");
+    shoes.emplace_back("Girl_Shoes01");
+    shoes.emplace_back("Girl_Shoes02");
     
     auto& hair = _skins[(int)SkinType::HAIR];
-    hair.push_back("Girl_Hair01");
-    hair.push_back("Girl_Hair02");
+    hair.emplace_back("Girl_Hair01");
+    hair.emplace_back("Girl_Hair02");
     
     auto& face = _skins[(int)SkinType::FACE];
-    face.push_back("Girl_Face01");
-    face.push_back("Girl_Face02");
+    face.emplace_back("Girl_Face01");
+    face.emplace_back("Girl_Face02");
     
     auto& hand = _skins[(int)SkinType::HAND];
-    hand.push_back("Girl_Hand01");
-    hand.push_back("Girl_Hand02");
+    hand.emplace_back("Girl_Hand01");
+    hand.emplace_back("Girl_Hand02");
     
     auto& glasses = _skins[(int)SkinType::GLASSES];
-    glasses.push_back("");
-    glasses.push_back("Girl_Glasses01");
+    glasses.emplace_back("");
+    glasses.emplace_back("Girl_Glasses01");
     
     memset(_curSkin, 0, (int)SkinType::MAX_TYPE * sizeof(int));
     
@@ -893,7 +917,7 @@ void Scene3DTestScene::onTouchEnd(Touch* touch, Event* event)
             dir = collisionPoint - _player->getPosition3D();
             dir.y = 0;
             dir.normalize();
-            _player->_headingAngle =  -1*acos(dir.dot(Vec3(0,0,-1)));
+            _player->_headingAngle =  -1*std::acos(dir.dot(Vec3(0,0,-1)));
             dir.cross(dir,Vec3(0,0,-1),&_player->_headingAxis);
             _player->_targetPos=collisionPoint;
             _player->forward();

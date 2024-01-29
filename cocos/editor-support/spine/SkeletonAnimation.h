@@ -31,8 +31,8 @@
 #ifndef SPINE_SKELETONANIMATION_H_
 #define SPINE_SKELETONANIMATION_H_
 
-#include <spine/spine.h>
-#include <spine/SkeletonRenderer.h>
+#include "spine/spine.h"
+#include "spine/SkeletonRenderer.h"
 #include "cocos2d.h"
 
 namespace spine {
@@ -61,7 +61,7 @@ public:
 		return SkeletonAnimation::createWithJsonFile(skeletonJsonFile, atlas, scale);
 	}
 	// Use createWithJsonFile instead
-	CC_DEPRECATED_ATTRIBUTE static SkeletonAnimation* createWithile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale = 1)
+	CC_DEPRECATED_ATTRIBUTE static SkeletonAnimation* createWithFile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale = 1)
 	{
 		return SkeletonAnimation::createWithJsonFile(skeletonJsonFile, atlasFile, scale);
 	}
@@ -73,6 +73,9 @@ public:
 
 	spTrackEntry* setAnimation (int trackIndex, const std::string& name, bool loop);
 	spTrackEntry* addAnimation (int trackIndex, const std::string& name, bool loop, float delay = 0);
+	spTrackEntry* setEmptyAnimation (int trackIndex, float mixDuration);
+	void setEmptyAnimations (float mixDuration);
+	spTrackEntry* addEmptyAnimation (int trackIndex, float mixDuration, float delay = 0);
 	spAnimation* findAnimation(const std::string& name) const;
 	spTrackEntry* getCurrent (int trackIndex = 0);
 	void clearTracks ();

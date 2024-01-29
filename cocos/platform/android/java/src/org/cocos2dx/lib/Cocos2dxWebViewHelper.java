@@ -1,12 +1,43 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 package org.cocos2dx.lib;
 
+import android.annotation.TargetApi;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.webkit.WebSettings;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -93,6 +124,67 @@ public class Cocos2dxWebViewHelper {
                 }
             }
         });
+    }
+
+    public static void setBackgroundTransparent(final int index) {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxWebView webView = webViews.get(index);
+                if (webView != null) {
+                    webView.setBackgroundColor(Color.TRANSPARENT);
+                }
+            }
+        });
+    }
+
+    public static void setOpacityWebView(final int index, final float opacity) {
+        if(android.os.Build.VERSION.SDK_INT >10){
+            sCocos2dxActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Cocos2dxWebView webView = webViews.get(index);
+                    if (webView != null) {
+                        try {
+                            Method method = webView.getClass().getMethod("setAlpha",float.class);
+                            method.invoke(webView,opacity);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+
+    public static float getOpacityWebView(final int index) {
+        if(android.os.Build.VERSION.SDK_INT >10){
+            FutureTask<Float> futureResult = new FutureTask<Float>(new Callable<Float>() {
+            @Override
+            public Float call() throws Exception {
+                float opacity=0.f;
+                Cocos2dxWebView webView = webViews.get(index);
+                Object valueToReturn=null;
+                if (webView != null) {
+                    try {
+                        Method method = webView.getClass().getMethod("getAlpha");
+                        valueToReturn = method.invoke(webView);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                return (Float) valueToReturn;
+            }
+            });
+            sCocos2dxActivity.runOnUiThread(futureResult);
+            try {
+                return futureResult.get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return 1;
     }
 
     public static void setWebViewRect(final int index, final int left, final int top, final int maxWidth, final int maxHeight) {

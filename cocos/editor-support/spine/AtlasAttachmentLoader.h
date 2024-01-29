@@ -31,8 +31,9 @@
 #ifndef SPINE_ATLASATTACHMENTLOADER_H_
 #define SPINE_ATLASATTACHMENTLOADER_H_
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include "spine/dll.h"
+#include "spine/AttachmentLoader.h"
+#include "spine/Atlas.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,7 +44,7 @@ typedef struct spAtlasAttachmentLoader {
 	spAtlas* atlas;
 } spAtlasAttachmentLoader;
 
-spAtlasAttachmentLoader* spAtlasAttachmentLoader_create (spAtlas* atlas);
+SP_API spAtlasAttachmentLoader* spAtlasAttachmentLoader_create (spAtlas* atlas);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spAtlasAttachmentLoader AtlasAttachmentLoader;

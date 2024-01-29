@@ -16,6 +16,7 @@ require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
 require "ComponentTest/main"
 require "CurrentLanguageTest/CurrentLanguageTest"
+require "DownloaderTest/DownloaderTest"
 require "DrawPrimitivesTest/DrawPrimitivesTest"
 require "EffectsTest/EffectsTest"
 require "EffectsAdvancedTest/EffectsAdvancedTest"
@@ -64,6 +65,7 @@ require "Physics3DTest/Physics3DTest"
 require "Scene3DTest/Scene3DTest"
 require "MaterialSystemTest/MaterialSystemTest"
 require "NavMeshTest/NavMeshTest"
+require "LuaLoaderTest/LuaLoaderTest"
 
 local LINE_SPACE = 40
 
@@ -106,6 +108,7 @@ local _allTests = {
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = true,  name = "ComponentTest"          , create_func   =         ComponentTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
+    { isSupported = true,  name = "DownloaderTest"          , create_func=   DownloaderTestMain      },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
     { isSupported = true,  name = "EffectsTest"            , create_func   =               EffectsTest      },
@@ -121,6 +124,7 @@ local _allTests = {
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
     { isSupported = true,  name = "LightTest"          , create_func   =                 LightTestMain  },
     { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
+    { isSupported = true,  name = "LuaLoaderTest"          , create_func   =        LuaLoaderMain },
     { isSupported = true,  name = "MaterialSystemTest"     , create_func   =        MaterialSystemTest },
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
@@ -188,23 +192,22 @@ function CreateTestMenu()
     local s = cc.Director:getInstance():getWinSize()
     local CloseItem = cc.MenuItemImage:create(s_pPathClose, s_pPathClose)
     CloseItem:registerScriptTapHandler(closeCallback)
-    CloseItem:setPosition(cc.p(s.width - 30, s.height - 30))
+    CloseItem:setAnchorPoint(1, 1)
+    CloseItem:setPosition(VisibleRect:rightTop())
 
     local CloseMenu = cc.Menu:create()
     CloseMenu:setPosition(0, 0)
     CloseMenu:addChild(CloseItem)
     menuLayer:addChild(CloseMenu)
+
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()       
-    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
-        CloseMenu:setVisible(false)
-    end
 
     -- add menu items for tests
     local MainMenu = cc.Menu:create()
     local index = 0
     local obj = nil
-    for index, obj in pairs(_allTests) do
-        local testLabel = cc.Label:createWithTTF(obj.name, s_arialPath, 24)
+    for index, obj in pairs(_allTests) do    
+        local testLabel = cc.Label:createWithTTF(index .. ". " .. obj.name, s_arialPath, 24)
         testLabel:setAnchorPoint(cc.p(0.5, 0.5))
         local testMenuItem = cc.MenuItemLabel:create(testLabel)
         if not obj.isSupported then

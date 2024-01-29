@@ -1,216 +1,307 @@
 
 spineboy.png
-size: 1024,1024
+size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-eye_indifferent
+crosshair
+  rotate: false
+  xy: 794, 167
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+dust01
+  rotate: false
+  xy: 960, 190
+  size: 48, 37
+  orig: 48, 37
+  offset: 0, 0
+  index: -1
+dust02
+  rotate: false
+  xy: 392, 2
+  size: 43, 44
+  orig: 43, 44
+  offset: 0, 0
+  index: -1
+dust03
+  rotate: false
+  xy: 841, 163
+  size: 31, 26
+  orig: 31, 26
+  offset: 0, 0
+  index: -1
+eye-indifferent
+  rotate: false
+  xy: 960, 229
+  size: 47, 45
+  orig: 47, 45
+  offset: 0, 0
+  index: -1
+eye-surprised
+  rotate: false
+  xy: 745, 167
+  size: 47, 45
+  orig: 47, 45
+  offset: 0, 0
+  index: -1
+front-bracer
+  rotate: false
+  xy: 547, 2
+  size: 29, 40
+  orig: 29, 40
+  offset: 0, 0
+  index: -1
+front-fist-closed
+  rotate: false
+  xy: 920, 190
+  size: 38, 41
+  orig: 38, 41
+  offset: 0, 0
+  index: -1
+front-fist-open
+  rotate: false
+  xy: 437, 2
+  size: 43, 44
+  orig: 43, 44
+  offset: 0, 0
+  index: -1
+front-foot
+  rotate: false
+  xy: 482, 11
+  size: 63, 35
+  orig: 63, 35
+  offset: 0, 0
+  index: -1
+front-shin
   rotate: true
-  xy: 648, 629
-  size: 93, 89
-  orig: 93, 89
+  xy: 866, 233
+  size: 41, 92
+  orig: 41, 92
   offset: 0, 0
   index: -1
-eye_surprised
-  rotate: true
-  xy: 233, 179
-  size: 93, 89
-  orig: 93, 89
-  offset: 0, 0
-  index: -1
-front_bracer
+front-thigh
   rotate: false
-  xy: 245, 2
-  size: 58, 80
-  orig: 58, 80
+  xy: 719, 155
+  size: 24, 56
+  orig: 24, 56
   offset: 0, 0
   index: -1
-front_fist_closed
+front-upper-arm
   rotate: false
-  xy: 168, 45
-  size: 75, 82
-  orig: 75, 82
-  offset: 0, 0
-  index: -1
-front_fist_open
-  rotate: false
-  xy: 844, 646
-  size: 86, 87
-  orig: 86, 87
-  offset: 0, 0
-  index: -1
-front_foot
-  rotate: true
-  xy: 310, 326
-  size: 126, 69
-  orig: 126, 69
-  offset: 0, 0
-  index: -1
-front_foot_bend1
-  rotate: true
-  xy: 951, 894
-  size: 128, 70
-  orig: 128, 70
-  offset: 0, 0
-  index: -1
-front_foot_bend2
-  rotate: false
-  xy: 2, 33
-  size: 108, 93
-  orig: 108, 93
-  offset: 0, 0
-  index: -1
-front_shin
-  rotate: true
-  xy: 739, 735
-  size: 82, 184
-  orig: 82, 184
-  offset: 0, 0
-  index: -1
-front_thigh
-  rotate: false
-  xy: 381, 340
-  size: 48, 112
-  orig: 48, 112
-  offset: 0, 0
-  index: -1
-front_upper_arm
-  rotate: false
-  xy: 112, 29
-  size: 54, 97
-  orig: 54, 97
+  xy: 719, 104
+  size: 27, 49
+  orig: 27, 49
   offset: 0, 0
   index: -1
 goggles
   rotate: false
-  xy: 156, 454
-  size: 261, 166
-  orig: 261, 166
+  xy: 881, 276
+  size: 131, 83
+  orig: 131, 83
   offset: 0, 0
   index: -1
 gun
   rotate: false
-  xy: 739, 819
-  size: 210, 203
-  orig: 210, 203
+  xy: 612, 109
+  size: 105, 102
+  orig: 105, 102
   offset: 0, 0
   index: -1
 head
   rotate: false
-  xy: 466, 724
-  size: 271, 298
-  orig: 271, 298
+  xy: 881, 361
+  size: 136, 149
+  orig: 136, 149
   offset: 0, 0
   index: -1
-hoverboard_board
-  rotate: true
-  xy: 2, 128
-  size: 492, 152
-  orig: 492, 152
-  offset: 0, 0
-  index: -1
-hoverboard_thruster
+hoverboard-board
   rotate: false
-  xy: 602, 558
-  size: 60, 64
-  orig: 60, 64
+  xy: 2, 38
+  size: 246, 76
+  orig: 246, 76
   offset: 0, 0
   index: -1
-hoverglow_small
+hoverboard-thruster
   rotate: true
-  xy: 156, 178
-  size: 274, 75
-  orig: 274, 75
+  xy: 578, 12
+  size: 30, 32
+  orig: 30, 32
   offset: 0, 0
   index: -1
-mouth_grind
+hoverglow-small
   rotate: true
-  xy: 951, 799
-  size: 93, 59
-  orig: 93, 59
+  xy: 572, 44
+  size: 137, 38
+  orig: 137, 38
   offset: 0, 0
   index: -1
-mouth_oooo
+mouth-grind
   rotate: true
-  xy: 245, 84
-  size: 93, 59
-  orig: 93, 59
+  xy: 713, 55
+  size: 47, 30
+  orig: 47, 30
   offset: 0, 0
   index: -1
-mouth_smile
+mouth-oooo
+  rotate: true
+  xy: 713, 6
+  size: 47, 30
+  orig: 47, 30
+  offset: 0, 0
+  index: -1
+mouth-smile
   rotate: false
-  xy: 925, 738
-  size: 93, 59
-  orig: 93, 59
+  xy: 748, 135
+  size: 47, 30
+  orig: 47, 30
   offset: 0, 0
   index: -1
-muzzle
+muzzle-glow
   rotate: false
-  xy: 2, 622
-  size: 462, 400
-  orig: 462, 400
+  xy: 612, 8
+  size: 99, 99
+  orig: 99, 99
+  offset: 0, 0
+  index: -1
+muzzle-ring
+  rotate: false
+  xy: 302, 190
+  size: 25, 105
+  orig: 25, 105
+  offset: 0, 0
+  index: -1
+muzzle01
+  rotate: false
+  xy: 336, 335
+  size: 271, 175
+  orig: 271, 175
+  offset: 0, 0
+  index: -1
+muzzle02
+  rotate: false
+  xy: 609, 341
+  size: 270, 169
+  orig: 270, 169
+  offset: 0, 0
+  index: -1
+muzzle03
+  rotate: false
+  xy: 2, 297
+  size: 332, 213
+  orig: 332, 213
+  offset: 0, 0
+  index: -1
+muzzle04
+  rotate: false
+  xy: 2, 116
+  size: 298, 179
+  orig: 298, 179
+  offset: 0, 0
+  index: -1
+muzzle05
+  rotate: false
+  xy: 336, 183
+  size: 269, 150
+  orig: 269, 150
   offset: 0, 0
   index: -1
 neck
   rotate: false
-  xy: 168, 2
-  size: 36, 41
-  orig: 36, 41
+  xy: 841, 191
+  size: 18, 21
+  orig: 18, 21
   offset: 0, 0
   index: -1
-rear_bracer
+portal-bg
   rotate: false
-  xy: 932, 664
-  size: 56, 72
-  orig: 56, 72
+  xy: 302, 48
+  size: 133, 133
+  orig: 133, 133
   offset: 0, 0
   index: -1
-rear_foot
+portal-flare1
   rotate: false
-  xy: 487, 562
-  size: 113, 60
-  orig: 113, 60
+  xy: 180, 6
+  size: 56, 30
+  orig: 56, 30
   offset: 0, 0
   index: -1
-rear_foot_bend1
+portal-flare2
+  rotate: false
+  xy: 2, 5
+  size: 57, 31
+  orig: 57, 31
+  offset: 0, 0
+  index: -1
+portal-flare3
+  rotate: false
+  xy: 61, 6
+  size: 58, 30
+  orig: 58, 30
+  offset: 0, 0
+  index: -1
+portal-shade
+  rotate: false
+  xy: 437, 48
+  size: 133, 133
+  orig: 133, 133
+  offset: 0, 0
+  index: -1
+portal-streaks1
   rotate: true
-  xy: 419, 503
-  size: 117, 66
-  orig: 117, 66
+  xy: 609, 213
+  size: 126, 128
+  orig: 126, 128
   offset: 0, 0
   index: -1
-rear_foot_bend2
+portsl-streaks2
   rotate: false
-  xy: 739, 650
-  size: 103, 83
-  orig: 103, 83
+  xy: 739, 214
+  size: 125, 125
+  orig: 125, 125
   offset: 0, 0
   index: -1
-rear_shin
+rear-bracer
+  rotate: true
+  xy: 797, 137
+  size: 28, 36
+  orig: 28, 36
+  offset: 0, 0
+  index: -1
+rear-foot
   rotate: false
-  xy: 233, 274
-  size: 75, 178
-  orig: 75, 178
+  xy: 121, 6
+  size: 57, 30
+  orig: 57, 30
   offset: 0, 0
   index: -1
-rear_thigh
+rear-shin
   rotate: true
-  xy: 487, 495
-  size: 65, 104
-  orig: 65, 104
+  xy: 301, 8
+  size: 38, 89
+  orig: 38, 89
   offset: 0, 0
   index: -1
-rear_upper_arm
+rear-thigh
   rotate: true
-  xy: 156, 129
-  size: 47, 87
-  orig: 47, 87
+  xy: 866, 198
+  size: 33, 52
+  orig: 33, 52
+  offset: 0, 0
+  index: -1
+rear-upper-arm
+  rotate: true
+  xy: 748, 109
+  size: 24, 44
+  orig: 24, 44
   offset: 0, 0
   index: -1
 torso
-  rotate: true
-  xy: 466, 624
-  size: 98, 180
-  orig: 98, 180
+  rotate: false
+  xy: 250, 24
+  size: 49, 90
+  orig: 49, 90
   offset: 0, 0
   index: -1

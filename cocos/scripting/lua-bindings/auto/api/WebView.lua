@@ -5,6 +5,13 @@
 -- @parent_module ccexp
 
 --------------------------------
+-- SetOpacity of webview.
+-- @function [parent=#WebView] setOpacityWebView 
+-- @param self
+-- @param #float opacity
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
 -- Gets whether this WebView has a back history item.<br>
 -- return WebView has a back history item.
 -- @function [parent=#WebView] canGoBack 
@@ -72,6 +79,12 @@
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
         
 --------------------------------
+-- set the background transparent
+-- @function [parent=#WebView] setBackgroundTransparent 
+-- @param self
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
 -- Get the Javascript callback.
 -- @function [parent=#WebView] getOnJSCallback 
 -- @param self
@@ -89,6 +102,12 @@
 -- @function [parent=#WebView] stopLoading 
 -- @param self
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
+-- getOpacity of webview.
+-- @function [parent=#WebView] getOpacityWebView 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Reloads the current URL.

@@ -3,6 +3,7 @@
  Copyright (c) 2012 James Chen
  Copyright (c) 2013-2015 zilongshanren
  Copyright (c) 2015 Mazyad Alabduljaleel
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -53,6 +54,8 @@
 - (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment;
 
 - (void)setPlaceHolder:(NSString *)text;
+- (void)setPlaceholderFont:(UIFont *)font;
+- (void)setPlaceholderTextColor:(UIColor *)color;
 - (void)setVisible:(BOOL)visible;
 - (void)setTextColor:(UIColor*)color;
 - (void)setFont:(UIFont *)font;

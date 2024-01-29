@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -30,7 +31,7 @@ NS_CC_BEGIN
 const Vec3 PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE(500.0f, 500.0f, 500.0f);
 
 //-----------------------------------------------------------------------
-unsigned short PUForceFieldCalculationFactory::getOctaves(void) const
+unsigned short PUForceFieldCalculationFactory::getOctaves() const
 {
     return _octaves;
 }
@@ -41,7 +42,7 @@ void PUForceFieldCalculationFactory::setOctaves(unsigned short octaves)
     generate(getForceFieldSize(), _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-double PUForceFieldCalculationFactory::getFrequency(void) const
+double PUForceFieldCalculationFactory::getFrequency() const
 {
     return _frequency;
 }
@@ -52,7 +53,7 @@ void PUForceFieldCalculationFactory::setFrequency(double frequency)
     generate(getForceFieldSize(), _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-double PUForceFieldCalculationFactory::getAmplitude(void) const
+double PUForceFieldCalculationFactory::getAmplitude() const
 {
     return _amplitude;
 }
@@ -63,7 +64,7 @@ void PUForceFieldCalculationFactory::setAmplitude(double amplitude)
     generate(getForceFieldSize(), _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-double PUForceFieldCalculationFactory::getPersistence(void) const
+double PUForceFieldCalculationFactory::getPersistence() const
 {
     return _persistence;
 }
@@ -74,7 +75,7 @@ void PUForceFieldCalculationFactory::setPersistence(double persistence)
     generate(getForceFieldSize(), _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-unsigned int PUForceFieldCalculationFactory::getForceFieldSize(void) const
+unsigned int PUForceFieldCalculationFactory::getForceFieldSize() const
 {
     return 1; // Return default cubic size
 }
@@ -88,7 +89,7 @@ void PUForceFieldCalculationFactory::setForceFieldSize(unsigned int forceFieldSi
     generate(forceFieldSize, _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-Vec3 PUForceFieldCalculationFactory::getWorldSize(void) const
+Vec3 PUForceFieldCalculationFactory::getWorldSize() const
 {
     return _worldSize;
 }
@@ -151,7 +152,7 @@ void PURealTimeForceFieldCalculationFactory::determineForce(const Vec3& position
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-PUForceField::PUForceField(void) :
+PUForceField::PUForceField() :
     _octaves(2),
     _frequency(1.0f),
     _amplitude(1.0f),
@@ -163,12 +164,9 @@ PUForceField::PUForceField(void) :
 {
 }
 //-----------------------------------------------------------------------
-PUForceField::~PUForceField(void)
+PUForceField::~PUForceField()
 {
-    if (_forceFieldCalculationFactory)
-    {
-        delete _forceFieldCalculationFactory;
-    }
+    delete _forceFieldCalculationFactory;
 }
 //-----------------------------------------------------------------------
 void PUForceField::initialise(ForceFieldType type,
@@ -206,7 +204,7 @@ void PUForceField::initialise(ForceFieldType type,
     _forceFieldCalculationFactory->generate(forceFieldSize, octaves, frequency, amplitude, persistence, worldSize);
 }
 //-----------------------------------------------------------------------
-const Vec3& PUForceField::getForceFieldPositionBase(void) const
+const Vec3& PUForceField::getForceFieldPositionBase() const
 {
     return _forceFieldPositionBase;
 }
@@ -235,10 +233,7 @@ PUForceFieldCalculationFactory* PUForceField::getForceFieldCalculationFactory() 
 //-----------------------------------------------------------------------
 void PUForceField::setForceFieldCalculationFactory(PUForceFieldCalculationFactory* forceFieldCalculationFactory)
 {
-    if (_forceFieldCalculationFactory)
-    {
-        delete _forceFieldCalculationFactory;
-    }
+    delete _forceFieldCalculationFactory;
     _forceFieldCalculationFactory = forceFieldCalculationFactory;
 }
 //-----------------------------------------------------------------------
@@ -273,7 +268,7 @@ void PUForceField::setForceFieldType(const PUForceField::ForceFieldType forceFie
     }
 }
 //-----------------------------------------------------------------------
-unsigned short PUForceField::getOctaves(void) const
+unsigned short PUForceField::getOctaves() const
 {
     return _octaves;
 }
@@ -287,7 +282,7 @@ void PUForceField::setOctaves(unsigned short octaves)
     }
 }
 //-----------------------------------------------------------------------
-double PUForceField::getFrequency(void) const
+double PUForceField::getFrequency() const
 {
     return _frequency;
 }
@@ -301,7 +296,7 @@ void PUForceField::setFrequency(double frequency)
     }
 }
 //-----------------------------------------------------------------------
-double PUForceField::getAmplitude(void) const
+double PUForceField::getAmplitude() const
 {
     return _amplitude;
 }
@@ -315,7 +310,7 @@ void PUForceField::setAmplitude(double amplitude)
     }
 }
 //-----------------------------------------------------------------------
-double PUForceField::getPersistence(void) const
+double PUForceField::getPersistence() const
 {
     return _persistence;
 }
@@ -329,7 +324,7 @@ void PUForceField::setPersistence(double persistence)
     }
 }
 //-----------------------------------------------------------------------
-unsigned int PUForceField::getForceFieldSize(void) const
+unsigned int PUForceField::getForceFieldSize() const
 {
     return _forceFieldSize;
 }
@@ -343,7 +338,7 @@ void PUForceField::setForceFieldSize(unsigned int forceFieldSize)
     }
 }
 //-----------------------------------------------------------------------
-Vec3 PUForceField::getWorldSize(void) const
+Vec3 PUForceField::getWorldSize() const
 {
     return _worldSize;
 }

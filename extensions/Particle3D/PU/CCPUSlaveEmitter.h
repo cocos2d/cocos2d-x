@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -40,7 +41,7 @@ public:
 
     /** 
     */
-    const std::string& getMasterTechniqueName(void) const;
+    const std::string& getMasterTechniqueName() const;
 
     /** 
     */
@@ -48,7 +49,7 @@ public:
 
     /** 
     */
-    const std::string& getMasterEmitterName(void) const;
+    const std::string& getMasterEmitterName() const;
 
     /** See ParticleEmitter.
     */
@@ -68,7 +69,7 @@ public:
 
     /** See ParticleEmitter.
     */
-    virtual void notifyStart (void) override;
+    virtual void notifyStart () override;
 
     /** Initialise the emitted particle. This means that its position is set.
     */
@@ -86,8 +87,8 @@ public:
     virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUSlaveEmitter(void);
-    virtual ~PUSlaveEmitter(void){};
+    PUSlaveEmitter();
+    virtual ~PUSlaveEmitter(){};
 
 protected:
 

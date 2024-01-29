@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2014-2017 Chukong Technologies Inc.
+ * Copyright (c) 2014-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -202,10 +203,6 @@ bool js_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, jsval *vp
         
         auto ret = EventListenerAcceleration::create(arg0);
         JS::RootedValue jsret(cx, OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerAcceleration>(cx, ret)));
-        if (wrapper)
-        {
-            wrapper->setOwner(cx, jsret);
-        }
         args.rval().set(jsret);
         return true;
     }
@@ -275,10 +272,6 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
 
         auto ret = EventListenerCustom::create(arg0, arg1);
         JS::RootedValue jsret(cx, OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerCustom>(cx, ret)));
-        if (wrapper)
-        {
-            wrapper->setOwner(cx, jsret);
-        }
         args.rval().set(jsret);
         return true;
     }

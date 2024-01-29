@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -59,18 +60,18 @@ public:
      *
      * @return the instance of LuaEngine.
      */
-    static LuaEngine* getInstance(void);
+    static LuaEngine* getInstance();
     /**
      * Get defaultEngine of LuaEngine, it was deprecated.
      *
      * @return the instance of LuaEngine.
      */
-    CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
+    CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine() { return LuaEngine::getInstance(); }
     
     /** 
      * Destructor of LuaEngine.
      */
-    virtual ~LuaEngine(void);
+    virtual ~LuaEngine();
     
     /**
      * Get ccScriptType of LuaEngine used, it is always kScriptTypeLua.
@@ -87,7 +88,7 @@ public:
      *
      * @return LuaStack object.
      */
-    LuaStack *getLuaStack(void) {
+    LuaStack *getLuaStack() {
         return _stack;
     }
     
@@ -216,11 +217,11 @@ public:
      */
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
 private:
-    LuaEngine(void)
+    LuaEngine()
     : _stack(nullptr)
     {
     }
-    bool init(void);
+    bool init();
     int handleNodeEvent(void* data);
     int handleMenuClickedEvent(void* data);
     int handleCallFuncActionEvent(void* data);

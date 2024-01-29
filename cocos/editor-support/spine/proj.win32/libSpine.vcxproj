@@ -14,6 +14,7 @@
     <ClCompile Include="..\Animation.c" />
     <ClCompile Include="..\AnimationState.c" />
     <ClCompile Include="..\AnimationStateData.c" />
+    <ClCompile Include="..\Array.c" />
     <ClCompile Include="..\Atlas.c" />
     <ClCompile Include="..\AtlasAttachmentLoader.c" />
     <ClCompile Include="..\Attachment.c" />
@@ -22,7 +23,9 @@
     <ClCompile Include="..\Bone.c" />
     <ClCompile Include="..\BoneData.c" />
     <ClCompile Include="..\BoundingBoxAttachment.c" />
+    <ClCompile Include="..\ClippingAttachment.c" />
     <ClCompile Include="..\Cocos2dAttachmentLoader.cpp" />
+    <ClCompile Include="..\Color.c" />
     <ClCompile Include="..\Event.c" />
     <ClCompile Include="..\EventData.c" />
     <ClCompile Include="..\extension.c" />
@@ -33,27 +36,33 @@
     <ClCompile Include="..\PathAttachment.c" />
     <ClCompile Include="..\PathConstraint.c" />
     <ClCompile Include="..\PathConstraintData.c" />
+    <ClCompile Include="..\PointAttachment.c" />
     <ClCompile Include="..\RegionAttachment.c" />
     <ClCompile Include="..\Skeleton.c" />
     <ClCompile Include="..\SkeletonAnimation.cpp" />
     <ClCompile Include="..\SkeletonBatch.cpp" />
     <ClCompile Include="..\SkeletonBinary.c" />
     <ClCompile Include="..\SkeletonBounds.c" />
+    <ClCompile Include="..\SkeletonClipping.c" />
     <ClCompile Include="..\SkeletonData.c" />
     <ClCompile Include="..\SkeletonJson.c" />
     <ClCompile Include="..\SkeletonRenderer.cpp" />
+    <ClCompile Include="..\SkeletonTwoColorBatch.cpp" />
     <ClCompile Include="..\Skin.c" />
     <ClCompile Include="..\Slot.c" />
     <ClCompile Include="..\SlotData.c" />
     <ClCompile Include="..\spine-cocos2dx.cpp" />
     <ClCompile Include="..\TransformConstraint.c" />
     <ClCompile Include="..\TransformConstraintData.c" />
+    <ClCompile Include="..\Triangulator.c" />
     <ClCompile Include="..\VertexAttachment.c" />
+    <ClCompile Include="..\VertexEffect.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Animation.h" />
     <ClInclude Include="..\AnimationState.h" />
     <ClInclude Include="..\AnimationStateData.h" />
+    <ClInclude Include="..\Array.h" />
     <ClInclude Include="..\Atlas.h" />
     <ClInclude Include="..\AtlasAttachmentLoader.h" />
     <ClInclude Include="..\Attachment.h" />
@@ -62,26 +71,33 @@
     <ClInclude Include="..\Bone.h" />
     <ClInclude Include="..\BoneData.h" />
     <ClInclude Include="..\BoundingBoxAttachment.h" />
+    <ClInclude Include="..\ClippingAttachment.h" />
     <ClInclude Include="..\Cocos2dAttachmentLoader.h" />
+    <ClInclude Include="..\Color.h" />
+    <ClInclude Include="..\dll.h" />
     <ClInclude Include="..\Event.h" />
     <ClInclude Include="..\EventData.h" />
     <ClInclude Include="..\extension.h" />
     <ClInclude Include="..\IkConstraint.h" />
     <ClInclude Include="..\IkConstraintData.h" />
     <ClInclude Include="..\Json.h" />
+    <ClInclude Include="..\kvec.h" />
     <ClInclude Include="..\MeshAttachment.h" />
     <ClInclude Include="..\PathAttachment.h" />
     <ClInclude Include="..\PathConstraint.h" />
     <ClInclude Include="..\PathConstraintData.h" />
+    <ClInclude Include="..\PointAttachment.h" />
     <ClInclude Include="..\RegionAttachment.h" />
     <ClInclude Include="..\Skeleton.h" />
     <ClInclude Include="..\SkeletonAnimation.h" />
     <ClInclude Include="..\SkeletonBatch.h" />
     <ClInclude Include="..\SkeletonBinary.h" />
     <ClInclude Include="..\SkeletonBounds.h" />
+    <ClInclude Include="..\SkeletonClipping.h" />
     <ClInclude Include="..\SkeletonData.h" />
     <ClInclude Include="..\SkeletonJson.h" />
     <ClInclude Include="..\SkeletonRenderer.h" />
+    <ClInclude Include="..\SkeletonTwoColorBatch.h" />
     <ClInclude Include="..\Skin.h" />
     <ClInclude Include="..\Slot.h" />
     <ClInclude Include="..\SlotData.h" />
@@ -89,11 +105,14 @@
     <ClInclude Include="..\spine.h" />
     <ClInclude Include="..\TransformConstraint.h" />
     <ClInclude Include="..\TransformConstraintData.h" />
+    <ClInclude Include="..\Triangulator.h" />
     <ClInclude Include="..\VertexAttachment.h" />
+    <ClInclude Include="..\VertexEffect.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}</ProjectGuid>
     <RootNamespace>libSpine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

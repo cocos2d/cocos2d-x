@@ -5,6 +5,8 @@
  * Copyright 2012 Yannick Loriot. All rights reserved.
  * http://yannickloriot.com
  * 
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -79,7 +81,7 @@ public:
      */
     void setOn(bool isOn, bool animated);
     void setOn(bool isOn);
-    bool isOn(void) const { return _on; }
+    bool isOn() const { return _on; }
     bool hasMoved() const { return _moved; }
     virtual void setEnabled(bool enabled) override;
 

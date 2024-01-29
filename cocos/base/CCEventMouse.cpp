@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -38,7 +39,7 @@ EventMouse::EventMouse(MouseEventType mouseEventCode)
 , _scrollY(0.0f)
 , _startPointCaptured(false)
 {
-};
+}
 
 // returns the current touch location in screen coordinates
 Vec2 EventMouse::getLocationInView() const 

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -23,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "editor-support/cocostudio/TriggerMng.h"
+#include <cmath>
 #include "json/prettywriter.h"
 #include "json/stringbuffer.h"
 #include "base/CCDirector.h"
@@ -36,14 +38,14 @@ namespace cocostudio {
     
 TriggerMng* TriggerMng::_sharedTriggerMng = nullptr;
 
-TriggerMng::TriggerMng(void)
+TriggerMng::TriggerMng()
 : _movementDispatches(new std::unordered_map<Armature*, ArmatureMovementDispatcher*>)
 {
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
     _eventDispatcher->retain();
 }
 
-TriggerMng::~TriggerMng(void)
+TriggerMng::~TriggerMng()
 {
     removeAll();
 	_triggerObjs.clear();
@@ -156,7 +158,7 @@ TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
     return iter->second;
 }
 
-void TriggerMng::removeAll(void)
+void TriggerMng::removeAll()
 {
     auto etIter = _triggerObjs.begin();
     for (;etIter != _triggerObjs.end(); ++etIter)
@@ -188,7 +190,7 @@ bool TriggerMng::removeTriggerObj(unsigned int id)
 	return true;
 }
 
-bool TriggerMng::isEmpty(void) const
+bool TriggerMng::isEmpty() const
 {
     return _triggerObjs.empty();
 }
@@ -219,7 +221,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
             std::string key1 = pTriggerArray[i1].GetName(pCocoLoader);
             const char *str1 = pTriggerArray[i1].GetValue(pCocoLoader);
             
-            if (key1.compare("actions") == 0)
+            if (key1 == "actions")
             {
                 rapidjson::Value actionsItem(rapidjson::kArrayType);
                 
@@ -235,14 +237,14 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                     {
                         std::string key2 = pActionArray[i3].GetName(pCocoLoader);
                         const char *str2 = pActionArray[i3].GetValue(pCocoLoader);
-                        if (key2.compare("classname") == 0)
+                        if (key2 == "classname")
                         {
                             if (str2 != nullptr)
                             {
                                 action.AddMember("classname", rapidjson::Value(str2,allocator), allocator);
                             }
                         }
-                        else if (key2.compare("dataitems") == 0)
+                        else if (key2 == "dataitems")
                         {
                             rapidjson::Value dataitems(rapidjson::kArrayType);
                             size = pActionArray[i3].GetChildNum();
@@ -256,7 +258,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                 {
                                     std::string key3 = pDataItemArray[i5].GetName(pCocoLoader);
                                     const char *str3 = pDataItemArray[i5].GetValue(pCocoLoader);
-                                    if (key3.compare("key") == 0)
+                                    if (key3 == "key")
                                     {
                                         if (str3 != nullptr)
                                         {
@@ -274,7 +276,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                         {
                                             int nV = atoi(str3);
                                             float fV = utils::atof(str3);
-                                            if (fabs(nV - fV) < 0.0000001)
+                                            if (std::fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);
                                             }
@@ -295,7 +297,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                 
                 vElemItem.AddMember("actions", actionsItem, allocator);
             }
-            else if (key1.compare("conditions") == 0)
+            else if (key1 == "conditions")
             {
                 rapidjson::Value condsItem(rapidjson::kArrayType);
                 
@@ -311,14 +313,14 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                     {
                         std::string key4 = pConditionArray[i7].GetName(pCocoLoader);
                         const char *str4 = pConditionArray[i7].GetValue(pCocoLoader);
-                        if (key4.compare("classname") == 0)
+                        if (key4 == "classname")
                         {
                             if (str4 != nullptr)
                             {
                                 cond.AddMember("classname", rapidjson::Value(str4,allocator), allocator);
                             }
                         }
-                        else if (key4.compare("dataitems") == 0)
+                        else if (key4 == "dataitems")
                         {
                             rapidjson::Value dataitems(rapidjson::kArrayType);
                             size = pConditionArray[i7].GetChildNum();
@@ -332,7 +334,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                 {
                                     std::string key5 = pDataItemArray[i9].GetName(pCocoLoader);
                                     const char *str5 = pDataItemArray[i9].GetValue(pCocoLoader);
-                                    if (key5.compare("key") == 0)
+                                    if (key5 == "key")
                                     {
                                         if (str5 != nullptr)
                                         {
@@ -350,7 +352,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                         {
                                             int nV = atoi(str5);
                                             float fV = utils::atof(str5);
-                                            if (fabs(nV - fV) < 0.0000001)
+                                            if (std::fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);
                                             }
@@ -371,7 +373,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                 
                 vElemItem.AddMember("conditions", condsItem, allocator);
             }
-            else if (key1.compare("events") == 0)
+            else if (key1 == "events")
             {
                 rapidjson::Value eventsItem(rapidjson::kArrayType);
                 
@@ -383,7 +385,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                     stExpCocoNode *pEventArray = pEventsArray->GetChildArray(pCocoLoader);
                     std::string key6 = pEventArray[0].GetName(pCocoLoader);
                     const char *str6 = pEventArray[0].GetValue(pCocoLoader);
-                    if (key6.compare("id") == 0 && str6 != nullptr)
+                    if (key6 == "id" && str6 != nullptr)
                     {
                         event.AddMember("id", atoi(str6), allocator);
                         eventsItem.PushBack(event, allocator);
@@ -391,7 +393,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                 }
                 vElemItem.AddMember("events", eventsItem, allocator);
             }
-            else if (key1.compare("id") == 0)
+            else if (key1 == "id")
             {
                 if (str1 != nullptr)
                 {
@@ -491,13 +493,13 @@ void TriggerMng::addEventListenerWithFixedPriority(cocos2d::EventListener* liste
     _eventDispatcher->addEventListenerWithFixedPriority(listener, fixedPriority);
 }
 
-ArmatureMovementDispatcher::ArmatureMovementDispatcher(void)
+ArmatureMovementDispatcher::ArmatureMovementDispatcher()
 : _mapEventAnimation(nullptr)
 {
 	_mapEventAnimation = new (std::nothrow) std::unordered_map<Ref*, SEL_MovementEventCallFunc> ;
 }
 
-ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
+ArmatureMovementDispatcher::~ArmatureMovementDispatcher()
 {
 	_mapEventAnimation->clear();
 	CC_SAFE_DELETE(_mapEventAnimation);

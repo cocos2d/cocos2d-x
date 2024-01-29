@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -146,7 +147,7 @@ std::string DisplayData::changeDisplayToTexture(const std::string& displayName)
 {
     // remove .xxx
     std::string textureName = displayName;
-    size_t startPos = textureName.find_last_of(".");
+    size_t startPos = textureName.find_last_of('.');
 
     if(startPos != std::string::npos)
     {
@@ -156,7 +157,7 @@ std::string DisplayData::changeDisplayToTexture(const std::string& displayName)
     return textureName;
 }
 
-DisplayData::DisplayData(void)
+DisplayData::DisplayData()
     : displayType(CS_DISPLAY_MAX)
     , displayName("")
 {
@@ -168,7 +169,7 @@ void DisplayData::copy(DisplayData *displayData)
     displayType = displayData->displayType;
 }
 
-SpriteDisplayData::SpriteDisplayData(void)
+SpriteDisplayData::SpriteDisplayData()
 {
     displayType = CS_DISPLAY_SPRITE;
 }
@@ -184,25 +185,25 @@ void SpriteDisplayData::copy(DisplayData *displayData)
     }
 }
 
-ArmatureDisplayData::ArmatureDisplayData(void)
+ArmatureDisplayData::ArmatureDisplayData()
 {
     displayType = CS_DISPLAY_ARMATURE;
 }
 
-ParticleDisplayData::ParticleDisplayData(void)
+ParticleDisplayData::ParticleDisplayData()
 {
     displayType = CS_DISPLAY_PARTICLE;
 }
 
 
 
-BoneData::BoneData(void)
+BoneData::BoneData()
     : name("")
     , parentName("")
 {
 }
 
-BoneData::~BoneData(void)
+BoneData::~BoneData()
 {
 }
 
@@ -246,7 +247,7 @@ BoneData *ArmatureData::getBoneData(const std::string& boneName)
     return static_cast<BoneData*>(boneDataDic.at(boneName));
 }
 
-FrameData::FrameData(void)
+FrameData::FrameData()
     : frameID(0)
     , duration(1)
     , tweenEasing(cocos2d::tweenfunc::Linear)
@@ -263,9 +264,9 @@ FrameData::FrameData(void)
 {
 }
 
-FrameData::~FrameData(void)
+FrameData::~FrameData()
 {
-    CC_SAFE_DELETE(easingParams);
+    CC_SAFE_DELETE_ARRAY(easingParams);
 }
 
 void FrameData::copy(const BaseData *baseData)
@@ -280,7 +281,7 @@ void FrameData::copy(const BaseData *baseData)
         tweenEasing = frameData->tweenEasing;
         easingParamNumber = frameData->easingParamNumber;
         
-        CC_SAFE_DELETE(easingParams);
+        CC_SAFE_DELETE_ARRAY(easingParams);
         if (easingParamNumber != 0)
         {
             easingParams = new (std::nothrow) float[easingParamNumber];
@@ -303,7 +304,7 @@ MovementBoneData::MovementBoneData()
 {
 }
 
-MovementBoneData::~MovementBoneData(void)
+MovementBoneData::~MovementBoneData()
 {
 }
 
@@ -324,7 +325,7 @@ FrameData *MovementBoneData::getFrameData(int index)
 
 
 
-MovementData::MovementData(void)
+MovementData::MovementData()
     : name("")
     , duration(0)
     , scale(1.0f)
@@ -335,7 +336,7 @@ MovementData::MovementData(void)
 {
 }
 
-MovementData::~MovementData(void)
+MovementData::~MovementData()
 {
 }
 
@@ -351,11 +352,11 @@ MovementBoneData *MovementData::getMovementBoneData(const std::string& boneName)
 
 
 
-AnimationData::AnimationData(void)
+AnimationData::AnimationData()
 {
 }
 
-AnimationData::~AnimationData(void)
+AnimationData::~AnimationData()
 {
 }
 

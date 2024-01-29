@@ -1312,21 +1312,6 @@
     <ClCompile Include="..\..\external\flatbuffers\idl_parser.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_js.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_php.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_python.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\reflection.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\util.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
@@ -2008,6 +1993,14 @@
     <ClCompile Include="..\..\external\md5\md5.c">
       <Filter>external\md5</Filter>
     </ClCompile>
+    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-common.cpp">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCController.cpp" />
+    <ClCompile Include="..\base\CCController-linux-win32.cpp" />
+    <ClCompile Include="..\base\CCEventController.cpp" />
+    <ClCompile Include="..\base\CCEventListenerController.cpp" />
+    <ClCompile Include="..\precheader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3175,9 +3168,6 @@
     <ClInclude Include="..\..\external\flatbuffers\util.h">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\hash.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
@@ -3904,10 +3894,6 @@
     <ClInclude Include="..\audio\win32\AudioDecoderManager.h">
       <Filter>audioengine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\gprc.h" />
-    <ClInclude Include="..\..\external\flatbuffers\code_generators.h" />
-    <ClInclude Include="..\..\external\flatbuffers\reflection.h" />
-    <ClInclude Include="..\..\external\flatbuffers\reflection_generated.h" />
     <ClInclude Include="..\network\Uri.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
@@ -3920,6 +3906,13 @@
     <ClInclude Include="..\..\external\md5\md5.h">
       <Filter>external\md5</Filter>
     </ClInclude>
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-common.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCController.h" />
+    <ClInclude Include="..\base\CCEventController.h" />
+    <ClInclude Include="..\base\CCEventListenerController.h" />
+    <ClInclude Include="..\precheader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

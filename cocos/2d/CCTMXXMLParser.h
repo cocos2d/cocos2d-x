@@ -2,7 +2,8 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -35,6 +36,7 @@ THE SOFTWARE.
 #include "platform/CCSAXParser.h"
 #include "base/CCVector.h"
 #include "base/CCValue.h"
+#include "base/CCMap.h"
 #include "2d/CCTMXObjectGroup.h" // needed for Vector<TMXObjectGroup*> for binding
 
 #include <string>
@@ -71,7 +73,8 @@ enum {
     TMXPropertyLayer,
     TMXPropertyObjectGroup,
     TMXPropertyObject,
-    TMXPropertyTile
+    TMXPropertyTile,
+    TMXPropertyAnimation
 };
 
 typedef enum TMXTileFlags_ {
@@ -105,7 +108,7 @@ public:
      */
     virtual ~TMXLayerInfo();
 
-    void setProperties(ValueMap properties);
+    void setProperties(const ValueMap& properties);
     ValueMap& getProperties();
 
     ValueMap            _properties;
@@ -116,6 +119,35 @@ public:
     unsigned char       _opacity;
     bool                _ownTiles;
     Vec2               _offset;
+};
+
+/** @brief TMXTileAnimFrame contains the information about the frame of a animated tile like:
+- Frame gid
+- duration of this frame
+
+This information is obtained from the TMX file.
+*/
+struct CC_DLL TMXTileAnimFrame
+{
+    TMXTileAnimFrame(uint32_t tileID, float duration);
+    /** gid of the frame */
+    uint32_t _tileID = 0;
+    /** duration of the frame */
+    float _duration = 0.0f;
+};
+
+/** @brief TMXTileAnimInfo contains the information about the animated tile like:
+- Animated Tile gid
+- frames the animated tile contains
+
+This information is obtained from the TMX file.
+*/
+struct CC_DLL TMXTileAnimInfo : public Ref
+{
+    static TMXTileAnimInfo * create(uint32_t  tileID);
+    explicit TMXTileAnimInfo(uint32_t  tileID);
+    uint32_t _tileID = 0;
+    std::vector<TMXTileAnimFrame> _frames;
 };
 
 /** @brief TMXTilesetInfo contains the information about the tilesets like:
@@ -142,6 +174,9 @@ public:
     //! size in pixels of the image
     Size            _imageSize;
     std::string     _originSourceImage;
+
+    //! map from gid of animated tile to its animation info
+    Map<uint32_t, TMXTileAnimInfo*> _animationInfo;
 
 public:
     /**
@@ -342,6 +377,7 @@ protected:
     int _currentFirstGID;
     bool _recordFirstGID;
     std::string _externalTilesetFilename;
+    std::string _externalTilesetFullPath;
 };
 
 // end of tilemap_parallax_nodes group

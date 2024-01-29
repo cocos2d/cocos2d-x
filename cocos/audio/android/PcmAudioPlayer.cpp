@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -68,9 +69,10 @@ bool PcmAudioPlayer::prepare(const std::string &url, const PcmData &decResult)
 
     _track->onStateChanged = [this, callerThreadId](Track::State state) {
         // It maybe in sub thread
-        auto func = [this, state](){
+        Track::State prevState = _track->getPrevState();
+        auto func = [this, state, prevState](){
             // It's in caller's thread
-            if (state == Track::State::OVER && _track->getPrevState() != Track::State::STOPPED)
+            if (state == Track::State::OVER && prevState != Track::State::STOPPED)
             {
                 if (_playEventCallback != nullptr)
                 {
@@ -158,26 +160,26 @@ void PcmAudioPlayer::setPlayEventCallback(const PlayEventCallback &playEventCall
 void PcmAudioPlayer::play()
 {
     // put track to AudioMixerController
-    ALOGV("PcmAudioPlayer (%p) play (%s) ...", this, _url.c_str());
+    ALOGV("PcmAudioPlayer (%p) play, url: %s", this, _url.c_str());
     _controller->addTrack(_track);
     _track->setState(Track::State::PLAYING);
 }
 
 void PcmAudioPlayer::pause()
 {
-    ALOGV("PcmAudioPlayer (%p) pause ...", this);
+    ALOGV("PcmAudioPlayer (%p) pause, url: %s", this, _url.c_str());
     _track->setState(Track::State::PAUSED);
 }
 
 void PcmAudioPlayer::resume()
 {
-    ALOGV("PcmAudioPlayer (%p) resume ...", this);
+    ALOGV("PcmAudioPlayer (%p) resume, url: %s", this, _url.c_str());
     _track->setState(Track::State::RESUMED);
 }
 
 void PcmAudioPlayer::stop()
 {
-    ALOGV("PcmAudioPlayer (%p) stop ...", this);
+    ALOGV("PcmAudioPlayer (%p) stop, url: %s", this, _url.c_str());
     _track->setState(Track::State::STOPPED);
 }
 

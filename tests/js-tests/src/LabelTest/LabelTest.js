@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -1078,7 +1079,7 @@ var LabelTTFStrokeShadowTest = AtlasDemo.extend({
         var fontDefRedShadow = new cc.FontDefinition();
         fontDefRedShadow.fontName = "Arial";
         fontDefRedShadow.fontSize = 32;
-        fontDefRedShadow.textAlign = cc.TEXT_ALIGNMENT_CENTER;
+        fontDefRedShadow.textAlign = cc.TEXT_ALIGNMENT_LEFT;
         fontDefRedShadow.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
         fontDefRedShadow.fillStyle = redColor;
         fontDefRedShadow.boundingWidth = blockSize.width;
@@ -1099,7 +1100,7 @@ var LabelTTFStrokeShadowTest = AtlasDemo.extend({
         var fontDefBlueStroke = new cc.FontDefinition();
         fontDefBlueStroke.fontName = "Arial";
         fontDefBlueStroke.fontSize = 32;
-        fontDefBlueStroke.textAlign = cc.TEXT_ALIGNMENT_CENTER;
+        fontDefBlueStroke.textAlign = cc.TEXT_ALIGNMENT_LEFT;
         fontDefBlueStroke.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
         fontDefBlueStroke.fillStyle = blueColor;
         fontDefBlueStroke.boundingWidth = blockSize.width;
@@ -1118,7 +1119,7 @@ var LabelTTFStrokeShadowTest = AtlasDemo.extend({
         var fontDefRedStrokeShadow = new cc.FontDefinition();
         fontDefRedStrokeShadow.fontName = "Arial";
         fontDefRedStrokeShadow.fontSize = 32;
-        fontDefRedStrokeShadow.textAlign = cc.TEXT_ALIGNMENT_CENTER;
+        fontDefRedStrokeShadow.textAlign = cc.TEXT_ALIGNMENT_LEFT;
         fontDefRedStrokeShadow.verticalAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
         fontDefRedStrokeShadow.fillStyle = blueColor;
         fontDefRedStrokeShadow.boundingWidth = blockSize.width;

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -147,6 +148,19 @@ namespace experimental{
                 _impl->setVisible(visible);
             }
         }
+        
+        void WebView::setOpacityWebView(float opacity){
+            _impl->setOpacityWebView(opacity);
+        }
+        
+        float WebView::getOpacityWebView() const{
+            return _impl->getOpacityWebView();
+        }
+        
+        void WebView::setBackgroundTransparent()
+        {
+            _impl->setBackgroundTransparent();
+        };
 
         void WebView::onEnter()
         {

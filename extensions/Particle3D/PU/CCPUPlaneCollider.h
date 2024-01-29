@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -46,7 +47,7 @@ public:
 
     /** Returns the normal of the plane
     */
-    const Vec3 getNormal(void) const;
+    const Vec3 getNormal() const;
 
     /** Sets the normal of the plane
     */
@@ -59,8 +60,8 @@ public:
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	
-    PUPlaneCollider(void);
-    virtual ~PUPlaneCollider(void);
+    PUPlaneCollider();
+    virtual ~PUPlaneCollider();
 
 protected:
     Vec3 _normal;

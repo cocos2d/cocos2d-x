@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -156,7 +157,7 @@ Controller::Controller()
 }
 
 void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive) {
-    JniHelper::callStaticVoidMethod("org/cocos2dx/lib/GameControllerHelper", "receiveExternalKeyEvent", _deviceId, externalKeyCode, receive);
+    JniHelper::callStaticVoidMethod("org.cocos2dx.lib.GameControllerHelper", "receiveExternalKeyEvent", _deviceId, externalKeyCode, receive);
 }
 
 NS_CC_END

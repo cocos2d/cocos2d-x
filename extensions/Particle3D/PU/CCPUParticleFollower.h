@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -46,19 +47,19 @@ public:
 
     /** 
     */
-    float getMaxDistance(void) const;
+    float getMaxDistance() const;
     void setMaxDistance(float maxDistance);
 
     /** 
     */
-    float getMinDistance(void) const;
+    float getMinDistance() const;
     void setMinDistance(float minDistance);
 
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUParticleFollower(void);
-    virtual ~PUParticleFollower(void);
+    PUParticleFollower();
+    virtual ~PUParticleFollower();
 
 protected:
     float _minDistance;
