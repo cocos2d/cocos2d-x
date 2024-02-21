@@ -64,17 +64,17 @@
 
 #include "js_Effect3D_bindings.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_webView_auto.hpp"
 #include "scripting/js-bindings/manual/experimental/jsb_cocos2dx_experimental_webView_manual.h"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_video_auto.hpp"
 #include "scripting/js-bindings/manual/experimental/jsb_cocos2dx_experimental_video_manual.h"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "scripting/js-bindings/auto/jsb_cocos2dx_audioengine_auto.hpp"
 #endif
 
@@ -165,14 +165,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_DrawNode3D_bindings);
     sc->addRegisterCallback(register_Effect3D_bindings);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) && !defined(CC_TARGET_OS_TVOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) && !defined(CC_TARGET_OS_TVOS)
     sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     sc->addRegisterCallback(register_all_cocos2dx_audioengine);
 #endif
 

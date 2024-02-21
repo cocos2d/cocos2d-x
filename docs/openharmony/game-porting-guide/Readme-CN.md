@@ -1,0 +1,40 @@
+# Readme
+
+- 基于Cocos的游戏移植介绍
+  - [OpenHarmony操作系统简介](openharmony-introduction.md)
+  - [Cocos引擎简介](cocos-engine-introduction.md)
+  - [基于Cocos引擎的游戏移植方案](cocos-game-porting-solution.md)
+- 游戏移植操作指导
+  - [游戏移植流程简介](game-porting-process.md)
+  - 准备开发环境
+    - [开发板或终端设备要求](development-board-device-requirements.md)
+    - [软件环境要求](software-environment-requirements.md)
+    - [待移植工程依赖关系的识别](project-dependency-identification.md)
+  - 游戏引擎最小化移植
+    - [引擎最小化移植总体思路](minimum-game-entry-adaptation.md)
+    - [Cocos 2dx引擎适配OpenHarmony](cocos2d-x-adaptation-to-openharmony.md)
+  - [游戏最小化移植](minimum-game-porting.md)
+  - 游戏引擎完整移植
+    - [文件操作](file-operation.md)
+    - [图像渲染](image-rendering.md)
+    - [动画效果](animation-effects.md)
+    - [媒体](media.md)
+    - [网络](network.md)
+  - 游戏完整功能移植
+    - HMS Core相关功能
+      - [推送服务](push-service.md)
+      - [广告标识服务](oaid.md)
+      - [华为帐号](account-management.md)
+      - [广告](ads.md)
+      - [应用内支付](payment.md)
+    - [三方SDK导入](third-party-sdk-import.md)
+    - [日志收集](log-collection.md)
+- 示例工程
+  - cocos2dx 3.17.2  
+    - [cpp 最小依赖工程](https://gitee.com/openharmony-sig/cocos2dx/tree/cocos2d-x-3.17.2-ohos/tests/cpp-empty-test/proj.ohos)
+    - [cpp 功能测试工程](https://gitee.com/openharmony-sig/cocos2dx/tree/cocos2d-x-3.17.2-ohos/tests/cpp-tests/proj.ohos)
+  - cocos2dx 2.2.6  
+    - [cpp 最小依赖工程](https://gitee.com/openharmony-sig/cocos2dx/tree/cocos2d-x-2.2.6-ohos/samples/Cpp/HelloCpp/proj.ohos)
+    - [cpp 功能测试工程](https://gitee.com/openharmony-sig/cocos2dx/tree/cocos2d-x-2.2.6-ohos/samples/Cpp/TestCpp/proj.ohos)
+
+- 参考

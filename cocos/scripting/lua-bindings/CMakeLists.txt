@@ -151,6 +151,21 @@ elseif(ANDROID)
         auto/lua_cocos2dx_experimental_webview_auto.cpp
         manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
         )
+elseif(OHOS)
+    set(lua_bindings_manual_headers
+        ${lua_bindings_manual_headers}
+        auto/lua_cocos2dx_experimental_webview_auto.hpp
+        manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
+        auto/lua_cocos2dx_experimental_video_auto.hpp
+        manual/ui/lua_cocos2dx_experimental_video_manual.hpp
+        )
+    set(lua_bindings_manual_files
+        ${lua_bindings_manual_files}
+        auto/lua_cocos2dx_experimental_webview_auto.cpp
+        manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
+        auto/lua_cocos2dx_experimental_video_auto.cpp
+        manual/ui/lua_cocos2dx_experimental_video_manual.cpp
+        )
 endif()
 
 set(lua_bindings_files

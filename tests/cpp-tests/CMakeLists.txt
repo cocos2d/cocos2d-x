@@ -33,6 +33,11 @@ if(ANDROID)
          Classes/JNITest/JNITest.cpp
          proj.android/app/jni/main.cpp
          )
+elseif(OHOS)
+    set(APP_NAME cpp_tests)
+    list(APPEND GAME_SOURCE
+        proj.ohos/entry/src/main/cpp/main.cpp
+         )
 elseif(LINUX)
     list(APPEND GAME_SOURCE
          proj.linux/main.cpp
@@ -334,7 +339,7 @@ list(APPEND GAME_SOURCE
      # Classes/VRTest/VRTest.h
      )
 
-if(ANDROID OR IOS)
+if(OHOS OR ANDROID OR IOS)
     list(APPEND GAME_HEADER
          Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.h
          Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.h
@@ -449,12 +454,14 @@ set(all_code_files
     ${GAME_SOURCE}
     )
 
-if(NOT ANDROID)
-    add_executable(${APP_NAME} ${all_code_files})
-else()
+if (ANDROID)
     add_library(${APP_NAME} SHARED ${all_code_files})
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
+elseif (OHOS)
+    add_library(${APP_NAME} STATIC ${all_code_files})
+else()
+    add_executable(${APP_NAME} ${all_code_files})
 endif()
 
 target_link_libraries(${APP_NAME} cocos2d)

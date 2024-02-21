@@ -100,7 +100,7 @@ void WebSocketDelayTest::startTestCallback(Ref* sender)
     std::vector<std::string> protocols;
     protocols.push_back("myprotocol_1");
     protocols.push_back("myprotocol_2");
-    if (!_wsiSendText->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
+    if (!_wsiSendText->init(*this, "ws://echo.websocket.events", &protocols, "cacert.pem"))
     {
         CC_SAFE_DELETE(_wsiSendText);
     }

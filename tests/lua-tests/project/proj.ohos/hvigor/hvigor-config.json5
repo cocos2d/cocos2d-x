@@ -1,0 +1,8 @@
+{
+  "hvigorVersion": "file:../dependencies/hvigor-3.0.4-s.tgz",
+  "dependencies": {
+    "@ohos/hvigor-ohos-plugin":"file:../dependencies/hvigor-ohos-plugin-3.0.4-s.tgz",
+    "rollup": "file:../dependencies/rollup.tgz"
+  }
+}
+

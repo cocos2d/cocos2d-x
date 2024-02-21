@@ -32,7 +32,7 @@ elseif(ANDROID)
     # refer to: cocos/scripting/js-bindings/proj.android
 endif()
 
-if(ANDROID OR IOS)
+if(ANDROID OR IOS OR OHOS)
     set(PLATFORM_HEADER
         ${PLATFORM_HEADER}
         auto/jsb_cocos2dx_experimental_webView_auto.hpp

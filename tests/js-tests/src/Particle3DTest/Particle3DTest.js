@@ -30,9 +30,15 @@ var Particle3DTestIdx = -1;
 
 var PARTICLE_SYSTEM_TAG = 0x0001;
 
-jsb.fileUtils.addSearchPath("res/Sprite3DTest");
-jsb.fileUtils.addSearchPath("res/Particle3D/materials");
-jsb.fileUtils.addSearchPath("res/Particle3D/scripts");
+if (cc.sys.os == cc.sys.OS_OHOS){
+  jsb.fileUtils.addSearchPath("Sprite3DTest");
+  jsb.fileUtils.addSearchPath("Particle3D/materials");
+  jsb.fileUtils.addSearchPath("Particle3D/scripts");
+}else{
+  jsb.fileUtils.addSearchPath("res/Sprite3DTest");
+  jsb.fileUtils.addSearchPath("res/Particle3D/materials");
+  jsb.fileUtils.addSearchPath("res/Particle3D/scripts");
+}
 
 var Particle3DTestDemo = cc.Layer.extend({
     _title:"Particle3D Test",

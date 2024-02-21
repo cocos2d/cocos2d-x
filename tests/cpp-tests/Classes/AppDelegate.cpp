@@ -30,6 +30,7 @@
 #include "controller.h"
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "extensions/cocos-ext.h"
+#include "audio/include/AudioEngine.h"
 
 USING_NS_CC;
 
@@ -127,6 +128,7 @@ void AppDelegate::applicationDidEnterBackground()
     }
     
     Director::getInstance()->stopAnimation();
+    _testController->onEnterBackground();
 }
 
 // this function will be called when the app is active again
@@ -138,4 +140,6 @@ void AppDelegate::applicationWillEnterForeground()
     }
     
     Director::getInstance()->startAnimation();
+    // resume audioEngine, otherwise the opensl audioPlayer will always be suspended.
+    _testController->onEnterForeground();
 }
