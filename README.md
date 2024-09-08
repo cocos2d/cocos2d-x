@@ -4,7 +4,7 @@
 cocos2d-x
 =========
 
-|Win32|Others|
+|Win64|Others|
 | ----|------|
 [![Build status](https://ci.appveyor.com/api/projects/status/nlgirox464j6ldg5/branch/v4?svg=true)](https://ci.appveyor.com/project/minggo/cocos2d-x/branch/v4)|[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.svg?branch=v4)](https://travis-ci.org/cocos2d/cocos2d-x)
 
