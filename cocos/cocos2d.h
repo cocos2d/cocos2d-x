@@ -216,6 +216,13 @@ THE SOFTWARE.
     #include "platform/linux/CCStdC-linux.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    #include "platform/ohos/CCApplication-ohos.h"
+    #include "platform/ohos/CCGLViewImpl-ohos.h"
+    #include "platform/ohos/CCGL-ohos.h"
+    #include "platform/ohos/CCStdC-ohos.h"
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+
 // script_support
 #include "base/CCScriptSupport.h"
 

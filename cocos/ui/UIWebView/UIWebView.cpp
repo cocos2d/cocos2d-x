@@ -22,5 +22,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "ui/UIWebView/UIWebViewImpl-android.h"
-#include "ui/UIWebView/UIWebView-inl.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+	#include "ui/UIWebView/UIWebViewImpl-ohos.h"
+	#include "ui/UIWebView/UIWebView-inl.h"
+#else
+	#include "ui/UIWebView/UIWebViewImpl-android.h"
+	#include "ui/UIWebView/UIWebView-inl.h"
+#endif

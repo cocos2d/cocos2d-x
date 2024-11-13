@@ -70,6 +70,20 @@ elseif(ANDROID)
         # it's special for android, not a common file
         ui/UIWebView/UIWebView.cpp
         )
+elseif(OHOS)
+    set(COCOS_UI_SPECIFIC_HEADER
+       ui/UIWebView/UIWebView.h
+       ui/UIEditBox/UIEditBoxImpl-ohos.h
+       ui/UIWebView/UIWebViewImpl-ohos.h
+       ui/UIVideoPlayer.h
+       ui/UIVideoPlayer-ohos.h
+       )
+    set(COCOS_UI_SPECIFIC_SRC
+       ui/UIEditBox/UIEditBoxImpl-ohos.cpp
+       ui/UIWebView/UIWebViewImpl-ohos.cpp
+       ui/UIWebView/UIWebView.cpp
+       ui/UIVideoPlayer-ohos.cpp
+       )
 endif()
 
 set(COCOS_UI_HEADER

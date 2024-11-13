@@ -62,6 +62,13 @@ public:
     */
     virtual void applicationWillEnterForeground();
 
+    /**
+    @brief  This function will be called when the application screen size is changed.
+    @param new width
+    @param new height
+    */
+    virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
+
 private:
     TestController* _testController;
 };

@@ -53,6 +53,7 @@ THE SOFTWARE.
 // #define CC_PLATFORM_TIZEN             11
 // #define CC_PLATFORM_QT5               12
 // #define CC_PLATFORM_WINRT             13
+#define CC_PLATFORM_OHOS                 14
 
 // Determine target platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -87,6 +88,11 @@ THE SOFTWARE.
     #define CC_TARGET_PLATFORM         CC_PLATFORM_LINUX
 #endif
 
+// OpenHarmony
+#if defined(OHOS)
+    #undef  CC_TARGET_PLATFORM
+    #define CC_TARGET_PLATFORM     CC_PLATFORM_OHOS
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 // post configure
@@ -103,7 +109,7 @@ THE SOFTWARE.
 #endif
 #endif  // CC_PLATFORM_WIN32
 
-#if ((CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS))
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS))
     #define CC_PLATFORM_MOBILE
 #else
     #define CC_PLATFORM_PC
@@ -111,7 +117,7 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #define CC_USE_METAL
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
     #define CC_USE_GLES
 #else
     #define CC_USE_GL
