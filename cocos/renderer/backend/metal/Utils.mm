@@ -25,6 +25,7 @@
 #include "Utils.h"
 #include "DeviceMTL.h"
 #include "base/CCConfiguration.h"
+#include "platform/CCGLView.h"
 
 #define COLOR_ATTAHCMENT_PIXEL_FORMAT MTLPixelFormatBGRA8Unorm
 
@@ -32,6 +33,9 @@ CC_BACKEND_BEGIN
 
 id<MTLTexture> Utils::_defaultColorAttachmentTexture = nil;
 id<MTLTexture> Utils::_defaultDepthStencilAttachmentTexture = nil;
+
+id<MTLTexture> Utils::_defaultMsaaColorTarget = nil;
+id<MTLTexture> Utils::_defaultMsaaDepthTarget = nil;
 
 namespace {
 #define byte(n) ((n) * 8)
@@ -95,6 +99,22 @@ id<MTLTexture> Utils::getDefaultDepthStencilTexture()
         _defaultDepthStencilAttachmentTexture = Utils::createDepthStencilAttachmentTexture();
     
     return _defaultDepthStencilAttachmentTexture;
+}
+
+id<MTLTexture> Utils::getDefaultMsaaColorTarget()
+{
+    if (! _defaultMsaaColorTarget)
+        _defaultMsaaColorTarget = Utils::createDefaultMsaaColorTarget();
+    
+    return _defaultMsaaColorTarget;
+}
+
+id<MTLTexture> Utils::getDefaultMsaaDepthTarget()
+{
+    if (! _defaultMsaaDepthTarget)
+        _defaultMsaaDepthTarget = Utils::createDefaultMsaaDepthTarget();
+    
+    return _defaultMsaaDepthTarget;
 }
 
 void Utils::updateDefaultColorAttachmentTexture(id<MTLTexture> texture)
@@ -168,6 +188,42 @@ id<MTLTexture> Utils::createDepthStencilAttachmentTexture()
     textureDescriptor.pixelFormat = getSupportedDepthStencilFormat();
     textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
     textureDescriptor.usage = MTLTextureUsageRenderTarget;
+    auto ret = [CAMetalLayer.device newTextureWithDescriptor:textureDescriptor];
+    [textureDescriptor release];
+    
+    return ret;
+}
+
+id<MTLTexture> Utils::createDefaultMsaaDepthTarget()
+{
+    auto CAMetalLayer = DeviceMTL::getCAMetalLayer();
+    MTLTextureDescriptor* textureDescriptor = [[MTLTextureDescriptor alloc] init];
+    textureDescriptor.width = CAMetalLayer.drawableSize.width;
+    textureDescriptor.height = CAMetalLayer.drawableSize.height;
+    textureDescriptor.pixelFormat = getSupportedDepthStencilFormat();
+    textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
+    textureDescriptor.usage = MTLTextureUsageRenderTarget;
+    textureDescriptor.textureType = MTLTextureType2DMultisample;
+    textureDescriptor.sampleCount = GLView::getGLContextAttrs().multisamplingCount;
+    
+    auto ret = [CAMetalLayer.device newTextureWithDescriptor:textureDescriptor];
+    [textureDescriptor release];
+    
+    return ret;
+}
+
+id<MTLTexture> Utils::createDefaultMsaaColorTarget()
+{
+    auto CAMetalLayer = DeviceMTL::getCAMetalLayer();
+    MTLTextureDescriptor* textureDescriptor = [[MTLTextureDescriptor alloc] init];
+    textureDescriptor.width = CAMetalLayer.drawableSize.width;
+    textureDescriptor.height = CAMetalLayer.drawableSize.height;
+    textureDescriptor.pixelFormat = getDefaultColorAttachmentPixelFormat();
+    textureDescriptor.mipmapLevelCount = 1;
+    textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
+    textureDescriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;;
+    textureDescriptor.textureType = MTLTextureType2DMultisample;
+    textureDescriptor.sampleCount = GLView::getGLContextAttrs().multisamplingCount;
     auto ret = [CAMetalLayer.device newTextureWithDescriptor:textureDescriptor];
     [textureDescriptor release];
     

@@ -29,6 +29,8 @@ using namespace cocos2d::ui;
 
 RenderTextureTests::RenderTextureTests()
 {
+    ADD_TEST_CASE(RenderTextureWithMsaaSprite3D);
+    
     ADD_TEST_CASE(RenderTextureSave);
     ADD_TEST_CASE(RenderTextureIssue937);
     ADD_TEST_CASE(RenderTextureZbuffer);
@@ -38,6 +40,7 @@ RenderTextureTests::RenderTextureTests()
     ADD_TEST_CASE(RenderTexturePartTest);
     ADD_TEST_CASE(Issue16113Test);
 //    ADD_TEST_CASE(RenderTextureWithSprite3DIssue16894); this Test makes no sense
+    
 };
 
 /**
@@ -889,4 +892,134 @@ std::string RenderTextureWithSprite3DIssue16894::title() const
 std::string RenderTextureWithSprite3DIssue16894::subtitle() const
 {
     return "3 ships, 1st & 3rd are the same";
+}
+
+
+//
+// RenderTextureWithMsaaSprite3D
+//
+RenderTextureWithMsaaSprite3D::RenderTextureWithMsaaSprite3D()
+{
+    // Update
+    scheduleUpdate();
+    
+    // Toggle clear on / off
+    auto visibleSize = Director::getInstance()->getWinSize();
+    _btnScale = MenuItemFont::create("test scale: 1", CC_CALLBACK_1(RenderTextureWithMsaaSprite3D::onScaleTest, this));
+    _btnScale->setPosition({0, 0});
+    _btnMsaa = MenuItemFont::create("msaa: No", CC_CALLBACK_1(RenderTextureWithMsaaSprite3D::onMssa, this));
+    _btnMsaa->setPosition({0, visibleSize.height * 0.15f});
+    
+    auto menu = Menu::create(_btnScale, _btnMsaa, nullptr);
+    addChild(menu, 1);
+    menu->setPosition(Vec2(visibleSize.width * 0.25, visibleSize.height*0.5));
+        
+    resetTest();
+}
+
+void RenderTextureWithMsaaSprite3D::resetTest()
+{
+    if(_renderTexWithBuffer){
+        _renderTexWithBuffer->removeFromParent();
+        _renderTexWithBuffer = nullptr;
+    }
+    _nodes.clear();
+    
+    auto visibleSize = Director::getInstance()->getWinSize();
+        
+    int colums = 8 * _testScale;
+    int rows = 2 * _testScale;
+    
+    float dx = visibleSize.width / (colums + 1);
+    float dy = visibleSize.height / (rows + 1);
+    
+    for(int r = 0; r < rows; ++r ){
+        for(int c = 0; c < colums; ++c ){
+            Node* n = Node::create();
+            n->setPosition({dx * (c + 1), dy * (r + 1)});
+            _nodes.pushBack(n);
+            
+            auto* sprite1 = Sprite::create("Images/grossini.png");
+            sprite1->setAnchorPoint({0.5f, 0.5f});
+            sprite1->setPosition({0.0f, 50.0f});
+            sprite1->setScale(0.4f);
+            n->addChild(sprite1);
+            
+            // Ship - Model is from cocos2d-x test project
+            auto* ship = Sprite3D::create("Sprite3DTest/boss.c3b");
+            ship->setRotation3D(Vec3(180.0f,45.0f,0.0f));
+            ship->setForce2DQueue(true);
+            ship->setScale(5);
+            n->addChild(ship);
+        }
+    }
+
+    _renderTexWithBuffer = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888, backend::PixelFormat::D24S8, _useMsaa);
+
+    _renderTexWithBuffer->setPosition({visibleSize.width/2, visibleSize.height/2});
+    _renderTexWithBuffer->setKeepMatrix(true);
+    addChild(_renderTexWithBuffer);
+}
+
+void RenderTextureWithMsaaSprite3D::onScaleTest(cocos2d::Ref* sender)
+{
+    _testScale++;
+    if(_testScale == 11)
+        _testScale = 1;
+        
+    _btnScale->setString("test scale: " + std::to_string(_testScale));
+    
+    resetTest();
+}
+
+void RenderTextureWithMsaaSprite3D::onMssa(cocos2d::Ref* sender)
+{
+    switch (_useMsaa) {
+        case RenderTexture::MsaaMode::None:{
+            _useMsaa = RenderTexture::MsaaMode::MtlUnified;
+            _btnMsaa->setString( "msaa: Unified");
+        }break;
+        case RenderTexture::MsaaMode::MtlUnified:{
+            _useMsaa = RenderTexture::MsaaMode::MtlCommon;
+            _btnMsaa->setString( "msaa: Common");
+        }break;
+        case RenderTexture::MsaaMode::MtlCommon:{
+            _useMsaa = RenderTexture::MsaaMode::None;
+            _btnMsaa->setString( "msaa: No");
+        }break;
+    }
+        
+    resetTest();
+}
+
+void RenderTextureWithMsaaSprite3D::update(float t)
+{
+    for(Node* n : _nodes){
+        n->setRotation(n->getRotation() + 30.0 * t);
+    }
+}
+
+void RenderTextureWithMsaaSprite3D::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
+{
+        
+    renderer->render();
+    _renderTexWithBuffer->beginWithClear(0, 0.5, 0, 0, 1, 0);
+    for(Node* n : _nodes){
+        n->visit(renderer, Mat4::IDENTITY, 0);
+    }
+    _renderTexWithBuffer->end();
+    renderer->render();
+    
+    RenderTextureTest::visit(renderer, parentTransform, parentFlags);
+
+}
+
+std::string RenderTextureWithMsaaSprite3D::title() const
+{
+    return "RenderTextureWithMsaa: Sprite + Sprite3D ";
+}
+
+std::string RenderTextureWithMsaaSprite3D::subtitle() const
+{
+    return "";
 }

@@ -1180,7 +1180,7 @@ void Director::showStats()
         // to make the FPS stable
         if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
-            sprintf(buffer, "%.1f / %.3f", _frames / _accumDt, _secondsPerFrame);
+            sprintf(buffer, "FPS: %.1f / %.3f", _frames / _accumDt, _secondsPerFrame);
             _FPSLabel->setString(buffer);
             _accumDt = 0;
             _frames = 0;
@@ -1188,8 +1188,12 @@ void Director::showStats()
 
         auto currentCalls = (unsigned long)_renderer->getDrawnBatches();
         auto currentVerts = (unsigned long)_renderer->getDrawnVertices();
+        auto metalEncoders = (unsigned long)_renderer->getUsedMetalEncoders();
         if( currentCalls != prevCalls ) {
-            sprintf(buffer, "GL calls:%6lu", currentCalls);
+            if(metalEncoders)
+                sprintf(buffer, "MTL calls:%5lu[%lu]", currentCalls, metalEncoders);
+            else
+                sprintf(buffer, "GL calls:%6lu", currentCalls);
             _drawnBatchesLabel->setString(buffer);
             prevCalls = currentCalls;
         }

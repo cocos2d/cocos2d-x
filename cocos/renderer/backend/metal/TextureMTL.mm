@@ -25,6 +25,7 @@
 #include "TextureMTL.h"
 #include "Utils.h"
 #include "base/ccMacros.h"
+#include "platform/CCGLView.h"
 
 CC_BACKEND_BEGIN
 
@@ -275,11 +276,22 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
                                                           mipmapped:YES];
     
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
-    {
-        //DepthStencil, and Multisample textures must be allocated with the MTLResourceStorageModePrivate resource option
-        if(PixelFormat::D24S8 == descriptor.textureFormat)
+    {        
+        // DepthStencil, and Multisample textures must be allocated with the MTLResourceStorageModePrivate resource option
+        if(PixelFormat::D24S8 == descriptor.textureFormat){
             textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
+            textureDescriptor.usage = MTLTextureUsageUnknown;
+        }
+        
         textureDescriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
+
+        if (descriptor.msaaEnabled) {
+            int msaaCount = GLView::getGLContextAttrs().multisamplingCount;
+            textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
+            textureDescriptor.textureType = MTLTextureType2DMultisample;
+            textureDescriptor.sampleCount = msaaCount;
+            textureDescriptor.mipmapLevelCount = 1;
+        }
     }
     
     if(_mtlTexture)

@@ -48,6 +48,7 @@ struct TextureDescriptor
     uint32_t height = 0;
     uint32_t depth = 0;
     SamplerDescriptor samplerDescriptor;
+    bool msaaEnabled = false;
 };
 
 /**

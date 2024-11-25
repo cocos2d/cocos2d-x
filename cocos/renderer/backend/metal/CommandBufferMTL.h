@@ -172,6 +172,8 @@ public:
      */
     virtual void captureScreen(std::function<void(const unsigned char*, int, int)> callback) override;
     
+    void unlockMtlEncoder() override;
+    
 private:
     void prepareDrawing() const;
     void setTextures() const;
@@ -196,6 +198,10 @@ private:
     dispatch_semaphore_t _frameBoundarySemaphore;
     RenderPassDescriptor _prevRenderPassDescriptor;
     NSAutoreleasePool* _autoReleasePool = nil;
+    
+    bool _isMtlEncoderLocked = false;
+    unsigned int _lockedEncoderColorId = 0;
+    unsigned int _lockedEncoderDepthId = 0;
 };
 
 // end of _metal group

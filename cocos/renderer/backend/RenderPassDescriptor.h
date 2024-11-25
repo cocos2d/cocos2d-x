@@ -45,7 +45,7 @@ struct RenderPassDescriptor
 {
     RenderPassDescriptor& operator=(const RenderPassDescriptor& descriptor);
     bool operator==(const RenderPassDescriptor& descriptor) const;
-    bool needDepthStencilAttachment() const { return depthTestEnabled || stencilTestEnabled; }
+    bool needDepthStencilAttachment() const;
 
     float clearDepthValue = 0.f;
     float clearStencilValue = 0.f;
@@ -56,6 +56,10 @@ struct RenderPassDescriptor
     bool needClearColor = false;
     bool needClearDepth = false;
     bool needClearStencil = false;
+    bool msaaEnabled = false;
+    bool encodeUnifiedMsaa = false;
+    bool encodeMsaaResolve = false;
+    TextureBackend* msaaResolveTexture = nullptr;
     TextureBackend* depthAttachmentTexture = nullptr;
     TextureBackend* stencilAttachmentTexture = nullptr;
     TextureBackend* colorAttachmentsTexture[MAX_COLOR_ATTCHMENT] = { nullptr };

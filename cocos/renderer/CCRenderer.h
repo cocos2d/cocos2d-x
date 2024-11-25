@@ -172,10 +172,13 @@ public:
     void addDrawnBatches(ssize_t number) { _drawnBatches += number; };
     /* returns the number of drawn triangles in the last frame */
     ssize_t getDrawnVertices() const { return _drawnVertices; }
+    /* returns the number of created metal encoders */
+    ssize_t getUsedMetalEncoders() const { return _metalEncoders; }
     /* RenderCommands (except) TrianglesCommand should update this value */
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
+    void addMetalEncoderUse(ssize_t number) { _metalEncoders += number; };
     /* clear draw stats */
-    void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
+    void clearDrawStats() { _drawnBatches = _drawnVertices = _metalEncoders =  0; }
 
     /**
      Set render targets. If not set, will use default render targets. It will effect all commands.
@@ -404,7 +407,11 @@ public:
 
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
-    
+
+    void beginUnifiedMsaa(Texture2D* resolveTex, const Color4F& color, float depth, unsigned int stencil, float globalOrder);
+    void endUnifiedMsaa();
+    void resolveMsaaColorTo(Texture2D*);
+
 protected:
     friend class Director;
     friend class GroupCommand;
@@ -529,9 +536,9 @@ protected:
     // stats
     unsigned int _drawnBatches = 0;
     unsigned int _drawnVertices = 0;
+    unsigned int _metalEncoders = 0;
     //the flag for checking whether renderer is rendering
     bool _isRendering = false;
-    bool _isDepthTestFor2D = false;
         
     GroupCommandManager* _groupCommandManager = nullptr;
 

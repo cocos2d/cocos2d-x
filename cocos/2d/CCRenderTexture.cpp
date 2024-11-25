@@ -41,6 +41,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+static const bool sUnified = false;
+
 // implementation RenderTexture
 RenderTexture::RenderTexture()
 {
@@ -58,6 +60,7 @@ RenderTexture::RenderTexture()
 RenderTexture::~RenderTexture()
 {
     CC_SAFE_RELEASE(_sprite);
+    CC_SAFE_RELEASE(_textureMsaaTarget);
     CC_SAFE_RELEASE(_texture2DCopy);
     CC_SAFE_RELEASE(_depthStencilTexture);
     CC_SAFE_RELEASE(_UITextureImage);
@@ -75,6 +78,7 @@ void RenderTexture::listenToBackground(EventCustom* /*event*/)
             CC_SAFE_RELEASE(_UITextureImage);
             _UITextureImage = uiTextureImage;
             CC_SAFE_RETAIN(_UITextureImage);
+                        
             const Size& s = _texture2D->getContentSizeInPixels();
             VolatileTextureMgr::addDataTexture(_texture2D, uiTextureImage->getData(), s.width * s.height * 4, backend::PixelFormat::RGBA8888, s);
 
@@ -110,6 +114,10 @@ void RenderTexture::listenToForeground(EventCustom* /*event*/)
     {
         _texture2DCopy->setAntiAliasTexParameters();
     }
+    if(_textureMsaaTarget)
+    {
+        _textureMsaaTarget->setAntiAliasTexParameters();
+    }
 #endif
 }
 
@@ -130,6 +138,23 @@ RenderTexture * RenderTexture::create(int w ,int h, backend::PixelFormat eFormat
 {
     RenderTexture *ret = new (std::nothrow) RenderTexture();
 
+    if(ret && ret->initWithWidthAndHeight(w, h, eFormat, uDepthStencilFormat))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+RenderTexture * RenderTexture::create(int w ,int h, backend::PixelFormat eFormat, PixelFormat uDepthStencilFormat, MsaaMode multisampling)
+{
+    RenderTexture *ret = new (std::nothrow) RenderTexture();
+#ifdef CC_USE_METAL
+    if(GLView::getGLContextAttrs().multisamplingCount > 1){
+        ret->_multisampling = multisampling;
+    }
+#endif
     if(ret && ret->initWithWidthAndHeight(w, h, eFormat, uDepthStencilFormat))
     {
         ret->autorelease();
@@ -197,19 +222,46 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, backend::PixelFormat fo
         if (_texture2D)
         {
             _texture2D->initWithBackendTexture(texture, CC_ENABLE_PREMULTIPLIED_ALPHA != 0);
-            _texture2D->setRenderTarget(true);
             texture->release();
         }
         else
             break;
-
+        
         _renderTargetFlags = RenderTargetFlag::COLOR;
+
+        if(_multisampling != MsaaMode::None)
+        {
+            _renderTargetFlags |= RenderTargetFlag::MSAA;
+            
+            // setup msaaTarget and depth textures as multisampe
+            descriptor.msaaEnabled = true;
+            
+            { // create msaaTarget texture
+                texture = backend::Device::getInstance()->newTexture(descriptor);
+                if (! texture)
+                    break;
+
+                _textureMsaaTarget = new (std::nothrow) Texture2D;
+                if (!_textureMsaaTarget)
+                {
+                    texture->release();
+                    break;
+                }
+                _textureMsaaTarget->initWithBackendTexture(texture);
+                _textureMsaaTarget->setRenderTarget(true);
+                texture->release();
+            }
+        }
+        
+        _texture2D->setRenderTarget(true);
 
         clearColorAttachment();
 
         if (PixelFormat::D24S8 == depthStencilFormat)
         {
-            _renderTargetFlags = RenderTargetFlag::ALL;
+            _renderTargetFlags |= RenderTargetFlag::DEPTH;
+            _renderTargetFlags |= RenderTargetFlag::STENCIL;
+            
             descriptor.textureFormat = depthStencilFormat;
             texture = backend::Device::getInstance()->newTexture(descriptor);
             if (! texture)
@@ -231,7 +283,10 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, backend::PixelFormat fo
         {
             _texture2DCopy->setAntiAliasTexParameters();
         }
-
+        if (_textureMsaaTarget)
+        {
+            _textureMsaaTarget->setAntiAliasTexParameters();
+        }
         // retained
         setSprite(Sprite::createWithTexture(_texture2D));
 
@@ -310,7 +365,11 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     setClearStencil(stencilValue);
     setClearFlags(flags);
     begin();
-    Director::getInstance()->getRenderer()->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil, _globalZOrder);
+    Renderer* renderer = Director::getInstance()->getRenderer();
+    if(_multisampling == MsaaMode::MtlUnified)
+        renderer->beginUnifiedMsaa(_texture2D, _clearColor, _clearDepth, _clearStencil, _globalZOrder);
+    else
+        renderer->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil, _globalZOrder);
 }
 
 void RenderTexture::clear(float r, float g, float b, float a)
@@ -568,16 +627,23 @@ void RenderTexture::onBegin()
     _oldStencilAttachment = renderer->getStencilAttachment();
     _oldRenderTargetFlag = renderer->getRenderTargetFlag();
 
-    renderer->setRenderTarget(_renderTargetFlags, _texture2D, _depthStencilTexture, _depthStencilTexture);
+    auto* texTarget = _textureMsaaTarget ? _textureMsaaTarget : _texture2D;
+    renderer->setRenderTarget(_renderTargetFlags, texTarget, _depthStencilTexture, _depthStencilTexture);
 }
 
 void RenderTexture::onEnd()
 {
     Director *director = Director::getInstance();
+    Renderer *renderer =  Director::getInstance()->getRenderer();
+    
+    if(_multisampling == MsaaMode::MtlCommon)
+        renderer->resolveMsaaColorTo(_texture2D);
+    else if(_multisampling == MsaaMode::MtlUnified)
+        renderer->endUnifiedMsaa();
+    
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _oldProjMatrix);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _oldTransMatrix);
-    
-    Renderer *renderer =  Director::getInstance()->getRenderer();
+        
     renderer->setViewPort(_oldViewport.x, _oldViewport.y, _oldViewport.w, _oldViewport.h);
     renderer->setRenderTarget(_oldRenderTargetFlag, _oldColorAttachment, _oldDepthAttachment, _oldStencilAttachment);
 }
@@ -650,9 +716,14 @@ void RenderTexture::setClearFlags(ClearFlag clearFlags)
 void RenderTexture::clearColorAttachment()
 {
     auto renderer = Director::getInstance()->getRenderer();
+    RenderTargetFlag oldFlags = renderer->getRenderTargetFlag();
+    RenderTargetFlag flags = RenderTargetFlag::COLOR;
+    if(_multisampling != MsaaMode::None)
+        flags |= RenderTargetFlag::MSAA;
+    
     _beforeClearAttachmentCommand.func = [=]() -> void {
         _oldColorAttachment = renderer->getColorAttachment();
-        renderer->setRenderTarget(RenderTargetFlag::COLOR, _texture2D, nullptr, nullptr);
+        renderer->setRenderTarget(flags, _texture2D, nullptr, nullptr);
     };
     renderer->addCommand(&_beforeClearAttachmentCommand);
 
@@ -660,7 +731,7 @@ void RenderTexture::clearColorAttachment()
     renderer->clear(ClearFlag::COLOR, color, 1, 0, _globalZOrder);
 
     _afterClearAttachmentCommand.func = [=]() -> void {
-        renderer->setRenderTarget(RenderTargetFlag::COLOR, _oldColorAttachment, nullptr, nullptr);
+        renderer->setRenderTarget(oldFlags, _oldColorAttachment, nullptr, nullptr);
     };
     renderer->addCommand(&_afterClearAttachmentCommand);
 }
