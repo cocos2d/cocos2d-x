@@ -46,7 +46,7 @@ export default class MainAbility extends UIAbility {
                 console.error('Failed to set the window, cause ' + JSON.stringify(err));
             });
         })
-        
+
         windowStage.on("windowStageEvent", (data) => {
             let stageEventType: window.WindowStageEventType = data;
             switch (stageEventType) {

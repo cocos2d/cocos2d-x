@@ -1,7 +1,7 @@
 import { Dialog } from '../components/dialog/DialogWorker'
 import { JumpManager } from '../system/appJump/JumpManager'
 import { DeviceUtils } from '../system/device/DeviceUtils'
-import ApplicationManager from '../system/application/ApplicationManager'
+import { ApplicationManager } from '../system/application/ApplicationManager'
 import { CocosEditBox } from '../components/editbox/CocosEditBox'
 import { WebView } from '../components/webview/WebView'
 import { VideoPlayer } from '../components/videoplayer/VideoPlayer'

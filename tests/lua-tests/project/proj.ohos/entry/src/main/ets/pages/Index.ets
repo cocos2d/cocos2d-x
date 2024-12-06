@@ -12,28 +12,27 @@ import { CocosEditBox } from '../components/CocosEditBox'
 import { CocosWebView } from '../components/CocosWebview'
 import { CocosVideoPlayer } from '../components/CocosVideoPlayer'
 import { TextInputDialog } from '../components/TextInputDialog'
-import { GlobalContext,GlobalContextConstants} from "@ohos/libSysCapabilities"
-const nativePageLifecycle:nativeRender.CPPFunctions  = nativeRender.getContext(ContextType.JSPAGE_LIFECYCLE);
+import { GlobalContext, GlobalContextConstants } from "@ohos/libSysCapabilities"
+import promptAction from '@ohos.promptAction';
+import process from '@ohos.process';
+
+const nativePageLifecycle: nativeRender.CPPFunctions = nativeRender.getContext(ContextType.JSPAGE_LIFECYCLE);
 
 @Entry
 @Component
 struct Index {
-
   cocosWorker = WorkerManager.getInstance().getWorker();
   xcomponentController: XComponentController = new XComponentController();
-
+  processMgr = new process.ProcessManager();
   // EditBox
   @State editBoxArray: TextInputInfo[] = [];
   private editBoxIndexMap: Map<number, TextInputInfo> = new Map;
-
   // WebView
   @State webViewArray: WebViewInfo[] = [];
   private webViewIndexMap: Map<number, number> = new Map;
-
   // videoPlayer
   @State videoPlayerInfoArray: VideoPlayerInfo[] = [];
   private videoPlayerIndexMap: Map<number, VideoPlayerInfo> = new Map;
-
   // textInputDialog
   showMessage: TextInputDialogEntity = new TextInputDialogEntity('');
   dialogController: CustomDialogController = new CustomDialogController({
@@ -68,7 +67,37 @@ struct Index {
 
   onBackPress() {
     console.log('[LIFECYCLE-Page] onBackPress');
-    this.cocosWorker.postMessage({ type: "exit" });
+    try {
+      promptAction.showDialog({
+        title: "提示",
+        message: "确认退出游戏吗",
+        buttons: [
+          {
+            text: '取消',
+            // 颜色可自定义
+            color: '#000000'
+          },
+          {
+            text: '确认',
+            // 颜色可自定义
+            color: '#000000'
+          }
+        ],
+      }).then(data => {
+        console.info('showDialog success, click button: ' + data.index);
+        if (data.index == 0) {
+          console.info('showDialog click button cancel');
+          return;
+        } else {
+          console.info('showDialog click button ok');
+          this.processMgr.exit(0);
+        }
+      })
+    } catch (error) {
+      console.error(`showDialog args error code is ${error.code}, message is ${error.message}`);
+    }
+    ;
+    // If disable system exit needed, remove comment "return true"
     return true;
   }
 
@@ -77,7 +106,7 @@ struct Index {
   }
 
   build() {
-    Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+    Stack() {
       XComponent({
         id: 'xcomponentId',
         type: 'surface',
@@ -102,23 +131,26 @@ struct Index {
         )
         .onLoad((context) => {
           console.log('[cocos] XComponent.onLoad Callback');
-          this.cocosWorker.postMessage({ type: "abilityContextInit", data: GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT)});
+          this.cocosWorker.postMessage({
+            type: "abilityContextInit",
+            data: GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT)
+          });
           this.cocosWorker.postMessage({ type: "onXCLoad", data: "XComponent" });
           this.cocosWorker.onmessage = WorkerMsgUtils.recvWorkerThreadMessage;
         })
         .onDestroy(() => {
         })
-      ForEach(this.editBoxArray, (item:TextInputInfo) => {
-        CocosEditBox({ textInputInfo: item});
-      }, (item:TextInputInfo) => item.viewTag.toString())
+      ForEach(this.editBoxArray, (item: TextInputInfo) => {
+        CocosEditBox({ textInputInfo: item });
+      }, (item: TextInputInfo) => item.viewTag.toString())
 
-      ForEach(this.webViewArray, (item:WebViewInfo) => {
+      ForEach(this.webViewArray, (item: WebViewInfo) => {
         CocosWebView({ viewInfo: item })
-      }, (item:WebViewInfo) => item.uniqueId.toString())
+      }, (item: WebViewInfo) => item.uniqueId.toString())
 
-      ForEach(this.videoPlayerInfoArray, (item:VideoPlayerInfo) => {
+      ForEach(this.videoPlayerInfoArray, (item: VideoPlayerInfo) => {
         CocosVideoPlayer({ videoPlayerInfo: item })
-      }, (item:VideoPlayerInfo) => item.viewTag.toString())
+      }, (item: VideoPlayerInfo) => item.viewTag.toString())
     }
     .width('100%')
     .height('100%')

@@ -22,6 +22,7 @@ export class TextInputInfo {
   public maxLength = 256;
   public inputMode = InputType.Normal;
   public visible: boolean = false;
+  public multiline: boolean = false;
 
   constructor(x: number, y: number, w: number, h: number, paddingW: number, paddingH: number, viewTag: number) {
     this.x = x;
@@ -130,6 +131,7 @@ export function handleEditBoxMsg(eventData: EditBoxMsgEntity) {
     case "setNativeInputMode": {
       let textInputInfo: TextInputInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_EDIT_BOX_INDEX_MAP)
         .get(eventData.viewTag);
+      textInputInfo.multiline = (eventData.inputMode == 0) ? true : false;
       if (textInputInfo.inputMode != InputType.Password) {
         switch (eventData.inputMode) {
           case 0:

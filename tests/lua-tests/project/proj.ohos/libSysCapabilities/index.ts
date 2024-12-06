@@ -12,3 +12,4 @@ export { NapiHelper } from './src/main/ets/napi/NapiHelper'
 
 export { JumpManager } from './src/main/ets/system/appJump/JumpManager'
 export { DeviceUtils } from './src/main/ets/system/device/DeviceUtils'
+export { ApplicationManager } from './src/main/ets/system/application/ApplicationManager'

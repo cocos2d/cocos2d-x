@@ -7,6 +7,7 @@ import { Dialog } from "@ohos/libSysCapabilities"
 import { WebView } from "@ohos/libSysCapabilities"
 import { JumpManager } from "@ohos/libSysCapabilities"
 import { NapiHelper } from "@ohos/libSysCapabilities"
+import { ApplicationManager } from "@ohos/libSysCapabilities"
 import { GlobalContext,GlobalContextConstants} from "@ohos/libSysCapabilities"
 
 const appLifecycle: nativeRender.CPPFunctions = nativeRender.getContext(ContextType.APP_LIFECYCLE);
@@ -33,6 +34,7 @@ workerPort.onmessage = function(e) : void {
             JumpManager.init(workerPort);
             WebView.init(workerPort);
             VideoPlayer.init(workerPort);
+            ApplicationManager.init(workerPort);
             napiContext.initAsyncInfo();
             break;
         case "abilityContextInit":

@@ -22,9 +22,7 @@ export class WebViewInfo {
   public visible: boolean = true
   public opacity: number = 1
   public backgroundColor: number = 0xffffff;
-
   public jsInterfaceScheme: string = "";
-
   public controller: web_webview.WebviewController = new web_webview.WebviewController()
 
   constructor(x: number, y: number, w: number, h: number, viewTag: number) {
