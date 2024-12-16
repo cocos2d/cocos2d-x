@@ -1053,13 +1053,14 @@ bool Label::updateQuads()
                 if (py > _tailoredTopY)
                 {
                     auto clipTop = py - _tailoredTopY;
-                    _reusedRect.origin.y += clipTop;
-                    _reusedRect.size.height -= clipTop;
+                    const float letterClipTop = clipTop / _bmfontScale;
+                    _reusedRect.origin.y += letterClipTop;
+                    _reusedRect.size.height -= letterClipTop;
                     py -= clipTop;
                 }
                 if (py - letterDef.height * _bmfontScale < _tailoredBottomY)
                 {
-                    _reusedRect.size.height = (py < _tailoredBottomY) ? 0.f : (py - _tailoredBottomY);
+                    _reusedRect.size.height = (py < _tailoredBottomY) ? 0.f : (py - _tailoredBottomY) / _bmfontScale;
                 }
             }
 
