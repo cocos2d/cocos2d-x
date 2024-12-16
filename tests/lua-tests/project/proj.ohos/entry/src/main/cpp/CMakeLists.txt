@@ -19,7 +19,7 @@ file(COPY ${ALL_SOURCE_FILES} DESTINATION ${res_raw_folders})
 
 add_library(${PROJECT_NAME} SHARED napi_init.cpp)
 
-include_directories(${COCOS2DX_ROOT_PATH}/external/opengles/api
+include_directories(
                     ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include)
 target_include_directories(${PROJECT_NAME}  PUBLIC  ${CLASSES_PATH}
                                             PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos

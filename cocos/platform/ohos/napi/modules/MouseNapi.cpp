@@ -9,7 +9,6 @@
 #include "MouseNapi.h"
 #include "platform/ohos/napi/plugin_manager.h"
 #include "../../CCLogOhos.h"
-#include "ui/UIEditBox/UIEditBoxImpl-ohos.h"
 #include "base/CCIMEDispatcher.h"
 #include "platform/ohos/napi/render/plugin_render.h"
 #include <string>

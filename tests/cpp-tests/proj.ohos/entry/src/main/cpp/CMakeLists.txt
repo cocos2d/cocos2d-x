@@ -15,7 +15,6 @@ endif()
 
 add_library(${PROJECT_NAME} SHARED napi_init.cpp)
 
-include_directories(${COCOS2DX_ROOT_PATH}/external/opengles/api)
 target_include_directories(${PROJECT_NAME}  PUBLIC  ${CLASSES_PATH}
                                             PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos
                                             PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos)

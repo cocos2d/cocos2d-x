@@ -16,6 +16,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/..
                                            PUBLIC       ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos2dx/include
                                            PUBLIC       ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos2dx/kazmath/include
                                            PUBLIC       ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos2dx/platform/ohos
-                                           PUBLIC       ${CMAKE_CURRENT_SOURCE_DIR}/../../external/opengles/api
                                                   )
 target_link_libraries(${PROJECT_NAME} PUBLIC cocos2dx_static OPENSLES pvmp3dec vorbisidec)
