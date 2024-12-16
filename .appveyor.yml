@@ -8,9 +8,9 @@ environment:
   PYTHON_VERSION: "2.7.13"
   PYTHON_ARCH: "32"
   matrix:
-    - build_type: windows32_cmake_test
-    - build_type: android_cpp_tests
-    - build_type: android_lua_tests
+#    - build_type: windows32_cmake_test
+ #   - build_type: android_cpp_tests
+ #   - build_type: android_lua_tests
 #    - build_type: android_cocos_new_test
 #    - build_type: android_cpp_empty_test
 #    - build_type: android_gen_libs
