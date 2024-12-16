@@ -95,6 +95,10 @@ int lua_print(lua_State * luastate)
     }
     CCLOG("[LUA-print] %s", t.c_str());
 
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+        OHOS_LOGD("[LUA-print] %s", t.c_str());
+    #endif
+    
     return 0;
 }
     

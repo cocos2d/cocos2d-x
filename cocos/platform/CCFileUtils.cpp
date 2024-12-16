@@ -1308,7 +1308,12 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
 
     if (0 != errorCode)
     {
+        #if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+        CCLOGERROR("Fail to rename file %s to %s !Error code is %d sys errno is %d", oldPath.c_str(), newPath.c_str(), errorCode, errno);
+        #else
         CCLOGERROR("Fail to rename file %s to %s !Error code is %d", oldPath.c_str(), newPath.c_str(), errorCode);
+        #endif
+
         return false;
     }
     return true;
@@ -1357,6 +1362,22 @@ bool FileUtils::isPopupNotify()
 {
     return s_popupNotify;
 }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+std::string FileUtils::getFileExtension(const std::string& filePath) const
+{
+    std::string fileExtension;
+    size_t pos = filePath.find_last_of('.');
+    if (pos != std::string::npos)
+    {
+        fileExtension = filePath.substr(pos, filePath.length());
+
+        std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
+    }
+
+    return fileExtension;
+}
+#endif
 
 NS_CC_END
 

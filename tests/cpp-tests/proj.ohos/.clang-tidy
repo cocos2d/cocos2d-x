@@ -1,0 +1,1 @@
+Checks: 'misc-missing-switch-cases,misc-napi-module-name,misc-replace-if-else-with-ternary-operator,misc-unused-local-variable,misc-unused-parameters,modernize-use-auto,readability-system-capabilities'

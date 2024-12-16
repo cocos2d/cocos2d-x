@@ -608,6 +608,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     
     GL::bindTexture2D(_texture->getName());
 
+// TBD need fixed ohos platform not support glUnmapBufferOES,can not use vao
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         //
@@ -626,10 +627,11 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
             // option 3: orphaning + glMapBuffer
             glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, nullptr, GL_DYNAMIC_DRAW);
-            void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+			void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
             memcpy(buf, _quads, sizeof(_quads[0])* _totalQuads);
             glUnmapBuffer(GL_ARRAY_BUFFER);
-            
+#endif
             glBindBuffer(GL_ARRAY_BUFFER, 0);
 
             _dirty = false;

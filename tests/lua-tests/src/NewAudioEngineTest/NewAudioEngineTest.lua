@@ -452,7 +452,7 @@ function InvalidAudioFileTest.create()
         if (cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == targetPlatform or cc.PLATFORM_OS_IPAD == targetPlatform) then
             ccexp.AudioEngine:play2d("background.ogg")
         end
-        if (cc.PLATFORM_OS_ANDROID == targetPlatform) then
+        if (cc.PLATFORM_OS_ANDROID == targetPlatform or cc.PLATFORM_OS_OHOS == targetPlatform) then
             ccexp.AudioEngine:play2d("background.caf")
         end
     end

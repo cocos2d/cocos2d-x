@@ -1,0 +1,13 @@
+CompileFlags:
+  Add: [-Wunreachable-code-aggressive]
+Diagnostics:
+  ClangTidy:
+    Add: [misc-unused-parameters,misc-unused-local-variable]
+    Remove: []
+    CheckOptions:
+      misc-unused-parameters.StrictMode: true
+      misc-unused-parameters.IgnoreVirtual: true
+      modernize-use-auto.MinTypeNameLength: 0
+
+  UnusedIncludes: Strict
+  UnusedFunctions: Check

@@ -128,6 +128,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     else
     {
         searchPaths.push_back("ccs-res");
+		#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+			searchPaths.push_back("Manifests");
+		#endif
         searchPaths.push_back("ccs-res/scenetest/ArmatureComponentTest");
         searchPaths.push_back("ccs-res/scenetest/AttributeComponentTest");
         searchPaths.push_back("ccs-res/scenetest/BackgroundComponentTest");
@@ -173,6 +176,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+	glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 #else
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
 #endif
@@ -218,3 +223,19 @@ BaseTest* AppDelegate::getCurrentTest()
 {
     return _curTest;
 }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
+{
+    auto director = cocos2d::Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if (glview != NULL) {
+        // Set ResolutionPolicy to a proper value. here use the original value when the game is started.
+        ResolutionPolicy resolutionPolicy = glview->getResolutionPolicy();
+        Size designSize = glview->getDesignResolutionSize();
+         glview->setFrameSize(newWidth, newHeight);
+         // Set the design resolution to a proper value. here use the original value when the game is started. 
+         glview->setDesignResolutionSize(designSize.width, designSize.height, resolutionPolicy);
+    }
+}
+#endif

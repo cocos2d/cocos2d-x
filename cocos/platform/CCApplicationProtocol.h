@@ -45,18 +45,19 @@ public:
     // Therefore, 'OS_' prefix is added to avoid conflicts with the definitions of system macros.
     enum class Platform
     {
-        OS_WINDOWS,
-        OS_LINUX,
-        OS_MAC,
-        OS_ANDROID,
-        OS_IPHONE,
-        OS_IPAD,
-        OS_BLACKBERRY,
-        OS_NACL,
-        OS_EMSCRIPTEN,
-        OS_TIZEN,
-        OS_WINRT,
-        OS_WP8
+        OS_WINDOWS,/** Windows */
+        OS_LINUX,/** Linux */
+        OS_MAC,/** Mac*/
+        OS_ANDROID,/** Android */
+        OS_IPHONE,/** Iphone */
+        OS_IPAD,/** Ipad */
+        OS_BLACKBERRY,/** BLACKBERRY */
+        OS_NACL,/** Nacl */
+        OS_EMSCRIPTEN,/** Emscripten */
+        OS_TIZEN,/** Tizen */
+        OS_WINRT,/** Winrt */
+        OS_WP8,/** WP8 */
+        OS_OHOS/** OHOS */
     };
 
     /**

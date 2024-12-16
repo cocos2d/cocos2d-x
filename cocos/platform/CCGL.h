@@ -34,6 +34,8 @@ THE SOFTWARE.
 #include "platform/ios/CCGL-ios.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "platform/android/CCGL-android.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+#include "platform/ohos/CCGL-ohos.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include "platform/win32/CCGL-win32.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT

@@ -29,3 +29,8 @@
 #include "UIWebView-inl.h"
 
 #endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+#include "UIWebViewImpl-ohos.h"
+#include "UIWebView-inl.h"
+#endif

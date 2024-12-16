@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #ifndef __AUDIO_ENGINE_H_
 #define __AUDIO_ENGINE_H_
@@ -212,6 +212,22 @@ public:
      * @return the audio profile
      */
     static AudioProfile* getProfile(const std::string &name);
+    
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    /**
+     * Preload audio file.
+     * @param filePath The file path of an audio.
+     */
+    static void preload(const std::string& filePath) { preload(filePath, nullptr); }
+
+    /**
+     * Preload audio file.
+     * @param filePath The file path of an audio.
+     * @param callback A callback which will be called after loading is finished.
+     */
+    static void preload(const std::string& filePath, std::function<void(bool isSuccess)> callback);
+    #endif
+
 
 protected:
     

@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "lua_cocos2dx_ui_manual.hpp"
 #include "lua_cocos2dx_ui_auto.hpp"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "lua_cocos2dx_experimental_video_auto.hpp"
 #include "lua_cocos2dx_experimental_video_manual.hpp"
 #endif

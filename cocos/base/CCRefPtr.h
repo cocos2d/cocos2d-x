@@ -211,8 +211,9 @@ public:
     
     inline bool operator > (typename std::remove_const<T>::type * other) const { return _ptr > other; }
     
+    #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
     inline bool operator > (const std::nullptr_t other) const { return _ptr > other; }
-    
+    #endif
     
     inline bool operator < (const RefPtr<T> & other) const { return _ptr < other._ptr; }
     
@@ -220,7 +221,9 @@ public:
     
     inline bool operator < (typename std::remove_const<T>::type * other) const { return _ptr < other; }
     
+    #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
     inline bool operator < (const std::nullptr_t other) const { return _ptr < other; }
+    #endif
     
         
     inline bool operator >= (const RefPtr<T> & other) const { return _ptr >= other._ptr; }
@@ -229,8 +232,9 @@ public:
     
     inline bool operator >= (typename std::remove_const<T>::type * other) const { return _ptr >= other; }
     
+    #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
     inline bool operator >= (const std::nullptr_t other) const { return _ptr >= other; }
-    
+    #endif
         
     inline bool operator <= (const RefPtr<T> & other) const { return _ptr <= other._ptr; }
     
@@ -238,7 +242,9 @@ public:
     
     inline bool operator <= (typename std::remove_const<T>::type * other) const { return _ptr <= other; }
     
+    #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
     inline bool operator <= (const std::nullptr_t other) const { return _ptr <= other; }
+    #endif
     
         
     inline operator bool() const { return _ptr != nullptr; }

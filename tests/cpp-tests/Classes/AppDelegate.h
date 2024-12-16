@@ -64,6 +64,15 @@ public:
     void setCurrentTest(BaseTest* curTest);
 private:
     BaseTest* _curTest;
+
+    /** ohos
+    @brief  This function will be called when the application screen size is changed.
+    @param new width
+    @param new height
+    */
+	#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    	virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
+	#endif
 };
 
 #endif // _APP_DELEGATE_H_

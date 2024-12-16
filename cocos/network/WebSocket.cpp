@@ -105,12 +105,15 @@ public:
                                 void *user, void *in, size_t len)
     {
         // Gets the user data from context. We know that it's a 'WebSocket' instance.
+        // ohos to be fixed
+        #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
         WebSocket* wsInstance = (WebSocket*)libwebsocket_context_user(ctx);
         if (wsInstance)
         {
             return wsInstance->onSocketCallback(ctx, wsi, reason, user, in, len);
         }
         return 0;
+        #endif
     }
 };
 
@@ -397,14 +400,20 @@ int WebSocket::onSubThreadLoop()
 {
     if (_readyState == State::CLOSED || _readyState == State::CLOSING)
     {
+        // ohos to be fixed
+        #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
         libwebsocket_context_destroy(_wsContext);
+        #endif
         // return 1 to exit the loop.
         return 1;
     }
     
     if (_wsContext && _readyState != State::CLOSED && _readyState != State::CLOSING)
     {
+        // ohos to be fixed
+        #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
         libwebsocket_service(_wsContext, 0);
+        #endif
     }
     
     // Sleep 50 ms
@@ -430,13 +439,19 @@ void WebSocket::onSubThreadStarted()
 	info.port = CONTEXT_PORT_NO_LISTEN;
 	info.protocols = _wsProtocols;
 #ifndef LWS_NO_EXTENSIONS
-	info.extensions = libwebsocket_get_internal_extensions();
+    // ohos to be fixed
+    #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+    info.extensions = libwebsocket_get_internal_extensions();
+    #endif
 #endif
 	info.gid = -1;
 	info.uid = -1;
     info.user = (void*)this;
-    
-	_wsContext = libwebsocket_create_context(&info);
+
+    // ohos to be fixed
+    #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+    _wsContext = libwebsocket_create_context(&info);
+    #endif
     
 	if(nullptr != _wsContext)
     {
@@ -448,10 +463,13 @@ void WebSocket::onSubThreadStarted()
             
             if (_wsProtocols[i+1].callback != nullptr) name += ", ";
         }
+        // ohos to be fixed
+        #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
         _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
-                                             _path.c_str(), _host.c_str(), _host.c_str(),
-                                             name.c_str(), -1);
-                                             
+                                            _path.c_str(), _host.c_str(), _host.c_str(),
+                                            name.c_str(), -1);                              
+        #endif
+
         if(nullptr == _wsInstance) {
             WsMessage* msg = new (std::nothrow) WsMessage();
             msg->what = WS_MSG_TO_UITHREAD_ERROR;
@@ -514,7 +532,10 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                  * start the ball rolling,
                  * LWS_CALLBACK_CLIENT_WRITEABLE will come next service
                  */
-                libwebsocket_callback_on_writable(ctx, wsi);
+                // ohos to be fixed
+                #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+                libwebsocket_callback_on_writable(ctx, wsi);                            
+                #endif
                 _wsHelper->sendMessageToUIThread(msg);
             }
             break;
@@ -570,7 +591,10 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         		writeProtocol |= LWS_WRITE_NO_FIN;
                         }
 
+                        // ohos to be fixed
+                        #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
                         bytesWrite = libwebsocket_write(wsi,  &buf[LWS_SEND_BUFFER_PRE_PADDING], n, (libwebsocket_write_protocol)writeProtocol);
+                        #endif
                         //fixme: the log is not thread safe
 //                        CCLOG("[websocket:send] bytesWrite => %d", bytesWrite);
 
@@ -598,8 +622,11 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                 }
                 
                 /* get notified as soon as we can write again */
-                
+
+                // ohos to be fixed
+                #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
                 libwebsocket_callback_on_writable(ctx, wsi);
+                #endif
             }
             break;
             
@@ -641,7 +668,10 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         _currentDataLen = _currentDataLen + len;
                     }
 
+                    // ohos to be fixed
+                    #if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
                     _pendingFrameDataLen = libwebsockets_remaining_packet_payload (wsi);
+                    #endif
 
                     if (_pendingFrameDataLen > 0)
                     {

@@ -935,7 +935,7 @@ void Label::createSpriteWithFontDefinition()
 void Label::setFontDefinition(const FontDefinition& textDefinition)
 {
     _fontDefinition = textDefinition;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
     if (_fontDefinition._stroke._strokeEnabled)
     {
         CCLOGERROR("Currently only supported on iOS and Android!");
@@ -1013,7 +1013,7 @@ void Label::updateContent()
                 _fontDefinition._stroke._strokeEnabled = false;
             }
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
             if (_fontDefinition._stroke._strokeEnabled)
             {
                 CCLOGERROR("Currently only supported on iOS and Android!");
