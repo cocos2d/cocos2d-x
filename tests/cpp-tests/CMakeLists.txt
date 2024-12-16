@@ -21,6 +21,11 @@ elseif(ANDROID)
           Classes/JNITest/JNITest.cpp
           proj.android/jni/main.cpp)
   set(RES_PREFIX "/Resources")
+elseif(OHOS)
+    set(PLATFORM_SRC
+            proj.ohos/entry/src/main/cpp/main.cpp
+            proj.ohos/entry/src/main/cpp/napi_init.cpp)
+    set(RES_PREFIX "/Resources")
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -266,6 +271,38 @@ if(ANDROID)
     IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
         ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
     ENDIF()
+elseif (OHOS)
+    add_library(${APP_NAME} STATIC ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
+    find_library( # Sets the name of the path variable.
+            GLES-lib
+            # Specifies the name of the NDK library that
+            # you want CMake to locate.
+            GLESv3 )
+    find_library( # Sets the name of the path variable.
+            hilog-lib
+            # Specifies the name of the NDK library that
+            # you want CMake to locate.
+            hilog_ndk.z )
+
+    find_library( # Sets the name of the path variable.
+            libnapi-lib
+            # Specifies the name of the NDK library that
+            # you want CMake to locate.
+            ace_napi.z )
+    message("  *************** target link cpptest and gles  : ${GLES-lib}  ******************")
+    target_link_libraries(${APP_NAME} cocos2d ${GLES-lib} ${hilog-lib} ${libnapi-lib})
+    target_include_directories(${APP_NAME}
+            PRIVATE Classes
+    )
+
+    target_include_directories(${APP_NAME}  PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/common
+            PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/modules
+            PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi
+            PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
+            PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+            PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/base
+            PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos
+            )
 else()
     # add the executable
     add_executable(${APP_NAME} ${TESTS_SRC} ${EXTENDED_TESTS_SRC})

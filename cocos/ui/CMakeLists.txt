@@ -26,6 +26,19 @@ ELSEIF(ANDROID)
         ui/UIVideoPlayer-android.cpp
         ui/UIWebViewImpl-android.cpp
     )
+elseif(OHOS)
+  set(COCOS_UI_SPECIFIC_SRC
+      ui/UIWebView.h
+      ui/UIWebView-inl.h
+      ui/UIEditBox/UIEditBoxImpl-ohos.h
+      ui/UIWebViewImpl-ohos.h
+      ui/UIVideoPlayer.h
+      ui/UIEditBox/UIEditBoxImpl-common.cpp
+      ui/UIEditBox/UIEditBoxImpl-ohos.cpp
+      ui/UIWebViewImpl-ohos.cpp
+      ui/UIWebView.cpp
+      ui/UIVideoPlayer-ohos.cpp
+      )
 endif()
 
 #todo: android UIWebViewImpl and UIVideoPlayer

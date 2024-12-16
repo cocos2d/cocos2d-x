@@ -260,10 +260,13 @@ void RefPtrTest::onEnter()
         
         CC_ASSERT(true == (ref1 == nullptr));
         CC_ASSERT(false == (ref1 != nullptr));
+		
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
         CC_ASSERT(false == (ref1 < nullptr));
         CC_ASSERT(false == (ref1 > nullptr));
         CC_ASSERT(true == (ref1 <= nullptr));
         CC_ASSERT(true == (ref1 >= nullptr));
+#endif
         
         CC_ASSERT(false == (ref1 == __String::create("Hello")));
         CC_ASSERT(true == (ref1 != __String::create("Hello")));

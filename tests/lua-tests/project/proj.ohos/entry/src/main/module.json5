@@ -1,0 +1,67 @@
+{
+  "module": {
+    "name": "entry",
+    "type": "entry",
+    "description": "$string:entry_desc",
+    "mainElement": "MainAbility",
+    "deviceTypes": [
+      "phone",
+      "tablet"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "MainAbility",
+        "srcEntry": "./ets/MainAbility/MainAbility.ts",
+        "description": "$string:MainAbility_desc",
+        "icon": "$media:icon",
+        "label": "$string:MainAbility_label",
+        "startWindowIcon": "$media:icon",
+        "startWindowBackground": "$color:white",
+        "exported": true,
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "action.system.home"
+            ]
+          }
+        ],
+        "supportWindowMode": ["fullscreen"],
+        "maxWindowWidth": 1080,
+        "minWindowWidth": 1080,
+        "maxWindowHeight": 720,
+        "minWindowHeight": 720
+      }
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.INTERNET"
+      }, {
+        "name" : "ohos.permission.SET_NETWORK_INFO"
+      }, {
+        "name" : "ohos.permission.GET_NETWORK_INFO"
+      }, {
+        "name": "ohos.permission.GET_WIFI_INFO"
+      }, {
+        "name": "ohos.permission.ACCELEROMETER"
+      },{
+        "name": "ohos.permission.VIBRATE"
+      }
+    ],
+    "metadata": [
+      {
+        "name": "ArkTSPartialUpdate",
+        "value": "true"
+      },
+      {
+        "name": "partialUpdateStrictCheck",
+        "value": "warn"
+      }
+    ]
+  }
+}

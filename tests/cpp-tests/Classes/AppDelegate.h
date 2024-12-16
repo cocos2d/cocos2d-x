@@ -63,6 +63,13 @@ public:
 
 private:
     TestController* _testController;
+	
+	 /**
+    @brief  This function will be called when the application screen size is changed.
+    @param new width
+    @param new height
+    */
+    virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
 };
 
 #endif // _APP_DELEGATE_H_

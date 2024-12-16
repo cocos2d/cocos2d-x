@@ -455,6 +455,9 @@ function InvalidAudioFileTest.create()
         if (cc.PLATFORM_OS_ANDROID == targetPlatform) then
             ccexp.AudioEngine:play2d("background.caf")
         end
+        if (cc.PLATFORM_OS_OHOS == targetPlatform) then
+            ccexp.AudioEngine:play2d("background.wav")
+        end
     end
     
     local playItem1 = cc.MenuItemFont:create("play unsupported media type")

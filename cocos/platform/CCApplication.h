@@ -43,6 +43,8 @@ THE SOFTWARE.
 #include "platform/linux/CCApplication-linux.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 #include "platform/tizen/CCApplication-tizen.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+#include "platform/ohos/CCApplication-ohos.h"
 #endif
 
 /// @endcond

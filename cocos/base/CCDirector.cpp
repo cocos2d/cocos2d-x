@@ -792,6 +792,18 @@ Vec2 Director::getVisibleOrigin() const
     }
 }
 
+Rect Director::getSafeAreaRect() const
+{
+    if (_openGLView)
+    {
+        return _openGLView->getSafeAreaRect();
+    }
+    else
+    {
+        return Rect::ZERO;
+    }
+}
+
 // scene management
 
 void Director::runWithScene(Scene *scene)
