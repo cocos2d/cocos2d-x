@@ -80,12 +80,10 @@ struct Index {
         buttons: [
           {
             text: '取消',
-            // 颜色可自定义
             color: '#000000'
           },
           {
             text: '确认',
-            // 颜色可自定义
             color: '#000000'
           }
         ],

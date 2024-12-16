@@ -80,12 +80,10 @@ struct Index {
         buttons: [
           {
             text: '取消',
-            // 颜色可自定义
             color: '#000000'
           },
           {
             text: '确认',
-            // 颜色可自定义
             color: '#000000'
           }
         ],
@@ -105,6 +103,7 @@ struct Index {
     // If disable system exit needed, remove comment "return true"
     return true;
   }
+
 
   onMouseWheel(eventType: string, scrollY: number) {
     this.cocosWorker.postMessage({ type: "onMouseWheel", eventType: eventType, scrollY: scrollY });

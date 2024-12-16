@@ -128,7 +128,9 @@ void AppDelegate::applicationDidEnterBackground()
     }
     
     Director::getInstance()->stopAnimation();
+ #if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
     _testController->onEnterBackground();
+ #endif
 }
 
 // this function will be called when the app is active again
@@ -141,7 +143,9 @@ void AppDelegate::applicationWillEnterForeground()
     
     Director::getInstance()->startAnimation();
     // resume audioEngine, otherwise the opensl audioPlayer will always be suspended.
+ #if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
     _testController->onEnterForeground();
+  #endif
 }
 
 void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
