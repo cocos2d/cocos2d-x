@@ -56,9 +56,6 @@ MeshCommand::MeshCommand()
 , _vao(0)
 , _material(nullptr)
 , _stateBlock(nullptr)
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-, _rendererRecreatedListener(nullptr)
-#endif
 {
     _type = RenderCommand::Type::MESH_COMMAND;
 

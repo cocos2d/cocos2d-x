@@ -51,8 +51,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     lua_pop(L, 1);
 
 
-    FileUtils::getInstance()->addSearchPath("");
-    pEngine->executeScriptFile("controller.lua");
+    pEngine->executeScriptFile("src/controller.lua");
+
     return true;
 }
 
