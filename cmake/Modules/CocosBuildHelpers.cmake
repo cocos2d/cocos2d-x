@@ -140,7 +140,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(SYSTEM_STRING "Mac OSX")
   endif()
 elseif(OHOS)
-  set(SYSTEM_STRING "OpenHarmony")
+  set(SYSTEM_STRING "HarmonyOS Next")
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
