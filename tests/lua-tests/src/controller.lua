@@ -1,7 +1,4 @@
 
--- jit off
-local jit = require("jit")
-jit.off()
 -- avoid memory leak
 collectgarbage("setpause", 100) 
 collectgarbage("setstepmul", 5000)
