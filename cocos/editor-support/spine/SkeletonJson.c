@@ -581,8 +581,10 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 	root = Json_create(json);
     
 #ifndef __ANDROID__
-	setlocale(LC_NUMERIC, oldLocale);
-	free(oldLocale);
+    #ifndef __OHOS__
+		setlocale(LC_NUMERIC, oldLocale);
+		free(oldLocale);
+	#endif
 #endif
     
 	if (!root) {

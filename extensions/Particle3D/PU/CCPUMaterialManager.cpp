@@ -40,6 +40,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+#include "platform/ohos/CCFileUtils-ohos.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #endif
 NS_CC_BEGIN
 
@@ -161,7 +166,7 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     ftw(fileFolder.c_str(), iterPath, 500);
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN || CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
     DIR *d; //dir handle
     struct dirent *file; //readdir
     struct stat statbuf;

@@ -1,0 +1,13 @@
+{
+  "license": "ISC",
+  "devDependencies": {
+    "@types/libnativerender.so": "file:./src/main/cpp/types/libentry"
+  },
+  "name": "entry",
+  "description": "example description",
+  "main": "",
+  "version": "1.0.0",
+  "dependencies": {
+    "@ohos/libSysCapabilities": "../libSysCapabilities"
+  }
+}

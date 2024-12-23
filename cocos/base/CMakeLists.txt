@@ -9,6 +9,11 @@ elseif(ANDROID)
     base/CCUserDefault-android.cpp
     base/CCController-android.cpp
   )
+elseif(OHOS)
+  set(COCOS_BASE_SPECIFIC_SRC
+    # base/CCUserDefault-ohos.cpp // TODO user userdefault rather than userdefault-ohos
+    base/CCController-ohos.cpp
+  )
 endif()
 
 set(COCOS_BASE_SRC

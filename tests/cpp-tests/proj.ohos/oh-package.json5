@@ -1,0 +1,10 @@
+{
+  "modelVersion": "5.0.0",
+  "license": "ISC",
+  "devDependencies": {},
+  "name": "proj.ohos",
+  "description": "example description",
+  "main": "",
+  "version": "1.0.0",
+  "dependencies": {}
+}

@@ -96,7 +96,7 @@ struct DownloaderTest : public TestCase
         bg->addChild(btn, 10);
         
         // add a progress bar
-        auto bar = ui::LoadingBar::create("cocosui/UIEditorTest/UISlider/silder_progressBar.png");
+        auto bar = ui::LoadingBar::create("cocosui/sliderProgress.png");
         bar->setTag(TAG_PROGRESS_BAR);
         bar->ignoreContentAdaptWithSize(false);
         bar->setAnchorPoint(Vec2(0.5, 0));

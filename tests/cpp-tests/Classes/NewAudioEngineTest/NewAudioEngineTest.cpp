@@ -589,7 +589,7 @@ bool InvalidAudioFileTest::init()
     auto playItem = TextButton::create("play unsupported media type", [&](TextButton* button){
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
         AudioEngine::play2d("background.ogg");
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
         AudioEngine::play2d("background.caf"); 
 #endif
     });

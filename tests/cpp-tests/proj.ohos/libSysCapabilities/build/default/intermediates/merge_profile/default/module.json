@@ -1,0 +1,26 @@
+{
+	"app": {
+		"bundleName": "ohos.cocos3_14.cpp.tests",
+		"debug": true,
+		"versionCode": 1000000,
+		"versionName": "1.0.0",
+		"minAPIVersion": 50000012,
+		"targetAPIVersion": 50001013,
+		"apiReleaseType": "Beta3",
+		"compileSdkVersion": "5.0.1.106",
+		"compileSdkType": "HarmonyOS",
+		"appEnvironments": [],
+		"bundleType": "app"
+	},
+	"module": {
+		"name": "libSysCapabilities",
+		"type": "har",
+		"deviceTypes": [
+			"phone",
+			"tablet",
+			"2in1"
+		],
+		"packageName": "libsyscapabilities",
+		"installationFree": false
+	}
+}
