@@ -1,5 +1,25 @@
 set(cocos_root ${Cocos2d-X_SOURCE_DIR})
 
+
+if(OHOS)
+include_directories(
+  ${cocos_root}/external/lua/tolua
+  ${cocos_root}/external/lua/luajit/include
+  ${cocos_root}/external/lua
+  ${cocos_root}/external/xxtea
+  ${cocos_root}/external
+  ${cocos_root}/cocos
+  ${cocos_root}/cocos/editor-support
+)
+
+file(GLOB lua_cocos2d_source_files
+    "${cocos_root}/external/lua/luajit/include/*.c"
+    "${cocos_root}/external/lua/tolua/*.c"
+    "${cocos_root}/external/xxtea/xxtea.cpp"
+    )
+
+else()
+
 include_directories(
   ${cocos_root}/external/lua/tolua
   ${cocos_root}/external/lua/lua
@@ -15,6 +35,8 @@ file(GLOB lua_cocos2d_source_files
     "${cocos_root}/external/lua/tolua/*.c"
     "${cocos_root}/external/xxtea/xxtea.cpp"
     )
+
+endif()
 
 list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/luasocket.c
@@ -48,6 +70,9 @@ elseif(UNIX)
     endif()
     if(APPLE)
         add_definitions(-D_DARWIN_C_SOURCE)
+    endif()
+    if(OHOS)
+        add_definitions(-D_GNU_SOURCE)
     endif()
 
     list(APPEND lua_cocos2d_source_files
@@ -123,12 +148,38 @@ if(MACOSX)
         ${lua_bindings_manual_files}
         manual/platform/ios/CCLuaObjcBridge.mm
         )
+elseif(OHOS)
+    set(lua_bindings_manual_headers
+        ${lua_bindings_manual_headers}
+        auto/lua_cocos2dx_experimental_webview_auto.hpp
+        manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
+        auto/lua_cocos2dx_experimental_video_auto.hpp
+        manual/ui/lua_cocos2dx_experimental_video_manual.hpp
+    	manual/ui/lua_cocos2dx_ui_manual.hpp
+        )
+    set(lua_bindings_manual_files
+        ${lua_bindings_manual_files}
+        auto/lua_cocos2dx_experimental_webview_auto.hpp
+        manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
+        auto/lua_cocos2dx_experimental_video_auto.hpp
+        manual/ui/lua_cocos2dx_experimental_video_manual.hpp
+        auto/lua_cocos2dx_experimental_webview_auto.cpp
+        manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
+        auto/lua_cocos2dx_experimental_video_auto.cpp
+        manual/ui/lua_cocos2dx_experimental_video_manual.cpp
+   	manual/lua_module_register.cpp
+        )
 endif()
 
 set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} ${lua_bindings_auto_files})
 
 add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
+
+if(OHOS)
+    target_link_libraries(luacocos2d ext_luajit)
+endif()
+
 set_target_properties(luacocos2d
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"

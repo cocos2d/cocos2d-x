@@ -29,6 +29,7 @@
 #include "controller.h"
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "extensions/cocos-ext.h"
+#include "audio/include/AudioEngine.h"
 
 USING_NS_CC;
 
@@ -72,14 +73,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0f / 60);
 
     auto screenSize = glview->getFrameSize();
-    auto designSize = Size(480, 320);
+    auto designSize = Size(1024/2, 2112/2);
 
     auto fileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
     {
-        auto resourceSize = Size(960, 640);
+        auto resourceSize = Size(1024, 2112);
         searchPaths.push_back("hd");
         searchPaths.push_back("ccs-res/hd");
         searchPaths.push_back("ccs-res");
@@ -96,8 +97,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     
     fileUtils->setSearchPaths(searchPaths);
-
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+    // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
+#else
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
+#endif
     
     // Enable Remote Console
     auto console = director->getConsole();
@@ -115,21 +120,40 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground()
 {
+    OHOS_LOGD("AppDelegate::applicationDidEnterBackground()");
     if (_testController)
     {
         _testController->onEnterBackground();
     }
     
     Director::getInstance()->stopAnimation();
+    _testController->onEnterBackground();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
+    OHOS_LOGD("AppDelegate::applicationDidEnterBackground()");
     if (_testController)
     {
         _testController->onEnterForeground();
     }
     
     Director::getInstance()->startAnimation();
+    // resume audioEngine, otherwise the opensl audioPlayer will always be suspended.
+    _testController->onEnterForeground();
+}
+
+void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
+{
+    auto director = cocos2d::Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if (glview != NULL) {
+        // Set ResolutionPolicy to a proper value. here use the original value when the game is started.
+        ResolutionPolicy resolutionPolicy = glview->getResolutionPolicy();
+        Size designSize = glview->getDesignResolutionSize();
+         glview->setFrameSize(newWidth, newHeight);
+         // Set the design resolution to a proper value. here use the original value when the game is started. 
+         glview->setDesignResolutionSize(designSize.width, designSize.height, resolutionPolicy);
+    }
 }

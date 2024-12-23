@@ -29,6 +29,7 @@
 #include "base/CCEvent.h"
 #include "math/CCGeometry.h"
 
+#define MOUSE_BUTTON_UNSET      -1
 #define MOUSE_BUTTON_LEFT       0
 #define MOUSE_BUTTON_RIGHT      1
 #define MOUSE_BUTTON_MIDDLE     2

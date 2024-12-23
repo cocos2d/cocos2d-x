@@ -415,7 +415,8 @@ void TestController::logEx(const char * format, ...)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buff);
-
+#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_OHOS
+    OHOS_LOGI("cocos2d-x info %{public}s", buff);
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
     WCHAR wszBuf[1024] = { 0 };
     MultiByteToWideChar(CP_UTF8, 0, buff, -1, wszBuf, sizeof(wszBuf));

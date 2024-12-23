@@ -120,6 +120,29 @@ find_library(FREETYPE_LIBRARY
     [HKEY_LOCAL_MACHINE\\SOFTWARE\\gtkmm\\2.4;Path]
 )
 
+if(OHOS)
+    if(${FREETYPE_INCLUDE_DIR_ft2build} STREQUAL "FREETYPE_INCLUDE_DIR_ft2build-NOTFOUND")
+        message("[OHOS_LOG] FREETYPE_INCLUDE_DIR_ft2build     NOTFOUND")
+        set(FREETYPE_INCLUDE_DIR_ft2build ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/ohos)
+    endif()
+
+    if(${FREETYPE_INCLUDE_DIR_freetype2} STREQUAL "FREETYPE_INCLUDE_DIR_freetype2-NOTFOUND")
+        message("[OHOS_LOG] FREETYPE_INCLUDE_DIR_freetype2    NOTFOUND")
+        set(FREETYPE_INCLUDE_DIR_freetype2 ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/ohos/freetype2)
+    endif()
+
+    if(${FREETYPE_LIBRARY} STREQUAL "FREETYPE_LIBRARY-NOTFOUND")
+        message("[OHOS_LOG] FREETYPE_LIBRARY                  NOTFOUND")
+        set(FREETYPE_LIBRARY
+                ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/ohos/libfreetype.a
+                )
+    endif()
+
+    message("[OHOS_LOG] FREETYPE_INCLUDE_DIR_ft2build     ${FREETYPE_INCLUDE_DIR_ft2build}")
+    message("[OHOS_LOG] FREETYPE_INCLUDE_DIR_freetype2    ${FREETYPE_INCLUDE_DIR_freetype2}")
+    message("[OHOS_LOG] FREETYPE_LIBRARY                  ${FREETYPE_LIBRARY}")
+endif()
+
 # set the user variables
 if(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2)
   set(FREETYPE_INCLUDE_DIRS "${FREETYPE_INCLUDE_DIR_ft2build};${FREETYPE_INCLUDE_DIR_freetype2}")

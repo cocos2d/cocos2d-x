@@ -1,6 +1,6 @@
 #include "scripting/js-bindings/manual/experimental/jsb_cocos2dx_experimental_webView_manual.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
 
 #include "ui/UIWebView.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"

@@ -787,6 +787,7 @@ void Renderer::drawBatchedTriangles()
     auto conf = Configuration::getInstance();
     if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
         //Bind VAO
         GL::bindVAO(_buffersVAO);
         //Set VBO data
@@ -811,6 +812,7 @@ void Renderer::drawBatchedTriangles()
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
+#endif
     }
     else
     {

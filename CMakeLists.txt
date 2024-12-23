@@ -81,6 +81,10 @@ if (CMAKE_FIND_ROOT_PATH AND USE_PREBUILT_LIBS)
   set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${COCOS_EXTERNAL_DIR})
 endif ()
 
+if(OHOS)
+set(CMAKE_FIND_ROOT_PATH ${COCOS_EXTERNAL_DIR})
+endif()
+
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
@@ -113,8 +117,13 @@ if(BUILD_LUA_LIBS)
 
   # build lua tests
   if(BUILD_LUA_TESTS)
+    if(OHOS)
+    add_subdirectory(external/lua/luajit)
+    endif()
     add_subdirectory(tests/lua-tests/project)
+    if(!OHOS)
     add_subdirectory(tests/lua-empty-test/project)
+    endif()
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)

@@ -40,6 +40,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+#include "platform/ohos/CCFileUtils-ohos.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #endif
 NS_CC_BEGIN
 
@@ -158,7 +163,17 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
         }
     }
     AAssetDir_close(dir);
-
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    FileUtilsOhos *fileUtilsOhos = dynamic_cast<FileUtilsOhos*>(FileUtils::getInstance());
+    std::vector<std::string> files = fileUtilsOhos -> listFiles(fileFolder);
+    for (auto fileName : files) {
+        if (FileUtils::getInstance()->getFileExtension(fileName) == ".material")
+        {
+            std::string fullpath = std::string(fileName);
+            loadMaterials(fullpath);
+            state = true;
+        }
+    }
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     ftw(fileFolder.c_str(), iterPath, 500);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)

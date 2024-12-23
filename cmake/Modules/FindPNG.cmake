@@ -126,6 +126,23 @@ if(ZLIB_FOUND)
   # find_package_handle_standard_args() below.
   unset(PNG_FOUND)
 
+  if(OHOS)
+      if(${PNG_PNG_INCLUDE_DIR} STREQUAL "PNG_PNG_INCLUDE_DIR-NOTFOUND")
+          message("[OHOS_LOG] PNG_PNG_INCLUDE_DIR NOTFOUND")
+          set(PNG_PNG_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/ohos)
+      endif()
+
+      if(${PNG_LIBRARY} STREQUAL "PNG_LIBRARY-NOTFOUND")
+          message("[OHOS_LOG] PNG_LIBRARY         NOTFOUND")
+          set(PNG_LIBRARY
+                  ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/ohos/libpng.a
+                  )
+      endif()
+
+      message("[OHOS_LOG] PNG_PNG_INCLUDE_DIR ${PNG_PNG_INCLUDE_DIR}")
+      message("[OHOS_LOG] PNG_LIBRARY         ${PNG_LIBRARY}")
+  endif()
+
   if (PNG_LIBRARY AND PNG_PNG_INCLUDE_DIR)
       # png.h includes zlib.h. Sigh.
       set(PNG_INCLUDE_DIRS ${PNG_PNG_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR} )

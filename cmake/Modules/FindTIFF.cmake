@@ -62,6 +62,23 @@ find_library(TIFF_LIBRARY
   /opt
   )
 
+if(OHOS)
+    if(${TIFF_INCLUDE_DIR} STREQUAL "TIFF_INCLUDE_DIR-NOTFOUND")
+        message("[OHOS_LOG] TIFF_INCLUDE_DIR  NOTFOUND")
+        set(TIFF_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/ohos)
+    endif()
+
+    if(${TIFF_LIBRARY} STREQUAL "TIFF_LIBRARY-NOTFOUND")
+        message("[OHOS_LOG] TIFF_LIBRARY      NOTFOUND")
+        set(TIFF_LIBRARY
+                ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/ohos/libtiff.a
+                )
+    endif()
+
+    message("[OHOS_LOG] TIFF_INCLUDE_DIR  ${TIFF_INCLUDE_DIR}")
+    message("[OHOS_LOG] TIFF_LIBRARY      ${TIFF_LIBRARY}")
+endif()
+
 if(TIFF_INCLUDE_DIR AND EXISTS "${TIFF_INCLUDE_DIR}/tiffvers.h")
     file(STRINGS "${TIFF_INCLUDE_DIR}/tiffvers.h" tiff_version_str
          REGEX "^#define[\t ]+TIFFLIB_VERSION_STR[\t ]+\"LIBTIFF, Version .*")

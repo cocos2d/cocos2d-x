@@ -36,10 +36,12 @@
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
 #if _MSC_VER > 1800
 #pragma comment(lib,"lua51-2015.lib")
 #else
 #pragma comment(lib,"lua51.lib")
+#endif
 #endif
 
 NS_CC_BEGIN

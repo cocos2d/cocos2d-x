@@ -36,6 +36,22 @@ find_path(JPEG_INCLUDE_DIR jpeglib.h)
 set(JPEG_NAMES ${JPEG_NAMES} jpeg)
 find_library(JPEG_LIBRARY NAMES ${JPEG_NAMES} )
 
+if(OHOS)
+  if(${JPEG_INCLUDE_DIR} STREQUAL "JPEG_INCLUDE_DIR-NOTFOUND")
+    message("[OHOS_LOG] JPEG_INCLUDE_DIR  NOTFOUND")
+    set(JPEG_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/ohos)
+  endif()
+  if(${JPEG_LIBRARY} STREQUAL "JPEG_LIBRARY-NOTFOUND")
+    message("[OHOS_LOG] JPEG_LIBRARY      NOTFOUND")
+    set(JPEG_LIBRARY
+            ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/ohos/libjpeg.a
+            )
+  endif()
+
+  message("[OHOS_LOG] JPEG_INCLUDE_DIR  ${JPEG_INCLUDE_DIR}")
+  message("[OHOS_LOG] JPEG_LIBRARY      ${JPEG_LIBRARY}")
+endif()
+
 # handle the QUIETLY and REQUIRED arguments and set JPEG_FOUND to TRUE if
 # all listed variables are TRUE
 include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
