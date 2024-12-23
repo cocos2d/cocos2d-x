@@ -155,7 +155,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);

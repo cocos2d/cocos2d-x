@@ -72,7 +72,7 @@ local BeginPos = {x = 0, y = 0}
 
 local audioEndineSupported = false
 local currPlatform = cc.Application:getInstance():getTargetPlatform()
-if (cc.PLATFORM_OS_WINDOWS == currPlatform or cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform) then
+if (cc.PLATFORM_OS_WINDOWS == currPlatform or cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform or cc.PLATFORM_OS_OHOS == currPlatform) then
     audioEndineSupported = true
 end
 
@@ -214,7 +214,7 @@ function CreateTestMenu()
         if obj.name == "WebViewTest" 
         or obj.name == "VibrateTest"
         or obj.name == "VideoPlayerTest" then
-            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
+            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform and cc.PLATFORM_OS_OHOS ~= targetPlatform then
                 testMenuItem:setEnabled(false)
             end
         end

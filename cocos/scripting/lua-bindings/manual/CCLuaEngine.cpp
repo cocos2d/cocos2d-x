@@ -36,7 +36,9 @@
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
 #pragma comment(lib,"lua51.lib")
+#endif
 
 NS_CC_BEGIN
 

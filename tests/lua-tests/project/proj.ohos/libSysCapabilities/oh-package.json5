@@ -1,0 +1,11 @@
+{
+  "license": "Apache-2.0",
+  "devDependencies": {},
+  "author": "",
+  "name": "libsyscapabilities",
+  "description": "Please describe the basic information.",
+  "main": "index.ts",
+  "version": "1.0.0",
+  "dynamicDependencies": {},
+  "dependencies": {}
+}

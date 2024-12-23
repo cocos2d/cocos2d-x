@@ -1168,6 +1168,13 @@ var _initSys = function () {
     sys.OS_WINRT = "WINRT";
     /**
      * @memberof cc.sys
+     * @name OS_OH
+     * @constant
+     * @type {string}
+     */
+    sys.OS_OHOS = "OHOS";
+    /**
+     * @memberof cc.sys
      * @name OS_UNKNOWN
      * @constant
      * @type {string}
@@ -1280,6 +1287,14 @@ var _initSys = function () {
     sys.WP8 = 11;
     /**
      * @memberof cc.sys
+     * @name OH
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.OHOS = 12;
+    /**
+     * @memberof cc.sys
      * @name MOBILE_BROWSER
      * @constant
      * @default
@@ -1338,7 +1353,8 @@ var _initSys = function () {
      * @name isMobile
      * @type {Boolean}
      */
-    sys.isMobile = (platform === sys.ANDROID || 
+    sys.isMobile = (cc.sys.os == sys.OS_OHOS ||
+                    platform === sys.ANDROID || 
                     platform === sys.IPAD || 
                     platform === sys.IPHONE || 
                     platform === sys.WP8 || 

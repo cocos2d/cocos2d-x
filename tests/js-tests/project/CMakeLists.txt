@@ -71,7 +71,7 @@ if(LINUX)
 else()
     set(RES_PREFIX "")
 endif()
-
+if(NOT OHOS)
 pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/script
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/res
@@ -86,3 +86,4 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../main.js ${APP_BIN_DIR}${RES_PREFIX}/main.js
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../project.json ${APP_BIN_DIR}${RES_PREFIX}/project.json
   )
+endif()

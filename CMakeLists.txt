@@ -39,7 +39,7 @@ endif()
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.13)
+set(COCOS2D_X_VERSION 3.15.1)
 
 # define some variables
 
@@ -99,7 +99,9 @@ BuildModules()
 
 # build cpp-empty-test
 if(BUILD_CPP_EMPTY_TEST)
+  if(!OHOS)
   add_subdirectory(tests/cpp-empty-test)
+  endif()
 endif(BUILD_CPP_EMPTY_TEST)
 
 # build cpp-tests
@@ -113,8 +115,13 @@ if(BUILD_LUA_LIBS)
 
   # build lua tests
   if(BUILD_LUA_TESTS)
+    if(OHOS)
+    add_subdirectory(external/lua/luajit)
+    endif()
     add_subdirectory(tests/lua-tests/project)
+    if(!OHOS)
     add_subdirectory(tests/lua-empty-test/project)
+    endif()
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)

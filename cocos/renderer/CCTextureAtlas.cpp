@@ -617,6 +617,8 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     auto conf = Configuration::getInstance();
     if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
+// TBD need fixed ohos platform not support glUnmapBufferOES,can not use vao
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
         //
         // Using VBO and VAO
         //
@@ -655,7 +657,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 #if CC_REBIND_INDICES_BUFFER
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif
-
+#endif
 //    glBindVertexArray(0);
     }
     else

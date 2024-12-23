@@ -25,7 +25,9 @@
 set(cocos_root ../../..)
 
 #platform
-if(WIN32) # Win32
+if(OHOS)
+  set(PLATFORM_FOLDER ohos)
+elseif(WIN32) # Win32
   set(PLATFORM_FOLDER win32)
 elseif(APPLE)# osx or ios
   set(PLATFORM_FOLDER mac)
@@ -81,6 +83,19 @@ set(JSBINDING_SRC
   ${PLATFORM_SRC}
 )
 
+if(OHOS)
+list(APPEND JSBINDING_SRC
+        auto/jsb_cocos2dx_experimental_webView_auto.hpp
+        auto/jsb_cocos2dx_experimental_webView_auto.cpp
+        auto/jsb_cocos2dx_experimental_video_auto.cpp
+        auto/jsb_cocos2dx_experimental_video_auto.hpp
+        manual/experimental/jsb_cocos2dx_experimental_webView_manual.h
+        manual/experimental/jsb_cocos2dx_experimental_webView_manual.cpp
+        manual/experimental/jsb_cocos2dx_experimental_video_manual.h
+        manual/experimental/jsb_cocos2dx_experimental_video_manual.cpp
+)
+endif()
+
 include_directories(
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
   ${cocos_root}/cocos
@@ -93,19 +108,27 @@ include_directories(
 add_library(jscocos2d STATIC
   ${JSBINDING_SRC}
 )
-
+if(!OHOS)
 find_library(SPIDERMONKEY_LIBRARY NAMES js_static mozjs HINTS
   ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
   ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}
 )
 
 message("SPIDERMONKEY_LIBRARY: ${SPIDERMONKEY_LIBRARY}")
+endif()
 
+if(OHOS)
+    include_directories(${cocos_root}/external/sqlite3/include)
+    add_subdirectory(${cocos_root}/external/sqlite3 ext_sqlite3)
+    add_subdirectory(${cocos_root}/external/spidermonkey ext_spidermonkey)
+    target_link_libraries(jscocos2d ext_spidermonkey ext_sqlite3)
+else()
 target_link_libraries(jscocos2d
   sqlite3
   ${SPIDERMONKEY_LIBRARY}
   xxhash
 )
+endif()
 
 set_target_properties(jscocos2d
     PROPERTIES

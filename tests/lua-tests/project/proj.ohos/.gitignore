@@ -1,0 +1,14 @@
+.hvigor
+.idea
+node_modules
+entry/build
+entry/.idea
+entry/.cxx
+local.properties
+package-lock.json
+entry/src/main/resources/rawfile
+oh_modules
+/.clangd
+/.clang-tidy
+.clang-format
+hvigor/hvigor-wrapper.js

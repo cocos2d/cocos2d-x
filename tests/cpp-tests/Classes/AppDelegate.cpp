@@ -101,7 +101,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
 #else
-    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::FIXED_WIDTH);
 #endif
 
     // Enable Remote Console
@@ -137,4 +137,18 @@ void AppDelegate::applicationWillEnterForeground()
     }
     
     Director::getInstance()->startAnimation();
+}
+
+void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
+{
+    auto director = cocos2d::Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if (glview != NULL) {
+        // Set ResolutionPolicy to a proper value. here use the original value when the game is started.
+        ResolutionPolicy resolutionPolicy = glview->getResolutionPolicy();
+        Size designSize = glview->getDesignResolutionSize();
+         glview->setFrameSize(newWidth, newHeight);
+         // Set the design resolution to a proper value. here use the original value when the game is started. 
+         glview->setDesignResolutionSize(designSize.width, designSize.height, resolutionPolicy);
+    }
 }

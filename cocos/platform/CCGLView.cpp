@@ -219,6 +219,11 @@ Rect GLView::getVisibleRect() const
     return ret;
 }
 
+Rect GLView::getSafeAreaRect() const
+{
+    return getVisibleRect();
+}
+
 Size GLView::getVisibleSize() const
 {
     if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)

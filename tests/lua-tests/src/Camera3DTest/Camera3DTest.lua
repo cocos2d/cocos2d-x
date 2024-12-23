@@ -779,7 +779,7 @@ function FogTestDemo:createLayer3D()
     self._layer3D:setCameraMask(2)
 
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
+    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8 or targetPlatform == cc.PLATFORM_OS_OHOS then
         self._backToForegroundListener = cc.EventListenerCustom:create("event_renderer_recreated", function (eventCustom)
             -- body
             cc.Director:getInstance():setClearColor(cc.c4f(0.5,0.5,0.5,1))

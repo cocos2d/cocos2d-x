@@ -32,6 +32,17 @@ macro (BuildModules)
 	  endif()
 	endif(LINUX OR MACOSX OR WINDOWS)
 
+	if(OHOS)
+		add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/ohos-specific/pvmp3dec)
+		set(PVMP3DEC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/ohos-specific/pvmp3dec/include)
+		set(PVMP3DEC_LIBRARIES pvmp3dec)
+		add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/ohos-specific/tremolo)
+		set(TREMOLO_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/ohos-specific/tremolo)
+		set(TREMOLO_LIBRARIES tremolo)
+		add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/openssl)
+		add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/websockets)
+	endif(OHOS)
+
 	# Freetype required on all platforms
 	cocos_find_package(Freetype FREETYPE REQUIRED)
 
@@ -42,14 +53,14 @@ macro (BuildModules)
 
 	# Chipmunk
 	if(USE_CHIPMUNK)
-	  if(USE_PREBUILT_LIBS)
+	  if(USE_PREBUILT_LIBS OR OHOS)
 	    cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
 	  endif()
 	endif(USE_CHIPMUNK)
 
 	# Box2d (not prebuilded, exists as source)
 	if(USE_BOX2D)
-	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL OR OHOS)
 	    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/Box2D)
 	    set(Box2D_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/include)
 	    set(Box2D_LIBRARIES box2d)
@@ -65,7 +76,7 @@ macro (BuildModules)
 
 	# Bullet (not prebuilded, exists as source)
 	if(USE_BULLET)
-	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL OR OHOS)
 	    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/bullet)
 	    set(BULLET_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet)
 	    set(BULLET_LIBRARIES bullet)
@@ -78,7 +89,7 @@ macro (BuildModules)
 
 	# Recast (not prebuilded, exists as source)
 	if(USE_RECAST)
-	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL OR OHOS)
 	    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/recast)
 	    set(RECAST_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/recast)
 	    set(RECAST_LIBRARIES recast)
@@ -90,7 +101,7 @@ macro (BuildModules)
 	endif(USE_RECAST)
 
 	# Tinyxml2 (not prebuilded, exists as source)
-	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL OR OHOS)
 	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2)
 	  set(TinyXML2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2)
 	  set(TinyXML2_LIBRARIES tinyxml2)
@@ -108,7 +119,7 @@ macro (BuildModules)
 	# dists have packages from zlib, thats very old for us.
 	# moreover our embedded version modified to quick provide
 	# functionality needed by cocos.
-	if(USE_PREBUILT_LIBS OR NOT MINGW)
+	if(USE_PREBUILT_LIBS OR NOT MINGW OR OHOS)
 	  #TODO: hack! should be in external/unzip/CMakeLists.txt
 	  include_directories(${ZLIB_INCLUDE_DIRS})
 	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/unzip)
@@ -132,7 +143,7 @@ macro (BuildModules)
 	cocos_find_package(CURL CURL REQUIRED)
 
 	# flatbuffers
-	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL OR OHOS)
 	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/flatbuffers)
 	  set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
 	  message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
@@ -141,7 +152,7 @@ macro (BuildModules)
 	endif()
 
 	# xxhash
-	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL OR OHOS)
 	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
 	  set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
 	  set(XXHASH_LIBRARIES xxhash)

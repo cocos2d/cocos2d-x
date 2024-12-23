@@ -82,6 +82,23 @@ macro (SetCompilerOptions)
 	  set(PLATFORM_FOLDER android)
 	  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fexceptions")
 	  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -latomic")
+	elseif(OHOS)
+	  add_compile_options(-DUSE_FILE32API
+			-Wno-absolute-value
+			-Wno-extra
+			-Wno-implicit-int-float-conversion
+			-Wno-overloaded-virtual
+			-Wno-unused-function
+			-Wno-unused-private-field
+			-Wno-unused-parameter
+			-Wno-reorder-ctor
+			-Wno-unsequenced
+			-Wno-extra
+			-Wno-c++11-narrowing
+			-Wno-expansion-to-defined
+			-Wno-unused-command-line-argument
+			)
+	  set(PLATFORM_FOLDER ohos)
 	else()
 	  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 	  return()
@@ -97,7 +114,7 @@ macro (SetCompilerOptions)
 	  endif()
 	endif()
 
-	if (MINGW AND NOT USE_PREBUILT_LIBS)
+	if (MINGW AND NOT USE_PREBUILT_LIBS AND NOT OHOS)
 		add_definitions(-DMINIZIP_FROM_SYSTEM)
 	endif()
 

@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.hpp"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 
 #include "scripting/lua-bindings/manual/tolua_fix.h"
@@ -370,4 +370,4 @@ int register_all_cocos2dx_controller_manual(lua_State* L)
     return 0;
 }
 
-#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

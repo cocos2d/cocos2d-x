@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "entry_desc",
+      "value": "3.15.1_js_tests"
+    },
+    {
+      "name": "MainAbility_label",
+      "value": "3.15.1_js_tests"
+    },
+    {
+      "name": "MainAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "text_field_ttf_complete",
+      "value": "完成"
+    }
+  ]
+}

@@ -85,13 +85,13 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
  * 
  * @since v0.99.5
  */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     #define CC_ENABLE_CACHE_TEXTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTURE_DATA       0
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
     /** Application will crash in glDrawElements function on some win32 computers and some android devices.
      *  Indices should be bound again while drawing to avoid this bug.
      */

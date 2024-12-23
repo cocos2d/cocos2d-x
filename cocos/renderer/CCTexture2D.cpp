@@ -1127,9 +1127,9 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
         CCASSERT(false, "Not supported alignment format!");
         return false;
     }
-    
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-    CCASSERT(textDefinition._stroke._strokeEnabled == false, "Currently stroke only supported on iOS and Android!");
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+    CCASSERT(textDefinition._stroke._strokeEnabled == false, "Currently stroke only supported on iOS, Android and OHOS!");
 #endif
 
     PixelFormat      pixelFormat = g_defaultAlphaPixelFormat;

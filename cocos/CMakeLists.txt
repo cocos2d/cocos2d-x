@@ -89,6 +89,9 @@ set(COCOS_SRC cocos2d.cpp
   include_directories(../external/clipper)
 
 add_library(cocos2dInternal ${COCOS_SRC})
+if (OHOS)
+ target_link_libraries(cocos2dInternal ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so)
+endif()
 
 set_target_properties(cocos2dInternal
     PROPERTIES
@@ -142,6 +145,29 @@ elseif(ANDROID)
   get_filename_component(__module_path "${CMAKE_TOOLCHAIN_FILE}" DIRECTORY)
   include(${__module_path}/AndroidNdkModules.cmake)
   android_ndk_import_module_cpufeatures()
+
+elseif(OHOS)
+  FIND_LIBRARY(Drawing-lib native_drawing)
+  FIND_LIBRARY(libace-lib ace_ndk.z)
+  FIND_LIBRARY(libnapi-lib ace_napi.z)
+  FIND_LIBRARY(GLES-lib GLESv3)
+  FIND_LIBRARY(libuv-lib uv)
+  FIND_LIBRARY(rawfile-lib rawfile.z)
+  FIND_LIBRARY(EGL-lib EGL)
+  FIND_LIBRARY(OpenSl-lib OpenSLES)
+  FIND_LIBRARY( hilog-lib hilog_ndk.z )
+
+  set(PLATFORM_SPECIFIC_LIBS
+        ${Drawing-lib}
+        ${libace-lib}
+        ${libnapi-lib}
+        ${GLES-lib}
+        ${libuv-lib}
+        ${rawfile-lib}
+        ${EGL-lib}
+        ${OpenSl-lib}
+        ${hilog-lib}
+        )
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -177,6 +203,16 @@ endif()
 
 if(USE_RECAST)
   cocos_use_pkg(cocos2dInternal RECAST)
+endif()
+
+if(OHOS)
+    cocos_use_pkg(cocos2dInternal PVMP3DEC)
+    cocos_use_pkg(cocos2dInternal TREMOLO)
+    target_link_libraries(cocos2dInternal
+    ext_ssl
+    ext_crypto
+    ext_websockets
+    )
 endif()
 
 ADD_LIBRARY(cocos2d cc_dummy.c)

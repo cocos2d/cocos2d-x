@@ -35,8 +35,9 @@ var PLATFORM_HTML5_WEBGL = 1 << 2;
 var PLATFROM_ANDROID = 1 << 3;
 var PLATFROM_IOS = 1 << 4;
 var PLATFORM_MAC = 1 << 5;
+var PLATFORM_OHOS = 1 << 6;
 var PLATFORM_JSB_AND_WEBGL =  PLATFORM_JSB | PLATFORM_HTML5_WEBGL;
-var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL | PLATFROM_ANDROID | PLATFROM_IOS;
+var PLATFORM_ALL = PLATFORM_JSB | PLATFORM_HTML5 | PLATFORM_HTML5_WEBGL | PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_OHOS;
 var PLATFROM_APPLE = PLATFROM_IOS | PLATFORM_MAC;
 
 // automation vars
@@ -150,6 +151,8 @@ var TestController = cc.LayerGradient.extend({
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFROM_IOS) );
                 } else if (cc.sys.os == cc.sys.OS_OSX) {
                     menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFORM_MAC) );
+                } else if (cc.sys.os == cc.sys.OS_OHOS) {
+                    menuItem.setEnabled( testNames[i].platforms & ( PLATFORM_JSB | PLATFORM_OHOS) );
                 } else {
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_JSB );
                 }

@@ -114,6 +114,7 @@ endfunction()
 #IOS		=	iOS
 #MACOSX		=	MacOS X
 #LINUX      =   Linux
+#OHOS		=	OHOS
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   if(WINRT)
@@ -139,6 +140,8 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(APPLE TRUE)
     set(SYSTEM_STRING "Mac OSX")
   endif()
+elseif(OHOS)
+  set(SYSTEM_STRING "OHOS")
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

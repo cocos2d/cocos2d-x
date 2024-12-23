@@ -1,5 +1,5 @@
 #include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_webView_auto.hpp"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "ui/UIWebView.h"
 
