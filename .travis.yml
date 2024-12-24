@@ -29,7 +29,7 @@ matrix:
       language: android
       sudo: required
       dist: xenial
-    # android_lua cmake
+     android_lua cmake
     - os: linux
       env: BUILD_TARGET=android_lua_cmake
       language: android

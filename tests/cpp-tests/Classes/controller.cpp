@@ -119,7 +119,7 @@ public:
         addTest("Unzip Test", []() {return new ZipTests();});
         addTest("URL Open Test", []() { return new OpenURLTests(); });
         addTest("UserDefault", []() { return new UserDefaultTests(); });
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
         addTest("Vibrate", []() { return new VibrateTests(); });
 #endif
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
@@ -439,7 +439,8 @@ void TestController::logEx(const char * format, ...)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buff);
-
+#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_OHOS
+    OHOS_LOGI("cocos2d-x info %{public}s", buff);
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
     WCHAR wszBuf[1024] = { 0 };
     MultiByteToWideChar(CP_UTF8, 0, buff, -1, wszBuf, sizeof(wszBuf));

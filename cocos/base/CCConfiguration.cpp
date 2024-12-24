@@ -255,6 +255,8 @@ bool Configuration::supportsMapBuffer() const
     // XXX: Warning. On iOS this is always `true`. Avoiding the comparison.
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     return _supportsOESMapBuffer;
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)    
+    return false;
 #else
     return true;
 #endif

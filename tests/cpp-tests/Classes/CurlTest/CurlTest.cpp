@@ -96,7 +96,11 @@ void CurlTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
     curl = curl_easy_init();
     if (curl) 
     {
-        curl_easy_setopt(curl, CURLOPT_URL, "http://webtest.cocos2d-x.org/curltest");
+	  #if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+        curl_easy_setopt(curl, CURLOPT_URL, "http://httpbin.org/get");
+	  #else
+	    curl_easy_setopt(curl, CURLOPT_URL, "http://webtest.cocos2d-x.org/curltest");
+	  #endif
 		//code from http://curl.haxx.se/libcurl/c/getinmemory.html
         /* we pass our 'chunk' struct to the callback function */
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
