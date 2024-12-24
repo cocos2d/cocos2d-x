@@ -85,6 +85,43 @@ private:
     cocos2d::EventListenerCustom* _listener2;
 };
 
+/**
+ * With the CustomEventOrderTest we want to verify that
+ * the call order of eventes added to the dispatcher follow
+ * the desired order.
+ *
+ * We pay special attention of while running a pending event,
+ * this event adds a new event of the same type, it is called
+ * once all pending events are called (and not for example in the
+ * next drawing frame)
+ **/
+class CustomEventOrderTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(CustomEventOrderTest);
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual std::string getExpectedOutput() const override;
+    virtual std::string getActualOutput() const override;
+    
+private:
+    cocos2d::EventListenerCustom* _beforeDraw;
+    cocos2d::EventListenerCustom* _beforeDraw2;
+    cocos2d::EventListenerCustom* _afterDraw;
+    
+    std::string _testText;
+    
+    cocos2d::Label*  _monitorLabel;
+    
+    void onBeforeDraw(cocos2d::EventCustom* event);
+    void onBeforeDraw2(cocos2d::EventCustom* event);
+    void onAfterDraw(cocos2d::EventCustom* event);
+};
+
 class LabelKeyboardEventTest : public EventDispatcherTestDemo
 {
 public:
