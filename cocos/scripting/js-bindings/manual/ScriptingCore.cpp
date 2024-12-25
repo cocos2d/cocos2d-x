@@ -347,7 +347,7 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     os = JS_InternString(cx, "OS X");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     os = JS_InternString(cx, "WINRT");
-#elif (CC_TARGET_PLATFORM == )CC_PLATFORM_OHOS
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
     os = JS_InternString(cx, "HarmonyOS Next");
 #else
     os = JS_InternString(cx, "Unknown");
