@@ -127,7 +127,7 @@ if(ZLIB_FOUND)
   unset(PNG_FOUND)
 
   if(OHOS)
-      # 主动set路径
+      # Active set path
       if(${PNG_PNG_INCLUDE_DIR} STREQUAL "PNG_PNG_INCLUDE_DIR-NOTFOUND")
           # message("[OHOS_LOG] PNG_PNG_INCLUDE_DIR NOTFOUND")
           set(PNG_PNG_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/ohos)

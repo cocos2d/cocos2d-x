@@ -121,7 +121,7 @@ find_library(FREETYPE_LIBRARY
 )
 
 if(OHOS)
-    # 主动set路径
+    # Active set path
     if(${FREETYPE_INCLUDE_DIR_ft2build} STREQUAL "FREETYPE_INCLUDE_DIR_ft2build-NOTFOUND")
         # message("[OHOS_LOG] FREETYPE_INCLUDE_DIR_ft2build     NOTFOUND")
         set(FREETYPE_INCLUDE_DIR_ft2build ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/ohos)

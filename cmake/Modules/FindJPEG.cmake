@@ -37,7 +37,7 @@ set(JPEG_NAMES ${JPEG_NAMES} jpeg)
 find_library(JPEG_LIBRARY NAMES ${JPEG_NAMES} )
 
 if(OHOS)
-  # 主动set路径
+  # Active set path
   if(${JPEG_INCLUDE_DIR} STREQUAL "JPEG_INCLUDE_DIR-NOTFOUND")
     # message("[OHOS_LOG] JPEG_INCLUDE_DIR  NOTFOUND")
     set(JPEG_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/ohos)
