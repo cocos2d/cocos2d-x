@@ -60,7 +60,7 @@ if(NOT CURL_FOUND)
     )
 
     if(OHOS)
-        # 主动set路径
+        # Active set path
         if(${CURL_INCLUDE_DIR} STREQUAL "CURL_INCLUDE_DIR-NOTFOUND")
             # message("[OHOS_LOG] CURL_INCLUDE_DIR  NOTFOUND")
             set(CURL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/ohos)

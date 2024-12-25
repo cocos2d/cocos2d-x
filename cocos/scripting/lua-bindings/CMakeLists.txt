@@ -186,7 +186,7 @@ target_link_libraries(luacocos2d cocos2d)
 
 if(USE_LUAJIT)
     target_link_libraries(luacocos2d luajit)
-    # luajit比lua多一个头文件luajit.h，在../../../external/lua/luajit/src下，暂时没有用到
+    # Luajit has an additional header file called Luajit. h, which can be found in.../...// Under external/lua/luajit/src, I haven't used it yet
 endif()
 
 set_target_properties(luacocos2d

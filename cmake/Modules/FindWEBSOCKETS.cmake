@@ -40,7 +40,7 @@ find_library(WEBSOCKETS_LIBRARY NAMES websockets libwebsockets
   )
 
 if(OHOS)
-    # 主动set路径
+    # Active set path
     if(${WEBSOCKETS_INCLUDE_DIR} STREQUAL "WEBSOCKETS_INCLUDE_DIR-NOTFOUND")
        #  message("[OHOS_LOG] WEBSOCKETS_INCLUDE_DIR  NOTFOUND")
         set(WEBSOCKETS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/ohos)

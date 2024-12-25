@@ -63,7 +63,7 @@ find_library(TIFF_LIBRARY
   )
 
 if(OHOS)
-    # 主动set路径
+    # Active set path
     if(${TIFF_INCLUDE_DIR} STREQUAL "TIFF_INCLUDE_DIR-NOTFOUND")
        #  message("[OHOS_LOG] TIFF_INCLUDE_DIR  NOTFOUND")
         set(TIFF_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/ohos)
