@@ -62,7 +62,11 @@ include(editor-support/spine/CMakeLists.txt)
 set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC})
 endif(BUILD_EDITOR_SPINE)
 
-include(../extensions/CMakeLists.txt)
+if(OHOS)
+    include(${COCOS2DX_ROOT_PATH}/extensions/CMakeLists.txt)
+else()
+    include(../extensions/CMakeLists.txt)
+endif()
 
 set(COCOS_SRC cocos2d.cpp
     ${COCOS_2D_SRC}
@@ -126,13 +130,62 @@ elseif(MACOSX OR APPLE)
 
 elseif(ANDROID)
   set(PLATFORM_SPECIFIC_LIBS GLESv2 log android)
+elseif(OHOS)
+  FIND_LIBRARY(Drawing-lib native_drawing)
+  FIND_LIBRARY(libace-lib ace_ndk.z)
+  FIND_LIBRARY(libnapi-lib ace_napi.z)
+  FIND_LIBRARY(GLES-lib GLESv3)
+  FIND_LIBRARY(libuv-lib uv)
+  FIND_LIBRARY(rawfile-lib rawfile.z)
+  FIND_LIBRARY(EGL-lib EGL)
+  FIND_LIBRARY(OpenSl-lib OpenSLES)
+  find_library( hilog-lib hilog_ndk.z )
+
+  set(PLATFORM_SPECIFIC_LIBS
+    ${Drawing-lib}
+    ${libace-lib}
+    ${libnapi-lib}
+    ${GLES-lib}
+    ${libuv-lib}
+    ${rawfile-lib}
+    ${EGL-lib}
+    ${OpenSl-lib}
+    ${hilog-lib}
+  )
+
+  set(COCOS2DX_HEADER_PUBLIC
+	        ${CLASSES_PATH}
+	        ${COCOS2DX_ROOT_PATH}/cocos
+	        ${COCOS2DX_ROOT_PATH}/cocos/math
+	        ${COCOS2DX_ROOT_PATH}/cocos/platform
+	        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/modules
+	        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
+	        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/common
+	        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi
+	        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/render
+	        )
+  target_include_directories(cocos2d PUBLIC ${COCOS2DX_HEADER_PUBLIC})
+  target_compile_definitions(cocos2d PUBLIC -DUSE_FILE32API -DOpenHarmony)
+  target_compile_options(cocos2d PUBLIC -Wno-psabi)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
+if (OHOS)
+    target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so)
+endif()
+
+foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS OPENSSL CURL FLATBUFFERS XXHASH)
   cocos_use_pkg(cocos2d ${pkg})
 endforeach()
+
+if(OHOS)
+target_link_libraries(cocos2d
+        # ext_cpufeatures  TBD need fixed?
+        ext_pvmp3dec
+        ext_tremolo
+        )
+endif(OHOS)
 
 if(LINUX)
   set(glfw_other_linker_flags X11)

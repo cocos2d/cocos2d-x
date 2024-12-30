@@ -1,0 +1,2 @@
+Currently, the DevEco does not support referencing Har projects outside the project directory.
+Related capabilities are being planned. The libSysCapabilities folder of each project will be unified here.

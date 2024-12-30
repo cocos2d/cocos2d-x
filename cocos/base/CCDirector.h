@@ -246,6 +246,13 @@ public:
     /** Returns visible origin coordinate of the OpenGL view in points. */
     Vec2 getVisibleOrigin() const;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    /**ohos
+     * Returns safe area rectangle of the OpenGL view in points.
+     */
+    Rect getSafeAreaRect() const;
+#endif    
+	
     /** 
      * Converts a screen coordinate to an OpenGL coordinate.
      * Useful to convert (multi) touch coordinates to the current layout (portrait or landscape).

@@ -94,6 +94,10 @@ int lua_print(lua_State * luastate)
             t += "\t";
     }
     CCLOG("[LUA-print] %s", t.c_str());
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+        OHOS_LOGD("[LUA-print] %{public}s", t.c_str());
+#endif
+
 
     return 0;
 }
@@ -136,7 +140,9 @@ int lua_release_print(lua_State * L)
             t += "\t";
     }
     log("[LUA-print] %s", t.c_str());
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+        OHOS_LOGD("[LUA-print] %{public}s", t.c_str());
+#endif
     return 0;
 }
 }

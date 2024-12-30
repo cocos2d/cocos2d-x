@@ -351,12 +351,15 @@ public:
     void calulateRotationOffset(void);
 
     virtual PUParticleSystem3D* clone();
-    virtual void copyAttributesTo(PUParticleSystem3D* system);
+    virtual void copyAttributesTo (PUParticleSystem3D* system);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();
 
+	#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    	bool initSystem(const std::string &filePath);
+	#endif
     bool initWithFilePath(const std::string &filePath);
     bool initWithFilePathAndMaterialPath (const std::string &filePath, const std::string &materialPath);
 
@@ -379,7 +382,9 @@ protected:
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
-    bool initSystem(const std::string &filePath);
+	#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+    	bool initSystem(const std::string &filePath);
+	#endif
     static void convertToUnixStylePath(std::string &path);
 
 protected:

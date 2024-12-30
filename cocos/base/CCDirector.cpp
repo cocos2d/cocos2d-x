@@ -789,6 +789,20 @@ Vec2 Director::getVisibleOrigin() const
     }
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+Rect Director::getSafeAreaRect() const
+{
+    if (_openGLView)
+    {
+        return _openGLView->getSafeAreaRect();
+    }
+    else
+    {
+        return Rect::ZERO;
+    }
+}
+#endif
+
 // scene management
 
 void Director::runWithScene(Scene *scene)

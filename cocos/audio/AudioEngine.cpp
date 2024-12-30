@@ -24,7 +24,7 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "audio/include/AudioEngine.h"
 #include "platform/CCFileUtils.h"
@@ -32,6 +32,8 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "android/AudioEngine-inl.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+#include "ohos/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "apple/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
@@ -63,6 +65,10 @@ AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
 void AudioEngine::end()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    stopAll();
+#endif
+    
     delete _audioEngineImpl;
     _audioEngineImpl = nullptr;
 
@@ -227,6 +233,11 @@ void AudioEngine::resumeAll()
 
 void AudioEngine::stop(int audioID)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+   if(!_audioEngineImpl){
+        return;
+    }
+#endif
     auto it = _audioIDInfoMap.find(audioID);
     if (it != _audioIDInfoMap.end()){
         _audioEngineImpl->stop(audioID);
@@ -267,6 +278,21 @@ void AudioEngine::stopAll()
 void AudioEngine::uncache(const std::string &filePath)
 {
     if(_audioPathIDMap.find(filePath) != _audioPathIDMap.end()){
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+        auto lst =  _audioPathIDMap[filePath];
+        for (auto it = lst.begin() ; it != lst.end(); ++it) {
+            auto audioID = *it;
+            _audioEngineImpl->stop(audioID);
+            
+            auto itInfo = _audioIDInfoMap.find(audioID);
+            if (itInfo != _audioIDInfoMap.end()){
+                if (itInfo->second.profileHelper) {
+                    itInfo->second.profileHelper->audioIDs.remove(audioID);
+                }
+                _audioIDInfoMap.erase(audioID);
+            }
+        }
+#else
         auto itEnd = _audioPathIDMap[filePath].end();
         for (auto it = _audioPathIDMap[filePath].begin() ; it != itEnd; ++it) {
             auto audioID = *it;
@@ -280,6 +306,7 @@ void AudioEngine::uncache(const std::string &filePath)
                 _audioIDInfoMap.erase(audioID);
             }
         }
+#endif
         _audioPathIDMap.erase(filePath);
     }
 
@@ -415,4 +442,21 @@ AudioProfile* AudioEngine::getProfile(const std::string &name)
     }
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+void AudioEngine::preload(const std::string &filePath, std::function<void(bool isSuccess)> callback) {
+
+    lazyInit();
+
+    if (_audioEngineImpl) {
+        if (!FileUtils::getInstance()->isFileExist(filePath)) {
+            if (callback) {
+                callback(false);
+            }
+            return;
+        }
+
+        _audioEngineImpl->preload(filePath, callback);
+    }
+}
+#endif
 #endif

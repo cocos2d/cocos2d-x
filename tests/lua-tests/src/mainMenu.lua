@@ -11,7 +11,10 @@ require "AssetsManagerTest/AssetsManagerTest"
 require "AssetsManagerExTest/AssetsManagerExTest"
 require "BillBoardTest/BillBoardTest"
 require "BugsTest/BugsTest"
+local currPlatform = cc.Application:getInstance():getTargetPlatform()
+if (cc.PLATFORM_OS_OHOS ~= currPlatform) then
 require "ByteCodeEncryptTest/ByteCodeEncryptTest"
+end
 require "Camera3DTest/Camera3DTest"
 require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
@@ -71,8 +74,7 @@ local CurPos = {x = 0, y = 0}
 local BeginPos = {x = 0, y = 0}
 
 local audioEndineSupported = false
-local currPlatform = cc.Application:getInstance():getTargetPlatform()
-if (cc.PLATFORM_OS_WINDOWS == currPlatform or cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform) then
+if (cc.PLATFORM_OS_WINDOWS == currPlatform or cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform or cc.PLATFORM_OS_OHOS == currPlatform) then
     audioEndineSupported = true
 end
 
@@ -89,7 +91,7 @@ local _allTests = {
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BillBoardTest"           , create_func=              BillBoardTestMain},
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
-    { isSupported = true,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
+    { isSupported = false,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
     { isSupported = true,  name = "Camera3DTest"     ,        create_func=       Camera3DTestMain  },
     { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
@@ -203,13 +205,13 @@ function CreateTestMenu()
         end
 
         if obj.name == "VideoPlayerTest" then
-            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
+            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform and cc.PLATFORM_OS_OHOS ~= targetPlatform then
                 testMenuItem:setEnabled(false)
             end
         end
 
         if obj.name == "WebViewTest" then
-            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
+            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform and cc.PLATFORM_OS_OHOS ~= targetPlatform then
                 testMenuItem:setEnabled(false)
             end
         end

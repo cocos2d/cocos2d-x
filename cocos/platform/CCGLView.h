@@ -232,6 +232,13 @@ public:
      */
     virtual Rect getVisibleRect() const;
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+    /**ohos
+     * Gets safe area rectangle
+     */
+    virtual Rect getSafeAreaRect() const;
+#endif
+
     /**
      * Set the design resolution size.
      * @param width Design resolution width.
