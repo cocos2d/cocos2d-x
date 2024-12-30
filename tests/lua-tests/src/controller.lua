@@ -1,3 +1,10 @@
+local currPlatform = cc.Application:getInstance():getTargetPlatform()
+cc.PLATFORM_OS_OHOS = 12
+if (cc.PLATFORM_OS_OHOS == currPlatform) then
+    local jit = require("jit")
+    jit.off()
+    print("jit.off()")
+end
 
 -- avoid memory leak
 collectgarbage("setpause", 100) 
