@@ -354,7 +354,7 @@ function Scene3DTest:create3DWorld()
     self:addChild(self._skyBox)
 
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
+    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8 or targetPlatform == cc.PLATFORM_OS_OHOS then
         self._backToForegroundListener = cc.EventListenerCustom:create("event_renderer_recreated", function (eventCustom)
 
                 local state = self._skyBox:getGLProgramState()
@@ -658,7 +658,7 @@ end
 
 function Scene3DTest:onExit()
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
+    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8 or targetPlatform == cc.PLATFORM_OS_OHOS then
         cc.Director:getInstance():getEventDispatcher():removeEventListener(self._backToForegroundListener)
     end
 end

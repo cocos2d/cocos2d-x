@@ -477,7 +477,7 @@ bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source,
         }
         free(src);
 
-        return false;;
+        return false;
     }
     return (status == GL_TRUE);
 }

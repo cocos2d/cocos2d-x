@@ -73,14 +73,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0 / 60);
 
     auto screenSize = glview->getFrameSize();
-    auto designSize = Size(480, 320);
+    auto designSize = Size(960, 960);
 
     auto fileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
     {
-        auto resourceSize = Size(960, 640);
+        auto resourceSize = Size(960, 960);
         searchPaths.push_back("hd");
         searchPaths.push_back("ccs-res/hd");
         searchPaths.push_back("ccs-res/hd/scenetest");
@@ -169,7 +169,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     fileUtils->setSearchPaths(searchPaths);
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
+#else
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
+#endif
     
     // Enable Remote Console
     auto console = director->getConsole();
@@ -201,3 +205,19 @@ void AppDelegate::applicationWillEnterForeground()
     
     Director::getInstance()->startAnimation();
 }
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
+{
+    auto director = cocos2d::Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if (glview != NULL) {
+        // Set ResolutionPolicy to a proper value. here use the original value when the game is started.
+        ResolutionPolicy resolutionPolicy = glview->getResolutionPolicy();
+        Size designSize = glview->getDesignResolutionSize();
+         glview->setFrameSize(newWidth, newHeight);
+         // Set the design resolution to a proper value. here use the original value when the game is started. 
+         glview->setDesignResolutionSize(designSize.width, designSize.height, resolutionPolicy);
+    }
+}
+#endif

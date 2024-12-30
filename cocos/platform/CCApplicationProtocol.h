@@ -57,7 +57,8 @@ public:
         OS_EMSCRIPTEN,/** Emscripten */
         OS_TIZEN,/** Tizen */
         OS_WINRT,/** Windows Store Applications */
-        OS_WP8/** Windows Phone Applications */
+        OS_WP8, /** Windows Phone Applications */
+        OS_OPENHARMONY          /** OpenHarmony OS */
     };
 
     /**
@@ -135,6 +136,15 @@ public:
      * @lua NA
      */
     virtual Platform getTargetPlatform() = 0;
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+    /**ohos
+     @brief Get application version.
+     * @js NA
+     * @lua NA
+     */
+    virtual std::string getVersion() = 0;
+#endif
     
     /**
      @brief Open url in default browser.

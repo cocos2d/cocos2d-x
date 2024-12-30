@@ -126,19 +126,74 @@ elseif(MACOSX OR APPLE)
 
 elseif(ANDROID)
   set(PLATFORM_SPECIFIC_LIBS GLESv2 log android)
+
+elseif(OHOS)
+  FIND_LIBRARY(Drawing-lib native_drawing)
+  FIND_LIBRARY(libace-lib ace_ndk.z)
+  FIND_LIBRARY(libnapi-lib ace_napi.z)
+  FIND_LIBRARY(GLES-lib GLESv3)
+  FIND_LIBRARY(libuv-lib uv)
+  FIND_LIBRARY(rawfile-lib rawfile.z)
+  FIND_LIBRARY(EGL-lib EGL)
+  FIND_LIBRARY(OpenSl-lib OpenSLES)
+  find_library( hilog-lib hilog_ndk.z )
+
+  set(PLATFORM_SPECIFIC_LIBS
+    ${Drawing-lib}
+    ${libace-lib}
+    ${libnapi-lib}
+    ${GLES-lib}
+    ${libuv-lib}
+    ${rawfile-lib}
+    ${EGL-lib}
+    ${OpenSl-lib}
+    ${hilog-lib}
+  )
+
+  set(COCOS2DX_HEADER_PUBLIC
+      ${CLASSES_PATH}
+      ${COCOS2DX_ROOT_PATH}/cocos
+      ${COCOS2DX_ROOT_PATH}/cocos/math
+      ${COCOS2DX_ROOT_PATH}/cocos/platform
+      ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/modules
+      ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
+      ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/common
+      ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi
+      ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/render
+      ${COCOS2DX_ROOT_PATH}/external/ohos-specific/tremolo
+      ${COCOS2DX_ROOT_PATH}/external/ohos-specific/pvmp3dec/include
+      ${COCOS2DX_ROOT_PATH}/external/ohos-specific/pvmp3dec/src
+      )
+  target_include_directories(cocos2d PUBLIC ${COCOS2DX_HEADER_PUBLIC})
+  target_compile_definitions(cocos2d PUBLIC -DUSE_FILE32API -DOpenHarmony)
+  target_compile_options(cocos2d PUBLIC -Wno-psabi)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
-  cocos_use_pkg(cocos2d ${pkg})
-endforeach()
+if(OHOS)
+    foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS OPENSSL CURL FLATBUFFERS XXHASH)
+      cocos_use_pkg(cocos2d ${pkg})
+    endforeach()
+else()
+    foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
+      cocos_use_pkg(cocos2d ${pkg})
+    endforeach()
+endif()
 
 if(LINUX)
   set(glfw_other_linker_flags X11)
 endif(LINUX)
 
 target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
+
+if(OHOS)
+    target_link_libraries(cocos2d pvmp3dec tremolo)
+endif()
+
+if (OHOS)
+    target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so)
+endif()
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
