@@ -17,7 +17,7 @@ local function updateLayer()
     local support  = false
     if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) 
         or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or (cc.PLATFORM_OS_ANDROID == targetPlatform) 
-        or (cc.PLATFORM_OS_MAC  == targetPlatform) then
+        or (cc.PLATFORM_OS_MAC  == targetPlatform) or (cc.PLATFORM_OS_OHOS  == targetPlatform) then
         support = true
     end
 

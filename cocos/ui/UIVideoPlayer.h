@@ -25,7 +25,7 @@
 #ifndef __COCOS2D_UI_VIDEOWEIGTH_H_
 #define __COCOS2D_UI_VIDEOWEIGTH_H_
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #include "ui/UIWidget.h"
 
@@ -57,7 +57,19 @@ namespace experimental{
                 PLAYING = 0,
                 PAUSED,
                 STOPPED,
-                COMPLETED
+                COMPLETED,
+                ERROR
+            };
+            
+            /**
+             * Styles of how the the video player is presented
+             * For now only used on iOS to use either MPMovieControlStyleEmbedded (DEFAULT) or 
+             * MPMovieControlStyleNone (NONE)
+             */
+            enum class StyleType
+            {
+                DEFAULT = 0,
+                NONE
             };
 
             /**
@@ -172,6 +184,47 @@ namespace experimental{
             virtual void onPlayEvent(int event);
             virtual void setVisible(bool visible) override;
             virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+            /**
+             * @brief Set if playback is done in loop mode
+             *
+             * @param looping the video will or not automatically restart at the end
+             */
+            virtual void setLooping(bool looping);
+            
+            /**
+             * Set if the player will enable user input for basic pause and resume of video
+             *
+             * @param enableInput If true, input will be handled for basic functionality (pause/resume)
+             */
+            virtual void setUserInputEnabled(bool enableInput);
+            
+            /**
+             * Set the style of the player
+             *
+             * @param style The corresponding style
+             */
+            virtual void setStyle(StyleType style);
+    
+            /**
+             * Checks whether the VideoPlayer is set with looping mode.
+             *
+             * @return true if the videoplayer is set to loop, false otherwise.
+             */
+            virtual bool isLooping() const;
+
+
+            /**
+             * Checks whether the VideoPlayer is set to listen user input to resume and pause the video
+             *
+             * @return true if the videoplayer user input is set, false otherwise.
+             */            
+            virtual bool isUserInputEnabled() const;
+    
+            virtual void onEnter() ;
+    
+            virtual void onExit() ;
+#endif
 
         protected:
             virtual cocos2d::ui::Widget* createCloneInstance() override;
@@ -204,6 +257,11 @@ namespace experimental{
             ccVideoPlayerCallback _eventCallback;
 
             void* _videoView;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+            bool _isLooping;
+            bool _isUserInputEnabled;
+            StyleType _styleType;
+#endif
         };
     }
 }
