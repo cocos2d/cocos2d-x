@@ -1,9 +1,11 @@
-local EFFECT_FILE = "effect1.wav"
+local EFFECT_FILE = "effect2.ogg"
 
 local MUSIC_FILE = nil 
 local targetPlatform = cc.Application:getInstance():getTargetPlatform()
 if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
     MUSIC_FILE = "background.caf"
+elseif (cc.PLATFORM_OS_OHOS == targetPlatform) then
+    MUSIC_FILE = "background.wav"
 else
     MUSIC_FILE = "background.mp3"
 end

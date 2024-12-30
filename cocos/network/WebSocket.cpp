@@ -28,6 +28,7 @@
  ****************************************************************************/
 
 #include "WebSocket.h"
+#include "CCPlatformConfig.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
@@ -429,8 +430,10 @@ void WebSocket::onSubThreadStarted()
     
 	info.port = CONTEXT_PORT_NO_LISTEN;
 	info.protocols = _wsProtocols;
-#ifndef LWS_NO_EXTENSIONS
-	info.extensions = libwebsocket_get_internal_extensions();
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
+    #ifndef LWS_NO_EXTENSIONS
+            info.extensions = libwebsocket_get_internal_extensions();
+    #endif
 #endif
 	info.gid = -1;
 	info.uid = -1;

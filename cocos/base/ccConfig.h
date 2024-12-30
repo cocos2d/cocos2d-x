@@ -278,7 +278,7 @@ THE SOFTWARE.
 /** Support webp or not. If your application don't use webp format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_WEBP
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
 #define CC_USE_WEBP  1
 #endif
 #endif // CC_USE_WEBP
@@ -305,7 +305,11 @@ THE SOFTWARE.
  * protected by default.
  */
 #ifndef CC_CONSTRUCTOR_ACCESS
-#define CC_CONSTRUCTOR_ACCESS protected
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+	#define CC_CONSTRUCTOR_ACCESS public
+#else
+	#define CC_CONSTRUCTOR_ACCESS protected
+#endif
 #endif
 
 /** @def CC_ENABLE_ALLOCATOR

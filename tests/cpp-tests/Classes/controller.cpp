@@ -23,7 +23,7 @@ public:
         addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
         addTest("Allocator - Basic", [](){return new (std::nothrow) AllocatorTests(); });
         addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); });
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
 #endif
 #if CC_ENABLE_BOX2D_INTEGRATION

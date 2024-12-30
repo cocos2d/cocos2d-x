@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "libSysCapabilities",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+      "tablet"
+    ]
+  }
+}

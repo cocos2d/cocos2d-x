@@ -57,7 +57,8 @@ public:
         OS_EMSCRIPTEN,/** Emscripten */
         OS_TIZEN,/** Tizen */
         OS_WINRT,/** Winrt */
-        OS_WP8/** WP8 */
+        OS_WP8,/** WP8 */
+        OS_OPENHARMONY  /** OPENHARMONY   */
     };
 
     /**

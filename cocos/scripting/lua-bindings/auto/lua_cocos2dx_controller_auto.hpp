@@ -1,5 +1,5 @@
 #include "base/ccConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
 #ifndef __cocos2dx_controller_h__
 #define __cocos2dx_controller_h__
 

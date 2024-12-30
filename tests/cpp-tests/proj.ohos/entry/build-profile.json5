@@ -1,0 +1,27 @@
+{
+  "apiType": 'stageMode',
+  "buildOption": {
+    "externalNativeOptions": {
+      "path": "./src/main/cpp/CMakeLists.txt",
+      "arguments": "",
+      "abiFilters": [
+        //"armeabi-v7a",
+        "arm64-v8a"
+      ],
+      "cppFlags": "",
+    },
+    "sourceOption": {
+      "workers": [
+        './src/main/ets/workers/CocosWorker.ts'
+      ]
+    }
+  },
+  "targets": [
+    {
+      "name": "default"
+    },
+    {
+      "name": "ohosTest"
+    }
+  ]
+}

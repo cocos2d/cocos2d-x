@@ -352,6 +352,17 @@ public:
      *  @param path The path that needs to be checked.
      *  @return True if it's an absolute path, false if not.
      */
+
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    /**
+    *  Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.
+    *  Examples of filename extensions are .png, .jpeg, .exe, .dmg and .txt.
+    *  @param filePath The path of the file, it could be a relative or absolute path.
+    *  @return suffix for filename in lower case or empty if a dot not found.
+    */
+    virtual std::string getFileExtension(const std::string& filePath) const;
+#endif
+
     virtual bool isAbsolutePath(const std::string& path) const;
     
     /**

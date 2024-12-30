@@ -45,17 +45,24 @@ include(CocosBuildHelpers)
 
 message(${BUILDING_STRING})
 
-set(USE_WEBP_DEFAULT ON)
+if(OHOS)
+   set(USE_WEBP_DEFAULT OFF)
+else()
+   set(USE_WEBP_DEFAULT ON)
+endif()
 if(WINRT OR WP8)
   set(USE_WEBP_DEFAULT OFF)
 endif()
 
 set(USE_PREBUILT_LIBS_DEFAULT ON)
-if(MINGW)
+if(MINGW AND NOT OHOS)
   set(USE_PREBUILT_LIBS_DEFAULT OFF)
 endif()
-
-set(BUILD_CPP_TESTS_DEFAULT ON)
+if(OHOS)
+  set(BUILD_CPP_TESTS_DEFAULT OFF)
+else()
+  set(BUILD_CPP_TESTS_DEFAULT ON)
+endif()
 set(BUILD_LUA_LIBS_DEFAULT ON)
 set(BUILD_LUA_TESTS_DEFAULT ON)
 # TODO: fix test samples for MSVC
@@ -78,8 +85,8 @@ option(BUILD_CPP_TESTS "Build TestCpp samples" ${BUILD_CPP_TESTS_DEFAULT})
 option(BUILD_LUA_LIBS "Build lua libraries" ${BUILD_LUA_LIBS_DEFAULT})
 option(BUILD_LUA_TESTS "Build TestLua samples" ${BUILD_LUA_TESTS_DEFAULT})
 option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ${USE_PREBUILT_LIBS_DEFAULT})
-
-if(USE_PREBUILT_LIBS AND MINGW)
+ 
+if(USE_PREBUILT_LIBS AND MINGW AND NOT OHOS)
   message(FATAL_ERROR "Prebuilt windows libs can't be used with mingw, please use packages.")
 endif()
 
@@ -138,6 +145,9 @@ elseif(LINUX)
 elseif(ANDROID)
   ADD_DEFINITIONS (-DUSE_FILE32API)
   set(PLATFORM_FOLDER android)
+elseif(OHOS)
+  ADD_DEFINITIONS (-DUSE_FILE32API)
+  set(PLATFORM_FOLDER ohos)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -206,6 +216,11 @@ if(LINUX OR MACOSX OR WINDOWS)
 endif(LINUX OR MACOSX OR WINDOWS)
 
 # Freetype required on all platforms
+if(OHOS)
+  set(FREETYPE_INCLUDE_DIR_ft2build ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/ohos)
+  set(FREETYPE_INCLUDE_DIR_freetype2 ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/ohos/freetype2)
+  set(FREETYPE_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/ohos/libfreetype.a)
+endif()
 cocos_find_package(Freetype FREETYPE REQUIRED)
 
 # WebP required if used
@@ -215,6 +230,10 @@ endif(USE_WEBP)
 
 # Chipmunk
 if(USE_CHIPMUNK)
+  if(OHOS)
+    set(CHIPMUNK_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk)
+    set(CHIPMUNK_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/ohos/libchipmunk.a)
+  endif()
   cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
   add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
   if(IOS OR MACOSX)
@@ -253,6 +272,10 @@ endif()
 message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 
 # libjpeg
+if(OHOS)
+    set(JPEG_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/ohos)
+    set(JPEG_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/ohos/libjpeg.a)
+endif()
 cocos_find_package(JPEG JPEG REQUIRED)
 cocos_find_package(ZLIB ZLIB REQUIRED)
 
@@ -279,9 +302,48 @@ else()
   add_definitions(-DMINIZIP_FROM_SYSTEM)
 endif()
 
+if(OHOS)
+    set(PNG_PNG_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/ohos)
+    set(PNG_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/ohos/libpng.a)
+endif()
 cocos_find_package(PNG PNG REQUIRED)
+
+if(OHOS)
+  set(TIFF_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/ohos)
+  set(TIFF_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/ohos/libtiff.a)
+endif()
 cocos_find_package(TIFF TIFF REQUIRED)
+
+if(OHOS)
+    set(WEBSOCKETS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/ohos)
+    set(WEBSOCKETS_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/ohos/libwebsockets.a)
+endif()
 cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
+
+# openssl for web
+if(OHOS)
+  set(OPENSSL_INCLUDE_DIR
+          ${CMAKE_CURRENT_SOURCE_DIR}/external/openssl
+          ${CMAKE_CURRENT_SOURCE_DIR}/external/openssl/include/ohos
+          ${CMAKE_CURRENT_SOURCE_DIR}/external/openssl/include/ohos/openssl
+          )
+  set(OPENSSL_LIBRARY
+          ${CMAKE_CURRENT_SOURCE_DIR}/external/openssl/prebuilt/ohos/libcrypto.a
+          ${CMAKE_CURRENT_SOURCE_DIR}/external/openssl/prebuilt/ohos/libssl.a
+          )
+endif()
+cocos_find_package(OPENSSL OPENSSL REQUIRED)
+
+if(OHOS)
+  set(CURL_INCLUDE_DIR
+          ${CMAKE_CURRENT_SOURCE_DIR}/external/curl
+          ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
+          ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/ohos
+          ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/ohos/curl
+          )
+  set(CURL_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/ohos/libcurl.a)
+
+endif()
 cocos_find_package(CURL CURL REQUIRED)
 
 add_subdirectory(external/flatbuffers)
@@ -294,23 +356,38 @@ add_subdirectory(external/xxhash)
 set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
 set(XXHASH_LIBRARIES xxhash)
 
+if(OHOS)
+    add_subdirectory(external/ohos-specific/pvmp3dec)
+    add_subdirectory(external/ohos-specific/tremolo)
+endif()
 # libcocos2d.a
 add_subdirectory(cocos)
 
 # build cpp tests
 if(BUILD_CPP_TESTS)
-  add_subdirectory(tests/cpp-empty-test)
-  add_subdirectory(tests/cpp-tests)
+    if(OHOS)
+        add_subdirectory(tests/cpp-tests)
+    elseif()
+      add_subdirectory(tests/cpp-empty-test)
+      add_subdirectory(tests/cpp-tests)
+    endif()
 endif(BUILD_CPP_TESTS)
 
 ## Scripting
 if(BUILD_LUA_LIBS)
+    if(OHOS)
+        add_subdirectory(external/lua/luajit)
+    endif()
     add_subdirectory(cocos/scripting/lua-bindings)
 
   # build lua tests
   if(BUILD_LUA_TESTS)
-    add_subdirectory(tests/lua-tests/project)
-    add_subdirectory(tests/lua-empty-test/project)
+    if(OHOS)
+        add_subdirectory(tests/lua-tests/project)
+    elseif()
+        add_subdirectory(tests/lua-tests/project)
+        add_subdirectory(tests/lua-empty-test/project)
+    endif()
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)

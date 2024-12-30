@@ -1,18 +1,28 @@
-
+local currPlatform = cc.Application:getInstance():getTargetPlatform()
+cc.PLATFORM_OS_OHOS=12
+if (cc.PLATFORM_OS_OHOS == currPlatform) then
+    local jit = require("jit")
+    jit.off()
+    print("jit.off()")
+end
 -- avoid memory leak
 collectgarbage("setpause", 100) 
 collectgarbage("setstepmul", 5000)
 
 ----------------
 -- run
-cc.FileUtils:getInstance():addSearchPath("src")
+if (cc.PLATFORM_OS_OHOS ~= currPlatform) then
+    cc.FileUtils:getInstance():addSearchPath("src")
+end
 CC_USE_DEPRECATED_API = true
 require "cocos.init"
 
 local director = cc.Director:getInstance()
 local glView   = director:getOpenGLView()
+local widthx = 1024
+local heighty = 2112
 if nil == glView then
-    glView = cc.GLViewImpl:createWithRect("Lua Tests", cc.rect(0,0,900,640))
+    glView = cc.GLViewImpl:createWithRect("Lua Tests", cc.rect(0,0,widthx,heighty))
     director:setOpenGLView(glView)
 end
 
@@ -24,14 +34,14 @@ director:setAnimationInterval(1.0 / 60)
 
 local screenSize = glView:getFrameSize()
 
-local designSize = {width = 480, height = 320}
+local designSize = {width = widthx / 2, height = heighty / 2}
 
 if screenSize.height > 320 then
-    local resourceSize = {width = 960, height = 640}
+    local resourceSize = {width = widthx, height = heighty}
     cc.Director:getInstance():setContentScaleFactor(resourceSize.height/designSize.height)
 end
 
-glView:setDesignResolutionSize(designSize.width, designSize.height, cc.ResolutionPolicy.FIXED_HEIGHT)
+glView:setDesignResolutionSize(designSize.width, designSize.height, cc.ResolutionPolicy.SHOW_ALL)
 
 local fileUtils = cc.FileUtils:getInstance()
 local function addSearchPath(resPrefix, height)

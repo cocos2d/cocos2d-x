@@ -737,6 +737,8 @@ void Renderer::drawBatchedTriangles()
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
+// TBD need fixed ohos platform not support glUnmapBufferOES,can not use vao
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
         //Bind VAO
         GL::bindVAO(_buffersVAO);
         //Set VBO data
@@ -758,6 +760,7 @@ void Renderer::drawBatchedTriangles()
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
+#endif
     }
     else
     {
@@ -858,10 +861,11 @@ void Renderer::drawBatchedQuads()
         
         // option 3: orphaning + glMapBuffer
         glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * _numberQuads * 4, nullptr, GL_DYNAMIC_DRAW);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_OHOS)
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         memcpy(buf, _quadVerts, sizeof(_quadVerts[0])* _numberQuads * 4);
         glUnmapBuffer(GL_ARRAY_BUFFER);
-        
+#endif
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);

@@ -189,8 +189,115 @@ local function OpenGLTestMainLayer()
         RetroEffectlayer:scheduleUpdateWithPriorityLua(updateRetroEffect,0)
         return RetroEffectlayer
     end
+if (cc.PLATFORM_OS_OHOS == targetPlatform) then
+    local function createShaderNodeLayer(vSource, fSource)
+        local shaderNodeLayer = cc.Layer:create()
+
+        InitTitle(shaderNodeLayer)
+
+        local vertSource = vSource
+        local fragSource = fSource
+        local glProgram = cc.GLProgram:createWithByteArrays(vertSource, fragSource)
+        glProgram:retain()
+
+        local glNode  = gl.glNodeCreate()
+
+        local resolution = cc.p(256, 256)
+        local director = cc.Director:getInstance()
+        local frameSize = director:getOpenGLView():getFrameSize()
+        local visibleSize = director:getVisibleSize()
+        local retinaFactor = director:getOpenGLView():getRetinaFactor()
+        local center = cc.p( size.width / 2 * frameSize.width / visibleSize.width * retinaFactor, size.height / 2 * frameSize.height / visibleSize.height * retinaFactor)
+
+        local function initBuffers()
+            local w = 256
+            local h = 256
+            local x = size.width / 2 - w / 2
+            local y = size.height / 2 -h / 2
+            local vertices ={ x,y, x+w,y, x+w,y+h, x,y, x,y+h, x+w,y+h }
+            local vbo = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, vbo)
+            gl.bufferData(gl.ARRAY_BUFFER, table.getn(vertices), vertices, gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
+            return vbo
+        end
+
+        local vbo = initBuffers()
+
+        local function update(fTime)
+            time = time + fTime
+        end
+
+        local function draw(transform, transformUpdated)
+            glProgram:use()
+            glProgram:setUniformsForBuiltins()
+
+            local uniformCenter = gl.getUniformLocation(glProgram:getProgram(), "center")
+            glProgram:setUniformLocationF32(uniformCenter, center.x, center.y)
+            local uniformResolution = gl.getUniformLocation(glProgram:getProgram(), "resolution")
+            glProgram:setUniformLocationF32(uniformResolution, resolution.x, resolution.y)
+
+            gl.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_POSITION)
+            gl.bindBuffer(gl.ARRAY_BUFFER, vbo)
+            gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
+            gl.drawArrays(gl.TRIANGLES, 0, 6)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
+        end
+  
+        shaderNodeLayer:scheduleUpdateWithPriorityLua(update,0)
+        glNode:registerScriptDrawHandler(draw)
+        time = 0
+        shaderNodeLayer:addChild(glNode,-10)
+        glNode:setPosition( size.width/2, size.height/2)
+
+        local function onNodeEvent(event)
+            if "exit" == event then
+                glProgram:release()
+            end
+        end
+        
+        shaderNodeLayer:registerScriptHandler(onNodeEvent)
+
+        return shaderNodeLayer
+    end
 
     local function createShaderMajoriTest()
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Monjori.fsh")
+        return createShaderNodeLayer(vSource, fSource)
+    end
+
+    local function createShaderMandelbrotTest()
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Mandelbrot.fsh")
+        return createShaderNodeLayer(vSource, fSource)
+    end
+
+    local function createShaderHeartTest()
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Heart.fsh")
+        return createShaderNodeLayer(vSource, fSource)
+    end
+
+    local function createShaderPlasmaTest()
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Plasma.fsh")
+        return createShaderNodeLayer(vSource, fSource)
+    end
+
+    local function createShaderFlowerTest()
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Flower.fsh")
+        return createShaderNodeLayer(vSource, fSource)
+    end
+
+    local function createShaderJuliaTest()
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Julia.fsh")
+        return createShaderNodeLayer(vSource, fSource)
+    end
+else
+     local function createShaderMajoriTest()
         local majorLayer = cc.Layer:create()
 
         InitTitle(majorLayer)
@@ -453,6 +560,7 @@ local function OpenGLTestMainLayer()
         glNode:getGLProgramState():setUniformVec2("center", center)
         return juliaLayer
     end
+end
 
     local function createGLGetActiveTest()
         local glGetActiveLayer = cc.Layer:create()

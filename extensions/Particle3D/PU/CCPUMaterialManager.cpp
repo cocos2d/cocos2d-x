@@ -34,6 +34,11 @@
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCFileUtils-android.h"
 #include <android/asset_manager.h>
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+#include "platform/ohos/CCFileUtils-ohos.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include <ftw.h>
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -156,6 +161,16 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
         loadMaterials(fullpath);
     }
     AAssetDir_close(dir);
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    std::vector<std::string> files = static_cast<FileUtilsOhos*>(FileUtils::getInstance())-> listFiles(fileFolder);
+    for (auto fileName : files) {
+        if (FileUtils::getInstance()->getFileExtension(fileName) == ".material")
+        {
+            std::string fullpath = std::string(fileName);
+            loadMaterials(fullpath);
+            state = true;
+        }
+    }
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     ftw(fileFolder.c_str(), iterPath, 500);

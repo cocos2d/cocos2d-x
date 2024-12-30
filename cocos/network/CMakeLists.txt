@@ -14,7 +14,9 @@ set(COCOS_NETWORK_SRC
     network/WebSocket.cpp
 
 )
-
+if(OHOS)
+	include_directories(../../../external/curl/include/ohos)
+endif()
 if(MSVC)
   set(COCOS_NETWORK_LINK 
     libcurl_imp 

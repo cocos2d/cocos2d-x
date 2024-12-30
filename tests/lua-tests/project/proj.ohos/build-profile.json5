@@ -1,0 +1,45 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\15509\\.ohos\\config\\default_proj.ohos_cdIeawgH0MuwYPdB-KKUt0lEuNUzhp6bYl-ZzucwMIE=.cer",
+          "storePassword": "0000001B89D4D9E3D0501478C5AE210BD5C6854DAB6C3DDBC99D66D5B4E3D3DE949837E377006B7FB6F8C8",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B02EF505F5C1E998D1EB8E3638D856BD9962E1C691960DCB6F5BA83DDE74B3C3F7F28842D02B49D",
+          "profile": "C:\\Users\\15509\\.ohos\\config\\default_proj.ohos_cdIeawgH0MuwYPdB-KKUt0lEuNUzhp6bYl-ZzucwMIE=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\15509\\.ohos\\config\\default_proj.ohos_cdIeawgH0MuwYPdB-KKUt0lEuNUzhp6bYl-ZzucwMIE=.p12"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "libSysCapabilities",
+      "srcPath": "./libSysCapabilities"
+    }
+  ]
+}

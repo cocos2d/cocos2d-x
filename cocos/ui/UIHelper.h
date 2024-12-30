@@ -111,6 +111,17 @@ public:
      *@return a restricted capInset.
      */
     static Rect restrictCapInsetRect(const Rect& capInsets, const Size& textureSize);
+
+    /** ohos
+     *@brief Convert a node's boundingBox rect into screen coordinates.
+     *
+     * @param node Any node pointer.
+     *
+     * @return A Rect in screen coordinates.
+    */
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    static Rect convertBoundingBoxToScreen(Node* node);
+#endif
 };
 }
 
