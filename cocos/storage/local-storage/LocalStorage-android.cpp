@@ -85,6 +85,16 @@ void localStorageSetItem( const std::string& key, const std::string& value)
     JniHelper::callStaticVoidMethod(className, "setItem", key, value);
 }
 
+/** sets an item Asynchrounously in the LS */
+void localStorageSetItemAsync( const std::string& key, const std::string& value)
+{
+
+    assert( _initialized );
+
+    JniHelper::callStaticVoidMethod(className, "setItemAsync", key, value);
+
+}
+
 /** gets an item from the LS */
 bool localStorageGetItem( const std::string& key, std::string *outItem )
 {
