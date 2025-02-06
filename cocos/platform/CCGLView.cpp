@@ -141,7 +141,8 @@ void GLView::updateDesignResolutionSize()
             _scaleX = _scaleY = MAX(_scaleX, _scaleY);
         }
         
-        else if (_resolutionPolicy == ResolutionPolicy::SHOW_ALL)
+        else if ((_resolutionPolicy == ResolutionPolicy::SHOW_ALL) ||
+			(_resolutionPolicy == ResolutionPolicy::COMPLETE_DESIGN))
         {
             _scaleX = _scaleY = MIN(_scaleX, _scaleY);
         }
@@ -157,15 +158,18 @@ void GLView::updateDesignResolutionSize()
         }
         
         // calculate the rect of viewport
-        float viewPortW = _designResolutionSize.width * _scaleX;
-        float viewPortH = _designResolutionSize.height * _scaleY;
+//        float viewPortW = _designResolutionSize.width * _scaleX;
+//        float viewPortH = _designResolutionSize.height * _scaleY;
+        float viewPortW = getVisibleSize().width * _scaleX;
+        float viewPortH = getVisibleSize().height * _scaleY;
         
         _viewPortRect.setRect((_screenSize.width - viewPortW) / 2, (_screenSize.height - viewPortH) / 2, viewPortW, viewPortH);
 
 
         // reset director's member variables to fit visible rect
         auto director = Director::getInstance();
-        director->_winSizeInPoints = getDesignResolutionSize();
+//        director->_winSizeInPoints = getDesignResolutionSize();
+		director->_winSizeInPoints = getVisibleSize();
         director->_isStatusLabelUpdated = true;
         director->setProjection(director->getProjection());
 
@@ -195,6 +199,20 @@ void GLView::setDesignResolutionSize(float width, float height, ResolutionPolicy
 const Size& GLView::getDesignResolutionSize() const 
 {
     return _designResolutionSize;
+}
+
+Vec2 GLView::getDesignOrigin() const
+{
+    if ((_resolutionPolicy == ResolutionPolicy::COMPLETE_DESIGN) ||
+        (_resolutionPolicy == ResolutionPolicy::NO_BORDER))
+    {
+        return Vec2((_screenSize.width/_scaleX - _designResolutionSize.width)/2,
+                    (_screenSize.height/_scaleY - _designResolutionSize.height)/2);
+    }
+    else
+    {
+        return Vec2::ZERO;
+    }
 }
 
 Size GLView::getFrameSize() const
@@ -227,27 +245,31 @@ Rect GLView::getSafeAreaRect() const
 
 Size GLView::getVisibleSize() const
 {
-    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
+//    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
+	if (_resolutionPolicy == ResolutionPolicy::SHOW_ALL)
     {
-        return Size(_screenSize.width/_scaleX, _screenSize.height/_scaleY);
+//        return Size(_screenSize.width/_scaleX, _screenSize.height/_scaleY);
+		return _designResolutionSize;
     }
     else 
     {
-        return _designResolutionSize;
+//        return _designResolutionSize;
+		return Size(_screenSize.width/_scaleX, _screenSize.height/_scaleY);
     }
 }
 
 Vec2 GLView::getVisibleOrigin() const
 {
-    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
-    {
-        return Vec2((_designResolutionSize.width - _screenSize.width/_scaleX)/2, 
-                           (_designResolutionSize.height - _screenSize.height/_scaleY)/2);
-    }
-    else 
-    {
-        return Vec2::ZERO;
-    }
+//    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
+//    {
+//        return Vec2((_designResolutionSize.width - _screenSize.width/_scaleX)/2, 
+//                           (_designResolutionSize.height - _screenSize.height/_scaleY)/2);
+//    }
+//    else 
+//    {
+//        return Vec2::ZERO;
+//    }
+	return Vec2::ZERO;
 }
 
 void GLView::setViewPortInPoints(float x , float y , float w , float h)
