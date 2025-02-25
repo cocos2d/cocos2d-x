@@ -286,6 +286,27 @@ int SimulatorWin::run()
         }
     }
 
+	// add user defined Simulator Screen size
+	for (int i = 0; i < ConfigParser::getInstance()->getScreenSizeCount(); i++)
+	{
+		SimulatorScreenSize screenSize = ConfigParser::getInstance()->getScreenSize(i);
+		SimulatorConfig::getInstance()->addScreenSize(screenSize);
+	}
+
+	// add user defined Simulator Design Resolution size
+	for (int i = 0; i < ConfigParser::getInstance()->getDesignResolutionSizeCount(); i++)
+	{
+		SimulatorScreenSize screenSize = ConfigParser::getInstance()->getDesignResolutionSize(i);
+		SimulatorConfig::getInstance()->addDesignResolutionSize(screenSize);
+	}
+
+    // add user defined Simulator Design Content Scale factor
+    for (int i=0; i < ConfigParser::getInstance()->getDesignContentScaleFactorCount(); i++)
+    {
+        SimulatorDesignContentScaleFactor scaleFactor = ConfigParser::getInstance()->getDesignContentScaleFactor(i);
+        SimulatorConfig::getInstance()->addDesignContentScaleFactor(scaleFactor);
+    }
+
     // create the application instance
     _app = new AppDelegate();
     RuntimeEngine::getInstance()->setProjectConfig(_project);
@@ -396,6 +417,18 @@ int SimulatorWin::run()
     _project.setFrameScale(frameScale);
     CCLOG("FRAME SCALE = %0.2f", frameScale);
 
+	// get design resolution size
+	cocos2d::Size designResolutionSize = _project.getDesignResolutionSize();
+	ConfigParser::getInstance()->setInitDesignResolutionSize(designResolutionSize);
+
+	// get design resolution policy
+	ResolutionPolicy policy = _project.getDesignResolutionPolicy();
+	ConfigParser::getInstance()->setInitDesignResolutionPolicy(policy);
+
+    // get design content scale factor
+    float designContentScaleFactor = _project.getDesignContentScaleFactor();
+    ConfigParser::getInstance()->setInitDesignContentScaleFactor(designContentScaleFactor);
+
     // create opengl view
     const Rect frameRect = Rect(0, 0, frameSize.width, frameSize.height);
     ConfigParser::getInstance()->setInitViewSize(frameSize);
@@ -489,6 +522,51 @@ void SimulatorWin::setupUI()
     // About
     menuBar->addItem("HELP_MENU", tr("Help"));
     menuBar->addItem("ABOUT_MENUITEM", tr("About"), "HELP_MENU");
+
+	menuBar->addItem("DESIGN_RESOLUTION_SIZE_SEP", "-", "VIEW_MENU");
+	current = config->checkDesignResolutionSize(_project.getDesignResolutionSize());
+	for (int i = 0; i < config->getDesignResolutionSizeCount(); i++)
+	{
+		SimulatorScreenSize size = config->getDesignResolutionSize(i);
+		std::stringstream menuId;
+		menuId << "DESIGN_RESOLUTION_SIZE_ITEM_MENU_" << i;
+		auto menuItem = menuBar->addItem(menuId.str(), size.title.c_str(), "VIEW_MENU");
+
+		if (i == current)
+		{
+			menuItem->setChecked(true);
+		}
+	}
+
+	menuBar->addItem("DESIGN_RESOLUTION_POLICY_SEP", "-", "VIEW_MENU");
+	current = config->checkDesignResolutionPolicy(_project.getDesignResolutionPolicy());
+	for (int i = 0; i < config->getDesignResolutionPolicyCount(); i++)
+	{
+		SimulatorDesignResolutionPolicy policyInfo = config->getDesignResolutionPolicy(i);
+		std::stringstream menuId;
+		menuId << "DESIGN_RESOLUTION_POLICY_ITEM_MENU_" << i;
+		auto menuItem = menuBar->addItem(menuId.str(), policyInfo.title.c_str(), "VIEW_MENU");
+
+		if (i == current)
+		{
+			menuItem->setChecked(true);
+		}
+	}
+
+    menuBar->addItem("DESIGN_CONTENT_SCALE_FACTOR_SEP", "-", "VIEW_MENU");
+    current = config->checkDesignContentScaleFactor(_project.getDesignContentScaleFactor());
+    for (int i = 0; i < config->getDesignContentScaleFactorCount(); i++)
+    {
+        SimulatorDesignContentScaleFactor scaleFactorInfo = config->getDesignContentScaleFactor(i);
+        std::stringstream menuId;
+        menuId << "DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_" << i;
+        auto menuItem = menuBar->addItem(menuId.str(), scaleFactorInfo.title.c_str(), "VIEW_MENU");
+
+        if (i == current)
+        {
+            menuItem->setChecked(true);
+        }
+    }
 
     menuBar->addItem("DIRECTION_MENU_SEP", "-", "VIEW_MENU");
     menuBar->addItem("DIRECTION_PORTRAIT_MENU", tr("Portrait"), "VIEW_MENU")
@@ -629,6 +707,38 @@ void SimulatorWin::setupUI()
 
                             project.setFrameSize(cocos2d::Size(size.width, size.height));
                             project.setWindowOffset(cocos2d::Vec2(_instance->getPositionX(), _instance->getPositionY()));
+                            _instance->openProjectWithProjectConfig(project);
+                        }
+                        else if (data.find("DESIGN_RESOLUTION_SIZE_ITEM_MENU_") == 0) // begin with DESIGN_RESOLUTION_SIZE_ITEM_MENU_
+                        {
+                            string tmp = data.erase(0, strlen("DESIGN_RESOLUTION_SIZE_ITEM_MENU_"));
+                            int index = atoi(tmp.c_str());
+                            SimulatorScreenSize size = SimulatorConfig::getInstance()->getDesignResolutionSize(index);
+
+                            if (project.isLandscapeFrame())
+                            {
+                                std::swap(size.width, size.height);
+                            }
+
+                            project.setDesignResolutionSize(cocos2d::Size(size.width, size.height));
+                            _instance->openProjectWithProjectConfig(project);
+                        }
+                        else if (data.find("DESIGN_RESOLUTION_POLICY_ITEM_MENU_") == 0) // begin with DESIGN_RESOLUTION_POLICY_ITEM_MENU_
+                        {
+                            string tmp = data.erase(0, strlen("DESIGN_RESOLUTION_POLICY_ITEM_MENU_"));
+                            int index = atoi(tmp.c_str());
+                            SimulatorDesignResolutionPolicy policyInfo = SimulatorConfig::getInstance()->getDesignResolutionPolicy(index);
+
+                            project.setDesignResolutionPolicy(policyInfo.policy);
+                            _instance->openProjectWithProjectConfig(project);
+                        }
+                        else if (data.find("DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_") == 0) // begin with DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_
+                        {
+                            string tmp = data.erase(0, strlen("DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_"));
+                            int index = atoi(tmp.c_str());
+                            SimulatorDesignContentScaleFactor scaleFactorInfo = SimulatorConfig::getInstance()->getDesignContentScaleFactor(index);
+
+                            project.setDesignContentScaleFactor(scaleFactorInfo.scaleFactor);
                             _instance->openProjectWithProjectConfig(project);
                         }
                         else if (data == "DIRECTION_PORTRAIT_MENU")
@@ -783,13 +893,18 @@ void SimulatorWin::parseCocosProjectConfig(ProjectConfig &config)
     config.setConsolePort(parser->getConsolePort());
     config.setFileUploadPort(parser->getUploadPort());
     config.setFrameSize(parser->getInitViewSize());
+    config.setDesignResolutionSize(parser->getInitDesignResolutionSize());
+    config.setDesignResolutionPolicy(parser->getInitDesignResolutionPolicy());
+    config.setDesignContentScaleFactor(parser->getInitDesignContentScaleFactor());
     if (parser->isLanscape())
     {
         config.changeFrameOrientationToLandscape();
+		config.changeDesignResolutionOrientationToLandscape();
     }
     else
     {
         config.changeFrameOrientationToPortait();
+		config.changeDesignResolutionOrientationToPortait();
     }
     config.setScriptFile(parser->getEntryFile());
 }
