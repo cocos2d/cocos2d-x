@@ -222,6 +222,83 @@ EventDispatcher::~EventDispatcher()
     removeAllEventListeners();
 }
 
+
+void EventDispatcher::visitTree(Node* node)
+{
+	node->sortAllChildren();
+
+	int i = 0;
+	long nodeData = (long)node->getUserData();
+	auto& children = node->getChildren();
+	auto childrenCount = children.size();
+
+	if (childrenCount > 0)
+	{
+		Node* child = nullptr;
+		// visit children zOrder < 0
+		for (; i < childrenCount; i++)
+		{
+			child = children.at(i);
+			if (child && child->getLocalZOrder() < 0)
+			{
+				if ((long)child->getUserData() == 0)
+					continue;
+				visitTree(child);
+			}
+			else
+				break;
+		}
+
+		if ((nodeData & 1) == 1)
+			_globalZOrderNodeMap[node->getGlobalZOrder()].push_back(node);
+
+		for (; i < childrenCount; i++)
+		{
+			child = children.at(i);
+			if (child)
+			{
+				if ((long)child->getUserData() == 0)
+					continue;
+				visitTree(child);
+			}
+		}
+	}
+	else
+	{
+		if ((nodeData & 1) == 1)
+			_globalZOrderNodeMap[node->getGlobalZOrder()].push_back(node);
+	}
+
+	node->setUserData(0);
+}
+
+void EventDispatcher::visitFromRoot(Node* node)
+{
+	visitTree(node);
+
+	std::vector<float> globalZOrders;
+	globalZOrders.reserve(_globalZOrderNodeMap.size());
+
+	for (const auto& e : _globalZOrderNodeMap)
+	{
+		globalZOrders.push_back(e.first);
+	}
+
+	std::stable_sort(globalZOrders.begin(), globalZOrders.end(), [](const float a, const float b) {
+		return a < b;
+	});
+
+	for (const auto& globalZ : globalZOrders)
+	{
+		for (const auto& n : _globalZOrderNodeMap[globalZ])
+		{
+			_nodePriorityMap[n] = ++_nodePriorityIndex;
+		}
+	}
+
+	_globalZOrderNodeMap.clear();
+}
+
 void EventDispatcher::visitTarget(Node* node, bool isRootNode)
 {
     node->sortAllChildren();
@@ -903,20 +980,20 @@ void EventDispatcher::dispatchEvent(Event* event)
     if (!_isEnabled)
         return;
     
-    updateDirtyFlagForSceneGraph();
-    
+	// defer it in kinds of path
+	// reduce no related kind to call
     
     DispatchGuard guard(_inDispatch);
     
     if (event->getType() == Event::Type::TOUCH)
     {
+		updateDirtyFlagForSceneGraph();
+
         dispatchTouchEvent(static_cast<EventTouch*>(event));
         return;
     }
     
     auto listenerID = __getListenerID(event);
-    
-    sortEventListeners(listenerID);
     
     auto pfnDispatchEventToListeners = &EventDispatcher::dispatchEventToListeners;
     if (event->getType() == Event::Type::MOUSE) {
@@ -925,7 +1002,13 @@ void EventDispatcher::dispatchEvent(Event* event)
     auto iter = _listenerMap.find(listenerID);
     if (iter != _listenerMap.end())
     {
-        auto listeners = iter->second;
+		EventListenerVector* listeners = iter->second;
+		auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
+		// no sceneGraph listeners mean no necessary to call updateDirtyFlagForSceneGraph
+		if (sceneGraphPriorityListeners && !sceneGraphPriorityListeners->empty())
+			updateDirtyFlagForSceneGraph();
+
+		sortEventListeners(listenerID);
         
         auto onEvent = [&event](EventListener* listener) -> bool{
             event->setCurrentTarget(listener->getAssociatedNode());
@@ -1256,10 +1339,13 @@ void EventDispatcher::updateListeners(Event* event)
     }
 }
 
+static EventListener::ListenerID prevListenerID;
+
 void EventDispatcher::updateDirtyFlagForSceneGraph()
 {
     if (!_dirtyNodes.empty())
     {
+		prevListenerID.clear();
         for (auto& node : _dirtyNodes)
         {
             auto iter = _nodeListenersMap.find(node);
@@ -1267,7 +1353,13 @@ void EventDispatcher::updateDirtyFlagForSceneGraph()
             {
                 for (auto& l : *iter->second)
                 {
-                    setDirty(l->getListenerID(), DirtyFlag::SCENE_GRAPH_PRIORITY);
+					const EventListener::ListenerID& id = l->getListenerID();
+					// ListenerID only had 8 types and 2 types used frequently
+					// reduce std::unordered_map.find
+					if (id == prevListenerID)
+						continue;
+					prevListenerID = id;
+					setDirty(id, DirtyFlag::SCENE_GRAPH_PRIORITY);
                 }
             }
         }
@@ -1313,20 +1405,40 @@ void EventDispatcher::sortEventListeners(const EventListener::ListenerID& listen
 
 void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID, Node* rootNode)
 {
+
     auto listeners = getListeners(listenerID);
-    
     if (listeners == nullptr)
         return;
     auto sceneGraphListeners = listeners->getSceneGraphPriorityListeners();
-    
     if (sceneGraphListeners == nullptr)
         return;
 
-    // Reset priority index
-    _nodePriorityIndex = 0;
-    _nodePriorityMap.clear();
 
-    visitTarget(rootNode, true);
+	// Reset priority index
+	_nodePriorityIndex = 0;
+	_nodePriorityMap.clear();
+
+	// reverse visit, from leaf to root, reduce the time of tree's travel
+	// use node userdata to mark, speed up hash find
+	for (const auto l : *sceneGraphListeners)
+	{
+		Node* node = l->getAssociatedNode();
+		if (node)
+			node->setUserData((void*)1);
+		while (node)
+		{
+			Node* parent = node->getParent();
+			if (parent)
+			{
+				long data = (long)parent->getUserData();
+				data |= 2;
+				parent->setUserData((void*)data);
+			}
+			node = parent;
+		}
+	}
+
+	visitFromRoot(rootNode);
     
     // After sort: priority < 0, > 0
     std::stable_sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
