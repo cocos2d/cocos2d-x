@@ -441,14 +441,6 @@ void GLViewImpl::enableRetina(bool enabled)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     _isRetinaEnabled = enabled;
-    if (_isRetinaEnabled)
-    {
-        _retinaFactor = 1;
-    }
-    else
-    {
-        _retinaFactor = 2;
-    }
     updateFrameSize();
 #endif
 }
@@ -666,10 +658,9 @@ void GLViewImpl::updateFrameSize()
         }
         else
         {
-            if (_isInRetinaMonitor)
-            {
-                _retinaFactor = 1;
-            }
+            _retinaFactor = 1;
+            _isRetinaEnabled = false;
+
             glfwSetWindowSize(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
 
             _isInRetinaMonitor = false;
