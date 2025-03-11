@@ -29,6 +29,7 @@
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include <set>
 
@@ -311,6 +312,9 @@ protected:
     
     /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
     void visitTarget(Node* node, bool isRootNode);
+
+	void visitTree(Node* node);
+	void visitFromRoot(Node* node);
 
     /** Remove all listeners in _toRemoveListeners list and cleanup */
     void cleanToRemovedListeners();
