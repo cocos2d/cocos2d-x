@@ -200,6 +200,10 @@ private:
     bool _shouldRestoreTableOffset;
     cocos2d::Vec2 _tableOffset;
     friend class TestController;
+    
+#if CC_LABEL_DEBUG_DRAW
+    cocos2d::MenuItemLabel* _toggleDebugDrawItem;
+#endif
 };
 
 
