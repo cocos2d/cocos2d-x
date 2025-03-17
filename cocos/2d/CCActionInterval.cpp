@@ -133,10 +133,10 @@ void ActionInterval::step(float dt)
                               std::min(1.0f, _elapsed / _duration)
                               );
 
-    if (sendUpdateEventToScript(updateDt, this)) return;
+    if (!sendUpdateEventToScript(updateDt, this)){
+        this->update(updateDt);
+    }
     
-    this->update(updateDt);
-
     _done = _elapsed >= _duration;
 }
 
