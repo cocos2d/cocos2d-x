@@ -50,8 +50,18 @@ cc.FILE_UTILS_SEARCH_DIRECTORY_MODE = 0x1
 cc.FILE_UTILS_SEARCH_SUFFIX_MODE    = 0x0
 cc.FLIPED_ALL   = 0xe0000000
 cc.FLIPPED_MASK = 0x1fffffff
-cc.IMAGE_FORMAT_JPEG    = 0x0
-cc.IMAGE_FORMAT_PNG = 0x1
+cc.IMAGE_FORMAT_JPEG     = 0x0
+cc.IMAGE_FORMAT_JPG     = 0x0
+cc.IMAGE_FORMAT_PNG     = 0x1
+cc.IMAGE_FORMAT_TIFF     = 0x2
+cc.IMAGE_FORMAT_WEBP     = 0x3
+cc.IMAGE_FORMAT_PVR     = 0x4
+cc.IMAGE_FORMAT_ETC      = 0x5
+cc.IMAGE_FORMAT_S3TC     = 0x6
+cc.IMAGE_FORMAT_ATITC     = 0x7
+cc.IMAGE_FORMAT_TGA      = 0x8
+cc.IMAGE_FORMAT_RAW_DATA = 0x9
+cc.IMAGE_FORMAT_UNKNOWN  = 0xA
 cc.ITEM_SIZE    = 0x20
 cc.LABEL_AUTOMATIC_WIDTH    = -1
 cc.LINE_BREAK_MODE_CHARACTER_WRAP   = 0x1
@@ -513,7 +523,7 @@ cc.KeyCode.KEY_LEFT_ALT   = cc.KeyCode.KEY_ALT
 
 cc.EventAssetsManagerEx =
 {
-    EventCode = 
+    EventCode =
     {
         ERROR_NO_LOCAL_MANIFEST = 0,
         ERROR_DOWNLOAD_MANIFEST = 1,
@@ -568,7 +578,7 @@ cc.CameraFlag =
     USER8 = 256,
 }
 
-cc.CameraBackgroundBrush.BrushType = 
+cc.CameraBackgroundBrush.BrushType =
 {
     NONE = 0,
     DEPTH = 1,
@@ -609,7 +619,7 @@ cc.MATRIX_STACK_TYPE =
     TEXTURE = 2,
 }
 
-cc.LightType = 
+cc.LightType =
 {
     DIRECTIONAL = 0,
     POINT = 1,
@@ -617,7 +627,7 @@ cc.LightType =
     AMBIENT = 3,
 }
 
-cc.LightFlag = 
+cc.LightFlag =
 {
     LIGHT0  = math.pow(2,0),
     LIGHT1  = math.pow(2,1),
@@ -642,7 +652,7 @@ cc.AsyncTaskPool.TaskType =
     TASK_IO = 0,
     TASK_NETWORK = 1,
     TASK_OTHER = 2,
-    TASK_MAX_TYPE = 3,  
+    TASK_MAX_TYPE = 3,
 }
 
 

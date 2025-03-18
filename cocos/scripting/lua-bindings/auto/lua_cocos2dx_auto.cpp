@@ -20022,6 +20022,26 @@ int lua_cocos2dx_Image_saveToFile(lua_State* tolua_S)
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
+    if (argc == 3) 
+    {
+        std::string arg0;
+        bool arg1;
+        double arg2;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Image:saveToFile");
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.Image:saveToFile");
+
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.Image:saveToFile");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Image_saveToFile'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->saveToFile(arg0, arg1, arg2);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Image:saveToFile",argc, 1);
     return 0;
 
@@ -79044,6 +79064,38 @@ int lua_cocos2dx_RenderTexture_saveToFileAsNonPMA(lua_State* tolua_S)
     }while(0);
     ok  = true;
     do{
+        if (argc == 5) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            cocos2d::Image::Format arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            std::function<void (cocos2d::RenderTexture *, const std::string&)> arg3;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+
+            if (!ok) { break; }
+            double arg4;
+            ok &= luaval_to_number(tolua_S, 6,&arg4, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFileAsNonPMA(arg0, arg1, arg2, arg3, arg4);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
         if (argc == 1) {
             std::string arg0;
             ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFileAsNonPMA");
@@ -79090,6 +79142,34 @@ int lua_cocos2dx_RenderTexture_saveToFileAsNonPMA(lua_State* tolua_S)
 
             if (!ok) { break; }
             bool ret = cobj->saveToFileAsNonPMA(arg0, arg1, arg2);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 4) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            std::function<void (cocos2d::RenderTexture *, const std::string&)> arg2;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+
+            if (!ok) { break; }
+            double arg3;
+            ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFileAsNonPMA(arg0, arg1, arg2, arg3);
             tolua_pushboolean(tolua_S,(bool)ret);
             return 1;
         }
@@ -79338,6 +79418,38 @@ int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
     }while(0);
     ok  = true;
     do{
+        if (argc == 5) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            cocos2d::Image::Format arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            std::function<void (cocos2d::RenderTexture *, const std::string&)> arg3;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+
+            if (!ok) { break; }
+            double arg4;
+            ok &= luaval_to_number(tolua_S, 6,&arg4, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFile(arg0, arg1, arg2, arg3, arg4);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
         if (argc == 1) {
             std::string arg0;
             ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFile");
@@ -79384,6 +79496,34 @@ int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
 
             if (!ok) { break; }
             bool ret = cobj->saveToFile(arg0, arg1, arg2);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 4) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            std::function<void (cocos2d::RenderTexture *, const std::string&)> arg2;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+
+            if (!ok) { break; }
+            double arg3;
+            ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFile(arg0, arg1, arg2, arg3);
             tolua_pushboolean(tolua_S,(bool)ret);
             return 1;
         }
