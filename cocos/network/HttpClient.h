@@ -150,7 +150,21 @@ public:
     std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
 
     std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
-    
+
+    /**
+     * Sets the latest latency value of the hpptclient
+     *
+     * @param int the timeout value for reading.
+     */
+    void setLatency(double latencyValue);
+
+    /**
+     * Returns the latest latency value recorded in the http client
+     *
+     * @return double, the value recorded for latency
+     */
+    double getLatency() const { return _latency;}
+
     typedef std::function<bool(HttpRequest*)> ClearRequestPredicate;
     typedef std::function<bool(HttpResponse*)> ClearResponsePredicate;
 
@@ -223,6 +237,8 @@ private:
 
     std::string _sslCaFilename;
     std::mutex _sslCaFileMutex;
+    
+    double _latency; // Value in seconds that represent the client latency
 
     HttpCookie* _cookie;
 

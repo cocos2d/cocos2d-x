@@ -241,7 +241,7 @@ static int processTask(HttpClient* client, HttpRequest* request, NSString* reque
     }
     
     *responseCode = httpAsynConn.responseCode;
-    
+    client->setLatency(httpAsynConn.latency);
     //add cookie to cookies vector
     if(!cookieFilename.empty())
     {
@@ -525,7 +525,7 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
 
     // write data to HttpResponse
     response->setResponseCode(responseCode);
-
+    response->setLatency(_latency);
     if (retValue != 0)
     {
         response->setSucceed(true);
@@ -610,6 +610,11 @@ void HttpClient::setTimeoutForRead(int value)
 {
     std::lock_guard<std::mutex> lock(_timeoutForReadMutex);
     _timeoutForRead = value;
+}
+    
+void HttpClient::setLatency(double latencyValue)
+{
+    _latency = latencyValue;
 }
 
 int HttpClient::getTimeoutForRead()
