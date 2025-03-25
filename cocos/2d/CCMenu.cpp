@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
 #include "base/CCEventListenerTouch.h"
+#include "base/CCEventListenerMouse.h"
 #include "base/CCEventDispatcher.h"
 #include "base/ccUTF8.h"
 #include "platform/CCStdC.h"
@@ -169,6 +170,35 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
         
         _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+        // For Desktop platform listen mouse
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+        auto mouseListener = EventListenerMouse::create();
+
+        mouseListener->onMouseMove = [this](EventMouse* event) {
+            if (_selectedWithCamera == nullptr)
+            {
+                Touch touch;
+                touch.setTouchInfo(0, event->getCursorX(), -event->getCursorY());
+
+                MenuItem *currentItem = getItemForTouch(&touch, Camera::getVisitingCamera());
+                if (currentItem != _selectedItem)
+                {
+                    if (_selectedItem)
+                    {
+                        _selectedItem->unselected();
+                    }
+                    _selectedItem = currentItem;
+                    if (_selectedItem)
+                    {
+                        _selectedItem->selected();
+                    }
+                }
+            }
+        };
+
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+#endif
         
         return true;
     }
