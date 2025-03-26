@@ -42,6 +42,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+static RenderTexture* g_current = nullptr;
+
 // implementation RenderTexture
 RenderTexture::RenderTexture()
 : _keepMatrix(false)
@@ -204,6 +206,10 @@ RenderTexture * RenderTexture::create(int w, int h)
     }
     CC_SAFE_DELETE(ret);
     return nullptr;
+}
+
+RenderTexture * RenderTexture::current() {
+    return g_current;
 }
 
 bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat)
@@ -684,8 +690,21 @@ Image* RenderTexture::newImage(bool flipImage)
     return image;
 }
 
+Rect& RenderTexture::getVirtualViewport() {
+    Rect viewport;
+    viewport.size.width = _fullviewPort.size.width;
+    viewport.size.height = _fullviewPort.size.height;
+    float viewPortRectWidthRatio = float(viewport.size.width)/_fullRect.size.width;
+    float viewPortRectHeightRatio = float(viewport.size.height)/_fullRect.size.height;
+    viewport.origin.x = (_fullRect.origin.x - _rtTextureRect.origin.x) * viewPortRectWidthRatio;
+    viewport.origin.y = (_fullRect.origin.y - _rtTextureRect.origin.y) * viewPortRectHeightRatio;
+    return viewport;
+}
+
 void RenderTexture::onBegin()
 {
+    g_current = this;
+    
     //
     Director *director = Director::getInstance();
     
@@ -755,6 +774,7 @@ void RenderTexture::onEnd()
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _oldProjMatrix);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _oldTransMatrix);
 
+    g_current = nullptr;
 }
 
 void RenderTexture::onClear()
