@@ -26,7 +26,7 @@
 
 #include "base/CCController.h"
 #include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #include "base/ccMacros.h"
 #include "base/CCEventDispatcher.h"
@@ -121,7 +121,7 @@ public:
     GCController* _gcController;
 };
 
-void Controller::startDiscoveryController()
+void Controller::startDiscoveryController(bool isRawInputPreferred)
 {
     if (NSClassFromString(@"GCController") == nil) {
         return;

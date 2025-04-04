@@ -1267,6 +1267,7 @@
 		3E2F27A619CFBFE100E7C490 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDAEB19C0436F0055CDCD /* AudioEngine.cpp */; };
 		3E2F27A719CFBFE400E7C490 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2BDADD19C030ED0055CDCD /* AudioEngine.h */; };
 		3E6176681960F89B00DE83F5 /* CCController-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176551960F89B00DE83F5 /* CCController-apple.mm */; };
+		093B162E22E75D5D00DD2919 /* CCController-desktop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 093B162D22E75D5C00DD2919 /* CCController-desktop.cpp */; };
 		3E6176691960F89B00DE83F5 /* CCController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6176561960F89B00DE83F5 /* CCController.h */; };
 		3E6176741960F89B00DE83F5 /* CCEventController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176611960F89B00DE83F5 /* CCEventController.cpp */; };
 		3E6176751960F89B00DE83F5 /* CCEventController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6176621960F89B00DE83F5 /* CCEventController.h */; };
@@ -3520,7 +3521,6 @@
 		50F965581CD0360000ADE813 /* CCVRProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F965501CD0360000ADE813 /* CCVRProtocol.h */; };
 		50F965591CD0360000ADE813 /* CCVRProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F965501CD0360000ADE813 /* CCVRProtocol.h */; };
 		50FC3F9E1D74C0A3001C936A /* CCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E61781C1966A5A300DE83F5 /* CCController.cpp */; };
-		50FC3F9F1D74C0E5001C936A /* CCController-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176551960F89B00DE83F5 /* CCController-apple.mm */; };
 		50FC3FA21D74C1A1001C936A /* CCEventController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176611960F89B00DE83F5 /* CCEventController.cpp */; };
 		50FC3FA81D74C2A1001C936A /* CCEventListenerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6176641960F89B00DE83F5 /* CCEventListenerController.h */; };
 		50FC3FA91D74C2D1001C936A /* CCEventListenerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176631960F89B00DE83F5 /* CCEventListenerController.cpp */; };
@@ -5038,6 +5038,7 @@
 		3E2BDADD19C030ED0055CDCD /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
 		3E2BDAEB19C0436F0055CDCD /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
 		3E6176551960F89B00DE83F5 /* CCController-apple.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "CCController-apple.mm"; path = "../base/CCController-apple.mm"; sourceTree = "<group>"; };
+		093B162D22E75D5C00DD2919 /* CCController-desktop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCController-desktop.cpp; path = ../base/CCController-desktop.cpp; sourceTree = "<group>"; };
 		3E6176561960F89B00DE83F5 /* CCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCController.h; path = ../base/CCController.h; sourceTree = "<group>"; };
 		3E6176611960F89B00DE83F5 /* CCEventController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventController.cpp; path = ../base/CCEventController.cpp; sourceTree = "<group>"; };
 		3E6176621960F89B00DE83F5 /* CCEventController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEventController.h; path = ../base/CCEventController.h; sourceTree = "<group>"; };
@@ -6480,6 +6481,7 @@
 				464AD6E4197EBB1400E502D8 /* pvr.h */,
 				3E61781C1966A5A300DE83F5 /* CCController.cpp */,
 				3E6176551960F89B00DE83F5 /* CCController-apple.mm */,
+				093B162D22E75D5C00DD2919 /* CCController-desktop.cpp */,
 				3E6176561960F89B00DE83F5 /* CCController.h */,
 				3E6176611960F89B00DE83F5 /* CCEventController.cpp */,
 				3E6176621960F89B00DE83F5 /* CCEventController.h */,
@@ -11677,7 +11679,6 @@
 				50ABBEB71925AB6F00A911A9 /* ccUTF8.cpp in Sources */,
 				B665E2621AA80A6500DDB1C5 /* CCPUDoExpireEventHandler.cpp in Sources */,
 				B665E4161AA80A6600DDB1C5 /* CCPUTextureAnimatorTranslator.cpp in Sources */,
-				50FC3F9F1D74C0E5001C936A /* CCController-apple.mm in Sources */,
 				B665E41E1AA80A6600DDB1C5 /* CCPUTextureRotatorTranslator.cpp in Sources */,
 				15AE189819AAD33D00C27E9E /* CCMenuItemLoader.cpp in Sources */,
 				50ABBE271925AB6F00A911A9 /* CCAutoreleasePool.cpp in Sources */,
@@ -11842,6 +11843,7 @@
 				B665E28E1AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.cpp in Sources */,
 				3823843D1A259140002C4610 /* SingleNodeReader.cpp in Sources */,
 				1A5701C1180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
+				093B162E22E75D5D00DD2919 /* CCController-desktop.cpp in Sources */,
 				B665E30A1AA80A6500DDB1C5 /* CCPUNoise.cpp in Sources */,
 				15AE182C19AAD2F700C27E9E /* CCMeshVertexIndexData.cpp in Sources */,
 				50ABBD4C1925AB0000A911A9 /* MathUtil.cpp in Sources */,

@@ -1,10 +1,16 @@
 
 if(APPLE)
-    set(COCOS_BASE_SPECIFIC_SRC
-        base/CCUserDefault-apple.mm
-        base/CCController-apple.mm
-        )
-
+    if(MACOSX)
+        set(COCOS_BASE_SPECIFIC_SRC
+            base/CCUserDefault-apple.mm
+            base/CCController-desktop.cpp
+            )
+    elseif(IOS)
+        set(COCOS_BASE_SPECIFIC_SRC
+            base/CCUserDefault-apple.mm
+            base/CCController-apple.mm
+            )
+    endif()
 elseif(ANDROID)
     set(COCOS_BASE_SPECIFIC_SRC
         base/CCUserDefault-android.cpp
@@ -12,7 +18,7 @@ elseif(ANDROID)
         )
 elseif(LINUX OR WINDOWS)
     set(COCOS_BASE_SPECIFIC_SRC
-        base/CCController-linux-win32.cpp
+        base/CCController-desktop.cpp
         )
 endif()
 
