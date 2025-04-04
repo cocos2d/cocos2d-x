@@ -109,6 +109,17 @@ public:
      */
     void send(HttpRequest* request);
 
+	/**
+	* Cancel latest request from _requestQueue 
+	*/
+	void cancelSend();
+
+	/**
+	* Cancel request based on the tag
+	* @param tag request's tag
+	*/
+	void cancelSend(const char* tag);
+
     /**
      * Immediate send a request
      *
