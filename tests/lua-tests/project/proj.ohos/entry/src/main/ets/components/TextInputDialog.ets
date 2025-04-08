@@ -18,7 +18,7 @@ export struct TextInputDialog {
           .caretColor(Color.Transparent)
           .defaultFocus(true)
           .onChange((value) => {
-            this.cocosWorker.postMessage({type: "textFieldTTFOnChange", data: value})
+            this.cocosWorker.postMessage({type: "textFieldTTFOnChange", text: value})
           })
         Blank(8).width(16)
         Button($r('app.string.text_field_ttf_complete')).onClick(() => {

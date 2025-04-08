@@ -2,7 +2,7 @@ import { WorkerManager } from '../workers/WorkerManager'
 import {
   VideoPlayerInfo,
   VideoEvent
-} from '@ohos/libSysCapabilities/src/main/ets/components/videoplayer/VideoPlayerMsg';
+} from '@ohos/libSysCapabilities/src/main/ets/components/videoplayer/VideoPlayer';
 import worker from '@ohos.worker';
 
 @Component

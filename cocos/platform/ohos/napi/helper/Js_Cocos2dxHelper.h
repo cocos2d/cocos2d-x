@@ -1,9 +1,7 @@
 #ifndef __Js_Cocos2dxHelper_H__
 #define __Js_Cocos2dxHelper_H__
 
-#include <new>
 #include <string>
-#include <hilog/log.h>
 #include <napi/native_api.h>
 
 #define APP_LOG_DOMAIN 0x0001
@@ -28,14 +26,9 @@ public:
     }
 
     static void terminateProcess();
-    static void enableAccelerometer();
-    static void disableAccelerometer();
-    static void setAccelerometerInterval(float interval);
     
 private:
     static std::string _asyncInfoMap[];
     static napi_env _env;
-    static float _accelerometerInterval;
-    static bool _accelerometerFlag;
 };
 #endif /* __Js_Cocos2dxHelper_H__ */

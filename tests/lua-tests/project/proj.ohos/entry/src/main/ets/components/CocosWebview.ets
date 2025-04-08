@@ -1,4 +1,4 @@
-import { WebViewInfo } from "@ohos/libSysCapabilities/src/main/ets/components/webview/WebViewMsg"
+import { WebViewInfo } from "@ohos/libSysCapabilities/src/main/ets/components/webview/WebView"
 import worker from '@ohos.worker';
 import { WorkerManager } from '../workers/WorkerManager';
 

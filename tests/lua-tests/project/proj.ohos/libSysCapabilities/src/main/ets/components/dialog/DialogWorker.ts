@@ -1,29 +1,38 @@
-import type { ThreadWorkerGlobalScope } from '@ohos.worker';
-import { DialogMsgEntity } from '../../entity/WorkerMsgEntity';
+import prompt from '@system.prompt'
+import Logger from '../../utils/Logger'
+import { GlobalContext,GlobalContextConstants } from "../../common/GlobalContext"
+import { TextInputDialogEntity } from '../../entity/TextInputDialogEntity';
 
+let log: Logger = new Logger(0x0001, "Dialog");
 export class Dialog {
     static MODULE_NAME : string = 'Dialog';
-    static workerPort;
-
-    static init(workerPort: ThreadWorkerGlobalScope) : void {
-        Dialog.workerPort = workerPort;
-    }
 
     static showDialog(message: string, title: string) : void {
-        let dialogMsgEntity: DialogMsgEntity = new DialogMsgEntity(Dialog.MODULE_NAME, 'showDialog');
-        dialogMsgEntity.title = title;
-        dialogMsgEntity.message = message;
-        Dialog.workerPort.postMessage(dialogMsgEntity);
+        prompt.showDialog({
+            title: title,
+            message: message,
+            buttons: [
+                {
+                    text: 'OK',
+                    color: '#000000'
+                },
+            ],
+            success: function(data) {
+                log.debug("handling callback, data:%{public}s", data);
+            }
+        });
     }
 
     static showTextInputDialog(message: string) : void {
-        let dialogMsgEntity: DialogMsgEntity = new DialogMsgEntity(Dialog.MODULE_NAME, 'showTextInputDialog');
-        dialogMsgEntity.message = message;
-        Dialog.workerPort.postMessage(dialogMsgEntity);
+        let tempShowMessage: TextInputDialogEntity = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_SHOW_MESSAGE);
+        tempShowMessage.message = message;
+        GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_DIALOG_CONTROLLER).open();
+
     }
 
     static hideTextInputDialog() : void {
-        let dialogMsgEntity: DialogMsgEntity = new DialogMsgEntity(Dialog.MODULE_NAME, 'hideTextInputDialog');
-        Dialog.workerPort.postMessage(dialogMsgEntity);
+        let tempShowMessage: TextInputDialogEntity = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_SHOW_MESSAGE);
+        tempShowMessage.message =  '';
+        GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_DIALOG_CONTROLLER).close();
     }
 }

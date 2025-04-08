@@ -1,6 +1,6 @@
 #include "VideoPlayerNapi.h"
+#include "ohos/napi/common/native_common.h"
 #include "platform/ohos/napi/plugin_manager.h"
-#include "../../CCLogOhos.h"
 #include "ui/UIVideoPlayer-ohos.h"
 #include <js_native_api.h>
 #include <js_native_api_types.h>

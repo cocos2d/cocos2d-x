@@ -2,13 +2,14 @@
 #include <unistd.h>
 
 #include "plugin_render.h"
+#include "ohos/napi/common/native_common.h"
 #include "platform/ohos/napi/plugin_manager.h"
 #include "../modules/TouchesNapi.h"
-#include "../helper/NapiHelper.h"
 #include "platform/ohos/CCLogOhos.h"
 #include "cocos2d.h"
 #include "native_window/external_window.h"
 #include "native_buffer/native_buffer.h"
+#include "aki/jsbind.h"
 
 using namespace cocos2d;
 
@@ -129,7 +130,7 @@ void DispatchKeyEventCB(OH_NativeXComponent* component, void* window) {
         PluginRender::keyEventQueue_.push(keyEvent);
         PluginRender::GetInstance()->sendMsgToWorker(MessageType::WM_XCOMPONENT_KEY_EVENT, component, window);
     } else {
-        OHOS_LOGE("OpenHarmonyPlatform::getKeyEventError");
+        OHOS_LOGE("HarmonyOS Next Platform::getKeyEventError");
     }
 }
 
@@ -140,12 +141,12 @@ void DispatchMouseEventCB(OH_NativeXComponent* component, void* window) {
         PluginRender::mouseEventQueue_.push(mouseEvent);
         PluginRender::GetInstance()->sendMsgToWorker(MessageType::WM_XCOMPONENT_MOUSE_EVENT, component, window);
     } else {
-        OHOS_LOGE("OpenHarmonyPlatform::getMouseEventError");
+        OHOS_LOGE("HarmonyOS Next Platform::getMouseEventError");
     }
 }
 
 void DispatchHoverEventCB(OH_NativeXComponent* component, bool isHover) {
-    OHOS_LOGD("OpenHarmonyPlatform::DispatchHoverEventCB");
+    OHOS_LOGD("HarmonyOS Next Platform::DispatchHoverEventCB");
 }
 
 void DispatchTouchEventCB(OH_NativeXComponent* component, void* window) {
@@ -246,6 +247,7 @@ static uint64_t getCurrentMillSecond() {
 void PluginRender::timerCb(uv_timer_t* handle) {
     // OHOS_LOGD("PluginRender::timerCb, animationInterval_ is %{public}lu", animationInterval_);
     if (PluginRender::GetInstance()->eglCore_ != nullptr) {
+        Device::sendAndClearAcc();
         cocos2d::Director::getInstance()->mainLoop();
         PluginRender::GetInstance()->eglCore_->Update();
     }
@@ -451,7 +453,9 @@ void PluginRender::DispatchTouchEvent(OH_NativeXComponent* component, void* wind
     }
     switch (touchEvent -> type) {
         case OH_NATIVEXCOMPONENT_DOWN:
-            JSFunction::getFunction("CocosEditBox.hideAllEditBox").invoke<void>(); // hide all editbox
+            if (auto hideAllEditBox = aki::JSBind::GetJSFunction("CocosEditBox.hideAllEditBox")) {
+                hideAllEditBox->Invoke<void>(); 
+            }
             Cocos2dxRenderer_nativeTouchesBegin(touchEvent->numPoints, ids, xs, ys);
             OHOS_LOGD("Touch Info : OH_NATIVEXCOMPONENT_DOWN");
             break;

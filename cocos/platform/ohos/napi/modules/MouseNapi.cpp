@@ -7,9 +7,8 @@
 #include <js_native_api.h>
 #include <js_native_api_types.h>
 #include "MouseNapi.h"
+#include "ohos/napi/common/native_common.h"
 #include "platform/ohos/napi/plugin_manager.h"
-#include "../../CCLogOhos.h"
-#include "base/CCIMEDispatcher.h"
 #include "platform/ohos/napi/render/plugin_render.h"
 #include <string>
 

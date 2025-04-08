@@ -12,9 +12,6 @@ export default class MainAbility extends UIAbility {
     onCreate(want, launchParam) {
         nativeAppLifecycle.onCreate();
         GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT, this.context);
-        // Initializes the webView kernel of the system. This parameter is optional if it is not used.
-        web_webview.WebviewController.initializeWebEngine();
-        GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_WANT, this.context);
         console.info('[LIFECYCLE-App] onCreate')
     }
 

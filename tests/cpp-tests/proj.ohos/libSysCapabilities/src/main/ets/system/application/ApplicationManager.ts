@@ -1,6 +1,4 @@
 import bundleManager from '@ohos.bundle.bundleManager';
-import type { ThreadWorkerGlobalScope } from '@ohos.worker';
-import { BaseWorkerMsgEntity } from '../../entity/WorkerMsgEntity';
 import { common } from '@kit.AbilityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { GlobalContext, GlobalContextConstants } from '../../common/GlobalContext';
@@ -8,30 +6,13 @@ import { GlobalContext, GlobalContextConstants } from '../../common/GlobalContex
 export class ApplicationManager {
     static MODULE_NAME: string = 'ApplicationManager';
 
-    private static workerPort: ThreadWorkerGlobalScope;
-
-    static init(workerPort: ThreadWorkerGlobalScope): void {
-        ApplicationManager.workerPort = workerPort;
-    }
-
     static exit(): void {
-        let workerMsg: BaseWorkerMsgEntity = new BaseWorkerMsgEntity(ApplicationManager.MODULE_NAME, 'exit');
-        ApplicationManager.workerPort.postMessage(workerMsg);
+        terminateSelf();
     }
 
     static getVersionName(): string {
         let bundleFlags = bundleManager.BundleFlag.GET_BUNDLE_INFO_DEFAULT;
         return bundleManager.getBundleInfoForSelfSync(bundleFlags).versionName;
-    }
-}
-
-export function handleApplicationMsg(eventData: BaseWorkerMsgEntity): void {
-    switch (eventData.function) {
-        case "exit":
-            terminateSelf();
-            break;
-        default:
-            console.error('%{public}s has not implement yet', eventData.function);
     }
 }
 

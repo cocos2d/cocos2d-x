@@ -1,21 +1,11 @@
 #include "CCLogOhos.h"
 #include "napi/plugin_manager.h"
+#include "aki/jsbind.h"
 
 /*
  * function for module exports
  */
-static napi_value Init(napi_env env, napi_value exports) {
-    napi_property_descriptor desc[] ={
-        DECLARE_NAPI_FUNCTION("getContext", NapiManager::GetContext),
-    };
-    NAPI_CALL(env, napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc));
-
-    bool ret = NapiManager::GetInstance()->Export(env, exports);
-    if (!ret) {
-        OHOS_LOGE("Init failed");
-    }
-    return exports;
-}
+extern napi_value Init(napi_env env, napi_value exports);
 
 /*
  * Napi Module define

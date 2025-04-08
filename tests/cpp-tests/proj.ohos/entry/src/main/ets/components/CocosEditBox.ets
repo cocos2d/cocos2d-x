@@ -1,4 +1,4 @@
-import { TextInputInfo } from '@ohos/libSysCapabilities/src/main/ets/components/editbox/EditBoxMsg'
+import { TextInputInfo } from '@ohos/libSysCapabilities/src/main/ets/components/editbox/CocosEditBox'
 import worker from '@ohos.worker';
 import { WorkerManager } from '../workers/WorkerManager';
 
@@ -33,7 +33,7 @@ export struct CocosEditBox {
         })
         .onChange((value: string)=>{
           this.textInputInfo.text = value;
-          this.cocosWorker.postMessage({type: "editBoxOnChange", viewTag: this.textInputInfo.viewTag, value: value});
+          this.cocosWorker.postMessage({type: "editBoxOnChange", viewTag: this.textInputInfo.viewTag, text: value});
         })
         .onBlur(()=> {
           this.textInputInfo.visible = false
@@ -68,7 +68,7 @@ export struct CocosEditBox {
         })
         .onChange((value: string)=>{
           this.textInputInfo.text = value;
-          this.cocosWorker.postMessage({type: "editBoxOnChange", viewTag: this.textInputInfo.viewTag, value: value});
+          this.cocosWorker.postMessage({type: "editBoxOnChange", viewTag: this.textInputInfo.viewTag, text: value});
         })
         .onBlur(()=> {
           this.textInputInfo.visible = false

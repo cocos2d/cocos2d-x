@@ -56,7 +56,7 @@ bool FileUtilsOhos::isFileExistInternal(const std::string& strFilePath) const {
 
     bool bFound = false;
     if (strFilePath[0] != '/') {
-        RawFile *fp = RawFileUtils::GetInstance().Open(strFilePath.c_str());
+        RawFile64 *fp = RawFileUtils::GetInstance().Open(strFilePath.c_str());
         if(fp) {
             OHOS_LOGI("FileUtilsOhos::isFileExistInternal() - open %{public}s success", strFilePath.c_str());
             bFound = true;
@@ -111,7 +111,7 @@ long FileUtilsOhos::getFileSize(const std::string& filepath) const {
         return FileUtils::getFileSize(filepath);
     }
 
-    RawFile *fp = RawFileUtils::GetInstance().Open(filepath.c_str());//fopen(strFilePath.c_str(), "r");
+    RawFile64 *fp = RawFileUtils::GetInstance().Open(filepath.c_str());//fopen(strFilePath.c_str(), "r");
     OHOS_LOGI("FileUtilsOhos::getFileSize ===================> doGetFileData %{public}s", filepath.c_str());
     long size = RawFileUtils::GetInstance().GetSize(fp);
     RawFileUtils::GetInstance().Close(fp);
@@ -141,7 +141,7 @@ FileUtils::Status FileUtilsOhos::getContents(const std::string& filename, Resiza
         return FileUtils::getContents(fullPath, buffer);
     }
 
-    RawFile *fp = RawFileUtils::GetInstance().Open(fullPath.c_str());
+    RawFile64 *fp = RawFileUtils::GetInstance().Open(fullPath.c_str());
     if (!fp) {
         OHOS_LOGD("FileUtilsOhos::fp is nullptr");
         return FileUtils::Status::NotInitialized;
@@ -168,13 +168,13 @@ FileUtils::Status FileUtilsOhos::getContents(const std::string& filename, Resiza
     return FileUtils::Status::OK;
 }
 
-FileUtils::Status FileUtilsOhos::getRawFileDescriptor(const std::string &filename, RawFileDescriptor &descriptor) {
+FileUtils::Status FileUtilsOhos::getRawFileDescriptor(const std::string &filename, RawFileDescriptor64 *descriptor) {
     if (filename.empty()) {
         return FileUtils::Status::NotExists;
     }
     string fullPath = fullPathForFilename(filename);
     
-    RawFile *fp = RawFileUtils::GetInstance().Open(fullPath.c_str());//fopen(strFilePath.c_str(), "r");
+    RawFile64 *fp = RawFileUtils::GetInstance().Open(fullPath.c_str());//fopen(strFilePath.c_str(), "r");
     if (!fp) {
         OHOS_LOGD("FileUtilsOhos::fp is nullptr");
         return FileUtils::Status::NotInitialized;

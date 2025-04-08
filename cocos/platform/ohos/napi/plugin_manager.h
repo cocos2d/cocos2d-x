@@ -1,16 +1,14 @@
 #ifndef _PLUGIN_MANAGER_H_
 #define _PLUGIN_MANAGER_H_
 
-#include <string>
-#include <unordered_map>
-
 #include <ace/xcomponent/native_interface_xcomponent.h>
 #include <napi/native_api.h>
 #include <uv.h>
 
-#include "common/native_common.h"
 #include "WorkerMessageQueue.h"
 #include "render/plugin_render.h"
+
+napi_value Init(napi_env env, napi_value exports);
 
 class NapiManager {
 public:
@@ -20,8 +18,8 @@ public:
         return &NapiManager::manager_;
     }
 
-    static napi_value GetContext(napi_env env, napi_callback_info info);
-
+    static napi_value GetContext(long contextEnum);
+    
     /******************************APP Lifecycle******************************/
     static napi_value NapiOnCreate(napi_env env, napi_callback_info info);
     static napi_value NapiOnShow(napi_env env, napi_callback_info info);
