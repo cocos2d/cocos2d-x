@@ -178,7 +178,6 @@ napi_value InputNapi::textFieldTTFOnChangeCB(napi_env env, napi_callback_info in
       const size_t insertLen = newView.length() - commonPrefixLen;
       if ( insertLen > 0) {
         const char* newText = text + commonPrefixLen;
-        CCLOG("textFieldTTFOnChangeCB: Inserting %zu characters: %s", insertLen, newText);
         dispatcher->dispatchInsertText(newText, insertLen);
       }
     

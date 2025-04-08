@@ -1,0 +1,82 @@
+{
+  "module": {
+    "name": "entry",
+    "type": "entry",
+    "description": "$string:entry_desc",
+    "mainElement": "MainAbility",
+    "deviceTypes": [
+      "phone",
+      "tablet"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "MainAbility",
+        "srcEntry": "./ets/MainAbility/MainAbility.ts",
+        "description": "$string:MainAbility_desc",
+        "icon": "$media:icon",
+        "label": "$string:MainAbility_label",
+        "startWindowIcon": "$media:icon",
+        "startWindowBackground": "$color:white",
+        "exported": true,
+        "orientation": "landscape",
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "action.system.home"
+            ]
+          }
+        ],
+        // https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/quick-start/module-configuration-file.md/
+        //将窗口模式设置为只支持全屏
+          "supportWindowMode": ["fullscreen"],
+//        游戏主窗口固定窗口化
+//        "supportWindowMode": ["floating"],
+//        如果有全屏需求，可以同时加上fullscreen和floating，可以做到窗口化按这只宽高显示，全屏按全屏方案显示
+ //       "supportWindowMode": ["fullscreen","floating"],
+        //最大宽高比
+//        "maxWindowRatio": 3.5,
+        //最小宽高比
+//        "minWindowRatio": 0.5,
+        //最大宽度为1080
+        "maxWindowWidth": 1080,
+        //最小宽度为1080
+        "minWindowWidth": 1080,
+        //最大高度为720
+        "maxWindowHeight": 720,
+        //最小高度为720
+        "minWindowHeight": 720
+      }
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.INTERNET"
+      }, {
+        "name" : "ohos.permission.SET_NETWORK_INFO"
+      }, {
+        "name" : "ohos.permission.GET_NETWORK_INFO"
+      }, {
+        "name": "ohos.permission.GET_WIFI_INFO"
+      }, {
+        "name": "ohos.permission.ACCELEROMETER"
+      },{
+        "name": "ohos.permission.VIBRATE"
+      }
+    ],
+    "metadata": [
+      {
+        "name": "ArkTSPartialUpdate",
+        "value": "true"
+      },
+      {
+        "name": "partialUpdateStrictCheck",
+        "value": "warn"
+      }
+    ]
+  }
+}

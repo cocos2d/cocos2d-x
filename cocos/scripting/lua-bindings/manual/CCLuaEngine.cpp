@@ -36,10 +36,14 @@
 #include "2d/CCMenuItem.h"
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
-
-#if _MSC_VER
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    #if _MSC_VER
+        #pragma comment(lib,"lua51.lib")
+    #endif
+#else
     #pragma comment(lib,"lua51.lib")
 #endif
+
 
 NS_CC_BEGIN
 

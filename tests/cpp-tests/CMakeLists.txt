@@ -34,9 +34,9 @@ if(ANDROID)
          proj.android/app/jni/main.cpp
          )
 elseif(OHOS)
-    set(APP_NAME cpp_tests)
+    set(APP_NAME cpp-tests)
     list(APPEND GAME_SOURCE
-        proj.ohos/entry/src/main/cpp/main.cpp
+        projOhos/entry/src/main/cpp/main.cpp
          )
 elseif(LINUX)
     list(APPEND GAME_SOURCE
@@ -83,7 +83,7 @@ elseif(APPLE)
     endif()
     list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
-
+if (OHOS)
 list(APPEND GAME_HEADER
      Classes/ActionsEaseTest/ActionsEaseTest.h
      Classes/ParallaxTest/ParallaxTest.h
@@ -338,7 +338,262 @@ list(APPEND GAME_SOURCE
      # Classes/VRTest/VRTest.cpp
      # Classes/VRTest/VRTest.h
      )
+else()
+list(APPEND GAME_HEADER
+     Classes/ActionsEaseTest/ActionsEaseTest.h
+     Classes/ParallaxTest/ParallaxTest.h
+     Classes/testBasic.h
+     Classes/ZwoptexTest/ZwoptexTest.h
+     Classes/precheader.h
+     Classes/CurlTest/CurlTest.h
+     Classes/UnitTest/UnitTest.h
+     Classes/UnitTest/RefPtrTest.h
+     Classes/ConfigurationTest/ConfigurationTest.h
+     Classes/CurrentLanguageTest/CurrentLanguageTest.h
+     Classes/AppDelegate.h
+     Classes/LabelTest/LabelTestNew.h
+     Classes/LabelTest/LabelTest.h
+     Classes/Particle3DTest/Particle3DTest.h
+     Classes/AllocatorTest/AllocatorTest.h
+     Classes/VibrateTest/VibrateTest.h
+     Classes/ClippingNodeTest/ClippingNodeTest.h
+     Classes/UserDefaultTest/UserDefaultTest.h
+     Classes/tests.h
+     Classes/DataVisitorTest/DataVisitorTest.h
+     Classes/NewAudioEngineTest/NewAudioEngineTest.h
+     Classes/BugsTest/Bug-422.h
+     Classes/BugsTest/Bug-CCDrawNode.h
+     Classes/BugsTest/BugsTest.h
+     Classes/BugsTest/Bug-12847.h
+     Classes/BugsTest/Bug-899.h
+     Classes/BugsTest/Bug-1159.h
+     Classes/BugsTest/Bug-350.h
+     Classes/BugsTest/Bug-15594.h
+     Classes/BugsTest/Bug-914.h
+     Classes/BugsTest/Bug-624.h
+     Classes/BugsTest/Bug-458/QuestionContainerSprite.h
+     Classes/BugsTest/Bug-458/Bug-458.h
+     Classes/BugsTest/Bug-886.h
+     Classes/BugsTest/Bug-Child.h
+     Classes/BugsTest/Bug-15776.h
+     Classes/BugsTest/Bug-1174.h
+     Classes/ActionsTest/ActionsTest.h
+     Classes/TouchesTest/TouchesTest.h
+     Classes/TouchesTest/Ball.h
+     Classes/TouchesTest/Paddle.h
+     Classes/ActionManagerTest/ActionManagerTest.h
+     Classes/ClickAndMoveTest/ClickAndMoveTest.h
+     Classes/MaterialSystemTest/MaterialSystemTest.h
+     Classes/IntervalTest/IntervalTest.h
+     Classes/TileMapTest/TileMapTest2.h
+     Classes/TileMapTest/TileMapTest.h
+     Classes/NewEventDispatcherTest/NewEventDispatcherTest.h
+     Classes/ActionsProgressTest/ActionsProgressTest.h
+     Classes/RotateWorldTest/RotateWorldTest.h
+     Classes/Camera3DTest/Camera3DTest.h
+     Classes/TextInputTest/TextInputTest.h
+     Classes/Texture2dTest/Texture2dTest.h
+     Classes/TerrainTest/TerrainTest.h
+     Classes/controller.h
+     Classes/TransitionsTest/TransitionsTest.h
+     Classes/TextureCacheTest/TextureCacheTest.h
+     Classes/MotionStreakTest/MotionStreakTest.h
+     Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.h
+     Classes/ExtensionsTest/ExtensionsTest.h
+     Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.h
+     Classes/ExtensionsTest/TableViewTest/TableViewTestScene.h
+     Classes/ExtensionsTest/NetworkTest/WebSocketTest.h
+     Classes/ExtensionsTest/NetworkTest/WebSocketDelayTest.h
+     Classes/ExtensionsTest/NetworkTest/SocketIOTest.h
+     Classes/ExtensionsTest/NetworkTest/HttpClientTest.h
+     Classes/Sprite3DTest/Sprite3DTest.h
+     Classes/Sprite3DTest/DrawNode3D.h
+     Classes/BaseTest.h
+     Classes/SceneTest/SceneTest.h
+     Classes/ReleasePoolTest/ReleasePoolTest.h
+     Classes/CocosDenshionTest/CocosDenshionTest.h
+     Classes/InputTest/MouseTest.h
+     Classes/SpineTest/SpineTest.h
+     Classes/Scene3DTest/Scene3DTest.h
+     Classes/ParticleTest/ParticleTest.h
+     Classes/EffectsTest/EffectsTest.h
+     Classes/UITest/UITest.h
+     Classes/UITest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.h
+     Classes/UITest/CocoStudioGUITest/CocosGUIScene.h
+     Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.h
+     Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.h
+     Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.h
+     Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.h
+     Classes/UITest/CocoStudioGUITest/UISliderTest/UISliderTest.h
+     Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.h
+     Classes/UITest/CocoStudioGUITest/UIEditBoxTest.h
+     Classes/UITest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.h
+     Classes/UITest/CocoStudioGUITest/UIScene.h
+     Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.h
+     Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.h
+     Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.h
+     Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.h
+     Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest.h
+     Classes/UITest/CocoStudioGUITest/UISceneManager.h
+     Classes/UITest/CocoStudioGUITest/UIRadioButtonTest/UIRadioButtonTest.h
+     Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest.h
+     Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.h
+     Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.h
+     Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.h
+     Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.h
+     Classes/DrawPrimitivesTest/DrawPrimitivesTest.h
+     Classes/BillBoardTest/BillBoardTest.h
+     Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.h
+     Classes/EffectsAdvancedTest/EffectsAdvancedTest.h
+     Classes/SchedulerTest/SchedulerTest.h
+     Classes/MultiTouchTest/MultiTouchTest.h
+     Classes/testResource.h
+     Classes/ShaderTest/ShaderTest.vsh.h
+     Classes/ShaderTest/shaderTest.psh.h
+     Classes/ShaderTest/ShaderTest.h
+     Classes/ShaderTest/ShaderTest2.h
+     Classes/NewRendererTest/NewRendererTest.h
+     Classes/SpritePolygonTest/SpritePolygonTest.h
+     Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h
+     Classes/NodeTest/NodeTest.h
+     Classes/FileUtilsTest/FileUtilsTest.h
+     Classes/RenderTextureTest/RenderTextureTest.h
+     Classes/LayerTest/LayerTest.h
+     Classes/SpriteTest/SpriteTest.h
+     Classes/FontTest/FontTest.h
+     Classes/LightTest/LightTest.h
+     Classes/VisibleRect.h
+     Classes/DownloaderTest/DownloaderTest.h
+     Classes/OpenURLTest/OpenURLTest.h
+     Classes/ConsoleTest/ConsoleTest.h
+     Classes/MenuTest/MenuTest.h
+     )
 
+list(APPEND GAME_SOURCE
+     Classes/ActionManagerTest/ActionManagerTest.cpp
+     Classes/ActionsEaseTest/ActionsEaseTest.cpp
+     Classes/ActionsProgressTest/ActionsProgressTest.cpp
+     Classes/ActionsTest/ActionsTest.cpp
+     Classes/AllocatorTest/AllocatorTest.cpp
+     Classes/AppDelegate.cpp
+     Classes/BaseTest.cpp
+     Classes/BillBoardTest/BillBoardTest.cpp
+     Classes/BugsTest/Bug-CCDrawNode.cpp
+     Classes/BugsTest/Bug-1159.cpp
+     Classes/BugsTest/Bug-1174.cpp
+     Classes/BugsTest/Bug-350.cpp
+     Classes/BugsTest/Bug-422.cpp
+     Classes/BugsTest/Bug-458/Bug-458.cpp
+     Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp
+     Classes/BugsTest/Bug-624.cpp
+     Classes/BugsTest/Bug-886.cpp
+     Classes/BugsTest/Bug-899.cpp
+     Classes/BugsTest/Bug-914.cpp
+     Classes/BugsTest/Bug-12847.cpp
+     Classes/BugsTest/Bug-15594.cpp
+     Classes/BugsTest/Bug-15776.cpp
+     Classes/BugsTest/Bug-Child.cpp
+     Classes/BugsTest/BugsTest.cpp
+     Classes/Camera3DTest/Camera3DTest.cpp
+     Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
+     Classes/ClippingNodeTest/ClippingNodeTest.cpp
+     Classes/CocosDenshionTest/CocosDenshionTest.cpp
+     Classes/ConfigurationTest/ConfigurationTest.cpp
+     Classes/ConsoleTest/ConsoleTest.cpp
+     Classes/CurlTest/CurlTest.cpp
+     Classes/CurrentLanguageTest/CurrentLanguageTest.cpp
+     Classes/DataVisitorTest/DataVisitorTest.cpp
+     Classes/DownloaderTest/DownloaderTest.cpp
+     Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp
+     Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp
+     Classes/EffectsTest/EffectsTest.cpp
+     Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.cpp
+     Classes/ExtensionsTest/ExtensionsTest.cpp
+     Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
+     Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
+     Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
+     Classes/ExtensionsTest/NetworkTest/WebSocketDelayTest.cpp
+     Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
+     Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp
+     Classes/FileUtilsTest/FileUtilsTest.cpp
+     Classes/FontTest/FontTest.cpp
+     Classes/InputTest/MouseTest.cpp
+     Classes/IntervalTest/IntervalTest.cpp
+     Classes/LabelTest/LabelTest.cpp
+     Classes/LabelTest/LabelTestNew.cpp
+     Classes/LayerTest/LayerTest.cpp
+     Classes/LightTest/LightTest.cpp
+     Classes/MaterialSystemTest/MaterialSystemTest.cpp
+     Classes/MenuTest/MenuTest.cpp
+     Classes/MotionStreakTest/MotionStreakTest.cpp
+     Classes/MultiTouchTest/MultiTouchTest.cpp
+     Classes/NewAudioEngineTest/NewAudioEngineTest.cpp
+     Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
+     Classes/NewRendererTest/NewRendererTest.cpp
+     Classes/NodeTest/NodeTest.cpp
+     Classes/OpenURLTest/OpenURLTest.cpp
+     Classes/ParallaxTest/ParallaxTest.cpp
+     Classes/Particle3DTest/Particle3DTest.cpp
+     Classes/ParticleTest/ParticleTest.cpp
+     Classes/ReleasePoolTest/ReleasePoolTest.cpp
+     Classes/RenderTextureTest/RenderTextureTest.cpp
+     Classes/RotateWorldTest/RotateWorldTest.cpp
+     Classes/SceneTest/SceneTest.cpp
+     Classes/SchedulerTest/SchedulerTest.cpp
+     Classes/ShaderTest/ShaderTest.cpp
+     Classes/ShaderTest/ShaderTest2.cpp
+     Classes/SpineTest/SpineTest.cpp
+     Classes/Scene3DTest/Scene3DTest.cpp
+     Classes/Sprite3DTest/DrawNode3D.cpp
+     Classes/Sprite3DTest/Sprite3DTest.cpp
+     Classes/SpritePolygonTest/SpritePolygonTest.cpp
+     Classes/SpriteTest/SpriteTest.cpp
+     Classes/TerrainTest/TerrainTest.cpp
+     Classes/TextInputTest/TextInputTest.cpp
+     Classes/Texture2dTest/Texture2dTest.cpp
+     Classes/TextureCacheTest/TextureCacheTest.cpp
+     Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp
+     Classes/TileMapTest/TileMapTest.cpp
+     Classes/TileMapTest/TileMapTest2.cpp
+     Classes/TouchesTest/Ball.cpp
+     Classes/TouchesTest/Paddle.cpp
+     Classes/TouchesTest/TouchesTest.cpp
+     Classes/TransitionsTest/TransitionsTest.cpp
+     Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp
+     Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
+     Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
+     Classes/UITest/CocoStudioGUITest/UIRadioButtonTest/UIRadioButtonTest.cpp
+     Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
+     Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp
+     Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp
+     Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp
+     Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp
+     Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp
+     Classes/UITest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp
+     Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
+     Classes/UITest/CocoStudioGUITest/UIScene.cpp
+     Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
+     Classes/UITest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp
+     Classes/UITest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp
+     Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.cpp
+     Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.cpp
+     Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp
+     Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.cpp
+     Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
+     Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.cpp
+     Classes/UITest/UITest.cpp
+     Classes/UnitTest/RefPtrTest.cpp
+     Classes/UnitTest/UnitTest.cpp
+     Classes/UserDefaultTest/UserDefaultTest.cpp
+     Classes/VisibleRect.cpp
+     Classes/VibrateTest/VibrateTest.cpp
+     Classes/ZwoptexTest/ZwoptexTest.cpp
+     Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
+     Classes/controller.cpp
+     # Classes/VRTest/VRTest.cpp
+     # Classes/VRTest/VRTest.h
+     )
+endif()
 if(OHOS OR ANDROID OR IOS)
     list(APPEND GAME_HEADER
          Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.h
@@ -459,7 +714,13 @@ if (ANDROID)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 elseif (OHOS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -frtti -fexceptions -fsigned-char")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
     add_library(${APP_NAME} STATIC ${all_code_files})
+    target_include_directories(${APP_NAME}  PUBLIC ${CLASSES_PATH}
+                                                PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
+                                                        )
 else()
     add_executable(${APP_NAME} ${all_code_files})
 endif()
