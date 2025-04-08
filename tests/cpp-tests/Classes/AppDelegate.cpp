@@ -29,10 +29,7 @@
 #include "controller.h"
 // #include "editor-support/cocostudio/CocoStudio.h"
 #include "extensions/cocos-ext.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-#include "audio/include/AudioEngine.h"
-#include "editor-support/cocostudio/CocoStudio.h"
-#endif
+
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
@@ -43,9 +40,8 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
     //SimpleAudioEngine::end();
-  #if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-    cocostudio::ArmatureDataManager::destroyInstance();
-  #endif
+    //TODO: minggo
+    // cocostudio::ArmatureDataManager::destroyInstance();
 }
 
 // if you want a different context, modify the value of glContextAttrs
@@ -77,14 +73,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0f / 60);
 
     auto screenSize = glview->getFrameSize();
-    auto designSize = Size(1024/2, 2112/2);
+    auto designSize = Size(480, 320);
 
     auto fileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
     {
-        auto resourceSize = Size(1024, 2112);
+        auto resourceSize = Size(960, 640);
         searchPaths.push_back("hd");
         searchPaths.push_back("ccs-res/hd");
         searchPaths.push_back("ccs-res");
@@ -118,15 +114,10 @@ void AppDelegate::applicationDidEnterBackground()
 {
     if (_testController)
     {
-	#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-        _testController->onEnterBackground();
-	#endif
+//        _testController->onEnterBackground();
     }
     
     Director::getInstance()->stopAnimation();
-	#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-       _testController->onEnterBackground();
-	#endif
 }
 
 // this function will be called when the app is active again
@@ -134,28 +125,8 @@ void AppDelegate::applicationWillEnterForeground()
 {
     if (_testController)
     {
-		#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-          _testController->onEnterForeground();
-		#endif
+//        _testController->onEnterForeground();
     }
     
     Director::getInstance()->startAnimation();
-    // resume audioEngine, otherwise the opensl audioPlayer will always be suspended.
-	#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-      _testController->onEnterForeground();
-    #endif
-}
-
-void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
-{
-    auto director = cocos2d::Director::getInstance();
-    auto glview = director->getOpenGLView();
-    if (glview != NULL) {
-        // Set ResolutionPolicy to a proper value. here use the original value when the game is started.
-        ResolutionPolicy resolutionPolicy = glview->getResolutionPolicy();
-        Size designSize = glview->getDesignResolutionSize();
-         glview->setFrameSize(newWidth, newHeight);
-         // Set the design resolution to a proper value. here use the original value when the game is started. 
-         glview->setDesignResolutionSize(designSize.width, designSize.height, resolutionPolicy);
-    }
 }

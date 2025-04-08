@@ -2453,7 +2453,7 @@ if (condition) {
 }
 ```
 
-## Loops and Switch Statement
+## Loops and Switch Statements
 
 Switch statements may use braces for blocks. Annotate non-trivial fall-through between cases. Empty loop bodies should use {} or continue.
 
