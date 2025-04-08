@@ -115,7 +115,6 @@ elseif(OHOS)
         audio/ohos/AudioResamplerPublic.h
         audio/ohos/AudioMixer.h
         audio/ohos/tinysndfile.h
-        audio/ohos/mp3reader.h
         audio/ohos/AudioMixerOps.h
         audio/ohos/cutils/bitops.h
         audio/ohos/cutils/log.h
@@ -124,7 +123,6 @@ elseif(OHOS)
         audio/ohos/utils/Utils.h
         audio/ohos/utils/Errors.h
         audio/ohos/utils/Compat.h
-        audio/ohos/AudioDecoderOgg.h
         audio/ohos/Track.h
         audio/ohos/OpenSLHelper.h
         audio/ohos/PcmAudioPlayer.h
@@ -138,9 +136,9 @@ elseif(OHOS)
         audio/ohos/ICallerThreadUtils.h
         audio/ohos/AudioDecoderWav.h
         audio/ohos/AudioDecoderProvider.h
-        audio/ohos/UrlAudioPlayer.h
-        audio/ohos/AudioDecoderSLES.h
-        audio/ohos/AudioDecoderMp3.h
+        audio/ohos/AudioDecoderOH.h
+        audio/ohos/BigAudioPlayer.h
+        audio/ohos/BigAudioService.h
         audio/ohos/PcmData.h
         audio/ohos/AudioMixerController.h
         audio/ohos/AudioResamplerCubic.h
@@ -155,10 +153,8 @@ elseif(OHOS)
         audio/ohos/AssetFd.cpp
         audio/ohos/AudioDecoder.cpp
         audio/ohos/AudioDecoderProvider.cpp
-        audio/ohos/AudioDecoderSLES.cpp
-        audio/ohos/AudioDecoderOgg.cpp
-        audio/ohos/AudioDecoderMp3.cpp
         audio/ohos/AudioDecoderWav.cpp
+            audio/ohos/AudioDecoderOH.cpp
         audio/ohos/AudioPlayerProvider.cpp
         audio/ohos/AudioResampler.cpp
         audio/ohos/AudioResamplerCubic.cpp
@@ -166,10 +162,10 @@ elseif(OHOS)
         audio/ohos/PcmAudioPlayer.cpp
         audio/ohos/PcmData.cpp
         audio/ohos/PcmAudioService.cpp
-        audio/ohos/UrlAudioPlayer.cpp
+            audio/ohos/BigAudioPlayer.cpp
+            audio/ohos/BigAudioService.cpp
         audio/ohos/AudioMixerController.cpp
         audio/ohos/AudioMixer.cpp
-        audio/ohos/mp3reader.cpp
         audio/ohos/tinysndfile.cpp
         audio/ohos/Track.cpp
         audio/ohos/audio_utils/RefCounted.cpp

@@ -26,42 +26,28 @@
 #define LOG_TAG "AudioDecoderProvider"
 
 #include "AudioDecoderProvider.h"
-#include "AudioDecoderMp3.h"
-#include "AudioDecoderOgg.h"
-#include "AudioDecoderSLES.h"
 #include "AudioDecoderWav.h"
+#include "AudioDecoderOH.h"
 #include "platform/CCFileUtils.h"
 
 namespace cocos2d {
 
-cocos2d::AudioDecoder *AudioDecoderProvider::createAudioDecoder(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate, const FdGetterCallback &fdGetterCallback) {
+cocos2d::AudioDecoder *AudioDecoderProvider::createAudioDecoder(const std::string &url, int sampleRate, AudioPlayerProvider::AudioFileInfo fileInfo) {
     AudioDecoder *decoder = nullptr;
     std::string extension = FileUtils::getInstance()->getFileExtension(url);
     ALOGE("url:%s, extension:%s, sampleRate:%d", url.c_str(), extension.c_str(), sampleRate);
-    if (extension == ".ogg") {
-        decoder = new AudioDecoderOgg();
-        if (!decoder->init(url, sampleRate)) {
-            delete decoder;
-            decoder = nullptr;
-        }
-    } else if (extension == ".mp3") {
-        decoder = new AudioDecoderMp3();
-        if (!decoder->init(url, sampleRate)) {
-            delete decoder;
-            decoder = nullptr;
-        }
-    } else if (extension == ".wav") {
+    if (extension == ".wav" && fileInfo.smallFile) {
         decoder = new AudioDecoderWav();
-        if (!decoder->init(url, sampleRate)) {
+        if (!decoder->init(url, sampleRate, fileInfo)) {
             delete decoder;
             decoder = nullptr;
         }
-    } else {
-        auto slesDecoder = new AudioDecoderSLES();
-        if (slesDecoder->init(engineItf, url, bufferSizeInFrames, sampleRate, fdGetterCallback)) {
-            decoder = slesDecoder;
-        } else {
-            delete slesDecoder;
+    }
+    else {
+        decoder = new AudioDecoderOH();
+        if (!decoder->init(url, sampleRate, fileInfo)) {
+            delete decoder;
+            decoder = nullptr;
         }
     }
 

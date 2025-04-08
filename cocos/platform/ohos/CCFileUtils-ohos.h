@@ -37,7 +37,7 @@ public:
     static void setassetmanager(NativeResourceManager* a);
     static NativeResourceManager* getAssetManager() { return nativeResourceManager_; }
     static ZipFile* getObbFile() { return obbfile; }
-    FileUtils::Status getRawFileDescriptor(const std::string &filename, RawFileDescriptor &descriptor);
+    FileUtils::Status getRawFileDescriptor(const std::string &filename, RawFileDescriptor64 *descriptor);
 
     /* override functions */
     bool init() override;

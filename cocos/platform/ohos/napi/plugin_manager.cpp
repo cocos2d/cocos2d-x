@@ -1,24 +1,21 @@
 #include <stdint.h>
 #include <string>
 #include <stdio.h>
-
 #include <ace/xcomponent/native_interface_xcomponent.h>
-
 #include "modules/RawFileUtils.h"
 #include "modules/InputNapi.h"
 #include "modules/MouseNapi.h"
 #include "modules/WebViewNapi.h"
-#include "modules/SensorNapi.h"
 #include "modules/VideoPlayerNapi.h"
 #include "plugin_manager.h"
 #include "../CCLogOhos.h"
 #include "cocos2d.h"
 #include "platform/CCApplication.h"
 #include "platform/ohos/CCFileUtils-ohos.h"
-#include "platform/ohos/napi/helper/JSRegisterUtils.h"
 #include "platform/ohos/napi/helper/Js_Cocos2dxHelper.h"
 #include "base/CCDirector.h"
 #include "base/CCEventKeyboard.h"
+#include <aki/jsbind.h>
 
 const int32_t kMaxStringLen = 512;
 enum ContextType {
@@ -34,36 +31,26 @@ enum ContextType {
     SENSOR_API
 };
 
+JSBIND_ENUM(ContextType) {
+    JSBIND_ENUM_VALUE(APP_LIFECYCLE);
+    JSBIND_ENUM_VALUE(JS_PAGE_LIFECYCLE);
+    JSBIND_ENUM_VALUE(RAW_FILE_UTILS);
+    JSBIND_ENUM_VALUE(WORKER_INIT);
+    JSBIND_ENUM_VALUE(NATIVE_API);
+    JSBIND_ENUM_VALUE(INPUT_NAPI);
+    JSBIND_ENUM_VALUE(MOUSE_NAPI);
+    JSBIND_ENUM_VALUE(WEBVIEW_NAPI);
+    JSBIND_ENUM_VALUE(VIDEOPLAYER_NAPI);
+    JSBIND_ENUM_VALUE(SENSOR_API);
+}
 NapiManager NapiManager::manager_;
 
-napi_value NapiManager::GetContext(napi_env env, napi_callback_info info) {
-    napi_status status;
+napi_value NapiManager::GetContext(long contextEnum) {
+    napi_env env = aki::JSBind::GetScopedEnv();
     napi_value exports;
-    size_t argc = 1;
-    napi_value args[1];
-    NAPI_CALL(env, napi_get_cb_info(env, info, &argc, args, nullptr, nullptr));
-
-    if (argc != 1) {
-        napi_throw_type_error(env, NULL, "Wrong number of arguments");
-        return nullptr;
-    }
-
-    napi_valuetype valuetype;
-    status = napi_typeof(env, args[0], &valuetype);
-    if (status != napi_ok) {
-        return nullptr;
-    }
-    if (valuetype != napi_number) {
-        napi_throw_type_error(env, NULL, "Wrong arguments");
-        return nullptr;
-    }
-
-    int64_t value;
-    NAPI_CALL(env, napi_get_value_int64(env, args[0], &value));
-
     NAPI_CALL(env, napi_create_object(env, &exports));
 
-    switch (value) {
+    switch (contextEnum) {
         case APP_LIFECYCLE: {
                 /****  application life cycle: onCreate, onShow, onHide, onDestroy ******/
                 OHOS_LOGD("GetContext APP_LIFECYCLE");
@@ -110,7 +97,6 @@ napi_value NapiManager::GetContext(napi_env env, napi_callback_info info) {
                 OHOS_LOGD("NapiManager::GetContext NATIVE_RENDER_API");
                 napi_property_descriptor desc[] = {
                     DECLARE_NAPI_FUNCTION("nativeEngineStart", NapiManager::napiNativeEngineStart),
-                    DECLARE_NAPI_FUNCTION("registerFunction", registerFunction),
                     DECLARE_NAPI_FUNCTION("initAsyncInfo", Js_Cocos2dxHelper::initAsyncInfo),
                 };
                 NAPI_CALL(env, napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc));
@@ -153,14 +139,6 @@ napi_value NapiManager::GetContext(napi_env env, napi_callback_info info) {
                 };
                 NAPI_CALL(env, napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc));
                 OHOS_LOGE("VideoPlayerNapi::Export finish");
-            }
-            break;
-        case SENSOR_API: {
-                OHOS_LOGD("NapiManager::GetContext SENSOR_API");
-                napi_property_descriptor desc[] = {
-                    DECLARE_NAPI_FUNCTION("onAccelerometerCallBack", SensorNapi::onAccelerometerCallBack),
-                };
-                NAPI_CALL(env, napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc));
             }
             break;
         default:
@@ -282,4 +260,15 @@ void NapiManager::OnPageShowNative() {
 
 void NapiManager::OnPageHideNative() {
     OHOS_LOGD("NapiManager::OnPageHideNative");
+}
+
+JSBIND_GLOBAL() { JSBIND_FUNCTION(NapiManager::GetContext, "getContext"); }
+
+napi_value Init(napi_env env, napi_value exports) {
+    aki::JSBind::BindSymbols(env, exports);
+    bool ret = NapiManager::GetInstance()->Export(env, exports);
+    if (!ret) {
+        OHOS_LOGE("napi init failed");
+    }
+    return exports;
 }

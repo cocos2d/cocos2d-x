@@ -2,22 +2,22 @@ import deviceInfo from '@ohos.deviceInfo';
 
 import nativeRender from 'libnativerender.so'
 import { ContextType } from '@ohos/libSysCapabilities'
-import { TextInputInfo } from '@ohos/libSysCapabilities/src/main/ets/components/editbox/EditBoxMsg'
+import { TextInputInfo } from '@ohos/libSysCapabilities/src/main/ets/components/editbox/CocosEditBox'
 import { TextInputDialogEntity } from '@ohos/libSysCapabilities'
-import { WebViewInfo } from '@ohos/libSysCapabilities/src/main/ets/components/webview/WebViewMsg'
-import { VideoPlayerInfo } from '@ohos/libSysCapabilities/src/main/ets/components/videoplayer/VideoPlayerMsg'
-import { WorkerMsgUtils } from '@ohos/libSysCapabilities/src/main/ets/utils/WorkerMsgUtils'
+import { WebViewInfo } from '@ohos/libSysCapabilities/src/main/ets/components/webview/WebView'
+import { VideoPlayerInfo } from '@ohos/libSysCapabilities/src/main/ets/components/videoplayer/VideoPlayer'
 import { WorkerManager } from '../workers/WorkerManager'
 import { CocosEditBox } from '../components/CocosEditBox'
 import { CocosWebView } from '../components/CocosWebview'
 import { CocosVideoPlayer } from '../components/CocosVideoPlayer'
 import { TextInputDialog } from '../components/TextInputDialog'
 import { GlobalContext, GlobalContextConstants } from "@ohos/libSysCapabilities"
+import { NapiHelper } from "@ohos/libSysCapabilities/src/main/ets/napi/NapiHelper"
 import promptAction from '@ohos.promptAction';
 import process from '@ohos.process';
 
 const nativePageLifecycle: nativeRender.CPPFunctions = nativeRender.getContext(ContextType.JSPAGE_LIFECYCLE);
-
+NapiHelper.registerUIFunctions();
 @Entry
 @Component
 struct Index {
@@ -133,10 +133,9 @@ struct Index {
           console.log('[cocos] XComponent.onLoad Callback');
           this.cocosWorker.postMessage({
             type: "abilityContextInit",
-            data: GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT)
+            context: GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT)
           });
           this.cocosWorker.postMessage({ type: "onXCLoad", data: "XComponent" });
-          this.cocosWorker.onmessage = WorkerMsgUtils.recvWorkerThreadMessage;
         })
         .onDestroy(() => {
         })

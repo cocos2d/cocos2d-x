@@ -33,9 +33,9 @@
 #include "base/CCEventListenerKeyboard.h"
 #include "platform/ohos/CCFileUtils-ohos.h"
 #include "ui/UIVideoPlayer-ohos.h"
-#include "platform/ohos/napi/helper/NapiHelper.h"
 
 #include "ui/UIHelper.h"
+#include "aki/jsbind.h"
 
 USING_NS_CC;
 #define QUIT_FULLSCREEN 1000
@@ -65,12 +65,16 @@ VideoPlayer::VideoPlayer()
     _debugDrawNode = DrawNode::create();
     addChild(_debugDrawNode);
 #endif
-    JSFunction::getFunction("VideoPlayer.createVideoPlayer").invoke<void>(_videoPlayerIndex);
+    if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.createVideoPlayer")) {
+        function->Invoke<void>(_videoPlayerIndex); 
+    }
 }
 
 VideoPlayer::~VideoPlayer() {
     if (_videoPlayerIndex != -1 && kVideoPlayerTag != -1) {
-        JSFunction::getFunction("VideoPlayer.removeVideoPlayer").invoke<void>(_videoPlayerIndex);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.removeVideoPlayer")) {
+            function->Invoke<void>(_videoPlayerIndex); 
+        }
         auto iter = s_allVideoPlayers.find(_videoPlayerIndex);
         if (iter != s_allVideoPlayers.end()) {
             s_allVideoPlayers.erase(iter);
@@ -82,22 +86,30 @@ void VideoPlayer::setFileName(const std::string &fileName) {
     _videoURL = FileUtils::getInstance()->fullPathForFilename(fileName);
     if (_videoURL[0] == '/') {
         _videoSource = VideoPlayer::Source::URL;
-        JSFunction::getFunction("VideoPlayer.setURL").invoke<void>(_videoPlayerIndex, SANDBOX_PREFIX + _videoURL, (int)_videoSource);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.setURL")) {
+            function->Invoke<void>(_videoPlayerIndex, SANDBOX_PREFIX + _videoURL, (int)_videoSource); 
+        }
     } else {
         _videoSource = VideoPlayer::Source::FILENAME;
-        JSFunction::getFunction("VideoPlayer.setURL").invoke<void>(_videoPlayerIndex, _videoURL, (int)_videoSource);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.setURL")) {
+            function->Invoke<void>(_videoPlayerIndex, _videoURL, (int)_videoSource); 
+        }
     }
 }
 
 void VideoPlayer::setURL(const std::string &videoUrl) {
     _videoURL = videoUrl;
     _videoSource = VideoPlayer::Source::URL;
-    JSFunction::getFunction("VideoPlayer.setURL").invoke<void>(_videoPlayerIndex, _videoURL, (int)_videoSource);
+    if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.setURL")) {
+        function->Invoke<void>(_videoPlayerIndex, _videoURL, (int)_videoSource); 
+    }
 }
 
 void VideoPlayer::setLooping(bool looping) {
     _isLooping = looping;
-    JSFunction::getFunction("VideoPlayer.setLooping").invoke<void>(_videoPlayerIndex, _isLooping);
+    if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.setLooping")) {
+        function->Invoke<void>(_videoPlayerIndex, _isLooping); 
+    }
 }
 
 void VideoPlayer::setUserInputEnabled(bool enableInput) {
@@ -114,8 +126,11 @@ void VideoPlayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags
 
     if (flags & FLAGS_TRANSFORM_DIRTY) {
         auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(this);
-        JSFunction::getFunction("VideoPlayer.setVideoPlayerRect").invoke<void>(_videoPlayerIndex, (int)uiRect.origin.x, (int)uiRect.origin.y,
-            (int)uiRect.size.width, (int)uiRect.size.height);
+        
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.setVideoPlayerRect")) {
+            function->Invoke<void>(_videoPlayerIndex, (int)uiRect.origin.x, (int)uiRect.origin.y,
+            (int)uiRect.size.width, (int)uiRect.size.height); 
+        }
     }
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
@@ -129,7 +144,9 @@ void VideoPlayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags
 void VideoPlayer::setFullScreenEnabled(bool enabled) {
     if (_fullScreenEnabled != enabled) {
         _fullScreenEnabled = enabled;
-        JSFunction::getFunction("VideoPlayer.requestFullscreen").invoke<void>(_videoPlayerIndex, enabled);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.requestFullscreen")) {
+            function->Invoke<void>(_videoPlayerIndex, enabled); 
+        }
     }
 }
 
@@ -140,7 +157,9 @@ bool VideoPlayer::isFullScreenEnabled() const {
 void VideoPlayer::setKeepAspectRatioEnabled(bool enable) {
     if (_keepAspectRatioEnabled != enable) {
         _keepAspectRatioEnabled = enable;
-        JSFunction::getFunction("VideoPlayer.setKeepAspectRatioEnabled").invoke<void>(_videoPlayerIndex, enable);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.setKeepAspectRatioEnabled")) {
+            function->Invoke<void>(_videoPlayerIndex, enable); 
+        }
     }
 }
 
@@ -164,31 +183,41 @@ void VideoPlayer::drawDebugData() {
 
 void VideoPlayer::play() {
     if (!_videoURL.empty()) {
-        JSFunction::getFunction("VideoPlayer.play").invoke<void>(_videoPlayerIndex);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.play")) {
+            function->Invoke<void>(_videoPlayerIndex); 
+        }
     }
 }
 
 void VideoPlayer::pause() {
     if (!_videoURL.empty()) {
-        JSFunction::getFunction("VideoPlayer.pause").invoke<void>(_videoPlayerIndex);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.pause")) {
+            function->Invoke<void>(_videoPlayerIndex); 
+        }
     }
 }
 
 void VideoPlayer::resume() {
     if (!_videoURL.empty()) {
-        JSFunction::getFunction("VideoPlayer.play").invoke<void>(_videoPlayerIndex);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.play")) {
+            function->Invoke<void>(_videoPlayerIndex); 
+        }
     }
 }
 
 void VideoPlayer::stop() {
     if (!_videoURL.empty()) {
-        JSFunction::getFunction("VideoPlayer.stop").invoke<void>(_videoPlayerIndex);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.stop")) {
+            function->Invoke<void>(_videoPlayerIndex); 
+        }
     }
 }
 
 void VideoPlayer::seekTo(float sec) {
     if (!_videoURL.empty()) {
-        JSFunction::getFunction("VideoPlayer.seekTo").invoke<void>(_videoPlayerIndex, (int)sec);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.seekTo")) {
+            function->Invoke<void>(_videoPlayerIndex, (int)sec); 
+        }
     }
 }
 
@@ -208,20 +237,26 @@ void VideoPlayer::setVisible(bool visible) {
     cocos2d::ui::Widget::setVisible(visible);
 
     if (!visible || isRunning()) {
-        JSFunction::getFunction("VideoPlayer.setVisible").invoke<void>(_videoPlayerIndex, visible);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.setVisible")) {
+            function->Invoke<void>(_videoPlayerIndex, visible); 
+        }
     }
 }
 
 void VideoPlayer::onEnter() {
     Widget::onEnter();
     if (isVisible() && !_videoURL.empty()) {
-        JSFunction::getFunction("VideoPlayer.setVisible").invoke<void>(_videoPlayerIndex, true);
+        if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.setVisible")) {
+            function->Invoke<void>(_videoPlayerIndex, true); 
+        }
     }
 }
 
 void VideoPlayer::onExit() {
     Widget::onExit();
-    JSFunction::getFunction("VideoPlayer.setVisible").invoke<void>(_videoPlayerIndex, false);
+    if (auto function = aki::JSBind::GetJSFunction("VideoPlayer.setVisible")) {
+        function->Invoke<void>(_videoPlayerIndex, false); 
+    }
 }
 
 void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback &callback) {

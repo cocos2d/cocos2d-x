@@ -2,8 +2,8 @@
 #include <js_native_api_types.h>
 
 #include "WebViewNapi.h"
+#include "ohos/napi/common/native_common.h"
 #include "platform/ohos/napi/plugin_manager.h"
-#include "../../CCLogOhos.h"
 #include "ui/UIWebView/UIWebViewImpl-ohos.h"
 
 napi_value WebViewNapi::shouldStartLoading(napi_env env, napi_callback_info info) {

@@ -1,10 +1,8 @@
-#include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
 
 #include "platform/CCCommon.h"
-#include "platform/ohos/napi/helper/NapiHelper.h"
 #include "CCLogOhos.h"
-#include <stdio.h>
+#include "aki/jsbind.h"
 
 NS_CC_BEGIN
 
@@ -13,7 +11,9 @@ NS_CC_BEGIN
 void MessageBox(const char * pszMsg, const char * pszTitle) {
     std::string msg(pszMsg);
     std::string title(pszTitle);
-    JSFunction::getFunction("DiaLog.showDialog").invoke<void>(msg, title);
+    if (auto showDialog = aki::JSBind::GetJSFunction("DiaLog.showDialog")) {
+        showDialog->Invoke<void>(msg, title); 
+    }
 }
 
 void LuaLog(const char * pszFormat) {

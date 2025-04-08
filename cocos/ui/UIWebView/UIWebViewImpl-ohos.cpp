@@ -30,9 +30,9 @@
 
 #include "platform/CCFileUtils.h"
 #include "platform/ohos/CCLogOhos.h"
-#include "platform/ohos/napi/helper/NapiHelper.h"
 #include "ui/UIHelper.h"
 #include "ui/UIWebView/UIWebView.h"
+#include "aki/jsbind.h"
 
 static const std::string SANDBOX_PREFIX = "file://";
 static const char S_MIME_TYPE_TEXT[] = "text/html";
@@ -46,7 +46,9 @@ NS_CC_BEGIN
 
         WebViewImpl::WebViewImpl(WebView *webView) : _viewTag(-1), _webView(webView) {
             _viewTag = kWebViewTag++;
-            JSFunction::getFunction("WebView.createWebView").invoke<void>(_viewTag);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.createWebView")) {
+                function->Invoke<void>(_viewTag); 
+            }
             sWebViewImpls[_viewTag] = this;
     // TODO There is a delay when the web component is bound to the controller. The sleep function is used to avoid errors. The onControllerAttached function that may be opened by API10 is used to control the binding.
             OHOS_LOGD("webview will sleep for 2s");
@@ -55,7 +57,9 @@ NS_CC_BEGIN
 
         WebViewImpl::~WebViewImpl() {
             if (_viewTag != -1) {
-                JSFunction::getFunction("WebView.removeWebView").invoke<void>(_viewTag);
+                if (auto function = aki::JSBind::GetJSFunction("WebView.removeWebView")) {
+                    function->Invoke<void>(_viewTag); 
+                }
                 auto iter = sWebViewImpls.find(_viewTag);
                 if (iter != sWebViewImpls.end()) {
                     sWebViewImpls.erase(iter);
@@ -65,88 +69,117 @@ NS_CC_BEGIN
         }
 
         void WebViewImpl::setJavascriptInterfaceScheme(const std::string &scheme) {
-            JSFunction::getFunction("WebView.setJavascriptInterfaceScheme").invoke<void>(_viewTag, scheme);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.setJavascriptInterfaceScheme")) {
+                function->Invoke<void>(_viewTag, scheme); 
+            }
         }
 
         void WebViewImpl::loadData(const Data &data, const std::string &mimeType,
                                    const std::string &encoding, const std::string &baseURL) {
             std::string dataString(reinterpret_cast<char *>(data.getBytes()),
                                    static_cast<unsigned int>(data.getSize()));
-            JSFunction::getFunction("WebView.loadData").invoke<void>(_viewTag, dataString, mimeType, encoding, baseURL);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.loadData")) {
+                function->Invoke<void>(_viewTag, dataString, mimeType, encoding, baseURL); 
+            }
         }
 
         void WebViewImpl::loadHTMLString(const std::string &string, const std::string &baseURL) {
-            JSFunction::getFunction("WebView.loadData").invoke<void>(_viewTag, string, S_MIME_TYPE_TEXT, S_ENCODING_UTF8, baseURL);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.loadData")) {
+                function->Invoke<void>(_viewTag, string, S_MIME_TYPE_TEXT, S_ENCODING_UTF8, baseURL); 
+            }
         }
 
         void WebViewImpl::loadURL(const std::string &url) {
-            JSFunction::getFunction("WebView.loadURL").invoke<void>(_viewTag, url);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.loadURL")) {
+                function->Invoke<void>(_viewTag, url); 
+            }
         }
 
         void WebViewImpl::loadURL(const std::string &url, bool cleanCachedData) {
             // The official website interface does not provide cache-related parameters. Therefore, the implementation of loadUrl is the same as that of the previous loadUrl.
-            JSFunction::getFunction("WebView.loadURL").invoke<void>(_viewTag, url);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.loadURL")) {
+                function->Invoke<void>(_viewTag, url); 
+            }
         }
 
         void WebViewImpl::loadFile(const std::string &fileName) {
             std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
             if(fullPath[0] == '/') {
-                JSFunction::getFunction("WebView.loadURL").invoke<void>(_viewTag, SANDBOX_PREFIX + fullPath);
+                if (auto function = aki::JSBind::GetJSFunction("WebView.loadURL")) {
+                  function->Invoke<void>(_viewTag, SANDBOX_PREFIX + fullPath); 
+                }
             } else {
-                JSFunction::getFunction("WebView.loadFile").invoke<void>(_viewTag, fullPath);
+                if (auto function = aki::JSBind::GetJSFunction("WebView.loadFile")) {
+                  function->Invoke<void>(_viewTag, fullPath); 
+                }
             }
         }
 
         void WebViewImpl::stopLoading() {
-            JSFunction::getFunction("WebView.stopLoading").invoke<void>(_viewTag);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.stopLoading")) {
+              function->Invoke<void>(_viewTag); 
+            }
         }
 
         void WebViewImpl::reload() {
-            JSFunction::getFunction("WebView.reload").invoke<void>(_viewTag);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.reload")) {
+              function->Invoke<void>(_viewTag); 
+            }
         }
 
         bool WebViewImpl::canGoBack() {
-            // return JSFunction::getFunction("WebView.canGoBack").invoke<bool>(_viewTag);
             return true;
         }
 
         bool WebViewImpl::canGoForward() {
-            // return JSFunction::getFunction("WebView.canGoForward").invoke<bool>(_viewTag);
             return true;
         }
 
         void WebViewImpl::goBack() {
-            JSFunction::getFunction("WebView.goBack").invoke<void>(_viewTag);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.goBack")) {
+              function->Invoke<void>(_viewTag); 
+            }
         }
 
         void WebViewImpl::goForward() {
-            JSFunction::getFunction("WebView.goForward").invoke<void>(_viewTag);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.goForward")) {
+              function->Invoke<void>(_viewTag); 
+            }
         }
 
         void WebViewImpl::evaluateJS(const std::string &js) {
-            JSFunction::getFunction("WebView.evaluateJS").invoke<void>(_viewTag, js);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.evaluateJS")) {
+              function->Invoke<void>(_viewTag, js); 
+            }
         }
 
         void WebViewImpl::setScalesPageToFit(bool scalesPageToFit) {
-            JSFunction::getFunction("WebView.setScalesPageToFit").invoke<void>(_viewTag, scalesPageToFit);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.setScalesPageToFit")) {
+              function->Invoke<void>(_viewTag, scalesPageToFit); 
+            }
         }
 
         void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) {
             if (flags & cocos2d::Node::FLAGS_TRANSFORM_DIRTY) {
                 auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(_webView);
-                JSFunction::getFunction("WebView.setWebViewRect")
-                        .invoke<void>(_viewTag, (int) uiRect.origin.x, (int) uiRect.origin.y,
-                                      (int) uiRect.size.width, (int) uiRect.size.height);
+                if (auto function = aki::JSBind::GetJSFunction("WebView.setWebViewRect")) {
+                  function->Invoke<void>(_viewTag, (int) uiRect.origin.x, (int) uiRect.origin.y,
+                                      (int) uiRect.size.width, (int) uiRect.size.height); 
+                }
             }
         }
 
         void WebViewImpl::setVisible(bool visible) {
-            JSFunction::getFunction("WebView.setVisible").invoke<void>(_viewTag, visible);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.setVisible")) {
+              function->Invoke<void>(_viewTag, visible); 
+            }
         }
 
         void WebViewImpl::setOpacityWebView(const float opacity) {
             _opacity = opacity;
-            JSFunction::getFunction("WebView.setOpacityWebView").invoke<void>(_viewTag, (double)_opacity);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.setOpacityWebView")) {
+              function->Invoke<void>(_viewTag, (double)_opacity); 
+            }
         }
 
         float WebViewImpl::getOpacityWebView() const {
@@ -154,7 +187,9 @@ NS_CC_BEGIN
         }
 
         void WebViewImpl::setBackgroundTransparent() {
-            JSFunction::getFunction("WebView.setBackgroundTransparent").invoke<void>(_viewTag);
+            if (auto function = aki::JSBind::GetJSFunction("WebView.setBackgroundTransparent")) {
+              function->Invoke<void>(_viewTag); 
+            }
         }
 
         void WebViewImpl::setBounces(bool bounces) {

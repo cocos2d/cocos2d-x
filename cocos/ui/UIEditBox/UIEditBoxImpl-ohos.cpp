@@ -10,8 +10,8 @@
 #include "ui/UIHelper.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
-#include "platform/ohos/napi/helper/NapiHelper.h"
 #include "platform/ohos/CCLogOhos.h"
+#include "aki/jsbind.h"
 
 
 NS_CC_BEGIN
@@ -48,7 +48,9 @@ namespace ui {
 
         s_allEditBoxes[curIndex] = this;
         _editBoxIndex = curIndex;
-        JSFunction::getFunction("CocosEditBox.createCocosEditBox").invoke<void>(_editBoxIndex, uiLeft, uiTop, uiWidth, uiHeight, paddingW, paddingH);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.createCocosEditBox")) {
+            function->Invoke<void>(_editBoxIndex, uiLeft, uiTop, uiWidth, uiHeight, paddingW, paddingH); 
+        }
         curIndex++;
     }
 
@@ -62,7 +64,9 @@ namespace ui {
     EditBoxImplOhos::~EditBoxImplOhos()
     {
         s_allEditBoxes.erase(_editBoxIndex);
-        JSFunction::getFunction("CocosEditBox.removeCocosEditBox").invoke<void>(_editBoxIndex);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.removeCocosEditBox")) {
+            function->Invoke<void>(_editBoxIndex); 
+        }
     }
 
     bool EditBoxImplOhos::isEditing()
@@ -72,7 +76,9 @@ namespace ui {
 
     void EditBoxImplOhos::setNativeText(const char* pText)
     {
-        JSFunction::getFunction("CocosEditBox.setCurrentText").invoke<void>(_editBoxIndex, pText);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setCurrentText")) {
+            function->Invoke<void>(_editBoxIndex, pText); 
+        }
     }
 
     void EditBoxImplOhos::setNativeFont(const char* pFontName, int fontSize)
@@ -89,18 +95,26 @@ namespace ui {
             }
         }
         auto realFontsize = fontSize * glView->getScaleX();
-        JSFunction::getFunction("CocosEditBox.setEditBoxFontSize").invoke<void>(_editBoxIndex, realFontsize);
-        JSFunction::getFunction("CocosEditBox.setEditBoxFontPath").invoke<void>(_editBoxIndex, realFontPath);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxFontSize")) {
+            function->Invoke<void>(_editBoxIndex, realFontsize); 
+        }
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxFontPath")) {
+            function->Invoke<void>(_editBoxIndex, realFontPath); 
+        }
     }
 
     void EditBoxImplOhos::setNativeFontColor(const Color4B& color)
     {
-        JSFunction::getFunction("CocosEditBox.setEditBoxFontColor").invoke<void>(_editBoxIndex, (int)color.r, (int)color.g, (int)color.b, (int)color.a);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxFontColor")) {
+            function->Invoke<void>(_editBoxIndex, (int)color.r, (int)color.g, (int)color.b, (int)color.a); 
+        }
     }
 
     void EditBoxImplOhos::setNativePlaceHolder(const char* pText)
     {
-        JSFunction::getFunction("CocosEditBox.setEditBoxPlaceHolder").invoke<void>(_editBoxIndex, pText);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxPlaceHolder")) {
+            function->Invoke<void>(_editBoxIndex, pText); 
+        }
     }
 
     void EditBoxImplOhos::setNativePlaceholderFont(const char* pFontName, int fontSize)
@@ -117,28 +131,40 @@ namespace ui {
             }
         }
         auto realFontsize = fontSize * glView->getScaleX();
-        JSFunction::getFunction("CocosEditBox.setEditBoxPlaceHolderFontSize").invoke<void>(_editBoxIndex, realFontsize);
-        JSFunction::getFunction("CocosEditBox.setEditBoxPlaceHolderFontPath").invoke<void>(_editBoxIndex, realFontPath);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxPlaceHolderFontSize")) {
+            function->Invoke<void>(_editBoxIndex, realFontsize); 
+        }
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxPlaceHolderFontPath")) {
+            function->Invoke<void>(_editBoxIndex, realFontPath); 
+        }
     }
 
     void EditBoxImplOhos::setNativePlaceholderFontColor(const Color4B& color)
     {
-        JSFunction::getFunction("CocosEditBox.setEditBoxPlaceHolderFontColor").invoke<void>(_editBoxIndex, (int)color.r, (int)color.g, (int)color.b, (int)color.a);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxPlaceHolderFontColor")) {
+            function->Invoke<void>(_editBoxIndex, (int)color.r, (int)color.g, (int)color.b, (int)color.a); 
+        }
     }
 
     void EditBoxImplOhos::setNativeMaxLength(int maxLength)
     {
-        JSFunction::getFunction("CocosEditBox.setEditBoxMaxLength").invoke<void>(_editBoxIndex, maxLength);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxMaxLength")) {
+            function->Invoke<void>(_editBoxIndex, maxLength); 
+        }
     }
 
     void EditBoxImplOhos::setNativeInputMode(EditBox::InputMode inputMode)
     {
-        JSFunction::getFunction("CocosEditBox.setNativeInputMode").invoke<void>(_editBoxIndex, static_cast<int>(inputMode));
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setNativeInputMode")) {
+            function->Invoke<void>(_editBoxIndex, static_cast<int>(inputMode)); 
+        }
     }
 
     void EditBoxImplOhos::setNativeInputFlag(EditBox::InputFlag inputFlag)
     {
-        JSFunction::getFunction("CocosEditBox.setNativeInputFlag").invoke<void>(_editBoxIndex, static_cast<int>(inputFlag));
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setNativeInputFlag")) {
+            function->Invoke<void>(_editBoxIndex, static_cast<int>(inputFlag)); 
+        }
     }
 
     void EditBoxImplOhos::setNativeReturnType(EditBox::KeyboardReturnType returnType)
@@ -148,26 +174,36 @@ namespace ui {
 
     void EditBoxImplOhos::setNativeVisible(bool visible)
     {   
-        JSFunction::getFunction("CocosEditBox.setEditBoxVisible").invoke<void>(_editBoxIndex, visible);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxVisible")) {
+            function->Invoke<void>(_editBoxIndex, visible); 
+        }
     }
 
     void EditBoxImplOhos::updateNativeFrame(const Rect& rect)
     {
-        JSFunction::getFunction("CocosEditBox.setEditBoxViewRect").invoke<void>(_editBoxIndex, (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxViewRect")) {
+            function->Invoke<void>(_editBoxIndex, (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height); 
+        }
     }
 
     void EditBoxImplOhos::nativeOpenKeyboard()
     {
-        JSFunction::getFunction("CocosEditBox.setEditBoxVisible").invoke<void>(_editBoxIndex, true);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxVisible")) {
+            function->Invoke<void>(_editBoxIndex, true); 
+        }
     }
 
     void EditBoxImplOhos::nativeCloseKeyboard()
     {
-        JSFunction::getFunction("CocosEditBox.setEditBoxVisible").invoke<void>(_editBoxIndex, false);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxVisible")) {
+            function->Invoke<void>(_editBoxIndex, false); 
+        }
     }
 
     void EditBoxImplOhos::hideAllEditBox() {
-        JSFunction::getFunction("CocosEditBox.hideAllEditBox").invoke<void>();
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.hideAllEditBox")) {
+            function->Invoke<void>(); 
+        }
     }
 
     void EditBoxImplOhos::onBeginCallBack(int index)
@@ -193,7 +229,9 @@ namespace ui {
     void EditBoxImplOhos::onEnterCallBack(int index, const std::string& text)
     {
         OHOS_LOGD("textinput onEnterCallBack");
-        JSFunction::getFunction("CocosEditBox.setEditBoxVisible").invoke<void>(index, false);
+        if (auto function = aki::JSBind::GetJSFunction("CocosEditBox.setEditBoxVisible")) {
+            function->Invoke<void>(index, false); 
+        }
         auto it = s_allEditBoxes.find(index);
         if (it != s_allEditBoxes.end())
         {

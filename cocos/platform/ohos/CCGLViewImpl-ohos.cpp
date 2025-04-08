@@ -8,7 +8,7 @@
 #include "napi/helper/Js_Cocos2dxHelper.h"
 #include "CCGL-ohos.h"
 #include "CCLogOhos.h"
-#include "napi/helper/NapiHelper.h"
+#include "aki/jsbind.h"
 
 
 
@@ -99,9 +99,13 @@ GLViewImpl* GLViewImpl::sharedOpenGLView() {
 void GLViewImpl::setIMEKeyboardState(bool bOpen) {
     if (bOpen) {
         std::string pszText = cocos2d::IMEDispatcher::sharedDispatcher()->getContentText();
-        JSFunction::getFunction("DiaLog.showTextInputDialog").invoke<void>(pszText);
+        if (auto showTextInputDialog = aki::JSBind::GetJSFunction("DiaLog.showTextInputDialog")) {
+            showTextInputDialog->Invoke<void>(pszText); 
+        }
     } else {
-        JSFunction::getFunction("DiaLog.hideTextInputDialog").invoke<void>();
+        if (auto hideTextInputDialog = aki::JSBind::GetJSFunction("DiaLog.hideTextInputDialog")) {
+            hideTextInputDialog->Invoke<void>(); 
+        }
     }
 }
 
@@ -116,10 +120,18 @@ Rect GLViewImpl::getSafeAreaRect() const {
 
     float marginX = DEFAULT_MARGIN_OHOS / _scaleX;
     float marginY = DEFAULT_MARGIN_OHOS / _scaleY;
-
-    bool isScreenRound = JSFunction::getFunction("DeviceUtils.isRoundScreen").invoke<bool>();
-    bool hasSoftKeys = JSFunction::getFunction("DeviceUtils.hasSoftKeys").invoke<bool>();
-    bool isCutoutEnabled = JSFunction::getFunction("DeviceUtils.isCutoutEnable").invoke<bool>();
+    bool isScreenRound;
+    if (auto function = aki::JSBind::GetJSFunction("DeviceUtils.isRoundScreen")) {
+        isScreenRound = function->Invoke<bool>(); 
+    }
+    bool hasSoftKeys;
+    if (auto function = aki::JSBind::GetJSFunction("DeviceUtils.hasSoftKeys")) {
+        hasSoftKeys = function->Invoke<bool>(); 
+    }
+    bool isCutoutEnabled;
+    if (auto function = aki::JSBind::GetJSFunction("DeviceUtils.isCutoutEnable")) {
+        isCutoutEnabled = function->Invoke<bool>(); 
+    }
 
     if(isScreenRound) {
         // edge screen
@@ -162,20 +174,40 @@ Rect GLViewImpl::getSafeAreaRect() const {
 
     if (isCutoutEnabled) {
         // screen with enabled cutout area
-        int orientation = JSFunction::getFunction("DeviceUtils.getOrientation").invoke<int>();
+        
+        int orientation;
+        if (auto function = aki::JSBind::GetJSFunction("DeviceUtils.getOrientation")) {
+            orientation = function->Invoke<int>(); 
+        }
 
         if(static_cast<int>(GLViewImpl::Orientation::PORTRAIT) == orientation) {
-            double height = JSFunction::getFunction("DeviceUtils.getCutoutHeight").invoke<int>() / _scaleY;
+            int result;
+            if (auto function = aki::JSBind::GetJSFunction("DeviceUtils.getCutoutHeight")) {
+                result = function->Invoke<int>(); 
+            }
+            double height = result / _scaleY;
             safeAreaRect.origin.y += height;
             safeAreaRect.size.height -= height;
         } else if(static_cast<int>(GLViewImpl::Orientation::PORTRAIT_INVERTED) == orientation) {
-            double height =JSFunction::getFunction("DeviceUtils.getCutoutHeight").invoke<int>() / _scaleY;
+            int result;
+            if (auto function = aki::JSBind::GetJSFunction("DeviceUtils.getCutoutHeight")) {
+                result = function->Invoke<int>(); 
+            }
+            double height = result / _scaleY;
             safeAreaRect.size.height -= height;
         } else if(static_cast<int>(GLViewImpl::Orientation::LANDSCAPE) == orientation) {
-            double width = JSFunction::getFunction("DeviceUtils.getCutoutWidth").invoke<int>() / _scaleX;
+            int result;
+            if (auto function = aki::JSBind::GetJSFunction("DeviceUtils.getCutoutWidth")) {
+                result = function->Invoke<int>(); 
+            }
+            double width = result / _scaleX;
             safeAreaRect.size.width -= width;
         } else if(static_cast<int>(GLViewImpl::Orientation::LANDSCAPE_INVERTED) == orientation) {
-            double width = JSFunction::getFunction("DeviceUtils.getCutoutWidth").invoke<int>() / _scaleX;
+            int result;
+            if (auto function = aki::JSBind::GetJSFunction("DeviceUtils.getCutoutWidth")) {
+                result = function->Invoke<int>(); 
+            }
+            double width = result / _scaleX;
             safeAreaRect.origin.x += width;
             safeAreaRect.size.width -= width;
         }

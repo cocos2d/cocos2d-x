@@ -1,12 +1,11 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
-#include "napi/helper/Js_Cocos2dxHelper.h"
-#include "napi/helper/NapiHelper.h"
 #include "napi/render/plugin_render.h"
 #include "platform/CCApplication.h"
 #include "base/CCDirector.h"
 #include "base/ccUtils.h"
 #include "CCLogOhos.h"
 #include <string>
+#include "aki/jsbind.h"
 
 NS_CC_BEGIN
 
@@ -52,9 +51,12 @@ Application* Application::sharedApplication() {
 
 const char * Application::getCurrentLanguageCode() {
     static char code[3]={0};
-    std::string systemLanguage = JSFunction::getFunction("DeviceUtils.getSystemLanguage").invoke<std::string>();
-    OHOS_LOGD("==========getCurrentLanguageCode is [%{public}s] =========",systemLanguage.c_str());
-    strncpy(code, systemLanguage.c_str(), 2);
+    std::string result;
+    if (auto getSystemLanguage = aki::JSBind::GetJSFunction("DeviceUtils.getSystemLanguage")) {
+        result = getSystemLanguage->Invoke<std::string>(); 
+    }
+    OHOS_LOGD("==========getCurrentLanguageCode is [%{public}s] =========",result.c_str());
+    strncpy(code, result.c_str(), 2);
     code[2]='\0';
     return code;
 }
@@ -65,17 +67,23 @@ LanguageType Application::getCurrentLanguage() {
 }
 
 ApplicationProtocol::Platform Application::getTargetPlatform() {
-    return ApplicationProtocol::Platform::OS_OPENHARMONY;
+    return ApplicationProtocol::Platform::OS_HARMONY_NEXT;
 }
 
 
 std::string Application::getVersion() {
-    return JSFunction::getFunction("ApplicationManager.getVersionName").invoke<std::string>();
+    std::string result;
+    if (auto getVersionName = aki::JSBind::GetJSFunction("ApplicationManager.getVersionName")) {
+        result = getVersionName->Invoke<std::string>(); 
+    }
+    return result;
 }
 
 bool Application::openURL(const std::string &url) {
     try {
-        JSFunction::getFunction("JumpManager.openUrl").invoke<void>(url);
+        if (auto openUrl = aki::JSBind::GetJSFunction("JumpManager.openUrl")) {
+            openUrl->Invoke<void>(); 
+        }
     } catch (std::exception& e) {
         return false;
     }

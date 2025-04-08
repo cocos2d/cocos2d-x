@@ -1,6 +1,7 @@
 #include <js_native_api.h>
 #include <js_native_api_types.h>
 #include "InputNapi.h"
+#include "ohos/napi/common/native_common.h"
 #include "platform/ohos/napi/plugin_manager.h"
 #include "../../CCLogOhos.h"
 #include "ui/UIEditBox/UIEditBoxImpl-ohos.h"

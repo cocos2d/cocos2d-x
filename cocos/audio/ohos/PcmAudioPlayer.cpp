@@ -64,7 +64,7 @@ bool PcmAudioPlayer::prepare(const std::string &url, const PcmData &decResult) {
     _track->onStateChanged = [this, callerThreadId](Track::State state) {
         // It maybe in sub thread
         Track::State prevState = _track->getPrevState();
-        ALOGE("PcmAudioPlayer %{public}p onStateChanged: preState = %{public}d, state = %{public}d", this, prevState, state);
+        ALOGE("PcmAudioPlayer %{public}p onStateChanged: preState = %{public}d, state = %{public}d", this, (int)prevState, (int)state);
         auto func = [this, state, prevState]() {
             // It's in caller's thread
             if (state == Track::State::OVER && prevState != Track::State::STOPPED) {
