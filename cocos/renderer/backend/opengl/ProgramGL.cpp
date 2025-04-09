@@ -40,7 +40,7 @@ namespace {
 ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmentShader)
 : Program(vertexShader, fragmentShader)
 {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
     //some device required manually specify the precision qualifiers for vertex shader.
     _vertexShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newVertexShaderModule(std::move(vsPreDefine + _vertexShader)));
     _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(std::move(fsPreDefine +  _fragmentShader)));

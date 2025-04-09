@@ -40,6 +40,8 @@ THE SOFTWARE.
 #include "platform/win32/CCApplication-win32.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "platform/linux/CCApplication-linux.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+#include "platform/ohos/CCApplication-ohos.h"
 #endif
 
 /// @endcond
