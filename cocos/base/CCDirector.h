@@ -61,6 +61,11 @@ class Camera;
 
 class Console;
 
+namespace backend 
+{
+    class CommandBuffer;
+}
+
 /**
  * @brief Matrix stack type.
  */
@@ -434,6 +439,10 @@ public:
      * @since v3.0
      */
     Renderer* getRenderer() const { return _renderer; }
+
+    /** Returns the backend CommandBuffer that performs the actual draw calls
+     */
+    backend::CommandBuffer* getCommandBuffer() const;
 
     /** Returns the Console associated with this director.
      * @since v3.0

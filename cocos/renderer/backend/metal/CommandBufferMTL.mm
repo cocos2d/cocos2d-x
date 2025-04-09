@@ -354,6 +354,15 @@ void CommandBufferMTL::captureScreen(std::function<void(const unsigned char*, in
     }];
 }
 
+void CommandBufferMTL::endEncoding()
+{
+    if (_mtlRenderEncoder) {
+        [_mtlRenderEncoder endEncoding];
+        [_mtlRenderEncoder release];
+    }
+    _mtlRenderEncoder = nil;
+}
+
 void CommandBufferMTL::endFrame()
 {
     [_mtlRenderEncoder endEncoding];

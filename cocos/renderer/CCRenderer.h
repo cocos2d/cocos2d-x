@@ -405,6 +405,9 @@ public:
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
     
+    /** get internal RenderPassDescriptr */
+    const backend::RenderPassDescriptor& getRenderPassDescriptor() { return _renderPassDescriptor; }
+
 protected:
     friend class Director;
     friend class GroupCommand;

@@ -363,6 +363,11 @@ void Director::calculateDeltaTime()
 #endif
 }
 
+backend::CommandBuffer* Director::getCommandBuffer() const
+{
+    return _renderer->_commandBuffer;
+}
+
 float Director::getDeltaTime() const
 {
     return _deltaTime;
