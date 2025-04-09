@@ -52,7 +52,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace experimental {
 
 static int getSystemAPILevel() {
-    // TODO(qgh): On the openharmony platform, pcm streaming must be used
+    // TODO(qgh): On the HarmonyOS Next platform, pcm streaming must be used
     return std::numeric_limits<int>::max();
 }
 

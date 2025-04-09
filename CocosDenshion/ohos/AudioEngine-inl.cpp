@@ -61,7 +61,7 @@ namespace {
     int outputSampleRate = 48000;
 
 // TODO(hack) : There is currently a bug in the opensles module,
-// so openharmony must configure a fixed size, otherwise the callback will be suspended
+// so HarmonyOS Next must configure a fixed size, otherwise the callback will be suspended
     int              bufferSizeInFrames = 2048;
 
 
