@@ -27,6 +27,7 @@ THE SOFTWARE.
 #ifndef __CCDEVICE_H__
 #define __CCDEVICE_H__
 
+#include "base/ccTypes.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/ccMacros.h"
 #include "base/CCData.h"
@@ -76,6 +77,10 @@ public:
      *  Sets the interval of accelerometer.
      */
     static void setAccelerometerInterval(float interval);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+    static void sendAndClearAcc();
+#endif
 
     /**
      * Controls whether the screen should remain on.
