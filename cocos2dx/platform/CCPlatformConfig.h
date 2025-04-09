@@ -117,7 +117,7 @@ Config of cocos2d-x project, per target platform.
     #define CC_TARGET_PLATFORM     CC_PLATFORM_TIZEN
 #endif
 
-// OpenHarmony
+// HarmonyOS Next
 #if defined(OHOS)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM     CC_PLATFORM_OHOS

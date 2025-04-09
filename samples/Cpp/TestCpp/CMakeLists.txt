@@ -8,12 +8,13 @@ if(OHOS)
 
 	include_directories(${NATIVERENDER_ROOT_PATH}
 	                    ${NATIVERENDER_ROOT_PATH}/include
+	                    ../../../external
 	                    ../../../cocos2dx/platform/third_party/ohos/
 	                    ../../../cocos2dx/platform/third_party/ohos/lib
-	                    ../../../cocos2dx/platform/third_party/ohos/Box2D
+	                    ../../../external/Box2D
 	                    ../../../../curl
 	                    ../../../CocosDenshion/include
-	                    ../../../cocos2dx/platform/third_party/ohos/chipmunk/include/chipmunk
+	                    ../../../external/chipmunk/include/chipmunk
 	                    Classes
 	                    Classes/ExtensionsTest
 	                    ../../../cocos2dx/platform/third_party/ohos/tiff_4_0_3
