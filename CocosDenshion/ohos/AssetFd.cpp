@@ -30,16 +30,16 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-        AssetFd::AssetFd(int assetFd)
-                : _assetFd(assetFd) {
-        }
+AssetFd::AssetFd(int assetFd)
+    : _assetFd(assetFd) {
+}
 
-        AssetFd::~AssetFd() {
-            ALOGV("~AssetFd: %d", _assetFd);
-            if (_assetFd > 0) {
-                ::close(_assetFd);
-                _assetFd = 0;
-            }
-        };
+AssetFd::~AssetFd() {
+    ALOGV("~AssetFd: %d", _assetFd);
+    if (_assetFd > 0) {
+        ::close(_assetFd);
+        _assetFd = 0;
+    }
+};
 
-    }} // namespace CocosDenshion
+}} // namespace CocosDenshion

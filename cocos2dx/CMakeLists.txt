@@ -98,6 +98,7 @@ if(OHOS)
 	    platform/ohos/CCAccelerometer.cpp
 	    platform/ohos/CCApplication.cpp
 	    platform/ohos/CCCommon.cpp
+	    platform/ohos/CCData.cpp
 	    platform/ohos/CCFileUtilsOhos.cpp
 	    platform/ohos/CCTextBitmap.cpp
         
@@ -105,6 +106,7 @@ if(OHOS)
 	    platform/CCImage.h
 	    platform/ohos/CCImage.cpp
 	    platform/ohos/CCLogOhos.h
+	    platform/ohos/CCData.h
 	    platform/ohos/CCApplication.cpp
 	    platform/ohos/CCTextBitmap.cpp
 	    platform/ohos/napi/modules/RawFileUtils.cpp
@@ -187,7 +189,7 @@ if(OHOS)
 	    -Wno-unsequenced
 	    -Wno-extra
 	    -Wno-c++11-narrowing
-	    -DOpenHarmony
+	    -DHarmonyOS_Next
 	    )
 
 	add_library(${PROJECT_NAME} STATIC ${COCOS2DX_SRC})
@@ -198,7 +200,7 @@ if(OHOS)
 
 	target_link_libraries(${PROJECT_NAME} PUBLIC ext_png ext_zlib libtiff ext_jpeg)
 	target_include_directories(${PROJECT_NAME} PUBLIC ${COCOS2DX_HEADER_PUBLIC})
-	target_compile_definitions(${PROJECT_NAME} PUBLIC -DUSE_FILE32API -DOpenHarmony)
+	target_compile_definitions(${PROJECT_NAME} PUBLIC -DUSE_FILE32API -DHarmonyOS_Next)
 	target_compile_options(${PROJECT_NAME} PUBLIC -Wno-psabi)
 
 	find_library( # Sets the name of the path variable.

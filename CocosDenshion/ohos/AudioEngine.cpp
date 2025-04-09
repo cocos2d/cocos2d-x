@@ -26,25 +26,20 @@
 
 #include "AudioEngine.h"
 #include <condition_variable>
-#include <cstdint>
-#include <mutex>
-#include <thread>
 #include <queue>
-#include "cutils/Log.h"
+#include <thread>
+#include "CocosDenshion/ohos/cutils/log.h"
 #include "utils/Utils.h"
-#include "audio_utils/AudioFileUtils.h"
-
-
+#include "CCFileUtilsOhos.h"
 #include "AudioEngine-inl.h"
-
-
 #define TIME_DELAY_PRECISION 0.0001
 
 #ifdef ERROR
-    #undef ERROR
+#undef ERROR
 #endif // ERROR
 
-namespace cocos2d { namespace experimental {
+using namespace cocos2d;
+using namespace cocos2d::experimental;
 
 const int AudioEngine::INVALID_AUDIO_ID = -1;
 const float AudioEngine::TIME_UNKNOWN = -1.0f;
@@ -58,9 +53,96 @@ AudioEngine::ProfileHelper* AudioEngine::_defaultProfileHelper = nullptr;
 std::unordered_map<int, AudioEngine::AudioInfo> AudioEngine::_audioIDInfoMap;
 AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
+AudioEngine::AudioEngineThreadPool* AudioEngine::s_threadPool = nullptr;
+bool AudioEngine::_isEnabled = true;
+
+AudioEngine::AudioInfo::AudioInfo()
+: filePath(nullptr)
+, profileHelper(nullptr)
+, volume(1.0f)
+, loop(false)
+, duration(TIME_UNKNOWN)
+, state(AudioState::INITIALIZING)
+{
+
+}
+
+AudioEngine::AudioInfo::~AudioInfo()
+{
+}
+
+class AudioEngine::AudioEngineThreadPool
+{
+public:
+    AudioEngineThreadPool(int threads = 4)
+        : _stop(false)
+    {
+        for (int index = 0; index < threads; ++index)
+        {
+            _workers.emplace_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this)));
+        }
+    }
+
+    void addTask(const std::function<void()> &task){
+        std::unique_lock<std::mutex> lk(_queueMutex);
+        _taskQueue.emplace(task);
+        _taskCondition.notify_one();
+    }
+
+    ~AudioEngineThreadPool()
+    {
+        {
+            std::unique_lock<std::mutex> lk(_queueMutex);
+            _stop = true;
+            _taskCondition.notify_all();
+        }
+
+        for (auto&& worker : _workers) {
+            worker.join();
+        }
+    }
+
+private:
+    void threadFunc()
+    {
+        while (true) {
+            std::function<void()> task = nullptr;
+            {
+                std::unique_lock<std::mutex> lk(_queueMutex);
+                if (_stop)
+                {
+                    break;
+                }
+                if (!_taskQueue.empty())
+                {
+                    task = std::move(_taskQueue.front());
+                    _taskQueue.pop();
+                }
+                else
+                {
+                    _taskCondition.wait(lk);
+                    continue;
+                }
+            }
+
+            task();
+        }
+    }
+
+    std::vector<std::thread>  _workers;
+    std::queue< std::function<void()> > _taskQueue;
+
+    std::mutex _queueMutex;
+    std::condition_variable _taskCondition;
+    bool _stop;
+};
 void AudioEngine::end()
 {
-    stopAll();
+    if (s_threadPool)
+    {
+        delete s_threadPool;
+        s_threadPool = nullptr;
+    }
     delete _audioEngineImpl;
     _audioEngineImpl = nullptr;
 
@@ -80,6 +162,10 @@ bool AudioEngine::lazyInit()
         }
     }
 
+    if (_audioEngineImpl && s_threadPool == nullptr)
+    {
+        s_threadPool = new (std::nothrow) AudioEngineThreadPool();
+    }
     return true;
 }
 
@@ -88,11 +174,16 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
     int ret = AudioEngine::INVALID_AUDIO_ID;
 
     do {
+        if (!isEnabled())
+        {
+            break;
+        }
+        
         if ( !lazyInit() ){
             break;
         }
 
-        if (!AudioFileUtils::getInstance()->isFileExist(filePath)) {
+        if ( !CCFileUtilsOhos::sharedFileUtils()->isFileExist(filePath)){
             break;
         }
 
@@ -102,9 +193,9 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             profileHelper = &_audioPathProfileHelperMap[profile->name];
             profileHelper->profile = *profile;
         }
-
+        
         if (_audioIDInfoMap.size() >= _maxInstances) {
-            ALOGE("Fail to play %s cause by limited max instance of AudioEngine", filePath.c_str());
+            ALOGI("Fail to play %s cause by limited max instance of AudioEngine",filePath.c_str());
             break;
         }
         if (profileHelper)
@@ -138,7 +229,6 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             auto& audioRef = _audioIDInfoMap[ret];
             audioRef.volume = volume;
             audioRef.loop = loop;
-            audioRef.is3dAudio = false;
             audioRef.filePath = &it->first;
 
             if (profileHelper) {
@@ -201,10 +291,6 @@ void AudioEngine::pauseAll()
     }
 }
 
-void AudioEngine::onResume() {
-    _audioEngineImpl->onResume(); 
-}
-
 void AudioEngine::resume(int audioID)
 {
     auto it = _audioIDInfoMap.find(audioID);
@@ -229,11 +315,6 @@ void AudioEngine::resumeAll()
 
 void AudioEngine::stop(int audioID)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-   if(!_audioEngineImpl){
-        return;
-    }
-#endif
     auto it = _audioIDInfoMap.find(audioID);
     if (it != _audioIDInfoMap.end()){
         _audioEngineImpl->stop(audioID);
@@ -245,7 +326,7 @@ void AudioEngine::stop(int audioID)
 void AudioEngine::remove(int audioID)
 {
     auto it = _audioIDInfoMap.find(audioID);
-    if (it != _audioIDInfoMap.end()) {
+    if (it != _audioIDInfoMap.end()){
         if (it->second.profileHelper) {
             it->second.profileHelper->audioIDs.remove(audioID);
         }
@@ -273,40 +354,36 @@ void AudioEngine::stopAll()
 
 void AudioEngine::uncache(const std::string &filePath)
 {
-    if(_audioPathIDMap.find(filePath) != _audioPathIDMap.end()){
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-        auto lst =  _audioPathIDMap[filePath];
-        for (auto it = lst.begin() ; it != lst.end(); ++it) {
-            auto audioID = *it;
-            _audioEngineImpl->stop(audioID);
-
-            auto itInfo = _audioIDInfoMap.find(audioID);
-            if (itInfo != _audioIDInfoMap.end()) {
-                if (itInfo->second.profileHelper) {
-                    itInfo->second.profileHelper->audioIDs.remove(audioID);
-                }
-                _audioIDInfoMap.erase(audioID);
-            }
-        }
-#else
-        auto itEnd = _audioPathIDMap[filePath].end();
-        for (auto it = _audioPathIDMap[filePath].begin() ; it != itEnd; ++it) {
-            auto audioID = *it;
+    if(!_audioEngineImpl){
+        return;
+    }
+    auto audioIDsIter = _audioPathIDMap.find(filePath);
+    if (audioIDsIter != _audioPathIDMap.end())
+    {
+        //@Note: For safely iterating elements from the audioID list, we need to copy the list
+        // since 'AudioEngine::remove' may be invoked in '_audioEngineImpl->stop' synchronously.
+        // If this happens, it will break the iteration, and crash will appear on some devices.
+        std::list<int> copiedIDs(audioIDsIter->second);
+        
+        for (int audioID : copiedIDs)
+        {
             _audioEngineImpl->stop(audioID);
             
             auto itInfo = _audioIDInfoMap.find(audioID);
-            if (itInfo != _audioIDInfoMap.end()){
-                if (itInfo->second.profileHelper) {
+            if (itInfo != _audioIDInfoMap.end())
+            {
+                if (itInfo->second.profileHelper)
+                {
                     itInfo->second.profileHelper->audioIDs.remove(audioID);
                 }
                 _audioIDInfoMap.erase(audioID);
             }
         }
-#endif
         _audioPathIDMap.erase(filePath);
     }
 
-    if (_audioEngineImpl){
+    if (_audioEngineImpl)
+    {
         _audioEngineImpl->uncache(filePath);
     }
 }
@@ -323,7 +400,7 @@ void AudioEngine::uncacheAll()
 float AudioEngine::getDuration(int audioID)
 {
     auto it = _audioIDInfoMap.find(audioID);
-    if (it != _audioIDInfoMap.end() && it->second.state != AudioState::INITIALZING)
+    if (it != _audioIDInfoMap.end() && it->second.state != AudioState::INITIALIZING)
     {
         if (it->second.duration == TIME_UNKNOWN)
         {
@@ -338,7 +415,7 @@ float AudioEngine::getDuration(int audioID)
 bool AudioEngine::setCurrentTime(int audioID, float time)
 {
     auto it = _audioIDInfoMap.find(audioID);
-    if (it != _audioIDInfoMap.end() && it->second.state != AudioState::INITIALZING){
+    if (it != _audioIDInfoMap.end() && it->second.state != AudioState::INITIALIZING) {
         return _audioEngineImpl->setCurrentTime(audioID, time);
     }
 
@@ -348,7 +425,7 @@ bool AudioEngine::setCurrentTime(int audioID, float time)
 float AudioEngine::getCurrentTime(int audioID)
 {
     auto it = _audioIDInfoMap.find(audioID);
-    if (it != _audioIDInfoMap.end() && it->second.state != AudioState::INITIALZING){
+    if (it != _audioIDInfoMap.end() && it->second.state != AudioState::INITIALIZING) {
         return _audioEngineImpl->getCurrentTime(audioID);
     }
     return 0.0f;
@@ -379,7 +456,7 @@ bool AudioEngine::isLoop(int audioID)
     {
         return tmpIterator->second.loop;
     }
-
+    
     ALOGI("AudioEngine::isLoop-->The audio instance %d is non-existent", audioID);
     return false;
 }
@@ -403,7 +480,7 @@ AudioEngine::AudioState AudioEngine::getState(int audioID)
     {
         return tmpIterator->second.state;
     }
-
+    
     return AudioState::ERROR;
 }
 
@@ -414,7 +491,7 @@ AudioProfile* AudioEngine::getProfile(int audioID)
     {
         return &it->second.profileHelper->profile;
     }
-
+    
     return nullptr;
 }
 
@@ -433,19 +510,26 @@ AudioProfile* AudioEngine::getProfile(const std::string &name)
     auto it = _audioPathProfileHelperMap.find(name);
     if (it != _audioPathProfileHelperMap.end()) {
         return &it->second.profile;
-    } 
-        
-	return nullptr;
-     
+    } else {
+        return nullptr;
+    }
 }
 
-void AudioEngine::preload(const std::string &filePath, std::function<void(bool isSuccess)> callback) {
-
+void AudioEngine::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback)
+{
+    if (!isEnabled())
+    {
+        callback(false);
+        return;
+    }
+    
     lazyInit();
 
-    if (_audioEngineImpl) {
-        if (!AudioFileUtils::getInstance()->isFileExist(filePath)) {
-            if (callback) {
+    if (_audioEngineImpl)
+    {
+        if (!CCFileUtilsOhos::sharedFileUtils()->isFileExist(filePath)){
+            if (callback)
+            {
                 callback(false);
             }
             return;
@@ -454,5 +538,36 @@ void AudioEngine::preload(const std::string &filePath, std::function<void(bool i
         _audioEngineImpl->preload(filePath, callback);
     }
 }
+
+void AudioEngine::addTask(const std::function<void()>& task)
+{
+    lazyInit();
+
+    if (_audioEngineImpl && s_threadPool)
+    {
+        s_threadPool->addTask(task);
+    }
 }
+
+int AudioEngine::getPlayingAudioCount()
+{
+    return static_cast<int>(_audioIDInfoMap.size());
+}
+
+void AudioEngine::setEnabled(bool isEnabled)
+{
+    if (_isEnabled != isEnabled)
+    {
+        _isEnabled = isEnabled;
+        
+        if (!_isEnabled)
+        {
+            stopAll();
+        }
+    }
+}
+
+bool AudioEngine::isEnabled()
+{
+    return _isEnabled;
 }

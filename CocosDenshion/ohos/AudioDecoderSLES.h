@@ -32,65 +32,65 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-        class AudioDecoderSLES : public AudioDecoder {
-        protected:
-            AudioDecoderSLES();
-            ~AudioDecoderSLES() override;
+class AudioDecoderSLES : public AudioDecoder {
+protected:
+    AudioDecoderSLES();
+    ~AudioDecoderSLES() override;
 
-            bool init(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate, const FdGetterCallback &fdGetterCallback);
-            bool decodeToPcm() override;
+    bool init(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate, const FdGetterCallback &fdGetterCallback);
+    bool decodeToPcm() override;
 
-        private:
-            void queryAudioInfo();
+private:
+    void queryAudioInfo();
 
-            void signalEos();
-            void decodeToPcmCallback(CCSLBufferQueueItf queueItf);
-            void prefetchCallback(SLPrefetchStatusItf caller, SLuint32 event);
-            void decodeProgressCallback(SLPlayItf caller, SLuint32 event);
+    void signalEos();
+    void decodeToPcmCallback(CCSLBufferQueueItf queueItf);
+    void prefetchCallback(SLPrefetchStatusItf caller, SLuint32 event);
+    void decodeProgressCallback(SLPlayItf caller, SLuint32 event);
 
-            SLEngineItf _engineItf;
-            SLObjectItf _playObj;
-            /* Local storage for decoded audio data */
-            char *_pcmData;
+    SLEngineItf _engineItf;
+    SLObjectItf _playObj;
+    /* Local storage for decoded audio data */
+    char *_pcmData;
 
-            /* we only want to query / display the PCM format once */
-            bool _formatQueried;
-            /* Used to signal prefetching failures */
-            bool _prefetchError;
+    /* we only want to query / display the PCM format once */
+    bool _formatQueried;
+    /* Used to signal prefetching failures */
+    bool _prefetchError;
 
-            /* to display the number of decode iterations */
-            int _counter;
+    /* to display the number of decode iterations */
+    int _counter;
 
-            /* metadata key index for the PCM format information we want to retrieve */
-            int _numChannelsKeyIndex;
-            int _sampleRateKeyIndex;
-            int _bitsPerSampleKeyIndex;
-            int _containerSizeKeyIndex;
-            int _channelMaskKeyIndex;
-            int _endiannessKeyIndex;
+    /* metadata key index for the PCM format information we want to retrieve */
+    int _numChannelsKeyIndex;
+    int _sampleRateKeyIndex;
+    int _bitsPerSampleKeyIndex;
+    int _containerSizeKeyIndex;
+    int _channelMaskKeyIndex;
+    int _endiannessKeyIndex;
 
-            /* to signal to the test app the end of the stream to decode has been reached */
-            bool _eos;
-            std::mutex _eosLock;
-            std::condition_variable _eosCondition;
+    /* to signal to the test app the end of the stream to decode has been reached */
+    bool _eos;
+    std::mutex _eosLock;
+    std::condition_variable _eosCondition;
 
-            /* Structure for passing information to callback function */
-            typedef struct CallbackCntxt_ { //NOLINT(modernize-use-using, readability-identifier-naming)
-                SLPlayItf playItf;
-                SLMetadataExtractionItf metaItf;
-                SLuint32 size;
-                SLint8 *pDataBase; // Base address of local audio data storage
-                SLint8 *pData;     // Current address of local audio data storage
-            } CallbackCntxt;
+    /* Structure for passing information to callback function */
+    typedef struct CallbackCntxt_ { //NOLINT(modernize-use-using, readability-identifier-naming)
+        SLPlayItf playItf;
+        SLMetadataExtractionItf metaItf;
+        SLuint32 size;
+        SLint8 *pDataBase; // Base address of local audio data storage
+        SLint8 *pData;     // Current address of local audio data storage
+    } CallbackCntxt;
 
-            CallbackCntxt _decContext;
-            int _bufferSizeInFrames;
-            int _assetFd;
-            FdGetterCallback _fdGetterCallback;
-            bool _isDecodingCallbackInvoked;
+    CallbackCntxt _decContext;
+    int _bufferSizeInFrames;
+    int _assetFd;
+    FdGetterCallback _fdGetterCallback;
+    bool _isDecodingCallbackInvoked;
 
-            friend class SLAudioDecoderCallbackProxy;
-            friend class AudioDecoderProvider;
-        };
+    friend class SLAudioDecoderCallbackProxy;
+    friend class AudioDecoderProvider;
+};
 
-    }}// namespace cocos2d { namespace experimental
+}}// namespace cocos2d { namespace experimental

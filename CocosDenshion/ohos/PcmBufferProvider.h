@@ -32,20 +32,20 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-        class PcmBufferProvider : public AudioBufferProvider {
-        public:
-            PcmBufferProvider();
-            bool init(const void *addr, size_t frames, size_t frameSize);
-            virtual status_t getNextBuffer(Buffer *buffer, int64_t pts = kInvalidPTS) override;
-            virtual void releaseBuffer(Buffer *buffer) override;
-            void reset();
+class PcmBufferProvider : public AudioBufferProvider {
+public:
+    PcmBufferProvider();
+    bool init(const void *addr, size_t frames, size_t frameSize);
+    virtual status_t getNextBuffer(Buffer *buffer, int64_t pts = kInvalidPTS) override;
+    virtual void releaseBuffer(Buffer *buffer) override;
+    void reset();
 
-        protected:
-            const void *_addr; // base address
-            size_t _numFrames; // total frames
-            size_t _frameSize; // size of each frame in bytes
-            size_t _nextFrame; // index of next frame to provide
-            size_t _unrel;     // number of frames not yet released
-        };
+protected:
+    const void *_addr; // base address
+    size_t _numFrames; // total frames
+    size_t _frameSize; // size of each frame in bytes
+    size_t _nextFrame; // index of next frame to provide
+    size_t _unrel;     // number of frames not yet released
+};
 
-    }} // namespace cocos2d { namespace experimental
+}} // namespace cocos2d { namespace experimental

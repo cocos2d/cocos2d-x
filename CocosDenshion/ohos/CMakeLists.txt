@@ -29,7 +29,7 @@ include_directories(${COCOSDENSHION_HEADER}
 
 #set(CMAKE_C_FLAGS -Wno-psabi -Wno-absolute-value -Wno-extra)
 #set(CMAKE_CXX_FLAGS -Wno-overloaded-virtual -Wno-unused-function -Wno-unused-private-field -Wno-reorder-ctor -Wno-unsequenced -Wno-extra)
-target_compile_definitions(${PROJECT_NAME} PUBLIC -DOpenHarmony=1)
+target_compile_definitions(${PROJECT_NAME} PUBLIC -DHarmonyOS_Next=1)
 target_compile_options(${PROJECT_NAME} PUBLIC -Wno-psabi -Wno-absolute-value -Wno-extra -Wno-overloaded-virtual -Wno-unused-function -Wno-unused-private-field -Wno-reorder-ctor -Wno-unsequenced -Wno-extra -Wno-unused-command-line-argument -Wno-ignored-qualifiers)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../include
                                            PUBLIC       ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos2dx

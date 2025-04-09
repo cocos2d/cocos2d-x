@@ -22,6 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include "CocosDenshion/ohos/Track.h"
 #include <rawfile/raw_file.h>
 #define LOG_TAG "AudioEngineImpl"
 
@@ -35,12 +36,7 @@
 #include <mutex>
 #include <thread>
 
-
-#include "AudioEngine.h"
-
-#include "audio_utils/AudioFileUtils.h"
-#include <rawfile/raw_file_manager.h>
-
+#include "platform/ohos/CCFileUtilsOhos.h"
 #include "AudioDecoder.h"
 #include "AudioDecoderProvider.h"
 #include "AudioPlayerProvider.h"
@@ -49,25 +45,26 @@
 #include "UrlAudioPlayer.h"
 #include "cutils/log.h"
 #include "CCDirector.h"
+#include "AudioEngine.h"
 #include "CCScheduler.h"
+#include "cocos2dx/include/CCEventType.h"
 
 
 using namespace cocos2d;
 using namespace cocos2d::experimental; //NOLINT
 
-// Audio focus values synchronized with which in cocos/platform/android/java/src/com/cocos/lib/CocosNativeActivity.java
 namespace {
-    AudioEngineImpl *gAudioImpl = nullptr;
-    int outputSampleRate = 48000;
+AudioEngineImpl *gAudioImpl = nullptr;
+int outputSampleRate = 48000;
 
 // TODO(hack) : There is currently a bug in the opensles module,
 // so openharmony must configure a fixed size, otherwise the callback will be suspended
-    int              bufferSizeInFrames = 2048;
+int              bufferSizeInFrames = 2048;
 
 
-    void getAudioInfo() {
+void getAudioInfo() {
 
-    }
+}
 } // namespace
 
 class CallerThreadUtils : public ICallerThreadUtils {
@@ -95,7 +92,8 @@ static int fdGetter(const std::string &url, off_t *start, off_t *length) {
     int fd = -1;
 
     RawFileDescriptor descriptor;
-    AudioFileUtils::getInstance()->getRawFileDescriptor(url, descriptor);
+    CCFileUtilsOhos *utils = dynamic_cast<CCFileUtilsOhos*>(CCFileUtils::sharedFileUtils());
+    utils->getRawFileDescriptor(url, descriptor);
     fd = descriptor.fd;
 
     if (fd <= 0) {
@@ -111,8 +109,8 @@ AudioEngineImpl::AudioEngineImpl()
   _engineEngine(nullptr),
   _outputMixObject(nullptr),
   _audioPlayerProvider(nullptr),
- // _onPauseListener(nullptr),
- // _onResumeListener(nullptr),
+  _onPauseListener(nullptr),
+  _onResumeListener(nullptr),
   _audioIDIndex(0),
   _lazyInitLoop(true) {
     gCallerThreadUtils.setCallerThreadId(std::this_thread::get_id());
@@ -132,14 +130,14 @@ AudioEngineImpl::~AudioEngineImpl() {
     if (_engineObject) {
         (*_engineObject)->Destroy(_engineObject);
     }
-//
-//     if (_onPauseListener != nullptr) {
-//         cocos2d::CCDirector::sharedDirector()->getEventDispatcher()->removeEventListener(_onPauseListener);
-//     }
-//
-//     if (_onResumeListener != nullptr) {
-//         cocos2d::CCDirector::sharedDirector()->getEventDispatcher()->removeEventListener(_onResumeListener);
-//     }
+
+    if (_onPauseListener != nullptr) {
+//        CCDirector::sharedDirector()->getEventDispatcher()->removeEventListener(_onPauseListener);
+    }
+
+    if (_onResumeListener != nullptr) {
+//        CCDirector::sharedDirector()->getEventDispatcher()->removeEventListener(_onResumeListener);
+    }
 
     gAudioImpl = nullptr;
 }
@@ -170,10 +168,9 @@ bool AudioEngineImpl::init() {
 
         _audioPlayerProvider = new AudioPlayerProvider(_engineEngine, outputSampleRate, fdGetter, &gCallerThreadUtils);
 
-      //    _onPauseListener = CCDirector::sharedDirector()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(AudioEngineImpl::onEnterBackground, this));
- 
-      //    _onResumeListener = CCDirector::sharedDirector()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(AudioEngineImpl::onEnterForeground, this));
+//         _onPauseListener = CCDirector::sharedDirector()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(AudioEngineImpl::onEnterBackground, this));
 
+//         _onResumeListener = CCDirector::sharedDirector()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(AudioEngineImpl::onEnterForeground, this));
 
         ret = true;
     } while (false);
@@ -181,38 +178,38 @@ bool AudioEngineImpl::init() {
     return ret;
 }
 
-// void AudioEngineImpl::onEnterBackground(EventCustom* event) {
-//     // _audioPlayerProvider->pause() pauses AudioMixer and PcmAudioService,
-//     // but UrlAudioPlayers could not be paused.
-//     if (_audioPlayerProvider != nullptr)
-//     {
-//         _audioPlayerProvider->pause();
-//     }
-//
-//     // pause UrlAudioPlayers which are playing.
-//     for (auto&& e : _audioPlayers) {
-//         auto player = e.second;
-//         if (dynamic_cast<UrlAudioPlayer*>(player) != nullptr
-//             && player->getState() == IAudioPlayer::State::PLAYING) {
-//             _urlAudioPlayersNeedResume.emplace(e.first, player);
-//             player->pause();
-//         }
-//     }
-// }
-//
-// void AudioEngineImpl::onEnterForeground(EventCustom* event) {
-//     // _audioPlayerProvider->resume() resumes AudioMixer and PcmAudioService,
-//     // but UrlAudioPlayers could not be resumed.
-//     if (_audioPlayerProvider != nullptr) {
-//         _audioPlayerProvider->resume();
-//     }
-//
-//     // resume UrlAudioPlayers
-//     for (auto&& iter : _urlAudioPlayersNeedResume) {
-//         iter.second->resume();
-//     }
-//     _urlAudioPlayersNeedResume.clear();
-// }
+void AudioEngineImpl::onEnterBackground(EventCustom* event) {
+    // _audioPlayerProvider->pause() pauses AudioMixer and PcmAudioService,
+    // but UrlAudioPlayers could not be paused.
+    if (_audioPlayerProvider != nullptr)
+    {
+        _audioPlayerProvider->pause();
+    }
+
+    // pause UrlAudioPlayers which are playing.
+    for (auto&& e : _audioPlayers) {
+        auto player = e.second;
+        if (dynamic_cast<UrlAudioPlayer*>(player) != nullptr
+            && player->getState() == IAudioPlayer::State::PLAYING) {
+            _urlAudioPlayersNeedResume.emplace(e.first, player);
+            player->pause();
+        }
+    }
+}
+
+void AudioEngineImpl::onEnterForeground(EventCustom* event) {
+    // _audioPlayerProvider->resume() resumes AudioMixer and PcmAudioService,
+    // but UrlAudioPlayers could not be resumed.
+    if (_audioPlayerProvider != nullptr) {
+        _audioPlayerProvider->resume();
+    }
+
+    // resume UrlAudioPlayers
+    for (auto&& iter : _urlAudioPlayersNeedResume) {
+        iter.second->resume();
+    }
+    _urlAudioPlayersNeedResume.clear();
+}
 
 void AudioEngineImpl::setAudioFocusForAllPlayers(bool isFocus) {
     for (const auto &e : _audioPlayers) {
@@ -229,7 +226,7 @@ int AudioEngineImpl::play2d(const std::string &filePath, bool loop, float volume
             break;
         }
 
-        auto fullPath = AudioFileUtils::getInstance()->fullPathForFilename(filePath);
+        auto fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath.c_str());
 
         audioId = _audioIDIndex++;
 
@@ -276,7 +273,7 @@ int AudioEngineImpl::play2d(const std::string &filePath, bool loop, float volume
         AudioEngine::_audioIDInfoMap[audioId].state = AudioEngine::AudioState::PLAYING;
 
     } while (false);
-
+    
     return audioId;
 }
 
@@ -338,7 +335,7 @@ bool AudioEngineImpl::isMusicPlaying(int audioID)
         auto *player = iter->second;
         auto state = player->getState();
         return state == IAudioPlayer::State::PLAYING;
-    }
+    }   
     return false;
 }
 
@@ -348,7 +345,7 @@ float AudioEngineImpl::getMusicVolume(int audioID)
     if (iter != _audioPlayers.end()) {
         auto *player = iter->second;
         return player->getVolume();
-    }
+    }   
     return 0;
 }
 
@@ -384,7 +381,7 @@ float AudioEngineImpl::getDuration(int audioID) {
 
 float AudioEngineImpl::getDurationFromFile(const std::string &filePath) {
     if (_audioPlayerProvider != nullptr) {
-        auto fullPath = AudioFileUtils::getInstance()->fullPathForFilename(filePath);
+        auto fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath.c_str());
         return _audioPlayerProvider->getDurationFromFile(fullPath);
     }
     return 0;
@@ -414,7 +411,7 @@ void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void(in
 
 void AudioEngineImpl::preload(const std::string &filePath, const std::function<void(bool)> &callback) {
     if (_audioPlayerProvider != nullptr) {
-        std::string fullPath = AudioFileUtils::getInstance()->fullPathForFilename(filePath);
+        std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath.c_str());
         _audioPlayerProvider->preloadEffect(fullPath, [callback](bool succeed, const PcmData & /*data*/) {
             if (callback != nullptr) {
                 callback(succeed);
@@ -429,7 +426,7 @@ void AudioEngineImpl::preload(const std::string &filePath, const std::function<v
 
 void AudioEngineImpl::uncache(const std::string &filePath) {
     if (_audioPlayerProvider != nullptr) {
-        std::string fullPath = AudioFileUtils::getInstance()->fullPathForFilename(filePath);
+        std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath.c_str());
         _audioPlayerProvider->clearPcmCache(fullPath);
     }
 }
@@ -454,7 +451,7 @@ void AudioEngineImpl::onResume() {
 
 PCMHeader AudioEngineImpl::getPCMHeader(const char *url) {
     PCMHeader header{};
-    std::string fileFullPath = AudioFileUtils::getInstance()->fullPathForFilename(url);
+    std::string fileFullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(url);
     if (fileFullPath.empty()) {
         ALOGD("file %{public}s does not exist or failed to load", url);
         return header;
@@ -489,7 +486,7 @@ PCMHeader AudioEngineImpl::getPCMHeader(const char *url) {
 }
 
 std::vector<uint8_t> AudioEngineImpl::getOriginalPCMBuffer(const char *url, uint32_t channelID) {
-    std::string fileFullPath = AudioFileUtils::getInstance()->fullPathForFilename(url);
+    std::string fileFullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(url);
     std::vector<uint8_t> pcmData;
     if (fileFullPath.empty()) {
         ALOGD("file %{public}s does not exist or failed to load", url);

@@ -28,15 +28,15 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-        class IVolumeProvider {
-        public:
-            // The provider implementation is responsible for validating that the return value is in range.
-            virtual gain_minifloat_packed_t getVolumeLR() = 0;
+class IVolumeProvider {
+public:
+    // The provider implementation is responsible for validating that the return value is in range.
+    virtual gain_minifloat_packed_t getVolumeLR() = 0;
 
-        protected:
-            IVolumeProvider() {}
+protected:
+    IVolumeProvider() {}
 
-            virtual ~IVolumeProvider() {}
-        };
+    virtual ~IVolumeProvider() {}
+};
 
-    }} // namespace cocos2d { namespace experimental
+}} // namespace cocos2d { namespace experimental

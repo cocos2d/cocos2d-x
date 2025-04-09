@@ -39,82 +39,85 @@ THE SOFTWARE.
 
 #define ERRORLOG(msg) log("fun:%s,line:%d,msg:%s", __func__, __LINE__, #msg)
 
-namespace cocos2d { namespace experimental {
+namespace cocos2d {
 
-        struct CustomEvent;
+class EventCustom;
+class EventListener;
 
-        class IAudioPlayer;
-        class AudioPlayerProvider;
+namespace experimental {
 
-        class AudioEngineImpl;
+class IAudioPlayer;
+class AudioPlayerProvider;
 
-        class AudioEngineImpl : public RefCounted {
-        public:
-            AudioEngineImpl();
-            ~AudioEngineImpl() override;
-            const int INVALID_AUDIO_ID = -1;
-            bool init();
-            int play2d(const std::string &filePath, bool loop, float volume);
+class AudioEngineImpl;
 
-            void setVolume(int audioID, float volume);
-            void setLoop(int audioID, bool loop);
-            void pause(int audioID);
+class AudioEngineImpl : public RefCounted {
+public:
+    AudioEngineImpl();
+    ~AudioEngineImpl() override;
+    const int INVALID_AUDIO_ID = -1;
+    bool init();
+    int play2d(const std::string &filePath, bool loop, float volume);
 
-            void resume(int audioID);
+    void setVolume(int audioID, float volume);
+    void setLoop(int audioID, bool loop);
+    void pause(int audioID);
 
-            void stop(int audioID);
+    void resume(int audioID);
 
-            void stopAll();
-            float getDuration(int audioID);
-            float getDurationFromFile(const std::string &filePath);
-            float getCurrentTime(int audioID);
-            bool setCurrentTime(int audioID, float time);
-            void setFinishCallback(int audioID, const std::function<void(int, const std::string &)> &callback);
+    void stop(int audioID);
 
-            void uncache(const std::string &filePath);
-            void uncacheAll();
-            void preload(const std::string &filePath, const std::function<void(bool)> &callback);
+    void stopAll();
+    float getDuration(int audioID);
+    float getDurationFromFile(const std::string &filePath);
+    float getCurrentTime(int audioID);
+    bool setCurrentTime(int audioID, float time);
+    void setFinishCallback(int audioID, const std::function<void(int, const std::string &)> &callback);
 
-            void onResume();
-            void onPause();
+    void uncache(const std::string &filePath);
+    void uncacheAll();
+    void preload(const std::string &filePath, const std::function<void(bool)> &callback);
 
-            void rewindMusic(int audioID);
-            bool isMusicPlaying(int audioID);
+    void onResume();
+    void onPause();
 
-            float getMusicVolume(int audioID);
+    void rewindMusic(int audioID);
+    bool isMusicPlaying(int audioID);
+
+    float getMusicVolume(int audioID);
 
 
-            void setAudioFocusForAllPlayers(bool isFocus);
+    void setAudioFocusForAllPlayers(bool isFocus);
 
-            PCMHeader getPCMHeader(const char *url);
-            std::vector<uint8_t> getOriginalPCMBuffer(const char *url, uint32_t channelID);
+    PCMHeader getPCMHeader(const char *url);
+    std::vector<uint8_t> getOriginalPCMBuffer(const char *url, uint32_t channelID);
 
-        private:
-//             void onEnterBackground(cocos2d::EventCustom* event);
-//             void onEnterForeground(cocos2d::EventCustom* event);
+private:
 
-            static AudioEngineImpl *audioEngineImpl;
+    void onEnterBackground(EventCustom* event);
+    void onEnterForeground(EventCustom* event);
+    static AudioEngineImpl *audioEngineImpl;
 
-            // engine interfaces
-            SLObjectItf _engineObject;
-            SLEngineItf _engineEngine;
+    // engine interfaces
+    SLObjectItf _engineObject;
+    SLEngineItf _engineEngine;
 
-            // output mix interfaces
-            SLObjectItf _outputMixObject;
+    // output mix interfaces
+    SLObjectItf _outputMixObject;
 
-            //audioID,AudioInfo
-            std::unordered_map<int, IAudioPlayer *> _audioPlayers;
-            std::unordered_map<int, std::function<void(int, const std::string &)>> _callbackMap;
+    //audioID,AudioInfo
+    std::unordered_map<int, IAudioPlayer *> _audioPlayers;
+    std::unordered_map<int, std::function<void(int, const std::string &)>> _callbackMap;
 
-            // UrlAudioPlayers which need to resumed while entering foreground
-            std::unordered_map<int, IAudioPlayer *> _urlAudioPlayersNeedResume;
-            AudioPlayerProvider *_audioPlayerProvider;
-//             cocos2d::EventListener* _onPauseListener;
-//             cocos2d::EventListener* _onResumeListener;
+    // UrlAudioPlayers which need to resumed while entering foreground
+    std::unordered_map<int, IAudioPlayer *> _urlAudioPlayersNeedResume;
+    AudioPlayerProvider *_audioPlayerProvider;
+    EventListener* _onPauseListener;
+    EventListener* _onResumeListener;
 
-            int _audioIDIndex;
+    int _audioIDIndex;
 
-            bool _lazyInitLoop;
-        };
+    bool _lazyInitLoop;
+};
 
-    }} // namespace cocos2d { namespace experimental
+}} // namespace cocos2d { namespace experimental

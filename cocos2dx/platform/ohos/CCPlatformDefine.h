@@ -1,5 +1,5 @@
-#ifndef __CCPLATFORMDEFINE_H__
-#define __CCPLATFORMDEFINE_H__
+#ifndef __CCPLATFORMDEFINE_OHOS_H__
+#define __CCPLATFORMDEFINE_OHOS_H__
 
 #include "CCLogOhos.h"
 
@@ -29,4 +29,4 @@
 #endif
 #endif
 
-#endif /* __CCPLATFORMDEFINE_H__*/
+#endif /* __CCPLATFORMDEFINE_OHOS_H__*/

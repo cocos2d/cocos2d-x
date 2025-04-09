@@ -30,15 +30,15 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-        class AudioDecoderOgg : public AudioDecoder {
-        protected:
-            AudioDecoderOgg();
-            virtual ~AudioDecoderOgg();
+class AudioDecoderOgg : public AudioDecoder {
+protected:
+    AudioDecoderOgg();
+    virtual ~AudioDecoderOgg();
 
-            static int fseek64Wrap(void *datasource, ogg_int64_t off, int whence);
-            virtual bool decodeToPcm() override;
+    static int fseek64Wrap(void *datasource, ogg_int64_t off, int whence);
+    virtual bool decodeToPcm() override;
 
-            friend class AudioDecoderProvider;
-        };
+    friend class AudioDecoderProvider;
+};
 
-    }} // namespace cocos2d { namespace experimental
+}} // namespace cocos2d { namespace experimental

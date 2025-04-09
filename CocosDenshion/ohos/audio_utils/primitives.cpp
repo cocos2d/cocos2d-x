@@ -1,27 +1,7 @@
-/*
- * Copyright (C) 2011 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 #include "include/audio_utils/primitives.h"
-//#include "private.h"
-
 #include "../utils/Utils.h"
 using namespace cocos2d::experimental::utils;
 
-
-//namespace {
 void ditherAndClamp(int32_t *out, const int32_t *sums, size_t c) {
     size_t i;
     for (i = 0; i < c; i++) {
@@ -495,4 +475,3 @@ size_t memcpy_by_index_array_initialization_dst_index(int8_t *idxary, size_t idx
     }
     return dstIdx;
 }
-//} // namespace

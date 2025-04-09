@@ -106,6 +106,79 @@ unsigned char* CCFileUtilsOhos::getFileDataForAsync(const char* pszFileName, con
     return doGetFileData(pszFileName, pszMode, pSize, true);
 }
 
+Data CCFileUtilsOhos::getDataFromFile(const std::string& filename)
+{
+    Data d;
+    getContents(filename, &d);
+    return d;
+}
+
+
+bool CCFileUtilsOhos::getContents(const std::string& filename, ResizableBuffer* buffer)
+{
+    if (filename.empty()) {
+        //OHOS_LOGE("FileUtilsOhos::getContents() - filename is empty");
+        return false;
+    }
+
+    std::string fullpath = isAbsolutePath(filename)? filename:fullPathForFilename(filename.c_str());
+
+    if (fullpath[0] == '/') {
+        FILE *fp = fopen(fullpath.c_str(), "rb");
+        if (!fp)
+            return false;
+
+#if defined(_MSC_VER)
+        auto descriptor = _fileno(fp);
+#else
+        auto descriptor = fileno(fp);
+#endif
+        struct stat statBuf;
+        if (fstat(descriptor, &statBuf) == -1) {
+            fclose(fp);
+            return false;
+        }
+        size_t size = statBuf.st_size;
+
+        buffer->resize(size);
+        size_t readsize = fread(buffer->buffer(), 1, size, fp);
+        fclose(fp);
+
+        if (readsize < size) {
+            buffer->resize(readsize);
+            return false;
+        }
+    }
+
+    else {
+        RawFile *fp = RawFileUtils::GetInstance().Open(fullpath.c_str());
+        if (!fp) {
+            OHOS_LOGI("FileUtilsOhos::fp is nullptr");
+            return false;
+        }
+        auto size = RawFileUtils::GetInstance().GetSize(fp);
+        buffer->resize(size);
+
+        int readsize = RawFileUtils::GetInstance().Read(fp, buffer->buffer(), size);
+        RawFileUtils::GetInstance().Close(fp);
+
+        if (readsize < size) {
+            if (readsize >= 0)
+                buffer->resize(readsize);
+            OHOS_LOGE("FileUtilsOhos::getContents() - readsize < size");
+            return false;
+        }
+
+        if (!buffer->buffer())
+        {
+            std::string msg = "Get data from file(" + filename + ") failed!";
+            OHOS_LOGI("%{public}s", msg.c_str());
+        }
+    }
+
+    return true;
+}
+
 unsigned char* CCFileUtilsOhos::doGetFileData(const char* pszFileName, const char* pszMode, unsigned long* pSize, bool forAsync) {
     unsigned char * pData = 0;
     if ((! pszFileName) || (! pszMode) || 0 == strlen(pszFileName))

@@ -1,20 +1,19 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013-2016 Chukong Technologies Inc.
- Copyright (c) 2017-2022 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
- http://www.cocos.com
+ http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated engine source code (the "Software"), a limited,
- worldwide, royalty-free, non-assignable, revocable and non-exclusive license
- to use Cocos Creator solely to develop games on your target platforms. You shall
- not use Cocos Creator software for developing other software or tools that's
- used for developing games. You are not granted to publish, distribute,
- sublicense, and/or sell copies of Cocos Creator.
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
- The software or tools in this License Agreement are licensed, not sold.
- Xiamen Yaji Software Co., Ltd. reserves all rights not expressly granted to you.
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -23,23 +22,32 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
-****************************************************************************/
+ ****************************************************************************/
 
-#pragma once
+#ifndef __CCDATA_H__
+#define __CCDATA_H__
 
-#include "Macros.h"
+#include "platform/CCPlatformMacros.h"
+#include <stdint.h> // for ssize_t on android
+#include <string>   // for ssize_t on linux
+#include "platform/ohos/CCStdC.h" // for ssize_t on window
 
-namespace cocos2d {
-namespace experimental {
+/**
+ * @addtogroup base
+ * @js NA
+ * @lua NA
+ */
+NS_CC_BEGIN
 
-class Data {
-    //    friend class Properties;
+class CC_DLL Data
+{
+    friend class Properties;
 
-  public:
+public:
     /**
      * This parameter is defined for convenient reference if a null Data object is needed.
      */
-    static const Data NULL_DATA;
+    static const Data Null;
 
     /**
      * Constructor of Data.
@@ -49,12 +57,12 @@ class Data {
     /**
      * Copy constructor of Data.
      */
-    Data(const Data &other);
+    Data(const Data& other);
 
     /**
      * Copy constructor of Data.
      */
-    Data(Data &&other) noexcept;
+    Data(Data&& other);
 
     /**
      * Destructor of Data.
@@ -64,33 +72,34 @@ class Data {
     /**
      * Overloads of operator=.
      */
-    Data &operator=(const Data &other);
+    Data& operator= (const Data& other);
 
     /**
      * Overloads of operator=.
      */
-    Data &operator=(Data &&other) noexcept;
+    Data& operator= (Data&& other);
 
     /**
      * Gets internal bytes of Data. It will return the pointer directly used in Data, so don't delete it.
      *
      * @return Pointer of bytes used internal in Data.
      */
-    uint8_t *getBytes() const;
+    unsigned char* getBytes() const;
 
     /**
      * Gets the size of the bytes.
      *
      * @return The size of bytes of Data.
      */
-    uint32_t getSize() const;
+    ssize_t getSize() const;
 
     /** Copies the buffer pointer and its size.
      *  @note This method will copy the whole buffer.
      *        Developer should free the pointer after invoking this method.
      *  @see Data::fastSet
+     * @return The size of bytes copied, return 0 if size <= 0
      */
-    void copy(const unsigned char *bytes, uint32_t size);
+    ssize_t copy(const unsigned char* bytes, const ssize_t size);
 
     /** Fast set the buffer pointer and its size. Please use it carefully.
      *  @param bytes The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',
@@ -99,9 +108,7 @@ class Data {
      *        2. The pointer should not be used outside after it was passed to this method.
      *  @see Data::copy
      */
-    void fastSet(unsigned char *bytes, uint32_t size);
-
-    void resize(uint32_t size);
+    void fastSet(unsigned char* bytes, const ssize_t size);
 
     /**
      * Clears data, free buffer and reset data size.
@@ -126,8 +133,8 @@ class Data {
      * @code
      *  Data d;
      *  // ...
-     *  uint32_t size;
-     *  uint8_t* buffer = d.takeBuffer(&size);
+     *  ssize_t size;
+     *  unsigned char* buffer = d.takeBuffer(&size);
      *  // use buffer and size
      *  free(buffer);
      * @endcode
@@ -135,14 +142,17 @@ class Data {
      * @param size Will fill with the data buffer size in bytes, if you do not care buffer size, pass nullptr.
      * @return the internal data buffer, free it after use.
      */
-    unsigned char *takeBuffer(uint32_t *size = nullptr);
+    unsigned char* takeBuffer(ssize_t* size);
+private:
+    void move(Data& other);
 
-  private:
-    void move(Data &other); //NOLINT
-
-    uint8_t *_bytes{nullptr};
-    uint32_t _size{0};
+private:
+    unsigned char* _bytes;
+    ssize_t _size;
 };
 
-} // namespace experimental
-} // namespace cocos2d
+
+NS_CC_END
+
+/** @} */
+#endif // __CCDATA_H__

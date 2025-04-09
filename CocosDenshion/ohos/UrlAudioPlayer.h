@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <map>
 #include "AssetFd.h"
 #include "IAudioPlayer.h"
-#include "OpenSLHelper.h"
+#include "cutils/log.h"
 #include "multimedia/player_framework/avplayer.h"
 
 namespace cocos2d { namespace experimental {

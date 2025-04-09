@@ -76,27 +76,27 @@ typedef std::function<int(const std::string &, off_t *start, off_t *length)> FdG
  *   in Hz units, rather than in milliHz units.
  */
 #ifndef ANDROID_KEY_PCMFORMAT_NUMCHANNELS
-#define ANDROID_KEY_PCMFORMAT_NUMCHANNELS "AndroidPcmFormatNumChannels"
+    #define ANDROID_KEY_PCMFORMAT_NUMCHANNELS "AndroidPcmFormatNumChannels"
 #endif
 
 #ifndef ANDROID_KEY_PCMFORMAT_SAMPLERATE
-#define ANDROID_KEY_PCMFORMAT_SAMPLERATE "AndroidPcmFormatSampleRate"
+    #define ANDROID_KEY_PCMFORMAT_SAMPLERATE "AndroidPcmFormatSampleRate"
 #endif
 
 #ifndef ANDROID_KEY_PCMFORMAT_BITSPERSAMPLE
-#define ANDROID_KEY_PCMFORMAT_BITSPERSAMPLE "AndroidPcmFormatBitsPerSample"
+    #define ANDROID_KEY_PCMFORMAT_BITSPERSAMPLE "AndroidPcmFormatBitsPerSample"
 #endif
 
 #ifndef ANDROID_KEY_PCMFORMAT_CONTAINERSIZE
-#define ANDROID_KEY_PCMFORMAT_CONTAINERSIZE "AndroidPcmFormatContainerSize"
+    #define ANDROID_KEY_PCMFORMAT_CONTAINERSIZE "AndroidPcmFormatContainerSize"
 #endif
 
 #ifndef ANDROID_KEY_PCMFORMAT_CHANNELMASK
-#define ANDROID_KEY_PCMFORMAT_CHANNELMASK "AndroidPcmFormatChannelMask"
+    #define ANDROID_KEY_PCMFORMAT_CHANNELMASK "AndroidPcmFormatChannelMask"
 #endif
 
 #ifndef ANDROID_KEY_PCMFORMAT_ENDIANNESS
-#define ANDROID_KEY_PCMFORMAT_ENDIANNESS "AndroidPcmFormatEndianness"
+    #define ANDROID_KEY_PCMFORMAT_ENDIANNESS "AndroidPcmFormatEndianness"
 #endif
 
 #define clockNow()                     std::chrono::high_resolution_clock::now()
