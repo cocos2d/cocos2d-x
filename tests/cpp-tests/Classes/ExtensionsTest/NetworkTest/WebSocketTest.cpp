@@ -134,7 +134,24 @@ void WebSocketTest::startTestCallback(Ref* sender)
     _wsiSendBinary = new network::WebSocket();
     _wsiError = new network::WebSocket();
 
-    std::vector<std::string> protocols;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    if (!_wsiSendText->init(*this, "ws://echo.websocket.events"))
+    {
+        CC_SAFE_DELETE(_wsiSendText);
+    }
+
+    if (!_wsiSendBinary->init(*this, "ws://echo.websocket.events"))
+    {
+        CC_SAFE_DELETE(_wsiSendBinary);
+    }
+
+    if (!_wsiError->init(*this, "ws://invalid.url.com"))
+    {
+        CC_SAFE_DELETE(_wsiError);
+    }
+#else
+	std::vector<std::string> protocols;
     protocols.push_back("myprotocol_1");
     protocols.push_back("myprotocol_2");
     if (!_wsiSendText->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
@@ -164,12 +181,28 @@ void WebSocketTest::startTestCallback(Ref* sender)
     {
         retain(); // Retain self to avoid WebSocketTest instance be deleted immediately, it will be released in WebSocketTest::onClose.
     }
+#endif
 }
 
 // Delegate methods
 void WebSocketTest::onOpen(network::WebSocket* ws)
 {
-    char status[256] = {0};
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    log("Websocket (%p) opened", ws);
+    if (ws == _wsiSendText)
+    {
+        _sendTextStatus->setString("Send Text WS was opened.");
+    }
+    else if (ws == _wsiSendBinary)
+    {
+        _sendBinaryStatus->setString("Send Binary WS was opened.");
+    }
+    else if (ws == _wsiError)
+    {
+        CCASSERT(0, "error test will never go here.");
+    }
+#else
+	char status[256] = {0};
     sprintf(status, "Opened, url: %s, protocol: %s", ws->getUrl().c_str(), ws->getProtocol().c_str());
 
     log("Websocket (%p) was opened, url: %s, protocol: %s", ws, ws->getUrl().c_str(), ws->getProtocol().c_str());
@@ -185,6 +218,7 @@ void WebSocketTest::onOpen(network::WebSocket* ws)
     {
         CCASSERT(0, "error test will never go here.");
     }
+#endif	
 }
 
 void WebSocketTest::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)

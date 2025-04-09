@@ -21,6 +21,8 @@ macro(cocos2dx_depend)
         set(THREADS_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
     elseif(ANDROID)
         list(APPEND PLATFORM_SPECIFIC_LIBS GLESv2 EGL log android OpenSLES)
+    elseif(OHOS)
+        list(APPEND PLATFORM_SPECIFIC_LIBS native_drawing EGL GLESv3 hilog_ndk.z ace_ndk.z ace_napi.z uv rawfile.z OpenSLES)
     elseif(APPLE)
 
         include_directories(/System/Library/Frameworks)

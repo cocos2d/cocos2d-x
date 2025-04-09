@@ -114,6 +114,12 @@ use_cocos2dx_compile_define(cocos2d)
 use_cocos2dx_compile_options(cocos2d)
 
 # use all platform related system libs
+if (OHOS)
+ include_directories(cocos2d ${COCOS2DX_ROOT_PATH}/external/ohos-specific/aki/include)
+ target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib}
+    ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so  libnative_window.so libnative_buffer.so
+    libnative_display_manager.so libohsensor.so libnative_media_codecbase.so libnative_media_core.so libnative_media_acodec.so libnative_media_avdemuxer.so libnative_media_avsource.so)
+endif()
 use_cocos2dx_libs_depend(cocos2d)
 
 target_include_directories(cocos2d

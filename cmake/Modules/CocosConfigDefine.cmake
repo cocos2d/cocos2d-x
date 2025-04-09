@@ -10,11 +10,14 @@ endif()
  #IOS    =  iOS
  #MACOSX    =  MacOS X
  #LINUX      =   Linux
+ #OHOS = OHOS
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(WINDOWS TRUE)
     set(PLATFORM_FOLDER win32)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Android")
     set(PLATFORM_FOLDER android)
+ elseif(CMAKE_SYSTEM_NAME MATCHES "OHOS")
+    set(PLATFORM_FOLDER ohos)     
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     if(ANDROID)
         set(PLATFORM_FOLDER android)
@@ -60,7 +63,11 @@ define_property(TARGET
 # check c++ standard
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+if(OHOS)
+set(CMAKE_CXX_STANDARD 14)
+else()
 set(CMAKE_CXX_STANDARD 11)
+endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -92,6 +99,9 @@ endif()
     elseif(ANDROID)
         target_compile_definitions(${target} PUBLIC ANDROID)
         target_compile_definitions(${target} PUBLIC USE_FILE32API)
+    elseif(OHOS)
+        target_compile_definitions(${target} PUBLIC OHOS)
+        target_compile_definitions(${target} PUBLIC USE_FILE32API)        
     elseif(WINDOWS)
         target_compile_definitions(${target} 
             PUBLIC WIN32

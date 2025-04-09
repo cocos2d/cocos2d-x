@@ -10,12 +10,23 @@ elseif(ANDROID)
         base/CCUserDefault-android.cpp
         base/CCController-android.cpp
         )
+elseif(OHOS)
+    set(COCOS_BASE_SPECIFIC_SRC
+        base/CCController-ohos.cpp
+        base/CCUserDefault-ohos.cpp
+        )
 elseif(LINUX OR WINDOWS)
     set(COCOS_BASE_SPECIFIC_SRC
         base/CCController-linux-win32.cpp
         )
 endif()
-
+if(!OHOS)
+    set(COCOS_BASE_SPECIFIC_SRC
+        ${COCOS_BASE_SPECIFIC_SRC}
+        base/CCUserDefault.cpp
+        )
+endif()
+    
 set(COCOS_BASE_HEADER
     base/pvr.h
     base/CCValue.h
@@ -116,7 +127,6 @@ set(COCOS_BASE_SRC
     base/CCScheduler.cpp
     base/CCScriptSupport.cpp
     base/CCTouch.cpp
-    base/CCUserDefault.cpp
     base/CCValue.cpp
     base/ObjectFactory.cpp
     base/CCStencilStateManager.cpp
