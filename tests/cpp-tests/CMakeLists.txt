@@ -36,7 +36,7 @@ if(ANDROID)
 elseif(OHOS)
     set(APP_NAME cpp-tests)
     list(APPEND GAME_SOURCE
-        projOhos/entry/src/main/cpp/main.cpp
+        proj.ohos/entry/src/main/cpp/main.cpp
          )
 elseif(LINUX)
     list(APPEND GAME_SOURCE

@@ -72,7 +72,7 @@ if(ANDROID)
          proj.android/app/jni/main.cpp
          )
 elseif(OHOS)
-    list(APPEND GAME_SOURCE projOhos/entry/src/main/cpp/main.cpp)
+    list(APPEND GAME_SOURCE proj.ohos/entry/src/main/cpp/main.cpp)
 elseif(LINUX)
     list(APPEND GAME_SOURCE
          proj.linux/main.cpp

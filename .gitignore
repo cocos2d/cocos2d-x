@@ -183,6 +183,6 @@ temp/
 # external libs zip
 *.zip
 **/simulator/
-tests/lua-tests/project/projOhos/package-lock.json
-tests/lua-tests/project/projOhos/build-profile.json5
+tests/lua-tests/project/proj.ohos/package-lock.json
+tests/lua-tests/project/proj.ohos/build-profile.json5
 external/*
