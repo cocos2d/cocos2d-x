@@ -142,25 +142,25 @@ napi_value InputNapi::textFieldTTFOnChangeCB(napi_env env, napi_callback_info in
       char text[2560] = {0};
       NAPI_CALL(env, napi_get_value_string_utf8(env, args[0], text, 2560, &textLen));
     
-      // Using string-view to avoid unnecessary string copying
+    // Optimization: Use string_view to avoid unnecessary string copying
       std::string_view oldView(oldContent);
       std::string_view newView(text, textLen);
     
-      // Find the first different character position
+    // Find the first different character position
       size_t commonPrefixLen = 0;
       const size_t minLen = std::min(oldView.length(), newView.length());
       while (commonPrefixLen < minLen && oldView[commonPrefixLen] == newView[commonPrefixLen]) {
         commonPrefixLen++;
       }
     
-      // Delete old content characters after differences
+    // Delete the old content characters after the difference
       const size_t charsToDelete = oldView.length() - commonPrefixLen;
       const size_t deleteOperations = [&]() {
         size_t count = 0;
         size_t pos = oldView. length() - 1;
         size_t remaining = charsToDelete;
         while (remaining > 0) {
-            // Check UTF-8 Chinese characters (3-byte characters starting with 0xE0-0xEF)
+            //Check UTF-8 Chinese characters (3-byte characters starting with 0xE0-0xEF)
             bool isChineseChar = (pos >= 2 &&
             (unsigned char)oldView [pos-2] >= 0xE0 &&
             (unsigned char)oldView [pos-2] <= 0xEF);
@@ -170,15 +170,14 @@ napi_value InputNapi::textFieldTTFOnChangeCB(napi_env env, napi_callback_info in
         }
         return count; 
       }();
-      // Batch delete characters
+    //Delete characters in batches
       for (size_t i = 0; i < deleteOperations; i++) {
         dispatcher->dispatchDeleteBackward();
       }
+    // Insert new characters after the difference
       const size_t insertLen = newView.length() - commonPrefixLen;
-      // Insert new characters after differences
       if ( insertLen > 0) {
         const char* newText = text + commonPrefixLen;
-        CCLOG("textFieldTTFOnChangeCB: Inserting %zu characters: %s", insertLen, newText);
         dispatcher->dispatchInsertText(newText, insertLen);
       }
     

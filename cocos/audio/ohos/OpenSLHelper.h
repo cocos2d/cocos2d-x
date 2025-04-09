@@ -26,11 +26,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "cutils/log.h"
-
 #include <SLES/OpenSLES.h>
-
-#include <SLES/OpenSLES_Platform.h>
-
 
 #include <functional>
 #include <string>

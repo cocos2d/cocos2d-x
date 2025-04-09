@@ -291,7 +291,7 @@ bool Configuration::supportsMapBuffer() const
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     return _supportsOESMapBuffer;
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)    
-    return false; // TBD
+    return false; // TBD ohos doesn't support gles2
 #else
     return true;
 #endif

@@ -1,9 +1,0 @@
-.hvigor
-.idea
-local.properties
-**/build
-entry/src/main/resources/rawfile
-oh_modules
-/.clangd
-/.clang-tidy
-.clang-format

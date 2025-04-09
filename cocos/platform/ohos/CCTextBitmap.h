@@ -10,6 +10,7 @@
 #include <native_drawing/drawing_text_typography.h>
 #include <native_drawing/drawing_font_collection.h>
 
+#include <unordered_set>
 #define DEFAULT_FONTSIZE 20
 
 NS_CC_BEGIN
@@ -64,9 +65,11 @@ class CCTextBitmap {
         OH_Drawing_Canvas* _canvas{nullptr};
         OH_Drawing_TypographyStyle* _typographyStyle{nullptr};
         OH_Drawing_TypographyCreate* _typographyCreate{nullptr};
-        OH_Drawing_FontCollection* _fontCollection{nullptr};
         OH_Drawing_TextStyle* _textStyle{nullptr};
         OH_Drawing_Typography *_typography{nullptr};
+    
+        static std::unordered_set<std::string> _setFontCollection;
+        static OH_Drawing_FontCollection *_fontCollection;
 };
 NS_CC_END
 #endif 
