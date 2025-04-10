@@ -84,6 +84,8 @@ public:
     
     /** Create a Value by a string. */
     explicit Value(const std::string& v);
+    /** Create a Value by a string. It will use std::move internally. */
+    explicit Value(std::string&& v);
     
     /** Create a Value by a ValueVector object. */
     explicit Value(const ValueVector& v);
@@ -129,6 +131,8 @@ public:
     Value& operator= (const char* v);
     /** Assignment operator, assign from string to Value. */
     Value& operator= (const std::string& v);
+    /** Assignment operator, assign from string to Value. It will use std::move internally. */
+    Value& operator= (std::string&& v);
 
     /** Assignment operator, assign from ValueVector to Value. */
     Value& operator= (const ValueVector& v);

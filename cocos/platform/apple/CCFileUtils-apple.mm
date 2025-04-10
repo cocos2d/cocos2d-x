@@ -153,24 +153,26 @@ static cocos2d::Value convertNSObjectToCCValue(id item)
     if ([item isKindOfClass:[NSDictionary class]])
     {
         ValueMap dict;
+        dict.reserve([item count]);
         for (id subKey in [item allKeys])
         {
             id subValue = [item objectForKey:subKey];
             addNSObjectToCCMap(subKey, subValue, dict);
         }
         
-        return Value(dict);
+        return Value(std::move(dict));
     }
     
     // add array value into array
     if ([item isKindOfClass:[NSArray class]])
     {
         ValueVector subArray;
+        subArray.reserve([item count]);
         for (id subItem in item)
         {
             addNSObjectToCCVector(subItem, subArray);
         }
-        return Value(subArray);
+        return Value(std::move(subArray));
     }
     
     return Value::Null;
@@ -191,7 +193,7 @@ static void addNSObjectToCCMap(id nsKey, id nsValue, ValueMap& dict)
     // the key must be a string
     CCASSERT([nsKey isKindOfClass:[NSString class]], "The key should be a string!");
     std::string key = [nsKey UTF8String];
-    dict[key] = convertNSObjectToCCValue(nsValue);
+    dict[std::move(key)] = convertNSObjectToCCValue(nsValue);
 }
 
 static void addCCValueToNSDictionary(const std::string& key, const Value& value, NSMutableDictionary *dict)
@@ -382,6 +384,7 @@ ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
 
     if (dict != nil)
     {
+        ret.reserve([dict count]);
         for (id key in [dict allKeys])
         {
             id value = [dict objectForKey:key];
@@ -490,6 +493,7 @@ ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename) 
     NSArray* array = [NSArray arrayWithContentsOfFile:path];
 
     ValueVector ret;
+    ret.reserve([array count]);
 
     for (id value in array)
     {
