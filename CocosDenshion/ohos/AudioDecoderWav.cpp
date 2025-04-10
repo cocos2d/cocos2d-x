@@ -27,80 +27,80 @@ THE SOFTWARE.
 
 #include "AudioDecoderWav.h"
 #include "tinysndfile.h"
-#include "audio_utils/AudioFileUtils.h"
+#include "platform/ohos/CCFileUtilsOhos.h"
 
 namespace cocos2d { namespace experimental {
-        using namespace sf; //NOLINT
-        AudioDecoderWav::AudioDecoderWav() {
-            ALOGV("Create AudioDecoderWav");
+using namespace sf; //NOLINT
+AudioDecoderWav::AudioDecoderWav() {
+    ALOGV("Create AudioDecoderWav");
+}
+
+AudioDecoderWav::~AudioDecoderWav() = default;
+
+void *AudioDecoderWav::onWavOpen(const char * /*path*/, void *user) {
+    return user;
+}
+
+int AudioDecoderWav::onWavSeek(void *datasource, long offset, int whence) { //NOLINT(google-runtime-int)
+    return AudioDecoder::fileSeek(datasource, static_cast<int64_t>(offset), whence);
+}
+
+int AudioDecoderWav::onWavClose(void * /*datasource*/) {
+    return 0;
+}
+
+bool AudioDecoderWav::decodeToPcm() {
+    _fileData = CCFileUtilsOhos::sharedFileUtils()->getDataFromFile(_url);
+    if (_fileData.isNull()) {
+        return false;
+    }
+
+    SF_INFO info;
+
+    snd_callbacks cb;
+    cb.open = onWavOpen;
+    cb.read = AudioDecoder::fileRead;
+    cb.seek = onWavSeek;
+    cb.close = onWavClose;
+    cb.tell = AudioDecoder::fileTell;
+
+    SNDFILE *handle = nullptr;
+    bool ret = false;
+    do {
+        handle = sf_open_read(_url.c_str(), &info, &cb, this);
+        if (handle == nullptr) {
+            break;
         }
 
-        AudioDecoderWav::~AudioDecoderWav() = default;
-
-        void *AudioDecoderWav::onWavOpen(const char * /*path*/, void *user) {
-            return user;
+        if (info.frames == 0) {
+            break;
         }
 
-        int AudioDecoderWav::onWavSeek(void *datasource, long offset, int whence) { //NOLINT(google-runtime-int)
-            return AudioDecoder::fileSeek(datasource, static_cast<int64_t>(offset), whence);
-        }
+        ALOGD("wav info: frames: %d, samplerate: %d, channels: %d, format: %d", info.frames, info.samplerate, info.channels, info.format);
+        size_t bufSize = sizeof(int16_t) * info.frames * info.channels;
+        auto *buf = static_cast<unsigned char *>(malloc(bufSize));
+        sf_count_t readFrames = sf_readf_short(handle, reinterpret_cast<int16_t *>(buf), info.frames);
+        CC_ASSERT(readFrames == info.frames);
 
-        int AudioDecoderWav::onWavClose(void * /*datasource*/) {
-            return 0;
-        }
+        _result.pcmBuffer->insert(_result.pcmBuffer->end(), buf, buf + bufSize);
+        _result.numChannels = info.channels;
+        _result.sampleRate = info.samplerate;
+        _result.bitsPerSample = SL_PCMSAMPLEFORMAT_FIXED_16;
+        _result.containerSize = SL_PCMSAMPLEFORMAT_FIXED_16;
+        _result.channelMask = _result.numChannels == 1 ? SL_SPEAKER_FRONT_CENTER : (SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT);
+        _result.endianness = SL_BYTEORDER_LITTLEENDIAN;
+        _result.numFrames = info.frames;
+        _result.duration = static_cast<float>(1.0F * info.frames / _result.sampleRate); //NOLINT
 
-        bool AudioDecoderWav::decodeToPcm() {
-            _fileData = AudioFileUtils::getInstance()->getDataFromFile(_url);
-            if (_fileData.isNull()) {
-                return false;
-            }
+        free(buf);
+        ret = true;
+    } while (false);
 
-            SF_INFO info;
+    if (handle != nullptr) {
+        sf_close(handle);
+    }
 
-            snd_callbacks cb;
-            cb.open = onWavOpen;
-            cb.read = AudioDecoder::fileRead;
-            cb.seek = onWavSeek;
-            cb.close = onWavClose;
-            cb.tell = AudioDecoder::fileTell;
+    return ret;
+}
 
-            SNDFILE *handle = nullptr;
-            bool ret = false;
-            do {
-                handle = sf_open_read(_url.c_str(), &info, &cb, this);
-                if (handle == nullptr) {
-                    break;
-                }
-
-                if (info.frames == 0) {
-                    break;
-                }
-
-                ALOGD("wav info: frames: %d, samplerate: %d, channels: %d, format: %d", info.frames, info.samplerate, info.channels, info.format);
-                size_t bufSize = sizeof(int16_t) * info.frames * info.channels;
-                auto *buf = static_cast<unsigned char *>(malloc(bufSize));
-                sf_count_t readFrames = sf_readf_short(handle, reinterpret_cast<int16_t *>(buf), info.frames);
-                CC_ASSERT(readFrames == info.frames);
-
-                _result.pcmBuffer->insert(_result.pcmBuffer->end(), buf, buf + bufSize);
-                _result.numChannels = info.channels;
-                _result.sampleRate = info.samplerate;
-                _result.bitsPerSample = SL_PCMSAMPLEFORMAT_FIXED_16;
-                _result.containerSize = SL_PCMSAMPLEFORMAT_FIXED_16;
-                _result.channelMask = _result.numChannels == 1 ? SL_SPEAKER_FRONT_CENTER : (SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT);
-                _result.endianness = SL_BYTEORDER_LITTLEENDIAN;
-                _result.numFrames = info.frames;
-                _result.duration = static_cast<float>(1.0F * info.frames / _result.sampleRate); //NOLINT
-
-                free(buf);
-                ret = true;
-            } while (false);
-
-            if (handle != nullptr) {
-                sf_close(handle);
-            }
-
-            return ret;
-        }
-
-    } }// namespace cocos2d { namespace experimental
+} }// namespace cocos2d { namespace experimental

@@ -29,18 +29,18 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-        class AudioDecoderWav : public AudioDecoder {
-        protected:
-            AudioDecoderWav();
-            virtual ~AudioDecoderWav();
+class AudioDecoderWav : public AudioDecoder {
+protected:
+    AudioDecoderWav();
+    virtual ~AudioDecoderWav();
 
-            virtual bool decodeToPcm() override;
+    virtual bool decodeToPcm() override;
 
-            static void *onWavOpen(const char *path, void *user);
-            static int onWavSeek(void *datasource, long offset, int whence);
-            static int onWavClose(void *datasource);
+    static void *onWavOpen(const char *path, void *user);
+    static int onWavSeek(void *datasource, long offset, int whence);
+    static int onWavClose(void *datasource);
 
-            friend class AudioDecoderProvider;
-        };
+    friend class AudioDecoderProvider;
+};
 
-    }} // namespace cocos2d { namespace experimental
+}} // namespace cocos2d { namespace experimental

@@ -30,7 +30,11 @@ THE SOFTWARE.
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "ccTypeInfo.h"
+#include "platform/CCPlatformConfig.h"
 
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    #include "ohos/CCData.h"
+#endif
 NS_CC_BEGIN
 
 class CCDictionary;
@@ -85,7 +89,14 @@ public:
      *        this method should be invoked to clean the file search cache.
      */
     virtual void purgeCachedEntries();
-    
+      
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    /**
+     *  Creates binary data from a file.
+     *  @return A data object.
+     */
+    virtual Data getDataFromFile(const std::string& filename);
+#endif
     /**
      *  Gets resource file data
      *
@@ -321,6 +332,15 @@ public:
      *  @return true if it's an absolute path, otherwise it will return false.
      *  @lua NA
      */
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    /**
+    *  Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.
+    *  Examples of filename extensions are .png, .jpeg, .exe, .dmg and .txt.
+    *  @param filePath The path of the file, it could be a relative or absolute path.
+    *  @return suffix for filename in lower case or empty if a dot not found.
+    */
+    virtual std::string getFileExtension(const std::string& filePath) const;
+    #endif
     virtual bool isAbsolutePath(const std::string& strPath);
     
     

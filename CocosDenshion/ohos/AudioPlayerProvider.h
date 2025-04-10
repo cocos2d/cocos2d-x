@@ -32,19 +32,18 @@ THE SOFTWARE.
 #include "OpenSLHelper.h"
 #include "PcmData.h"
 #include "audio_utils/AudioDef.h"
-#include "audio_utils/AudioFileUtils.h"
 
 
 namespace cocos2d { namespace experimental {
 // Manage PcmAudioPlayer& UrlAudioPlayer
 
-        class PcmAudioPlayer;
-        class PcmAudioService;
-        class UrlAudioPlayer;
-        class AudioMixerController;
-        class ICallerThreadUtils;
-        class AssetFd;
-        class LegacyThreadPool;
+class PcmAudioPlayer;
+class PcmAudioService;
+class UrlAudioPlayer;
+class AudioMixerController;
+class ICallerThreadUtils;
+class AssetFd;
+class LegacyThreadPool;
 
 class AudioPlayerProvider {
 public:
@@ -62,62 +61,62 @@ public:
     float getDurationFromFile(const std::string &filePath);
     void clearPcmCache(const std::string &audioFilePath);
 
-            void clearAllPcmCaches();
+    void clearAllPcmCaches();
 
-            void pause();
+    void pause();
 
-            void resume();
+    void resume();
 
 
-            struct AudioFileInfo {
-                std::string url;
-                std::shared_ptr<AssetFd> assetFd;
-                off_t start{};
-                off_t length;
+    struct AudioFileInfo {
+        std::string url;
+        std::shared_ptr<AssetFd> assetFd;
+        off_t start{};
+        off_t length;
 
-                AudioFileInfo()
-                        : assetFd(nullptr) {}
+        AudioFileInfo()
+        : assetFd(nullptr) {}
 
-                inline bool isValid() const {
-                    return !url.empty() && length > 0;
-                }
-            };
+        inline bool isValid() const {
+            return !url.empty() && length > 0;
+        }
+    };
 
-            PcmAudioPlayer *obtainPcmAudioPlayer(const std::string &url, const PcmData &pcmData);
+    PcmAudioPlayer *obtainPcmAudioPlayer(const std::string &url, const PcmData &pcmData);
 
-            UrlAudioPlayer *createUrlAudioPlayer(const AudioFileInfo &info);
+    UrlAudioPlayer *createUrlAudioPlayer(const AudioFileInfo &info);
 
-            void preloadEffect(const AudioFileInfo &info, const PreloadCallback &callback, bool isPreloadInPlay2d);
+    void preloadEffect(const AudioFileInfo &info, const PreloadCallback &callback, bool isPreloadInPlay2d);
 
-            AudioFileInfo getFileInfo(const std::string &audioFilePath);
+    AudioFileInfo getFileInfo(const std::string &audioFilePath);
 
-            bool isSmallFile(const AudioFileInfo &info);
+    bool isSmallFile(const AudioFileInfo &info);
 
-            SLEngineItf _engineItf;
-            SLObjectItf _outputMixObject;
-            int _deviceSampleRate;
-            int _bufferSizeInFrames;
-            FdGetterCallback _fdGetterCallback;
-            ICallerThreadUtils *_callerThreadUtils;
+    SLEngineItf _engineItf;
+    SLObjectItf _outputMixObject;
+    int _deviceSampleRate;
+    int _bufferSizeInFrames;
+    FdGetterCallback _fdGetterCallback;
+    ICallerThreadUtils *_callerThreadUtils;
 
-            std::unordered_map<std::string, PcmData> _pcmCache;
-            std::mutex _pcmCacheMutex;
+    std::unordered_map<std::string, PcmData> _pcmCache;
+    std::mutex _pcmCacheMutex;
 
-            struct PreloadCallbackParam {
-                PreloadCallback callback;
-                bool isPreloadInPlay2d;
-            };
+    struct PreloadCallbackParam {
+        PreloadCallback callback;
+        bool isPreloadInPlay2d;
+    };
 
-            std::unordered_map<std::string, std::vector<PreloadCallbackParam>> _preloadCallbackMap;
-            std::mutex _preloadCallbackMutex;
+    std::unordered_map<std::string, std::vector<PreloadCallbackParam>> _preloadCallbackMap;
+    std::mutex _preloadCallbackMutex;
 
-            std::mutex _preloadWaitMutex;
-            std::condition_variable _preloadWaitCond;
+    std::mutex _preloadWaitMutex;
+    std::condition_variable _preloadWaitCond;
 
-            PcmAudioService *_pcmAudioService;
-            AudioMixerController *_mixController;
+    PcmAudioService *_pcmAudioService;
+    AudioMixerController *_mixController;
 
-            LegacyThreadPool *_threadPool;
-        };
+    LegacyThreadPool *_threadPool;
+};
 
-    }} // namespace cocos2d { namespace experimental
+}} // namespace cocos2d { namespace experimental

@@ -427,6 +427,61 @@ static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict,
     return rootNode;
 }
 
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+static Data getData(const std::string& filename, bool forString)
+{
+    if (filename.empty())
+    {
+        return Data::Null;
+    }
+    
+    Data ret;
+    unsigned char* buffer = nullptr;
+    ssize_t size = 0;
+    const char* mode = nullptr;
+    if (forString)
+        mode = "rt";
+    else
+        mode = "rb";
+    
+    do
+    {
+        // Read the file from hardware
+        std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.c_str());
+        FILE *fp = fopen(fullPath.c_str(), mode);
+        CC_BREAK_IF(!fp);
+        fseek(fp,0,SEEK_END);
+        size = ftell(fp);
+        fseek(fp,0,SEEK_SET);
+        
+        if (forString)
+        {
+            buffer = (unsigned char*)malloc(sizeof(unsigned char) * (size + 1));
+            buffer[size] = '\0';
+        }
+        else
+        {
+            buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
+        }
+        
+        size = fread(buffer, sizeof(unsigned char), size, fp);
+        fclose(fp);
+    } while (0);
+    
+    if (nullptr == buffer || 0 == size)
+    {
+        std::string msg = "Get data from file(";
+        msg.append(filename).append(") failed!");
+        CCLOG("%s", msg.c_str());
+    }
+    else
+    {
+        ret.fastSet(buffer, size);
+    }
+    
+    return ret;
+}
+#endif
 /*
  * Generate tinyxml2::XMLElement for CCArray through a tinyxml2::XMLDocument
  */
@@ -514,7 +569,12 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     }
     return pBuffer;
 }
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+Data CCFileUtils::getDataFromFile(const std::string& filename)
+{
+    return getData(filename, false);
+}
+#endif
 unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
 {
     unsigned char * pBuffer = NULL;
@@ -820,5 +880,20 @@ bool CCFileUtils::isPopupNotify()
     return s_bPopupNotify;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+std::string CCFileUtils::getFileExtension(const std::string& filePath) const
+{
+    std::string fileExtension;
+    size_t pos = filePath.find_last_of('.');
+    if (pos != std::string::npos)
+    {
+        fileExtension = filePath.substr(pos, filePath.length());
+
+        std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
+    }
+
+    return fileExtension;
+}
+#endif
 NS_CC_END
 

@@ -28,15 +28,15 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-        class AssetFd {
-        public:
-            AssetFd(int assetFd);
-            ~AssetFd();
+class AssetFd {
+public:
+    AssetFd(int assetFd);
+    ~AssetFd();
 
-            inline int getFd() const { return _assetFd; };
+    inline int getFd() const { return _assetFd; };
 
-        private:
-            int _assetFd;
-        };
+private:
+    int _assetFd;
+};
 
-    }} // namespace CocosDenshion
+}} // namespace CocosDenshion

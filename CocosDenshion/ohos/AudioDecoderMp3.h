@@ -28,14 +28,14 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-        class AudioDecoderMp3 : public AudioDecoder {
-        protected:
-            AudioDecoderMp3();
-            virtual ~AudioDecoderMp3();
+class AudioDecoderMp3 : public AudioDecoder {
+protected:
+    AudioDecoderMp3();
+    virtual ~AudioDecoderMp3();
 
-            virtual bool decodeToPcm() override;
+    virtual bool decodeToPcm() override;
 
-            friend class AudioDecoderProvider;
-        };
+    friend class AudioDecoderProvider;
+};
 
-    }} // namespace cocos2d { namespace experimental
+}} // namespace cocos2d { namespace experimental

@@ -10,7 +10,7 @@ const PREFS_NAME: string = "Cocos2dxPreferences";
 
 export default class Preferences {
 
-  // 通过 preferencesName 获取Preferences实例
+  // Get Preferences instance through preferencesName
   static getPreferences(): data_preferences.Preferences {
     let context: common.UIAbilityContext = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT);
     try {
@@ -25,8 +25,8 @@ export default class Preferences {
   }
 
   /*
-  通过 preferencesName 从缓存中移出指定的Preferences实例，若Preferences实例有对应的持久化文件，则同时删除其持久化文件。使用Promise异步回调。
-  调用该接口后，不建议再使用旧的Preferences实例进行数据操作，否则会出现数据一致性问题，应将Preferences实例置为null，系统将会统一回收。
+   * Retrieve the specified Preferences instance from the cache using preferencesName, and if the Preferences instance has a corresponding persistent file, delete its persistent file at the same time. Use Promise asynchronous callbacks.
+   * After calling this interface, it is not recommended to use the old Preferences instance for data operations, otherwise data consistency issues may occur. The Preferences instance should be set to null, and the system will uniformly recycle it.
   */
   static deletePreferences(): void {
     let context: common.UIAbilityContext = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT);
@@ -42,10 +42,10 @@ export default class Preferences {
   }
 
   /*
-  通过 preferencesName 从缓存中移出指定的Preferences实例，使用Promise异步回调。
-  应用首次调用getPreferences接口获取某个Preferences实例后，该实例会被会被缓存起来，后续再次getPreferences时不会再次从持久化文件中读取，
-  直接从缓存中获取Preferences实例。调用此接口移出缓存中的实例之后，再次getPreferences将会重新读取持久化文件，生成新的Preferences实例。
-  调用该接口后，不建议再使用旧的Preferences实例进行数据操作，否则会出现数据一致性问题，应将Preferences实例置为null，系统将会统一回收。
+   * Retrieve the specified Preferences instance from the cache using preferencesName and use Promise asynchronous callback.
+   * After the application first calls the getPreferences interface to obtain a Preferences instance, the instance will be cached and will not be read from the persistent file again when getPreferences is retrieved later,
+   * Retrieve the Preferences instance directly from the cache. After calling this interface to remove the instance from the cache, getPreferences will re read the persistent file and generate a new Preferences instance.
+   * After calling this interface, it is not recommended to use the old Preferences instance for data operations, otherwise data consistency issues may occur. The Preferences instance should be set to null, and the system will uniformly recycle it.
   */
   static removePreferencesFromCache(): void {
     let context: common.UIAbilityContext = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT);
@@ -59,7 +59,7 @@ export default class Preferences {
     }
   }
 
-  // 从缓存的Preferences实例中获取键对应的值，如果值为null或者非默认值类型，返回默认数据defValue
+  // Retrieve the value corresponding to the key from the cached Preferences instance. If the value is null or of a non default type, return the default data defValue
   static get(key: string, defValue: data_preferences.ValueType): data_preferences.ValueType {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -76,7 +76,7 @@ export default class Preferences {
     }
   }
 
-  // 将数据写入缓存的Preferences实例中，可通过flush将Preferences实例持久化
+  // Write data to the cached Preferences instance, which can be persisted through flushing
   static put(key: string, value: data_preferences.ValueType): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -92,7 +92,7 @@ export default class Preferences {
     }
   }
 
-  // 从缓存的Preferences实例中获取所有键值数据。
+  // Retrieve all key value data from the cached Preferences instance.
   static getAll(): string | undefined {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -111,7 +111,7 @@ export default class Preferences {
     }
   }
 
-  // 检查缓存的Preferences实例中是否包含名为给定Key的存储键值对
+  // Check if the cached Preferences instance contains a stored key value pair named the given Key
   static has(key: string): boolean {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -133,7 +133,7 @@ export default class Preferences {
     }
   }
 
-  // 从缓存的Preferences实例中删除名为给定Key的存储键值对，可通过flush将Preferences实例持久化
+  // Deleting the stored key value pair named the given Key from the cached Preferences instance can be persisted by flushing the Preferences instance
   static delete(key: string): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -149,7 +149,7 @@ export default class Preferences {
     }
   }
 
-  // 将缓存的Preferences实例中的数据异步存储到用户首选项的持久化文件中，使用Promise异步回调。
+  // Asynchronous storage of data from cached Preferences instances to persistent files of user preferences, using Promise asynchronous callbacks.
   static flush(): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -159,7 +159,7 @@ export default class Preferences {
     });
   }
 
-  // 清除缓存的Preferences实例中的所有数据，可通过flush将Preferences实例持久化，使用Promise异步回调。
+  // Clearing all data from cached Preferences instances can be achieved by persistently flushing the Preferences instance and using Promise asynchronous callbacks.
   static clear(): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -175,7 +175,7 @@ export default class Preferences {
   }
 
 
-  // 订阅数据变更，订阅的Key的值发生变更后，在执行flush方法后，触发callback回调。
+  // After the subscription data changes and the value of the subscription key changes, a callback is triggered after executing the flush method.
   static onChange(cb: Function): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -192,7 +192,7 @@ export default class Preferences {
     }
   }
 
-  // 取消订阅数据变更。
+  // Unsubscribe from data changes.
   static offChange(cb: Function): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -210,8 +210,8 @@ export default class Preferences {
   }
 }
 
-// 由于ArkTS中无Object.keys，且无法使用for..in...
-// 若报ArkTS问题，请将此方法单独抽离至一个ts文件中并暴露，在需要用到的ets文件中引入使用
+// Due to the absence of Object. keys in ArkTS and the inability to use for in...
+//If ArkTS issues are reported, please separate this method into a TS file and expose it, and introduce it into the ETS file that needs to be used
 function getObjKeys(obj: Object): string[] {
   let keys = Object.keys(obj);
   return keys;

@@ -24,6 +24,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include <memory>
+#include <rawfile/raw_file.h>
+#include "CCFileUtilsOhos.h"
 #include "PcmData.h"
 #include "audio_utils/AudioDef.h"
 #include "cutils/log.h"
@@ -43,7 +45,7 @@ THE SOFTWARE.
 #include "utils/Utils.h"
 #include "CCThreadPool.h"
 
-#include "platform/ohos/CCFileUtilsOhos.h"
+#include "platform/CCFileUtils.h"
 
 #include <algorithm> // for std::find_if
 #include <cstdlib>

@@ -14,7 +14,7 @@ add_definitions("-DCOCOS2D_DEBUG=3")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_definitions(-DOpenHarmony)
+add_definitions(-DHarmonyOS_Next)
 
 find_library( # Sets the name of the path variable.
               EGL-lib
@@ -101,11 +101,8 @@ include_directories(${PROJECT_NAME}  PUBLIC  ${CLASSES_PATH}
                                             PUBLIC  ${COCOS2DX_ROOT_PATH}/external/openssl/include/ohos
                                             PUBLIC  ${COCOS2DX_ROOT_PATH}/external/sqlit3/include
                                             PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos2dx/include
-                                            PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos2dx/platform/third_party/ohos/curl/include
-                                            PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos2dx/platform/third_party/ohos/webp/include
 )
 
-#add_subdirectory(${COCOS2DX_ROOT_PATH}/external/webp webp.bin)
 add_subdirectory(${COCOS2DX_ROOT_PATH}/external/openssl openssl.bin)
 add_subdirectory(${COCOS2DX_ROOT_PATH}/external/curl curl.bin)
 add_subdirectory(${COCOS2DX_ROOT_PATH}/scripting/lua/cocos2dx_support luasupport.bin)

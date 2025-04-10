@@ -322,12 +322,10 @@ void PluginRender::OnCreateNative(napi_env env, uv_loop_t* loop) {
 
 void PluginRender::OnShowNative() {
     OHOS_LOGD("PluginRender::OnShowNative");
-    cocos2d::CCApplication* app = cocos2d::CCApplication::sharedApplication() ;
-    if(app) {
+    cocos2d::CCApplication* app = cocos2d::CCApplication::sharedApplication();
+    if(app){
         app->applicationWillEnterForeground();
     }
-//     cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
-//     CCDirector::sharedDirector()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
     if (timerInited_) {
         uv_timer_start(&timerHandle_, &PluginRender::timerCb, 0, 1);
     } 
@@ -335,12 +333,10 @@ void PluginRender::OnShowNative() {
 
 void PluginRender::OnHideNative() {
     OHOS_LOGD("PluginRender::OnHideNative");
-    cocos2d::CCApplication *app = cocos2d::CCApplication::sharedApplication();
-    if(app) {
+    cocos2d::CCApplication* app = cocos2d::CCApplication::sharedApplication();
+    if(app){
         app->applicationDidEnterBackground();
     }
-//     cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
-//     CCDirector::sharedDirector()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
     if (timerInited_) {
         uv_timer_stop(&timerHandle_);
     }

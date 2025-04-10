@@ -31,66 +31,66 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-        class ICallerThreadUtils;
-        class AudioMixerController;
+class ICallerThreadUtils;
+class AudioMixerController;
 
-        class PcmAudioPlayer : public IAudioPlayer {
-        public:
-            bool prepare(const std::string &url, const PcmData &decResult);
+class PcmAudioPlayer : public IAudioPlayer {
+public:
+    bool prepare(const std::string &url, const PcmData &decResult);
 
-            // Override Functions Begin
-            virtual int getId() const override { return _id; };
+    // Override Functions Begin
+    virtual int getId() const override { return _id; };
 
-            virtual void setId(int id) override { _id = id; };
+    virtual void setId(int id) override { _id = id; };
 
-            virtual std::string getUrl() const override { return _url; };
+    virtual std::string getUrl() const override { return _url; };
 
-            virtual State getState() const override;
+    virtual State getState() const override;
 
-            virtual void play() override;
+    virtual void play() override;
 
-            virtual void pause() override;
+    virtual void pause() override;
 
-            virtual void resume() override;
+    virtual void resume() override;
 
-            virtual void stop() override;
+    virtual void stop() override;
 
-            virtual void rewind() override;
+    virtual void rewind() override;
 
-            virtual void setVolume(float volume) override;
+    virtual void setVolume(float volume) override;
 
-            virtual float getVolume() const override;
+    virtual float getVolume() const override;
 
-            virtual void setAudioFocus(bool isFocus) override;
+    virtual void setAudioFocus(bool isFocus) override;
 
-            virtual void setLoop(bool isLoop) override;
+    virtual void setLoop(bool isLoop) override;
 
-            virtual bool isLoop() const override;
+    virtual bool isLoop() const override;
 
-            virtual float getDuration() const override;
+    virtual float getDuration() const override;
 
-            virtual float getPosition() const override;
+    virtual float getPosition() const override;
 
-            virtual bool setPosition(float pos) override;
+    virtual bool setPosition(float pos) override;
 
-            virtual void setPlayEventCallback(const PlayEventCallback &playEventCallback) override;
+    virtual void setPlayEventCallback(const PlayEventCallback &playEventCallback) override;
 
-            // Override Functions End
+    // Override Functions End
 
 
-            PcmAudioPlayer(AudioMixerController *controller, ICallerThreadUtils *callerThreadUtils);
-            virtual ~PcmAudioPlayer();
+    PcmAudioPlayer(AudioMixerController *controller, ICallerThreadUtils *callerThreadUtils);
+    virtual ~PcmAudioPlayer();
 
-        private:
-            int _id;
-            std::string _url;
-            PcmData _decResult;
-            Track *_track;
-            PlayEventCallback _playEventCallback;
-            AudioMixerController *_controller;
-            ICallerThreadUtils *_callerThreadUtils;
+private:
+    int _id;
+    std::string _url;
+    PcmData _decResult;
+    Track *_track;
+    PlayEventCallback _playEventCallback;
+    AudioMixerController *_controller;
+    ICallerThreadUtils *_callerThreadUtils;
 
-            friend class AudioPlayerProvider;
-        };
+    friend class AudioPlayerProvider;
+};
 
-    }} // namespace cocos2d { namespace experimental
+}} // namespace cocos2d { namespace experimental

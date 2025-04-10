@@ -26,37 +26,37 @@ THE SOFTWARE.
 
 #include "OpenSLHelper.h"
 #include "PcmData.h"
-#include "CCData.h"
+#include "cocos2dx/platform//ohos/CCData.h" 
 
 namespace cocos2d {
-    namespace experimental {
+namespace experimental {
 
-        class AudioDecoder {
-        public:
-            AudioDecoder();
-            virtual ~AudioDecoder();
+class AudioDecoder {
+  public:
+    AudioDecoder();
+    virtual ~AudioDecoder();
 
-            virtual bool init(const std::string &url, int sampleRate);
+    virtual bool init(const std::string &url, int sampleRate);
 
-            bool start();
+    bool start();
 
-            inline PcmData getResult() { return _result; };
+    inline PcmData getResult() { return _result; };
 
-        protected:
-            virtual bool decodeToPcm() = 0;
-            bool resample();
-            bool interleave();
+  protected:
+    virtual bool decodeToPcm() = 0;
+    bool resample();
+    bool interleave();
 
-            static size_t fileRead(void *ptr, size_t size, size_t nmemb, void *datasource);
-            static int fileSeek(void *datasource, int64_t offset, int whence);
-            static int fileClose(void *datasource);
-            static long fileTell(void *datasource); // NOLINT
+    static size_t fileRead(void *ptr, size_t size, size_t nmemb, void *datasource);
+    static int fileSeek(void *datasource, int64_t offset, int whence);
+    static int fileClose(void *datasource);
+    static long fileTell(void *datasource); // NOLINT
 
-            std::string _url;
-            PcmData _result;
-            int _sampleRate;
-            Data _fileData;
-            size_t _fileCurrPos;
-        };
-    } // namespace experimental
+    std::string _url;
+    PcmData _result;
+    int _sampleRate;
+    Data _fileData;
+    size_t _fileCurrPos;
+};
+} // namespace experimental
 } // namespace cocos2d { namespace experimental

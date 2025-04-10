@@ -26,12 +26,12 @@ THE SOFTWARE.
 #pragma once
 
 #include "IAudioPlayer.h"
-#include "OpenSLHelper.h"
 #include "PcmData.h"
 
 #include <mutex>
 #include <condition_variable>
 #include "utils/Compat.h"
+#include "cutils/log.h"
 #include <ohaudio/native_audiostreambuilder.h>
 #include <ohaudio/native_audiorenderer.h>
 

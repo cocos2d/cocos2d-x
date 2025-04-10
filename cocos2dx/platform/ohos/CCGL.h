@@ -2,7 +2,6 @@
 #define __CCGL_OHOS_H__
 
 #include "cocos2dx/platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
 
 #define	glClearDepth				glClearDepthf
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
@@ -36,7 +35,5 @@ extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
 #define glBindVertexArrayOES glBindVertexArrayOESEXT
 #define glDeleteVertexArraysOES glDeleteVertexArraysOESEXT
 
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
 
 #endif // __CCGL_OHOS_H__

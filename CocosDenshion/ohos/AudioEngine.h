@@ -25,7 +25,9 @@
 
 #pragma once
 
-#include "Export.h"
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "CocosDenshion/include/Export.h"
 
 #include <functional>
 #include <list>
@@ -41,7 +43,7 @@
  * @{
  */
 
-namespace cocos2d {
+NS_CC_BEGIN
 namespace experimental {
 
 /**
@@ -92,7 +94,7 @@ public:
     enum class AudioState
     {
         ERROR  = -1,
-        INITIALZING,
+        INITIALIZING,
         PLAYING,
         PAUSED
     };
@@ -173,7 +175,6 @@ public:
     /** Pause all playing audio instances. */
     static void pauseAll();
 
-    static void onResume();
     /** 
      * Resume an audio instance.
      *
@@ -292,9 +293,23 @@ public:
      */
     static void preload(const std::string& filePath, std::function<void(bool isSuccess)> callback);
 
-
-protected:
+    /**
+     * Gets playing audio count.
+     */
+    static int getPlayingAudioCount();
     
+    /**
+     * Whether to enable playing audios
+     * @note If it's disabled, current playing audios will be stopped and the later 'preload', 'play2d' methods will take no effects.
+     */
+    static void setEnabled(bool isEnabled);
+    /**
+     * Check whether AudioEngine is enabled.
+     */
+    static bool isEnabled();
+    
+protected:
+    static void addTask(const std::function<void()>& task);
     static void remove(int audioID);
     
     struct ProfileHelper
@@ -321,16 +336,14 @@ protected:
         bool loop;
         float duration;
         AudioState state;
-        
-        bool is3dAudio;
 
-        AudioInfo()
-            : profileHelper(nullptr)
-            , duration(TIME_UNKNOWN)
-            , state(AudioState::INITIALZING)
-        {
-
-        }
+        AudioInfo();
+        ~AudioInfo();
+    private:
+        AudioInfo(const AudioInfo& info);
+        AudioInfo(AudioInfo&& info);
+        AudioInfo& operator=(const AudioInfo& info);
+        AudioInfo& operator=(AudioInfo&& info);
     };
 
     //audioID,audioAttribute
@@ -347,13 +360,17 @@ protected:
     static ProfileHelper* _defaultProfileHelper;
     
     static AudioEngineImpl* _audioEngineImpl;
+
+    class AudioEngineThreadPool;
+    static AudioEngineThreadPool* s_threadPool;
+    
+    static bool _isEnabled;
     
     friend class AudioEngineImpl;
 };
 
 } // namespace experimental {
-} // namespace cocos2d
+NS_CC_END
+
 // end group
 /// @}
- 
-
