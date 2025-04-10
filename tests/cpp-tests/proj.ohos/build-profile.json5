@@ -13,13 +13,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_cVH5E_jhivWpH1G1xxY8OLXUTNTmD8SODpqOIrtme5E=.cer",
-          "storePassword": "0000001B5CB8776478C1411B593CFD4F39489A3E411CE13DFDF53328C6F724DA172111B95C7E99C2272438",
+          "certpath": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_Vg40DG6dRGc4HOYvxCqz5Jy4aVjZ6b0apm1mRuoAcp4=.cer",
+          "storePassword": "0000001B9388100C0A533353FCBA9CB7CD920E622D05FF15E65377B2335A7F65B74011B4B8983D1F356D23",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BB51E522040B6BCCB099EEB3736F242F7E814CE1C7E67420E0706EFFA080DFFBE827CA906DD1463",
-          "profile": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_cVH5E_jhivWpH1G1xxY8OLXUTNTmD8SODpqOIrtme5E=.p7b",
+          "keyPassword": "0000001B8B711F7FB4BC0C9F2881DF4D8643CC3E5F5D3B067EB23B6C131C01C12BADD033DB2CFE462D2A50",
+          "profile": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_Vg40DG6dRGc4HOYvxCqz5Jy4aVjZ6b0apm1mRuoAcp4=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_cVH5E_jhivWpH1G1xxY8OLXUTNTmD8SODpqOIrtme5E=.p12"
+          "storeFile": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_Vg40DG6dRGc4HOYvxCqz5Jy4aVjZ6b0apm1mRuoAcp4=.p12"
         }
       }
     ]
