@@ -1,5 +1,5 @@
 
-require "cocos/CCBReaderLoad"
+require "CCBReaderLoad"
 
 HelloCocosBuilderLayer = HelloCocosBuilderLayer or {}
 ccb["HelloCocosBuilderLayer"] = HelloCocosBuilderLayer

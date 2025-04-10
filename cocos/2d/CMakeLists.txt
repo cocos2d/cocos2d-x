@@ -40,7 +40,6 @@ elseif(OHOS)
           platform/ohos/napi/modules/TouchesNapi.cpp
           platform/ohos/napi/modules/InputNapi.cpp
           platform/ohos/napi/modules/WebViewNapi.cpp
-          platform/ohos/napi/modules/SensorNapi.cpp
           platform/ohos/napi/modules/VideoPlayerNapi.cpp
           platform/ohos/napi/helper/NapiValueConverter.cpp
           platform/ohos/napi/helper/Js_Cocos2dxHelper.cpp
@@ -62,8 +61,17 @@ set(PLATFORM_SRC
 
 endif()
 
-
+if(OHOS)
 set(COCOS2D_SRC
+  CCUserDefault-ohos.cpp
+)
+else()
+set(COCOS2D_SRC
+  CCUserDefault.cpp
+)
+endif()
+set(COCOS2D_SRC
+  ${COCOS2D_SRC}
   CCAction.cpp
   CCActionCamera.cpp
   CCTweenFunction.cpp
@@ -134,7 +142,6 @@ set(COCOS2D_SRC
   CCSpriteFrameCache.cpp
   ccUTF8.cpp
   CCProfiling.cpp
-  CCUserDefault.cpp
   TransformUtils.cpp
   base64.cpp
   ccUtils.cpp
@@ -246,7 +253,7 @@ elseif(OHOS)
                 # Specifies the name of the NDK library that
                 # you want CMake to locate.
                 native_drawing )
-  set(COCOS_LINK ext_freetype ext_png ext_jpeg ext_tiff ext_webp ext_zlib ${rawfile-lib} ${libnapi-lib} ${Drawing-lib} OpenSLES libnative_window.so libnative_buffer.so)
+  set(COCOS_LINK ext_freetype ext_png ext_jpeg ext_tiff ext_webp ext_zlib ${rawfile-lib} ${libnapi-lib} ${Drawing-lib} OpenSLES libnative_window.so libnative_buffer.so libnative_display_manager.so libohsensor.so)
 else()
 set(COCOS_LINK
   jpeg

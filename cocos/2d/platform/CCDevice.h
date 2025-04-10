@@ -26,6 +26,7 @@ THE SOFTWARE.
 #ifndef __CCDEVICE_H__
 #define __CCDEVICE_H__
 
+#include "ccTypes.h"
 #include "CCPlatformMacros.h"
 #include "ccMacros.h"
 #include "CCData.h"
@@ -63,6 +64,10 @@ public:
      *  Sets the interval of accelerometer.
      */
     static void setAccelerometerInterval(float interval);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+    static void sendAndClearAcc();
+#endif
 
     static Data getTextureDataForText(const char * text,const FontDefinition& textDefinition,TextAlign align,int &widht,int &height);
 

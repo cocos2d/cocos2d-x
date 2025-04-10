@@ -1,4 +1,4 @@
-require "PerformanceTest/PerformanceSpriteTest"
+require "src/PerformanceTest/PerformanceSpriteTest"
 
 local MAX_COUNT     = 6
 local LINE_SPACE    = 40

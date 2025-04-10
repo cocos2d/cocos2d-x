@@ -1,4 +1,4 @@
-require "cocos/Cocos2d.lua"
+require "Cocos2d.lua"
 --tip
 local function deprecatedTip(old_name,new_name)
     print("\n********** \n"..old_name.." was deprecated please use ".. new_name .. " instead.\n**********")

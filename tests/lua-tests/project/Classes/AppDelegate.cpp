@@ -96,9 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/UIComponentTest");
         searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/TriggerTest");
     }
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
-    FileUtils::getInstance()->addSearchPath("src/");
-    pEngine->executeScriptFile("controller.lua");
+    pEngine->executeScriptFile("src/controller.lua");
     return true;
 }
 

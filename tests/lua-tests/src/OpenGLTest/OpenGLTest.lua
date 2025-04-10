@@ -1,6 +1,6 @@
-require "cocos/OpenglConstants"
-require "cocos/Cocos2dConstants"
-require "cocos/Opengl"
+require "OpenglConstants"
+require "Cocos2dConstants"
+require "Opengl"
 local function OpenGLTestMainLayer()
     local kItemTagBasic = 1000
     local testCount = 16

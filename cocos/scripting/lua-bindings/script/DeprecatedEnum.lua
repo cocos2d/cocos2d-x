@@ -1,7 +1,7 @@
-require "cocos/Cocos2dConstants.lua"
-require "cocos/OpenglConstants.lua"
-require "cocos/StudioConstants.lua"
-require "cocos/GuiConstants.lua"
+require "Cocos2dConstants.lua"
+require "OpenglConstants.lua"
+require "StudioConstants.lua"
+require "GuiConstants.lua"
 --Enums will be deprecated,begin
 _G.kCCTextAlignmentLeft              = cc.TEXT_ALIGNMENT_LEFT
 _G.kCCTextAlignmentRight             = cc.TEXT_ALIGNMENT_RIGHT

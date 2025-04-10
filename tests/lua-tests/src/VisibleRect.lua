@@ -1,5 +1,5 @@
-require "cocos/extern"
-require "cocos/Cocos2d"
+require "extern"
+require "Cocos2d"
 
 VisibleRect = class("VisibleRect")
 VisibleRect.__index = VisibleRect

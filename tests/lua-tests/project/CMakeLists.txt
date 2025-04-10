@@ -15,14 +15,12 @@ if(OHOS)
     file(GLOB resFiles "${CMAKE_CURRENT_LIST_DIR}/../res/*")
     file(COPY ${resFiles} DESTINATION  ${res_raw_folders})
     file(GLOB srcFiles "${CMAKE_CURRENT_LIST_DIR}/../src/*")
-    file(COPY ${srcFiles} DESTINATION  ${res_raw_folders})
+    file(COPY ${srcFiles} DESTINATION  ${res_raw_folders}/src)
     file(GLOB cppTestresFiles "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources/*")
     file(COPY ${cppTestresFiles} DESTINATION  ${res_raw_folders})
 
-    if(NOT EXISTS  ${res_raw_folders}/cocos)
-        file(GLOB cocosFiles "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*")
-        file(COPY ${cocosFiles} DESTINATION  ${res_raw_folders}/cocos)
-    endif()
+    file(GLOB cocosFiles "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*")
+    file(COPY ${cocosFiles} DESTINATION  ${res_raw_folders})
 
     add_library(${APP_NAME} SHARED ${APP_SRC})
 

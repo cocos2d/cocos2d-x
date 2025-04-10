@@ -1,4 +1,4 @@
-require "cocos/CocoStudio"
+require "CocoStudio"
 
 cc = cc or {}
 
