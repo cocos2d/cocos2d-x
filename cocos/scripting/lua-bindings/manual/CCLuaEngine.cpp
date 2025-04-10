@@ -57,9 +57,11 @@ bool LuaEngine::init(void)
 {
     _stack = LuaStack::create();
     _stack->retain();
+#if CC_TARGET_PLATFORM != CC_PLATFORM_OHOS
     executeScriptFile("DeprecatedEnum.lua");
     executeScriptFile("DeprecatedClass.lua");
     executeScriptFile("Deprecated.lua");
+#endif
     return true;
 }
 

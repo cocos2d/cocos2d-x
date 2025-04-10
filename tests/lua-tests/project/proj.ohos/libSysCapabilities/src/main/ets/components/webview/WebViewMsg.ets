@@ -5,7 +5,7 @@ import { WebViewMsgEntity } from '../../entity/WorkerMsgEntity';
 import { BusinessError } from '@ohos.base';
 
 let log: Logger = new Logger(0x0001, "WebViewMsg");
-
+@Observed
 export class WebViewInfo {
   public uniqueId: number = 0;
   // position
@@ -32,19 +32,7 @@ export class WebViewInfo {
     this.viewTag = viewTag
     this.uniqueId = viewTag;
   }
-}
 
-function copyWebViewInfo(viewInfo: WebViewInfo): WebViewInfo {
-  let newViewInfo: WebViewInfo = new WebViewInfo(viewInfo.x, viewInfo.y, viewInfo.w, viewInfo.h, viewInfo.viewTag);
-  newViewInfo.url = viewInfo.url;
-  newViewInfo.isUrl = viewInfo.isUrl;
-  newViewInfo.zoomAccess = viewInfo.zoomAccess;
-  newViewInfo.visible = viewInfo.visible;
-  newViewInfo.controller = viewInfo.controller;
-  newViewInfo.opacity = viewInfo.opacity;
-  newViewInfo.backgroundColor = viewInfo.backgroundColor;
-  newViewInfo.uniqueId = 100000 - viewInfo.uniqueId; // support 50000 webView exist at the same time
-  return newViewInfo;
 }
 
 function waitUtilControllerAttached(): Promise<number> {
@@ -159,9 +147,6 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
       tmpWebInfo.y = px2vp(eventData.viewRect.y);
       tmpWebInfo.w = px2vp(eventData.viewRect.w);
       tmpWebInfo.h = px2vp(eventData.viewRect.h);
-      let newViewInfo: WebViewInfo = copyWebViewInfo(tmpWebInfo);
-      let tempInfoArray: WebViewInfo[] = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY);
-      tempInfoArray[index] = newViewInfo;
       break;
     }
     case "setVisible": {
@@ -172,9 +157,6 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
       }
       let tmpWebInfo: WebViewInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
       tmpWebInfo.visible = eventData.visible;
-      let newViewInfo: WebViewInfo = copyWebViewInfo(tmpWebInfo);
-      let tempInfoArray: WebViewInfo[] = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY);
-      tempInfoArray[index] = newViewInfo;
       break;
     }
     case "setOpacityWebView": {
@@ -185,9 +167,6 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
       }
       let tmpWebInfo: WebViewInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
       tmpWebInfo.opacity = eventData.opacity;
-      let newViewInfo: WebViewInfo = copyWebViewInfo(tmpWebInfo);
-      let tempInfoArray: WebViewInfo[] = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY);
-      tempInfoArray[index] = newViewInfo;
       break;
     }
     case "setBackgroundTransparent": {
@@ -198,9 +177,6 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
       }
       GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index]
         .backgroundColor = Color.Transparent;
-      let newViewInfo: WebViewInfo = copyWebViewInfo(GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index]);
-      let tempInfoArray: WebViewInfo[] = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY);
-      tempInfoArray[index] = newViewInfo;
       break;
     }
     case "evaluateJS": {
@@ -227,9 +203,6 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
       }
       let tmpWebInfo: WebViewInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
       tmpWebInfo.zoomAccess == eventData.scalesPageToFit
-      let newViewInfo: WebViewInfo = copyWebViewInfo(tmpWebInfo);
-      let tempInfoArray: WebViewInfo[] = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY);
-      tempInfoArray[index] = newViewInfo;
     }
       break;
   }

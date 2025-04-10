@@ -56,7 +56,7 @@ public:
         OS_TIZEN,
         OS_WINRT,
         OS_WP8,
-        OS_OPENHARMONY  
+        OS_HARMONY_NEXT  
     };
 
     /**

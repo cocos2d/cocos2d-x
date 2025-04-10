@@ -1,4 +1,4 @@
-require "cocos/CocoStudio"
+require "CocoStudio"
 
 local TMoveBy = class("TMoveBy")
 TMoveBy._tag = -1

@@ -8,7 +8,6 @@
 #include "modules/InputNapi.h"
 #include "modules/MouseNapi.h"
 #include "modules/WebViewNapi.h"
-#include "modules/SensorNapi.h"
 #include "modules/VideoPlayerNapi.h"
 #include "plugin_manager.h"
 #include "../CCLogOhos.h"
@@ -161,15 +160,6 @@ napi_value NapiManager::GetContext(napi_env env, napi_callback_info info) {
                 };
                 NAPI_CALL(env, napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc));
                 OHOS_LOGE("VideoPlayerNapi::Export finish");
-            }
-            break;
-        case SENSOR_API:
-            {
-                OHOS_LOGD("NapiManager::GetContext SENSOR_API");
-                napi_property_descriptor desc[] = {
-                    DECLARE_NAPI_FUNCTION("onAccelerometerCallBack", SensorNapi::onAccelerometerCallBack),
-                };
-                NAPI_CALL(env, napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc));
             }
             break;
         default:

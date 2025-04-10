@@ -1,4 +1,4 @@
-require "cocos/OpenglConstants"
+require "OpenglConstants"
 
 gl = gl or {}
 

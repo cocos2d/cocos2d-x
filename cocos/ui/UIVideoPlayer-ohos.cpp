@@ -109,14 +109,15 @@ void VideoPlayer::setStyle(StyleType style) {
     _styleType = style;
 }
 
-// void VideoPlayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) {
-//     cocos2d::ui::Widget::draw(renderer, transform, flags);
-//
-//     if (flags & FLAGS_TRANSFORM_DIRTY) {
-//         auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(this);
-//         JSFunction::getFunction("VideoPlayer.setVideoPlayerRect").invoke<void>(_videoPlayerIndex, (int)uiRect.origin.x, (int)uiRect.origin.y,
-//             (int)uiRect.size.width, (int)uiRect.size.height);
-//     }
+void VideoPlayer::draw(Renderer *renderer, const kmMat4 &transform, bool flags)
+{
+    cocos2d::ui::Widget::draw(renderer, transform, flags);
+
+    if (flags ) {
+        auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(this);
+        JSFunction::getFunction("VideoPlayer.setVideoPlayerRect").invoke<void>(_videoPlayerIndex, (int)uiRect.origin.x, (int)uiRect.origin.y,
+            (int)uiRect.size.width, (int)uiRect.size.height);
+    }
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
     _debugDrawNode->clear();
@@ -124,7 +125,7 @@ void VideoPlayer::setStyle(StyleType style) {
     Point vertices[4] = {Point::ZERO, Point(size.width, 0), Point(size.width, size.height), Point(0, size.height)};
     _debugdrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 #endif
-// }
+}
 
 void VideoPlayer::setFullScreenEnabled(bool enabled) {
     if (_fullScreenEnabled != enabled) {
@@ -168,17 +169,19 @@ void VideoPlayer::play() {
     }
 }
 
-// void VideoPlayer::pause() {
-//     if (!_videoURL.empty()) {
-//         JSFunction::getFunction("VideoPlayer.pause").invoke<void>(_videoPlayerIndex);
-//     }
-// }
-//
-// void VideoPlayer::resume() {
-//     if (!_videoURL.empty()) {
-//         JSFunction::getFunction("VideoPlayer.play").invoke<void>(_videoPlayerIndex);
-//     }
-// }
+void VideoPlayer::pause()
+{
+    if (!_videoURL.empty()) {
+        JSFunction::getFunction("VideoPlayer.pause").invoke<void>(_videoPlayerIndex);
+    }
+}
+
+void VideoPlayer::resume()
+{
+    if (!_videoURL.empty()) {
+        JSFunction::getFunction("VideoPlayer.play").invoke<void>(_videoPlayerIndex);
+    }
+}
 
 void VideoPlayer::stop() {
     if (!_videoURL.empty()) {

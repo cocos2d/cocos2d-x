@@ -1,12 +1,14 @@
 #include <native_drawing/drawing_font_collection.h>
+#include <native_drawing/drawing_register_font.h>
+#include <unordered_set>
 #include "CCTextBitmap.h"
 #include "CCPlatformMacros.h"
 #include "platform/CCCommon.h"
-#include <native_drawing/drawing_font_collection.h>
-
 
 NS_CC_BEGIN
 
+std::unordered_set<std::string> CCTextBitmap::_setFontCollection;
+OH_Drawing_FontCollection * CCTextBitmap::_fontCollection = OH_Drawing_CreateSharedFontCollection();
 CCTextBitmap* CCTextBitmap::createCCTextBitmap(const char *text, const char *pFontName, const Device::TextAlign eAlignMask, int width_, int height_, double fontSize) {
     return createCCTextBitmap(text, pFontName, 
         fontSize, 255, 0, 0, 0, eAlignMask,
@@ -89,10 +91,6 @@ CCTextBitmap* CCTextBitmap::createCCTextBitmap(const char *text,  const char *pF
     int align = processTextAlign((int)eAlignMask);
     // Set text alignment
     OH_Drawing_SetTypographyTextAlign(cCTextBitmap->_typographyStyle, align);
-    // Used to load fonts
-    cCTextBitmap->_fontCollection = OH_Drawing_CreateFontCollection();
-    cCTextBitmap->_typographyCreate = OH_Drawing_CreateTypographyHandler(cCTextBitmap->_typographyStyle,
-		cCTextBitmap->_fontCollection);
     
     cCTextBitmap->_textStyle = OH_Drawing_CreateTextStyle();
 
@@ -108,14 +106,23 @@ CCTextBitmap* CCTextBitmap::createCCTextBitmap(const char *text,  const char *pF
     OH_Drawing_SetTextStyleBaseLine(cCTextBitmap->_textStyle, TEXT_BASELINE_ALPHABETIC);
     // Set font height
     OH_Drawing_SetTextStyleFontHeight(cCTextBitmap->_textStyle, 1);
+    
+    const char* fontFamily = pFontName;
+    char* Path  = new char[1000];
+    std::strcpy(Path, "/system/fonts/");
+    const char* fontPath = strcat(Path,fontFamily);
+    auto iter = cCTextBitmap->_setFontCollection.find(fontPath);
+    if (iter == cCTextBitmap->_setFontCollection.end())
+    {
+        OH_Drawing_RegisterFont(cCTextBitmap->_fontCollection, pFontName, fontPath);
+        cCTextBitmap->_setFontCollection.insert(fontPath);
+    }
     const char *fontFamilies[] = {pFontName};
     // Set the font type
     OH_Drawing_SetTextStyleFontFamilies(cCTextBitmap->_textStyle, 1, fontFamilies);
-    // Set the font style. The font style is not italicized. FONT_EVEN_ITALIC Italic
-    OH_Drawing_SetTextStyleFontStyle(cCTextBitmap->_textStyle, FONT_STYLE_NORMAL);
-    // Setting the Language Area
-    OH_Drawing_SetTextStyleLocale(cCTextBitmap->_textStyle, "en");
-
+    // Creates a pointer to the OH_Drawing_TypographyCreate object
+    cCTextBitmap->_typographyCreate = OH_Drawing_CreateTypographyHandler(cCTextBitmap->_typographyStyle, cCTextBitmap->_fontCollection);
+    
     // Set the typesetting style
     OH_Drawing_TypographyHandlerPushTextStyle(cCTextBitmap->_typographyCreate, cCTextBitmap->_textStyle);
     // Set text content
@@ -171,6 +178,7 @@ CCTextBitmap* CCTextBitmap::createCCTextBitmap(const char *text,  const char *pF
     cCTextBitmap->pixelAddr = OH_Drawing_BitmapGetPixels(cCTextBitmap->_bitmap);
     cCTextBitmap->width = textWidth;
     cCTextBitmap->height = textHeight;
+    delete [] Path; 
     return cCTextBitmap;
 }
 
@@ -189,8 +197,6 @@ CCTextBitmap::~CCTextBitmap() {
     _textStyle = nullptr;
     OH_Drawing_DestroyTypographyHandler(_typographyCreate);
     _typographyCreate = nullptr;
-    OH_Drawing_DestroyFontCollection(_fontCollection);
-    _fontCollection = nullptr;
     OH_Drawing_DestroyTypographyStyle(_typographyStyle);
     _typographyStyle = nullptr;
 

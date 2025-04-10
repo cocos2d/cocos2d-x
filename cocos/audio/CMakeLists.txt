@@ -21,10 +21,8 @@ elseif(OHOS)
             ohos/AssetFd.cpp
             ohos/AudioDecoder.cpp
             ohos/AudioDecoderProvider.cpp
-            ohos/AudioDecoderSLES.cpp
-            ohos/AudioDecoderOgg.cpp
-            ohos/AudioDecoderMp3.cpp
             ohos/AudioDecoderWav.cpp
+            ohos/AudioDecoderOH.cpp
             ohos/AudioPlayerProvider.cpp
             ohos/AudioResampler.cpp
             ohos/AudioResamplerCubic.cpp
@@ -32,13 +30,12 @@ elseif(OHOS)
             ohos/PcmAudioPlayer.cpp
             ohos/PcmData.cpp
             ohos/PcmAudioService.cpp
-            ohos/UrlAudioPlayer.cpp
+            ohos/BigAudioPlayer.cpp
+            ohos/BigAudioService.cpp
             ohos/AudioMixerController.cpp
             ohos/AudioMixer.cpp
-            ohos/mp3reader.cpp
             ohos/tinysndfile.cpp
             ohos/Track.cpp
-
             ohos/audio_utils/RefCounted.cpp
             ohos/audio_utils/Value.cpp
             ohos/audio_utils/minifloat.cpp
@@ -67,12 +64,17 @@ if(OHOS)
   )
   target_link_libraries(audio 
       # ext_cpufeatures  TBD need fixed?
-      ext_pvmp3dec 
-      ext_tremolo
       libohaudio.so
-      libavplayer.so
+      libnative_media_codecbase.so 
+      libnative_media_core.so
+      libnative_media_acodec.so 
+      libnative_media_avdemuxer.so 
+      libnative_media_avsource.so
   )
 endif()
+
+
+
 
 if((NOT APPLE) AND (NOT WIN32) AND (NOT OHOS) )
 

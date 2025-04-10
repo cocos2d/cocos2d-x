@@ -26,7 +26,14 @@ static std::string fontList[] =
     "Paint Boy",
     "Schwarzwald Regular",
     "Scissor Cuts",
-#else
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    "HarmonyOS_Sans.ttf",
+    "HMSymbolVF.ttf",
+    "NotoSans[wdth,wght].ttf",
+    "NotoSerifTibetan[wght].ttf",
+    "NotoSerifHebrew[wdth,wght].ttf",
+    "NotoSerifLao[wdth,wght].ttf",
+#else    
     "fonts/A Damn Mess.ttf",
     "fonts/Abberancy.ttf",
     "fonts/Abduction.ttf",
@@ -97,12 +104,12 @@ void FontTest::showFont(const char *pFont)
     removeChildByTag(kTagColor2, true);
     removeChildByTag(kTagColor3, true);
 
-    auto top = Label::createWithTTF(pFont, pFont, 24);
-    auto left = Label::createWithTTF("alignment left", pFont, fontSize,
+    auto top = Label::createWithSystemFont(pFont, pFont, 24);
+    auto left = Label::createWithSystemFont("alignment left", pFont, fontSize,
                                           blockSize, TextHAlignment::LEFT, verticalAlignment[vAlignIdx]);
-    auto center = Label::createWithTTF("alignment center", pFont, fontSize,
+    auto center = Label::createWithSystemFont("alignment center", pFont, fontSize,
                                             blockSize, TextHAlignment::CENTER, verticalAlignment[vAlignIdx]);
-    auto right = Label::createWithTTF("alignment right", pFont, fontSize,
+    auto right = Label::createWithSystemFont("alignment right", pFont, fontSize,
                                            blockSize, TextHAlignment::RIGHT, verticalAlignment[vAlignIdx]);
 
     auto leftColor = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);

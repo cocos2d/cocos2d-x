@@ -1,5 +1,5 @@
-require "ExtensionTest/CocosBuilderTest"
-require "ExtensionTest/WebProxyTest"
+require "src/ExtensionTest/CocosBuilderTest"
+require "src/ExtensionTest/WebProxyTest"
 
 local LINE_SPACE = 40
 local kItemTagBasic = 1000

@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "OpenSLHelper.h"
 #include "PcmData.h"
 #include "base/CCData.h"
+#include "AudioPlayerProvider.h"
 
 namespace cocos2d {
     namespace experimental {
@@ -36,9 +37,11 @@ namespace cocos2d {
             AudioDecoder();
             virtual ~AudioDecoder();
 
-            virtual bool init(const std::string &url, int sampleRate);
+            virtual bool init(const std::string &url, int sampleRate, AudioPlayerProvider::AudioFileInfo fileInfo);
 
             bool start();
+
+            bool asyncStart();
 
             inline PcmData getResult() { return _result; };
 
@@ -50,8 +53,9 @@ namespace cocos2d {
             static size_t fileRead(void *ptr, size_t size, size_t nmemb, void *datasource);
             static int fileSeek(void *datasource, int64_t offset, int whence);
             static int fileClose(void *datasource);
-            static long fileTell(void *datasource); // NOLINT
+            static long fileTell(void *datasource); // NOLINT           
 
+            AudioPlayerProvider::AudioFileInfo _fileInfo;
             std::string _url;
             PcmData _result;
             int _sampleRate;

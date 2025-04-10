@@ -137,12 +137,12 @@ namespace experimental{
             /**
              * Pauses playback.
              */
-         //   virtual void pause()override;
+         virtual void pause() ;
 
             /**
              * Resumes playback.
              */
-         //   virtual void resume()override;
+            virtual void resume() ;
 
             /**
              * Stops playback.
@@ -221,7 +221,7 @@ namespace experimental{
              */
             virtual void onPlayEvent(int event);
             virtual void setVisible(bool visible) override;
-           // virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
+            virtual void draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated) override;
             virtual void onEnter() override;
             virtual void onExit() override;
 

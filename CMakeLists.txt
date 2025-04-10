@@ -253,8 +253,6 @@ if(OHOS)
   add_subdirectory(external/jpeg)
   add_subdirectory(external/tiff)
   add_subdirectory(external/zlib)
-  add_subdirectory(external/ohos-specific/pvmp3dec)
-  add_subdirectory(external/ohos-specific/tremolo)
   add_subdirectory(external/websockets)
   add_subdirectory(external/lua/luajit)
   

@@ -1,4 +1,4 @@
-require("cocos/json")
+require("json")
 
 local function XMLHttpRequestLayer()
     local layer = cc.Layer:create()
