@@ -41,7 +41,7 @@ namespace CocosDenshion {
     static float _effectsVolume = 1.0;
 
     static std::string getFullPathWithoutAssetsPrefix(const char* pszFilename) {
-        std::string fullPath = cocos2d::FileUtils::sharedFileUtils()->fullPathForFilename(pszFilename);
+        std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(pszFilename);
         size_t pos = fullPath.find("hap:/");
         if (pos == 0)
         {

@@ -40,6 +40,7 @@ namespace cocos2d { namespace experimental {
         class PcmAudioPlayer;
         class PcmAudioService;
         class UrlAudioPlayer;
+        class BigAudioPlayer;
         class AudioMixerController;
         class ICallerThreadUtils;
         class AssetFd;
@@ -73,6 +74,8 @@ namespace cocos2d { namespace experimental {
                 std::shared_ptr<AssetFd> assetFd;
                 off_t start{};
                 off_t length;
+                bool smallFile = true;
+
 
                 AudioFileInfo()
                         : assetFd(nullptr) {}
@@ -84,13 +87,13 @@ namespace cocos2d { namespace experimental {
 
             PcmAudioPlayer *obtainPcmAudioPlayer(const std::string &url, const PcmData &pcmData);
 
-            UrlAudioPlayer *createUrlAudioPlayer(const AudioFileInfo &info);
+            BigAudioPlayer *createBigAudioPlayer(const AudioFileInfo &info);
 
             void preloadEffect(const AudioFileInfo &info, const PreloadCallback &callback, bool isPreloadInPlay2d);
 
-            AudioFileInfo getFileInfo(const std::string &audioFilePath);
-
-            bool isSmallFile(const AudioFileInfo &info);
+            static AudioFileInfo getFileInfo(const std::string &audioFilePath);
+ 
+            static bool isSmallFile(const AudioFileInfo &info);
 
             SLEngineItf _engineItf;
             SLObjectItf _outputMixObject;

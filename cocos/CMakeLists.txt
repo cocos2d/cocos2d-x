@@ -88,7 +88,7 @@ elseif(OHOS)
                   # Specifies the name of the NDK library that
                   # you want CMake to locate.
                   native_drawing )
-    set(COCOS_LINK ext_freetype ext_png ext_jpeg ext_tiff ext_webp ext_zlib ext_pvmp3dec ext_tremolo ${rawfile-lib} ${libnapi-lib} ${Drawing-lib} OpenSLES)
+    set(COCOS_LINK ext_freetype ext_png ext_jpeg ext_tiff ext_webp ext_zlib ${rawfile-lib} ${libnapi-lib} ${Drawing-lib} OpenSLES)
 else()
 set(COCOS_LINK
   jpeg
@@ -108,7 +108,10 @@ set(COCOS_LINK
 endif()
 
 if(OHOS)
-target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so)
+  target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib}
+  ${EGL-lib} ${hilog-lib} libohaudio.so libnative_window.so libnative_buffer.so
+  libnative_display_manager.so libohsensor.so libnative_media_codecbase.so libnative_media_core.so
+  libnative_media_acodec.so libnative_media_avdemuxer.so libnative_media_avsource.so)
 endif()
 
 set(COMMON_LINK chipmunk_static tinyxml2 unzip xxhash)

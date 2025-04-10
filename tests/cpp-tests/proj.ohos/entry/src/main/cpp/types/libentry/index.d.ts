@@ -24,7 +24,6 @@ export interface CPPFunctions {
   failLoading: (viewTag: number, url: string) => void;
   jsCallback: () => void;
   onVideoCallBack: (viewTag: number, event: number) => void;
-  onAccelerometerCallBack: (x: number, y: number, z: number, interval: number) => void;
 }
 
 export const getContext: (a: number) => CPPFunctions;
