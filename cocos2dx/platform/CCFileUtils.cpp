@@ -427,6 +427,7 @@ static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict,
     return rootNode;
 }
 
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
 static Data getData(const std::string& filename, bool forString)
 {
     if (filename.empty())
@@ -480,7 +481,7 @@ static Data getData(const std::string& filename, bool forString)
     
     return ret;
 }
-
+#endif
 /*
  * Generate tinyxml2::XMLElement for CCArray through a tinyxml2::XMLDocument
  */
