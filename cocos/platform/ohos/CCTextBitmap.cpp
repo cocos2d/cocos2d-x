@@ -126,11 +126,9 @@ CCTextBitmap* CCTextBitmap::createCCTextBitmap(const char *text,  const char *pF
     OH_Drawing_SetTextStyleFontHeight(cCTextBitmap->_textStyle, 1);
     
     
-    // 注册自定义字体
     const char* fontFamily = pFontName;
     char* Path  = new char[1000];
     std::strcpy(Path, "/system/fonts/");
-    // 设置自定义字体所在的沙箱路径
     const char* fontPath = strcat(Path,fontFamily);
     auto iter = cCTextBitmap->_setFontCollection.find(fontPath);
     if (iter == cCTextBitmap->_setFontCollection.end())

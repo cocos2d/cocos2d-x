@@ -72,15 +72,15 @@ struct Index {
     console.log('[LIFECYCLE-Page] onBackPress');
     try {
       promptAction.showDialog({
-        title: "$)ALaJ>",
-        message: "$)AH7HOMK3vSNO7Bp",
+        title: "提示",
+        message: "确认退出游戏吗",
         buttons: [
           {
-            text: '$)AH!O{',
+            text: '取消',
             color: '#000000'
           },
           {
-            text: '$)AH7HO',
+            text: '确认',
             color: '#000000'
           }
         ],
