@@ -33,13 +33,14 @@ THE SOFTWARE.
 #include <cstdlib>
 #include <utility>
 #include "AudioDecoder.h"
+#include "AudioDecoderOH.h"
 #include "AudioDecoderProvider.h"
 #include "AudioMixerController.h"
 #include "AudioPlayerProvider.h"
 #include "ICallerThreadUtils.h"
 #include "PcmAudioPlayer.h"
 #include "PcmAudioService.h"
-#include "UrlAudioPlayer.h"
+#include "BigAudioPlayer.h"
 #include "utils/Utils.h"
 #include "CCThreadPool.h"
 #include "platform/ohos/CCFileUtils-ohos.h"
@@ -53,7 +54,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace experimental {
 
         static int getSystemAPILevel() {
-            // TODO(qgh): On the openharmony platform, pcm streaming must be used
+            // TODO(qgh): On the HarmonyOS Next platform, pcm streaming must be used
             return std::numeric_limits<int>::max();
         }
 
@@ -74,19 +75,16 @@ namespace cocos2d { namespace experimental {
                                          ICallerThreadUtils *callerThreadUtils)
 : _engineItf(engineItf), _deviceSampleRate(deviceSampleRate), _fdGetterCallback(fdGetterCallback), _callerThreadUtils(callerThreadUtils), _pcmAudioService(nullptr), _mixController(nullptr), _threadPool(LegacyThreadPool::newCachedThreadPool(1, 8, 5, 2, 2)) {
     ALOGI("deviceSampleRate: %d", _deviceSampleRate);
-    if (getSystemAPILevel() >= 17) {
-        _mixController = new AudioMixerController(_deviceSampleRate, 2);
-        _pcmAudioService = new PcmAudioService();
-        _pcmAudioService->init(_mixController, CHANNEL_NUMBERS, deviceSampleRate, &_bufferSizeInFrames);
-        _mixController->init(_bufferSizeInFrames);
-            }
+    _mixController = new AudioMixerController(_deviceSampleRate, 2);
+    _pcmAudioService = new PcmAudioService();
+    _pcmAudioService->init(_mixController, CHANNEL_NUMBERS, deviceSampleRate, &_bufferSizeInFrames);
+    _mixController->init(_bufferSizeInFrames);
 
             ALOG_ASSERT(callerThreadUtils != nullptr, "Caller thread utils parameter should not be nullptr!");
         }
 
         AudioPlayerProvider::~AudioPlayerProvider() {
             ALOGV("~AudioPlayerProvider()");
-            UrlAudioPlayer::stopAll();
 
             SL_SAFE_DELETE(_pcmAudioService);
             SL_SAFE_DELETE(_mixController);
@@ -94,15 +92,6 @@ namespace cocos2d { namespace experimental {
         }
 
         IAudioPlayer *AudioPlayerProvider::getAudioPlayer(const std::string &audioFilePath) {
-            // Pcm data decoding by OpenSLES API only supports in API level 17 and later.
-            if (getSystemAPILevel() < 17) {
-                AudioFileInfo info = getFileInfo(audioFilePath);
-                if (info.isValid()) {
-                    return dynamic_cast<IAudioPlayer*>(createUrlAudioPlayer(info));
-                }
-
-                return nullptr;
-            }
 
             IAudioPlayer *player = nullptr;
 
@@ -120,7 +109,7 @@ namespace cocos2d { namespace experimental {
                 // playing background music uses UrlAudioPlayer
                 AudioFileInfo info = getFileInfo(audioFilePath);
                 if (info.isValid()) {
-                    if (isSmallFile(info)) {
+                    if (info.smallFile) {
                         // Put an empty lambda to preloadEffect since we only want the future object to get PcmData
                         auto pcmData = std::make_shared<PcmData>();
                         auto isSucceed = std::make_shared<bool>(false);
@@ -162,7 +151,7 @@ namespace cocos2d { namespace experimental {
                             ALOGE("FileInfo (%p), preloadEffect (%s) failed", &info, audioFilePath.c_str());
                         }
                     } else {
-                        player = dynamic_cast<IAudioPlayer*>(createUrlAudioPlayer(info));
+                        player = dynamic_cast<IAudioPlayer*>(createBigAudioPlayer(info));
                         ALOGV_IF(player == nullptr, "%s, %d: player is nullptr, path: %s", __FUNCTION__, __LINE__, audioFilePath.c_str());
                     }
                 } else {
@@ -175,12 +164,6 @@ namespace cocos2d { namespace experimental {
         }
 
         void AudioPlayerProvider::preloadEffect(const std::string &audioFilePath, const PreloadCallback &callback) {
-            // Pcm data decoding by OpenSLES API only supports in API level 17 and later.
-            if (getSystemAPILevel() < 17) {
-                PcmData data;
-                callback(true, data);
-                return;
-            }
 
             _pcmCacheMutex.lock();
             auto &&iter = _pcmCache.find(audioFilePath);
@@ -211,7 +194,7 @@ namespace cocos2d { namespace experimental {
                 return;
             }
 
-            if (isSmallFile(info)) {
+            if (info.smallFile) {
                 std::string audioFilePath = info.url;
 
                 // 1. First time check, if it wasn't in the cache, goto 2 step
@@ -260,10 +243,10 @@ namespace cocos2d { namespace experimental {
                     _preloadCallbackMap.insert(std::make_pair(audioFilePath, std::move(callbacks)));
                 }
 
-                _threadPool->pushTask([this, audioFilePath](int /*tid*/) {
+                _threadPool->pushTask([this, audioFilePath, info](int /*tid*/) {
                     ALOGV("AudioPlayerProvider::preloadEffect: (%s)", audioFilePath.c_str());
                     PcmData d;
-                    AudioDecoder *decoder = AudioDecoderProvider::createAudioDecoder(_engineItf, audioFilePath, _bufferSizeInFrames, _deviceSampleRate, _fdGetterCallback);
+                    AudioDecoder *decoder = AudioDecoderProvider::createAudioDecoder(audioFilePath, _deviceSampleRate, info);
                     bool ret = decoder != nullptr && decoder->start();
                     if (ret) {
                         d = decoder->getResult();
@@ -298,50 +281,47 @@ namespace cocos2d { namespace experimental {
             }
         }
 
-
-AudioPlayerProvider::AudioFileInfo AudioPlayerProvider::getFileInfo(const std::string &audioFilePath) 
-{
-    AudioFileInfo info;
-    long fileSize = 0; //NOLINT(google-runtime-int)
-    off_t start = 0;
-    int assetFd = -1;
-
-    if(audioFilePath[0]!='/'){
-        RawFileDescriptor descriptor;
-        FileUtilsOhos *utils = dynamic_cast<FileUtilsOhos *>(FileUtils::getInstance());
-        bool result = utils->getRawFileDescriptor(audioFilePath , descriptor);
-        if(result != 1|| descriptor.fd <= 0){
-            ALOGE("Failed to open file descriptor for '%s'", audioFilePath.c_str());
+        AudioPlayerProvider::AudioFileInfo AudioPlayerProvider::getFileInfo(const std::string &audioFilePath) 
+        {
+            AudioFileInfo info;
+            long fileSize = 0; //NOLINT(google-runtime-int)
+            off_t start = 0;
+            int assetFd = -1;
+        
+            if (audioFilePath[0]!='/') {
+        RawFileDescriptor64 descriptor;
+                FileUtilsOhos *utils = dynamic_cast<FileUtilsOhos *>(FileUtils::getInstance());
+                bool result = utils->getRawFileDescriptor(audioFilePath , &descriptor);
+                if (result != 1 || descriptor.fd <= 0) {
+                    ALOGE("Failed to open file descriptor for '%s'", audioFilePath.c_str());
+                    return info;
+                }
+                assetFd = descriptor.fd;
+                start = descriptor.start;
+                fileSize = descriptor.length;
+            } else {
+                FILE *fp = fopen(audioFilePath.c_str(),"rb");
+                if (fp!=nullptr) {
+                    fseek(fp,0,SEEK_END);
+                    fileSize = ftell(fp);
+                    fclose(fp);
+                    assetFd = open(audioFilePath.c_str(), O_RDONLY);
+                } else {
+                    return info;
+                }
+            }
+            info.url = audioFilePath;
+            info.assetFd = std::make_shared<AssetFd>(assetFd);
+            info.start = start;
+            info.length = fileSize;
+            info.smallFile = isSmallFile(info);
+            ALOGI("AudioPlayerProvide::getFileInfo(%{public}s) file size:%{public}ld,fd is %d",audioFilePath.c_str(), fileSize,assetFd);
             return info;
         }
-        assetFd = descriptor.fd;
-        start = descriptor.start;
-        fileSize = descriptor.length;
-    }else{
-        FILE *fp = fopen(audioFilePath.c_str(),"rb");
-        if(fp!=nullptr){
-            fseek(fp,0,SEEK_END);
-            fileSize = ftell(fp);
-            fclose(fp);
-        }else{
-            return info;
-        }
-    }
-    info.url = audioFilePath;
-    info.assetFd = std::make_shared<AssetFd>(assetFd);
-    info.start = start;
-    info.length = fileSize;
-    ALOGI("AudioPlayerProvide::getFileInfo(%{public}s) file size:%{public}ld,fd is %d",audioFilePath.c_str(), fileSize,assetFd);
-    return info;
-}
 
         bool AudioPlayerProvider::isSmallFile(const AudioFileInfo &info) { //NOLINT(readability-convert-member-functions-to-static)
             //REFINE: If file size is smaller than 100k, we think it's a small file. This value should be set by developers.
             auto &audioFileInfo = const_cast<AudioFileInfo &>(info);
-            if(audioFileInfo.url[0] == '/') {
-                // avplayer does not support playing audio files in sandbox path currently.
-                return true;
-            }
             size_t judgeCount = sizeof(gAudioFileIndicator) / sizeof(gAudioFileIndicator[0]);
             size_t pos = audioFileInfo.url.rfind('.');
             std::string extension;
@@ -401,23 +381,28 @@ AudioPlayerProvider::AudioFileInfo AudioPlayerProvider::getFileInfo(const std::s
             return pcmPlayer;
         }
 
-        UrlAudioPlayer *AudioPlayerProvider::createUrlAudioPlayer(
-                const AudioPlayerProvider::AudioFileInfo &info) {
+        BigAudioPlayer *AudioPlayerProvider::createBigAudioPlayer(const AudioFileInfo &info) {
             if (info.url.empty()) {
-                ALOGE("createUrlAudioPlayer failed, url is empty!");
+                ALOGE("createBigAudioPlayer failed, url is empty!");
                 return nullptr;
             }
 
-            auto *urlPlayer = new (std::nothrow) UrlAudioPlayer(_callerThreadUtils);
-            bool ret = urlPlayer->prepare(info.url, info.assetFd, info.start, info.length);
- 
-            if (!ret) {
-                if (urlPlayer != nullptr) { 
-                    delete urlPlayer;
-                    urlPlayer = nullptr; 
-                }
-            }
-            return urlPlayer;
+            auto pcmData = std::make_shared<PcmData>();
+            std::unique_lock<std::mutex> lck(_preloadWaitMutex);
+            auto *bigPlayer = new (std::nothrow) BigAudioPlayer();
+            _threadPool->pushTask([this, info, bigPlayer, pcmData](int /*tid*/) {
+                AudioDecoder *decoder = AudioDecoderProvider::createAudioDecoder(info.url, _deviceSampleRate, info);
+                ((AudioDecoderOH *) decoder)->demuxer();
+                PcmData d = decoder->getResult();
+                *pcmData = std::move(d);
+                bigPlayer->prepare(info.url, *pcmData);
+                _preloadWaitCond.notify_one();
+                bool ret = decoder != nullptr && decoder->asyncStart();
+                ALOGV("decoderBigAudio %{public}s", (ret ? "succeed" : "failed"));
+                AudioDecoderProvider::destroyAudioDecoder(&decoder);
+            });
+            _preloadWaitCond.wait_for(lck, std::chrono::seconds(2));
+            return bigPlayer;
         }
         void AudioPlayerProvider::pause() 
         {

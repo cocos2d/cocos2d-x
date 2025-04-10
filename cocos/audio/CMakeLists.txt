@@ -23,10 +23,8 @@ elseif(OHOS)
             ohos/AssetFd.cpp
             ohos/AudioDecoder.cpp
             ohos/AudioDecoderProvider.cpp
-            ohos/AudioDecoderSLES.cpp
-            ohos/AudioDecoderOgg.cpp
-            ohos/AudioDecoderMp3.cpp
             ohos/AudioDecoderWav.cpp
+            ohos/AudioDecoderOH.cpp
             ohos/AudioPlayerProvider.cpp
             ohos/AudioResampler.cpp
             ohos/AudioResamplerCubic.cpp
@@ -35,10 +33,10 @@ elseif(OHOS)
             ohos/PcmAudioPlayer.cpp
             ohos/PcmData.cpp
             ohos/PcmAudioService.cpp
-            ohos/UrlAudioPlayer.cpp
+            ohos/BigAudioPlayer.cpp
+            ohos/BigAudioService.cpp
             ohos/AudioMixerController.cpp
             ohos/AudioMixer.cpp
-            ohos/mp3reader.cpp
             ohos/tinysndfile.cpp
             ohos/Track.cpp
 
@@ -74,8 +72,6 @@ if(OHOS)
     ../../cocos/platform/ohos
   )
   target_link_libraries(audio 
-      ext_pvmp3dec 
-      ext_tremolo
   )
 endif()
 

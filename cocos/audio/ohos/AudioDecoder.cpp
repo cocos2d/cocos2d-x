@@ -75,9 +75,10 @@ namespace cocos2d { namespace experimental {
             ALOGV("~AudioDecoder() %p", this);
         }
 
-        bool AudioDecoder::init(const std::string &url, int sampleRate) {
+        bool AudioDecoder::init(const std::string &url, int sampleRate, AudioPlayerProvider::AudioFileInfo fileInfo) {
             _url = url;
             _sampleRate = sampleRate;
+            _fileInfo = fileInfo;
             return true;
         }
 
@@ -120,6 +121,25 @@ namespace cocos2d { namespace experimental {
             ALOGV_IF(!ret, "%s returns false, decode (%s)", __FUNCTION__, _url.c_str());
             return ret;
         }
+
+        bool AudioDecoder::asyncStart() {
+            auto oldTime = clockNow();
+            auto nowTime = oldTime;
+            bool ret;
+            do {
+                ret = decodeToPcm();
+                if (!ret) {
+                    ALOGE("decodeToPcm (%s) failed!", _url.c_str());
+                    break;
+                }
+ 
+                nowTime = clockNow();
+                ALOGD("Decoding (%s) to pcm data wasted %fms", _url.c_str(), intervalInMS(oldTime, nowTime));
+            } while (false);
+            ALOGV_IF(!ret, "%s returns false, decode (%s)", __FUNCTION__, _url.c_str());
+            return ret;
+        }
+ 
 
         bool AudioDecoder::resample() {
             if (_result.sampleRate == _sampleRate) {

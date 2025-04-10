@@ -102,7 +102,7 @@ public:
 
     static void setassetmanager(NativeResourceManager* a);
 	static NativeResourceManager* getAssetManager() { return nativeResourceManager_; }
-    bool getRawFileDescriptor(const std::string &filename, RawFileDescriptor &descriptor);
+    bool getRawFileDescriptor(const std::string &filename, RawFileDescriptor64 *descriptor);
     /* override funtions */
     bool init() override;
 

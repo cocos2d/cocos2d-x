@@ -37,35 +37,36 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-class AudioMixerController;
+        class AudioMixerController;
 
-class PcmAudioService {
-public:
-    inline int getChannelCount() const { return _numChannels; };
+        class PcmAudioService {
+        public:
+            inline int getChannelCount() const { return _numChannels; };
 
-    inline int getSampleRate() const { return _sampleRate; };
+            inline int getSampleRate() const { return _sampleRate; };
 
 
-    PcmAudioService();
+            PcmAudioService();
 
-    virtual ~PcmAudioService();
+            virtual ~PcmAudioService();
 
-    bool init(AudioMixerController* controller, int numChannels, int sampleRate, int* bufferSizeInBytes);
-    static int32_t AudioRendererOnWriteData(OH_AudioRenderer* renderer, void* userData, void* buffer, int32_t bufferLen);
+            bool init(AudioMixerController* controller, int numChannels, int sampleRate, int* bufferSizeInBytes);
+            static int32_t AudioRendererOnWriteData(OH_AudioRenderer* renderer, void* userData, void* buffer, int32_t bufferLen);
     static int32_t AudioRendererOnInterrupt(OH_AudioRenderer* renderer, void* userData, OH_AudioInterrupt_ForceType type, OH_AudioInterrupt_Hint hint);
 
-    void pause();
-    void resume();
+            void pause();
+            void resume();
 
-    int _numChannels;
-    int _sampleRate;
-    int _bufferSizeInBytes;
 
-    AudioMixerController *_controller;
-    OH_AudioRenderer *_audioRenderer;
-    OH_AudioStreamBuilder *_builder;
+            int _numChannels;
+            int _sampleRate;
+            int _bufferSizeInBytes;
 
-    friend class AudioPlayerProvider;
-};
+            AudioMixerController *_controller;
+            OH_AudioRenderer *_audioRenderer;
+            OH_AudioStreamBuilder *_builder;
+            
+            friend class AudioPlayerProvider;
+        };
 
-}} // namespace cocos2d { namespace experimental
+    }} // namespace cocos2d { namespace experimental
