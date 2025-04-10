@@ -4,7 +4,7 @@ import { WorkerManager } from '../workers/WorkerManager';
 
 @Component
 export struct CocosWebView {
-  viewInfo: WebViewInfo = new WebViewInfo(0, 0, 0, 0, 0);
+  @ObjectLink viewInfo: WebViewInfo ;
   cocosWorker: worker.ThreadWorker = WorkerManager.getInstance().getWorker();
 
   build() {

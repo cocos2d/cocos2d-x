@@ -26,6 +26,13 @@ static std::string fontList[] =
     "Paint Boy",
     "Schwarzwald Regular",
     "Scissor Cuts",
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    "HarmonyOS_Sans.ttf",
+    "HMSymbolVF.ttf",
+    "NotoSans[wdth,wght].ttf",
+    "NotoSerifTibetan[wght].ttf",
+    "NotoSerifHebrew[wdth,wght].ttf",
+    "NotoSerifLao[wdth,wght].ttf",
 #else
     "fonts/A Damn Mess.ttf",
     "fonts/Abberancy.ttf",
