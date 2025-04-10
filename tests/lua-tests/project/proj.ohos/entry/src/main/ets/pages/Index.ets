@@ -1,5 +1,4 @@
 import deviceInfo from '@ohos.deviceInfo';
-
 import nativeRender from 'libnativerender.so'
 import { ContextType } from '@ohos/libSysCapabilities'
 import { TextInputInfo } from '@ohos/libSysCapabilities/src/main/ets/components/editbox/EditBoxMsg'
@@ -23,9 +22,7 @@ struct Index {
 
   cocosWorker = WorkerManager.getInstance().getWorker();
   xcomponentController: XComponentController = new XComponentController();
-
   processMgr = new process.ProcessManager();
-
 
   // EditBox
   @State editBoxArray: TextInputInfo[] = [];

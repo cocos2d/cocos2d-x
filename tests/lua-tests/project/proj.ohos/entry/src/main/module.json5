@@ -15,7 +15,7 @@
     "abilities": [
       {
         "name": "MainAbility",
-        "srcEntry": "./ets/MainAbility/MainAbility.ts",
+        "srcEntry": "./ets/MainAbility/MainAbility.ets",
         "description": "$string:MainAbility_desc",
         "icon": "$media:icon",
         "label": "$string:MainAbility_label",
@@ -38,7 +38,7 @@
         //        游戏主窗口固定窗口化
         //        "supportWindowMode": ["floating"],
         //        如果有全屏需求，可以同时加上fullscreen和floating，可以做到窗口化按这只宽高显示，全屏按全屏方案显示
-        //"supportWindowMode": ["fullscreen", "floating"],
+        //"supportWindowMode": ["fullscreen","floating"],
         //最大宽高比
         //        "maxWindowRatio": 3.5,
         //最小宽高比
