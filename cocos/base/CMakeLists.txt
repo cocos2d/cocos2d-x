@@ -1,4 +1,16 @@
+if(OHOS)
+    set(COCOS_BASE_SRC
+        base/CCUserDefault-ohos.cpp
+        )
+else()
+    
+    set(COCOS_BASE_SRC
+	  base/CCUserDefault.cpp
+	  base/CCUserDefaultAndroid.cpp
+        )
+endif()
 set(COCOS_BASE_SRC
+  ${COCOS_BASE_SRC}
   base/CCAutoreleasePool.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
@@ -27,8 +39,6 @@ set(COCOS_BASE_SRC
   base/CCScheduler.cpp
   base/CCScriptSupport.cpp
   base/CCTouch.cpp
-  base/CCUserDefault.cpp
-  base/CCUserDefaultAndroid.cpp
   base/CCValue.cpp
   base/TGAlib.cpp
   base/ZipUtils.cpp
