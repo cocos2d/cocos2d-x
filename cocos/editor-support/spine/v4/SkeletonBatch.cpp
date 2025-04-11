@@ -37,6 +37,7 @@ USING_NS_CC;
 #define EVENT_AFTER_DRAW_RESET_POSITION "director_after_draw"
 using std::max;
 #define INITIAL_SIZE (10000)
+#define VETEXT_BUFF_SIZE (64000)
 
 #include "renderer/ccShaders.h"
 #include "renderer/backend/Device.h"
@@ -103,6 +104,17 @@ void SkeletonBatch::update (float delta) {
 
 cocos2d::V3F_C4B_T2F* SkeletonBatch::allocateVertices(uint32_t numVertices) {
 	if (_vertices.size() - _numVertices < numVertices) {
+		//Creating a large number of different spine animations at the same time 
+		//results in the allocation of vertex vector(large than 1.4 billion)
+		//Then run out of memory and crash.
+		if (_vertices.size() > VETEXT_BUFF_SIZE)
+		{
+			//CCLOG("SkeletonBatch::allocateVertices _vertices size:%d, clear here...", _vertices.size());
+			reset();
+			_vertices.resize(VETEXT_BUFF_SIZE);
+		}
+		//CCLOG("SkeletonBatch::allocateVertices _vertices vector size:%d, _numVertices:%d, add vertics:%d", _vertices.size(), _numVertices, numVertices);
+
 		cocos2d::V3F_C4B_T2F* oldData = _vertices.data();
 		_vertices.resize((_vertices.size() + numVertices) * 2 + 1);
 		cocos2d::V3F_C4B_T2F* newData = _vertices.data();
