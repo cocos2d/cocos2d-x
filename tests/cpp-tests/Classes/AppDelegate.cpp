@@ -204,6 +204,7 @@ void AppDelegate::applicationWillEnterForeground()
     Director::getInstance()->startAnimation();
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
 void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
 {
     auto director = cocos2d::Director::getInstance();
@@ -217,3 +218,4 @@ void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
          glview->setDesignResolutionSize(designSize.width, designSize.height, resolutionPolicy);
     }
 }
+#endif

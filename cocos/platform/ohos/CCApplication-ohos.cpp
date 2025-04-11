@@ -133,7 +133,7 @@ LanguageType Application::getCurrentLanguage() {
 }
 
 Application::Platform Application::getTargetPlatform() {
-    return Platform::OS_OPENHARMONY;
+    return Platform::OS_HARMONY_NEXT;
 }
 
 bool Application::openURL(const std::string &url) {

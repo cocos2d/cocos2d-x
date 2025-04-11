@@ -17,12 +17,21 @@ enum {
 //you don't need any ifdef anymore
 static std::string fontList[] =
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    "HarmonyOS_Sans.ttf",
+    "HMSymbolVF.ttf",
+    "NotoSans[wdth,wght].ttf",
+    "NotoSerifTibetan[wght].ttf",
+    "NotoSerifHebrew[wdth,wght].ttf",
+    "NotoSerifLao[wdth,wght].ttf",
+#else    
     "fonts/A Damn Mess.ttf",
     "fonts/Abberancy.ttf",
     "fonts/Abduction.ttf",
     "fonts/Paint Boy.ttf",
     "fonts/Schwarzwald.ttf",
     "fonts/Scissor Cuts.ttf",
+#endif    
 };
 
 static int vAlignIdx = 0;
@@ -52,8 +61,7 @@ FontTests::FontTests()
     }
 }
 
-void FontTest::showFont(const std::string& fontFile)
-{
+void FontTest::showFont(const std::string& fontFile){
     auto s = Director::getInstance()->getWinSize();
 
     auto blockSize = Size(s.width/3, 200);
@@ -66,23 +74,14 @@ void FontTest::showFont(const std::string& fontFile)
     removeChildByTag(kTagColor1, true);
     removeChildByTag(kTagColor2, true);
     removeChildByTag(kTagColor3, true);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-    auto top = Label::createWithTTF(fontFile, fontFile, 24);
-    auto left = Label::createWithTTF("alignment left", fontFile, fontSize,
-                                          blockSize, TextHAlignment::LEFT, verticalAlignment[vAlignIdx]);
-    auto center = Label::createWithTTF("alignment center", fontFile, fontSize,
-                                            blockSize, TextHAlignment::CENTER, verticalAlignment[vAlignIdx]);
-    auto right = Label::createWithTTF("alignment right", fontFile, fontSize,
-                                           blockSize, TextHAlignment::RIGHT, verticalAlignment[vAlignIdx]);
-#else
- auto top = Label::createWithSystemFont(fontFile, fontFile, 24);
+ 	auto top = Label::createWithSystemFont(fontFile, fontFile, 24);
     auto left = Label::createWithSystemFont("alignment left", fontFile, fontSize,
                                           blockSize, TextHAlignment::LEFT, verticalAlignment[vAlignIdx]);
     auto center = Label::createWithSystemFont("alignment center", fontFile, fontSize,
                                             blockSize, TextHAlignment::CENTER, verticalAlignment[vAlignIdx]);
     auto right = Label::createWithSystemFont("alignment right", fontFile, fontSize,
                                            blockSize, TextHAlignment::RIGHT, verticalAlignment[vAlignIdx]);
-#endif
+
     auto leftColor = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
     auto centerColor = LayerColor::create(Color4B(200, 100, 100, 255), blockSize.width, blockSize.height);
     auto rightColor = LayerColor::create(Color4B(100, 100, 200, 255), blockSize.width, blockSize.height);

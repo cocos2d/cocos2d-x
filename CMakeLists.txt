@@ -58,11 +58,7 @@ set(USE_PREBUILT_LIBS_DEFAULT ON)
 if(MINGW AND NOT OHOS)
   set(USE_PREBUILT_LIBS_DEFAULT OFF)
 endif()
-if(OHOS)
-  set(BUILD_CPP_TESTS_DEFAULT OFF)
-else()
-  set(BUILD_CPP_TESTS_DEFAULT ON)
-endif()
+set(BUILD_CPP_TESTS_DEFAULT ON)
 set(BUILD_LUA_LIBS_DEFAULT ON)
 set(BUILD_LUA_TESTS_DEFAULT ON)
 # TODO: fix test samples for MSVC
@@ -180,6 +176,16 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
+if(OHOS)
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/opengles/api
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include/bullet
+    ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/ohos
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/opengles/api
+    ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/ohos
+  )
+endif()
 if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
 endif()
@@ -356,21 +362,15 @@ add_subdirectory(external/xxhash)
 set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
 set(XXHASH_LIBRARIES xxhash)
 
-if(OHOS)
-    add_subdirectory(external/ohos-specific/pvmp3dec)
-    add_subdirectory(external/ohos-specific/tremolo)
-endif()
 # libcocos2d.a
 add_subdirectory(cocos)
 
 # build cpp tests
 if(BUILD_CPP_TESTS)
-    if(OHOS)
-        add_subdirectory(tests/cpp-tests)
-    elseif()
-      add_subdirectory(tests/cpp-empty-test)
-      add_subdirectory(tests/cpp-tests)
+    if(!OHOS)
+        add_subdirectory(tests/cpp-empty-test)
     endif()
+    add_subdirectory(tests/cpp-tests)
 endif(BUILD_CPP_TESTS)
 
 ## Scripting
@@ -382,10 +382,8 @@ if(BUILD_LUA_LIBS)
 
   # build lua tests
   if(BUILD_LUA_TESTS)
-    if(OHOS)
-        add_subdirectory(tests/lua-tests/project)
-    elseif()
-        add_subdirectory(tests/lua-tests/project)
+    add_subdirectory(tests/lua-tests/project)
+    if(!OHOS)
         add_subdirectory(tests/lua-empty-test/project)
     endif()
   endif(BUILD_LUA_TESTS)
