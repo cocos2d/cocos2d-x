@@ -250,6 +250,7 @@ void PluginRender::timerCb(uv_timer_t* handle)
 {
     // OHOS_LOGD("PluginRender::timerCb, animationInterval_ is %{public}lu", animationInterval_);
     if (PluginRender::GetInstance()->eglCore_ != nullptr) {
+        Device::sendAndClearAcc();
         cocos2d::Director::getInstance()->mainLoop();
         PluginRender::GetInstance()->eglCore_->Update();
     }

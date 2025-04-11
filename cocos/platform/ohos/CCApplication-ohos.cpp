@@ -156,7 +156,7 @@ std::string Application::getVersion() {
 }
 
 Application::Platform Application::getTargetPlatform() {
-    return Platform::OS_OHOS;
+    return Platform::OS_HARMONY_NEXT;
 }
 
 bool Application::openURL(const std::string &url) {

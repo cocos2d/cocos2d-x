@@ -42,7 +42,7 @@ namespace CocosDenshion {
 
     static std::string getFullPathWithoutAssetsPrefix(const char* pszFilename)
     {
-        std::string fullPath = cocos2d::FileUtils::sharedFileUtils()->fullPathForFilename(pszFilename);
+        std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(pszFilename);
         size_t pos = fullPath.find("hap:/");
         if (pos == 0)
         {
@@ -64,7 +64,7 @@ namespace CocosDenshion {
     }
 
     void SimpleAudioEngine::end() {
-        cocos2d::experimental::AudioEngine::end();
+        AudioEngine::end();
     }
 
     SimpleAudioEngine::SimpleAudioEngine() {
@@ -93,24 +93,24 @@ namespace CocosDenshion {
 
     void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData) {
         ALOGD("stopBackgroundMusic");
-        cocos2d::experimental::AudioEngine::stop(_lastBackGroundAudioID);
+        AudioEngine::stop(_lastBackGroundAudioID);
         _lastBackGroundAudioID = -1;
         ALOGD("stopBackgroundMusic end, and id:%d", _lastBackGroundAudioID);
     }
 
     void SimpleAudioEngine::pauseBackgroundMusic() {
         ALOGD("pauseBackgroundMusic");
-        cocos2d::experimental::AudioEngine::pause(_lastBackGroundAudioID);
+        AudioEngine::pause(_lastBackGroundAudioID);
     }
 
     void SimpleAudioEngine::resumeBackgroundMusic() {
         ALOGD("resumeBackgroundMusic start!");
-        cocos2d::experimental::AudioEngine::resume(_lastBackGroundAudioID);
+        AudioEngine::resume(_lastBackGroundAudioID);
     }
 
     void SimpleAudioEngine::rewindBackgroundMusic() {
         ALOGD("rewindBackgroundMusic");
-        cocos2d::experimental::AudioEngine::setCurrentTime(_lastBackGroundAudioID, 0);
+        AudioEngine::setCurrentTime(_lastBackGroundAudioID, 0);
     }
 
     bool SimpleAudioEngine::willPlayBackgroundMusic() {
@@ -118,7 +118,7 @@ namespace CocosDenshion {
     }
 
     bool SimpleAudioEngine::isBackgroundMusicPlaying() {
-        return cocos2d::experimental::AudioEngine::getState(_lastBackGroundAudioID) == cocos2d::experimental::AudioEngine::AudioState::PLAYING;
+        return AudioEngine::getState(_lastBackGroundAudioID) == AudioEngine::AudioState::PLAYING;
     }
 
     float SimpleAudioEngine::getBackgroundMusicVolume() {
@@ -164,7 +164,7 @@ namespace CocosDenshion {
     }
 
     void SimpleAudioEngine::resumeEffect(unsigned int nSoundId) {
-        cocos2d::experimental::AudioEngine::resume(nSoundId);
+        AudioEngine::resume(nSoundId);
     }
 
     void SimpleAudioEngine::resumeAllEffects() {
