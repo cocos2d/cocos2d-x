@@ -49,13 +49,9 @@ bool AppDelegate::applicationDidFinishLaunching()
         register_test_binding(L);
     }
     lua_pop(L, 1);
-	#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
-		FileUtils::getInstance()->addSearchPath("src");
-	    FileUtils::getInstance()->addSearchPath("res");
-	    pEngine->executeScriptFile("controller.lua");
-	#else
-	    pEngine->executeScriptFile("src/controller.lua");
-	#endif
+    
+    
+    pEngine->executeScriptFile("src/controller.lua");
 
     return true;
 }

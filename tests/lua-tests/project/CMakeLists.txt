@@ -49,27 +49,76 @@ endif()
 
 if(OHOS)
     set(res_raw_folders "${CMAKE_CURRENT_LIST_DIR}/proj.ohos/entry/src/main/resources/rawfile")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fms-extensions")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
     file(GLOB resFiles "${CMAKE_CURRENT_LIST_DIR}/../res/*")
     file(COPY ${resFiles} DESTINATION  ${res_raw_folders})
     file(GLOB srcFiles "${CMAKE_CURRENT_LIST_DIR}/../src/*")
-    file(COPY ${srcFiles} DESTINATION  ${res_raw_folders})
+    file(COPY ${srcFiles} DESTINATION  ${res_raw_folders}/src)
     file(GLOB cppTestresFiles "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources/*")
     file(COPY ${cppTestresFiles} DESTINATION  ${res_raw_folders})
 
-    if(NOT EXISTS  ${res_raw_folders}/cocos)
-        file(GLOB cocosFiles "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*")
-        file(COPY ${cocosFiles} DESTINATION  ${res_raw_folders}/cocos)
-    endif()
+    file(GLOB cocosFiles "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*")
+    file(COPY ${cocosFiles} DESTINATION  ${res_raw_folders}/src/cocos)
 
     include_directories(${COCOS2DX_ROOT_PATH}/external/opengles/api ${COCOS2DX_ROOT_PATH}/cocos ${COCOS2DX_ROOT_PATH} ${COCOS2DX_ROOT_PATH}/external)
     add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
 
     find_library( # Sets the name of the path variable.
-                  hilog-lib
+                  EGL-lib
                   # Specifies the name of the NDK library that
                   # you want CMake to locate.
-                  hilog_ndk.z )
-    target_link_libraries(${APP_NAME} PRIVATE ${hilog-lib})
+                  EGL )
+
+    find_library( # Sets the name of the path variable.
+                  GLES-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  GLESv3 )
+
+    message("***************  GLES-lib: ${GLES-lib} ****************")
+
+    find_library( # Sets the name of the path variable.
+                  libace-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  ace_ndk.z )
+
+    find_library( # Sets the name of the path variable.
+                  libnapi-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  ace_napi.z )
+
+    find_library( # Sets the name of the path variable.
+                  libuv-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  uv )
+    find_library( # Sets the name of the path variable.
+                  rawfile-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  rawfile.z )
+    target_include_directories(${APP_NAME}  PUBLIC  ${CLASSES_PATH}
+                                                PUBLIC  ${CLASSES_PATH}/../..
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/math
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/modules
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/common
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/render
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/external
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/external/lua/lua
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/external/lua/tolua
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/external/opengles/api
+    )
+    target_link_libraries(${APP_NAME} PRIVATE ${libnapi-lib} ${GLES-lib} ${libace-lib} ${EGL-lib} ${rawfile-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib})
 else()
     # add the executable
     add_executable(${APP_NAME} ${SAMPLE_SRC})
