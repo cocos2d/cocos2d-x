@@ -100,16 +100,16 @@ void CommandBufferGL::beginFrame()
 {
 }
 
-void CommandBufferGL::beginRenderPass(const RenderPassDescriptor& descirptor)
+void CommandBufferGL::beginRenderPass(const RenderPassDescriptor& descriptor)
 {
-    applyRenderPassDescriptor(descirptor);
+    applyRenderPassDescriptor(descriptor);
 }
 
-void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& descirptor)
+void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& descriptor)
 {
-    bool useColorAttachmentExternal = descirptor.needColorAttachment && descirptor.colorAttachmentsTexture[0];
-    bool useDepthAttachmentExternal = descirptor.depthTestEnabled && descirptor.depthAttachmentTexture;
-    bool useStencilAttachmentExternal = descirptor.stencilTestEnabled && descirptor.stencilAttachmentTexture;
+    bool useColorAttachmentExternal = descriptor.needColorAttachment && descriptor.colorAttachmentsTexture[0];
+    bool useDepthAttachmentExternal = descriptor.depthTestEnabled && descriptor.depthAttachmentTexture;
+    bool useStencilAttachmentExternal = descriptor.stencilTestEnabled && descriptor.stencilAttachmentTexture;
     bool useGeneratedFBO = false;
     if (useColorAttachmentExternal || useDepthAttachmentExternal || useStencilAttachmentExternal)
     {
@@ -131,7 +131,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
         glFramebufferTexture2D(GL_FRAMEBUFFER,
                                GL_DEPTH_ATTACHMENT,
                                GL_TEXTURE_2D,
-                               getHandler(descirptor.depthAttachmentTexture),
+                               getHandler(descriptor.depthAttachmentTexture),
                                0);
         CHECK_GL_ERROR_DEBUG();
 
@@ -157,7 +157,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
         glFramebufferTexture2D(GL_FRAMEBUFFER,
                                GL_STENCIL_ATTACHMENT,
                                GL_TEXTURE_2D,
-                               getHandler(descirptor.depthAttachmentTexture),
+                               getHandler(descriptor.depthAttachmentTexture),
                                0);
         CHECK_GL_ERROR_DEBUG();
 
@@ -178,10 +178,10 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
         }
     }
     
-    if (descirptor.needColorAttachment)
+    if (descriptor.needColorAttachment)
     {
         int i = 0;
-        for (const auto& texture : descirptor.colorAttachmentsTexture)
+        for (const auto& texture : descriptor.colorAttachmentsTexture)
         {
             if (texture)
             {
@@ -243,10 +243,10 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     
     // set clear color, depth and stencil
     GLbitfield mask = 0;
-    if (descirptor.needClearColor)
+    if (descriptor.needClearColor)
     {
         mask |= GL_COLOR_BUFFER_BIT;
-        const auto& clearColor = descirptor.clearColorValue;
+        const auto& clearColor = descriptor.clearColorValue;
         glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
     }
     
@@ -256,7 +256,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     GLboolean oldDepthTest = GL_FALSE;
     GLfloat oldDepthClearValue = 0.f;
     GLint oldDepthFunc = GL_LESS;
-    if (descirptor.needClearDepth)
+    if (descriptor.needClearDepth)
     {
         glGetBooleanv(GL_DEPTH_WRITEMASK, &oldDepthWrite);
         glGetBooleanv(GL_DEPTH_TEST, &oldDepthTest);
@@ -264,7 +264,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
         glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
         
         mask |= GL_DEPTH_BUFFER_BIT;
-        glClearDepth(descirptor.clearDepthValue);
+        glClearDepth(descriptor.clearDepthValue);
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         glDepthFunc(GL_ALWAYS);
@@ -272,10 +272,10 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     
     CHECK_GL_ERROR_DEBUG();
     
-    if (descirptor.needClearStencil)
+    if (descriptor.needClearStencil)
     {
         mask |= GL_STENCIL_BUFFER_BIT;
-        glClearStencil(descirptor.clearStencilValue);
+        glClearStencil(descriptor.clearStencilValue);
     }
 
     if(mask) glClear(mask);
@@ -283,7 +283,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     CHECK_GL_ERROR_DEBUG();
     
     // restore depth test
-    if (descirptor.needClearDepth)
+    if (descriptor.needClearDepth)
     {
         if (!oldDepthTest)
             glDisable(GL_DEPTH_TEST);
