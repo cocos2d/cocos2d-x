@@ -65,7 +65,7 @@ bool FileUtilsOhos::isFileExistInternal(const std::string& strFilePath) const {
 
     bool bFound = false;
     if (strFilePath[0] != '/') {
-        RawFile *fp = RawFileUtils::GetInstance().Open(strFilePath.c_str());
+        RawFile64 *fp = RawFileUtils::GetInstance().Open(strFilePath.c_str());
         if(fp) {
             OHOS_LOGI("FileUtilsOhos::isFileExistInternal() - open %{public}s success", strFilePath.c_str());
             bFound = true;
@@ -141,7 +141,7 @@ Data FileUtilsOhos::getData(const std::string& filename) {
             fclose(fp);
         }
         else {
-            RawFile *fp = RawFileUtils::GetInstance().Open(fullpath.c_str());
+            RawFile64 *fp = RawFileUtils::GetInstance().Open(fullpath.c_str());
             CC_BREAK_IF(!fp);
             ssize_t fileSize = RawFileUtils::GetInstance().GetSize(fp);
             data = new unsigned char[fileSize];
@@ -200,7 +200,7 @@ bool FileUtilsOhos::getContents(const std::string& filename, ResizableBuffer* bu
     }
 
     else {
-        RawFile *fp = RawFileUtils::GetInstance().Open(fullpath.c_str());
+        RawFile64 *fp = RawFileUtils::GetInstance().Open(fullpath.c_str());
         if (!fp) {
             OHOS_LOGD("FileUtilsOhos::fp is nullptr");
             return false;
@@ -273,7 +273,7 @@ unsigned char* FileUtilsOhos::getFileData(const std::string& filename, const cha
         } while (0);
     } else {
         do{
-            RawFile *fp = RawFileUtils::GetInstance().Open(fullpath.c_str());
+            RawFile64 *fp = RawFileUtils::GetInstance().Open(fullpath.c_str());
             CC_BREAK_IF(!fp);
             ssize_t fileSize = RawFileUtils::GetInstance().GetSize(fp);
             data = new unsigned char[fileSize];
@@ -296,13 +296,13 @@ unsigned char* FileUtilsOhos::getFileData(const std::string& filename, const cha
     return data;
 }
 
-bool FileUtilsOhos::getRawFileDescriptor(const std::string &filename, RawFileDescriptor &descriptor) {
+bool FileUtilsOhos::getRawFileDescriptor(const std::string &filename, RawFileDescriptor64 *descriptor) {
     if (filename.empty()) {
         return false;
     }
     std::string fullpath = isAbsolutePath(filename)? filename:fullPathForFilename(filename);
 
-    RawFile *fp = RawFileUtils::GetInstance().Open(fullpath.c_str());//fopen(strFilePath.c_str(), "r");
+    RawFile64 *fp = RawFileUtils::GetInstance().Open(fullpath.c_str());//fopen(strFilePath.c_str(), "r");
     if (!fp) {
         OHOS_LOGE("FileUtilsOhos::fp is nullptr");
         return false;

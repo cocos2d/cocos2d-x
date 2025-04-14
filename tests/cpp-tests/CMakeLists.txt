@@ -298,8 +298,17 @@ if(OHOS)
     list(APPEND TESTS_SRC
             ${EXTENDED_TESTS_SRC}
             )
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -frtti -fexceptions -fsigned-char")
+    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules)
+    include(CocosBuildHelpers)
     add_library(${PROJECT_NAME} SHARED ${TESTS_SRC})
-
+    find_library( # Sets the name of the path variable.
+                  rawfile-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  rawfile.z )
     find_library( # Sets the name of the path variable.
             EGL-lib
             # Specifies the name of the NDK library that
@@ -336,6 +345,20 @@ if(OHOS)
             # you want CMake to locate.
             uv )
 
+    set(COCOS2DX_HEADER_PUBLIC
+        ${CLASSES_PATH}
+        ${COCOS2DX_ROOT_PATH}/cocos
+        # ${COCOS2DX_ROOT_PATH}/cocos/include
+        ${COCOS2DX_ROOT_PATH}/cocos/math
+        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/modules
+        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
+        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/common
+        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi
+        ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/render
+        )
+
+    target_include_directories(${PROJECT_NAME} PUBLIC ${COCOS2DX_HEADER_PUBLIC})
+    target_include_directories(${PROJECT_NAME} PUBLIC ${CLASSES_PATH})
     target_link_libraries(${PROJECT_NAME} PUBLIC ${EGL-lib} ${GLES-lib} ${hilog-lib}
             ${libace-lib} ${libnapi-lib} ${libuv-lib} cocos2d)
 
