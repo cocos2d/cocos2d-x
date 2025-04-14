@@ -32,6 +32,7 @@
 #include "2d/CCActionTween.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
+#include "renderer/CCCallbackCommand.h"
 
 /**
  * @addtogroup ui
@@ -382,8 +383,8 @@ protected:
     /** Touch listener */
     EventListenerTouchOneByOne* _touchListener;
     
-    CustomCommand _beforeDrawCommand;
-    CustomCommand _afterDrawCommand;
+    CallbackCommand _beforeDrawCommand;
+    CallbackCommand _afterDrawCommand;
 
     /**
      * Action created with setContentOffsetInDuration(), saved so it can be halted
