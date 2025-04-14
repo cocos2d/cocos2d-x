@@ -11,9 +11,7 @@ collectgarbage("setstepmul", 5000)
 
 ----------------
 -- run
-if (cc.PLATFORM_OS_OHOS ~= currPlatform) then
 cc.FileUtils:getInstance():addSearchPath("src")
-end
 CC_USE_DEPRECATED_API = true
 require "cocos.init"
 

@@ -201,6 +201,25 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
+if(OHOS)
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/opengles/api
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include/bullet
+  )
+  FIND_LIBRARY(Drawing-lib native_drawing)
+  FIND_LIBRARY(libace-lib ace_ndk.z)
+  FIND_LIBRARY(libnapi-lib ace_napi.z)
+  FIND_LIBRARY(GLES-lib GLESv3)
+  FIND_LIBRARY(rawfile-lib rawfile.z)
+  FIND_LIBRARY(EGL-lib EGL)
+  FIND_LIBRARY(OpenSl-lib OpenSLES)
+  FIND_LIBRARY(OpenSl-lib OpenSLES)
+  FIND_LIBRARY(OpenSl-lib OpenSLES)
+  FIND_LIBRARY(hilog-lib hilog_ndk.z)
+  FIND_LIBRARY(libuv-lib uv)
+endif()
+
 if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
 endif()
@@ -427,21 +446,18 @@ else()
   cocos_find_package(xxhash xxhash REQUIRED)
 endif()
 
-if(OHOS)
-    add_subdirectory(external/ohos-specific/pvmp3dec)
-    add_subdirectory(external/ohos-specific/tremolo)
-endif()
 # libcocos2d.a
 add_subdirectory(cocos)
 
 # build cpp-empty-test
 if(BUILD_CPP_EMPTY_TEST)
-  add_subdirectory(tests/cpp-empty-test)
+   if(!OHOS)
+ 	 add_subdirectory(tests/cpp-empty-test)
+   endif() 
 endif(BUILD_CPP_EMPTY_TEST)
-
 # build cpp-tests
 if(BUILD_CPP_TESTS)
-  add_subdirectory(tests/cpp-tests)
+   add_subdirectory(tests/cpp-tests)
 endif(BUILD_CPP_TESTS)
 
 ## Scripting
@@ -451,10 +467,10 @@ if(BUILD_LUA_LIBS)
 
   # build lua tests
   if(BUILD_LUA_TESTS)
-    add_subdirectory(tests/lua-tests/project)
-    if(!OHOS)
-    add_subdirectory(tests/lua-empty-test/project)
-    endif()
+     add_subdirectory(tests/lua-tests/project)
+     if(!OHOS)
+     	add_subdirectory(tests/lua-empty-test/project)
+     endif()
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)

@@ -132,15 +132,6 @@ elseif(ANDROID)
   android_ndk_import_module_cpufeatures()
 
 elseif(OHOS)
-  FIND_LIBRARY(Drawing-lib native_drawing)
-  FIND_LIBRARY(libace-lib ace_ndk.z)
-  FIND_LIBRARY(libnapi-lib ace_napi.z)
-  FIND_LIBRARY(GLES-lib GLESv3)
-  FIND_LIBRARY(libuv-lib uv)
-  FIND_LIBRARY(rawfile-lib rawfile.z)
-  FIND_LIBRARY(EGL-lib EGL)
-  FIND_LIBRARY(OpenSl-lib OpenSLES)
-  find_library( hilog-lib hilog_ndk.z )
 
   set(PLATFORM_SPECIFIC_LIBS
     ${Drawing-lib}
@@ -164,9 +155,6 @@ elseif(OHOS)
       ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/common
       ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi
       ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/render
-      ${COCOS2DX_ROOT_PATH}/external/ohos-specific/tremolo
-      ${COCOS2DX_ROOT_PATH}/external/ohos-specific/pvmp3dec/include
-      ${COCOS2DX_ROOT_PATH}/external/ohos-specific/pvmp3dec/src
       )
   target_include_directories(cocos2dInternal PUBLIC ${COCOS2DX_HEADER_PUBLIC})
   target_compile_definitions(cocos2dInternal PUBLIC -DUSE_FILE32API -DOpenHarmony)
@@ -192,8 +180,10 @@ endif(LINUX)
 target_link_libraries(cocos2dInternal ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
 
 if(OHOS)
- target_link_libraries(cocos2dInternal ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so)
- target_link_libraries(cocos2dInternal pvmp3dec tremolo)
+ target_link_libraries(cocos2dInternal libohaudio.so libavplayer.so 
+                        libnative_window.so libnative_buffer.so libnative_display_manager.so libohsensor.so libnative_media_codecbase.so 
+			libnative_media_core.so libnative_media_acodec.so libnative_media_avdemuxer.so libnative_media_avsource.so)
+
 endif()
 
 if(USE_WEBP)
