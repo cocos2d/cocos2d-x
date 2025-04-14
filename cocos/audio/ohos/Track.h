@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "PcmData.h"
 #include "IVolumeProvider.h"
 #include "PcmBufferProvider.h"
+#include "audio/ohos/BigAudioService.h"
 
 #include <functional>
 #include <mutex>
@@ -96,6 +97,7 @@ private:
     bool _isAudioFocus;
 
     friend class AudioMixerController;
+    friend class BigAudioService;
 };
 
 }} // namespace cocos2d { namespace experimental

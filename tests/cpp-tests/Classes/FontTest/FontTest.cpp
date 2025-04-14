@@ -14,16 +14,28 @@ enum {
     kTagColor3,
 };
 
-//you don't need any ifdef anymore
-static std::string fontList[] =
-{
-    "fonts/A Damn Mess.ttf",
-    "fonts/Abberancy.ttf",
-    "fonts/Abduction.ttf",
-    "fonts/Paint Boy.ttf",
-    "fonts/Schwarzwald.ttf",
-    "fonts/Scissor Cuts.ttf",
-};
+static int fontIdx = 0;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    static std::string fontList[] =
+    {
+        "HarmonyOS_Sans.ttf",
+        "HMSymbolVF.ttf",
+        "NotoSans[wdth,wght].ttf",
+        "NotoSerifTibetan[wght].ttf",
+        "NotoSerifHebrew[wdth,wght].ttf",
+        "NotoSerifLao[wdth,wght].ttf",
+    };
+#else
+    static std::string fontList[] =
+    {
+        "fonts/A Damn Mess.ttf",
+        "fonts/Abberancy.ttf",
+        "fonts/Abduction.ttf",
+        "fonts/Paint Boy.ttf",
+        "fonts/Schwarzwald.ttf",
+        "fonts/Scissor Cuts.ttf",
+    };
+#endif
 
 static int vAlignIdx = 0;
 static TextVAlignment verticalAlignment[] =
