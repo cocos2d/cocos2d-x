@@ -48,17 +48,13 @@ void TrianglesCommand::init(float globalOrder, Texture2D* texture, const BlendFu
     }
     _mv = mv;
 
-    if (_programType != _pipelineDescriptor.programState->getProgram()->getProgramType() ||
+    if (_programState != _pipelineDescriptor.programState ||
         _texture != texture->getBackendTexture() ||
         _blendType != blendType)
     {
-        _programType = _pipelineDescriptor.programState->getProgram()->getProgramType();
+        _programState = _pipelineDescriptor.programState;
         _texture = texture->getBackendTexture();
         _blendType = blendType;
-        
-        //since it would be too expensive to check the uniforms, simplify enable batching for built-in program.
-        if(_programType == backend::ProgramType::CUSTOM_PROGRAM)
-            setSkipBatching(true);
         
         //TODO: minggo set it in Node?
         auto& blendDescriptor = _pipelineDescriptor.blendDescriptor;
@@ -66,15 +62,8 @@ void TrianglesCommand::init(float globalOrder, Texture2D* texture, const BlendFu
         blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = blendType.src;
         blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = blendType.dst;
 
-        if(!isSkipBatching())
-            generateMaterialID();
+        generateMaterialID();
     }
-}
-
-void TrianglesCommand::updateMaterialID()
-{
-    setSkipBatching(false);
-    generateMaterialID();
 }
 
 TrianglesCommand::~TrianglesCommand()
@@ -86,6 +75,7 @@ void TrianglesCommand::generateMaterialID()
     struct
     {
         void* texture;
+        void* programState;
         backend::ProgramType programType;
         backend::BlendFactor src;
         backend::BlendFactor dst;
@@ -97,9 +87,9 @@ void TrianglesCommand::generateMaterialID()
     memset(&hashMe, 0, sizeof(hashMe));
 
     hashMe.texture = _texture;
+    hashMe.programState = _programState;
     hashMe.src = _blendType.src;
     hashMe.dst = _blendType.dst;
-    hashMe.programType = _programType;
     _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
 }
 
