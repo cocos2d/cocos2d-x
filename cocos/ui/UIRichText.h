@@ -350,6 +350,12 @@ public:
         WRAP_PER_WORD,
         WRAP_PER_CHAR
     };
+
+    enum WordSeparatorMode: int {
+        WordSeparatorBasedOnDevice,                /*!< The wrapping will be compute based on the device setting */
+        WordSeparatorSpaceSlashNotHighUnicode,     /*!< Spaces and '-' will be consider words separators.  Recommended for Korean */
+        WordSeparatorSpaceSlashAndKCJ              /*!< Spaces, '-' and KCJ unicodes will be consider words separators. */
+    };
     
     enum class HorizontalAlignment {
         LEFT,
@@ -372,6 +378,7 @@ public:
     
     static const std::string KEY_VERTICAL_SPACE;                    /*!< key of vertical space */
     static const std::string KEY_WRAP_MODE;                         /*!< key of per word, or per char */
+    static const std::string KEY_WORD_SEPARATOR_MODE;               /*!< key of word separator mode */
     static const std::string KEY_HORIZONTAL_ALIGNMENT;              /*!< key of left, right, or center */
     static const std::string KEY_FONT_COLOR_STRING;                 /*!< key of font color */
     static const std::string KEY_FONT_SIZE;                         /*!< key of font size */
@@ -486,6 +493,8 @@ public:
 
     void setWrapMode(WrapMode wrapMode);                /*!< sets the wrapping mode: WRAP_PER_CHAR or WRAP_PER_WORD */
     WrapMode getWrapMode() const;                       /*!< returns the current wrapping mode */
+    void setWordSeparatorMode(WordSeparatorMode wordSeparatorMode); /*!< sets the word separator mode */
+    WordSeparatorMode getWordSeparatorMode();                       /*!< returns the current word separator mode */
     void setHorizontalAlignment(HorizontalAlignment a); /*!< sets the horizontal alignment mode: LEFT, CENTER, or RIGHT */
     HorizontalAlignment getHorizontalAlignment() const; /*!< returns the current horizontal alignment mode */
     void setFontColor(const std::string& color);        /*!< Set the font color. @param color the #RRGGBB hexadecimal notation. */
