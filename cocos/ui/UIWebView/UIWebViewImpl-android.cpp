@@ -178,7 +178,7 @@ namespace ui{
 
     void WebViewImpl::loadData(const Data &data, const std::string &MIMEType, const std::string &encoding, const std::string &baseURL) {
         std::string dataString(reinterpret_cast<char *>(data.getBytes()), static_cast<unsigned int>(data.getSize()));
-        JniHelper::callStaticVoidMethod(className, "setJavascriptInterfaceScheme", _viewTag, dataString, MIMEType, encoding, baseURL);
+        JniHelper::callStaticVoidMethod(className, "loadData", _viewTag, dataString, MIMEType, encoding, baseURL);
     }
 
     void WebViewImpl::loadHTMLString(const std::string &string, const std::string &baseURL) {
