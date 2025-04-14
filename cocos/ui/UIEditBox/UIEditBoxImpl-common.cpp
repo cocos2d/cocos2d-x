@@ -178,6 +178,11 @@ void EditBoxImplCommon::setFontColor(const Color4B& color)
     _label->setTextColor(color);
 }
 
+void EditBoxImplCommon::setInsertionPointColor(const Color4B& color)
+{
+    this->setNativeInsertionPointColor(color);
+}
+
 void EditBoxImplCommon::setPlaceholderFont(const char* pFontName, int fontSize)
 {
     _placeholderFontName = pFontName;

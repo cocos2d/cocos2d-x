@@ -134,6 +134,11 @@ void EditBoxImplAndroid::setNativeFontColor(const Color4B& color)
                                     (int)color.r, (int)color.g, (int)color.b, (int)color.a);
 }
 
+void EditBoxImplAndroid::setNativeInsertionPointColor(const Color4B& color)
+{
+    // not implemented
+}
+
 void EditBoxImplAndroid::setNativePlaceholderFont(const char* pFontName, int fontSize)
 {
     CCLOG("Warning! You can't change Android Hint fontName and fontSize");

@@ -48,6 +48,7 @@ namespace ui {
         virtual bool isEditing() override;
         virtual void createNativeControl(const Rect& frame) override;
         virtual void setNativeFont(const char* pFontName, int fontSize) override;
+        virtual void setNativeInsertionPointColor(const Color4B& color) override;
         virtual void setNativeFontColor(const Color4B& color) override;
         virtual void setNativePlaceholderFont(const char* pFontName, int fontSize) override;
         virtual void setNativePlaceholderFontColor(const Color4B& color) override;

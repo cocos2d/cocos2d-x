@@ -289,6 +289,11 @@
     }
 }
 
+- (void)setInsertionPointColor:(NSColor *)color
+{
+    [self.textInput setInsertionPointColor:color];
+}
+
 - (void)setPlaceholderFontColor:(NSColor *)color
 {
     self.textInput.ccui_placeholderColor = color;

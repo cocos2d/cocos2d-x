@@ -113,6 +113,14 @@ void EditBoxImplIOS::setNativeFontColor(const Color4B& color)
 
 }
 
+void EditBoxImplIOS::setNativeInsertionPointColor(const Color4B& color)
+{
+    _systemControl.textInput.tintColor = [UIColor colorWithRed:color.r / 255.0f
+                                                        green:color.g / 255.0f
+                                                         blue:color.b / 255.0f
+                                                        alpha:color.a / 255.f];
+}
+
 void EditBoxImplIOS::setNativePlaceholderFont(const char* pFontName, int fontSize)
 {
     UIFont* textFont = constructFont(pFontName, fontSize);

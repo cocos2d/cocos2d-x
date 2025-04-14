@@ -543,6 +543,19 @@ const Color4B& EditBox::getFontColor() const
     return Color4B::WHITE;
 }
 
+void EditBox::setInsertionPointColor(const Color3B& color)
+{
+    setInsertionPointColor(Color4B(color));
+}
+
+void EditBox::setInsertionPointColor(const Color4B& color)
+{
+    if (_editBoxImpl != nullptr)
+    {
+        _editBoxImpl->setInsertionPointColor(color);
+    }
+}
+
 void EditBox::setPlaceholderFont(const char* pFontName, int fontSize)
 {
     CCASSERT(pFontName != nullptr, "fontName can't be nullptr");
