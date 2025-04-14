@@ -5,7 +5,7 @@
 # ./download-deps.py
 #
 # Downloads Cocos2D-x 3rd party dependencies from github:
-# https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin) and extracts the zip
+# https://github.com/heroiclabs/cocos2d-x-3rd-party-libs-bin) and extracts the zip
 # file
 #
 # Having the dependencies outside the official cocos2d-x repo helps prevent
