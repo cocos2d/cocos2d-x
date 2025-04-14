@@ -154,6 +154,13 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
+if(OHOS)
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/ohos
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/opengles/api
+    ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/ohos
+  )
+endif()
 if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
 endif()
@@ -366,8 +373,6 @@ if(OHOS)
   add_subdirectory(external/lua/luajit)
   add_subdirectory(external/lua/tolua)
   add_subdirectory(external/websockets)
-  add_subdirectory(external/ohos-specific/pvmp3dec)
-  add_subdirectory(external/ohos-specific/tremolo)
 endif()
 
 # libcocos2d.a

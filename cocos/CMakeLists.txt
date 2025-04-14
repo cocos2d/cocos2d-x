@@ -165,7 +165,10 @@ else()
 endif()
 
 if(OHOS)
-target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so)
+    target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib}
+        ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so  libnative_window.so libnative_buffer.so
+        libnative_display_manager.so libohsensor.so libnative_media_codecbase.so libnative_media_core.so
+        libnative_media_acodec.so libnative_media_avdemuxer.so libnative_media_avsource.so)
 endif()
 
 if(OHOS)
@@ -198,14 +201,8 @@ else()
   endforeach()
 endif()
 
-if(OHOS)
-  target_link_libraries(cocos2d
-          # ext_cpufeatures  TBD need fixed?
-          ext_pvmp3dec
-          ext_tremolo
-          )
-else()
-  target_link_libraries(cocos2d xxhash ${PLATFORM_SPECIFIC_LIBS})
+if(!OHOS)
+	target_link_libraries(cocos2d xxhash ${PLATFORM_SPECIFIC_LIBS})
 endif()
 
 if(USE_WEBP)

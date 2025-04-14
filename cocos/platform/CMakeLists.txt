@@ -66,6 +66,7 @@ include_directories(
         platform/ohos/napi/modules
         platform/ohos/napi/common
         platform/ohos/napi/render
+        ../external/opengles/api
 	platform/ohos/napi/plugin_manager.h
         platform/ohos/napi/helper/NapiValueConverter.h
         platform/ohos/napi/helper/Js_Cocos2dxHelper.h
@@ -84,7 +85,6 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
         platform/ohos/napi/modules/InputNapi.cpp
         platform/ohos/napi/modules/MouseNapi.cpp
         platform/ohos/napi/modules/WebViewNapi.cpp
-        platform/ohos/napi/modules/SensorNapi.cpp
         platform/ohos/napi/modules/VideoPlayerNapi.cpp
         platform/ohos/napi/helper/NapiValueConverter.cpp
         platform/ohos/napi/helper/Js_Cocos2dxHelper.cpp

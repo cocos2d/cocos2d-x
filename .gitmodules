@@ -10,3 +10,11 @@
 [submodule "tests/cpp-tests/Resources/ccs-res"]
         path = tests/cpp-tests/Resources/ccs-res
         url = git://github.com/dumganhar/ccs-res.git
+[submodule "tests/lua-tests/project/proj.ohos"]
+	path = tests/lua-tests/project/proj.ohos
+	url = git@github.com:cocos2d/cocos2d-x-tests-harmonyos-next-project.git
+	branch = lua-tests
+[submodule "tests/cpp-tests/proj.ohos"]
+	path = tests/cpp-tests/proj.ohos
+	url = git@github.com:cocos2d/cocos2d-x-tests-harmonyos-next-project.git
+	branch = cpp-tests

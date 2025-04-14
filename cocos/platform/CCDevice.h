@@ -26,6 +26,7 @@ THE SOFTWARE.
 #ifndef __CCDEVICE_H__
 #define __CCDEVICE_H__
 
+#include "base/ccTypes.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/ccMacros.h"
 #include "base/CCData.h"
@@ -59,6 +60,10 @@ public:
      * To enable or disable accelerometer.
      */
     static void setAccelerometerEnabled(bool isEnabled);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+    static void sendAndClearAcc();
+#endif
     /**
      *  Sets the interval of accelerometer.
      */
