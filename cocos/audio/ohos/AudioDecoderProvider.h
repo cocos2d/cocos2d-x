@@ -25,7 +25,8 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "OpenSLHelper.h"
+#include <string>
+#include "AudioPlayerProvider.h"
 
 namespace cocos2d { namespace experimental {
 
@@ -33,7 +34,8 @@ namespace cocos2d { namespace experimental {
 
         class AudioDecoderProvider {
         public:
-            static AudioDecoder *createAudioDecoder(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate, const FdGetterCallback &fdGetterCallback);
+            static AudioDecoder *createAudioDecoder(const std::string &url, int sampleRate, AudioPlayerProvider::AudioFileInfo fileInfo);
+ 
             static void destroyAudioDecoder(AudioDecoder **decoder);
         };
 
