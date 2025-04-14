@@ -117,7 +117,7 @@ void ListView::updateInnerContainerSize()
             float totalHeight = (length == 0) ? 0.0f : (length - 1) * _itemsMargin + (_topPadding + _bottomPadding);
             for (auto& item : _items)
             {
-                totalHeight += item->getContentSize().height;
+                totalHeight += item->getContentSize().height * item->getScaleY();
             }
             float finalWidth = _contentSize.width;
             float finalHeight = totalHeight;
@@ -130,7 +130,7 @@ void ListView::updateInnerContainerSize()
             float totalWidth = (length == 0) ? 0.0f : (length - 1) * _itemsMargin + (_leftPadding + _rightPadding);
             for (auto& item : _items)
             {
-                totalWidth += item->getContentSize().width;
+                totalWidth += item->getContentSize().width * item->getScaleX();
             }
             float finalWidth = totalWidth;
             float finalHeight = _contentSize.height;
