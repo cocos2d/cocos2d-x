@@ -750,6 +750,7 @@ void VolatileTextureMgr::addImage(Texture2D *tt, Image *image)
     
     VolatileTexture *vt = findVolotileTexture(tt);
     image->retain();
+    CC_SAFE_RELEASE_NULL(vt->_uiImage);
     vt->_uiImage = image;
     vt->_cashedImageType = VolatileTexture::kImage;
     vt->_pixelFormat = tt->getPixelFormat();
