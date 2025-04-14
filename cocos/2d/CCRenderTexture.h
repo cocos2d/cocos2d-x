@@ -159,6 +159,15 @@ public:
      * @js NA
      */
     void newImage(std::function<void(Image*)> imageCallback, bool flipImage = true);
+
+    /**
+     * New Version Of Create a new Image from with the texture's data.
+     * FIX: Null Image Data In RenderTexture::newImage Callback Issue (#20776)
+     * 
+     * @param imageCallback 
+     * @param flipImage 
+     */
+    void createNewImage(std::function<void(Image*)> imageCallback, bool flipImage = true);
     
     /** Saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
      * Returns true if the operation is successful.
@@ -390,6 +399,12 @@ protected:
      and the command and callback will be executed twice.
     */
     CallbackCommand _saveToFileCommand;
+
+    /**
+     * This Command Use to Fix Null Image Data In RenderTexture::newImage(#20776)
+     */
+    CallbackCommand _newImageCommand;
+
     std::function<void (RenderTexture*, const std::string&)> _saveFileCallback = nullptr;
     
     Mat4 _oldTransMatrix, _oldProjMatrix;

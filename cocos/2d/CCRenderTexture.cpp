@@ -501,6 +501,13 @@ void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool fli
 //    } while (0);
 }
 
+void RenderTexture::createNewImage(std::function<void(Image*)> imageCallback, bool flipImage)
+{
+    _newImageCommand.init(_globalZOrder);
+    _newImageCommand.func = CC_CALLBACK_0(RenderTexture::newImage, this, imageCallback, flipImage);
+    Director::getInstance()->getRenderer()->addCommand(&_newImageCommand);
+}
+
 void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_autoDraw)
