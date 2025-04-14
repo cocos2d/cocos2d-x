@@ -149,9 +149,9 @@ You can also create a Lua project with `-l lua`.
 Using IDE
 ----------------------------
 
-If need to debug program, then it is more convinent to use IDE to run and debug it. All platforms other than Android can use CMake to generate corresponding project file. Can refer to [Detail CMake Guide](cmake/README.md) for detail information.
+If need to debug program, then it is more convenient to use IDE to run and debug it. All platforms other than Android can use CMake to generate corresponding project file. Can refer to [Detail CMake Guide](cmake/README.md) for detail information.
 
-For Android, the Android Studio project file lies in `PROJECT_DIR/proj.android`. Can just use Android Studio to import the exsting project file.
+For Android, the Android Studio project file lies in `PROJECT_DIR/proj.android`. Can just use Android Studio to import the existing project file.
 
 Learning Resources
 --------------------------------
