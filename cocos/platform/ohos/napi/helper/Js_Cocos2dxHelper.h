@@ -28,14 +28,9 @@ public:
     }
 
     static void terminateProcess();
-    static void enableAccelerometer();
-    static void disableAccelerometer();
-    static void setAccelerometerInterval(float interval);
     
 private:
     static std::string _asyncInfoMap[];
     static napi_env _env;
-    static float _accelerometerInterval;
-    static bool _accelerometerFlag;
 };
 #endif /* __Js_Cocos2dxHelper_H__ */

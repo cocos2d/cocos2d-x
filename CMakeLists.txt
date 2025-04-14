@@ -189,6 +189,13 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/extensions
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
+if(OHOS)
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/opengles/api
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include/bullet
+  )
+endif()
 
 if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
@@ -407,10 +414,6 @@ else()
   cocos_find_package(xxhash xxhash REQUIRED)
 endif()
 
-if(OHOS)
-    add_subdirectory(external/ohos-specific/pvmp3dec)
-    add_subdirectory(external/ohos-specific/tremolo)
-endif()
 # libcocos2d.a
 add_subdirectory(cocos)
 
