@@ -135,7 +135,7 @@ THE SOFTWARE.
     #define CC_TARGET_PLATFORM          CC_PLATFORM_WINRT
 #endif
 
-// OpenHarmony
+// HarmonyOS Next
 #if defined(OHOS)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM     CC_PLATFORM_OHOS

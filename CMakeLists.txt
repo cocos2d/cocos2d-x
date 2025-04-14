@@ -100,7 +100,9 @@ if(DEBUG_MODE)
 else(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE RELEASE)
 endif(DEBUG_MODE)
-
+if(OHOS AND BUILD_JS_LIBS)
+    string(REPLACE "-O2" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+endif()
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
@@ -184,6 +186,13 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/extensions
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
+if(OHOS)
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/opengles/api
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include/bullet
+  )
+endif()
 
 if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
@@ -403,10 +412,6 @@ else()
   cocos_find_package(xxhash xxhash REQUIRED)
 endif()
 
-if(OHOS)
-    add_subdirectory(external/ohos-specific/pvmp3dec)
-    add_subdirectory(external/ohos-specific/tremolo)
-endif()
 # libcocos2d.a
 add_subdirectory(cocos)
 
@@ -426,9 +431,9 @@ if(BUILD_LUA_LIBS)
   # build lua tests
   if(BUILD_LUA_TESTS)
     add_subdirectory(tests/lua-tests/project)
-if(!OHOS)
+  if(!OHOS)
     add_subdirectory(tests/lua-empty-test/project)
-endif()
+  endif()
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)

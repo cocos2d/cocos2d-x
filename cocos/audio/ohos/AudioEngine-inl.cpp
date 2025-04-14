@@ -39,7 +39,7 @@
 #include "AudioPlayerProvider.h"
 #include "IAudioPlayer.h"
 #include "ICallerThreadUtils.h"
-#include "UrlAudioPlayer.h"
+#include "BigAudioPlayer.h"
 #include "cutils/log.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
@@ -55,7 +55,7 @@ AudioEngineImpl *gAudioImpl = nullptr;
 int outputSampleRate = 48000;
 
 // TODO(hack) : There is currently a bug in the opensles module,
-// so openharmony must configure a fixed size, otherwise the callback will be suspended
+// so HarmonyOS Next must configure a fixed size, otherwise the callback will be suspended
 int              bufferSizeInFrames = 2048;
 
 
@@ -67,7 +67,7 @@ void getAudioInfo() {
 class CallerThreadUtils : public ICallerThreadUtils {
 public:
     void performFunctionInCallerThread(const std::function<void()> &func) override {
-        cocos2d::Director::sharedDirector()->getScheduler()->performFunctionInCocosThread(func);
+        cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread(func);
  
     };
 
@@ -116,6 +116,7 @@ AudioEngineImpl::AudioEngineImpl()
 }
 
 AudioEngineImpl::~AudioEngineImpl() {
+    stopAll();
     if (_audioPlayerProvider != nullptr) {
         delete _audioPlayerProvider;
         _audioPlayerProvider = nullptr;
@@ -190,9 +191,8 @@ void AudioEngineImpl::onEnterBackground(EventCustom* event)
     for (auto&& e : _audioPlayers)
     {
         auto player = e.second;
-        if (dynamic_cast<UrlAudioPlayer*>(player) != nullptr
-            && player->getState() == IAudioPlayer::State::PLAYING)
-        {
+        if (dynamic_cast<BigAudioPlayer*>(player) != nullptr
+            && player->getState() == IAudioPlayer::State::PLAYING) {
             _urlAudioPlayersNeedResume.emplace(e.first, player);
             player->pause();
         }
@@ -466,7 +466,8 @@ PCMHeader AudioEngineImpl::getPCMHeader(const char *url) {
         return header;
     }
 
-    AudioDecoder *decoder = AudioDecoderProvider::createAudioDecoder(_engineEngine, fileFullPath, bufferSizeInFrames, outputSampleRate, fdGetter);
+    auto info = AudioPlayerProvider::getFileInfo(fileFullPath);
+    AudioDecoder *decoder = AudioDecoderProvider::createAudioDecoder(fileFullPath, bufferSizeInFrames, info);
 
     if (decoder == nullptr) {
         ALOGD("decode %{public}s failed, the file formate might not support", url);
@@ -501,7 +502,8 @@ std::vector<uint8_t> AudioEngineImpl::getOriginalPCMBuffer(const char *url, uint
     if (_audioPlayerProvider->getPcmData(url, data)) {
         ALOGD("file %{public}s pcm data already cached", url);
     } else {
-        AudioDecoder *decoder = AudioDecoderProvider::createAudioDecoder(_engineEngine, fileFullPath, bufferSizeInFrames, outputSampleRate, fdGetter);
+        auto info = AudioPlayerProvider::getFileInfo(fileFullPath);
+        AudioDecoder *decoder = AudioDecoderProvider::createAudioDecoder(fileFullPath, bufferSizeInFrames, info);
         if (decoder == nullptr) {
             ALOGD("decode %{public}s failed, the file formate might not support", url);
             return pcmData;
