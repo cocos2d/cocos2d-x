@@ -232,18 +232,11 @@ void ComponentLua::storeLuaTable()
     lua_rawset(l, -3);                         // stack: table_return_from_lua table_of_component
     lua_pop(l, 1);                             // stack: table_return_from_lua
     
-    // add table's elements to userdata's metatable
-    object_to_luaval<cocos2d::ComponentLua>(l, "cc.ComponentLua", this);  // stack: table_return_from_lua userdata
-    lua_getmetatable(l, -1);                   // stack: table_return_from_lua userdata mt
-    lua_remove(l, -2);                         // stack: table_return_from_lua mt
-    lua_pushnil(l);                            // stack: table_return_from_lua mt nil
-    while (lua_next(l, -3))                    // stack: table_return_from_lua mt key value
-    {
-        lua_pushvalue(l, -2);                  // stack: table_return_from_lua mt key value key
-        lua_insert(l, -2);                     // stack: table_return_from_lua mt key key value
-        lua_rawset(l, -4);                     // stack: table_return_from_lua mt key
-    }
-    lua_pop(l, 2);
+    // set table_return_from_lua as the new environment for this
+    object_to_luaval<cocos2d::ComponentLua>(l, "cc.ComponentLua", this);  // stack: table_return_from_lua/this
+    lua_pushvalue(l, -2);		// stack: table_return_from_lua/this/table_return_from_lua
+    lua_setfenv(l, -2);			// stack: table_return_from_lua/this
+    lua_pop(l, 1);				// stack: table_return_from_lua
 }
 
 void ComponentLua::removeLuaTable()
