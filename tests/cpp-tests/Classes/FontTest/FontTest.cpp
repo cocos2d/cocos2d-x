@@ -17,12 +17,21 @@ static int fontIdx = 0;
 //you don't need any ifdef anymore
 static std::string fontList[] =
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+    "HarmonyOS_Sans.ttf",
+    "HMSymbolVF.ttf",
+    "NotoSans[wdth,wght].ttf",
+    "NotoSerifTibetan[wght].ttf",
+    "NotoSerifHebrew[wdth,wght].ttf",
+    "NotoSerifLao[wdth,wght].ttf",
+#else    
     "fonts/A Damn Mess.ttf",
     "fonts/Abberancy.ttf",
     "fonts/Abduction.ttf",
     "fonts/Paint Boy.ttf",
     "fonts/Schwarzwald.ttf",
     "fonts/Scissor Cuts.ttf",
+#endif    
 };
 
 static int fontCount = sizeof(fontList) / sizeof(*fontList);

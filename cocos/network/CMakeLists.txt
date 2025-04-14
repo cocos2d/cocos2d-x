@@ -7,19 +7,12 @@ else()
   set(PLATFORM_LINK websockets)
 endif()
 
-if(OHOS)
-set(COCOS_NETWORK_SRC
-    network/HttpClient.cpp
-)
-else()
 set(COCOS_NETWORK_SRC
     network/HttpClient.cpp
     network/SocketIO.cpp
     network/WebSocket.cpp
 
 )
-endif()
-
 if(MSVC)
   set(COCOS_NETWORK_LINK 
     libcurl_imp 

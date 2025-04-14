@@ -201,7 +201,16 @@ public:
      * @js NA
      */
     void    flush();
+	
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
 
+    /**
+    * delete any value by key,
+    * @param key The key to delete value.
+    * @js NA
+    */
+     void deleteValueForKey(const char* key);
+#endif
     /** Returns the singleton.
      * @js NA
      * @lua NA

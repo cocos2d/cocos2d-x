@@ -173,6 +173,18 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
+if(OHOS)
+  include_directories(
+      ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/ohos
+      ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/ohos
+      ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/ohos/freetype2
+      ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
+      ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip
+      ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/ohos
+      ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/ohos
+      ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/ohos
+  )
+endif()
 if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
 endif()
@@ -360,10 +372,7 @@ message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
 add_subdirectory(external/xxhash)
 set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
 set(XXHASH_LIBRARIES xxhash)
-if(OHOS)
-  add_subdirectory(external/ohos-specific/pvmp3dec)
-  add_subdirectory(external/ohos-specific/tremolo)
-endif()
+
 # libcocos2d.a
 add_subdirectory(cocos)
 
@@ -383,7 +392,9 @@ if(!OHOS)
   # build lua tests
   if(BUILD_LUA_TESTS)
         add_subdirectory(tests/lua-tests/project)
-        add_subdirectory(tests/lua-empty-test/project)
+        if(!OHOS)
+          add_subdirectory(tests/lua-empty-test/project)
+        endif()
   endif(BUILD_LUA_TESTS)
 endif()
 endif(BUILD_LUA_LIBS)
