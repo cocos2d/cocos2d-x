@@ -115,3 +115,13 @@ jobs:
       - run: ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
         shell: bash
         working-directory: tests/cpp-tests/proj.android
+
+      - run: ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
+        shell: bash
+        working-directory: tests/cpp-empty-test/proj.android
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: |
+            templates/**/*.apk
+            tests/**/*.apk
