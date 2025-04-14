@@ -155,7 +155,7 @@ LanguageType Application::getCurrentLanguage() {
 
 Application::Platform Application::getTargetPlatform()
 {
-    return Platform::OS_OHOS;
+    return Platform::OS_HARMONY_NEXT;
 }
 
 std::string Application::getVersion() {

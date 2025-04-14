@@ -58,7 +58,7 @@ public:
         OS_TIZEN,/** Tizen */
         OS_WINRT,/** Winrt */
         OS_WP8,/** WP8 */
-        OS_OHOS/** OHOS */
+        OS_HARMONY_NEXT          /** OS_HARMONY_NEXT */
     };
 
     /**

@@ -5,9 +5,6 @@
 
 #include <SLES/OpenSLES.h>
 
-#include <SLES/OpenSLES_Platform.h>
-
-
 #include <functional>
 #include <string>
 

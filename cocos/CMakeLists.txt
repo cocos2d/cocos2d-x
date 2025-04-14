@@ -172,20 +172,15 @@ else()
 endif()
 
 if (OHOS)
-    target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so)
+    target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib}
+        ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so  libnative_window.so libnative_buffer.so
+        libnative_display_manager.so libohsensor.so libnative_media_codecbase.so libnative_media_core.so
+        libnative_media_acodec.so libnative_media_avdemuxer.so libnative_media_avsource.so)
 endif()
 
 foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS OPENSSL CURL FLATBUFFERS XXHASH)
   cocos_use_pkg(cocos2d ${pkg})
 endforeach()
-
-if(OHOS)
-target_link_libraries(cocos2d
-        # ext_cpufeatures  TBD need fixed?
-        ext_pvmp3dec
-        ext_tremolo
-        )
-endif(OHOS)
 
 if(LINUX)
   set(glfw_other_linker_flags X11)

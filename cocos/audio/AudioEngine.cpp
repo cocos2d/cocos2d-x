@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -442,7 +443,6 @@ AudioProfile* AudioEngine::getProfile(const std::string &name)
     }
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
 void AudioEngine::preload(const std::string &filePath, std::function<void(bool isSuccess)> callback) {
 
     lazyInit();
@@ -458,5 +458,4 @@ void AudioEngine::preload(const std::string &filePath, std::function<void(bool i
         _audioEngineImpl->preload(filePath, callback);
     }
 }
-#endif
 #endif
