@@ -162,6 +162,20 @@ public:
      */
     static float getVolume(int audioID);
 
+    /**
+     * Sets global volume.
+     *
+     * @param volume Volume value (range from 0.0 to 1.0).
+     */
+    static void setVolumeGlobal(float volume);
+
+    /**
+     * Gets the global volume value.
+     *
+     * @return Volume value (range from 0.0 to 1.0).
+     */
+    static float getVolumeGlobal();
+
     /** 
      * Pause an audio instance.
      *
@@ -362,6 +376,8 @@ protected:
     static AudioEngineThreadPool* s_threadPool;
     
     static bool _isEnabled;
+
+    static float _volumeGlobal;
     
     friend class AudioEngineImpl;
 };
