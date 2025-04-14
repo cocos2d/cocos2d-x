@@ -35,6 +35,7 @@
 #include "renderer/backend/Types.h"
 #include "renderer/backend/Program.h"
 #include "renderer/backend/VertexLayout.h"
+#include "renderer/backend/Buffer.h"
 
 CC_BACKEND_BEGIN
 
@@ -182,14 +183,14 @@ public:
      * @param[out] size Specifies the size of the buffer in bytes.
      */
     void getVertexUniformBuffer(char** buffer, std::size_t& size) const;
-
+    
     /**
      * Get fragment uniform buffer. The buffer store all the fragment uniform's data for metal.
      * @param[out] buffer Specifies the pointer points to a fragment uniform storage.
      * @param[out] size Specifies the size of the buffer in bytes.
      */
     void getFragmentUniformBuffer(char** buffer, std::size_t& size) const;
-    
+
     /**
     * An abstract base class that can be extended to support custom material auto bindings.
     *
@@ -323,7 +324,7 @@ protected:
     char* _fragmentUniformBuffer = nullptr;
     std::size_t _vertexUniformBufferSize = 0;
     std::size_t _fragmentUniformBufferSize = 0;
-
+    
     std::unordered_map<int, TextureInfo>                    _vertexTextureInfos;
     std::unordered_map<int, TextureInfo>                    _fragmentTextureInfos;
 
