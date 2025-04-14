@@ -327,8 +327,8 @@ void Texture2DGL::getBytes(std::size_t x, std::size_t y, std::size_t width, std:
     } else
     {
         callback(image, width, height);
-        CC_SAFE_DELETE_ARRAY(image);
     }
+    CC_SAFE_DELETE_ARRAY(image);
 
     glBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
     glDeleteFramebuffers(1, &frameBuffer);
