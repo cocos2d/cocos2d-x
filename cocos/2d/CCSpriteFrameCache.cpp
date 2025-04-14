@@ -725,18 +725,23 @@ void SpriteFrameCache::PlistFramesCache::insertFrame(const std::string &plist, c
 bool SpriteFrameCache::PlistFramesCache::eraseFrame(const std::string &frame)
 {
     _spriteFrames.erase(frame);                             //drop SpriteFrame
-    auto itFrame = _indexFrame2plist.find(frame);
+    const auto itFrame = _indexFrame2plist.find(frame);
     if (itFrame != _indexFrame2plist.end())
     {
-        auto plist = itFrame->second;
+        const auto plist = itFrame->second;
         markPlistFull(plist, false);
-        _indexPlist2Frames[plist].erase(frame);             //update index plist->[frameNames]
-        _indexFrame2plist.erase(itFrame);                   //update index frame->plist
-        // erase plist index if all frames was erased
-        if (_indexFrame2plist.empty())
+        
+        auto plist2FramesItr = _indexPlist2Frames.find(plist);
+        if (_indexPlist2Frames.end() != plist2FramesItr)
         {
-            _indexPlist2Frames.erase(plist);
+            plist2FramesItr->second.erase(frame);             //update index plist->[frameNames]
+            if (plist2FramesItr->second.empty())
+            {
+                // erase plist index if all frames was erased
+                _indexPlist2Frames.erase(plist2FramesItr);
+            }
         }
+        _indexFrame2plist.erase(itFrame);                   //update index frame->plist
         return true;
     }
     return false;
@@ -749,8 +754,7 @@ bool SpriteFrameCache::PlistFramesCache::eraseFrames(const std::vector<std::stri
     {
         ret |= eraseFrame(frame);
     }
-    _indexPlist2Frames.clear();
-    _indexFrame2plist.clear();
+
     return ret;
 }
 
