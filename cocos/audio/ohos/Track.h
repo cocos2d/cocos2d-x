@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "PcmData.h"
 #include "IVolumeProvider.h"
 #include "PcmBufferProvider.h"
+#include "audio/ohos/BigAudioService.h"
 
 #include <functional>
 #include <mutex>
@@ -94,7 +95,8 @@ private:
     bool _isLoop;
     bool _isInitialized;
     bool _isAudioFocus;
-
+    
+    friend class BigAudioService;
     friend class AudioMixerController;
 };
 
