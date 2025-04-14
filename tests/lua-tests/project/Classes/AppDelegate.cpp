@@ -52,7 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 
     FileUtils::getInstance()->addSearchPath("");
-    pEngine->executeScriptFile("controller.lua");
+    pEngine->executeScriptFile("src/controller.lua");
     return true;
 }
 

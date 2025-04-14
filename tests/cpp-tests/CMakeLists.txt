@@ -105,7 +105,7 @@ set(TESTS_SRC
   Classes/LabelTest/LabelTestNew.cpp
   Classes/LayerTest/LayerTest.cpp
   Classes/LightTest/LightTest.cpp
-  Classes/MaterialSystemTest/MaterialSystemTest
+  Classes/MaterialSystemTest/MaterialSystemTest.cpp
   Classes/MenuTest/MenuTest.cpp
   Classes/MotionStreakTest/MotionStreakTest.cpp
   Classes/MutiTouchTest/MutiTouchTest.cpp
@@ -257,25 +257,50 @@ include_directories(
 )
 
 if (OHOS)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fms-extensions")
+    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules)
+    include(CocosBuildHelpers)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
     add_library(${APP_NAME} STATIC ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
     find_library( # Sets the name of the path variable.
-            GLES-lib
-            # Specifies the name of the NDK library that
-            # you want CMake to locate.
-            GLESv3 )
-    find_library( # Sets the name of the path variable.
-            hilog-lib
-            # Specifies the name of the NDK library that
-            # you want CMake to locate.
-            hilog_ndk.z )
+                    GLES-lib
+                    # Specifies the name of the NDK library that
+                    # you want CMake to locate.
+                    GLESv3 )
 
-    find_library( # Sets the name of the path variable.
-            libnapi-lib
-            # Specifies the name of the NDK library that
-            # you want CMake to locate.
-            ace_napi.z )
+            find_library( # Sets the name of the path variable.
+                    libnapi-lib
+                    # Specifies the name of the NDK library that
+                    # you want CMake to locate.
+                    ace_napi.z )
+            find_library( # Sets the name of the path variable.
+                    EGL-lib
+                    # Specifies the name of the NDK library that
+                    # you want CMake to locate.
+                    EGL )
+
+            find_library( # Sets the name of the path variable.
+                    libace-lib
+                    # Specifies the name of the NDK library that
+                    # you want CMake to locate.
+                    ace_ndk.z )
+
+            find_library( # Sets the name of the path variable.
+                    rawfile-lib
+                    # Specifies the name of the NDK library that
+                    # you want CMake to locate.
+                    rawfile.z )
     message("  *************** target link cpptest and gles  : ${GLES-lib}  ******************")
-    target_link_libraries(${APP_NAME} cocos2d ${GLES-lib} ${hilog-lib} ${libnapi-lib})
+    target_include_directories(${APP_NAME}  PUBLIC  ${CLASSES_PATH}
+                                            PUBLIC  ${CLASSES_PATH}/../..
+                                            )
+
+        #TBD need fixed
+        target_include_directories(${APP_NAME} PUBLIC ${COCOS2DX_ROOT_PATH}/external/chipmunk/include
+        )
+
+    target_link_libraries(${APP_NAME} cocos2d ${GLES-lib}  ${libnapi-lib})
     target_include_directories(${APP_NAME}
             PRIVATE Classes
     )
