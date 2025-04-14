@@ -239,8 +239,8 @@ if(LINUX)
 else()
     set(EXTENDED_TESTS_SRC
         Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
-        # Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
-        # Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
+        Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
+        Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
 
         Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp
         Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp
