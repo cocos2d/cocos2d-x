@@ -39,6 +39,8 @@
 #include "audio/win32/AudioEngine-win32.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "audio/linux/AudioEngine-linux.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+#include "audio/ohos/AudioEngine-inl.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001

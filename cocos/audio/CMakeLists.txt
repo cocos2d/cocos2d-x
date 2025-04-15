@@ -105,6 +105,78 @@ elseif(ANDROID)
         audio/android/tinysndfile.cpp
         )
 
+elseif(OHOS)
+    set(COCOS_AUDIO_PLATFORM_HEADER
+        audio/ohos/PcmAudioService.h
+        audio/ohos/AudioBufferProvider.h
+        audio/ohos/IAudioPlayer.h
+        audio/ohos/AudioResampler.h
+        audio/ohos/AudioDecoder.h
+        audio/ohos/AudioResamplerPublic.h
+        audio/ohos/AudioMixer.h
+        audio/ohos/tinysndfile.h
+        audio/ohos/mp3reader.h
+        audio/ohos/AudioMixerOps.h
+        audio/ohos/cutils/bitops.h
+        audio/ohos/cutils/log.h
+        audio/ohos/audio.h
+        audio/ohos/AudioPlayerProvider.h
+        audio/ohos/utils/Utils.h
+        audio/ohos/utils/Errors.h
+        audio/ohos/utils/Compat.h
+        audio/ohos/AudioDecoderOgg.h
+        audio/ohos/Track.h
+        audio/ohos/OpenSLHelper.h
+        audio/ohos/PcmAudioPlayer.h
+        audio/ohos/AssetFd.h
+        audio/ohos/PcmBufferProvider.h
+        audio/ohos/CCThreadPool.h
+        audio/ohos/audio_utils/include/audio_utils/minifloat.h
+        audio/ohos/audio_utils/include/audio_utils/primitives.h
+        audio/ohos/audio_utils/AudioDef.h
+    	audio/ohos/audio_utils/RefCounted.h
+        audio/ohos/ICallerThreadUtils.h
+        audio/ohos/AudioDecoderWav.h
+        audio/ohos/AudioDecoderProvider.h
+        audio/ohos/UrlAudioPlayer.h
+        audio/ohos/AudioDecoderSLES.h
+        audio/ohos/AudioDecoderMp3.h
+        audio/ohos/PcmData.h
+        audio/ohos/AudioMixerController.h
+        audio/ohos/AudioResamplerCubic.h
+        audio/ohos/AudioEngine-inl.h
+        audio/ohos/IVolumeProvider.h
+    	audio/ohos/Macros.h 
+        )
+
+    set(COCOS_AUDIO_PLATFORM_SRC
+        audio/ohos/AudioEngine-inl.cpp
+        audio/ohos/CCThreadPool.cpp
+        audio/ohos/AssetFd.cpp
+        audio/ohos/AudioDecoder.cpp
+        audio/ohos/AudioDecoderProvider.cpp
+        audio/ohos/AudioDecoderSLES.cpp
+        audio/ohos/AudioDecoderOgg.cpp
+        audio/ohos/AudioDecoderMp3.cpp
+        audio/ohos/AudioDecoderWav.cpp
+        audio/ohos/AudioPlayerProvider.cpp
+        audio/ohos/AudioResampler.cpp
+        audio/ohos/AudioResamplerCubic.cpp
+        audio/ohos/PcmBufferProvider.cpp
+        audio/ohos/PcmAudioPlayer.cpp
+        audio/ohos/PcmData.cpp
+        audio/ohos/PcmAudioService.cpp
+        audio/ohos/UrlAudioPlayer.cpp
+        audio/ohos/AudioMixerController.cpp
+        audio/ohos/AudioMixer.cpp
+        audio/ohos/mp3reader.cpp
+        audio/ohos/tinysndfile.cpp
+        audio/ohos/Track.cpp
+        audio/ohos/audio_utils/RefCounted.cpp
+        audio/ohos/audio_utils/minifloat.cpp
+        audio/ohos/audio_utils/primitives.cpp
+        audio/ohos/utils/Utils.cpp
+        )
 elseif(LINUX)
     set(COCOS_AUDIO_PLATFORM_HEADER
         audio/linux/AudioEngine-linux.h

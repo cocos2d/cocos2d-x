@@ -118,6 +118,10 @@ use_cocos2dx_compile_define(cocos2d)
 use_cocos2dx_compile_options(cocos2d)
 
 # use all platform related system libs
+if (OHOS)
+
+ target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so  libnative_window.so libnative_buffer.so)
+endif()
 use_cocos2dx_libs_depend(cocos2d)
 
 target_include_directories(cocos2d

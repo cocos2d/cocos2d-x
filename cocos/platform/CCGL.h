@@ -36,6 +36,8 @@ THE SOFTWARE.
 #include "platform/win32/CCGL-win32.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "platform/linux/CCGL-linux.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_OHOS
+#include "platform/ohos/CCGL-ohos.h"
 #endif
 
 /// @endcond

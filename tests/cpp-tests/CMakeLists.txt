@@ -39,6 +39,11 @@ if(ANDROID)
          Classes/JNITest/JNITest.cpp
          proj.android/app/jni/main.cpp
          )
+elseif(OHOS)
+    set(APP_NAME cpp_tests)
+    list(APPEND GAME_SOURCE
+        proj.ohos/entry/src/main/cpp/main.cpp
+         )
 elseif(LINUX)
     list(APPEND GAME_SOURCE
          proj.linux/main.cpp
@@ -335,7 +340,7 @@ list(APPEND GAME_SOURCE
      Classes/ZipTest/ZipTests.cpp
      )
 
-if(ANDROID OR IOS)
+if(ANDROID OR IOS OR OHOS)
     list(APPEND GAME_HEADER
          Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.h
          Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.h
@@ -386,7 +391,9 @@ set(all_code_files
     ${GAME_SOURCE}
     )
 
-if(NOT ANDROID)
+if (OHOS)
+    add_library(${APP_NAME} STATIC ${all_code_files})
+elseif(NOT ANDROID)
     add_executable(${APP_NAME} ${all_code_files})
 else()
     add_library(${APP_NAME} SHARED ${all_code_files})

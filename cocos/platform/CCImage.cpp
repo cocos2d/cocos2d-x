@@ -109,6 +109,9 @@ extern "C"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtils-android.h"
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_OHOS)
+#include "platform/ohos/CCFileUtils-ohos.h"
+#endif
 
 #define CC_GL_ATC_RGB_AMD                                          0x8C92
 #define CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD                          0x8C93
