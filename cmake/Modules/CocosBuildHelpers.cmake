@@ -114,7 +114,7 @@ endfunction()
 #IOS		=	iOS
 #MACOSX		=	MacOS X
 #LINUX      =   Linux
-#OHOS		=	Ohos
+#OHOS		=	HarmonyOS Next OS
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   if(WINRT)

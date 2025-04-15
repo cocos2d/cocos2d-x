@@ -129,7 +129,7 @@ void DispatchKeyEventCB(OH_NativeXComponent* component, void* window) {
         PluginRender::keyEventQueue_.push(keyEvent);
         PluginRender::GetInstance()->sendMsgToWorker(MessageType::WM_XCOMPONENT_KEY_EVENT, component, window);
     } else {
-        OHOS_LOGE("OpenHarmonyPlatform::getKeyEventError");
+        OHOS_LOGE("HarmonyOS Next Platform::getKeyEventError");
     }
 }
 
@@ -140,12 +140,12 @@ void DispatchMouseEventCB(OH_NativeXComponent* component, void* window) {
         PluginRender::mouseEventQueue_.push(mouseEvent);
         PluginRender::GetInstance()->sendMsgToWorker(MessageType::WM_XCOMPONENT_MOUSE_EVENT, component, window);
     } else {
-        OHOS_LOGE("OpenHarmonyPlatform::getMouseEventError");
+        OHOS_LOGE("HarmonyOS Next Platform::getMouseEventError");
     }
 }
 
 void DispatchHoverEventCB(OH_NativeXComponent* component, bool isHover) {
-    OHOS_LOGD("OpenHarmonyPlatform::DispatchHoverEventCB");
+    OHOS_LOGD("HarmonyOS Next Platform::DispatchHoverEventCB");
 }
 
 void DispatchTouchEventCB(OH_NativeXComponent* component, void* window) {
@@ -246,6 +246,7 @@ static uint64_t getCurrentMillSecond() {
 void PluginRender::timerCb(uv_timer_t* handle) {
     // OHOS_LOGD("PluginRender::timerCb, animationInterval_ is %{public}lu", animationInterval_);
     if (PluginRender::GetInstance()->eglCore_ != nullptr) {
+        Device::sendAndClearAcc();
         cocos2d::CCDirector::sharedDirector()->mainLoop();
         PluginRender::GetInstance()->eglCore_->Update();
     }
