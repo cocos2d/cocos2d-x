@@ -90,6 +90,14 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
+if(OHOS)
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/opengles/api
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include/bullet
+  )
+endif()
+
 if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
 endif()
@@ -99,7 +107,9 @@ BuildModules()
 
 # build cpp-empty-test
 if(BUILD_CPP_EMPTY_TEST)
-  add_subdirectory(tests/cpp-empty-test)
+  if(!OHOS)
+      add_subdirectory(tests/cpp-empty-test)
+  endif()
 endif(BUILD_CPP_EMPTY_TEST)
 
 # build cpp-tests

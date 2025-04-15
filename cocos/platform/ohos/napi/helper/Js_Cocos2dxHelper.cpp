@@ -24,32 +24,3 @@ std::string Js_Cocos2dxHelper::_asyncInfoMap[AsyncInfo::LAST_INDEX];
 void Js_Cocos2dxHelper::terminateProcess() {
     JSFunction::getFunction("ApplicationManager.exit").invoke<void>();
 }
-
-// The default accelerometer interval is 10000000 ns, that is, 10 ms.
-float Js_Cocos2dxHelper::_accelerometerInterval = 10000000.0f;
-bool Js_Cocos2dxHelper::_accelerometerFlag = false;
-void Js_Cocos2dxHelper::enableAccelerometer() {
-    // Start accelerometer subscription when allowed use default interval
-    JSFunction::getFunction("Accelerometer.enable").invoke<void>(_accelerometerInterval);
-    _accelerometerFlag = true;
-}
-    
-void Js_Cocos2dxHelper::disableAccelerometer() {
-    JSFunction::getFunction("Accelerometer.disable").invoke<void>();
-    _accelerometerFlag = false;
-}
-
-void Js_Cocos2dxHelper::setAccelerometerInterval(float interval) {
-    OHOS_LOGD("accelerometer setAccelerometerInterval, change to %{public}f", interval);
-    // Same as the original one. No handling is required.
-    if(_accelerometerInterval == interval) {
-        return;
-    }
-    _accelerometerInterval = interval;
-
-    // if accelerometer running, restart with new interval
-    if(_accelerometerFlag) {
-        JSFunction::getFunction("Accelerometer.enable").invoke<void>(_accelerometerInterval);
-    }
-}
-
