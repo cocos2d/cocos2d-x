@@ -26,6 +26,7 @@
 
 #include <unordered_map>
 #include <list>
+#include <vector>
 
 #include "base/CCRef.h"
 #include "audio/apple/AudioCache.h"
@@ -70,6 +71,8 @@ private:
 
     //source,used
     std::list<ALuint> _unusedSourcesPool;
+
+    std::vector<std::function<void()>> _postCallbacks;
 
     //filePath,bufferInfo
     std::unordered_map<std::string, AudioCache> _audioCaches;
