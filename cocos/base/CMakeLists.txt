@@ -6,12 +6,20 @@ if(MACOSX OR APPLE)
 elseif(OHOS)
     set(COCOS_BASE_SPECIFIC_SRC
         base/CCController-ohos.cpp
+        base/CCUserDefault-ohos.cpp
         )
 elseif(ANDROID)
   set(COCOS_BASE_SPECIFIC_SRC
     base/CCUserDefault-android.cpp
     base/CCController-android.cpp
   )
+endif()
+
+if(!OHOS)
+    set(COCOS_BASE_SPECIFIC_SRC
+        ${COCOS_BASE_SPECIFIC_SRC}
+        base/CCUserDefault.cpp
+        )
 endif()
 
 set(COCOS_BASE_SRC
@@ -49,7 +57,6 @@ set(COCOS_BASE_SRC
   base/CCScheduler.cpp
   base/CCScriptSupport.cpp
   base/CCTouch.cpp
-  base/CCUserDefault.cpp
   base/CCValue.cpp
   base/ObjectFactory.cpp
   base/CCStencilStateManager.cpp

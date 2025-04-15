@@ -208,7 +208,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             profileHelper = &_audioPathProfileHelperMap[profile->name];
             profileHelper->profile = *profile;
         }
-        
+
         if (_audioIDInfoMap.size() >= _maxInstances) {
             log("Fail to play %s cause by limited max instance of AudioEngine",filePath.c_str());
             break;
@@ -241,20 +241,20 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
 #endif
             }
         }
-        
+
         if (volume < 0.0f) {
             volume = 0.0f;
         }
         else if (volume > 1.0f){
             volume = 1.0f;
         }
-        
+
         ret = _audioEngineImpl->play2d(filePath, loop, volume);
         if (ret != INVALID_AUDIO_ID)
         {
             _audioPathIDMap[filePath].push_back(ret);
             auto it = _audioPathIDMap.find(filePath);
-            
+
             auto& audioRef = _audioIDInfoMap[ret];
             audioRef.volume = volume;
             audioRef.loop = loop;
@@ -416,11 +416,11 @@ void AudioEngine::uncache(const std::string &filePath)
         // since 'AudioEngine::remove' may be invoked in '_audioEngineImpl->stop' synchronously.
         // If this happens, it will break the iteration, and crash will appear on some devices.
         std::list<int> copiedIDs(audioIDsIter->second);
-        
+
         for (int audioID : copiedIDs)
         {
             _audioEngineImpl->stop(audioID);
-            
+
             auto itInfo = _audioIDInfoMap.find(audioID);
             if (itInfo != _audioIDInfoMap.end())
             {
@@ -461,7 +461,7 @@ float AudioEngine::getDuration(int audioID)
         }
         return it->second.duration;
     }
-    
+
     return TIME_UNKNOWN;
 }
 
@@ -509,7 +509,7 @@ bool AudioEngine::isLoop(int audioID)
     {
         return tmpIterator->second.loop;
     }
-    
+
     log("AudioEngine::isLoop-->The audio instance %d is non-existent", audioID);
     return false;
 }
@@ -533,7 +533,7 @@ AudioEngine::AudioState AudioEngine::getState(int audioID)
     {
         return tmpIterator->second.state;
     }
-    
+
     return AudioState::ERROR;
 }
 
@@ -544,7 +544,7 @@ AudioProfile* AudioEngine::getProfile(int audioID)
     {
         return &it->second.profileHelper->profile;
     }
-    
+
     return nullptr;
 }
 
@@ -554,7 +554,7 @@ AudioProfile* AudioEngine::getDefaultProfile()
     {
         _defaultProfileHelper = new (std::nothrow) ProfileHelper();
     }
-    
+
     return &_defaultProfileHelper->profile;
 }
 
