@@ -231,25 +231,50 @@ if(ANDROID)
         ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
     ENDIF()
 elseif (OHOS)
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+    set(CLASSES_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Classes)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -frtti -fexceptions -fsigned-char")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
     add_library(${APP_NAME} STATIC ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
     find_library( # Sets the name of the path variable.
             GLES-lib
             # Specifies the name of the NDK library that
             # you want CMake to locate.
             GLESv3 )
-    find_library( # Sets the name of the path variable.
-            hilog-lib
-            # Specifies the name of the NDK library that
-            # you want CMake to locate.
-            hilog_ndk.z )
 
     find_library( # Sets the name of the path variable.
             libnapi-lib
             # Specifies the name of the NDK library that
             # you want CMake to locate.
             ace_napi.z )
+    find_library( # Sets the name of the path variable.
+            EGL-lib
+            # Specifies the name of the NDK library that
+            # you want CMake to locate.
+            EGL )
+
+    find_library( # Sets the name of the path variable.
+            libace-lib
+            # Specifies the name of the NDK library that
+            # you want CMake to locate.
+            ace_ndk.z )
+
+    find_library( # Sets the name of the path variable.
+            rawfile-lib
+            # Specifies the name of the NDK library that
+            # you want CMake to locate.
+            rawfile.z )
     message("  *************** target link cpptest and gles  : ${GLES-lib}  ******************")
-    target_link_libraries(${APP_NAME} cocos2d ${GLES-lib} ${hilog-lib} ${libnapi-lib})
+    target_include_directories(${APP_NAME}  PUBLIC  ${CLASSES_PATH}
+                                            PUBLIC  ${CLASSES_PATH}/../..
+                                                    )
+
+    #TBD need fixed
+    target_include_directories(${APP_NAME} PUBLIC ${COCOS2DX_ROOT_PATH}/external/chipmunk/include
+    )
+
+    target_link_libraries(${APP_NAME} cocos2d ${GLES-lib}  ${libnapi-lib})
     target_include_directories(${APP_NAME}
             PRIVATE Classes
     )
