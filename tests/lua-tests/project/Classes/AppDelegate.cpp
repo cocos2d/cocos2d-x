@@ -49,9 +49,8 @@ bool AppDelegate::applicationDidFinishLaunching()
         register_test_binding(L);
     }
     lua_pop(L, 1);
-
-
-    pEngine->executeScriptFile("controller.lua");
+    
+    pEngine->executeScriptFile("src/controller.lua");
 
     return true;
 }

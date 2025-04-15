@@ -103,7 +103,9 @@ BuildModules()
 
 # build cpp-empty-test
 if(BUILD_CPP_EMPTY_TEST)
+  if(!OHOS)
   add_subdirectory(tests/cpp-empty-test)
+  endif()
 endif(BUILD_CPP_EMPTY_TEST)
 
 # build cpp-tests
