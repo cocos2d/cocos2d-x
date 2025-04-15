@@ -119,7 +119,7 @@ Should invoke this script if using linux system
 
 ```
 $ cd cocos2d-x
-$ ./install-linux-deps.sh
+$ ./install-deps-linux.sh
 ```
 
 Running Tests
