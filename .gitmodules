@@ -13,3 +13,15 @@
 [submodule "web"]
         path = web
         url = git://github.com/cocos2d/cocos2d-html5.git
+[submodule "tests/cpp-tests/proj.ohos"]
+	path = tests/cpp-tests/proj.ohos
+	url = git@github.com:cocos2d/cocos2d-x-tests-harmonyos-next-project.git
+	branch = cpp-tests
+[submodule "tests/js-tests/project/proj.ohos"]
+	path = tests/js-tests/project/proj.ohos
+	url = git@github.com:cocos2d/cocos2d-x-tests-harmonyos-next-project.git
+	branch = js-tests
+[submodule "tests/lua-tests/project/proj.ohos"]
+	path = tests/lua-tests/project/proj.ohos
+	url = git@github.com:cocos2d/cocos2d-x-tests-harmonyos-next-project.git
+	branch = lua-tests

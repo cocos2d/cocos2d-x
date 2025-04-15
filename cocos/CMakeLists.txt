@@ -90,7 +90,9 @@ set(COCOS_SRC cocos2d.cpp
 
 add_library(cocos2dInternal ${COCOS_SRC})
 if (OHOS)
- target_link_libraries(cocos2dInternal ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so)
+
+ target_link_libraries(cocos2dInternal ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so libnative_display_manager.so libohsensor.so
+ 			libnative_media_codecbase.so libnative_media_core.so libnative_media_acodec.so libnative_media_avdemuxer.so libnative_media_avsource.so)
 endif()
 
 set_target_properties(cocos2dInternal
@@ -172,7 +174,7 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL OPENSSL FLATBUFFERS XXHASH)
+foreach(pkg ZLIB MINIZIP JPEG PNG TinyXML2 FREETYPE WEBSOCKETS CURL OPENSSL FLATBUFFERS XXHASH TIFF)
   cocos_use_pkg(cocos2dInternal ${pkg})
 endforeach()
 
@@ -206,8 +208,6 @@ if(USE_RECAST)
 endif()
 
 if(OHOS)
-    cocos_use_pkg(cocos2dInternal PVMP3DEC)
-    cocos_use_pkg(cocos2dInternal TREMOLO)
     target_link_libraries(cocos2dInternal
     ext_ssl
     ext_crypto
