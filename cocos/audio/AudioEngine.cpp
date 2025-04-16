@@ -248,7 +248,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
 #endif
             }
         }
-        
+
         if (volume < 0.0f) {
             volume = 0.0f;
         }
@@ -422,11 +422,11 @@ void AudioEngine::uncache(const std::string &filePath)
         // since 'AudioEngine::remove' may be invoked in '_audioEngineImpl->stop' synchronously.
         // If this happens, it will break the iteration, and crash will appear on some devices.
         std::list<int> copiedIDs(audioIDsIter->second);
-        
+
         for (int audioID : copiedIDs)
         {
             _audioEngineImpl->stop(audioID);
-            
+
             auto itInfo = _audioIDInfoMap.find(audioID);
             if (itInfo != _audioIDInfoMap.end())
             {
@@ -558,6 +558,11 @@ AudioProfile* AudioEngine::getDefaultProfile()
 {
     if (_defaultProfileHelper == nullptr)
     {
+	
+	
+	
+	
+	
         _defaultProfileHelper = new (std::nothrow) ProfileHelper();
     }
     

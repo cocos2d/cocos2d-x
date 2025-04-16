@@ -89,6 +89,13 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/extensions
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
+if(OHOS)
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/opengles/api
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet/include/bullet
+  )
+endif()
 
 if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
