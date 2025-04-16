@@ -588,8 +588,10 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 	internal->linkedMeshCount = 0;
 
 #ifndef __ANDROID__
-	oldLocale = strdup(setlocale(LC_NUMERIC, NULL));
-	setlocale(LC_NUMERIC, "C");
+    #ifndef __OHOS__
+	    oldLocale = strdup(setlocale(LC_NUMERIC, NULL));
+	    setlocale(LC_NUMERIC, "C");
+    #endif
 #endif
 
 	root = Json_create(json);

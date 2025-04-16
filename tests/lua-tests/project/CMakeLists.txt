@@ -44,13 +44,14 @@ if(APPLE OR VS)
 endif()
 
 if(OHOS)
+    set(CLASSES_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Classes)
     set(res_raw_folders
             "${CMAKE_CURRENT_LIST_DIR}/proj.ohos/entry/src/main/resources/rawfile"
             )
     file(GLOB ALL_RESOURCES_FILES ${res_res_folders}/* ${res_src_folders}/*)
-    file(COPY ${ALL_RESOURCES_FILES} DESTINATION ${res_raw_folders})
+    file(COPY ${ALL_RESOURCES_FILES} DESTINATION ${res_raw_folders}/src)
     file(GLOB ALL_RESOURCES_FILES ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*)
-    file(COPY ${ALL_RESOURCES_FILES} DESTINATION ${res_raw_folders}/cocos)
+    file(COPY ${ALL_RESOURCES_FILES} DESTINATION ${res_raw_folders}/src/cocos)
 
     set(res_raw_ccs_res_folders "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources/ccs-res/*")
     file(GLOB CCS_RESOURCES_FILES ${res_raw_ccs_res_folders})
@@ -64,7 +65,6 @@ if(ANDROID)
     set(APP_NAME lua_tests)
     list(APPEND GAME_SOURCE proj.android/app/jni/main.cpp)
 elseif(OHOS)
-    set(APP_NAME lua_test)
     list(APPEND GAME_SOURCE proj.ohos/entry/src/main/cpp/main.cpp ${cc_common_res})
 elseif(LINUX)
     list(APPEND GAME_SOURCE proj.linux/main.cpp)
@@ -125,6 +125,65 @@ set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 if(OHOS)
     add_library(${APP_NAME} SHARED ${APP_SRC})
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    add_compile_options(-Wno-error=int-conversion)
+    find_library( # Sets the name of the path variable.
+                  EGL-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  EGL )
+
+    find_library( # Sets the name of the path variable.
+                  GLES-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  GLESv3 )
+
+    message("***************  GLES-lib: ${GLES-lib} ****************")
+
+    find_library( # Sets the name of the path variable.
+                  hilog-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  hilog_ndk.z )
+
+    find_library( # Sets the name of the path variable.
+                  libace-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  ace_ndk.z )
+
+    find_library( # Sets the name of the path variable.
+                  libnapi-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  ace_napi.z )
+
+    find_library( # Sets the name of the path variable.
+                  libuv-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  uv )
+    find_library( # Sets the name of the path variable.
+                  rawfile-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  rawfile.z )
+
+
+    target_include_directories(${APP_NAME} PUBLIC ${CLASSES_PATH})
+    target_include_directories(${APP_NAME}  PUBLIC  ${COCOS2DX_ROOT_PATH}
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/extensions
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/external/lua/tolua
+                                                        )
+    include_directories(${COCOS2DX_ROOT_PATH}/external/lua/luajit/include)
+    #TBD need fixed
+    target_include_directories(${APP_NAME} PUBLIC ${COCOS2DX_ROOT_PATH}/external/chipmunk/include
+        )
     target_link_libraries(${APP_NAME} luacocos2d cocos2d)
 elseif()
     # mark app complie info and libs info
