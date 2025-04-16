@@ -39,10 +39,19 @@ include(CocosBuildSet)
 
 # default tests include lua, js test project, so we set those option on to build libs
 set(BUILD_LUA_LIBS ON)
+if(!OHOS)
 set(BUILD_JS_LIBS ON)
+endif()
 
 if(NOT USE_COCOS_PREBUILT)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif()
-add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
 
+# add cpp tests default
+if(!OHOS)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
+else()
+    set(BUILD_ENGINE_DONE ON)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-tests ${ENGINE_BINARY_PATH}/tests/cpp-tests)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/lua-tests/project ${ENGINE_BINARY_PATH}/tests/lua-test)
+endif()

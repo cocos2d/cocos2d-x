@@ -33,8 +33,6 @@ THE SOFTWARE.
 namespace cocos2d { namespace experimental {
 
 
-static std::vector<char> __silenceData;//NOLINT(bugprone-reserved-identifier, readability-identifier-naming)
-
 PcmAudioService::PcmAudioService()
 : _controller(nullptr) {
 }
@@ -59,14 +57,13 @@ int32_t PcmAudioService::AudioRendererOnWriteData(OH_AudioRenderer* renderer,
 {
     auto *thiz = reinterpret_cast<PcmAudioService *>(userData);
     if (bufferLen != thiz->_bufferSizeInBytes) {
-        __silenceData.resize(bufferLen, 0x00);
         thiz->_bufferSizeInBytes = bufferLen;
         thiz->_controller->updateBufferSize(thiz->_bufferSizeInBytes);
      }
 
     if (thiz->_controller->hasPlayingTacks()) {
         if (thiz->_controller->isPaused()) {
-            memcpy(buffer, __silenceData.data(), bufferLen);
+            return AUDIO_DATA_CALLBACK_RESULT_INVALID;
         } else {
          
             thiz->_controller->mixOneFrame();
@@ -75,10 +72,10 @@ int32_t PcmAudioService::AudioRendererOnWriteData(OH_AudioRenderer* renderer,
             memcpy(buffer, current->buf, current->size < bufferLen ? current->size : bufferLen);
         }
     } else {
-        memcpy(buffer, __silenceData.data(), bufferLen);
+        return AUDIO_DATA_CALLBACK_RESULT_INVALID;
     }
 
-    return 0;
+    return AUDIO_DATA_CALLBACK_RESULT_VALID;
 }
 
 int32_t PcmAudioService::AudioRendererOnInterrupt(OH_AudioRenderer* renderer,
@@ -96,6 +93,7 @@ int32_t PcmAudioService::AudioRendererOnInterrupt(OH_AudioRenderer* renderer,
     }
     return 0;
 }
+
 
 bool PcmAudioService::init(AudioMixerController *controller, int numChannels, int sampleRate, int *bufferSizeInBytes) {
     _controller = controller;
@@ -117,6 +115,7 @@ bool PcmAudioService::init(AudioMixerController *controller, int numChannels, in
     callbacks.OH_AudioRenderer_OnInterruptEvent = AudioRendererOnInterrupt;
     callbacks.OH_AudioRenderer_OnError = nullptr;
     callbacks.OH_AudioRenderer_OnStreamEvent = nullptr;
+    
     ret = OH_AudioStreamBuilder_SetRendererCallback(_builder, callbacks, this);
     if (ret != AUDIOSTREAM_SUCCESS) {
         return false;
@@ -132,9 +131,6 @@ bool PcmAudioService::init(AudioMixerController *controller, int numChannels, in
     _bufferSizeInBytes = buffer_size * numChannels * 2;
     *bufferSizeInBytes = buffer_size;
 
-    if (__silenceData.empty()) {
-        __silenceData.resize(_bufferSizeInBytes, 0x00);
-    }
 
     ret = OH_AudioRenderer_Start(_audioRenderer);
     if (ret != AUDIOSTREAM_SUCCESS) {
@@ -146,6 +142,7 @@ bool PcmAudioService::init(AudioMixerController *controller, int numChannels, in
 
 void PcmAudioService::pause() {
     if (_audioRenderer != nullptr) {
+        OH_AudioRenderer_Flush(_audioRenderer);// clear pop sound
         OH_AudioRenderer_Pause(_audioRenderer);
     }
 }

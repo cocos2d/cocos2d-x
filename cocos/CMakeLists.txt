@@ -182,7 +182,8 @@ if (OHOS)
               # you want CMake to locate.
               hilog_ndk.z )
     message("****************  native_drawing:${Drawing-lib}  *************************")
-    target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so libnative_window.so libnative_buffer.so)
+    target_link_libraries(cocos2d ${Drawing-lib} ${libace-lib} ${GLES-lib} ${libnapi-lib} ${libuv-lib} ${rawfile-lib} ${EGL-lib} ${hilog-lib} libohaudio.so libavplayer.so  libnative_window.so libnative_buffer.so libnative_display_manager.so libohsensor.so
+    			  libnative_media_codecbase.so libnative_media_core.so libnative_media_acodec.so libnative_media_avdemuxer.so libnative_media_avsource.so)
 endif()
 
 include(CocosUseLibs)
@@ -193,27 +194,6 @@ if(OHOS)
     # add_subdirectory(${COCOS2DX_ROOT_PATH}/external/bullet ${ENGINE_BINARY_PATH}/external/bullet)
     # set(BULLET_LIBRARIES bullet)
     # include_directories(${BULLET_INCLUDE_DIRS})
-
-     set(PVMP3DEC_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/ohos-specific/pvmp3dec/include ${COCOS2DX_ROOT_PATH}/external/ohos-specific/pvmp3dec/src)
-     if(USE_COCOS_PREBUILT)
-         cocos_find_prebuilt_lib_by_name(pvmp3dec PVMP3DEC_LIBRARIES)
-     else()
-         add_subdirectory(${COCOS2DX_ROOT_PATH}/external/ohos-specific/pvmp3dec ${ENGINE_BINARY_PATH}/external/ohos-specific/pvmp3dec)
-         set(PVMP3DEC_LIBRARIES pvmp3dec)
-     endif()
-     include_directories(${PVMP3DEC_INCLUDE_DIRS})
-
-     set(TREMOLO_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/ohos-specific/tremolo)
-     if(USE_COCOS_PREBUILT)
-         cocos_find_prebuilt_lib_by_name(tremolo TREMOLO_LIBRARIES)
-     else()
-         add_subdirectory(${COCOS2DX_ROOT_PATH}/external/ohos-specific/tremolo ${ENGINE_BINARY_PATH}/external/ohos-specific/tremolo)
-         set(TREMOLO_LIBRARIES tremolo)
-     endif()
-     include_directories(${TREMOLO_INCLUDE_DIRS})
- 
-     target_link_libraries(cocos2d ext_pvmp3dec ext_tremolo)
-
      target_include_directories(cocos2d PUBLIC ${COCOS2DX_ROOT_PATH}/external/chipmunk/include)
      target_include_directories(cocos2d PUBLIC ${COCOS2DX_ROOT_PATH}/external)
      target_compile_definitions(cocos2d PUBLIC -DOpenHarmony)

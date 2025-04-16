@@ -60,7 +60,7 @@ public:
         OS_TIZEN,       /**< Tizen */
         OS_WINRT,       /**< Windows Runtime Applications */
         OS_WP8,          /**< Windows Phone 8 Applications */
-        OS_OPENHARMONY   /**< OHOS */
+        OS_HARMONY_NEXT   /**< HarmonyOS Next OS */
     };
 
     /**

@@ -36,11 +36,6 @@ if(ANDROID)
          proj.android/app/jni/main.cpp
          )
 elseif(OHOS)
-    # change APP_NAME to the share library name for ohos
-    set(APP_NAME cpp_tests)
-    # list(APPEND GAME_HEADER
-    #      Classes/JNITest/JNITest.h
-    #      )
     list(APPEND GAME_SOURCE
         #  Classes/JNITest/JNITest.cpp
             proj.ohos/entry/src/main/cpp/main.cpp
@@ -476,11 +471,35 @@ set(APP_SRC
     )
 # mark app complie info and libs info
 if(OHOS)
+    add_compile_options(-Wno-error=int-conversion)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
     add_library(${APP_NAME} SHARED ${APP_SRC})
     include_directories(${COCOS2DX_ROOT_PATH}/external/freetype2/include/ohos/freetype2)
     include_directories(${COCOS2DX_ROOT_PATH}/external/curl/include/ohos)
     # include_directories(${COCOS2DX_ROOT_PATH}/external/openssl/include/ohos/openssl)
+    find_library( # Sets the name of the path variable.
+                  EGL-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  EGL )
 
+    find_library( # Sets the name of the path variable.
+                  libace-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  ace_ndk.z )
+
+    find_library( # Sets the name of the path variable.
+                  libuv-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  uv )
+    find_library( # Sets the name of the path variable.
+                  rawfile-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  rawfile.z )
     find_library( # Sets the name of the path variable.
         GLES-lib
         # Specifies the name of the NDK library that
@@ -497,7 +516,19 @@ if(OHOS)
         # Specifies the name of the NDK library that
         # you want CMake to locate.
         ace_napi.z )
+    target_include_directories(${APP_NAME}  PUBLIC  ${CLASSES_PATH}
+                                                PUBLIC  ${CLASSES_PATH}/../..
+                                                        )
+    target_include_directories(${APP_NAME}  PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/common
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/modules
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
+                                                        )
 
+
+    #TBD need fixed
+    target_include_directories(${APP_NAME} PUBLIC ${COCOS2DX_ROOT_PATH}/external/chipmunk/include
+    )
     target_include_directories(${APP_NAME}
     PRIVATE Classes
     )
