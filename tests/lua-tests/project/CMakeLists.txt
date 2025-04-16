@@ -30,13 +30,12 @@ elseif(OHOS)
     file(GLOB resFiles "${CMAKE_CURRENT_LIST_DIR}/../res/*")
     file(COPY ${resFiles} DESTINATION ${CMAKE_CURRENT_LIST_DIR}/proj.ohos/entry/src/main/resources/rawfile)
     file(GLOB srcFiles "${CMAKE_CURRENT_LIST_DIR}/../src/*")
-    file(COPY ${srcFiles} DESTINATION ${CMAKE_CURRENT_LIST_DIR}/proj.ohos/entry/src/main/resources/rawfile)
+    file(COPY ${srcFiles} DESTINATION ${CMAKE_CURRENT_LIST_DIR}/proj.ohos/entry/src/main/resources/rawfile/src)
     file(GLOB testResource ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources/*)
     file(COPY ${testResource} DESTINATION ${CMAKE_CURRENT_LIST_DIR}/proj.ohos/entry/src/main/resources/rawfile)
-    if(NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/proj.ohos/entry/src/main/resources/rawfile/cocos)
         file(GLOB cocosFiles "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*")
-        file(COPY ${cocosFiles} DESTINATION ${CMAKE_CURRENT_LIST_DIR}/proj.ohos/entry/src/main/resources/rawfile/cocos)
-    endif()
+        file(COPY ${cocosFiles} DESTINATION ${CMAKE_CURRENT_LIST_DIR}/proj.ohos/entry/src/main/resources/rawfile/src/cocos)
+
 endif()
 
 include_directories(
@@ -49,6 +48,65 @@ include_directories(
 
 if (OHOS)
     add_library(${APP_NAME} STATIC ${SAMPLE_SRC})
+    set(CMAKE_CXX_FLAGS "-frtti -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -fsigned-char ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    find_library( # Sets the name of the path variable.
+                  EGL-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  EGL )
+
+    find_library( # Sets the name of the path variable.
+                  GLES-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  GLESv3 )
+
+    find_library( # Sets the name of the path variable.
+                  hilog-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  hilog_ndk.z )
+
+    find_library( # Sets the name of the path variable.
+                  libace-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  ace_ndk.z )
+
+    find_library( # Sets the name of the path variable.
+                  libnapi-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  ace_napi.z )
+
+    find_library( # Sets the name of the path variable.
+                  libuv-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  uv )
+    find_library( # Sets the name of the path variable.
+                  rawfile-lib
+                  # Specifies the name of the NDK library that
+                  # you want CMake to locate.
+                  rawfile.z )
+
+
+    include_directories(${COCOS2DX_ROOT_PATH}/external/opengles/api)
+    include_directories(${COCOS2DX_ROOT_PATH}/external/bullet/include)
+    include_directories(${COCOS2DX_ROOT_PATH}/external/bullet/include/bullet)
+    target_include_directories(${APP_NAME} PUBLIC ${COCOS2DX_ROOT_PATH}/external/chipmunk/include)
+    target_include_directories(${APP_NAME}  PUBLIC  ${CLASSES_PATH}
+                                                PUBLIC  ${CLASSES_PATH}/../..
+                                                )
+    target_include_directories(${APP_NAME}  PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/common
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi/modules
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos/napi
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos
+                                                PUBLIC  ${COCOS2DX_ROOT_PATH}/cocos/base
+                                                )
 else()
     # add the executable
     add_executable(${APP_NAME} ${SAMPLE_SRC})

@@ -1172,7 +1172,7 @@ var _initSys = function () {
      * @constant
      * @type {string}
      */
-    sys.OS_OHOS = "OHOS";
+    sys.OS_OHOS = "HarmonyOS Next";
     /**
      * @memberof cc.sys
      * @name OS_UNKNOWN
