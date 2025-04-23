@@ -7,7 +7,7 @@
   "ohos": {
     "org": ""
   },
-  "main": "index.ts",
+  "main": "index.ets",
   "type": "module",
   "version": "1.0.0",
   "dependencies": {}

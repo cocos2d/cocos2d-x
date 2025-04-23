@@ -12,7 +12,7 @@ export struct  CocosVideoPlayer {
       Video({
         src: this.videoPlayerInfo.isUrl ? this.videoPlayerInfo.url : this.videoPlayerInfo.rawfile,
         controller: this.videoPlayerInfo.controller
-      }).position({ x: this.videoPlayerInfo.x, y: this.videoPlayerInfo.y })
+      })
         .width(this.videoPlayerInfo.w)
         .height(this.videoPlayerInfo.h)
         .visibility(this.videoPlayerInfo.visible ? Visibility.Visible : Visibility.None)
