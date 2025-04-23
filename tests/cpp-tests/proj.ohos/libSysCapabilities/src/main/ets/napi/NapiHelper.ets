@@ -108,5 +108,10 @@ export class NapiHelper {
         nativerender.JSBind.bindFunction('DiaLog.showDialog', Dialog.showDialog);
         nativerender.JSBind.bindFunction('DiaLog.showTextInputDialog', Dialog.showTextInputDialog);
         nativerender.JSBind.bindFunction('DiaLog.hideTextInputDialog', Dialog.hideTextInputDialog);
+
+        nativerender.JSBind.bindFunction("DeviceUtils.getSafeAreaLeft", DeviceUtils.getSafeAreaLeft);
+        nativerender.JSBind.bindFunction("DeviceUtils.getSafeAreaTop", DeviceUtils.getSafeAreaTop);
+        nativerender.JSBind.bindFunction("DeviceUtils.getSafeAreaWidth", DeviceUtils.getSafeAreaWidth);
+        nativerender.JSBind.bindFunction("DeviceUtils.getSafeAreaHeight", DeviceUtils.getSafeAreaHeight);
     }
 }

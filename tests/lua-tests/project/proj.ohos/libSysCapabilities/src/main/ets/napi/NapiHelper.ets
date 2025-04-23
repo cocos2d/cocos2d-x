@@ -9,19 +9,21 @@ import Accelerometer from '../system/sensor/AccelerometerUtils'
 import nativerender from "libnativerender.so";
 
 export class NapiHelper {
-    // 需要将JS代码执行在worker线程的在此处绑定方法
+    // The JS code needs to be executed in the worker thread and the method needs to be bound here.
     static registerFunctions() {
         NapiHelper.registerOthers();
         NapiHelper.registerDeviceUtils();
         NapiHelper.registerSensor();
     }
-    // 需要将JS代码执行在UI线程的在此处注册方法
+
+    // The JS code needs to be executed in the UI thread. The method is registered here.
     static registerUIFunctions() {
         NapiHelper.registerEditBox();
         NapiHelper.registerVideoPlay();
         NapiHelper.registerWebView();
         NapiHelper.registerOtherUIFunctions();
     }
+
     private static registerOthers() {
         nativerender.JSBind.bindFunction("ApplicationManager.getVersionName", ApplicationManager.getVersionName);
     }
@@ -63,6 +65,7 @@ export class NapiHelper {
         nativerender.JSBind.bindFunction('CocosEditBox.setNativeInputFlag', CocosEditBox.setNativeInputFlag);
         nativerender.JSBind.bindFunction('CocosEditBox.hideAllEditBox', CocosEditBox.hideAllEditBox);
     }
+
     private static registerVideoPlay() {
         nativerender.JSBind.bindFunction('VideoPlayer.createVideoPlayer', VideoPlayer.createVideoPlayer);
         nativerender.JSBind.bindFunction('VideoPlayer.removeVideoPlayer', VideoPlayer.removeVideoPlayer);
@@ -98,11 +101,17 @@ export class NapiHelper {
         nativerender.JSBind.bindFunction('WebView.evaluateJS', WebView.evaluateJS);
         nativerender.JSBind.bindFunction('WebView.setScalesPageToFit', WebView.setScalesPageToFit);
     }
+
     private static registerOtherUIFunctions() {
         nativerender.JSBind.bindFunction('JumpManager.openUrl', JumpManager.openUrl);
         nativerender.JSBind.bindFunction('ApplicationManager.exit', ApplicationManager.exit);
         nativerender.JSBind.bindFunction('DiaLog.showDialog', Dialog.showDialog);
         nativerender.JSBind.bindFunction('DiaLog.showTextInputDialog', Dialog.showTextInputDialog);
         nativerender.JSBind.bindFunction('DiaLog.hideTextInputDialog', Dialog.hideTextInputDialog);
+
+        nativerender.JSBind.bindFunction("DeviceUtils.getSafeAreaLeft", DeviceUtils.getSafeAreaLeft);
+        nativerender.JSBind.bindFunction("DeviceUtils.getSafeAreaTop", DeviceUtils.getSafeAreaTop);
+        nativerender.JSBind.bindFunction("DeviceUtils.getSafeAreaWidth", DeviceUtils.getSafeAreaWidth);
+        nativerender.JSBind.bindFunction("DeviceUtils.getSafeAreaHeight", DeviceUtils.getSafeAreaHeight);
     }
 }
