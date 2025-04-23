@@ -26,7 +26,7 @@ function openUrl(url: string): void {
         'uri': url
     }
     context.startAbility(wantInfo).then(() => {
-        log.info('%{public}s',  JSON.stringify(Result.success({})));
+        log.info('%{public}s',  JSON.stringify(Result.success("")));
     }).catch((err: BusinessError) => {
         log.error('openUrl : err : %{public}s', err.code, err.message);
     });

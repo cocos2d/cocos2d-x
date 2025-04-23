@@ -4,9 +4,9 @@ import type { ThreadWorkerGlobalScope } from '@ohos.worker';
 export class VideoPlayer {
     static MODULE_NAME: string = 'VideoPlay';
 
-    private static workerPort: ThreadWorkerGlobalScope;
+    private static workerPort : ThreadWorkerGlobalScope;
 
-    static init(workerPort: ThreadWorkerGlobalScope) : void {
+    static init(workerPort : ThreadWorkerGlobalScope) : void {
         VideoPlayer.workerPort = workerPort;
     }
 

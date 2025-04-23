@@ -1,4 +1,3 @@
-
 import worker from '@ohos.worker';
 import { Constants } from '@ohos/libSysCapabilities';
 
