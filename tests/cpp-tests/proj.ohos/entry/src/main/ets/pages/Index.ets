@@ -95,8 +95,7 @@ struct Index {
       })
     } catch (error) {
       console.error(`showDialog args error code is ${error.code}, message is ${error.message}`);
-    }
-    ;
+    };
     // If disable system exit needed, remove comment "return true"
     return true;
   }

@@ -1,6 +1,6 @@
 {
   "app": {
-    "bundleName": "ohos.cocos4.0.lua.tests",
+    "bundleName": "ohos.cocosV4.lua.tests",
     "vendor": "example",
     "versionCode": 1000000,
     "versionName": "1.0.0",

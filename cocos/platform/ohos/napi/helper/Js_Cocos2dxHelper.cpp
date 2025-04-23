@@ -13,9 +13,6 @@ napi_value Js_Cocos2dxHelper::initJsCocos2dxHelper(napi_env env, napi_callback_i
  * If you have more information that can be obtained asynchronously, add it here.
  */
 napi_value Js_Cocos2dxHelper::initAsyncInfo(napi_env env, napi_callback_info info) {
-    if (auto initScreenInfo = aki::JSBind::GetJSFunction("DeviceUtils.initScreenInfo")) {
-            initScreenInfo->Invoke<void>();
-    }
     return nullptr;
 }
 
