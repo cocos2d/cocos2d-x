@@ -4,10 +4,8 @@
       {
         "name": "default",
         "signingConfig": "default",
-        "compatibleSdkVersion": "5.0.0(12)",
-        //指定HarmonyOS应用/服务目标版本。若没有设置，默认为compatibleSdkVersion
+        "compatibleSdkVersion": "5.0.3(15)",
         "runtimeOS": "HarmonyOS"
-        //指定为HarmonyOS/OpenHarmony
       }
     ],
     "signingConfigs": [
