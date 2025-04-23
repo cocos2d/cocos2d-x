@@ -1,11 +1,12 @@
+import type { ThreadWorkerGlobalScope } from '@ohos.worker';
 import { Color4B, EditBoxMsgEntity, ViewRect } from '../../entity/WorkerMsgEntity';
 
 export class CocosEditBox {
     static MODULE_NAME : string = 'EditBox';
 
-    private static workerPort;
+    private static workerPort : ThreadWorkerGlobalScope;
 
-    static init(workerPort) : void {
+    static init(workerPort : ThreadWorkerGlobalScope) : void {
         CocosEditBox.workerPort = workerPort;
     }
 

@@ -5,13 +5,12 @@ import common from '@ohos.app.ability.common';
 import { GlobalContext, GlobalContextConstants } from '../common/GlobalContext';
 
 let log: Logger = new Logger(0x0001, "Preferences");
-let preferences: data_preferences.Preferences | null = null;
+let preferences: data_preferences.Preferences;
 const PREFS_NAME: string = "Cocos2dxPreferences";
 
 export default class Preferences {
 
-  // 通过 preferencesName 获取Preferences实例
-  static getPreferences(): data_preferences.Preferences {
+  static getPreferences(): void {
     let context: common.UIAbilityContext = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT);
     try {
       preferences = data_preferences.getPreferencesSync(context, {name: PREFS_NAME});
@@ -21,13 +20,8 @@ export default class Preferences {
       let message = (err as BusinessError).message;
       log.error("Failed to get preferences. code =" + code + ", message =" + message);
     }
-    return preferences;
   }
 
-  /*
-  通过 preferencesName 从缓存中移出指定的Preferences实例，若Preferences实例有对应的持久化文件，则同时删除其持久化文件。使用Promise异步回调。
-  调用该接口后，不建议再使用旧的Preferences实例进行数据操作，否则会出现数据一致性问题，应将Preferences实例置为null，系统将会统一回收。
-  */
   static deletePreferences(): void {
     let context: common.UIAbilityContext = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT);
     try {
@@ -41,12 +35,6 @@ export default class Preferences {
     }
   }
 
-  /*
-  通过 preferencesName 从缓存中移出指定的Preferences实例，使用Promise异步回调。
-  应用首次调用getPreferences接口获取某个Preferences实例后，该实例会被会被缓存起来，后续再次getPreferences时不会再次从持久化文件中读取，
-  直接从缓存中获取Preferences实例。调用此接口移出缓存中的实例之后，再次getPreferences将会重新读取持久化文件，生成新的Preferences实例。
-  调用该接口后，不建议再使用旧的Preferences实例进行数据操作，否则会出现数据一致性问题，应将Preferences实例置为null，系统将会统一回收。
-  */
   static removePreferencesFromCache(): void {
     let context: common.UIAbilityContext = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT);
     try {
@@ -59,7 +47,6 @@ export default class Preferences {
     }
   }
 
-  // 从缓存的Preferences实例中获取键对应的值，如果值为null或者非默认值类型，返回默认数据defValue
   static get(key: string, defValue: data_preferences.ValueType): data_preferences.ValueType {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -76,7 +63,6 @@ export default class Preferences {
     }
   }
 
-  // 将数据写入缓存的Preferences实例中，可通过flush将Preferences实例持久化
   static put(key: string, value: data_preferences.ValueType): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -92,7 +78,6 @@ export default class Preferences {
     }
   }
 
-  // 从缓存的Preferences实例中获取所有键值数据。
   static getAll(): string | undefined {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -111,7 +96,6 @@ export default class Preferences {
     }
   }
 
-  // 检查缓存的Preferences实例中是否包含名为给定Key的存储键值对
   static has(key: string): boolean {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -133,7 +117,6 @@ export default class Preferences {
     }
   }
 
-  // 从缓存的Preferences实例中删除名为给定Key的存储键值对，可通过flush将Preferences实例持久化
   static delete(key: string): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -149,7 +132,6 @@ export default class Preferences {
     }
   }
 
-  // 将缓存的Preferences实例中的数据异步存储到用户首选项的持久化文件中，使用Promise异步回调。
   static flush(): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -159,7 +141,6 @@ export default class Preferences {
     });
   }
 
-  // 清除缓存的Preferences实例中的所有数据，可通过flush将Preferences实例持久化，使用Promise异步回调。
   static clear(): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -175,7 +156,6 @@ export default class Preferences {
   }
 
 
-  // 订阅数据变更，订阅的Key的值发生变更后，在执行flush方法后，触发callback回调。
   static onChange(cb: Function): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -192,7 +172,6 @@ export default class Preferences {
     }
   }
 
-  // 取消订阅数据变更。
   static offChange(cb: Function): void {
     if (preferences === null) {
       Preferences.getPreferences();
@@ -210,8 +189,6 @@ export default class Preferences {
   }
 }
 
-// 由于ArkTS中无Object.keys，且无法使用for..in...
-// 若报ArkTS问题，请将此方法单独抽离至一个ts文件中并暴露，在需要用到的ets文件中引入使用
 function getObjKeys(obj: Object): string[] {
   let keys = Object.keys(obj);
   return keys;

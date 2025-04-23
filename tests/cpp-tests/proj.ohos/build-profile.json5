@@ -4,8 +4,7 @@
       {
         "name": "default",
         "signingConfig": "default",
-        "compatibleSdkVersion": "5.0.0(12)",
-        "targetSdkVersion": "5.0.0(12)",
+        "compatibleSdkVersion": "5.0.3(15)",
         "runtimeOS": "HarmonyOS"
       }
     ],
@@ -14,13 +13,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_bDUQ21cu36Hb_T3jW1UCUliZUhDOg-slWObojAZ01aE=.cer",
-          "storePassword": "0000001B42DE88211EE39411DFDEC8296FC1F89A1E03E0A0E155C6E2D9282E6FDCEA4C39E34EB9C3D38AA3",
+          "certpath": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_Sn00X7CKuPjypPJX7h9NSE93VEZdoZLgQH01I4cTSMw=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B85EB0DEC53BFE80C21BD062A5180A3CAA3DFBBB1B13B8F29130E2CF6DD6A2B2E4EABBABA095CC6",
-          "profile": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_bDUQ21cu36Hb_T3jW1UCUliZUhDOg-slWObojAZ01aE=.p7b",
+          "keyPassword": "0000001A142B209FF7D2A7268F3273851288B08854AD9E09D57A0F77AEA8C1488ACD59F3BF5F880ABE47",
+          "profile": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_Sn00X7CKuPjypPJX7h9NSE93VEZdoZLgQH01I4cTSMw=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_bDUQ21cu36Hb_T3jW1UCUliZUhDOg-slWObojAZ01aE=.p12"
+          "storeFile": "C:\\Users\\cocos\\.ohos\\config\\default_proj.ohos_Sn00X7CKuPjypPJX7h9NSE93VEZdoZLgQH01I4cTSMw=.p12",
+          "storePassword": "0000001A11A855F8A13953CDE22713662FC55157E78C6847EDF97963892A7BDC05A0C5B554C6528FB69D"
         }
       }
     ]

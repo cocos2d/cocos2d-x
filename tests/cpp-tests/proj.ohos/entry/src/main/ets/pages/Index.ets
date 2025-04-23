@@ -109,7 +109,7 @@ struct Index {
   }
 
   build() {
-    Stack(){
+    Stack() {
       XComponent({
         id: 'xcomponentId',
         type: 'surface',

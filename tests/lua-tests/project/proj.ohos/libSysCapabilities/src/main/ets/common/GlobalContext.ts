@@ -22,4 +22,5 @@ export class GlobalContextConstants {
   static readonly COCOS2DX_ABILITY_CONTEXT = "Cocos2dx.abilityContext";
   static readonly COCOS2DX_ABILITY_WANT = "Cocos2dx.abilityWant";
   static readonly COCOS2DX_WEB_RESULT= "Cocos2dx.webResult";
+  static readonly COCOS2DX_MAIN_WINDOW = "Cocos2dx.mainWindow";
 }
