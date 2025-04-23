@@ -5,6 +5,8 @@ import Logger from '../../utils/Logger';
 import window from '@ohos.window';
 import { GlobalContext, GlobalContextConstants } from '../../common/GlobalContext';
 import { Rect } from '@ohos.application.AccessibilityExtensionAbility';
+import { JSON, worker } from '@kit.ArkTS';
+import {BusinessError} from '@kit.BasicServicesKit'
 
 let log = new Logger(0x0001, "DeviceUtils");
 
@@ -17,6 +19,10 @@ export class DeviceUtils {
   static _cutoutWidth: number;
   static _cutoutTop: number;
   static _cutoutHeight: number;
+  static _originalWindowWidth: number = 0;
+  static _originalWindowHeight: number = 0;
+  static oldSafeArea: window.Rect = {left: 0, top: 0, width: 0, height: 0};
+  static safeAreaInWorker: window.Rect = {left: 0, top: 0, width: 0, height: 0};
 
   static getDpi(): number {
     return display.getDefaultDisplaySync().densityDPI;
@@ -46,7 +52,7 @@ export class DeviceUtils {
   }
 
   static setKeepScreenOn(value: boolean) {
-    let windowClass = null;
+    let windowClass:window.Window;
     try {
       window.getLastWindow(GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT), (err, data) => { //获取窗口实例
         if (err.code) {
@@ -58,7 +64,7 @@ export class DeviceUtils {
         let keepScreenOnPromise = windowClass.setWindowKeepScreenOn(value);
         Promise.all([keepScreenOnPromise]).then(() => {
           log.info('Succeeded in setKeepScreenOn, value:%{public}s', value);
-        }).catch((err) => {
+        }).catch((err:BusinessError) => {
           log.error('Failed to setKeepScreenOn, cause:%{public}s', JSON.stringify(err));
         });
       });
@@ -80,11 +86,11 @@ export class DeviceUtils {
   }
 
   static initScreenInfo() : void {
-    let windowClass = null;
+    let windowClass: window.Window;
     try {
       window.getLastWindow(GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT), (err, data) => {
         if (err.code) {
-          log.error('Failed to obtain last window when initScreenInfo. Cause:%{public}s', JSON.stringify(err));
+          log.error('Failed to obtain last window when initScreenInfo. Cause:%{public}s', err.code, err.message);
           return;
         }
 
@@ -113,8 +119,8 @@ export class DeviceUtils {
       DeviceUtils._cutoutTop = data.boundingRects[0].top;
       DeviceUtils._cutoutWidth = data.boundingRects[0].width;
       DeviceUtils._cutoutHeight = data.boundingRects[0].height;
-    }).catch((err) => {
-      log.error('Failed to obtain all the display objects. Code: ' + JSON.stringify(err));
+    }).catch((err: BusinessError) => {
+      log.error('Failed to obtain all the display objects. Code: ', err.code, err.message);
     });
   }
 
@@ -160,5 +166,44 @@ export class DeviceUtils {
     }
 
     return DeviceUtils._cutoutLeft + DeviceUtils._cutoutWidth;
+  }
+  
+  static calculateSafeArea(cocosWorker: worker.ThreadWorker, avoidArea: window.AvoidArea, windowRect: window.Rect) {
+    let safeArea : window.Rect = {left: 0, top: 0, width: 0, height: 0};
+    if(DeviceUtils._originalWindowWidth == windowRect.width && DeviceUtils._originalWindowHeight == windowRect.height) {
+      safeArea.left = DeviceUtils.oldSafeArea.left + avoidArea.leftRect.left + avoidArea.leftRect.width;
+      safeArea.top = DeviceUtils.oldSafeArea.top + avoidArea.topRect.top + avoidArea.topRect.height;
+      safeArea.width = (avoidArea.rightRect.left != 0 ? avoidArea.rightRect.left : DeviceUtils.oldSafeArea.width) - safeArea.left;
+      safeArea.height = (avoidArea.bottomRect.top != 0 ? avoidArea.bottomRect.top : DeviceUtils.oldSafeArea.height) - safeArea.top;
+    } else {
+      safeArea.left = avoidArea.leftRect.left + avoidArea.leftRect.width;
+      safeArea.top = avoidArea.topRect.top + avoidArea.topRect.height;
+      safeArea.width = (avoidArea.rightRect.left != 0 ? avoidArea.rightRect.left : windowRect.width) - safeArea.left;
+      safeArea.height = (avoidArea.bottomRect.top != 0 ? avoidArea.bottomRect.top : windowRect.height) - safeArea.top;
+      DeviceUtils._originalWindowWidth = windowRect.width;
+      DeviceUtils._originalWindowHeight = windowRect.height;
+    }
+    DeviceUtils.oldSafeArea = safeArea;
+    cocosWorker.postMessage({type: 'updateSafeArea', safeArea: safeArea});
+  }
+
+  static updateWorkerSafeArea(safeArea: window.Rect) {
+    DeviceUtils.safeAreaInWorker = safeArea;
+  }
+
+  static getSafeAreaLeft() : number {
+    return DeviceUtils.safeAreaInWorker.left;
+  }
+
+  static getSafeAreaTop() : number {
+    return DeviceUtils.safeAreaInWorker.top;
+  }
+
+  static getSafeAreaWidth() : number {
+    return DeviceUtils.safeAreaInWorker.width;
+  }
+
+  static getSafeAreaHeight() : number {
+    return DeviceUtils.safeAreaInWorker.height;
   }
 }

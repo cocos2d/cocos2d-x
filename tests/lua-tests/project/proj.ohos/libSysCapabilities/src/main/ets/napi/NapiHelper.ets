@@ -29,7 +29,6 @@ export class NapiHelper {
         registerFunc('JumpManager.openUrl', JumpManager.openUrl);
     }
 
-
     private static registerDeviceUtils(registerFunc : Function) {
         registerFunc('DeviceUtils.getDpi', DeviceUtils.getDpi);
         registerFunc('DeviceUtils.getSystemLanguage', DeviceUtils.getSystemLanguage);
@@ -42,6 +41,10 @@ export class NapiHelper {
         registerFunc('DeviceUtils.getOrientation', DeviceUtils.getOrientation);
         registerFunc('DeviceUtils.getCutoutHeight', DeviceUtils.getCutoutHeight);
         registerFunc('DeviceUtils.getCutoutWidth', DeviceUtils.getCutoutWidth);
+        registerFunc('DeviceUtils.getSafeAreaLeft', DeviceUtils.getSafeAreaLeft);
+        registerFunc('DeviceUtils.getSafeAreaTop', DeviceUtils.getSafeAreaTop);
+        registerFunc('DeviceUtils.getSafeAreaWidth', DeviceUtils.getSafeAreaWidth);
+        registerFunc('DeviceUtils.getSafeAreaHeight', DeviceUtils.getSafeAreaHeight);
     }
 
     private static registerEditBox(registerFunc : Function) {
@@ -66,6 +69,7 @@ export class NapiHelper {
     private static registerWebView(registerFunc : Function) {
         registerFunc('WebView.createWebView', WebView.createWebView);
         registerFunc('WebView.removeWebView', WebView.removeWebView);
+        registerFunc('WebView.setJavascriptInterfaceScheme', WebView.setJavascriptInterfaceScheme);
         registerFunc('WebView.loadData', WebView.loadData);
         registerFunc('WebView.loadURL', WebView.loadURL);
         registerFunc('WebView.loadFile', WebView.loadFile);

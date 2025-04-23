@@ -1,11 +1,12 @@
 import { ViewRect, WebViewMsgEntity } from '../../entity/WorkerMsgEntity';
+import type { ThreadWorkerGlobalScope } from '@ohos.worker';
 
 export class WebView {
     static MODULE_NAME: string = 'WebView';
 
-    private static workerPort;
+    private static workerPort : ThreadWorkerGlobalScope;
 
-    static init(workerPort) : void {
+    static init(workerPort : ThreadWorkerGlobalScope) : void {
         WebView.workerPort = workerPort;
     }
 
@@ -16,6 +17,12 @@ export class WebView {
 
     static removeWebView(viewTag: number) : void {
         let webViewMsgEntity: WebViewMsgEntity = new WebViewMsgEntity(WebView.MODULE_NAME, 'removeWebView', viewTag);
+        WebView.workerPort.postMessage(webViewMsgEntity);
+    }
+
+    static setJavascriptInterfaceScheme(viewTag: number, jsInterfaceScheme: string) : void {
+        let webViewMsgEntity: WebViewMsgEntity = new WebViewMsgEntity(WebView.MODULE_NAME, 'setJavascriptInterfaceScheme', viewTag);
+        webViewMsgEntity.jsInterfaceScheme = jsInterfaceScheme;
         WebView.workerPort.postMessage(webViewMsgEntity);
     }
 

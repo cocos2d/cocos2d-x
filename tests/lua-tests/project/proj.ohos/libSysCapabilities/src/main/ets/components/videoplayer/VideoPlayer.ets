@@ -1,11 +1,12 @@
 import { VideoPlayMsgEntity, ViewRect } from '../../entity/WorkerMsgEntity';
+import type { ThreadWorkerGlobalScope } from '@ohos.worker';
 
 export class VideoPlayer {
     static MODULE_NAME: string = 'VideoPlay';
 
-    private static workerPort;
+    private static workerPort : ThreadWorkerGlobalScope;
 
-    static init(workerPort) : void {
+    static init(workerPort : ThreadWorkerGlobalScope) : void {
         VideoPlayer.workerPort = workerPort;
     }
 

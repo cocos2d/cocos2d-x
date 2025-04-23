@@ -52,4 +52,3 @@ function terminateSelf(): void {
         console.error(`terminateSelf failed, code is ${code}, message is ${message}`);
     }
 }
-
