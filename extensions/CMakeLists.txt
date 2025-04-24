@@ -156,7 +156,7 @@ if(OHOS)
 	add_library(${PROJECT_NAME} STATIC ${EXTENSION_SRC})
 	target_link_libraries(${PROJECT_NAME} box2d chipmunk cocosdenshion)
 	set(CMAKE_C_FLAGS -fexceptions)
-	target_compile_options(${PROJECT_NAME} PUBLIC -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -DHarmonyOS_Next=1)
+	target_compile_options(${PROJECT_NAME} PUBLIC -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -DHARMONYOS_NEXT=1)
 	target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/
 	                                                  ${CMAKE_CURRENT_SOURCE_DIR}/CCBReader
 	                                                  ${CMAKE_CURRENT_SOURCE_DIR}/GUI/CCControlExtension

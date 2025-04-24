@@ -189,7 +189,7 @@ if(OHOS)
 	    -Wno-unsequenced
 	    -Wno-extra
 	    -Wno-c++11-narrowing
-	    -DHarmonyOS_Next
+	    -DHARMONYOS_NEXT
 	    )
 
 	add_library(${PROJECT_NAME} STATIC ${COCOS2DX_SRC})
@@ -200,7 +200,7 @@ if(OHOS)
 
 	target_link_libraries(${PROJECT_NAME} PUBLIC ext_png ext_zlib libtiff ext_jpeg)
 	target_include_directories(${PROJECT_NAME} PUBLIC ${COCOS2DX_HEADER_PUBLIC})
-	target_compile_definitions(${PROJECT_NAME} PUBLIC -DUSE_FILE32API -DHarmonyOS_Next)
+	target_compile_definitions(${PROJECT_NAME} PUBLIC -DUSE_FILE32API -DHARMONYOS_NEXT)
 	target_compile_options(${PROJECT_NAME} PUBLIC -Wno-psabi)
 
 	find_library( # Sets the name of the path variable.
