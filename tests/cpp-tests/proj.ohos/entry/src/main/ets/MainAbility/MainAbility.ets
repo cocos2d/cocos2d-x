@@ -11,7 +11,8 @@ import AbilityConstant from '@ohos.app.ability.AbilityConstant';
 const nativeAppLifecycle: nativeRender.CPPFunctions = nativeRender.getContext(ContextType.APP_LIFECYCLE);
 const rawFileUtils: nativeRender.CPPFunctions = nativeRender.getContext(ContextType.RAW_FILE_UTILS);
 let cocosWorker = WorkerManager.getInstance().getWorker();
-
+GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_SHOW_FLAG, true);
+GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_HIDE_FLAG, true);
 export default class MainAbility extends UIAbility {
     onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
         nativeAppLifecycle.onCreate();
@@ -70,10 +71,20 @@ export default class MainAbility extends UIAbility {
             let stageEventType: window.WindowStageEventType = data;
             switch (stageEventType) {
                 case window.WindowStageEventType.RESUMED:
-                    nativeAppLifecycle.onShow();
+                    console.info('[LIFECYCLE-App] onShow_RESUMED')
+                    if(GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_SHOW_FLAG)){
+                        nativeAppLifecycle.onShow();
+                        GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_SHOW_FLAG, false);
+                        GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_HIDE_FLAG, true);
+                    }
                     break;
                 case window.WindowStageEventType.PAUSED:
-                    nativeAppLifecycle.onHide();
+                    if(GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_HIDE_FLAG)){
+                        console.info('[LIFECYCLE-App] onHide_PAUSED')
+                        nativeAppLifecycle.onHide();
+                        GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_HIDE_FLAG, false);
+                        GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_SHOW_FLAG, true);
+                    }
                     break;
                 default:
                     break;
@@ -86,14 +97,22 @@ export default class MainAbility extends UIAbility {
     }
 
     onForeground() {
-        // Ability has brought to foreground
-        console.info('[LIFECYCLE-App] onShow')
-        nativeAppLifecycle.onShow();
+        if(GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_SHOW_FLAG)){
+            // Ability has brought to foreground
+            console.info('[LIFECYCLE-App] onShow')
+            nativeAppLifecycle.onShow();
+            GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_SHOW_FLAG, false);
+            GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_HIDE_FLAG, true);
+        }
     }
 
     onBackground() {
-        // Ability has back to background
-        console.info('[LIFECYCLE-App] onDestroy')
-        nativeAppLifecycle.onHide();
+        if(GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_HIDE_FLAG)){
+            // Ability has back to background
+            console.info('[LIFECYCLE-App] onHide')
+            nativeAppLifecycle.onHide();
+            GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_HIDE_FLAG, false);
+            GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_SHOW_FLAG, true);
+        }
     }
 };
