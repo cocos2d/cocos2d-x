@@ -1,3 +1,4 @@
+#include <ace/xcomponent/native_xcomponent_key_event.h>
 #include <stdint.h>
 #include <unistd.h>
 
@@ -31,7 +32,7 @@ float mousePositionY = -1;
 bool isMouseLeftActive = false;
 double scrollDistance = 0;
 
-std::unordered_map<int, cocos2d::EventKeyboard::KeyCode> ohKeyMap = {
+const std::unordered_map<OH_NativeXComponent_KeyCode, cocos2d::EventKeyboard::KeyCode> ohKeyMap = {
     {KEY_ESCAPE, cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE},
     {KEY_GRAVE, cocos2d::EventKeyboard::KeyCode::KEY_GRAVE},
     {KEY_MINUS, cocos2d::EventKeyboard::KeyCode::KEY_MINUS},
@@ -61,7 +62,23 @@ std::unordered_map<int, cocos2d::EventKeyboard::KeyCode> ohKeyMap = {
     {KEY_DPAD_UP, cocos2d::EventKeyboard::KeyCode::KEY_DPAD_UP},
     {KEY_SYSRQ, cocos2d::EventKeyboard::KeyCode::KEY_PRINT},
     {KEY_INSERT, cocos2d::EventKeyboard::KeyCode::KEY_INSERT},
-    {KEY_FORWARD_DEL, cocos2d::EventKeyboard::KeyCode::KEY_DELETE}
+    {KEY_FORWARD_DEL, cocos2d::EventKeyboard::KeyCode::KEY_DELETE},
+    {KEY_SCROLL_LOCK, cocos2d::EventKeyboard::KeyCode::KEY_SCROLL_LOCK},
+    {KEY_MINUS, cocos2d::EventKeyboard::KeyCode::KEY_MINUS},
+    {KEY_AT, cocos2d::EventKeyboard::KeyCode::KEY_AT},
+    {KEY_PLUS, cocos2d::EventKeyboard::KeyCode::KEY_PLUS},
+    {KEY_MENU, cocos2d::EventKeyboard::KeyCode::KEY_MENU},
+    {KEY_BREAK, cocos2d::EventKeyboard::KeyCode::KEY_PAUSE},
+    {KEY_MOVE_HOME, cocos2d::EventKeyboard::KeyCode::KEY_HOME},
+    {KEY_MOVE_END, cocos2d::EventKeyboard::KeyCode::KEY_END},
+    {KEY_PAGE_UP, cocos2d::EventKeyboard::KeyCode::KEY_PG_UP},
+    {KEY_PAGE_DOWN, cocos2d::EventKeyboard::KeyCode::KEY_PG_DOWN},
+    {KEY_NUMPAD_ADD, cocos2d::EventKeyboard::KeyCode::KEY_KP_PLUS},
+    {KEY_NUMPAD_SUBTRACT, cocos2d::EventKeyboard::KeyCode::KEY_KP_MINUS},
+    {KEY_NUMPAD_MULTIPLY, cocos2d::EventKeyboard::KeyCode::KEY_KP_MULTIPLY},
+    {KEY_NUMPAD_DIVIDE, cocos2d::EventKeyboard::KeyCode::KEY_KP_DIVIDE},
+    {KEY_NUMPAD_ENTER, cocos2d::EventKeyboard::KeyCode::KEY_KP_ENTER}
+    
 };
 
 cocos2d::EventKeyboard::KeyCode ohKeyCodeToCocosKeyCode(OH_NativeXComponent_KeyCode ohKeyCode)
@@ -81,8 +98,9 @@ cocos2d::EventKeyboard::KeyCode ohKeyCodeToCocosKeyCode(OH_NativeXComponent_KeyC
     if (ohKeyCode >= KEY_A && ohKeyCode <= KEY_Z) {
         // A - Z
         return cocos2d::EventKeyboard::KeyCode(int(cocos2d::EventKeyboard::KeyCode::KEY_A) + (ohKeyCode - KEY_A));
-    }
-    return cocos2d::EventKeyboard::KeyCode(ohKeyCode);
+    }  
+    OHOS_LOGW("Unmapped OH key code: %d", ohKeyCode);
+    return cocos2d::EventKeyboard::KeyCode::KEY_NONE;
 }
 
 void OnSurfaceCreatedCB(OH_NativeXComponent* component, void* window)
