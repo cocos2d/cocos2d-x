@@ -26,8 +26,7 @@ EGLConfig getConfig(int version, EGLDisplay eglDisplay) {
     return configs;
 }
 
-void EGLCore::GLContextInit(void* window, int w, int h)
-{
+void EGLCore::GLContextInit(void* window, int w, int h) {
     OHOS_LOGD("EGLCore::GLContextInit window = %{public}p, w = %{public}d, h = %{public}d.", window, w, h);
     width_ = w;
     height_ = h;
@@ -54,9 +53,8 @@ void EGLCore::GLContextInit(void* window, int w, int h)
     }
 
     // 2. Create EGL Surface from Native Window
-    EGLint winAttribs[] = {EGL_GL_COLORSPACE_KHR, EGL_GL_COLORSPACE_LINEAR_KHR, EGL_NONE};
     if (mEglWindow) {
-        mEGLSurface = eglCreateWindowSurface(mEGLDisplay, mEGLConfig, mEglWindow, winAttribs);
+        mEGLSurface = eglCreateWindowSurface(mEGLDisplay, mEGLConfig, mEglWindow, nullptr);
         if (mEGLSurface == nullptr) {
             OHOS_LOGE("EGLCore::eglCreateContext eglSurface is null");
             return;
@@ -76,13 +74,11 @@ void EGLCore::GLContextInit(void* window, int w, int h)
     }
 }
 
-void EGLCore::Update()
-{
+void EGLCore::Update() {
     eglSwapBuffers(mEGLDisplay, mEGLSurface);
 }
 
-bool EGLCore::checkGlError(const char* op)
-{
+bool EGLCore::checkGlError(const char* op) {
     OHOS_LOGE("EGL ERROR CODE = %{public}x", eglGetError());
     GLint error;
     for (error = glGetError(); error; error = glGetError()) {

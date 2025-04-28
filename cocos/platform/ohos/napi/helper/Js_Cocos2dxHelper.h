@@ -12,11 +12,10 @@
 
 enum AsyncInfo {
     // VERSION_NAME = 0,
-    LAST_INDEX // 仅为表明用于保存数据的数组大小，无意义，后续如新增枚举，请保持 LAST_INDEX 在最后一个
+    LAST_INDEX // Only indicates the size of the array used for storing data. It is meaningless. If an enumeration is added later, keep LAST_INDEX at the end.
 };
 
-class Js_Cocos2dxHelper
-{
+class Js_Cocos2dxHelper {
 public:
     static napi_value initJsCocos2dxHelper(napi_env env, napi_callback_info info);
     static napi_value initAsyncInfo(napi_env env, napi_callback_info info);

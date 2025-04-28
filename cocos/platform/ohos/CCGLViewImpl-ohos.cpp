@@ -106,82 +106,13 @@ void GLViewImpl::setIMEKeyboardState(bool bOpen) {
 }
 
 Rect GLViewImpl::getSafeAreaRect() const {
-    Rect safeAreaRect = GLView::getSafeAreaRect();
-    float deviceAspectRatio = 0;
-    if(safeAreaRect.size.height > safeAreaRect.size.width) {
-        deviceAspectRatio = safeAreaRect.size.height / safeAreaRect.size.width;
-    } else {
-        deviceAspectRatio = safeAreaRect.size.width / safeAreaRect.size.height;
-    }
-
-    float marginX = DEFAULT_MARGIN_OHOS / _scaleX;
-    float marginY = DEFAULT_MARGIN_OHOS / _scaleY;
-
-    bool isScreenRound = JSFunction::getFunction("DeviceUtils.isRoundScreen").invoke<bool>();
-    bool hasSoftKeys = JSFunction::getFunction("DeviceUtils.hasSoftKeys").invoke<bool>();
-    bool isCutoutEnabled = JSFunction::getFunction("DeviceUtils.isCutoutEnable").invoke<bool>();
-
-    if(isScreenRound) {
-        // edge screen
-        if(safeAreaRect.size.width < safeAreaRect.size.height) {
-            safeAreaRect.origin.y += marginY * 2.f;
-            safeAreaRect.size.height -= (marginY * 2.f);
-
-            safeAreaRect.origin.x += marginX;
-            safeAreaRect.size.width -= (marginX * 2.f);
-        } else {
-            safeAreaRect.origin.y += marginY;
-            safeAreaRect.size.height -= (marginY * 2.f);
-
-            // landscape: no changes with X-coords
-        }
-    } else if (deviceAspectRatio >= WIDE_SCREEN_ASPECT_RATIO_OHOS) {
-        // almost all devices on the market have round corners
-        float bottomMarginIfPortrait = 0;
-        if(hasSoftKeys) {
-            bottomMarginIfPortrait = marginY * 2.f;
-        }
-
-        if(safeAreaRect.size.width < safeAreaRect.size.height) {
-            // portrait: double margin space if device has soft menu
-            safeAreaRect.origin.y += bottomMarginIfPortrait;
-            safeAreaRect.size.height -= (bottomMarginIfPortrait + marginY);
-        } else {
-            // landscape: ignore double margin at the bottom in any cases
-            // prepare signle margin for round corners
-            safeAreaRect.origin.y += marginY;
-            safeAreaRect.size.height -= (marginY * 2.f);
-        }
-    } else {
-        if(hasSoftKeys && (safeAreaRect.size.width < safeAreaRect.size.height)) {
-            // portrait: preserve only for soft system menu
-            safeAreaRect.origin.y += marginY * 2.f;
-            safeAreaRect.size.height -= (marginY * 2.f);
-        }
-    }
-
-    if (isCutoutEnabled) {
-        // screen with enabled cutout area
-        int orientation = JSFunction::getFunction("DeviceUtils.getOrientation").invoke<int>();
-
-        if(static_cast<int>(GLViewImpl::Orientation::PORTRAIT) == orientation) {
-            double height = JSFunction::getFunction("DeviceUtils.getCutoutHeight").invoke<int>() / _scaleY;
-            safeAreaRect.origin.y += height;
-            safeAreaRect.size.height -= height;
-        } else if(static_cast<int>(GLViewImpl::Orientation::PORTRAIT_INVERTED) == orientation) {
-            double height =JSFunction::getFunction("DeviceUtils.getCutoutHeight").invoke<int>() / _scaleY;
-            safeAreaRect.size.height -= height;
-        } else if(static_cast<int>(GLViewImpl::Orientation::LANDSCAPE) == orientation) {
-            double width = JSFunction::getFunction("DeviceUtils.getCutoutWidth").invoke<int>() / _scaleX;
-            safeAreaRect.size.width -= width;
-        } else if(static_cast<int>(GLViewImpl::Orientation::LANDSCAPE_INVERTED) == orientation) {
-            double width = JSFunction::getFunction("DeviceUtils.getCutoutWidth").invoke<int>() / _scaleX;
-            safeAreaRect.origin.x += width;
-            safeAreaRect.size.width -= width;
-        }
-    }
-
-    return safeAreaRect;
+    Rect safeAreaRect1;
+    safeAreaRect1.origin.x = JSFunction::getFunction("DeviceUtils.getSafeAreaLeft").invoke<int>() / _scaleX;
+    safeAreaRect1.origin.y = JSFunction::getFunction("DeviceUtils.getSafeAreaTop").invoke<int>() / _scaleY;
+    safeAreaRect1.size.width = JSFunction::getFunction("DeviceUtils.getSafeAreaWidth").invoke<int>() / _scaleX;
+    safeAreaRect1.size.height = JSFunction::getFunction("DeviceUtils.getSafeAreaHeight").invoke<int>() / _scaleX;
+    OHOS_LOGD("GLViewImpl getsafeAreaRect1, x:%{public}f, y:%{public}f, width:%{public}f, height:%{public}f", safeAreaRect1.origin.x, safeAreaRect1.origin.y, safeAreaRect1.size.width, safeAreaRect1.size.height);
+    return safeAreaRect1;
 }
 NS_CC_END
 
