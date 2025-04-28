@@ -116,7 +116,11 @@ public:
         napi_value jsArgs[sizeof...(Args)] = {NapiValueConverter::ToNapiValue(env, args)...};
         napi_value return_val;
         status = napi_call_function(env, global, func, sizeof...(Args), jsArgs, &return_val);
-        
+        if (status == napi_pending_exception) {
+            LOGI("Caught invoke exception: napi_pending_exception");
+            napi_value exception;
+            napi_get_and_clear_last_exception(env, &exception);
+        }
         ReturnType value;
         if (!NapiValueConverter::ToCppValue(env, return_val, value)) {
             // Handle error here
@@ -138,6 +142,11 @@ public:
         napi_value jsArgs[sizeof...(Args)] = {NapiValueConverter::ToNapiValue(env, args)...};
         napi_value return_val;
         status = napi_call_function(env, global, func, sizeof...(Args), jsArgs, &return_val);
+        if (status == napi_pending_exception) {
+            LOGI("Caught invoke exception: napi_pending_exception");
+            napi_value exception;
+            napi_get_and_clear_last_exception(env, &exception);
+        }
     }
 
     static void callFunctionWithParams(WorkParam *param) {
@@ -169,6 +178,11 @@ public:
         }
         if (status != napi_ok) {
             LOGI("XXXXXX:napi_call_function getClassObject != napi_ok %{public}d", status);
+            if (status == napi_pending_exception) {
+                LOGI("Caught invoke exception: napi_pending_exception");
+                napi_value exception;
+                napi_get_and_clear_last_exception(env, &exception);
+            }
         }
 
         napi_value thenFunc = nullptr;
@@ -189,6 +203,11 @@ public:
         status = napi_call_function(env, promise, thenFunc, 1, &successFunc, &ret);
         if (status != napi_ok) {
             LOGI("XXXXXX:napi_call_function thenFunc failed, ret: %{public}d", status);
+            if (status == napi_pending_exception) {
+                LOGI("Caught invoke exception: napi_pending_exception");
+                napi_value exception;
+                napi_get_and_clear_last_exception(env, &exception);
+            }
         }
     }
     // Callback Function Type
