@@ -37,7 +37,6 @@ set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 include(CocosBuildSet)
 set(BUILD_JS_LIBS ON)
 add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-
 # script and source files info, not need to compile
 set(res_main_files
     "${CMAKE_CURRENT_SOURCE_DIR}/main.js"
@@ -68,6 +67,9 @@ if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME cocos2djs)
     list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellojavascript/main.cpp)
+elseif(OHOS)
+    set(APP_NAME js_tests)
+    list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.ohos/entry/src/main/cpp/main.cpp)
 elseif(LINUX)
     list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
@@ -113,7 +115,9 @@ endif()
 set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
-if(NOT ANDROID)
+if(OHOS)
+    add_library(${APP_NAME} SHARED ${APP_SRC})
+elseif(NOT ANDROID)
     add_executable(${APP_NAME} ${APP_SRC})
 else()
     add_library(${APP_NAME} SHARED ${APP_SRC})

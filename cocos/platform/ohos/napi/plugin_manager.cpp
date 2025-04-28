@@ -59,7 +59,11 @@ napi_value NapiManager::GetContext(napi_env env, napi_callback_info info) {
 
     int64_t value;
     NAPI_CALL(env, napi_get_value_int64(env, args[0], &value));
-
+    napi_handle_scope scope = nullptr;
+    NAPI_CALL(env, napi_open_handle_scope(env, &scope));
+    if(scope == nullptr){
+        return nullptr;
+    }
     NAPI_CALL(env, napi_create_object(env, &exports));
 
     switch (value) {
@@ -157,6 +161,7 @@ napi_value NapiManager::GetContext(napi_env env, napi_callback_info info) {
         default:
             OHOS_LOGE("unknown type");
     }
+    NAPI_CALL(env, napi_close_handle_scope(env, scope));
     return exports;
 }
 
@@ -212,6 +217,7 @@ napi_value NapiManager::NapiOnShow(napi_env env, napi_callback_info info) {
 }
 
 napi_value NapiManager::NapiOnHide(napi_env env, napi_callback_info info) {
+    OHOS_LOGD("NapiManager::NapiOnHide");
     WorkerMessageData data{MessageType::WM_APP_HIDE, nullptr, nullptr};
     PluginRender::GetInstance()->enqueue(data);
     return nullptr;

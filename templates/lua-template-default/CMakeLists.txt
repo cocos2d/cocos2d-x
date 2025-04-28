@@ -34,7 +34,6 @@ set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 include(CocosBuildSet)
 set(BUILD_LUA_LIBS ON)
 add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-
 # script and source files info, not need to compile
 set(res_res_folders
     "${CMAKE_CURRENT_SOURCE_DIR}/res"
@@ -64,6 +63,20 @@ if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME cocos2dlua)
     list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellolua/main.cpp)
+elseif(OHOS)
+    set(APP_NAME lua-tests)
+    list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.ohos/entry/src/main/cpp/main.cpp)
+
+    set(res_raw_folders "${CMAKE_CURRENT_LIST_DIR}/frameworks/runtime-src/proj.ohos/entry/src/main/resources/rawfile")
+    
+    file(GLOB ALL_SCRIPT_FILES "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*")
+    file(COPY ${ALL_SCRIPT_FILES} DESTINATION ${res_raw_folders}/cocos)
+
+    file(GLOB ALL_SOURCE_FILES ${CMAKE_CURRENT_LIST_DIR}/src)
+    file(COPY ${ALL_SOURCE_FILES} DESTINATION ${res_raw_folders})
+
+    file(GLOB ALL_RES_FILES ${CMAKE_CURRENT_LIST_DIR}/res/*)
+    file(COPY ${ALL_RES_FILES} DESTINATION ${res_raw_folders})
 elseif(LINUX)
     list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
@@ -127,7 +140,14 @@ endif()
 set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
-if(NOT ANDROID)
+if(OHOS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -frtti -fexceptions -fsigned-char")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    add_library(${APP_NAME} STATIC ${APP_SRC})
+    target_include_directories(${APP_NAME} PUBLIC ${COCOS2DX_ROOT_PATH}/cocos
+                                           PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos)
+elseif(NOT ANDROID)
     add_executable(${APP_NAME} ${APP_SRC})
 else()
     add_library(${APP_NAME} SHARED ${APP_SRC})

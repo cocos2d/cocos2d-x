@@ -1,0 +1,12 @@
+.hvigor
+.idea
+local.properties
+**/build
+entry/src/main/resources/rawfile
+oh_modules
+/.clangd
+/.clang-tidy
+.clang-format
+oh-package-lock.json5
+hvigor/hvigor-wrapper.js
+**/BuildProfile.ets

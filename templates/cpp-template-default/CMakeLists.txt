@@ -34,7 +34,6 @@ set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
 include(CocosBuildSet)
 add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-
 # record sources, headers, resources...
 set(GAME_SOURCE)
 set(GAME_HEADER)
@@ -61,6 +60,11 @@ if(ANDROID)
     set(APP_NAME MyGame)
     list(APPEND GAME_SOURCE
          proj.android/app/jni/hellocpp/main.cpp
+         )
+elseif(OHOS)
+    set(APP_NAME cpp-tests)
+    list(APPEND GAME_SOURCE
+        proj.ohos/entry/src/main/cpp/main.cpp
          )
 elseif(LINUX)
     list(APPEND GAME_SOURCE
@@ -113,7 +117,13 @@ set(all_code_files
     ${GAME_HEADER}
     ${GAME_SOURCE}
     )
-if(NOT ANDROID)
+if (OHOS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -frtti -fexceptions -fsigned-char")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    add_library(${APP_NAME} STATIC ${all_code_files})
+    target_include_directories(${APP_NAME} PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/platform/ohos)
+elseif(NOT ANDROID)
     add_executable(${APP_NAME} ${all_code_files})
 else()
     add_library(${APP_NAME} SHARED ${all_code_files})
