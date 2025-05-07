@@ -12,7 +12,7 @@
     },
     "sourceOption": {
       "workers": [
-        './src/main/ets/workers/CocosWorker.ts'
+        './src/main/ets/workers/CocosWorker.ets'
       ]
     }
   },

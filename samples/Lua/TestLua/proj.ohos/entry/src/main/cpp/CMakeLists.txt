@@ -14,7 +14,7 @@ add_definitions("-DCOCOS2D_DEBUG=3")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_definitions(-DHarmonyOS_Next)
+add_definitions(-DHARMONYOS_NEXT)
 
 find_library( # Sets the name of the path variable.
               EGL-lib

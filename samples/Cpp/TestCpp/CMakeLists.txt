@@ -186,7 +186,7 @@ if(OHOS)
 
 	)
 	list(APPEND TEST_COMMON_SRC proj.ohos/entry/src/main/cpp/main.cpp)
-	add_definitions("-DHarmonyOS_Next")
+	add_definitions("-DHARMONYOS_NEXT")
 	add_definitions("-DCOCOS2D_DEBUG=3")
 
 	include_directories(${COCOS2DX_HEADER}
