@@ -3,8 +3,15 @@ import type common from '@ohos.app.ability.common';
 import { GlobalContext, GlobalContextConstants } from '../../common/GlobalContext';
 import {Result} from "../../entity/Result"
 import Logger from '../../utils/Logger'
+import { BusinessError } from '@kit.BasicServicesKit';
 
 let log: Logger = new Logger(0x0001, "JumpManager");
+
+interface WantInfoObjectInterface {
+    'action': string;
+    'entities': string[];
+    'uri': string;
+}
 
 export class JumpManager {
 
@@ -18,14 +25,14 @@ export class JumpManager {
 
     static openUrl(url: string) : void {
         let context: common.UIAbilityContext = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT);
-        let wantInfo = {
+        let wantInfo: WantInfoObjectInterface = {
             'action': 'ohos.want.action.viewData',
             'entities': ['entity.system.browsable'],
             'uri': url
         }
         context.startAbility(wantInfo).then(() => {
-            log.info('%{public}s',  JSON.stringify(Result.success({})));
-        }).catch((err) => {
+            log.info('%{public}s',  JSON.stringify(Result.success("")));
+        }).catch((err:BusinessError) => {
             log.error('openUrl : err : %{public}s', JSON.stringify(Result.error(-1, JSON.stringify(err))) ?? '');
         });
     }

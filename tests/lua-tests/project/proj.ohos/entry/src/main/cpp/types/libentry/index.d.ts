@@ -12,7 +12,6 @@ export interface CPPFunctions {
   writablePathInit: (writePath: string) => void;
   workerInit: () => void;
   nativeEngineStart: () => void;
-  registerFunction: () => void;
   initAsyncInfo: () => void;
   mouseWheelCB: (eventType: string, scrollY : number) => void;
   editBoxOnFocusCB: (viewTag: number) => void;

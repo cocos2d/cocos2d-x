@@ -79,7 +79,7 @@ export class VideoPlayer {
                 removeIndex = index;
             }
         });
-        GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_VIDEO_PLAYER_INDEX_MAP).get(viewTag).controller.requestFullscreen(false); //4.x已修复
+        GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_VIDEO_PLAYER_INDEX_MAP).get(viewTag).controller.requestFullscreen(false);
         GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_VIDEO_PLAYER_ARRAY).splice(removeIndex, 1);
         GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_VIDEO_PLAYER_INDEX_MAP).delete(viewTag);
     }
