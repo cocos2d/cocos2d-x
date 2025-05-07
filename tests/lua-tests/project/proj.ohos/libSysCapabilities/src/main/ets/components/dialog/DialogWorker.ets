@@ -17,7 +17,7 @@ export class Dialog {
                     color: '#000000'
                 },
             ],
-            success: function(data) {
+            success: (data) => {
                 log.debug("handling callback, data:%{public}s", data);
             }
         });

@@ -1,4 +1,5 @@
 import { getContext } from "libnativerender.so";
+import { CPPFunctions } from "libnativerender.so";
 import { ContextType } from "../../common/Constants"
 import sensor from '@ohos.sensor';
 import display from '@ohos.display';
@@ -7,7 +8,7 @@ import Logger from '../../utils/Logger'
 
 let log: Logger = new Logger(0x0001, "AccelerometerUtils");
 
-const accUtils = getContext(ContextType.SENSOR_API);
+const accUtils: CPPFunctions= getContext(ContextType.SENSOR_API);
 
 export default class Accelerometer {
 
@@ -22,7 +23,7 @@ export default class Accelerometer {
             /* HarmonyOS allow multiple subscriptions, but the game only need one
              so if the interval changed, cancel subscription and redo with the new interval */
             sensor.off(sensor.SensorId.ACCELEROMETER);
-            sensor.on(sensor.SensorId.ACCELEROMETER, function (data) {
+            sensor.on(sensor.SensorId.ACCELEROMETER, (data) => {
                 let rotation = display.getDefaultDisplaySync().rotation;
                 if (rotation === 0) {
                     // Display device screen rotation 0°
@@ -34,10 +35,11 @@ export default class Accelerometer {
                     // Display device screen rotation 180°
                     accUtils.onAccelerometerCallBack(-data.x, -data.y, data.z, intervalTime);
                 } else if (rotation === 3) {
-                     // Display device screen rotation 270°
-                     accUtils.onAccelerometerCallBack(-data.y, data.x, data.z, intervalTime);
+                    // Display device screen rotation 270°
+                    accUtils.onAccelerometerCallBack(-data.y, data.x, data.z, intervalTime);
                 } else {
-                    log.error('Accelerometer init fail, err: %{public}s', JSON.stringify(Result.error(-1, 'unsupported rotation: ' + rotation)));
+                    log.error('Accelerometer init fail, err: %{public}s',
+                        JSON.stringify(Result.error(-1, 'unsupported rotation: ' + rotation)));
                 }
             }, { interval: intervalTime });
         } catch (err) {
