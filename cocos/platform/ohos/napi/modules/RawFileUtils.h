@@ -15,8 +15,7 @@
 #include <rawfile/raw_file.h>
 #include <rawfile/raw_file_manager.h>
 
-class RawFileUtils
-{
+class RawFileUtils {
 public:
     static bool InitResourceManager(napi_env env, napi_value info);
     
