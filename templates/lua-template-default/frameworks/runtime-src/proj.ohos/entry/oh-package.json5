@@ -1,0 +1,13 @@
+{
+  "license": "",
+  "devDependencies": {},
+  "author": "",
+  "name": "entry",
+  "description": "Please describe the basic information.",
+  "main": "",
+  "version": "1.0.0",
+  "dependencies": {
+    "libnativerender.so": "file:./src/main/cpp/types/libentry",
+    "@ohos/libSysCapabilities": "../libSysCapabilities"
+  }
+}
