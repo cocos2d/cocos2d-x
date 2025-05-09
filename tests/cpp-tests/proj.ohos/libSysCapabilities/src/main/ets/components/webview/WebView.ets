@@ -1,11 +1,12 @@
 import { ViewRect, WebViewMsgEntity } from '../../entity/WorkerMsgEntity';
+import type { ThreadWorkerGlobalScope } from '@ohos.worker';
 
 export class WebView {
     static MODULE_NAME: string = 'WebView';
 
-    private static workerPort;
+    private static workerPort : ThreadWorkerGlobalScope;
 
-    static init(workerPort) : void {
+    static init(workerPort : ThreadWorkerGlobalScope) : void {
         WebView.workerPort = workerPort;
     }
 

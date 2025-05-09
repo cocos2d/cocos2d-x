@@ -4,7 +4,7 @@
   "author": "",
   "name": "libsyscapabilities",
   "description": "Please describe the basic information.",
-  "main": "index.ts",
+  "main": "index.ets",
   "version": "1.0.0",
   "dependencies": {}
 }

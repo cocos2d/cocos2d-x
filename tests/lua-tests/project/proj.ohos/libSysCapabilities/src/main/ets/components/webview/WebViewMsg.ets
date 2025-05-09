@@ -7,7 +7,7 @@ import { BusinessError } from '@ohos.base';
 let log: Logger = new Logger(0x0001, "WebViewMsg");
 @Observed
 export class WebViewInfo {
-  public uniqueId: number = 0;
+  public uniqueId : number = 0;
   // position
   public x: number = 0;
   public y: number = 0;
@@ -17,14 +17,13 @@ export class WebViewInfo {
   // url
   public url: string = '';
   public isUrl: boolean = true;
+
   public viewTag: number = 0
   public zoomAccess: boolean = true
   public visible: boolean = true
   public opacity: number = 1
   public backgroundColor: number = 0xffffff;
-
   public jsInterfaceScheme: string = "";
-
   public controller: web_webview.WebviewController = new web_webview.WebviewController()
 
   constructor(x: number, y: number, w: number, h: number, viewTag: number) {
@@ -38,9 +37,9 @@ export class WebViewInfo {
 
 }
 
-function waitUtilControllerAttached(): Promise<number> {
+function waitUtilControllerAttached() : Promise<number> {
   return new Promise((resolve, reject) => {
-    resolve(1);
+      resolve(1);
   })
 }
 
@@ -151,7 +150,7 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
     }
     case "setWebViewRect": {
       index = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_INDEX_MAP).get(eventData.viewTag);
-      let tmpWebInfo: WebViewInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
+      let tmpWebInfo :WebViewInfo= GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
       tmpWebInfo.x = px2vp(eventData.viewRect.x);
       tmpWebInfo.y = px2vp(eventData.viewRect.y);
       tmpWebInfo.w = px2vp(eventData.viewRect.w);
@@ -164,7 +163,7 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
         .visible == eventData.visible) {
         return;
       }
-      let tmpWebInfo: WebViewInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
+      let tmpWebInfo:WebViewInfo= GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
       tmpWebInfo.visible = eventData.visible;
       break;
     }
@@ -174,7 +173,7 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
         .opacity == eventData.opacity) {
         return;
       }
-      let tmpWebInfo: WebViewInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
+      let tmpWebInfo :WebViewInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
       tmpWebInfo.opacity = eventData.opacity;
       break;
     }
@@ -192,13 +191,13 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
       index = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_INDEX_MAP).get(eventData.viewTag);
       GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index]
         .controller
-        .runJavaScript(eventData.js, (error: BusinessError, result: string) => {
+        .runJavaScript(eventData.js, (error:BusinessError, result:string) => {
           if (error) {
             log.warn("webView run JavaScript error:%{public}s", JSON.stringify(error));
             return;
           }
           if (result) {
-            GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_WEB_RESULT, result)
+            GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_WEB_RESULT,result)
             log.debug("webView run JavaScript result is %{public}s:", result);
           }
         })
@@ -210,7 +209,7 @@ export function handleWebViewMsg(eventData: WebViewMsgEntity) {
         .zoomAccess == eventData.scalesPageToFit) {
         return;
       }
-      let tmpWebInfo: WebViewInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
+      let tmpWebInfo:WebViewInfo = GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY)[index];
       tmpWebInfo.zoomAccess == eventData.scalesPageToFit
     }
       break;
