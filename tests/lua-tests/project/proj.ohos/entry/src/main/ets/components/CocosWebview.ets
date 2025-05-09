@@ -4,7 +4,7 @@ import { WorkerManager } from '../workers/WorkerManager';
 
 @Component
 export struct CocosWebView {
-  viewInfo: WebViewInfo = new WebViewInfo(0, 0, 0, 0, 0);
+  @ObjectLink viewInfo: WebViewInfo ;
   cocosWorker: worker.ThreadWorker = WorkerManager.getInstance().getWorker();
 
   build() {
@@ -27,6 +27,9 @@ export struct CocosWebView {
       })
       .onPageEnd((event) => {
         this.cocosWorker.postMessage({ type: "onPageEnd", viewTag: this.viewInfo.viewTag, url: event == null ? '' : event.url })
+        if(this.viewInfo.jsInterfaceScheme != "" && event != null && event.url.startsWith(this.viewInfo.jsInterfaceScheme)) {
+          this.cocosWorker.postMessage({ type: "onJsCallBack", viewTag: this.viewInfo.viewTag, url: event == null ? '' : event.url })
+        }
         // if u want use the javascript on ur page, u can use registerJavaScriptProxy() to register js function here
         // and confirm that just register once by a local variable
       })

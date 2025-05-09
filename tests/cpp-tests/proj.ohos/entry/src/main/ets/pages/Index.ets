@@ -17,11 +17,11 @@ import promptAction from '@ohos.promptAction';
 import process from '@ohos.process';
 const nativePageLifecycle:nativeRender.CPPFunctions  = nativeRender.getContext(ContextType.JSPAGE_LIFECYCLE);
 
+let cocosWorker = WorkerManager.getInstance().getWorker();
+
 @Entry
 @Component
 struct Index {
-
-  cocosWorker = WorkerManager.getInstance().getWorker();
   xcomponentController: XComponentController = new XComponentController();
 
   processMgr = new process.ProcessManager();
@@ -56,7 +56,7 @@ struct Index {
     console.log('[LIFECYCLE-Page] onPageShow');
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_EDIT_BOX_ARRAY, this.editBoxArray);
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_EDIT_BOX_INDEX_MAP, this.editBoxIndexMap);
-    GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_COCOS_WORKER, this.cocosWorker);
+    GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_COCOS_WORKER, cocosWorker);
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_ARRAY, this.webViewArray);
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_WEB_VIEW_INDEX_MAP, this.webViewIndexMap);
     GlobalContext.storeGlobalThis(GlobalContextConstants.COCOS2DX_VIDEO_PLAYER_ARRAY, this.videoPlayerInfoArray);
@@ -80,12 +80,10 @@ struct Index {
         buttons: [
           {
             text: '取消',
-            // Color can be customized
             color: '#000000'
           },
           {
             text: '确认',
-            // Color can be customized
             color: '#000000'
           }
         ],
@@ -105,12 +103,13 @@ struct Index {
     // If disable system exit needed, remove comment "return true"
     return true;
   }
+
   onMouseWheel(eventType: string, scrollY: number) {
-    this.cocosWorker.postMessage({ type: "onMouseWheel", eventType: eventType, scrollY: scrollY });
+    cocosWorker.postMessage({ type: "onMouseWheel", eventType: eventType, scrollY: scrollY });
   }
 
   build() {
-    Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+    Stack() {
       XComponent({
         id: 'xcomponentId',
         type: 'surface',
@@ -135,9 +134,9 @@ struct Index {
         )
         .onLoad((context) => {
           console.log('[cocos] XComponent.onLoad Callback');
-          this.cocosWorker.postMessage({ type: "abilityContextInit", data: GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT)});
-          this.cocosWorker.postMessage({ type: "onXCLoad", data: "XComponent" });
-          this.cocosWorker.onmessage = WorkerMsgUtils.recvWorkerThreadMessage;
+          cocosWorker.postMessage({ type: "abilityContextInit", data: GlobalContext.loadGlobalThis(GlobalContextConstants.COCOS2DX_ABILITY_CONTEXT)});
+          cocosWorker.postMessage({ type: "onXCLoad", data: "XComponent" });
+          cocosWorker.onmessage = WorkerMsgUtils.recvWorkerThreadMessage;
         })
         .onDestroy(() => {
         })

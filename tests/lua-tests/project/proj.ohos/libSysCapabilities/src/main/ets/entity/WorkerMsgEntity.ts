@@ -124,6 +124,7 @@ export class WebViewMsgEntity extends BaseWorkerMsgEntity {
   js: string
 
   scalesPageToFit: boolean
+  jsInterfaceScheme: string
 
   constructor(module: string, func: string, viewTag: number) {
     super(module, func);
