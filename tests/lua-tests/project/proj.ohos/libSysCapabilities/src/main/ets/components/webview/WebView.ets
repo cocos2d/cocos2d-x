@@ -4,9 +4,9 @@ import type { ThreadWorkerGlobalScope } from '@ohos.worker';
 export class WebView {
     static MODULE_NAME: string = 'WebView';
 
-    private static workerPort: ThreadWorkerGlobalScope;
+    private static workerPort : ThreadWorkerGlobalScope;
 
-    static init(workerPort: ThreadWorkerGlobalScope) : void {
+    static init(workerPort : ThreadWorkerGlobalScope) : void {
         WebView.workerPort = workerPort;
     }
 
