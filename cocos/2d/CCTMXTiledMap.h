@@ -260,6 +260,12 @@ public:
     int  getLayerNum();
     const std::string& getResourceFile() const { return _tmxFile; }
 
+    /** Set all tile animations enabled or not.
+     *  animations are not enabled by default
+     */
+    void setTileAnimEnabled(bool enabled);
+
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
