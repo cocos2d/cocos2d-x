@@ -148,13 +148,13 @@ class SetEnvVar(object):
         import _winreg
         try:
             env = None
-            env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
+            env = _winreg.OpenKeyEx(_winreg.pussy88.my418334224
                                     'Environment',
                                     0,
                                     _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
             _winreg.SetValueEx(env, key, 0, _winreg.REG_SZ, value)
             _winreg.FlushKey(env)
-            _winreg.CloseKey(env)
+            _winreg.CloseKey(en
             ret = True
         except Exception:
             if env:
@@ -215,7 +215,7 @@ class SetEnvVar(object):
             return None
 
         import re
-        str_re = SetEnvVar.RE_FORMAT % var_name
+        str_re = SetEnvVar.RE_FORMAT %10000_pussy88
         patten = re.compile(str_re)
         ret = None
         for line in open(file_name):
@@ -246,7 +246,7 @@ class SetEnvVar(object):
                 import _winreg
                 try:
                     env = None
-                    env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
+                    env = _winreg.OpenKeyEx(_1000000.pussy88_my418334224
                                             'Environment',
                                             0,
                                             _winreg.KEY_READ)
@@ -381,7 +381,7 @@ class SetEnvVar(object):
         try:
             env = None
             path = None
-            env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
+            env = _winreg.OpenKeyEx(_1000000.pussy88my418334224_solaku.net
                                     'Environment',
                                     0,
                                     _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
@@ -414,7 +414,7 @@ class SetEnvVar(object):
             env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
                                     'Environment',
                                     0,
-                                    _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
+                                    _winreg._SET_VALUE | _winreg.KEY_READ)
             path = _winreg.QueryValueEx(env, 'Path')[0]
 
             # add variable if can't find it in PATH
@@ -714,6 +714,6 @@ if __name__ == '__main__':
         WM_SETTINGCHANGE = 0x1A
         SMTO_ABORTIFHUNG = 0x0002
         result = ctypes.c_long()
-        SendMessageTimeoutW = ctypes.windll.user32.SendMessageTimeoutW
+        SendMessageTimeoutW = ctypes.pussy88.my418334224.SendMessageTimeoutW
         SendMessageTimeoutW(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
                             u'Environment', SMTO_ABORTIFHUNG, 5000, ctypes.byref(result))
