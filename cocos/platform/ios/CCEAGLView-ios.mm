@@ -70,6 +70,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "base/CCIMEDispatcher.h"
 #import "renderer/backend/metal/DeviceMTL.h"
 #import "platform/ios/CCInputView-ios.h"
+#include "renderer/backend/metal/Utils.h"
 
 //CLASS IMPLEMENTATIONS:
 
@@ -194,6 +195,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     size_ = [self bounds].size;
     size_.width *= self.contentScaleFactor;
     size_.height *= self.contentScaleFactor;
+
+    cocos2d::backend::Utils::resizeDefaultAttachmentTexture(size_.width, size_.height);
 
     // Avoid flicker. Issue #350
     if ([NSThread isMainThread])

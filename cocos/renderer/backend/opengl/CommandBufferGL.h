@@ -196,7 +196,7 @@ private:
 
     GLint _defaultFBO = 0;  // The value gets from glGetIntegerv, so need to use GLint
     GLuint _currentFBO = 0;
-    BufferGL* _vertexBuffer;
+    BufferGL* _vertexBuffer = nullptr;
     ProgramState* _programState = nullptr;
     BufferGL* _indexBuffer = nullptr;
     RenderPipelineGL* _renderPipeline = nullptr;

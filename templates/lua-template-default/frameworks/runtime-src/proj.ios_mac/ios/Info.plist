@@ -4,10 +4,12 @@
 <dict>
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
+    <!--
     <key>CFBundleDisplayName</key>
-    <string>${PRODUCT_NAME}</string>
+    <string>${PROJECT_NAME}</string>
     <key>CFBundleExecutable</key>
-    <string>${EXECUTABLE_NAME}</string>
+    <string>${MACOSX_BUNDLE_EXECUTABLE_NAME}</string>
+    -->
     <key>CFBundleIconFile</key>
     <string>Icon-57.png</string>
     <key>CFBundleIdentifier</key>
@@ -17,7 +19,7 @@
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleName</key>
-    <string>${PRODUCT_NAME}</string>
+    <string>${PROJECT_NAME}</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0</string>
     <key>CFBundlePackageType</key>

@@ -1,0 +1,117 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: [ v4, v3 ]
+  pull_request:
+    branches: [ v4, v3 ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  ubuntu-18_04:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: echo -e "y" | bash install-deps-linux.sh
+      - run: cmake -B b -S .
+      - run: cmake --build b
+
+  ubuntu-20_04:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: echo -e "y" | bash install-deps-linux.sh
+      - run: cmake -B b -S .
+      - run: cmake --build b
+
+  windows-2019:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S . -G "Visual Studio 16 2019" -A Win32
+      - run: cmake --build b
+
+  windows-2022:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S . -G "Visual Studio 17 2022" -A Win32
+      - run: cmake --build b
+
+  macos-10_15:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S . -GXcode
+      - run: cmake --build b
+
+  macos-11:
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S . -GXcode
+      - run: cmake --build b 
+
+  macos-10_15_ios:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S . -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
+      - run: cmake --build b --config Release --target cpp-tests -- -quiet
+
+  macos-11_ios:
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: cmake -B b -S . -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
+      - run: cmake --build b --config Release --target cpp-tests -- -quiet -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"
+
+  windows-2019-android:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
+        shell: bash
+        working-directory: tests/cpp-tests/proj.android
+
+  ubuntu-20_04-android:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: recursive
+      - run: python download-deps.py --r no
+      - run: ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --info
+        shell: bash
+        working-directory: tests/cpp-tests/proj.android

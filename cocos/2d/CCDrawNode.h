@@ -349,7 +349,7 @@ protected:
     bool        _dirtyGLLine = false;
     bool        _isolated = false;
     float       _lineWidth = 0.0f;
-    
+    float       _defaultLineWidth = 0.0f;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };

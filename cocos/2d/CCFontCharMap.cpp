@@ -126,6 +126,7 @@ FontAtlas * FontCharMap::createFontAtlas()
     tempDefinition.width = _itemWidth / contentScaleFactor;
     tempDefinition.height = _itemHeight / contentScaleFactor;
     tempDefinition.xAdvance = _itemWidth;
+    tempDefinition.rotated = false;
 
     int charId = _mapStartChar;
     for (int row = 0; row < itemsPerColumn; ++row)

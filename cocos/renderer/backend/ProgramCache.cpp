@@ -64,6 +64,8 @@ namespace
 }
 
 std::unordered_map<backend::ProgramType, backend::Program*>  ProgramCache::_cachedPrograms;
+std::unordered_map<std::string, backend::Program*> ProgramCache::_cachedCustomPrograms;
+
 ProgramCache* ProgramCache::_sharedProgramCache = nullptr;
 
 ProgramCache* ProgramCache::getInstance()
@@ -303,6 +305,29 @@ void ProgramCache::removeAllPrograms()
         program.second->release();
     }
     _cachedPrograms.clear();
+    
+    for (auto& program : _cachedCustomPrograms)
+    {
+        program.second->release();
+    }
+    _cachedCustomPrograms.clear();
+}
+
+void ProgramCache::addCustomProgram(const std::string &key, backend::Program *program)
+{
+    _cachedCustomPrograms.emplace(key, program);
+}
+
+backend::Program* ProgramCache::getCustomProgram(const std::string &key) const
+{
+    const auto& iter = ProgramCache::_cachedCustomPrograms.find(key);
+    if (ProgramCache::_cachedCustomPrograms.end() != iter)
+    {
+        return iter->second;
+    }
+    
+    CCLOG("Warning: program %s not found in cache.", key.c_str());
+    return nullptr;
 }
 
 CC_BACKEND_END

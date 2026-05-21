@@ -726,6 +726,12 @@ void TMXMapInfo::endElement(void* /*ctx*/, const char *name)
             tmxMapInfo->setStoringCharacters(false);
             std::string currentString = tmxMapInfo->getCurrentString();
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+			// Fix bug when tilemap data is in csv format.
+			// We have to remove all '\r' from the string
+			currentString.erase(std::remove(currentString.begin(), currentString.end(), '\r'), currentString.end());
+#endif
+
             vector<string> gidTokens;
             istringstream filestr(currentString);
             string sRow;

@@ -25,7 +25,7 @@ make
 
 Execute `make help` to see all build targets, `make <target>` build specified target
 
-### Generate Visual Studio projects
+### Generating a Visual Studio project
 
 ```sh
 cd cocos2d-x
@@ -42,7 +42,7 @@ or open __Cocos2d-x.sln__ in Explorer to use the generated project.
 
 If can't found `MSVCR110.dll` issue occurs to you, please install this [Visual C++ Runtime Libraries](https://www.microsoft.com/en-us/download/details.aspx?id=30679), when runing the cpp-tests project
 
-### Generate macOS Project
+### Generating a macOS Project
 
 ```sh
 cd cocos2d-x
@@ -51,13 +51,38 @@ cmake .. -GXcode
 open Cocos2d-x.xcodeproj
 ```
 
-### Generate iOS Project
+### Generating an iOS Project
 
+**Create iOS device project**
 ```sh
 cd cocos2d-x
 mkdir ios-build && cd ios-build
 cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos
 open Cocos2d-x.xcodeproj
+```
+
+**Create iOS simulator project**
+```sh
+cd cocos2d-x
+mkdir ios-build && cd ios-build
+cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator
+open Cocos2d-x.xcodeproj
+```
+
+If you meet the error like this:
+```
+CMake Error at CMakeLists.txt:28 (project):
+  No CMAKE_C_COMPILER could be found.
+
+
+
+CMake Error at CMakeLists.txt:28 (project):
+  No CMAKE_CXX_COMPILER could be found.
+```
+
+Then you can set C/C++ compiler manually like this
+```sh
+cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
 ```
 
 #### How do I customize the generated Xcode project?
