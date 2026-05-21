@@ -648,6 +648,8 @@ namespace ui {
          */
         virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info) override;
 
+        void setGlobalZOrder(float globalZOrder) override;
+
         void openKeyboard() const;
 
     protected:

@@ -86,4 +86,11 @@ public:
     virtual bool init() override;
 };
 
+class UIEditBoxTestGlobalZ : public UIScene
+{
+public:
+    CREATE_FUNC(UIEditBoxTestGlobalZ);
+    virtual bool init() override;
+};
+
 #endif /* defined(__cocos2d_tests__UIEditBoxTest__) */

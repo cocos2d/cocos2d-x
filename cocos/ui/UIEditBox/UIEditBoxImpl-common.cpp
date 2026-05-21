@@ -96,12 +96,14 @@ void EditBoxImplCommon::initInactiveLabels(const Size& size)
     _label->setAnchorPoint(Vec2(0.0f,1.0f));
     _label->setOverflow(Label::Overflow::CLAMP);
     _label->setVisible(false);
+    _label->setGlobalZOrder(_editBox->getGlobalZOrder());
     _editBox->addChild(_label, kLabelZOrder);
 
     _labelPlaceHolder = Label::create();
     _labelPlaceHolder->setAnchorPoint(Vec2(0.0f, 1.0f));
     _labelPlaceHolder->setTextColor(Color4B::GRAY);
     _labelPlaceHolder->enableWrap(false);
+    _labelPlaceHolder->setGlobalZOrder(_editBox->getGlobalZOrder());
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
 
     setFont(pDefaultFontName, size.height*2/3);
@@ -238,7 +240,7 @@ void EditBoxImplCommon::refreshInactiveText()
 
     refreshLabelAlignment();
     if (!_editingMode) {
-        if (_text.size() == 0) {
+        if (_text.empty()) {
             _label->setVisible(false);
             _labelPlaceHolder->setVisible(true);
         } else {
@@ -291,6 +293,19 @@ void EditBoxImplCommon::setContentSize(const Size& size)
     placeInactiveLabels(_contentSize);
 }
 
+void EditBoxImplCommon::setGlobalZOrder(float globalZOrder)
+{
+    if (_label)
+    {
+        _label->setGlobalZOrder(globalZOrder);
+    }
+
+    if (_labelPlaceHolder)
+    {
+        _labelPlaceHolder->setGlobalZOrder(globalZOrder);
+    }
+}
+
 void EditBoxImplCommon::draw(Renderer* /*renderer*/, const Mat4& /*transform*/, uint32_t flags)
 {
     if(flags)
@@ -300,7 +315,7 @@ void EditBoxImplCommon::draw(Renderer* /*renderer*/, const Mat4& /*transform*/, 
     }
 }
 
-void EditBoxImplCommon::onEnter(void)
+void EditBoxImplCommon::onEnter()
 {
     const char* pText = getText();
     if (pText) {
