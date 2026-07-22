@@ -196,6 +196,7 @@ private:
     RenderTargetBase* _rt;
     RenderTargetDepthStencil* _rtDepthStencil;
     bool _isDefault;
+    bool _restoreDepthMask;
 public:
     static FrameBuffer* getOrCreateDefaultFBO(GLView* glView);
     static void applyDefaultFBO();
