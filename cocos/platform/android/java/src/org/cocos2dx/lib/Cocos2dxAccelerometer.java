@@ -65,8 +65,8 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
         this.mAccelerometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         this.mCompass = this.mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
-        final Display display = ((WindowManager) this.mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        this.mNaturalOrientation = display.getOrientation();
+        final Display display = Cocos2dxHelper.getDisplay();
+        this.mNaturalOrientation = display != null ? display.getRotation() : Surface.ROTATION_0;
     }
 
     // ===========================================================
@@ -82,13 +82,8 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
     }
 
     public void setInterval(float interval) {
-        // Honeycomb version is 11
-        if(android.os.Build.VERSION.SDK_INT < 11) {
-            this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-        } else {
-            //convert seconds to microseconds
-            this.mSensorManager.registerListener(this, this.mAccelerometer, (int)(interval*1000000));
-        }
+        //convert seconds to microseconds
+        this.mSensorManager.registerListener(this, this.mAccelerometer, (int)(interval*1000000));
     }
 
     public void disable() {
@@ -129,7 +124,8 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
             }
 
             // Invert axes for reverse landscape and reverse portrait
-            int rotation =  Cocos2dxHelper.getActivity().getWindowManager().getDefaultDisplay().getRotation();
+            final Display rotationDisplay = Cocos2dxHelper.getDisplay();
+            int rotation = rotationDisplay != null ? rotationDisplay.getRotation() : Surface.ROTATION_0;
             if (rotation == Surface.ROTATION_180 || rotation == Surface.ROTATION_270) {
                 x = -x;
                 y = -y;
