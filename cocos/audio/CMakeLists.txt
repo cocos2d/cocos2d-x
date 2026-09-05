@@ -116,20 +116,36 @@ elseif(LINUX)
         )
 
 elseif(APPLE)
-    # common
-    set(COCOS_AUDIO_PLATFORM_HEADER
-        audio/apple/AudioDecoder.h
-        audio/apple/AudioPlayer.h
-        audio/apple/AudioMacros.h
-        audio/apple/AudioCache.h
-        audio/apple/AudioEngine-inl.h
-        )
-    set(COCOS_AUDIO_PLATFORM_SRC
-        audio/apple/AudioCache.mm
-        audio/apple/AudioDecoder.mm
-        audio/apple/AudioEngine-inl.mm
-        audio/apple/AudioPlayer.mm
-        )
+    option(CC_USE_AVAUDIOENGINE "Use the AVAudioEngine backend instead of the deprecated OpenAL one" ON)
+
+    if(CC_USE_AVAUDIOENGINE)
+        set(COCOS_AUDIO_PLATFORM_HEADER
+            audio/apple/av/AudioMacros.h
+            audio/apple/av/AudioCache.h
+            audio/apple/av/AudioPlayer.h
+            audio/apple/av/AudioEngine-av.h
+            )
+        set(COCOS_AUDIO_PLATFORM_SRC
+            audio/apple/av/AudioCache.mm
+            audio/apple/av/AudioPlayer.mm
+            audio/apple/av/AudioEngine-av.mm
+            )
+    else()
+        # common
+        set(COCOS_AUDIO_PLATFORM_HEADER
+            audio/apple/AudioDecoder.h
+            audio/apple/AudioPlayer.h
+            audio/apple/AudioMacros.h
+            audio/apple/AudioCache.h
+            audio/apple/AudioEngine-inl.h
+            )
+        set(COCOS_AUDIO_PLATFORM_SRC
+            audio/apple/AudioCache.mm
+            audio/apple/AudioDecoder.mm
+            audio/apple/AudioEngine-inl.mm
+            audio/apple/AudioPlayer.mm
+            )
+    endif()
 endif()
 
 set(COCOS_AUDIO_HEADER
