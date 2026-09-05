@@ -361,6 +361,24 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         }
     }
 
+    /**
+     * Feeds a system back navigation into the engine.
+     *
+     * Since Android 13 the platform can report back through an OnBackInvokedCallback instead
+     * of a KeyEvent, and for apps targeting SDK 36 that is the only way it is reported, so
+     * onKeyDown below never runs for KEYCODE_BACK there.
+     */
+    public void dispatchBackKeyToEngine() {
+        Cocos2dxVideoHelper.mVideoHandler.sendEmptyMessage(Cocos2dxVideoHelper.KeyEventBack);
+        this.queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(KeyEvent.KEYCODE_BACK);
+                Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyUp(KeyEvent.KEYCODE_BACK);
+            }
+        });
+    }
+
     @Override
     public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
         switch (pKeyCode) {

@@ -343,7 +343,10 @@ int ProgramGL::getOriginalLocation(int location) const
 
 const UniformInfo& ProgramGL::getActiveUniformInfo(ShaderStage stage, int location) const
 {
-    return std::move(UniformInfo{});
+    // The GL backend does not track per-location uniform info; returning a temporary here
+    // handed the caller a reference to a destroyed object.
+    static const UniformInfo emptyInfo;
+    return emptyInfo;
 }
 
 const std::unordered_map<std::string, UniformInfo>& ProgramGL::getAllActiveUniformInfo(ShaderStage stage) const

@@ -127,29 +127,17 @@ public class Cocos2dxHelper {
             int sampleRate = 44100;
             int bufferSizeInFrames = 192;
 
-            if (Build.VERSION.SDK_INT >= 17) {
-                AudioManager am = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
-                // use reflection to remove dependence of API 17 when compiling
+            AudioManager am = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+            final String strSampleRate = am.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
+            final String strBufferSizeInFrames = am.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
 
-                // AudioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
-                final Class audioManagerClass = AudioManager.class;
-                Object[] parameters = new Object[]{Cocos2dxReflectionHelper.<String>getConstantValue(audioManagerClass, "PROPERTY_OUTPUT_SAMPLE_RATE")};
-                final String strSampleRate = Cocos2dxReflectionHelper.<String>invokeInstanceMethod(am, "getProperty", new Class[]{String.class}, parameters);
-
-                // AudioManager.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
-                parameters = new Object[]{Cocos2dxReflectionHelper.<String>getConstantValue(audioManagerClass, "PROPERTY_OUTPUT_FRAMES_PER_BUFFER")};
-                final String strBufferSizeInFrames = Cocos2dxReflectionHelper.<String>invokeInstanceMethod(am, "getProperty", new Class[]{String.class}, parameters);
-
-                try {
-                    sampleRate = Integer.parseInt(strSampleRate);
-                    bufferSizeInFrames = Integer.parseInt(strBufferSizeInFrames);
-                } catch (NumberFormatException e) {
-                    Log.e(TAG, "parseInt failed", e);
-                }
-                Log.d(TAG, "sampleRate: " + sampleRate + ", framesPerBuffer: " + bufferSizeInFrames);
-            } else {
-                Log.d(TAG, "android version is lower than 17");
+            try {
+                sampleRate = Integer.parseInt(strSampleRate);
+                bufferSizeInFrames = Integer.parseInt(strBufferSizeInFrames);
+            } catch (NumberFormatException e) {
+                Log.e(TAG, "parseInt failed", e);
             }
+            Log.d(TAG, "sampleRate: " + sampleRate + ", framesPerBuffer: " + bufferSizeInFrames);
 
             nativeSetAudioDeviceInfo(isSupportLowLatency, sampleRate, bufferSizeInFrames);
 
@@ -389,9 +377,7 @@ public class Cocos2dxHelper {
     
     public static void terminateProcess() {
         // Remove it from recent apps.
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            sActivity.finishAndRemoveTask();
-        }
+        sActivity.finishAndRemoveTask();
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
@@ -415,21 +401,29 @@ public class Cocos2dxHelper {
         }
     }
 
+    /**
+     * The display this activity is on. WindowManager.getDefaultDisplay() is deprecated since
+     * API 30 and reports the wrong display when more than one is attached.
+     */
+    @SuppressWarnings("deprecation")
+    public static Display getDisplay() {
+        if (sActivity == null) {
+            return null;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return sActivity.getDisplay();
+        }
+        return sActivity.getWindowManager().getDefaultDisplay();
+    }
+
     public static int getDPI()
     {
-        if (sActivity != null)
+        Display d = getDisplay();
+        if (d != null)
         {
             DisplayMetrics metrics = new DisplayMetrics();
-            WindowManager wm = sActivity.getWindowManager();
-            if (wm != null)
-            {
-                Display d = wm.getDefaultDisplay();
-                if (d != null)
-                {
-                    d.getMetrics(metrics);
-                    return (int)(metrics.density*160.0f);
-                }
-            }
+            d.getMetrics(metrics);
+            return (int)(metrics.density*160.0f);
         }
         return -1;
     }
@@ -653,13 +647,7 @@ public class Cocos2dxHelper {
      * @return true if the screen is rounded, false otherwise
      */
     public static boolean isScreenRound() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (sActivity.getResources().getConfiguration().isScreenRound()) {
-                return true;
-            }
-        }
-
-        return false;
+        return sActivity.getResources().getConfiguration().isScreenRound();
     }
 
     /**
@@ -713,31 +701,22 @@ public class Cocos2dxHelper {
      * otherwise <code>false</code> will returned.
      */
     public static boolean hasSoftKeys() {
-        boolean hasSoftwareKeys = true;
+        Display display = getDisplay();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            Display display = sActivity.getWindowManager().getDefaultDisplay();
+        DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+        display.getRealMetrics(realDisplayMetrics);
 
-            DisplayMetrics realDisplayMetrics = new DisplayMetrics();
-            display.getRealMetrics(realDisplayMetrics);
+        int realHeight = realDisplayMetrics.heightPixels;
+        int realWidth = realDisplayMetrics.widthPixels;
 
-            int realHeight = realDisplayMetrics.heightPixels;
-            int realWidth = realDisplayMetrics.widthPixels;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        display.getMetrics(displayMetrics);
 
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            display.getMetrics(displayMetrics);
+        int displayHeight = displayMetrics.heightPixels;
+        int displayWidth = displayMetrics.widthPixels;
 
-            int displayHeight = displayMetrics.heightPixels;
-            int displayWidth = displayMetrics.widthPixels;
-
-            hasSoftwareKeys = (realWidth - displayWidth) > 0 ||
-                    (realHeight - displayHeight) > 0;
-        } else {
-            boolean hasMenuKey = ViewConfiguration.get(sActivity).hasPermanentMenuKey();
-            boolean hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
-            hasSoftwareKeys = !hasMenuKey && !hasBackKey;
-        }
-        return hasSoftwareKeys;
+        return (realWidth - displayWidth) > 0 ||
+                (realHeight - displayHeight) > 0;
     }
 
     //Enhance API modification end     

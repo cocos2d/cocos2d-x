@@ -24,6 +24,7 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
@@ -43,6 +44,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
@@ -73,6 +76,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private boolean showVirtualButton = false;
     private boolean gainAudioFocus = false;
     private boolean paused = true;
+    private PredictiveBackBridge mPredictiveBack = null;
 
     public Cocos2dxGLSurfaceView getGLSurfaceView(){
         return  mGLSurfaceView;
@@ -166,6 +170,14 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
         // Audio configuration
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        // From Android 13 the system may report back navigation through
+        // OnBackInvokedCallback, and for apps targeting SDK 36 it no longer sends
+        // KEYCODE_BACK at all, so the key path in Cocos2dxGLSurfaceView goes silent.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mPredictiveBack = new PredictiveBackBridge(this);
+            mPredictiveBack.register();
+        }
     }
 
     //native method,call GLViewImpl::getGLContextAttrs() to get the OpenGL ES context attributions
@@ -224,6 +236,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     
     @Override
     protected void onDestroy() {
+        if (mPredictiveBack != null) {
+            mPredictiveBack.unregister();
+            mPredictiveBack = null;
+        }
         if(gainAudioFocus)
             Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
         super.onDestroy();
@@ -252,6 +268,40 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    private void onSystemBackInvoked() {
+        if (mGLSurfaceView != null) {
+            mGLSurfaceView.dispatchBackKeyToEngine();
+        }
+    }
+
+    /**
+     * Kept in its own class so the API 33 types are only loaded on devices that have them.
+     */
+    @TargetApi(Build.VERSION_CODES.TIRAMISU)
+    private static final class PredictiveBackBridge {
+        private final Cocos2dxActivity mActivity;
+        private final OnBackInvokedCallback mCallback;
+
+        PredictiveBackBridge(final Cocos2dxActivity activity) {
+            mActivity = activity;
+            mCallback = new OnBackInvokedCallback() {
+                @Override
+                public void onBackInvoked() {
+                    mActivity.onSystemBackInvoked();
+                }
+            };
+        }
+
+        void register() {
+            mActivity.getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT, mCallback);
+        }
+
+        void unregister() {
+            mActivity.getOnBackInvokedDispatcher().unregisterOnBackInvokedCallback(mCallback);
+        }
+    }
 
     protected ResizeLayout mFrameLayout = null;
     // ===========================================================
@@ -315,34 +365,16 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= 19) {
-            // use reflection to remove dependence of API level
-
-            Class viewClass = View.class;
-
-            try {
-                final int SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION");
-                final int SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN");
-                final int SYSTEM_UI_FLAG_HIDE_NAVIGATION = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_HIDE_NAVIGATION");
-                final int SYSTEM_UI_FLAG_FULLSCREEN = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_FULLSCREEN");
-                final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_IMMERSIVE_STICKY");
-                final int SYSTEM_UI_FLAG_LAYOUT_STABLE = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_STABLE");
-
-                // getWindow().getDecorView().setSystemUiVisibility();
-                final Object[] parameters = new Object[]{SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                        | SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                        | SYSTEM_UI_FLAG_IMMERSIVE_STICKY};
-                Cocos2dxReflectionHelper.<Void>invokeInstanceMethod(getWindow().getDecorView(),
-                        "setSystemUiVisibility",
-                        new Class[]{Integer.TYPE},
-                        parameters);
-            } catch (NullPointerException e) {
-                Log.e(TAG, "hideVirtualButton", e);
-            }
-        }
+        // The reflection here dated from the API 19 minimum; the constants are plain
+        // compile time values now. setSystemUiVisibility itself is deprecated since API 30
+        // and is what forced edge to edge handling to be revisited.
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
    private static boolean isAndroidEmulator() {
@@ -369,11 +401,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         if(powerManager == null) {
             return false;
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            return !powerManager.isInteractive();
-        } else {
-            return !powerManager.isScreenOn();
-        }
+        return !powerManager.isInteractive();
     }
     
     // ===========================================================
