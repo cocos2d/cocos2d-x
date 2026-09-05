@@ -156,7 +156,6 @@ list(APPEND GAME_HEADER
      Classes/SceneTest/SceneTest.h
      Classes/ReleasePoolTest/ReleasePoolTest.h
      Classes/InputTest/MouseTest.h
-     Classes/SpineTest/SpineTest.h
     #  Classes/Scene3DTest/Scene3DTest.h
      Classes/ParticleTest/ParticleTest.h
      Classes/EffectsTest/EffectsTest.h
@@ -284,7 +283,6 @@ list(APPEND GAME_SOURCE
      Classes/SchedulerTest/SchedulerTest.cpp
      Classes/ShaderTest/ShaderTest.cpp
      Classes/ShaderTest/ShaderTest2.cpp
-     Classes/SpineTest/SpineTest.cpp
     #  Classes/Scene3DTest/Scene3DTest.cpp
      Classes/Sprite3DTest/DrawNode3D.cpp
      Classes/Sprite3DTest/Sprite3DTest.cpp
@@ -380,6 +378,15 @@ if(NOT LINUX)
          )
 endif()
 
+if(BUILD_EDITOR_SPINE)
+    list(APPEND GAME_HEADER
+         Classes/SpineTest/SpineTest.h
+         )
+    list(APPEND GAME_SOURCE
+         Classes/SpineTest/SpineTest.cpp
+         )
+endif()
+
 # mark app complie info and libs info
 set(all_code_files
     ${GAME_HEADER}
@@ -401,6 +408,9 @@ endif()
 target_include_directories(${APP_NAME}
         PRIVATE Classes
 )
+if(BUILD_EDITOR_SPINE)
+    target_compile_definitions(${APP_NAME} PRIVATE CC_USE_SPINE)
+endif()
 
 # mark app resources
 setup_cocos_app_config(${APP_NAME})

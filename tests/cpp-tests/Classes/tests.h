@@ -98,7 +98,9 @@
 #include "SchedulerTest/SchedulerTest.h"
 #include "ShaderTest/ShaderTest.h"
 #include "ShaderTest/ShaderTest2.h"
+#if defined(CC_USE_SPINE)
 #include "SpineTest/SpineTest.h"
+#endif
 #include "Sprite3DTest/Sprite3DTest.h"
 #include "SpritePolygonTest/SpritePolygonTest.h"
 #include "SpriteTest/SpriteTest.h"
