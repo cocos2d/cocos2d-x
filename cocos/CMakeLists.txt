@@ -123,6 +123,10 @@ use_cocos2dx_compile_options(cocos2d)
 # use all platform related system libs
 use_cocos2dx_libs_depend(cocos2d)
 
+if(APPLE AND CC_USE_AVAUDIOENGINE)
+    target_compile_definitions(cocos2d PRIVATE CC_USE_AVAUDIOENGINE=1)
+endif()
+
 target_include_directories(cocos2d
     PUBLIC ${COCOS2DX_ROOT_PATH}
     PUBLIC ${COCOS2DX_ROOT_PATH}/cocos
