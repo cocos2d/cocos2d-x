@@ -204,12 +204,7 @@ void Texture2DGL::updateData(uint8_t* data, std::size_t width , std::size_t heig
                 _textureInfo.format,
                 _textureInfo.type,
                 data);
-    //CHECK_GL_ERROR_DEBUG();
-    GLenum __error = glGetError();
-    if ( __error )
-    {
-        cocos2d::log( "OpenGL error 0x%04X in %s %s %d\n", __error, __FILE__, __FUNCTION__, __LINE__ );
-    }
+    CHECK_GL_ERROR_DEBUG();
 
     if(!_hasMipmaps && level > 0)
         _hasMipmaps = true;

@@ -163,7 +163,7 @@ void ProgramCache::addProgram(ProgramType type)
             program = backend::Device::getInstance()->newProgram(positionColor_vert, positionColor_frag);
             break;
         case ProgramType::POSITION:
-            program = backend::Device::getInstance()->newProgram(position_vert, positionColor_frag);
+            program = backend::Device::getInstance()->newProgram(positionColor_vert, positionColor_frag);
             break;
         case ProgramType::LAYER_RADIA_GRADIENT:
             program = backend::Device::getInstance()->newProgram(position_vert, layer_radialGradient_frag);

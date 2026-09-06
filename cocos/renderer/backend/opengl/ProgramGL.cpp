@@ -146,6 +146,9 @@ void ProgramGL::compileProgram()
 
 void ProgramGL::computeLocations()
 {
+    if (!_program)
+    return;
+
     std::fill(_builtinAttributeLocation, _builtinAttributeLocation + ATTRIBUTE_MAX, -1);
 //    std::fill(_builtinUniformLocation, _builtinUniformLocation + UNIFORM_MAX, -1);
 
