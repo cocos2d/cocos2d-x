@@ -26,7 +26,6 @@
 
 # this CMakeLists is to generate Cocos2d-x Engine Library
 # build libcocos2d
-# build luacocos2d if BUILD_LUA_LIBS=ON
 
 # The version number
 set(COCOS2D_X_VERSION 4.0)
@@ -145,11 +144,6 @@ set_target_properties(cocos2d
                       VERSION "${COCOS2D_X_VERSION}"
                       FOLDER "Internal"
                       )
-
-## Lua bindings lib
-if(BUILD_LUA_LIBS)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
-endif()
 
 if(XCODE OR VS)
     cocos_mark_code_files("cocos2d")

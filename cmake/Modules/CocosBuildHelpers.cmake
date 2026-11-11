@@ -36,41 +36,6 @@ function(cocos_def_copy_resource_target cocos_target)
 endfunction()
 
 
-function(cocos_copy_lua_scripts cocos_target src_dir dst_dir)
-    set(luacompile_target COPY_LUA-${cocos_target})
-    if(NOT TARGET ${luacompile_target})
-        add_custom_target(${luacompile_target} ALL
-            COMMAND ${CMAKE_COMMAND} -E echo "Copying lua scripts ..."
-        )
-        add_dependencies(${cocos_target} ${luacompile_target})
-        set_target_properties(${luacompile_target} PROPERTIES
-            FOLDER Utils
-        )
-    endif()
-    if(MSVC)
-        add_custom_command(TARGET ${luacompile_target} POST_BUILD
-            COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-                -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m $<CONFIG>
-        )
-    else()
-        if("${CMAKE_BUILD_TYPE}" STREQUAL "")
-            add_custom_command(TARGET ${luacompile_target} POST_BUILD
-                COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-                -s ${src_dir} -d ${dst_dir}
-            )
-        else()
-            add_custom_command(TARGET ${luacompile_target} POST_BUILD
-                COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-                    -s ${src_dir} -d ${dst_dir} -l ${LUAJIT32_COMMAND} -m ${CMAKE_BUILD_TYPE}
-                COMMAND ${PYTHON_COMMAND} ARGS ${COCOS2DX_ROOT_PATH}/cmake/scripts/sync_folder.py
-                    -s ${src_dir} -d ${dst_dir}/64bit -l ${LUAJIT64_COMMAND} -m ${CMAKE_BUILD_TYPE}
-            )
-        endif()
-    endif()
-
-endfunction()
-
-
 function(cocos_get_resource_path output cocos_target)
     get_target_property(rt_output ${cocos_target} RUNTIME_OUTPUT_DIRECTORY)
     set(${output} "${rt_output}/${CMAKE_CFG_INTDIR}/Resources" PARENT_SCOPE)

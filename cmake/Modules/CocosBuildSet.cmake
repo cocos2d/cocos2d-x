@@ -28,8 +28,6 @@ message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 message(STATUS "PYTHON_PATH:"  ${PYTHON_COMMAND})
 message(STATUS "COCOS_COMMAND_PATH:"  ${COCOS_COMMAND})
 message(STATUS "HOST_SYSTEM:" ${CMAKE_HOST_SYSTEM_NAME})
-# the default behavior of build module
-option(BUILD_LUA_LIBS "Build lua libraries" OFF)
 
 # include helper functions
 include(CocosBuildHelpers)
@@ -41,22 +39,3 @@ include(CocosConfigDefine)
 
 # config libraries dependence
 include(CocosConfigDepend)
-
-if(COCOS_COMMAND)
-    get_filename_component(cocos2dx_console_dir ${COCOS_COMMAND} DIRECTORY)
-    set(COCOS2DX_LUAJIT_ROOT ${cocos2dx_console_dir}/../plugins/plugin_luacompile/bin)
-    message(STATUS "COCOS2DX_LUAJIT_ROOT:" ${COCOS2DX_LUAJIT_ROOT})
-    if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
-        find_program(LUAJIT32_COMMAND NAMES luajit-win32 PATHS ${COCOS2DX_LUAJIT_ROOT}/32bit NO_SYSTEM_ENVIRONMENT_PATH)
-        find_program(LUAJIT64_COMMAND NAMES luajit-win32 PATHS ${COCOS2DX_LUAJIT_ROOT}/64bit NO_SYSTEM_ENVIRONMENT_PATH)
-    elseif("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Linux")
-        find_program(LUAJIT32_COMMAND NAMES luajit-linux PATHS ${COCOS2DX_LUAJIT_ROOT}/32bit NO_SYSTEM_ENVIRONMENT_PATH)
-        find_program(LUAJIT64_COMMAND NAMES luajit-linux PATHS ${COCOS2DX_LUAJIT_ROOT}/64bit NO_SYSTEM_ENVIRONMENT_PATH)
-    endif()
-endif()
-
-
-if(WINDOWS OR LINUX)
-    message(STATUS "LUAJIT32_COMMAND:" ${LUAJIT32_COMMAND})
-    message(STATUS "LUAJIT64_COMMAND:" ${LUAJIT64_COMMAND})
-endif()

@@ -2,7 +2,3 @@
         path = tools/cocos2d-console
         url = ../cocos2d-console.git
 	branch = v3
-[submodule "tools/bindings-generator"]
-	path = tools/bindings-generator
-	url = ../bindings-generator.git
-	branch = v3

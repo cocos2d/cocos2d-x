@@ -45,18 +45,6 @@ elseif(CMAKE_GENERATOR MATCHES Visual)
 endif()
 message(STATUS "CMAKE_GENERATOR: ${CMAKE_GENERATOR}")
 
-# custom target property for lua/js link
-define_property(TARGET
-    PROPERTY CC_JS_DEPEND
-    BRIEF_DOCS "cocos2d js depend libs"
-    FULL_DOCS "use to save depend libs of cocos2d js project"
-) 
-define_property(TARGET
-    PROPERTY CC_LUA_DEPEND
-    BRIEF_DOCS "cocos2d lua depend libs"
-    FULL_DOCS "use to save depend libs of cocos2d lua project"
-) 
-
 # check c++ standard
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
